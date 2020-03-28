@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/imsobear/iceworks-next.git"
+    "url": "https://github.com/ice-lab/iceworks-next.git"
   },
   "activationEvents": [
     "*"

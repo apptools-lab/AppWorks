@@ -1,9 +1,9 @@
 # iceworks-next
 
 <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
-<a href="https://travis-ci.com/imsobear/iceworks-next"><img src="https://travis-ci.com/imsobear/iceworks-next.svg?branch=master" alt="Build Status" /></a>
-<a href="https://codecov.io/gh/imsobear/iceworks-next"><img src="https://img.shields.io/codecov/c/github/imsobear/iceworks-next/master.svg" alt="Test Coverage" /></a>
-<a href="https://gitter.im/imsobear/iceworks-next"><img src="https://badges.gitter.im/imsobear/iceworks-next.svg" alt="Gitter" /></a>
+<a href="https://travis-ci.com/ice-lab/iceworks-next"><img src="https://travis-ci.comice-labr/iceworks-next.svg?branch=master" alt="Build Status" /></a>
+<a href="https://codecov.io/gh/ice-lab/iceworks-next"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks-next/master.svg" alt="Test Coverage" /></a>
+<a href="https://gitter.im/ice-lab/iceworks-next"><img src="https://badges.gitter.imice-labr/iceworks-next.svg" alt="Gitter" /></a>
 
 ## Usage
 
@@ -11,34 +11,19 @@
 
 - @iceworks/npm-utils：npm 相关方法
 - @iceworks/config：管理配置
-- @iceworks/project-generate：生成项目
 - @iceworks/block-add：TODO，添加区块
 
 ### extensions
 
-- iceworks engine: install/start/build
-- iceworks exmaple: just example
-- 添加页面
-- 添加区块
-- 依赖管理
+- `extensions/app`: 核心应用
 
 ## Develop
 
 ### command
 
 ```bash
-# install all deps
-$ yarn run install:deps
-$ yarn run install:deps -- --registry=http://registry.npm.taobao.org
-
-# build packages and run link
+# install deps and link packages
 $ yarn run setup
-
-# watch electron main & electron renderer
-$ yarn run app:watch
-# start electron app
-$ yarn run app:start
-
 
 # packages
 $ yarn run packages:watch
@@ -58,7 +43,6 @@ $ yarn workspace @iceworks/app add <npmName> --registry https://registry.yarnpkg
 
 ```md
 .
-├── app // Electron app
 ├── extensions // VS Code extensions
 ├── packages // Common packages
 │   ├── add-block
@@ -66,16 +50,19 @@ $ yarn workspace @iceworks/app add <npmName> --registry https://registry.yarnpkg
 └── scripts
 ```
 
-### VS Code extensions
+### extensions
 
-开发过程比较独立，不放在 yarn workspace 中，插件自己管理依赖即可。
+开发比较独立，因此依赖独立安装，不跟 lerna 耦合：
 
 ```bash
-$ npm i -g vsce
-$ cd extensions/example
-$ vsce publish
+$ cd extensions/app
+$ yarn install // or cnpm install
+$ npm start
+
+# TODO: link packages
 ```
 
-## TODO
+Then open vscode and debug extension. Docs:
 
-- extensions 下 link packages
+- [官方英文教程](https://code.visualstudio.com/api)
+- [VS Code 插件开发中文教程](https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/api/README)
