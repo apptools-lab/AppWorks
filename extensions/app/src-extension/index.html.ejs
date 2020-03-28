@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <% styles.forEach(function(style){ %>
+     <link rel="stylesheet" href="<%= style %>" />
+  <% }); %>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="ice-container">哈哈哈</div>
+  <script>console.log(1111222)</script>
+  <script>
+    window.__VSCODE__ = acquireVsCodeApi();
+    window.__LANGUAGE__ = "<%= language %>";
+  </script>
+   <% scripts.forEach(function(script){ %>
+     <script src="<%= script %>"></script>
+  <% }); %>
+</body>
+
+</html>

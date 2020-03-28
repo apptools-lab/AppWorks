@@ -1,0 +1,12 @@
+{
+  "name": "@iceworks/block-add",
+  "version": "0.1.1",
+  "main": "lib/index.js",
+  "dependencies": {
+    "fs-extra": "^8.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "ccb10e6adc8071c1b0e58ceac110ede6560e8375"
+}

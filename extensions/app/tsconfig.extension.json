@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "out",
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "es6"
+    ],
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "src-extension"
+  ],
+  "exclude": [
+    "node_modules",
+    "src",
+    ".vscode-test",
+    "out",
+    "public",
+    ".ice"
+  ]
+}

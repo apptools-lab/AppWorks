@@ -1,0 +1,67 @@
+{
+  "name": "iceworks-app",
+  "private": true,
+  "displayName": "iceworks app",
+  "publisher": "ICE",
+  "description": "iceworks app",
+  "version": "0.1.3",
+  "engines": {
+    "vscode": "^1.42.0"
+  },
+  "icon": "public/logo.png",
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imsobear/iceworks-next.git"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/src-extension/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks",
+        "title": "iceworks"
+      }
+    ]
+  },
+  "scripts": {
+    "start": "icejs start --disable-reload",
+    "build": "icejs build",
+    "vscode:prepublish": "rm -rf out && yarn run compile && npm run build",
+    "compile": "tsc -p tsconfig.extension.json && mv ",
+    "watch": "tsc -watch -p tsconfig.extension.json",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "ice.js": "^1.0.0",
+    "@types/ejs": "^3.0.1",
+    "@types/fs-extra": "^8.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.42.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.0.1",
+    "typescript": "^3.7.5",
+    "vscode-test": "^1.3.0"
+  },
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "fs-extra": "^9.0.0",
+    "@alifd/next": "^1.19.4",
+    "moment": "^2.24.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "@alifd/theme-design-pro": "^0.x"
+  }
+}

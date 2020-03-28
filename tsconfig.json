@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    {"path": "packages/npm-utils"},
+    {"path": "packages/config"},
+    {"path": "packages/block-add"}
+  ]
+}

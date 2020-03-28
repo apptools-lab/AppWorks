@@ -1,0 +1,84 @@
+{
+  "name": "iceworks-engine",
+  "private": true,
+  "displayName": "iceworks engine",
+  "publisher": "ICE",
+  "description": "iceworks engine balabala",
+  "version": "0.1.2",
+  "engines": {
+    "vscode": "^1.42.0"
+  },
+  "icon": "assets/logo.png",
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imsobear/iceworks-next.git"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks.start",
+        "title": "iceworks.start"
+      },
+      {
+        "command": "iceworks.install",
+        "title": "iceworks.install"
+      },
+      {
+        "command": "iceworks.build",
+        "title": "iceworks.build"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "iceworks.engine",
+      "properties": {
+        "iceworks.showPreview": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Whether to display the preview when run start."
+        },
+        "iceworks.previewUrl": {
+          "type": "string",
+          "default": "http://localhost:3333/",
+          "scope": "window",
+          "description": "Preview url to launch when run start."
+        }
+      }
+    }
+  },
+  "extensionDependencies": [
+    "auchenberg.vscode-browser-preview"
+  ],
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.42.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.0.1",
+    "typescript": "^3.7.5",
+    "vscode-test": "^1.3.0"
+  },
+  "dependencies": {
+    "@iceworks/config": "^1.0.4"
+  }
+}
