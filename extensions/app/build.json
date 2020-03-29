@@ -18,6 +18,9 @@
           "zh-cn"
         ]
       }
-    ]
+    ],
+    ["build-plugin-css-assets-local", {
+      "activeInDev": true
+    }]
   ]
 }

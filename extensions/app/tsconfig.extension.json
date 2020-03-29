@@ -8,8 +8,7 @@
     "lib": [
       "es6"
     ],
-    "sourceMap": true,
-    "strict": true
+    "sourceMap": true
   },
   "include": [
     "src-extension"

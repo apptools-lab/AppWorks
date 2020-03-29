@@ -1,15 +1,25 @@
-// const vscode = acquireVsCodeApi();
-// vscode.postMessage({
-//   command: 'alert',
-//   text: '哈哈哈'
-// })
+import { createApp, IAppConfig } from 'ice';
+import { callService } from '@/services';
 
-import { createApp } from 'ice';
-
-const appConfig = {
+const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
+    getInitialData: async () => {
+      const config = await callService('config', 'get');
+      return { config };
+    }
   },
+  store: {
+    getInitialStates: (initialData) => {
+      const { config } = initialData;
+      const { materialCollections } = config;
+      return {
+        materials: {
+          collections: materialCollections
+        }
+      };
+    }
+  }
 };
 
 createApp(appConfig);

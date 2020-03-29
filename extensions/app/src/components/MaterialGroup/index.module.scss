@@ -1,0 +1,74 @@
+.group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 31%;
+  margin: 1%;
+  border: 1px solid #eee;
+  padding: 2px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    .ops {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .item {
+    width: 23%;
+    margin: 1%;
+  }
+}
+
+.cover {
+  width: 100%;
+  padding-bottom: 75%;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
+}
+
+.title {
+  font-size: 1.25em;
+  font-weight: bold;
+  line-height: 30px;
+  height: 30px;
+  padding: 0 6px;
+}
+
+.desc {
+  font-size: 12px;
+  color: #999;
+  padding: 0 6px;
+  min-height: 3.2em;
+  line-height: 1.6em;
+}
+
+.ops {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: -30px;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: all 0.1s linear;
+  border-top: 1px solid #eee;
+  opacity: 0;
+}
+
+.opButton {
+  flex: auto;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  // color: $colorPrimary;
+  cursor: pointer;
+}

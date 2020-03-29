@@ -2,9 +2,11 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as ejs from 'ejs';
+import * as services from './services';
 
 interface IMessage {
-  command: string;
+  service: string;
+  method: string;
   [propName: string]: any;
 }
 
@@ -12,39 +14,47 @@ export function activate(context: vscode.ExtensionContext): void {
   const { extensionPath } = context;
   const { env, commands, window, ProgressLocation, Uri, ViewColumn } = vscode;
 
-  // function disposeWebview() {
-  //   if (webviewPanel) {
-  //     webviewPanel.dispose();
-  //     webviewPanel = null;
-  //   }
-  // }
+  let webviewPanel: vscode.WebviewPanel | undefined;
+
   // context.subscriptions.push(vscode.commands.registerCommand('iceworks', function() {
-  vscode.window.showInformationMessage('run iceworks example!');
+    vscode.window.showInformationMessage('run iceworks example!');
 
-  // disposeWebview();
+    if (!webviewPanel) {
+      webviewPanel = window.createWebviewPanel('react', 'iceworks', ViewColumn.One, {
+        // Enable javascript in the webview
+        enableScripts: true,
+        // And restric the webview to only loading content from our extension's `media` directory.
+        // localResourceRoots: [vscode.Uri.file(path.join(this._extensionPath, 'build'))]
+      });
+      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      webviewPanel.webview.onDidReceiveMessage(
+        async (message: IMessage) => {
+          const { service, method, eventId, args } = message;
+          const api = services[service] && services[service][method];
+          console.log('onDidReceiveMessage', message);
+          if (api) {
+            try {
+              console.log(3333, ...args);
+              const result = args ? await api(...args) : await api();
+              console.log('invoke service result', result);
+              webviewPanel.webview.postMessage({ eventId, result });
+            } catch(err) {
+              console.error('invoke service error', err);
+              webviewPanel.webview.postMessage({ eventId, errorMessage: err.message });
+            }
+          } else {
+            vscode.window.showErrorMessage(`invalid command ${message}`);
+          }
+        },
+        undefined,
+        context.subscriptions
+      );
+    }
 
-  let webviewPanel: vscode.WebviewPanel = null;
-  webviewPanel = window.createWebviewPanel('react', 'React', ViewColumn.One, {
-    // Enable javascript in the webview
-    enableScripts: true,
-    // And restric the webview to only loading content from our extension's `media` directory.
-    // localResourceRoots: [vscode.Uri.file(path.join(this._extensionPath, 'build'))]
-  });
-  webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-
-  webviewPanel.webview.onDidReceiveMessage(
-    (message: IMessage) => {
-      if (message.command === 'alert') {
-        vscode.window.showErrorMessage(message.text);
-      }
-    },
-    undefined,
-    context.subscriptions
-  );
   // }));
 }
 
-function getHtmlForWebview(extensionPath) {
+function getHtmlForWebview(extensionPath: string): string {
   const basePath = path.join(extensionPath, 'out/assets/');
 
   const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/index.js'));
@@ -74,7 +84,7 @@ function getHtmlForWebview(extensionPath) {
     </html>`;
 }
 
-function getNonce() {
+function getNonce(): string {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (let i = 0; i < 32; i++) {

@@ -1,0 +1,27 @@
+
+.layout {
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.aside {
+  width: 160px;
+  background-color: var(--vscode-editor-background);
+  flex: 0 0 160px;
+}
+
+.main {
+  flex: auto;
+}
+
+:global {
+  // .iceworks-nav .next-menu-item.next-nav-item.next-selected {
+  //   background-color: var(--vscode-badge-background) !important;
+  // }
+  // .iceworks-nav .next-menu-item.next-nav-item.next-opened {
+  //   background-color: inherit !important;
+  // }
+}

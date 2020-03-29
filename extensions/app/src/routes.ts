@@ -1,17 +1,28 @@
-import BasicLayout from '@/layouts/BasicLayout';
-import Dashboard from '@/pages/Dashboard';
+import Layout from '@/layouts/BasicLayout';
+import MaterialCollection from '@/pages/MaterialCollection';
+import Projects from '@/pages/Projects';
+// import Settings from '@/pages/Settings';
 
-const routerConfig = [
+export default [
   {
     path: '/',
-    component: BasicLayout,
+    component: Layout,
     children: [
       {
         path: '/',
         exact: true,
-        component: Dashboard,
+        component: Projects
       },
-    ],
-  },
+      {
+        path: '/materialCollection',
+        exact: true,
+        component: MaterialCollection,
+      },
+      // {
+      //   path: '/Settings',
+      //   exact: true,
+      //   component: Settings,
+      // }
+    ]
+  }
 ];
-export default routerConfig;
