@@ -13,10 +13,16 @@ interface IMessage {
 export function activate(context: vscode.ExtensionContext): void {
   const { extensionPath } = context;
   const { env, commands, window, ProgressLocation, Uri, ViewColumn } = vscode;
-
   let webviewPanel: vscode.WebviewPanel | undefined;
 
-  // context.subscriptions.push(vscode.commands.registerCommand('iceworks', function() {
+  // just for test
+  activeWebview();
+
+  context.subscriptions.push(vscode.commands.registerCommand('iceworks', function() {
+    activeWebview();
+  }));
+
+  function activeWebview() {
     vscode.window.showInformationMessage('run iceworks example!');
 
     if (!webviewPanel) {
@@ -50,8 +56,7 @@ export function activate(context: vscode.ExtensionContext): void {
         context.subscriptions
       );
     }
-
-  // }));
+  }
 }
 
 function getHtmlForWebview(extensionPath: string): string {

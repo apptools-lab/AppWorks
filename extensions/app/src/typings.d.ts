@@ -1,3 +1,5 @@
+declare const acquireVsCodeApi: any;
+
 declare module '*.module.scss' {
   const classes: { [key: string]: string };
   export default classes;
