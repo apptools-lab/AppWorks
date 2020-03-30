@@ -1,11 +1,14 @@
+/* eslint-disable import/first */
+(window as any).isVscode = typeof acquireVsCodeApi === 'function';
+
 import { createApp, IAppConfig } from 'ice';
-import { callService } from '@/services';
+import { get as getConfig } from '@/services/config';
 
 const appConfig: IAppConfig = {
   app: {
     rootId: 'ice-container',
     getInitialData: async () => {
-      const config = await callService('config', 'get');
+      const config = await getConfig();
       return { config };
     }
   },

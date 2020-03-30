@@ -1,7 +1,9 @@
-// eslint-disable-next-line
-const vscode = acquireVsCodeApi();
+/* eslint-disable no-undef */
 
-export async function callService(service: string, method: string, ...args) {
+// @ts-ignore
+const vscode = (window as any).isVscode ? acquireVsCodeApi() : null;
+
+export default async function callService(service: string, method: string, ...args) {
   return new Promise((resolve, reject) => {
     const eventId = setTimeout(() => {});
     console.log('webview call vscode service', service, method, eventId, args);
@@ -24,3 +26,4 @@ export async function callService(service: string, method: string, ...args) {
     });
   });
 }
+

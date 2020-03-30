@@ -4,10 +4,14 @@ import { Loading, Search, Tab } from '@alifd/next';
 import MaterialGroup from '@/components/MaterialGroup';
 import styles from './index.module.scss';
 
-const Material = (): ReactElement => {
+function getUrl(): string {
   const parts = location.href.match(/\?url=(.*)$/);
   const url = parts ? parts[1] : '';
+  return url;
+}
 
+const Material = (): ReactElement => {
+  const url = getUrl();
   const [{ currentCollection }, { fetchCollectionData }] = store.useModel('materials');
   const { fetchCollectionData: fetchCollectionDataStates } = store.useModelEffectsState('materials');
   const [tabActive, setTabActive] = useState<string>('scaffold');

@@ -1,4 +1,4 @@
-import { callService } from '@/services';
+import { fetchData as fetchMaterialData } from '@/services/material';
 
 // TODO: @iceworks/config
 interface IMaterialCollection {
@@ -63,7 +63,6 @@ const materials = {
   },
   effects: {
     async fetchCollectionData(prevState: IState, url: string, actions): Promise<void> {
-      console.log('fetchCollectionData');
       const currentCollection = prevState.collections.find((item) => {
         return item.url === url;
       });
@@ -73,9 +72,7 @@ const materials = {
       }
 
       if (!currentCollection.data) {
-        const { data } = (await callService('axios', 'get', currentCollection.url)) as {
-          data: IMaterialData;
-        };
+        const data = (await fetchMaterialData(url)) as IMaterialData;
         currentCollection.data = data;
       }
 

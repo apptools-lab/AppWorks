@@ -29,10 +29,10 @@
     ]
   },
   "scripts": {
-    "start": "npm run watch & icejs start --disable-reload",
+    "start": "icejs start",
     "build": "icejs build",
     "vscode:prepublish": "rm -rf out && yarn run compile && npm run build",
-    "compile": "tsc -p tsconfig.extension.json && mv ",
+    "compile": "tsc -p tsconfig.extension.json",
     "watch": "tsc -watch -p tsconfig.extension.json",
     "pretest": "yarn run compile && yarn run lint",
     "test": "node ./out/test/runTest.js"
