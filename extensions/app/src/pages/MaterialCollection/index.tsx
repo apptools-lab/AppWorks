@@ -18,6 +18,8 @@ const Material = (): ReactElement => {
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
+    setKeyword('');
+    setTabActive('scaffold');
     fetchCollectionData(url);
   }, [url]);
 

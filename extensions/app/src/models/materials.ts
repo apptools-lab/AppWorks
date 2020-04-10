@@ -1,3 +1,4 @@
+import { IRootDispatch, IRootState } from 'ice';
 import { fetchData as fetchMaterialData } from '@/services/material';
 
 // TODO: @iceworks/config
@@ -54,35 +55,37 @@ const materials = {
   //       collections,
   //     };
   //   },
-    setCurrentCollection(prevState: IState, data: ICollection): IState {
-      return {
-        ...prevState,
-        currentCollection: data,
-      };
+    setCurrentCollection(prevState: IState, collection: ICollection) {
+      prevState.currentCollection = collection;
+    },
+    setCurrentCollectionData(prevState: IState, data: IMaterialData) {
+      if (prevState.currentCollection) {
+        prevState.currentCollection.data = data;
+      }
     },
   },
-  effects: {
-    async fetchCollectionData(prevState: IState, url: string, actions): Promise<void> {
-      const currentCollection = prevState.collections.find((item) => {
+  effects: (dispach: IRootDispatch) => ({
+    async fetchCollectionData(url: string, rootState: IRootState): Promise<void> {
+      const currentCollection = rootState.materials.collections.find((item) => {
         return item.url === url;
       });
 
       if (!currentCollection) {
-        throw new Error('Invalid url');
+        throw new Error(`Invalid url: ${url}`);
       }
+
+      dispach.materials.setCurrentCollection(currentCollection);
 
       if (!currentCollection.data) {
         const data = (await fetchMaterialData(url)) as IMaterialData;
-        currentCollection.data = data;
+        dispach.materials.setCurrentCollectionData(data);
       }
-
-      actions.setCurrentCollection(currentCollection);
     },
 
     // async enableCollection(prevState: IState, opts: { enable: boolean; url: string }, actions): Promise<void> {
     //   actions.modifyCollection(opts);
     // },
-  },
+  }),
 };
 
 export default materials;
