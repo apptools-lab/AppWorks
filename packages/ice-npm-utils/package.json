@@ -1,9 +1,13 @@
 {
-  "name": "@iceworks/npm-utils",
-  "version": "0.1.1",
-  "description": "npm utils for iceworks",
+  "name": "ice-npm-utils",
+  "version": "1.4.1",
+  "description": "npm utils for ice",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
+    "@types/npmlog": "^4.1.2",
     "mkdirp": "^0.5.1",
     "npmlog": "^4.1.2",
     "request": "^2.88.0",
@@ -12,13 +16,8 @@
     "semver": "^6.0.0",
     "tar": "^4.4.8"
   },
-  "devDependencies": {
-    "@types/npmlog": "^4.1.2",
-    "rimraf": "^2.6.3"
-  },
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
-  "gitHead": "ccb10e6adc8071c1b0e58ceac110ede6560e8375"
+  "license": "MIT"
 }

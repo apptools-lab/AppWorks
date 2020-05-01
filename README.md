@@ -14,6 +14,7 @@
 ├── extensions // VS Code extensions
 ├── packages // Common packages
 │   ├── add-block
+|   ├── ...
 │   └── config
 └── scripts
 ```

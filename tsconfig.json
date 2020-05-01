@@ -1,8 +1,9 @@
 {
   "files": [],
   "references": [
-    {"path": "packages/npm-utils"},
+    {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
+    {"path": "packages/generate-project"},
     {"path": "packages/block-add"}
   ]
 }

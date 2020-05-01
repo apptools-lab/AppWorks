@@ -1,12 +1,13 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as zlib from 'zlib';
-import * as tar from 'tar';
-import * as semver from 'semver';
-import * as request from 'request-promise';
-import * as mkdirp from 'mkdirp';
-import * as progress from 'request-progress';
 import log from './log';
+
+const request = require('request-promise');
+const semver = require('semver');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const path = require('path');
+const progress = require('request-progress');
+const zlib = require('zlib');
+const tar = require('tar');
 
 /**
  * 获取指定 npm 包版本的 tarball
@@ -59,7 +60,7 @@ function getAndExtractTarball(
     )
       .on('progress', progressFunc)
       .on('error', reject)
-      .pipe(zlib.createGunzip())
+      .pipe(zlib.Unzip())
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
         if (entry.type === 'Directory') {
@@ -177,7 +178,7 @@ function isAliNpm(npmName?: string): boolean {
   return /^(@alife|@ali|@alipay|@kaola)\//.test(npmName);
 }
 
-function getNpmRegistry(npmName = ''): string {
+function getNpmRegistry(npmName: string = ''): string {
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   }
@@ -189,7 +190,7 @@ function getNpmRegistry(npmName = ''): string {
   return 'https://registry.npm.taobao.org';
 }
 
-function getUnpkgHost(npmName = ''): string {
+function getUnpkgHost(npmName: string = ''): string {
   if (process.env.UNPKG) {
     return process.env.UNPKG;
   }
@@ -201,7 +202,7 @@ function getUnpkgHost(npmName = ''): string {
   return 'https://unpkg.com';
 }
 
-function getNpmClient(npmName = ''): string {
+function getNpmClient(npmName: string = ''): string {
   if (process.env.NPM_CLIENT) {
     return process.env.NPM_CLIENT;
   }
