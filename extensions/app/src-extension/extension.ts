@@ -33,6 +33,7 @@ export function activate(context: vscode.ExtensionContext): void {
         // localResourceRoots: [vscode.Uri.file(path.join(this._extensionPath, 'build'))]
       });
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+
       webviewPanel.webview.onDidReceiveMessage(
         async (message: IMessage) => {
           const { service, method, eventId, args } = message;
@@ -40,7 +41,6 @@ export function activate(context: vscode.ExtensionContext): void {
           console.log('onDidReceiveMessage', message);
           if (api) {
             try {
-              console.log(3333, ...args);
               const result = args ? await api(...args) : await api();
               console.log('invoke service result', result);
               webviewPanel.webview.postMessage({ eventId, result });
