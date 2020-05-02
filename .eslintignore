@@ -12,7 +12,8 @@ extensions/*/out
 packages/*/lib/
 app/main_dist/
 app/build/
-
+tmp
+.tmp
 # 忽略文件
 **/*-min.js
 **/*.min.js
