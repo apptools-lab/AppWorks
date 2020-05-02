@@ -4,6 +4,7 @@
     {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
     {"path": "packages/generate-project"},
-    {"path": "packages/block-add"}
+    {"path": "packages/block-add"},
+    {"path": "packages/iceworks-cli"}
   ]
 }

@@ -7,6 +7,10 @@
     "iceworks": "bin/iceworks.js",
     "ice": "bin/iceworks.js"
   },
+  "files": [
+    "lib",
+    "bin"
+  ],
   "scripts": {},
   "license": "MIT",
   "dependencies": {
