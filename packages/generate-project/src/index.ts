@@ -18,7 +18,7 @@ export async function downloadAndGenerateProject(
 
   log.verbose('download tarballURL', tarballURL);
 
-  const spinner = ora(`download npm tarball start`).start();
+  const spinner = ora('download npm tarball start').start();
   await getAndExtractTarball(
     projectDir,
     tarballURL,
