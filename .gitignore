@@ -15,7 +15,6 @@ tmp/
 .tmp/
 
 packages/*/lib/
-!packages/iceworks-cli/lib/
 extensions/*/out
 .vscode-test
 
