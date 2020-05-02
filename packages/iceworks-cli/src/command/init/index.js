@@ -8,7 +8,7 @@ const initMaterialAndComponent = require('./initMaterialAndComponent');
 const getNpmRegistry = require('../../utils/getNpmRegistry');
 
 module.exports = async function(options = {}) {
-  const cwd = process.cwd();
+  const cwd = options.rootDir || process.cwd();
   let { npmName, type } = options;
   log.verbose('iceworks init options', options);
 

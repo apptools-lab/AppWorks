@@ -8,5 +8,8 @@ module.exports = {
   preset: 'ts-jest',
   setupFilesAfterEnv: [
     'jest-extended'
+  ],
+  setupFiles: [
+    './jest.setup.js'
   ]
 };

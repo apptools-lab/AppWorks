@@ -60,6 +60,7 @@ function getAndExtractTarball(
     )
       .on('progress', progressFunc)
       .on('error', reject)
+      // @ts-ignore
       .pipe(zlib.Unzip())
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
@@ -220,7 +221,7 @@ function checkAliInternal(): Promise<boolean> {
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {
-    log.verbose('checkAliInternal error: ', err);
+    log.verbose('checkAliInternal error: ', err.message);
     return false;
   }).then((response) => {
     return response.statusCode === 200 && /success/.test(response.body);

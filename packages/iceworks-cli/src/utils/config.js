@@ -1,6 +1,6 @@
 const fse = require('fs-extra');
 const { CONFIG_PATH, TOKEN_ALI_KEY, TOKEN_KEY } = require('./constants');
-const log = require('../lib/log');
+const log = require('./log');
 
 let config;
 
