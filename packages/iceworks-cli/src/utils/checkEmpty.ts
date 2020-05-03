@@ -1,7 +1,7 @@
-const fs = require('fs');
-const inquirer = require('inquirer');
+import * as fs from 'fs';
+import * as inquirer from 'inquirer';
 
-module.exports = function checkEmpty(dir) {
+export default function checkEmpty(dir): Promise<boolean> {
   return new Promise((resolve) => {
     fs.readdir(dir, (err, files) => {
       // filter some special files

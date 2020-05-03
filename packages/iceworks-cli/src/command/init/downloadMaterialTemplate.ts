@@ -1,10 +1,10 @@
-const fse = require('fs-extra');
-const getNpmTarball = require('../../utils/getNpmTarball');
-const getNpmRegistry = require('../../utils/getNpmRegistry');
-const extractTarball = require('../../utils/extractTarball');
-const { TEMP_PATH } = require('../../utils/constants');
+import * as fse from 'fs-extra';
+import getNpmTarball from '../../utils/getNpmTarball';
+import getNpmRegistry from '../../utils/getNpmRegistry';
+import extractTarball from '../../utils/extractTarball';
+import { TEMP_PATH } from '../../utils/constants';
 
-module.exports = async(template, materialConfig) => {
+export default async (template: string, materialConfig?: any): Promise<string> => {
   await fse.emptyDir(TEMP_PATH);
 
   if (isLocalPath(template)) {
@@ -20,6 +20,6 @@ module.exports = async(template, materialConfig) => {
   return TEMP_PATH;
 };
 
-function isLocalPath(filepath) {
+function isLocalPath(filepath: string): boolean {
   return /^[./]|(^[a-zA-Z]:)/.test(filepath);
 }

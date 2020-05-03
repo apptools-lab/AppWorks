@@ -1,7 +1,7 @@
-const { isAliNpm } = require('ice-npm-utils');
-const config = require('./config');
+import { isAliNpm } from 'ice-npm-utils';
+import config from './config';
 
-module.exports = async function(npmName, materialConfig) {
+export default async function(npmName: string, materialConfig): Promise<string> {
   let unpkgHost = 'https://unpkg.com';
   if (process.env.UNPKG) {
     // 兼容老的用法

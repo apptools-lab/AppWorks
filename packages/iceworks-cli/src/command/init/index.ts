@@ -1,16 +1,23 @@
-const chalk = require('chalk');
-const inquirer = require('inquirer');
-const { downloadAndGenerateProject } = require('@iceworks/generate-project');
-const log = require('../../utils/log');
-const goldlog = require('../../utils/goldlog');
-const checkEmpty = require('../../utils/checkEmpty');
-const initMaterialAndComponent = require('./initMaterialAndComponent');
-const getNpmRegistry = require('../../utils/getNpmRegistry');
+import { downloadAndGenerateProject } from '@iceworks/generate-project';
+import chalk from 'chalk';
+import log from '../../utils/log';
+import goldlog from '../../utils/goldlog';
+import checkEmpty from '../../utils/checkEmpty';
+import getNpmRegistry from '../../utils/getNpmRegistry';
+import initMaterialAndComponent from './initMaterialAndComponent';
 
-module.exports = async function(options = {}) {
+import inquirer = require('inquirer');
+
+interface IOptions {
+  rootDir?: string;
+  npmName?: string;
+  type?: string;
+};
+
+export default async function(options: IOptions = {}): Promise<void> {
   const cwd = options.rootDir || process.cwd();
   let { npmName, type } = options;
-  log.verbose('iceworks init options', options);
+  log.verbose('iceworks init options', options as string);
 
   const go = await checkEmpty(cwd);
   if (!go) process.exit(1);
@@ -53,7 +60,7 @@ module.exports = async function(options = {}) {
 /**
  * 选择初始项目类型
  */
-async function selectType() {
+async function selectType(): Promise<string> {
   const DEFAULT_TYPE = 'project';
   return inquirer
     .prompt({
@@ -84,7 +91,7 @@ async function selectType() {
  *
  * @param {String} type project|material|component
  */
-async function selectTemplate(type) {
+async function selectTemplate(type: string): Promise<string> {
   // 针对不同 init 类型的内置模板
   const typeToTemplates = {
     project: [{

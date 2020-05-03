@@ -1,6 +1,4 @@
-const axios = require('axios');
-
-module.exports = goldlog;
+import axios from 'axios';
 
 /**
  * Send log records to the aplus website
@@ -8,7 +6,7 @@ module.exports = goldlog;
  * @param {String} action
  * @param {Object} extraData
  */
-function goldlog(action, extraData = {}) {
+export default function goldlog(action, extraData = {}) {
   const realData = {
     action: `iceworks-cli-${action}`,
     data: {

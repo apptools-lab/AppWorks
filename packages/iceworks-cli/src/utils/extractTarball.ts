@@ -1,10 +1,17 @@
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const path = require('path');
-const request = require('request');
-const progress = require('request-progress');
-const zlib = require('zlib');
-const tar = require('tar');
+import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
+import * as path from 'path';
+import * as request from 'request';
+import * as progress from 'request-progress';
+import * as zlib from 'zlib';
+import * as tar from 'tar';
+
+interface IOptions {
+  tarballURL: string;
+  destDir: string;
+  progressFunc?: (state) => void;
+  formatFilename?: (filename) => string;
+}
 
 /**
  * Download tarbar content to the specified directory
@@ -12,12 +19,12 @@ const tar = require('tar');
  * @param {string} tarballURL tarball url
  * @param {string} destDir target directory
  */
-module.exports = function extractTarball({
+export default function extractTarball({
   tarballURL,
   destDir,
-  progressFunc = () => {},
+  progressFunc = (state) => {},
   formatFilename,
-}) {
+}: IOptions): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
     const allWriteStream = [];
@@ -32,13 +39,15 @@ module.exports = function extractTarball({
       .on('progress', (state) => {
         progressFunc(state);
       })
-      .on('error', (error = {}) => {
+      .on('error', (error) => {
+        error = error || {};
         error.name = 'download-tarball-error';
         error.data = {
           url: tarballURL,
         };
         reject(error);
       })
+      // @ts-ignore
       .pipe(zlib.Unzip())
       .on('error', (error) => {
         reject(error);

@@ -10,20 +10,26 @@
  *  1. download npm
  *  2. add component（转换文件名，具体参考 addSingleMaterial）
  */
-const fse = require('fs-extra');
-const path = require('path');
-const chalk = require('chalk');
-const inquirer = require('inquirer');
-const { checkAliInternal } = require('ice-npm-utils');
-const addSingleMaterial = require('./addSingleMaterial');
-const downloadMaterialTemplate = require('./downloadMaterialTemplate');
-const ejsRenderDir = require('./ejsRenderDir');
-const generateNpmName = require('./generateNpmName');
-const log = require('../../utils/log');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import chalk from 'chalk';
+import * as inquirer from 'inquirer';
+import { checkAliInternal } from 'ice-npm-utils';
+import addSingleMaterial from './addSingleMaterial';
+import downloadMaterialTemplate from './downloadMaterialTemplate';
+import ejsRenderDir from './ejsRenderDir';
+import generateNpmName from './generateNpmName';
+import log from '../../utils/log';
 
-module.exports = async function({
+interface IOptions {
+  cwd: string;
+  projectType: string;
+  template: string;
+}
+
+export default async function({
   cwd, projectType, template,
-}) {
+}: IOptions): Promise<void> {
   log.verbose('initMaterialAndComponent', projectType, template);
 
   const materialDir = await downloadMaterialTemplate(template);
@@ -100,9 +106,16 @@ module.exports = async function({
   await fse.remove(materialDir);
 };
 
-async function initMaterialAsk(cwd, projectType) {
+
+interface IResult {
+  npmScope: string;
+  projectName: string;
+  description: string;
+}
+
+async function initMaterialAsk(cwd, projectType): Promise<IResult> {
   const isInnerNet = await checkAliInternal();
-  const result = {
+  const result: IResult = {
     npmScope: '',
     projectName: '',
     description: '',

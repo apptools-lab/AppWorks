@@ -1,4 +1,4 @@
-const npmlog = require('npmlog');
+import npmlog = require('npmlog');
 
 const envs = ['verbose', 'info', 'error', 'warn'];
 const logLevel =
@@ -6,4 +6,4 @@ const logLevel =
 
 npmlog.level = logLevel;
 
-module.exports = npmlog;
+export default npmlog;

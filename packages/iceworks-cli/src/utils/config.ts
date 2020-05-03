@@ -1,6 +1,6 @@
-const fse = require('fs-extra');
-const { CONFIG_PATH, TOKEN_ALI_KEY, TOKEN_KEY } = require('./constants');
-const log = require('./log');
+import * as fse from 'fs-extra';
+import { CONFIG_PATH, TOKEN_ALI_KEY, TOKEN_KEY } from './constants';
+import log from './log';
 
 let config;
 
@@ -17,7 +17,7 @@ function validateConfigKey(key) {
   }
 }
 
-module.exports = {
+export default {
 
   async get(key) {
     if (key) {

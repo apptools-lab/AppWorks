@@ -1,9 +1,9 @@
-const path = require('path');
-const glob = require('glob');
-const ejs = require('ejs');
-const fse = require('fs-extra');
+import * as path from 'path';
+import * as glob from 'glob';
+import * as ejs from 'ejs';
+import * as fse from 'fs-extra';
 
-module.exports = async function(dir, options, diableFormatDotFile) {
+export default async function(dir: string, options: any, diableFormatDotFile?: boolean): Promise<void> {
   return new Promise((resolve, reject) => {
     glob('**', {
       cwd: dir,
@@ -25,7 +25,7 @@ module.exports = async function(dir, options, diableFormatDotFile) {
   });
 };
 
-function renderFile(filepath, options, diableFormatDotFile) {
+function renderFile(filepath: string, options: any, diableFormatDotFile: boolean): Promise<string> {
   let filename = path.basename(filepath);
 
   return new Promise((resolve, reject) => {

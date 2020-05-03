@@ -1,11 +1,11 @@
-const request = require('request-promise-native');
-const semver = require('semver');
-const log = require('./log');
+import * as request from 'request-promise-native';
+import * as semver from 'semver';
+import log from './log';
 
 /**
  * 获取指定 npm 包版本的 tarball
  */
-module.exports = async function getNpmTarball(npm, version, registry) {
+export default async function getNpmTarball(npm: string, version: string, registry: string): Promise<string> {
   const url = `${registry}/${npm}`;
   const body = await request({
     url,

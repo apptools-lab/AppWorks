@@ -14,35 +14,36 @@
  *  3. copy and ejsRender，文件名称转换
  *
  */
-const path = require('path');
-const fse = require('fs-extra');
-const inquirer = require('inquirer');
-const decamelize = require('decamelize');
-const validateName = require('validate-npm-package-name');
-const uppercamelcase = require('uppercamelcase');
-const { isAliNpm } = require('ice-npm-utils');
-const log = require('../../utils/log');
-const ejsRenderDir = require('./ejsRenderDir');
-const generateNpmName = require('./generateNpmName');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as inquirer from 'inquirer';
+import * as decamelize from 'decamelize';
+import * as validateName from 'validate-npm-package-name';
+import * as uppercamelcase from 'uppercamelcase';
+import { isAliNpm } from 'ice-npm-utils';
 
-module.exports = async function({
+import log from '../../utils/log';
+import ejsRenderDir from './ejsRenderDir';
+import generateNpmName from './generateNpmName';
+
+export default async function({
   materialDir,
   cwd,
   useDefaultOptions,
   npmScope,
   materialType,
   projectType,
-}) {
+}): Promise<void> {
   log.verbose('addSingleMaterial args', materialDir, cwd, useDefaultOptions, npmScope, materialType);
 
   const materialPath = path.join(materialDir, 'template', materialType);
   if (!fse.existsSync(materialPath)) {
-    log.warn(`当前物料模板不存在 ${materialType} 类型的物料`);
+    log.warn('', `当前物料模板不存在 ${materialType} 类型的物料`);
     return;
   }
 
   const questions = getQuestions(npmScope, cwd)[materialType];
-  let options = {};
+  let options: any = {};
 
   if (useDefaultOptions) {
     // inquire

@@ -1,6 +1,6 @@
-const decamelize = require('decamelize');
+import * as decamelize from 'decamelize';
 
-module.exports = function(name, npmScope) {
+export default function(name: string, npmScope?: string): string {
   // WebkitTransform -> webkit-transform
   name = decamelize(name, '-');
   return npmScope ? `${npmScope}/${name}` : name;
