@@ -15,7 +15,7 @@
     "packages:clean": "rm -rf ./packages/*/lib",
     "publish": "npm run packages:build && lerna publish --no-git-tag-version",
     "publish:beta": "npm run packages:build && lerna publish --dist-tag beta --no-git-tag-version",
-    "lint": "eslint --cache --ext .ts,.tsx ./",
+    "lint": "eslint --cache --ext .ts,.tsx,.js ./ --quiet",
     "coverage": "codecov"
   },
   "husky": {

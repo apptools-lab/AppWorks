@@ -149,7 +149,7 @@ class FusionSDK {
         index += concurrency;
         spinner.text = `Sync to ${url}, Now: ${index}/${total}`;
       }
-      spinner.succeed(`物料上传完成！`);
+      spinner.succeed('物料上传完成！');
 
       // 访问物料的地址
       return url;

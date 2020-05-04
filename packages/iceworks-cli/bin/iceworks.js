@@ -127,7 +127,7 @@ program
 
 program
   .command('sync')
-  .description(`sync materials data to Fusion Material Center`)
+  .description('sync materials data to Fusion Material Center')
   .option(
     '-e, --env <env>',
     'Specify fusion env, support daily|pre|prod'
