@@ -5,7 +5,7 @@ import path = require('path');
 import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(30 * 1000);
 
 test('iceworks-cli', async () => {
   const projectDir = path.join(__dirname, 'tmp');

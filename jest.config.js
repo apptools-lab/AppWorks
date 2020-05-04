@@ -1,6 +1,7 @@
 module.exports = {
   coverageDirectory: './coverage/',
   collectCoverage: true,
+  testEnvironment: 'node',
   testPathIgnorePatterns: [
     'lib/',
     '__tests__/tmp/',
