@@ -8,9 +8,9 @@ module.exports = {
     '/node_modules/',
   ],
   modulePathIgnorePatterns: [
-    '<rootDir>/packages/generate-project/',
-    '<rootDir>/packages/ice-npm-utils/',
-    '<rootDir>/packages/config/',
+    // '<rootDir>/packages/generate-project/',
+    // '<rootDir>/packages/ice-npm-utils/',
+    // '<rootDir>/packages/config/',
   ],
   preset: 'ts-jest',
   setupFilesAfterEnv: [
