@@ -2,12 +2,39 @@ import * as fse from 'fs-extra';
 import init from '../command/init';
 import add from '../command/add';
 import generate from '../command/generate';
+import config from '../command/config';
 
 import path = require('path');
 import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
 jest.setTimeout(30 * 1000);
+
+let originConfig;
+beforeAll(async () => {
+  originConfig = await config({
+    type: 'list'
+  });
+
+  await config({
+    type: 'set',
+    key: 'registry',
+    value: 'https://registry.npm.taobao.org'
+  });
+  const registry = await config({
+    type: 'get',
+    key: 'registry'
+  });
+  expect(registry).toBe('https://registry.npm.taobao.org');
+});
+
+afterAll(async () => {
+  await config({
+    type: 'set',
+    key: 'registry',
+    value: originConfig.registry
+  });
+});
 
 test('init project', async () => {
   const projectDir = path.join(__dirname, 'tmp/init/project');
