@@ -19,7 +19,7 @@ function validateConfigKey(key) {
 
 export default {
 
-  async get(key) {
+  async get(key?: string) {
     if (key) {
       validateConfigKey(key);
     }

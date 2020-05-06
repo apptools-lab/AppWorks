@@ -1,9 +1,9 @@
-const path = require('path');
-const spawn = require('cross-spawn');
-const userHome = require('user-home');
-const chalk = require('chalk');
-const getNpmTarball = require('../../utils/getNpmTarball');
-const extractTarball = require('../../utils/extractTarball');
+import * as path from 'path';
+import * as spawn from 'cross-spawn';
+import * as userHome from 'user-home';
+import chalk from 'chalk';
+import getNpmTarball from '../../utils/getNpmTarball';
+import extractTarball from '../../utils/extractTarball';
 
 const NPM_NAME = 'iceworks-server';
 const DEST_DIR = path.join(userHome, `.${NPM_NAME}`);
@@ -15,7 +15,7 @@ const REGISTRY = process.env.REGISTRY || 'https://registry.npm.taobao.org';
  * @param {string} npmName npm package name
  * @param {string} destDir target directory
  */
-module.exports = function downloadServer(version = 'latest') {
+export default function downloadServer(version = 'latest') {
   const npmName = NPM_NAME;
   const destDir = DEST_DIR;
 

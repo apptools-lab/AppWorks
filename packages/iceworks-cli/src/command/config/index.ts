@@ -1,6 +1,6 @@
-const config = require('../../utils/config');
+import config from '../../utils/config';
 
-module.exports = async function({ type, key, value }) {
+export default async function({ type, key, value }) {
   if (!type || type === 'list') {
     const data = await config.get();
     console.log(data);

@@ -1,17 +1,18 @@
-const path = require('path');
-const fse = require('fs-extra');
-const camelCase = require('camelcase');
-const readFiles = require('fs-readdir-recursive');
-const pkgDir = require('pkg-dir');
-const glob = require('glob');
-const transfromTsToJs = require('sylvanas');
-const extractTarball = require('../../utils/extractTarball');
-const log = require('../../utils/log');
-const { TEMP_PATH } = require('../../utils/constants');
-const getNpmTarball = require('../../utils/getNpmTarball');
-const getNpmRegistry = require('../../utils/getNpmRegistry');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as camelCase from 'camelcase';
+import * as readFiles from 'fs-readdir-recursive';
+import * as pkgDir from 'pkg-dir';
+import * as glob from 'glob';
+import * as transfromTsToJs from 'sylvanas';
 
-module.exports = async (options, destDir) => {
+import extractTarball from '../../utils/extractTarball';
+import log from '../../utils/log';
+import { TEMP_PATH } from '../../utils/constants';
+import getNpmTarball from '../../utils/getNpmTarball';
+import getNpmRegistry from '../../utils/getNpmRegistry';
+
+export default async (options, destDir) => {
   const tempDir = TEMP_PATH;
 
   await fse.ensureDir(tempDir);
@@ -58,11 +59,11 @@ async function addBlock(options, destDir, tempDir) {
       });
     })
     .then(() => {
-      log.info('create block directory……');
+      log.info('AddBlock', 'create block directory……');
       return fse.mkdirp(blockDirPath);
     })
     .then(() => {
-      log.info('copy block src files to dest blockDir');
+      log.info('AddBlock', 'copy block src files to dest blockDir');
 
       const blockType = getBlockType(tempDir);
       const projectType = getProjectType(blockDirPath);
@@ -75,7 +76,7 @@ async function addBlock(options, destDir, tempDir) {
         const files = glob.sync('**/*.@(ts|tsx)', {
           cwd: blockSourceSrcPath,
         });
-        log.verbose('transfrom ts to js', files);
+        log.verbose('transfrom ts to js', files.join(','));
         transfromTsToJs(files, {
           cwd: blockSourceSrcPath,
           outDir: blockSourceSrcPath,

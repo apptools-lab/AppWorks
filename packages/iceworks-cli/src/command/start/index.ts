@@ -1,21 +1,21 @@
-const path = require('path');
-const fs = require('fs');
-const userHome = require('user-home');
-const spawn = require('cross-spawn');
-const portfinder = require('portfinder');
-const chalk = require('chalk');
-const ora = require('ora');
-const open = require('open');
-const inquirer = require('inquirer');
-const semver = require('semver');
-const { checkAliInternal } = require('ice-npm-utils');
-const goldlog = require('../../utils/goldlog');
-const checkVersion = require('../../utils/checkVersion');
-const downloadServer = require('./downloadServer');
+import * as path from 'path';
+import * as userHome from 'user-home';
+import * as spawn from 'cross-spawn';
+import * as portfinder from 'portfinder';
+import * as ora from 'ora';
+import * as open from 'open';
+import * as inquirer from 'inquirer';
+import * as semver from 'semver';
+import chalk from 'chalk';
+import { checkAliInternal } from 'ice-npm-utils';
+import goldlog from '../../utils/goldlog';
+import checkVersion from '../../utils/checkVersion';
+import downloadServer from './downloadServer';
 
 const SERVER_PATH = path.join(userHome, '.iceworks-server');
 
-async function start(options = {}) {
+async function start(options) {
+  options = options || {};
   const pkgPath = path.join(SERVER_PATH, 'package.json');
   let packageConfig;
 
@@ -68,7 +68,7 @@ async function start(options = {}) {
 async function startIceworks(options) {
   // DAU statistics
   try {
-    await dauStat(options);
+    await dauStat();
   } catch (error) {
     // ignore error
   }
@@ -178,7 +178,8 @@ async function dauStat() {
   });
 }
 
-module.exports = (...args) => {
+export default (...args) => {
+  // @ts-ignore
   return start(...args).catch((err) => {
     console.log(err);
     process.exit(1);

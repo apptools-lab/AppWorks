@@ -1,11 +1,16 @@
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const request = require('request-promise-native');
-const ora = require('ora');
-const _ = require('lodash');
-const log = require('../../utils/log');
+import * as inquirer from 'inquirer';
+import * as request from 'request-promise-native';
+import * as ora from 'ora'
+import * as _ from 'lodash';
+import chalk from 'chalk';
+import log from '../../utils/log';
 
-class FusionSDK {
+export default class FusionSDK {
+
+  private syncToAli: boolean;
+
+  private fusionHost: string;
+
   constructor(options) {
     this.syncToAli = options.syncToAli;
 
@@ -27,7 +32,7 @@ class FusionSDK {
     }
   }
 
-  async getToken() {
+  public async getToken() {
     const helpUrl = `${this.fusionHost}/help.html#/dev-create-site`;
     console.log();
     console.log(`如果这是你第一次使用该功能，或者不知道如何获取Token。\n请查看文档: ${chalk.yellow(helpUrl)}`);
@@ -52,7 +57,7 @@ class FusionSDK {
     return token;
   }
 
-  async getSite(token) {
+  public async getSite(token) {
     const options = {
       method: 'GET',
       uri: `${this.fusionHost}/api/v1/mysites`,
@@ -63,7 +68,7 @@ class FusionSDK {
       followRedirect: false,
     };
 
-    log.verbose('fetch fusion sites start', options);
+    log.verbose('fetch fusion sites start', options as any);
     const { body } = await requestFusion(options, this.fusionHost);
     log.verbose('fetch fusion sites success', body);
 
@@ -103,7 +108,7 @@ class FusionSDK {
     };
   }
 
-  async uploadMaterialsData(fusionToken, fusionSite, materialsData) {
+  public async uploadMaterialsData(fusionToken, fusionSite, materialsData) {
     const url = `${this.fusionHost}/api/v1/sites/${fusionSite.id}/materials`;
     const total = materialsData.length;
     let index = 0;
@@ -131,7 +136,7 @@ class FusionSDK {
 
       if (!body.success) {
         (body.data || []).forEach((fail) =>
-          log.error(`物料 ${fail.npm} 上传失败, 原因: ${fail.reason}`)
+          log.error('FusionSDK:', `物料 ${fail.npm} 上传失败, 原因: ${fail.reason}`)
         );
         throw new Error('物料上传失败');
       }
@@ -160,8 +165,6 @@ class FusionSDK {
   }
 
 };
-
-module.exports = FusionSDK;
 
 async function requestFusion(options, fusionHost) {
   try {

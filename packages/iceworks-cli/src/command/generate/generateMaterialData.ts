@@ -1,11 +1,11 @@
-const path = require('path');
-const fse = require('fs-extra');
-const chalk = require('chalk');
-const request = require('request-promise-native');
-const getNpmRegistry = require('../../utils/getNpmRegistry');
-const getUnpkgHost = require('../../utils/getUnpkgHost');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import chalk from 'chalk';
+import * as request from 'request-promise-native';
+import getNpmRegistry from '../../utils/getNpmRegistry';
+import getUnpkgHost from '../../utils/getUnpkgHost';
 
-module.exports = async function generateMaterialData(pkgPath, materialType, materialConfig) {
+export default async function generateMaterialData(pkgPath, materialType, materialConfig) {
   const pkg = await fse.readJson(pkgPath);
 
   const materialItemConfig = pkg[`${materialType}Config`] || {};

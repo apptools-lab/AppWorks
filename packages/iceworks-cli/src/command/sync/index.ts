@@ -1,14 +1,14 @@
-const path = require('path');
-const { checkAliInternal, isAliNpm } = require('ice-npm-utils');
-const inquirer = require('inquirer');
-const fse = require('fs-extra');
-const { DB_PATH, TOKEN_ALI_KEY, TOKEN_KEY } = require('../../utils/constants');
-const FusionSDK = require('./fusionSDK');
-const goldlog = require('../../utils/goldlog');
-const log = require('../../utils/log');
-const config = require('../../utils/config');
+import * as path from 'path';
+import { checkAliInternal, isAliNpm } from 'ice-npm-utils';
+import * as inquirer from 'inquirer';
+import * as fse from 'fs-extra';
+import { DB_PATH, TOKEN_ALI_KEY, TOKEN_KEY } from '../../utils/constants';
+import FusionSDK from './fusionSDK';
+import goldlog from '../../utils/goldlog';
+import log from '../../utils/log';
+import config from '../../utils/config';
 
-module.exports = async (options) => {
+export default async (options) => {
   const cwd = process.cwd();
   const DB_PATH_ABSOLUTE = path.join(cwd, DB_PATH);
   const pkgPath = path.join(cwd, 'package.json');
@@ -76,7 +76,7 @@ module.exports = async (options) => {
     pkgData.materialConfig = materialConfig;
     try {
       await fse.writeJson(pkgPath, pkgData, { spaces: 2 });
-      log.verbose('write site success');
+      log.verbose('Sync:', 'write site success');
     } catch(err) {
       log.warn('write site warning', err.message);
       console.error(err);
@@ -88,7 +88,7 @@ module.exports = async (options) => {
   try {
     const materialUrl = await fusionSDK.uploadMaterialsData(fusionToken, fusionSite, materialsData);
     console.log();
-    log.info('物料上传完成，可以在 iceworks 中添加自定义物料使用啦！');
+    log.info('Sync:', '物料上传完成，可以在 iceworks 中添加自定义物料使用啦！');
     log.info('物料地址：', materialUrl);
     console.log();
   } catch(err) {

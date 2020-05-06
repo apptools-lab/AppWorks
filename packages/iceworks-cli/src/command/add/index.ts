@@ -1,13 +1,13 @@
-const path = require('path');
-const fse = require('fs-extra');
-const inquirer = require('inquirer');
-const goldlog = require('../../utils/goldlog');
-const log = require('../../utils/log');
-const addBlockToProject = require('./addBlockToProject');
-const downloadMaterialTemplate = require('../init/downloadMaterialTemplate');
-const addSingleMaterial = require('../init/addSingleMaterial');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as inquirer from 'inquirer';
+import goldlog from '../../utils/goldlog';
+import log from '../../utils/log';
+import addBlockToProject from './addBlockToProject';
+import downloadMaterialTemplate from '../init/downloadMaterialTemplate';
+import addSingleMaterial from '../init/addSingleMaterial';
 
-module.exports = async (options) => {
+export default async (options) => {
   const destDir = process.cwd();
   // eslint-disable-next-line prefer-const
   let { materialType, npmName } = options;

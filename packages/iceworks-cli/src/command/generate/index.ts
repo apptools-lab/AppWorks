@@ -5,18 +5,18 @@
  * 2. generate all materials data
  * 3. write file
  */
-const path = require('path');
-const fse = require('fs-extra');
-const glob = require('glob');
-const chalk = require('chalk');
-const BluebirdPromise = require('bluebird');
-const ora = require('ora');
-const goldlog = require('../../utils/goldlog');
-const log = require('../../utils/log');
-const { DB_PATH } = require('../../utils/constants');
-const generateMaterialData = require('./generateMaterialData');
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as glob from 'glob';
+import chalk from 'chalk';
+import * as BluebirdPromise from 'bluebird';
+import * as ora from 'ora';
+import goldlog from '../../utils/goldlog';
+import log from '../../utils/log';
+import { DB_PATH } from '../../utils/constants';
+import generateMaterialData from './generateMaterialData';
 
-module.exports = async function() {
+export default async function() {
   const cwd = process.cwd();
 
   const pkg = await fse.readJson(path.join(cwd, 'package.json'));
@@ -36,7 +36,7 @@ module.exports = async function() {
   const allMaterials = [].concat(blocks).concat(components).concat(scaffolds);
 
   const concurrency = Number(process.env.CONCURRENCY) || 30;
-  log.info(`generating materials data，total: ${allMaterials.length}，concurrency: ${concurrency}`);
+  log.info('Generate:', `generating materials data，total: ${allMaterials.length}，concurrency: ${concurrency}`);
 
   const total = allMaterials.length;
   let index = 0;
