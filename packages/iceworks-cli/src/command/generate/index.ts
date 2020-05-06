@@ -16,8 +16,8 @@ import log from '../../utils/log';
 import { DB_PATH } from '../../utils/constants';
 import generateMaterialData from './generateMaterialData';
 
-export default async function() {
-  const cwd = process.cwd();
+export default async function(options) {
+  const cwd = (options && options.rootDir) || process.cwd();
 
   const pkg = await fse.readJson(path.join(cwd, 'package.json'));
   const { materialConfig } = pkg;

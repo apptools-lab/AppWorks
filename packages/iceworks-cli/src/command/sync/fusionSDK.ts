@@ -1,5 +1,5 @@
 import * as inquirer from 'inquirer';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import * as ora from 'ora'
 import * as _ from 'lodash';
 import chalk from 'chalk';
@@ -69,7 +69,7 @@ export default class FusionSDK {
     };
 
     log.verbose('fetch fusion sites start', options as any);
-    const { body } = await requestFusion(options, this.fusionHost);
+    const { data: body } = await requestFusion(options, this.fusionHost);
     log.verbose('fetch fusion sites success', body);
 
     const sites = body.data;
@@ -124,14 +124,13 @@ export default class FusionSDK {
         components: getData('component'),
       };
 
-      const { body } = await requestFusion({
+      const { data: body } = await requestFusion({
         url,
-        body: data,
+        data,
         headers: {
           'x-auth-token': fusionToken,
         },
         method: 'PATCH',
-        json: true,
       }, this.fusionHost);
 
       if (!body.success) {
@@ -166,7 +165,7 @@ export default class FusionSDK {
 
 };
 
-async function requestFusion(options, fusionHost) {
+async function requestFusion(options: AxiosRequestConfig, fusionHost: string) {
   try {
     const response = await axios(options);
     return response;

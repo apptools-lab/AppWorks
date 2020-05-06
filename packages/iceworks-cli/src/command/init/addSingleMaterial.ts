@@ -45,7 +45,7 @@ export default async function({
   const questions = getQuestions(npmScope, cwd)[materialType];
   let options: any = {};
 
-  if (useDefaultOptions) {
+  if (useDefaultOptions || process.env.NODE_ENV === 'unittest') {
     // inquire
     questions.forEach((item) => {
       options[item.name] = item.default;

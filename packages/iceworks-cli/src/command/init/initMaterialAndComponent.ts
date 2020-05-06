@@ -121,6 +121,11 @@ async function initMaterialAsk(cwd, projectType): Promise<IResult> {
     description: '',
   };
 
+  if (process.env.NODE_ENV === 'unittest') {
+    result.projectName = 'test';
+    return result;
+  }
+
   const { forInnerNet } = await (isInnerNet
     ? inquirer.prompt([
       {

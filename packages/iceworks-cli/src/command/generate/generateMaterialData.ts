@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import axios from 'axios';
 import getNpmRegistry from '../../utils/getNpmRegistry';
 import getUnpkgHost from '../../utils/getUnpkgHost';
+import log from '../../utils/log';
 
 export default async function generateMaterialData(pkgPath, materialType, materialConfig) {
   const pkg = await fse.readJson(pkgPath);
@@ -87,6 +88,9 @@ function getNpmPublishTime(npm, version = 'latest', registry) {
       const distTags = data['dist-tags'];
       version = distTags[version] || version;
       const { versions } = data;
+
+      log.verbose('Generate:', url, version, 'distTags', distTags, 'versions', versions ? Object.keys(versions) : '[]');
+
       if (!versions || versions[version] === undefined) {
         return Promise.reject(new Error(`${npm}@${version} 未发布! 禁止提交!`));
       }
