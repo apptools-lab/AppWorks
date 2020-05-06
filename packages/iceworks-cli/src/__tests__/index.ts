@@ -23,7 +23,7 @@ test('init project', async () => {
   expect(1).toBe(1);
 });
 
-test.only('init material', async () => {
+test('init material', async () => {
   const projectDir = path.join(__dirname, 'tmp/init/material');
   rimraf.sync(projectDir);
   mkdirp.sync(projectDir);
@@ -31,6 +31,17 @@ test.only('init material', async () => {
   await init({
     type: 'material',
     npmName: '@icedesign/ice-react-material-template',
+    rootDir: projectDir,
+  });
+
+  const blockPkgPath = path.join(projectDir, 'blocks/ExampleBlock/package.json');
+  const blockPkgData = fse.readJSONSync(blockPkgPath);
+  // published
+  blockPkgData.version = '1.0.8';
+  fse.writeJSONSync(blockPkgPath, blockPkgData);
+
+  // iceworks generate
+  await generate({
     rootDir: projectDir,
   });
 
@@ -48,6 +59,7 @@ test.only('init material', async () => {
     });
   } catch(err) {
     console.error('generate error', err);
+    expect(err.message).toMatch('未发布');
   }
 
   expect(1).toBe(1);
