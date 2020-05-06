@@ -5,21 +5,31 @@
 <a href="https://codecov.io/gh/ice-lab/iceworks-next"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks-next/master.svg" alt="Test Coverage" /></a>
 <a href="https://gitter.im/ice-lab/iceworks-next"><img src="https://badges.gitter.imice-labr/iceworks-next.svg" alt="Gitter" /></a>
 
-## Usage
+## Develop
+
+### Directory
+
+```md
+.
+├── extensions // VS Code extensions
+├── packages // Common packages
+│   ├── add-block
+|   ├── ...
+│   └── config
+└── scripts
+```
+
+### extensions
+
+- [/extensions/app](/extensions/app): 核心应用，[去开发](/extensions/app)。
 
 ### packages
 
 - @iceworks/npm-utils：npm 相关方法
 - @iceworks/config：管理配置
-- @iceworks/block-add：TODO，添加区块
+- @iceworks/block-add：TODO，添加区块到项目中
 
-### extensions
-
-- `extensions/app`: 核心应用
-
-## Develop
-
-### command
+### scripts
 
 ```bash
 # install deps and link packages
@@ -38,31 +48,3 @@ $ yarn workspace @iceworks/app add <npmName>
 # 如果全局指定了 yarn 的 registry，添加依赖时请使用官方源，避免污染 yarn.lock
 $ yarn workspace @iceworks/app add <npmName> --registry https://registry.yarnpkg.com
 ```
-
-### Directory
-
-```md
-.
-├── extensions // VS Code extensions
-├── packages // Common packages
-│   ├── add-block
-│   └── config
-└── scripts
-```
-
-### extensions
-
-开发比较独立，因此依赖独立安装，不跟 lerna 耦合：
-
-```bash
-$ cd extensions/app
-$ yarn install // or cnpm install
-$ npm start
-
-# TODO: link packages
-```
-
-Then open vscode and debug extension. Docs:
-
-- [官方英文教程](https://code.visualstudio.com/api)
-- [VS Code 插件开发中文教程](https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/api/README)

@@ -1,12 +1,13 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as zlib from 'zlib';
-import * as tar from 'tar';
-import * as semver from 'semver';
-import * as request from 'request-promise';
-import * as mkdirp from 'mkdirp';
-import * as progress from 'request-progress';
 import log from './log';
+
+import request = require('request-promise');
+import semver = require('semver');
+import fs = require('fs');
+import mkdirp = require('mkdirp');
+import path = require('path');
+import progress = require('request-progress');
+import zlib = require('zlib');
+import tar = require('tar');
 
 /**
  * 获取指定 npm 包版本的 tarball
@@ -59,7 +60,9 @@ function getAndExtractTarball(
     )
       .on('progress', progressFunc)
       .on('error', reject)
-      .pipe(zlib.createGunzip())
+      // @ts-ignore
+      .pipe(zlib.Unzip())
+      // @ts-ignore
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
         if (entry.type === 'Directory') {
@@ -219,7 +222,7 @@ function checkAliInternal(): Promise<boolean> {
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {
-    log.verbose('checkAliInternal error: ', err);
+    log.verbose('checkAliInternal error: ', err.message);
     return false;
   }).then((response) => {
     return response.statusCode === 200 && /success/.test(response.body);
