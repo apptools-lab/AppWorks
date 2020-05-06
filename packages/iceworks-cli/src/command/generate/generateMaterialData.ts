@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import chalk from 'chalk';
-import * as request from 'request-promise-native';
+import axios from 'axios';
 import getNpmRegistry from '../../utils/getNpmRegistry';
 import getUnpkgHost from '../../utils/getUnpkgHost';
 
@@ -76,9 +76,9 @@ function hasScreenshot(cwd) {
  */
 function getNpmPublishTime(npm, version = 'latest', registry) {
   const url = `${registry}/${npm}`;
-  return request.get(url)
+  return axios.get(url)
     .then((response) => {
-      const data = JSON.parse(response);
+      const { data } = response;
       if (!data.time) {
         console.error(chalk.red('time 字段不存在'));
         return Promise.reject(new Error(`${npm}@${version} time 字段不存在`));

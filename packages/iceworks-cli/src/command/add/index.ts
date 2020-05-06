@@ -8,7 +8,7 @@ import downloadMaterialTemplate from '../init/downloadMaterialTemplate';
 import addSingleMaterial from '../init/addSingleMaterial';
 
 export default async (options) => {
-  const destDir = process.cwd();
+  const destDir = options.rootDir || process.cwd();
   // eslint-disable-next-line prefer-const
   let { materialType, npmName } = options;
 

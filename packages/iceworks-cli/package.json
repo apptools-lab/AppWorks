@@ -37,7 +37,6 @@
     "portfinder": "^1.0.20",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
-    "request-promise-native": "^1.0.7",
     "rimraf": "^2.6.3",
     "semver": "^6.3.0",
     "sylvanas": "^0.4.3",

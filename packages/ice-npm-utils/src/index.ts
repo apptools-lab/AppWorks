@@ -62,6 +62,7 @@ function getAndExtractTarball(
       .on('error', reject)
       // @ts-ignore
       .pipe(zlib.Unzip())
+      // @ts-ignore
       .pipe(new tar.Parse())
       .on('entry', (entry) => {
         if (entry.type === 'Directory') {

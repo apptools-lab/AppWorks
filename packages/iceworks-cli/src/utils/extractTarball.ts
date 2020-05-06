@@ -52,7 +52,8 @@ export default function extractTarball({
       .on('error', (error) => {
         reject(error);
       })
-      .pipe(tar.Parse())
+      // @ts-ignore
+      .pipe(new tar.Parse())
       .on('entry', (entry) => {
         const realPath = entry.path.replace(/^package\//, '');
 

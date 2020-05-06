@@ -8,7 +8,7 @@ module.exports = {
     '/node_modules/',
   ],
   modulePathIgnorePatterns: [
-    // '<rootDir>/packages/generate-project/',
+    '<rootDir>/packages/generate-project/',
     // '<rootDir>/packages/ice-npm-utils/',
     // '<rootDir>/packages/config/',
   ],

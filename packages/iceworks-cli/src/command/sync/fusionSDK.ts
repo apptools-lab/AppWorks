@@ -1,5 +1,5 @@
 import * as inquirer from 'inquirer';
-import * as request from 'request-promise-native';
+import axios from 'axios';
 import * as ora from 'ora'
 import * as _ from 'lodash';
 import chalk from 'chalk';
@@ -168,23 +168,18 @@ export default class FusionSDK {
 
 async function requestFusion(options, fusionHost) {
   try {
-    options = {
-      ...options,
-      resolveWithFullResponse: true,
-    };
-
-    const response = await request(options);
+    const response = await axios(options);
     return response;
   } catch(err) {
-    if (err.statusCode && (err.statusCode === 403 || err.statusCode === 401)) {
+    if (err.response && (err.response.status === 403 || err.response.status === 401)) {
       err.noAuth = true;
       console.log();
       console.log();
       console.log(`鉴权失败，请前往 ${fusionHost} 重新获取 token 或 请站点所有者把你添加为站点成员。`);
       console.log(`token 文档: ${chalk.yellow(`${fusionHost}/help.html#/dev-create-site`)}`);
       console.log(`添加成员文档: ${chalk.yellow(`${fusionHost}/help.html#/site-user-management`)}`);
-      if (err.response.success === false) {
-        console.log(`错误信息: ${chalk.red(err.response.message)}`);
+      if (err.response.data.success === false) {
+        console.log(`错误信息: ${chalk.red(err.response.data.message)}`);
       }
       console.log();
       console.log();

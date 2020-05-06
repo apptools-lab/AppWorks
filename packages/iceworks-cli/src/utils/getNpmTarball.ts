@@ -1,4 +1,4 @@
-import * as request from 'request-promise-native';
+import axios from 'axios';
 import * as semver from 'semver';
 import log from './log';
 
@@ -7,10 +7,7 @@ import log from './log';
  */
 export default async function getNpmTarball(npm: string, version: string, registry: string): Promise<string> {
   const url = `${registry}/${npm}`;
-  const body = await request({
-    url,
-    json: true,
-  });
+  const { data: body } = await axios.get(url);
 
   if (!semver.valid(version)) {
     version = body['dist-tags'].latest;
