@@ -1,17 +1,17 @@
-# @iceworks/npm-utils
+# ice-npm-utils
 
 some utils for ice.
 
 ## Installation
 
 ```bash
-$ npm install @iceworks/npm-utils --save
+npm install ice-npm-utils --save-dev
 ```
 
 ## Basic Usage
 
 ```js
-import { getNpmLatestSemverVersion } from 'ice-npm-utils';
+const { getNpmLatestSemverVersion } = require('ice-npm-utils');
 ```
 
 ## API
