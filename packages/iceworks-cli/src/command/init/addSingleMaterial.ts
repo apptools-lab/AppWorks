@@ -70,6 +70,7 @@ export default async function({
       projectAuthor: 'rax',
       projectTargets: ['web'],
       projectFeatures: [],
+      scaffoldType: 'lite',
     });
   }
 
