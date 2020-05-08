@@ -8,7 +8,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as glob from 'glob';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import * as BluebirdPromise from 'bluebird';
 import * as ora from 'ora';
 import goldlog from '../../utils/goldlog';

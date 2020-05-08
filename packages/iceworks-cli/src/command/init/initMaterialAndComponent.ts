@@ -12,7 +12,7 @@
  */
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import { checkAliInternal } from 'ice-npm-utils';
 import addSingleMaterial from './addSingleMaterial';

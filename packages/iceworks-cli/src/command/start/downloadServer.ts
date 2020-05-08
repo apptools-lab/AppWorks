@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as spawn from 'cross-spawn';
 import * as userHome from 'user-home';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import getNpmTarball from '../../utils/getNpmTarball';
 import extractTarball from '../../utils/extractTarball';
 

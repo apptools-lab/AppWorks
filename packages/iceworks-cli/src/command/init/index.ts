@@ -1,5 +1,5 @@
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import log from '../../utils/log';
 import goldlog from '../../utils/goldlog';
 import checkEmpty from '../../utils/checkEmpty';
