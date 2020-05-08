@@ -1,7 +1,7 @@
 # iceworks
 
 <p align="center">
-  <img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" />
+  <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
   <a href="https://github.com/alibaba/ice/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
