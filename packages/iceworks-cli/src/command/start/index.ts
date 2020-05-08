@@ -6,7 +6,7 @@ import * as ora from 'ora';
 import * as open from 'open';
 import * as inquirer from 'inquirer';
 import * as semver from 'semver';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { checkAliInternal } from 'ice-npm-utils';
 import goldlog from '../../utils/goldlog';
 import checkVersion from '../../utils/checkVersion';

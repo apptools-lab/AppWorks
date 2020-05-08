@@ -8,7 +8,7 @@ import path = require('path');
 import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
-jest.setTimeout(30 * 1000);
+jest.setTimeout(60 * 1000);
 
 let originConfig;
 beforeAll(async () => {

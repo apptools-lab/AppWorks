@@ -2,7 +2,7 @@ import * as inquirer from 'inquirer';
 import axios, { AxiosRequestConfig } from 'axios';
 import * as ora from 'ora'
 import * as _ from 'lodash';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import log from '../../utils/log';
 
 export default class FusionSDK {
