@@ -63,7 +63,7 @@ export default async function({
   // @ali/test-component
   options.npmName = generateNpmName(options.name, npmScope);
 
-  if (materialType === 'component') {
+  if (materialType === 'component' || materialType === 'scaffold') {
     options = Object.assign({}, options, {
       // 补全 rax 组件的几个字段
       projectName: options.npmName,
