@@ -1,4 +1,12 @@
-# iceworks
+<p align="center">
+  <a href="https://ice.work">
+    <img alt="飞冰（ICE）" src="https://img.alicdn.com/tfs/TB1gOdQRCrqK1RjSZK9XXXyypXa-192-192.png" width="96">
+  </a>
+</p>
+
+<h1 align="center">iceworks</h1>
+
+<p align="center">基于物料的可视化研发工具</p>
 
 <p align="center">
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
