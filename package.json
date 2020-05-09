@@ -8,7 +8,7 @@
   "scripts": {
     "setup": "npm run install:deps && lerna clean --yes && npm run packages:build && npm run packages:link",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
-    "install:deps": "rm -rf node_modules && yarn install --registry=http://registry.npm.taobao.org",
+    "install:deps": "rm -rf node_modules && rm -rf ./packages/*/node_modules && yarn install --registry=http://registry.npm.taobao.org",
     "packages:link": "lerna link",
     "packages:watch": "ts-node ./scripts/watch.ts",
     "packages:build": "npm run packages:clean && ts-node ./scripts/build.ts",

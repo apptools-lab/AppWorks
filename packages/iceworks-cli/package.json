@@ -18,7 +18,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.5",
     "camelcase": "^5.3.1",
-    "chalk": "^2.4.2",
+    "chalk": "^4.0.0",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
     "decamelize": "^3.2.0",
@@ -43,6 +43,7 @@
     "tar": "^2.0.0",
     "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0",
+    "url-join": "^4.0.1",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0",
     "zlib": "^1.0.5"

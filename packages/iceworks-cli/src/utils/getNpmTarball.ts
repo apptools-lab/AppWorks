@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as urlJoin from 'url-join';
+import * as path from 'path';
 import * as semver from 'semver';
 import log from './log';
 
@@ -6,7 +8,9 @@ import log from './log';
  * 获取指定 npm 包版本的 tarball
  */
 export default async function getNpmTarball(npm: string, version: string, registry: string): Promise<string> {
-  const url = `${registry}/${npm}`;
+  const url = urlJoin(registry, npm);
+
+  log.verbose('getNpmTarball', url);
   const { data: body } = await axios.get(url);
 
   if (!semver.valid(version)) {
