@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "3.2.2-alpha.0",
+  "version": "3.2.2-alpha.1",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
@@ -14,7 +14,7 @@
   "scripts": {},
   "license": "MIT",
   "dependencies": {
-    "@iceworks/generate-project": "^1.0.7-alpha.0",
+    "@iceworks/generate-project": "^1.0.7-alpha.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.5",
     "camelcase": "^5.3.1",
@@ -26,7 +26,7 @@
     "fs-extra": "^8.0.1",
     "fs-readdir-recursive": "^1.1.0",
     "glob": "^7.1.4",
-    "ice-npm-utils": "^1.4.2-alpha.0",
+    "ice-npm-utils": "^1.4.2-alpha.1",
     "inquirer": "^6.5.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",

@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/config",
-  "version": "1.0.6-alpha.0",
+  "version": "1.0.6-alpha.1",
   "main": "lib/index.js",
   "dependencies": {
     "fs-extra": "^8.1.0",
