@@ -1,6 +1,6 @@
 {
   "name": "ice-npm-utils",
-  "version": "1.4.1",
+  "version": "1.4.2-alpha.0",
   "description": "npm utils for ice",
   "main": "lib/index.js",
   "files": [
@@ -20,5 +20,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "1096f88f2d5a7ee82270d656c5b6c52218d817d1"
 }
