@@ -10,10 +10,43 @@
 		"Other"
 	],
 	"activationEvents": [
+		"onView:nodeDependencies",
+		"onView:scripts",
+		"onView:pages",
+		"onView:components",
 		"onCommand:iceworks-project-viewer.helloWorld"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "projectViewer",
+					"title": "Project Viewer",
+					"icon": "assets/logo.svg"
+				}
+			]
+		},
+		"views": {
+			"projectViewer": [
+				{
+					"id": "scripts",
+					"name": "Scripts"
+				},
+				{
+					"id": "pages",
+					"name": "Pages"
+				},
+				{
+					"id": "components",
+					"name": "Components"
+				},
+				{
+					"id": "nodeDependencies",
+					"name": "Node Dependencies"
+				}
+			]
+		},
 		"commands": [
 			{
 				"command": "iceworks-project-viewer.helloWorld",
