@@ -75,13 +75,33 @@
 				"command": "pages.addEntry",
 				"title": "Add",
 				"icon": {
+					"light": "assets/light/add.svg",
+					"dark": "assets/dark/add.svg"
+				}
+			},
+			{
+				"command": "pages.refreshEntry",
+				"title": "Refresh",
+				"icon": {
 					"light": "assets/light/refresh.svg",
 					"dark": "assets/dark/refresh.svg"
 				}
 			},
 			{
+				"command": "pages.openFile",
+				"title": "Open File"
+			},
+			{
 				"command": "components.addEntry",
 				"title": "Add",
+				"icon": {
+					"light": "assets/light/add.svg",
+					"dark": "assets/dark/add.svg"
+				}
+			},
+			{
+				"command": "components.refreshEntry",
+				"title": "Refresh",
 				"icon": {
 					"light": "assets/light/refresh.svg",
 					"dark": "assets/dark/refresh.svg"
@@ -101,7 +121,17 @@
 					"group": "navigation"
 				},
 				{
+					"command": "pages.refreshEntry",
+					"when": "view == pages",
+					"group": "navigation"
+				},
+				{
 					"command": "components.addEntry",
+					"when": "view == components",
+					"group": "navigation"
+				},
+				{
+					"command": "components.refreshEntry",
 					"when": "view == components",
 					"group": "navigation"
 				},

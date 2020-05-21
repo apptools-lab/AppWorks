@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { pathExists } from './utils';
 
 export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
 
@@ -8,6 +9,10 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
 
   constructor(private workspaceRoot: string) {
+  }
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire(undefined);
   }
 
   getTreeItem(element: Dependency): vscode.TreeItem {
@@ -24,7 +29,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       return Promise.resolve(this.getDepsInPackageJson(path.join(this.workspaceRoot, 'node_modules', element.label, 'package.json')));
     } else {
       const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-      if (this.pathExists(packageJsonPath)) {
+      if (pathExists(packageJsonPath)) {
         return Promise.resolve(this.getDepsInPackageJson(packageJsonPath));
       } else {
         vscode.window.showInformationMessage('Workspace has no package.json');
@@ -38,7 +43,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
 	 * Given the path to package.json, read all its dependencies and devDependencies.
 	 */
   private getDepsInPackageJson(packageJsonPath: string): Dependency[] {
-    if (this.pathExists(packageJsonPath)) {
+    if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
       const toDep = (moduleName: string, version: string): Dependency => {
@@ -68,16 +73,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
     } else {
       return [];
     }
-  }
-
-  private pathExists(p: string): boolean {
-    try {
-      fs.accessSync(p);
-    } catch (err) {
-      return false;
-    }
-
-    return true;
   }
 }
 

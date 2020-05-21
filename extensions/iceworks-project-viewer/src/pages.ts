@@ -1,12 +1,20 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { pathExists } from './utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
+  private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
+  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this._onDidChangeTreeData.event;
+
   constructor(private workspaceRoot: string) { }
 
   getTreeItem(element: Page): vscode.TreeItem {
     return element;
+  }
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire(undefined);
   }
 
   getChildren(): Thenable<Page[]> {
@@ -15,7 +23,7 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
       return Promise.resolve([]);
     }
     const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');
-    if (this.pathExists(pagesPath)) {
+    if (pathExists(pagesPath)) {
       return Promise.resolve(this.getPages(pagesPath));
     } else {
       return Promise.resolve([]);
@@ -23,10 +31,17 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
   }
 
   private getPages(pagesPath: string): Page[] {
-    if (this.pathExists(pagesPath)) {
-
+    if (pathExists(pagesPath)) {
       const toPage = (pageName: string) => {
-        return new Page(pageName);
+        const pageIndexPath = vscode.Uri.file(path.join(pagesPath, pageName, 'index.tsx'));
+
+        const cmdObj = {
+          command: 'pages.openFile',
+          title: 'Open File',
+          arguments: [pageIndexPath]
+        };
+
+        return new Page(pageName, cmdObj);
       };
 
       const pagesName = fs.readdirSync(pagesPath);
@@ -35,21 +50,15 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
       return [];
     }
   }
-
-  private pathExists(p: string): boolean {
-    try {
-      fs.accessSync(p);
-    } catch (err) {
-      return false;
-    }
-    return true;
-  }
 }
 
 class Page extends vscode.TreeItem {
   constructor(
-    public readonly label: string
+    public readonly label: string,
+    public readonly command?: vscode.Command
   ) {
     super(label);
   }
+
+  contextValue = 'page';
 }

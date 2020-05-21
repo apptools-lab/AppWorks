@@ -1,12 +1,20 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { pathExists } from './utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
+  private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
+  readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
+
   constructor(private workspaceRoot: string) { }
 
   getTreeItem(element: Script): vscode.TreeItem {
     return element;
+  }
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire(undefined);
   }
 
   getChildren(): Thenable<Script[]> {
@@ -15,7 +23,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
       return Promise.resolve([]);
     }
     const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-    if (this.pathExists(packageJsonPath)) {
+    if (pathExists(packageJsonPath)) {
       return Promise.resolve(this.getNpmScripts(packageJsonPath));
     } else {
       return Promise.resolve([]);
@@ -23,7 +31,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   }
 
   private getNpmScripts(packageJsonPath: string): Script[] {
-    if (this.pathExists(packageJsonPath)) {
+    if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
@@ -47,15 +55,6 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
     } else {
       return [];
     }
-  }
-
-  private pathExists(p: string): boolean {
-    try {
-      fs.accessSync(p);
-    } catch (err) {
-      return false;
-    }
-    return true;
   }
 }
 
