@@ -13,8 +13,7 @@
 		"onView:nodeDependencies",
 		"onView:scripts",
 		"onView:pages",
-		"onView:components",
-		"onCommand:iceworks-project-viewer.helloWorld"
+		"onView:components"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -30,8 +29,8 @@
 		"views": {
 			"projectViewer": [
 				{
-					"id": "scripts",
-					"name": "Scripts"
+					"id": "npmScripts",
+					"name": "Npm Scripts"
 				},
 				{
 					"id": "pages",
@@ -49,10 +48,77 @@
 		},
 		"commands": [
 			{
-				"command": "iceworks-project-viewer.helloWorld",
-				"title": "Hello World"
+				"command": "npmScripts.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "assets/light/refresh.svg",
+					"dark": "assets/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "npmScripts.runEntry",
+				"title": "Run",
+				"icon": {
+					"light": "assets/light/run.svg",
+					"dark": "assets/dark/run.svg"
+				}
+			},
+			{
+				"command": "nodeDependencies.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "assets/light/refresh.svg",
+					"dark": "assets/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "pages.addEntry",
+				"title": "Add",
+				"icon": {
+					"light": "assets/light/refresh.svg",
+					"dark": "assets/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "components.addEntry",
+				"title": "Add",
+				"icon": {
+					"light": "assets/light/refresh.svg",
+					"dark": "assets/dark/refresh.svg"
+				}
 			}
-		]
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "npmScripts.refreshEntry",
+					"when": "view == npmScripts",
+					"group": "navigation"
+				},
+				{
+					"command": "pages.addEntry",
+					"when": "view == pages",
+					"group": "navigation"
+				},
+				{
+					"command": "components.addEntry",
+					"when": "view == components",
+					"group": "navigation"
+				},
+				{
+					"command": "nodeDependencies.refreshEntry",
+					"when": "view == nodeDependencies",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "npmScripts.runEntry",
+					"when": "view == npmScripts && viewItem == script",
+					"group": "inline"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
