@@ -19,7 +19,7 @@ interface IExtensionInfo {
 }
 
 function checkVersionExists(extension: string, version: string, retry = 0): Promise<boolean> {
-  return axios(
+  return axios.get(
     // Use VS Code Extension assets icon check version.
     `http://rax.gallery.vsassets.io/_apis/public/gallery/publisher/Rax/extension/${encodeURIComponent(extension)}/${encodeURIComponent(version)}/assetbyname/Microsoft.VisualStudio.Services.Icons.Default`,
     { timeout: TIMEOUT },
