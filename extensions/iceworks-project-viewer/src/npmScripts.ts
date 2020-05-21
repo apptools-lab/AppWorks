@@ -25,13 +25,19 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private getNpmScripts(packageJsonPath: string): Script[] {
     if (this.pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      const workspaceDir: string = path.dirname(packageJsonPath);
 
-      const toScript = (scriptName: string, script: string): Script => {
-        return new Script(scriptName, script, {
-          command: 'extension.openPackageOnNpm',
-          title: '',
-          arguments: []
-        });
+      const toScript = (scriptName: string, scriptCommand: string): Script => {
+        const cmdObj = {
+          command: 'npmScripts.executeCommand',
+          title: 'Run Script',
+          arguments: [scriptName, workspaceDir]
+        };
+        return new Script(
+          scriptName,
+          scriptCommand,
+          cmdObj
+        );
       };
 
       const scripts = packageJson.scripts
@@ -56,14 +62,10 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
 export class Script extends vscode.TreeItem {
   constructor(
     public readonly label: string,
-    public script: string,
+    public readonly tooltip: string,
     public readonly command?: vscode.Command
   ) {
     super(label);
-  }
-
-  get tooltip(): string {
-    return `${this.script}`;
   }
 
   iconPath = {
