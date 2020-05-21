@@ -9,7 +9,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
     return element;
   }
 
-  getChildren(element?: Component): Thenable<Component[]> {
+  getChildren(): Thenable<Component[]> {
     if (!this.workspaceRoot) {
       vscode.window.showInformationMessage('No component found');
       return Promise.resolve([]);

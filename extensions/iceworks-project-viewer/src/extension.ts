@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { DepNodeProvider } from './nodeDenpendencies';
 import { ComponentsProvider } from './components';
+import { PagesProvider } from './pages';
 
 export function activate(context: vscode.ExtensionContext) {
 	const nodeDependenciesProvider = new DepNodeProvider(vscode.workspace.rootPath!);
@@ -9,4 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const componentsProvider = new ComponentsProvider(vscode.workspace.rootPath!);
 	vscode.window.registerTreeDataProvider('components', componentsProvider);
+
+	const pagesProvider = new PagesProvider(vscode.workspace.rootPath!);
+	vscode.window.registerTreeDataProvider('pages', pagesProvider);
 }
