@@ -1,30 +1,27 @@
 import * as vscode from 'vscode';
 import { Terminal, TerminalOptions } from 'vscode';
 import { ITerminalMap } from './types';
-import { makeTerminalPrettyName } from './utils';
-import { Script } from './npmScripts';
+import { makeTerminalName } from './utils';
 
-export function executeCommand(terminalMapping: ITerminalMap) {
-  return function (script: Script) {
-    const args = script.command?.arguments!;
-    const [task, cwd] = args;
-    const packageManager: string = vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
+export function executeCommand(terminalMapping: ITerminalMap, script: any) {
+  const args = script.command?.arguments!;
+  let [cwd, command, terminalName] = args;
+  if (!command) {
+    return;
+  }
+  terminalName = terminalName ? terminalName : command;
+  const name: string = makeTerminalName(cwd, terminalName);
 
-    const command: string = `${packageManager} run ${task}`;
+  let terminal: Terminal;
 
-    const name: string = makeTerminalPrettyName(cwd, task);
+  if (terminalMapping.has(name)) {
+    terminal = terminalMapping.get(name)!;
+  } else {
+    const terminalOptions: TerminalOptions = { cwd, name };
+    terminal = vscode.window.createTerminal(terminalOptions);
+    terminalMapping.set(name, terminal);
+  }
 
-    let terminal: Terminal;
-
-    if (terminalMapping.has(name)) {
-      terminal = terminalMapping.get(name)!;
-    } else {
-      const terminalOptions: TerminalOptions = { cwd, name };
-      terminal = vscode.window.createTerminal(terminalOptions);
-      terminalMapping.set(name, terminal);
-    }
-
-    terminal.show();
-    terminal.sendText(command);
-  };
+  terminal.show();
+  terminal.sendText(command);
 }

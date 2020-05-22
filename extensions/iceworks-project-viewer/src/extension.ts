@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import { NpmScriptsProvider, Script } from './npmScripts';
-import { DepNodeProvider } from './nodeDenpendencies';
+import { DepNodeProvider, Dependency } from './nodeDenpendencies';
 import { ComponentsProvider } from './components';
 import { PagesProvider } from './pages';
 import { executeCommand } from './executeCommand';
@@ -11,15 +11,17 @@ import { openEntryFile } from './utils';
 export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
 	if (!rootPath) {
+		// TODO: show the default page
 		return;
 	}
 
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 
+	vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
+
 	const npmScriptsProvider = new NpmScriptsProvider(rootPath);
 	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-	vscode.commands.registerCommand('npmScripts.executeCommand', executeCommand(terminals));
-	vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
+	vscode.commands.registerCommand('npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script));
 	vscode.commands.registerCommand('npmScripts.refreshEntry', () => npmScriptsProvider.refresh());
 
 	const componentsProvider = new ComponentsProvider(rootPath);
@@ -37,7 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const nodeDependenciesProvider = new DepNodeProvider(rootPath);
 	vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
-	vscode.commands.registerCommand('extension.openPackageOnNpm', moduleName => vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`https://www.npmjs.com/package/${moduleName}`)));
 	vscode.commands.registerCommand('nodeDependencies.refreshEntry', () => nodeDependenciesProvider.refresh());
-
+	vscode.commands.registerCommand('nodeDependencies.upgradeEntry', (node: Dependency) => executeCommand(terminals, node));
+	vscode.commands.registerCommand('nodeDependencies.installEntry', () => executeCommand(terminals, nodeDependenciesProvider.install()));
+	vscode.commands.registerCommand('nodeDependencies.reinstallEntry', () => executeCommand(terminals, nodeDependenciesProvider.reinstall()));
 }

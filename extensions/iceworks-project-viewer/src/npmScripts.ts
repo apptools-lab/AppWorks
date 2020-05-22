@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists } from './utils';
+import { pathExists, getPackageManager } from './utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
@@ -38,7 +38,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
         const cmdObj = {
           command: 'npmScripts.executeCommand',
           title: 'Run Script',
-          arguments: [scriptName, workspaceDir]
+          arguments: [workspaceDir, `${getPackageManager()} run ${scriptName}`]
         };
         return new Script(
           scriptName,

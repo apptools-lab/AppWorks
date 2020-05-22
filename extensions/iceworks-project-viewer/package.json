@@ -180,6 +180,11 @@
 					"command": "npmScripts.executeCommand",
 					"when": "view == npmScripts && viewItem == script",
 					"group": "inline"
+				},
+				{
+					"command": "nodeDependencies.upgradeEntry",
+					"when": "view == nodeDependencies && viewItem == dependency",
+					"group": "inline"
 				}
 			]
 		}

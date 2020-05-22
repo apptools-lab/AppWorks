@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists } from './utils';
+import { pathExists, getPackageManager } from './utils';
 import { NodeDepTypes } from './types';
 
 const nodeDepTypes: NodeDepTypes[] = [
@@ -10,7 +10,6 @@ const nodeDepTypes: NodeDepTypes[] = [
 ];
 
 export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
-
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<Dependency | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
 
@@ -42,12 +41,13 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   private getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes): Dependency[] {
     if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      const workspaceDir: string = path.dirname(packageJsonPath);
 
       const toDep = (moduleName: string, version: string): Dependency => {
         return new Dependency(moduleName, vscode.TreeItemCollapsibleState.None, version, {
-          command: 'extension.openPackageOnNpm',
-          title: 'Open Package On Npm',
-          arguments: [moduleName]
+          command: 'nodeDependencies.upgradeEntry',
+          title: 'Upgrade Dependency',
+          arguments: [workspaceDir, `${getPackageManager()} update ${moduleName}`]
         });
       };
       return packageJson[label]
@@ -55,6 +55,36 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
         : [];
     } else {
       return [];
+    }
+  }
+
+  public install() {
+    const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
+
+    if (pathExists(packageJsonPath)) {
+      const workspaceDir: string = path.dirname(packageJsonPath);
+      return {
+        command: {
+          command: 'nodeDependencies.upgradeEntry',
+          title: 'Install Dependencies',
+          arguments: [workspaceDir, `${getPackageManager()} install`]
+        }
+      };
+    }
+  }
+
+  public reinstall() {
+    const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
+
+    if (pathExists(packageJsonPath)) {
+      const workspaceDir: string = path.dirname(packageJsonPath);
+      return {
+        command: {
+          command: 'nodeDependencies.upgradeEntry',
+          title: 'Install Dependencies',
+          arguments: [workspaceDir, `rm -rf node_modules && ${getPackageManager()} install`]
+        }
+      };
     }
   }
 }
@@ -69,10 +99,6 @@ export class Dependency extends vscode.TreeItem {
     super(label, collapsibleState);
   }
 
-  get tooltip(): string {
-    return `${this.label}-${this.version}`;
-  }
-
   get description(): string {
     return this.version ? this.version : '';
   }
@@ -82,5 +108,5 @@ export class Dependency extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', 'assets', 'dark', 'dependency.svg')
   };
 
-  contextValue = 'dependency';
+  contextValue = this.version ? 'dependency' : 'dependenciesDir';
 }

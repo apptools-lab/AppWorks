@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import * as vscode from 'vscode';
 import { entryFileSuffix } from './constants';
 
-export function makeTerminalPrettyName(cwd: string, taskName: string): string {
-  return `${path.basename(cwd)} - ${taskName}`;
+export function makeTerminalName(cwd: string, command: string): string {
+  return `${path.basename(cwd)} - ${command}`;
 }
 
 export function pathExists(p: string): boolean {
@@ -24,4 +24,8 @@ export function openEntryFile(p: string) {
   } else {
     vscode.window.showErrorMessage('Entry file not found.');
   }
+}
+
+export function getPackageManager(): string {
+  return vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
 }
