@@ -7,7 +7,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot?: string) { }
+  constructor(private workspaceRoot: string) { }
 
   getTreeItem(element: Script): vscode.TreeItem {
     return element;

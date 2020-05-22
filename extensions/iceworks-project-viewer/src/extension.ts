@@ -6,10 +6,14 @@ import { ComponentsProvider } from './components';
 import { PagesProvider } from './pages';
 import { executeCommand } from './executeCommand';
 import { ITerminalMap } from "./types";
-import { openFile } from './utils';
+import { openEntryFile } from './utils';
 
 export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
+	if (!rootPath) {
+		return;
+	}
+
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 
 	const npmScriptsProvider = new NpmScriptsProvider(rootPath);
@@ -22,13 +26,13 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.window.registerTreeDataProvider('components', componentsProvider);
 	vscode.commands.registerCommand('components.addEntry', () => { });
 	vscode.commands.registerCommand('components.refreshEntry', () => componentsProvider.refresh());
-	vscode.commands.registerCommand('components.openFile', (resource) => openFile(resource));
+	vscode.commands.registerCommand('components.openFile', (p) => openEntryFile(p));
 
 	const pagesProvider = new PagesProvider(rootPath);
 	vscode.window.registerTreeDataProvider('pages', pagesProvider);
 	vscode.commands.registerCommand('pages.addEntry', () => { });
 	vscode.commands.registerCommand('pages.refreshEntry', () => pagesProvider.refresh());
-	vscode.commands.registerCommand('pages.openFile', (resource) => openFile(resource));
+	vscode.commands.registerCommand('pages.openFile', (p) => openEntryFile(p));
 
 
 	const nodeDependenciesProvider = new DepNodeProvider(rootPath);

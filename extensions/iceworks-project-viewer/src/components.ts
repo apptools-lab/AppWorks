@@ -2,12 +2,13 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { pathExists } from './utils';
+import { entryFileSuffix } from './constants';
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot?: string) { }
+  constructor(private workspaceRoot: string) { }
 
   refresh(): void {
     this._onDidChangeTreeData.fire(undefined);
@@ -32,12 +33,12 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private getComponents(componentsPath: string): Component[] {
     if (pathExists(componentsPath)) {
       const toComponent = (componentName: string) => {
-        const pageIndexPath = vscode.Uri.file(path.join(componentsPath, componentName, 'index.tsx'));
+        const pageEntryPath = path.join(componentsPath, componentName);
 
         const cmdObj = {
-          command: 'pages.openFile',
+          command: 'components.openFile',
           title: 'Open File',
-          arguments: [pageIndexPath]
+          arguments: [pageEntryPath]
         };
 
         return new Component(componentName, cmdObj);
