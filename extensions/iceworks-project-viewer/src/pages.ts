@@ -7,7 +7,7 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
   private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) { }
+  constructor(private workspaceRoot?: string) { }
 
   getTreeItem(element: Page): vscode.TreeItem {
     return element;
@@ -19,7 +19,6 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
 
   getChildren(): Thenable<Page[]> {
     if (!this.workspaceRoot) {
-      vscode.window.showInformationMessage('No Page found');
       return Promise.resolve([]);
     }
     const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');

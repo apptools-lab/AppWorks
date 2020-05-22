@@ -7,7 +7,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) { }
+  constructor(private workspaceRoot?: string) { }
 
   refresh(): void {
     this._onDidChangeTreeData.fire(undefined);
@@ -19,7 +19,6 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
 
   getChildren(): Thenable<Component[]> {
     if (!this.workspaceRoot) {
-      vscode.window.showInformationMessage('No component found');
       return Promise.resolve([]);
     }
     const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
