@@ -64,14 +64,6 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.refreshEntry",
-				"title": "Refresh",
-				"icon": {
-					"light": "assets/light/refresh.svg",
-					"dark": "assets/dark/refresh.svg"
-				}
-			},
-			{
 				"command": "pages.addEntry",
 				"title": "Add",
 				"icon": {
@@ -106,6 +98,38 @@
 					"light": "assets/light/refresh.svg",
 					"dark": "assets/dark/refresh.svg"
 				}
+			},
+			{
+				"command": "nodeDependencies.installEntry",
+				"title": "Install Dependencies",
+				"icon": {
+					"light": "assets/light/install.svg",
+					"dark": "assets/dark/install.svg"
+				}
+			},
+			{
+				"command": "nodeDependencies.reinstallEntry",
+				"title": "Reinstall Dependencies",
+				"icon": {
+					"light": "assets/light/dep-reinstall.svg",
+					"dark": "assets/dark/dep-reinstall.svg"
+				}
+			},
+			{
+				"command": "nodeDependencies.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "assets/light/refresh.svg",
+					"dark": "assets/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "nodeDependencies.upgradeEntry",
+				"title": "Upgrade Dependency",
+				"icon": {
+					"light": "assets/light/upgrade.svg",
+					"dark": "assets/dark/upgrade.svg"
+				}
 			}
 		],
 		"menus": {
@@ -133,6 +157,16 @@
 				{
 					"command": "components.refreshEntry",
 					"when": "view == components",
+					"group": "navigation"
+				},
+				{
+					"command": "nodeDependencies.installEntry",
+					"when": "view == nodeDependencies",
+					"group": "navigation"
+				},
+				{
+					"command": "nodeDependencies.reinstallEntry",
+					"when": "view == nodeDependencies",
 					"group": "navigation"
 				},
 				{

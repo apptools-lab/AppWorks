@@ -60,5 +60,10 @@ class Component extends vscode.TreeItem {
     super(label);
   }
 
+  iconPath = {
+    light: path.join(__filename, '..', '..', 'assets', 'light', 'component.svg'),
+    dark: path.join(__filename, '..', '..', 'assets', 'dark', 'component.svg')
+  };
+
   contextValue = 'component';
 }
