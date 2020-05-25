@@ -10,11 +10,11 @@
 		"Other"
 	],
 	"activationEvents": [
-		"command:workbench.action.files.openFileFolder",
 		"onView:nodeDependencies",
 		"onView:scripts",
 		"onView:pages",
-		"onView:components"
+		"onView:components",
+		"onCommand:myExtension.addDependency"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -117,8 +117,8 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.add",
-				"title": "Add Dependencies",
+				"command": "nodeDependencies.addDependency",
+				"title": "Add Dependency",
 				"icon": {
 					"light": "assets/light/add.svg",
 					"dark": "assets/dark/add.svg"
@@ -185,7 +185,7 @@
 					"group": "navigation"
 				},
 				{
-					"command": "nodeDependencies.add",
+					"command": "nodeDependencies.addDependency",
 					"when": "view == nodeDependencies",
 					"group": "navigation"
 				},
@@ -202,7 +202,7 @@
 				{
 					"command": "nodeDependencies.refresh",
 					"when": "view == nodeDependencies",
-					"group": "navigation"
+					"group": "navigation@99"
 				}
 			],
 			"view/item/context": [

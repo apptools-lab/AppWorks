@@ -2,19 +2,18 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { pathExists, getPackageManager } from './utils';
-import { NodeDepTypes } from './types';
+import { NodeDepTypes, Command } from './types';
 import { getNodeDepVersion } from 'ice-npm-utils';
-
-const nodeDepTypes: NodeDepTypes[] = [
-  'dependencies',
-  'devDependencies'
-];
+import { nodeDepTypes } from './constants';
 
 export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<Dependency | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
 
+  packageJsonPath: string;
+
   constructor(private workspaceRoot: string) {
+    this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
   }
 
   refresh(): void {
@@ -32,8 +31,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
 
     if (element) {
       const { label } = element;
-      const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-      return Promise.resolve(this.getDepsInPackageJson(packageJsonPath, (label as NodeDepTypes)));
+      return Promise.resolve(this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes)));
     } else {
       return Promise.resolve(nodeDepTypes.map(nodeDepType => new Dependency(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
@@ -70,35 +68,47 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
     }
   }
 
-
   public install() {
-    const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-
-    if (pathExists(packageJsonPath)) {
-      const workspaceDir: string = path.dirname(packageJsonPath);
+    if (pathExists(this.packageJsonPath)) {
+      const workspaceDir: string = path.dirname(this.packageJsonPath);
+      const command: Command = {
+        command: 'nodeDependencies.upgrade',
+        title: 'Install Dependencies',
+        arguments: [workspaceDir, `${getPackageManager()} install`]
+      };
       return {
-        command: {
-          command: 'nodeDependencies.upgrade',
-          title: 'Install Dependencies',
-          arguments: [workspaceDir, `${getPackageManager()} install`]
-        }
+        command
       };
     }
   }
 
   public reinstall() {
-    const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-
-    if (pathExists(packageJsonPath)) {
-      const workspaceDir: string = path.dirname(packageJsonPath);
+    if (pathExists(this.packageJsonPath)) {
+      const workspaceDir: string = path.dirname(this.packageJsonPath);
+      const command: Command = {
+        command: 'nodeDependencies.upgrade',
+        title: 'Install Dependencies',
+        arguments: [workspaceDir, `rm -rf node_modules && ${getPackageManager()} install`]
+      };
       return {
-        command: {
-          command: 'nodeDependencies.upgrade',
-          title: 'Install Dependencies',
-          arguments: [workspaceDir, `rm -rf node_modules && ${getPackageManager()} install`]
-        }
+        command
       };
     }
+  }
+
+  public installDependency(depType: NodeDepTypes, packageName: string) {
+    const workspaceDir: string = path.dirname(this.packageJsonPath);
+    const packageManager = getPackageManager();
+    const isYarn = packageManager === 'yarn';
+    const isDevDep = depType === 'devDependencies';
+    const command: Command = {
+      command: 'nodeDependencies.addDependency',
+      title: 'Add Dependency',
+      arguments: [workspaceDir, `${packageManager} ${isYarn ? 'add' : 'install'} ${packageName} -${isDevDep ? 'D' : isYarn ? '' : 'S'}`]
+    };
+    return {
+      command
+    };
   }
 }
 

@@ -7,6 +7,8 @@ import { PagesProvider } from './pages';
 import { executeCommand } from './executeCommand';
 import { ITerminalMap } from "./types";
 import { openEntryFile } from './utils';
+import { nodeDepTypes } from './constants';
+import { NodeDepTypes } from './types';
 
 export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
@@ -44,4 +46,31 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('nodeDependencies.upgrade', (node: Dependency) => executeCommand(terminals, node));
 	vscode.commands.registerCommand('nodeDependencies.install', () => executeCommand(terminals, nodeDependenciesProvider.install()));
 	vscode.commands.registerCommand('nodeDependencies.reinstall', () => executeCommand(terminals, nodeDependenciesProvider.reinstall()));
+
+	const addDepCommandHandler = () => {
+		const quickPick = vscode.window.createQuickPick();
+
+		quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
+		quickPick.onDidChangeSelection(selection => {
+			if (selection[0]) {
+				showDepInputBox(selection[0].label as NodeDepTypes)
+					.catch(console.error);
+			}
+		});
+		quickPick.onDidHide(() => quickPick.dispose());
+		quickPick.show();
+	};
+
+	async function showDepInputBox(depType: NodeDepTypes) {
+		const result = await vscode.window.showInputBox({
+			placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
+		});
+		if (!result) {
+			vscode.window.showErrorMessage('Module name is invalid. Please try again.');
+			return;
+		}
+		executeCommand(terminals, nodeDependenciesProvider.installDependency(depType, result));
+	}
+
+	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.addDependency', addDepCommandHandler));
 }
