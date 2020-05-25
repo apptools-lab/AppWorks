@@ -56,7 +56,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
 
       const toDep = (moduleName: string, version: string): Dependency => {
         return new Dependency(moduleName, vscode.TreeItemCollapsibleState.None, version, {
-          command: 'nodeDependencies.upgradeEntry',
+          command: 'nodeDependencies.upgrade',
           title: 'Upgrade Dependency',
           arguments: [workspaceDir, `${getPackageManager()} update ${moduleName}`]
         });
@@ -78,7 +78,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const workspaceDir: string = path.dirname(packageJsonPath);
       return {
         command: {
-          command: 'nodeDependencies.upgradeEntry',
+          command: 'nodeDependencies.upgrade',
           title: 'Install Dependencies',
           arguments: [workspaceDir, `${getPackageManager()} install`]
         }
@@ -93,7 +93,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const workspaceDir: string = path.dirname(packageJsonPath);
       return {
         command: {
-          command: 'nodeDependencies.upgradeEntry',
+          command: 'nodeDependencies.upgrade',
           title: 'Install Dependencies',
           arguments: [workspaceDir, `rm -rf node_modules && ${getPackageManager()} install`]
         }
@@ -117,8 +117,8 @@ export class Dependency extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', 'assets', 'light', 'dependency.svg'),
-    dark: path.join(__filename, '..', '..', 'assets', 'dark', 'dependency.svg')
+    light: path.join(__filename, '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
+    dark: path.join(__filename, '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
 
   contextValue = this.version ? 'dependency' : 'dependenciesDir';

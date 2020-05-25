@@ -10,6 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
+		"command:workbench.action.files.openFileFolder",
 		"onView:nodeDependencies",
 		"onView:scripts",
 		"onView:pages",
@@ -58,13 +59,13 @@
 		"viewsWelcome": [
 			{
 				"view": "welcomePage",
-				"contents": "In order to use iceworks-project-viewer, you have to open a folder or create a new project first.\n[Open a Folder](command:workbench.action.files.openFileFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](http://github.com/ice-lab/iceworks).",
+				"contents": "In order to use iceworks Project Viewer, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](https://github.com/ice-lab/iceworks).",
 				"when": "workbenchState == empty"
 			}
 		],
 		"commands": [
 			{
-				"command": "npmScripts.refreshEntry",
+				"command": "npmScripts.refresh",
 				"title": "Refresh",
 				"icon": {
 					"light": "assets/light/refresh.svg",
@@ -80,7 +81,7 @@
 				}
 			},
 			{
-				"command": "pages.addEntry",
+				"command": "pages.add",
 				"title": "Add",
 				"icon": {
 					"light": "assets/light/add.svg",
@@ -88,7 +89,7 @@
 				}
 			},
 			{
-				"command": "pages.refreshEntry",
+				"command": "pages.refresh",
 				"title": "Refresh",
 				"icon": {
 					"light": "assets/light/refresh.svg",
@@ -100,7 +101,7 @@
 				"title": "Open File"
 			},
 			{
-				"command": "components.addEntry",
+				"command": "components.add",
 				"title": "Add",
 				"icon": {
 					"light": "assets/light/add.svg",
@@ -108,7 +109,7 @@
 				}
 			},
 			{
-				"command": "components.refreshEntry",
+				"command": "components.refresh",
 				"title": "Refresh",
 				"icon": {
 					"light": "assets/light/refresh.svg",
@@ -116,7 +117,15 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.installEntry",
+				"command": "nodeDependencies.add",
+				"title": "Add Dependencies",
+				"icon": {
+					"light": "assets/light/add.svg",
+					"dark": "assets/dark/add.svg"
+				}
+			},
+			{
+				"command": "nodeDependencies.install",
 				"title": "Install Dependencies",
 				"icon": {
 					"light": "assets/light/install.svg",
@@ -124,7 +133,7 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.reinstallEntry",
+				"command": "nodeDependencies.reinstall",
 				"title": "Reinstall Dependencies",
 				"icon": {
 					"light": "assets/light/dep-reinstall.svg",
@@ -132,7 +141,7 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.refreshEntry",
+				"command": "nodeDependencies.refresh",
 				"title": "Refresh",
 				"icon": {
 					"light": "assets/light/refresh.svg",
@@ -140,7 +149,7 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.upgradeEntry",
+				"command": "nodeDependencies.upgrade",
 				"title": "Upgrade Dependency",
 				"icon": {
 					"light": "assets/light/upgrade.svg",
@@ -151,42 +160,47 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "npmScripts.refreshEntry",
+					"command": "npmScripts.refresh",
 					"when": "view == npmScripts",
 					"group": "navigation"
 				},
 				{
-					"command": "pages.addEntry",
+					"command": "pages.add",
 					"when": "view == pages",
 					"group": "navigation"
 				},
 				{
-					"command": "pages.refreshEntry",
+					"command": "pages.refresh",
 					"when": "view == pages",
 					"group": "navigation"
 				},
 				{
-					"command": "components.addEntry",
+					"command": "components.add",
 					"when": "view == components",
 					"group": "navigation"
 				},
 				{
-					"command": "components.refreshEntry",
+					"command": "components.refresh",
 					"when": "view == components",
 					"group": "navigation"
 				},
 				{
-					"command": "nodeDependencies.installEntry",
+					"command": "nodeDependencies.add",
 					"when": "view == nodeDependencies",
 					"group": "navigation"
 				},
 				{
-					"command": "nodeDependencies.reinstallEntry",
+					"command": "nodeDependencies.install",
 					"when": "view == nodeDependencies",
 					"group": "navigation"
 				},
 				{
-					"command": "nodeDependencies.refreshEntry",
+					"command": "nodeDependencies.reinstall",
+					"when": "view == nodeDependencies",
+					"group": "navigation"
+				},
+				{
+					"command": "nodeDependencies.refresh",
 					"when": "view == nodeDependencies",
 					"group": "navigation"
 				}
@@ -198,7 +212,7 @@
 					"group": "inline"
 				},
 				{
-					"command": "nodeDependencies.upgradeEntry",
+					"command": "nodeDependencies.upgrade",
 					"when": "view == nodeDependencies && viewItem == dependency",
 					"group": "inline"
 				}
