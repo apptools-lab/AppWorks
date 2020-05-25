@@ -11,6 +11,11 @@ import { openEntryFile } from './utils';
 export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
 
+	if (!rootPath) {
+		vscode.window.showInformationMessage('The root path is empty. Please open a project or create a project.');
+		return;
+	}
+
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 
 	vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));

@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { pathExists, getPackageManager } from './utils';
 import { NodeDepTypes } from './types';
+import { getNodeDepVersion } from 'ice-npm-utils';
 
 const nodeDepTypes: NodeDepTypes[] = [
   'dependencies',
@@ -13,7 +14,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<Dependency | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot?: string) {
+  constructor(private workspaceRoot: string) {
   }
 
   refresh(): void {
@@ -38,6 +39,16 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
     }
   }
 
+  private getDepVersion(moduleName: string) {
+    const nodeModulesPath = path.join(this.workspaceRoot, 'node_modules');
+
+    if (!pathExists(nodeModulesPath)) {
+      vscode.window.showErrorMessage('The node_modules folder is empty. Please run `npm install` first.');
+    }
+
+    return getNodeDepVersion(nodeModulesPath, moduleName);
+  };
+
   private getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes): Dependency[] {
     if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
@@ -50,19 +61,17 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
           arguments: [workspaceDir, `${getPackageManager()} update ${moduleName}`]
         });
       };
+
       return packageJson[label]
-        ? Object.keys(packageJson[label]).map(dep => toDep(dep, packageJson[label][dep]))
+        ? Object.keys(packageJson[label]).map(dep => toDep(dep, this.getDepVersion(dep) || ''))
         : [];
     } else {
       return [];
     }
   }
 
+
   public install() {
-    if (!this.workspaceRoot) {
-      vscode.window.showErrorMessage('The workspace root is Empty. Please open a project.');
-      return;
-    }
     const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
 
     if (pathExists(packageJsonPath)) {
@@ -78,10 +87,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   }
 
   public reinstall() {
-    if (!this.workspaceRoot) {
-      vscode.window.showErrorMessage('The workspace root is Empty. Please open a project.');
-      return;
-    }
     const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
 
     if (pathExists(packageJsonPath)) {
