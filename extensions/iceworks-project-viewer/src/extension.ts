@@ -10,10 +10,6 @@ import { openEntryFile } from './utils';
 
 export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
-	if (!rootPath) {
-		// TODO: show the default page
-		return;
-	}
 
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 

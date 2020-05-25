@@ -8,7 +8,8 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) { }
+  constructor(private workspaceRoot?: string) {
+  }
 
   refresh(): void {
     this._onDidChangeTreeData.fire(undefined);

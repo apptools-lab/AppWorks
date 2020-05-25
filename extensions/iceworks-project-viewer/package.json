@@ -1,6 +1,6 @@
 {
 	"name": "iceworks-project-viewer",
-	"displayName": "iceworks-project-viewer",
+	"displayName": "iceworks Project Viewer",
 	"description": "iceworks-project-viewer",
 	"version": "0.0.1",
 	"engines": {
@@ -29,23 +29,39 @@
 		"views": {
 			"projectViewer": [
 				{
+					"id": "welcomePage",
+					"name": "Welcome Page",
+					"when": "workbenchState == empty"
+				},
+				{
 					"id": "npmScripts",
-					"name": "Npm Scripts"
+					"name": "Npm Scripts",
+					"when": "workbenchState != empty"
 				},
 				{
 					"id": "pages",
-					"name": "Pages"
+					"name": "Pages",
+					"when": "workbenchState != empty"
 				},
 				{
 					"id": "components",
-					"name": "Components"
+					"name": "Components",
+					"when": "workbenchState != empty"
 				},
 				{
 					"id": "nodeDependencies",
-					"name": "Node Dependencies"
+					"name": "Node Dependencies",
+					"when": "workbenchState != empty"
 				}
 			]
 		},
+		"viewsWelcome": [
+			{
+				"view": "welcomePage",
+				"contents": "In order to use iceworks-project-viewer, you have to open a folder or create a new project first.\n[Open a Folder](command:workbench.action.files.openFileFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](http://github.com/ice-lab/iceworks).",
+				"when": "workbenchState == empty"
+			}
+		],
 		"commands": [
 			{
 				"command": "npmScripts.refreshEntry",

@@ -13,7 +13,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<Dependency | undefined>();
   readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) {
+  constructor(private workspaceRoot?: string) {
   }
 
   refresh(): void {
@@ -59,6 +59,10 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   }
 
   public install() {
+    if (!this.workspaceRoot) {
+      vscode.window.showErrorMessage('The workspace root is Empty. Please open a project.');
+      return;
+    }
     const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
 
     if (pathExists(packageJsonPath)) {
@@ -74,6 +78,10 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   }
 
   public reinstall() {
+    if (!this.workspaceRoot) {
+      vscode.window.showErrorMessage('The workspace root is Empty. Please open a project.');
+      return;
+    }
     const packageJsonPath = path.join(this.workspaceRoot, 'package.json');
 
     if (pathExists(packageJsonPath)) {
