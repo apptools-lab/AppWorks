@@ -3,11 +3,11 @@ import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists, getPackageManager } from './utils';
+// import latestVersion from 'latest-version';
+import { pathExists, getNpmClient, getNpmRegister } from './utils';
 import { NodeDepTypes, Command } from './types';
 import { getNodeDepVersion } from 'ice-npm-utils';
-import { nodeDepTypes } from './constants';
-import latestVersion from 'latest-version';
+import { nodeDepTypes, npmClients, npmRegisters } from './constants';
 
 const rimrafAsync = util.promisify(rimraf);
 
@@ -57,11 +57,11 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
-      const toDep = (moduleName: string, version: string) => {
+      function toDep(moduleName: string, version: string) {
         return new Dependency(moduleName, vscode.TreeItemCollapsibleState.None, version, {
           command: 'nodeDependencies.upgrade',
           title: 'Upgrade Dependency',
-          arguments: [workspaceDir, `${getPackageManager()} update ${moduleName}`]
+          arguments: [workspaceDir, `${getNpmClient()} update ${moduleName} --registry=${getNpmRegister()}`]
         });
       };
 
@@ -87,7 +87,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const command: Command = {
         command: 'nodeDependencies.install',
         title: 'Install Dependencies',
-        arguments: [workspaceDir, `${getPackageManager()} install`]
+        arguments: [workspaceDir, `${getNpmClient()} install --registry=${getNpmRegister()}`]
       };
       return {
         command
@@ -105,7 +105,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const command: Command = {
         command: 'nodeDependencies.reinstall',
         title: 'Reinstall Dependencies',
-        arguments: [workspaceDir, `${getPackageManager()} install`]
+        arguments: [workspaceDir, `${getNpmClient()} install --registry=${getNpmRegister()}`]
       };
       return {
         command
@@ -115,13 +115,13 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
 
   public addDependency(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getPackageManager();
-    const isYarn = packageManager === 'yarn';
+    const npmClient = getNpmClient();
+    const isYarn = npmClient === 'yarn';
     const isDevDep = depType === 'devDependencies';
     const command: Command = {
       command: 'nodeDependencies.addDependency',
       title: 'Add Dependency',
-      arguments: [workspaceDir, `${packageManager} ${isYarn ? 'add' : 'install'} ${packageName} -${isDevDep ? 'D' : isYarn ? '' : 'S'}`]
+      arguments: [workspaceDir, `${npmClient} ${isYarn ? 'add' : 'install'} ${packageName} -${isDevDep ? 'D' : isYarn ? '' : 'S'}`]
     };
     return {
       command
@@ -143,10 +143,10 @@ export class Dependency extends vscode.TreeItem {
     return this.version ? this.version : '';
   }
 
-  private async getNpmOutdated(moduleName: string, version: string) {
-    const latest = await latestVersion(moduleName);
-    return version !== latest;
-  };
+  // private async getNpmOutdated(moduleName: string, version: string) {
+  //   const latest = await latestVersion(moduleName);
+  //   return version !== latest;
+  // };
 
   get iconPath() {
     return {
@@ -157,3 +157,35 @@ export class Dependency extends vscode.TreeItem {
 
   contextValue = this.version ? 'dependency' : 'dependenciesDir';
 }
+
+export async function setNpmClient() {
+  const quickPick = vscode.window.createQuickPick();
+  const currentNpmClient = vscode.workspace.getConfiguration('iceworks').get('npmClient') || npmClients[0];
+  quickPick.items = npmClients.map(label => ({ label, detail: `Use ${label} Client`, picked: label === currentNpmClient }));
+  quickPick.onDidChangeSelection(async selection => {
+    if (selection[0]) {
+      await vscode.workspace.getConfiguration().update('iceworks.npmClient', selection[0].label, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
+      quickPick.hide();
+    }
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+};
+
+export async function setNpmRegister() {
+  const quickPick = vscode.window.createQuickPick();
+  const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister') || npmRegisters[0];
+
+  quickPick.items = npmRegisters.map(label => ({ label, picked: label === currentNpmRegister }));
+  quickPick.onDidChangeSelection(async selection => {
+    if (selection[0]) {
+      // if not 
+      await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
+      quickPick.hide();
+    }
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+};

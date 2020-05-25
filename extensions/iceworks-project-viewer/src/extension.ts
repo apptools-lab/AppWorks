@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import { NpmScriptsProvider, Script } from './npmScripts';
-import { DepNodeProvider, Dependency } from './nodeDenpendencies';
+import { DepNodeProvider, Dependency, setNpmClient, setNpmRegister } from './nodeDenpendencies';
 import { ComponentsProvider } from './components';
 import { PagesProvider } from './pages';
 import { executeCommand } from './executeCommand';
@@ -39,7 +39,6 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('pages.refresh', () => pagesProvider.refresh());
 	vscode.commands.registerCommand('pages.openFile', (p) => openEntryFile(p));
 
-
 	const nodeDependenciesProvider = new DepNodeProvider(rootPath);
 	vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
 	vscode.commands.registerCommand('nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
@@ -50,9 +49,12 @@ export function activate(context: vscode.ExtensionContext) {
 		executeCommand(terminals, command);
 	});
 
-	const addDepCommandHandler = () => {
-		const quickPick = vscode.window.createQuickPick();
+	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.addDependency', addDepCommandHandler));
+	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.setNpmClient', setNpmClient));
+	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.setNpmRegister', setNpmRegister));
 
+	function addDepCommandHandler() {
+		const quickPick = vscode.window.createQuickPick();
 		quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
 		quickPick.onDidChangeSelection(selection => {
 			if (selection[0]) {
@@ -69,11 +71,8 @@ export function activate(context: vscode.ExtensionContext) {
 			placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
 		});
 		if (!result) {
-			vscode.window.showErrorMessage('Module name is invalid. Please try again.');
 			return;
 		}
 		executeCommand(terminals, nodeDependenciesProvider.addDependency(depType, result));
 	}
-
-	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.addDependency', addDepCommandHandler));
 }

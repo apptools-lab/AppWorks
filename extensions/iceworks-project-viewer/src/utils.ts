@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from 'fs';
 import * as vscode from 'vscode';
-import { entryFileSuffix } from './constants';
+import { entryFileSuffix, npmClients, npmRegisters } from './constants';
 
 export function makeTerminalName(cwd: string, command: string): string {
   return `${path.basename(cwd)} - ${command}`;
@@ -26,6 +26,10 @@ export function openEntryFile(p: string) {
   }
 }
 
-export function getPackageManager(): string {
-  return vscode.workspace.getConfiguration('npm').get('packageManager') || 'npm';
+export function getNpmClient(): string {
+  return vscode.workspace.getConfiguration('iceworks').get('npmClient') || npmClients[0];
+}
+
+export function getNpmRegister(): string {
+  return vscode.workspace.getConfiguration('iceworks').get('npmRegister') || npmRegisters[0];
 }
