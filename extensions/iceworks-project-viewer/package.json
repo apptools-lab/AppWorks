@@ -1,243 +1,249 @@
 {
-	"name": "iceworks-project-viewer",
-	"displayName": "iceworks Project Viewer",
-	"description": "iceworks-project-viewer",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.45.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onView:nodeDependencies",
-		"onView:scripts",
-		"onView:pages",
-		"onView:components",
-		"onCommand:myExtension.addDependency"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "projectViewer",
-					"title": "Project Viewer",
-					"icon": "assets/logo.svg"
-				}
-			]
-		},
-		"views": {
-			"projectViewer": [
-				{
-					"id": "welcomePage",
-					"name": "Welcome Page",
-					"when": "workbenchState == empty"
-				},
-				{
-					"id": "npmScripts",
-					"name": "Npm Scripts",
-					"when": "workbenchState != empty"
-				},
-				{
-					"id": "pages",
-					"name": "Pages",
-					"when": "workbenchState != empty"
-				},
-				{
-					"id": "components",
-					"name": "Components",
-					"when": "workbenchState != empty"
-				},
-				{
-					"id": "nodeDependencies",
-					"name": "Node Dependencies",
-					"when": "workbenchState != empty"
-				}
-			]
-		},
-		"viewsWelcome": [
-			{
-				"view": "welcomePage",
-				"contents": "In order to use iceworks Project Viewer, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](https://github.com/ice-lab/iceworks).",
-				"when": "workbenchState == empty"
-			}
-		],
-		"commands": [
-			{
-				"command": "npmScripts.refresh",
-				"title": "Refresh",
-				"icon": {
-					"light": "assets/light/refresh.svg",
-					"dark": "assets/dark/refresh.svg"
-				}
-			},
-			{
-				"command": "npmScripts.executeCommand",
-				"title": "Run",
-				"icon": {
-					"light": "assets/light/run.svg",
-					"dark": "assets/dark/run.svg"
-				}
-			},
-			{
-				"command": "pages.add",
-				"title": "Add",
-				"icon": {
-					"light": "assets/light/add.svg",
-					"dark": "assets/dark/add.svg"
-				}
-			},
-			{
-				"command": "pages.refresh",
-				"title": "Refresh",
-				"icon": {
-					"light": "assets/light/refresh.svg",
-					"dark": "assets/dark/refresh.svg"
-				}
-			},
-			{
-				"command": "pages.openFile",
-				"title": "Open File"
-			},
-			{
-				"command": "components.add",
-				"title": "Add",
-				"icon": {
-					"light": "assets/light/add.svg",
-					"dark": "assets/dark/add.svg"
-				}
-			},
-			{
-				"command": "components.refresh",
-				"title": "Refresh",
-				"icon": {
-					"light": "assets/light/refresh.svg",
-					"dark": "assets/dark/refresh.svg"
-				}
-			},
-			{
-				"command": "nodeDependencies.addDependency",
-				"title": "Add Dependency",
-				"icon": {
-					"light": "assets/light/add.svg",
-					"dark": "assets/dark/add.svg"
-				}
-			},
-			{
-				"command": "nodeDependencies.install",
-				"title": "Install Dependencies",
-				"icon": {
-					"light": "assets/light/install.svg",
-					"dark": "assets/dark/install.svg"
-				}
-			},
-			{
-				"command": "nodeDependencies.reinstall",
-				"title": "Reinstall Dependencies",
-				"icon": {
-					"light": "assets/light/dep-reinstall.svg",
-					"dark": "assets/dark/dep-reinstall.svg"
-				}
-			},
-			{
-				"command": "nodeDependencies.refresh",
-				"title": "Refresh",
-				"icon": {
-					"light": "assets/light/refresh.svg",
-					"dark": "assets/dark/refresh.svg"
-				}
-			},
-			{
-				"command": "nodeDependencies.upgrade",
-				"title": "Upgrade Dependency",
-				"icon": {
-					"light": "assets/light/upgrade.svg",
-					"dark": "assets/dark/upgrade.svg"
-				}
-			}
-		],
-		"menus": {
-			"view/title": [
-				{
-					"command": "npmScripts.refresh",
-					"when": "view == npmScripts",
-					"group": "navigation"
-				},
-				{
-					"command": "pages.add",
-					"when": "view == pages",
-					"group": "navigation"
-				},
-				{
-					"command": "pages.refresh",
-					"when": "view == pages",
-					"group": "navigation"
-				},
-				{
-					"command": "components.add",
-					"when": "view == components",
-					"group": "navigation"
-				},
-				{
-					"command": "components.refresh",
-					"when": "view == components",
-					"group": "navigation"
-				},
-				{
-					"command": "nodeDependencies.addDependency",
-					"when": "view == nodeDependencies",
-					"group": "navigation"
-				},
-				{
-					"command": "nodeDependencies.install",
-					"when": "view == nodeDependencies",
-					"group": "navigation"
-				},
-				{
-					"command": "nodeDependencies.reinstall",
-					"when": "view == nodeDependencies",
-					"group": "navigation"
-				},
-				{
-					"command": "nodeDependencies.refresh",
-					"when": "view == nodeDependencies",
-					"group": "navigation@99"
-				}
-			],
-			"view/item/context": [
-				{
-					"command": "npmScripts.executeCommand",
-					"when": "view == npmScripts && viewItem == script",
-					"group": "inline"
-				},
-				{
-					"command": "nodeDependencies.upgrade",
-					"when": "view == nodeDependencies && viewItem == dependency",
-					"group": "inline"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/vscode": "^1.45.0",
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.11.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.30.0",
-		"@typescript-eslint/eslint-plugin": "^2.30.0",
-		"glob": "^7.1.6",
-		"mocha": "^7.1.2",
-		"typescript": "^3.8.3",
-		"vscode-test": "^1.3.0"
-	}
+  "name": "iceworks-project-viewer",
+  "displayName": "iceworks Project Viewer",
+  "description": "iceworks-project-viewer",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:nodeDependencies",
+    "onView:scripts",
+    "onView:pages",
+    "onView:components",
+    "onCommand:myExtension.addDependency"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "projectViewer",
+          "title": "Project Viewer",
+          "icon": "assets/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "projectViewer": [
+        {
+          "id": "welcomePage",
+          "name": "Welcome Page",
+          "when": "workbenchState == empty"
+        },
+        {
+          "id": "npmScripts",
+          "name": "Npm Scripts",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "pages",
+          "name": "Pages",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "components",
+          "name": "Components",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "nodeDependencies",
+          "name": "Node Dependencies",
+          "when": "workbenchState != empty"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "welcomePage",
+        "contents": "In order to use iceworks Project Viewer, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](https://github.com/ice-lab/iceworks).",
+        "when": "workbenchState == empty"
+      }
+    ],
+    "commands": [
+      {
+        "command": "npmScripts.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "npmScripts.executeCommand",
+        "title": "Run",
+        "icon": {
+          "light": "assets/light/run.svg",
+          "dark": "assets/dark/run.svg"
+        }
+      },
+      {
+        "command": "pages.add",
+        "title": "Add",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "pages.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "pages.openFile",
+        "title": "Open File"
+      },
+      {
+        "command": "components.add",
+        "title": "Add",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "components.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.addDependency",
+        "title": "Add Dependency",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.install",
+        "title": "Install Dependencies",
+        "icon": {
+          "light": "assets/light/install.svg",
+          "dark": "assets/dark/install.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.reinstall",
+        "title": "Reinstall Dependencies",
+        "icon": {
+          "light": "assets/light/dep-reinstall.svg",
+          "dark": "assets/dark/dep-reinstall.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "nodeDependencies.upgrade",
+        "title": "Upgrade Dependency",
+        "icon": {
+          "light": "assets/light/upgrade.svg",
+          "dark": "assets/dark/upgrade.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "npmScripts.refresh",
+          "when": "view == npmScripts",
+          "group": "navigation"
+        },
+        {
+          "command": "pages.add",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "pages.refresh",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "components.add",
+          "when": "view == components",
+          "group": "navigation"
+        },
+        {
+          "command": "components.refresh",
+          "when": "view == components",
+          "group": "navigation"
+        },
+        {
+          "command": "nodeDependencies.addDependency",
+          "when": "view == nodeDependencies",
+          "group": "navigation"
+        },
+        {
+          "command": "nodeDependencies.install",
+          "when": "view == nodeDependencies",
+          "group": "navigation"
+        },
+        {
+          "command": "nodeDependencies.reinstall",
+          "when": "view == nodeDependencies",
+          "group": "navigation"
+        },
+        {
+          "command": "nodeDependencies.refresh",
+          "when": "view == nodeDependencies",
+          "group": "navigation@99"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "npmScripts.executeCommand",
+          "when": "view == npmScripts && viewItem == script",
+          "group": "inline"
+        },
+        {
+          "command": "nodeDependencies.upgrade",
+          "when": "view == nodeDependencies && viewItem == dependency",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.11.0",
+    "@types/rimraf": "^3.0.0",
+    "@types/vscode": "^1.45.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
+    "mocha": "^7.1.2",
+    "typescript": "^3.8.3",
+    "vscode-test": "^1.3.0"
+  },
+  "dependencies": {
+    "latest-version": "^5.1.0",
+    "rimraf": "^3.0.2",
+    "util": "^0.12.3"
+  }
 }

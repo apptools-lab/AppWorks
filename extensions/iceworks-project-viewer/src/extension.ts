@@ -45,7 +45,10 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
 	vscode.commands.registerCommand('nodeDependencies.upgrade', (node: Dependency) => executeCommand(terminals, node));
 	vscode.commands.registerCommand('nodeDependencies.install', () => executeCommand(terminals, nodeDependenciesProvider.install()));
-	vscode.commands.registerCommand('nodeDependencies.reinstall', () => executeCommand(terminals, nodeDependenciesProvider.reinstall()));
+	vscode.commands.registerCommand('nodeDependencies.reinstall', async () => {
+		const command = await nodeDependenciesProvider.reinstall();
+		executeCommand(terminals, command);
+	});
 
 	const addDepCommandHandler = () => {
 		const quickPick = vscode.window.createQuickPick();
@@ -69,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('Module name is invalid. Please try again.');
 			return;
 		}
-		executeCommand(terminals, nodeDependenciesProvider.installDependency(depType, result));
+		executeCommand(terminals, nodeDependenciesProvider.addDependency(depType, result));
 	}
 
 	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.addDependency', addDepCommandHandler));
