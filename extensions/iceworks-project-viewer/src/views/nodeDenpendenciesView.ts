@@ -174,7 +174,7 @@ export class DependencyNode extends vscode.TreeItem {
 export async function setNpmClient() {
   const quickPick = vscode.window.createQuickPick();
   const currentNpmClient = vscode.workspace.getConfiguration('iceworks').get('npmClient', npmClients[0]);
-  quickPick.items = npmClients.map(label => ({ label, detail: `Use ${label} Client`, picked: label === currentNpmClient }));
+  quickPick.items = npmClients.map(label => ({ label, picked: label === currentNpmClient }));
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
       await vscode.workspace.getConfiguration().update('iceworks.npmClient', selection[0].label, true);
