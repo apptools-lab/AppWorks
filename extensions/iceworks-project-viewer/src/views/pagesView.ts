@@ -60,8 +60,8 @@ class Page extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', 'assets', 'light', 'page.svg'),
-    dark: path.join(__filename, '..', '..', 'assets', 'dark', 'page.svg')
+    light: path.join(__filename, '..', '..', '..', 'assets', 'light', 'page.svg'),
+    dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'page.svg')
   };
 
   contextValue = 'page';

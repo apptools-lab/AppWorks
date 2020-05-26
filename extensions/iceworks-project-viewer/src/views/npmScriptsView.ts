@@ -68,8 +68,8 @@ export class Script extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', 'assets', 'light', 'tool.svg'),
-    dark: path.join(__filename, '..', '..', 'assets', 'dark', 'tool.svg')
+    light: path.join(__filename, '..', '..', '..', 'assets', 'light', 'tool.svg'),
+    dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'tool.svg')
   };
 
   contextValue = 'script';
