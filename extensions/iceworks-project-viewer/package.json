@@ -1,7 +1,7 @@
 {
   "name": "iceworks-project-viewer",
   "displayName": "iceworks Project Viewer",
-  "description": "iceworks-project-viewer",
+  "description": "Quick to view and build your react app.",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
