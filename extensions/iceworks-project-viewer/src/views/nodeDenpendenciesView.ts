@@ -3,9 +3,9 @@ import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as fs from 'fs';
 import * as path from 'path';
-// import latestVersion from 'latest-version';
-import { pathExists, getNpmClient, getNpmRegister } from '../utils';
-import { NodeDepTypes, Command } from '../types';
+import latestVersion from 'latest-version';
+import { pathExists, getNpmClient, createNpmCommand } from '../utils';
+import { NodeDepTypes } from '../types';
 import { getNodeDepVersion } from 'ice-npm-utils';
 import { nodeDepTypes, npmClients, npmRegisters } from '../constants';
 
@@ -29,14 +29,15 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     return element;
   }
 
-  getChildren(element?: DependencyNode): Thenable<DependencyNode[]> {
+  async getChildren(element?: DependencyNode) {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
 
     if (element) {
       const { label } = element;
-      return Promise.resolve(this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes)));
+      const deps = await this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
+      return deps;
     } else {
       return Promise.resolve(nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
@@ -51,42 +52,51 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     return getNodeDepVersion(nodeModulesPath, moduleName);
   };
 
-  private getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes): DependencyNode[] {
+  private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
     if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
-      function toDep(moduleName: string, version: string) {
-        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, {
-          command: 'nodeDependencies.upgrade',
-          title: 'Upgrade Dependency',
-          arguments: [workspaceDir, `${getNpmClient()} update ${moduleName} --registry=${getNpmRegister()}`]
-        });
+      function toDep(moduleName: string, version: string, outdated: boolean) {
+        const npmCommand = createNpmCommand('update', moduleName);
+        const command = outdated ?
+          {
+            command: 'nodeDependencies.upgrade',
+            title: 'Upgrade Dependency',
+            arguments: [workspaceDir, npmCommand]
+          } :
+          undefined;
+        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
       };
 
-      return packageJson[label]
-        ? Object.keys(packageJson[label]).map((dep) => {
-          return toDep(dep, this.getDepVersion(dep) || '');
-        })
-        : [];
+      let deps: DependencyNode[] = [];
+      if (packageJson[label]) {
+        for (const dep of Object.keys(packageJson[label])) {
+          const version = this.getDepVersion(dep) || '';
+          const outdated = await this.getNpmOutdated(dep, version);
+          deps.push(toDep(dep, version, outdated));
+        }
+      }
+
+      return deps;
     } else {
       return [];
     }
   }
-  // const isOutdated = await this.getNpmOutdated(moduleName, version);
 
-  // private async getNpmOutdated(moduleName: string, version: string) {
-  //   const latest = await latestVersion(moduleName);
-  //   return version === latest;
-  // };
+  private async getNpmOutdated(moduleName: string, version: string) {
+    const latest = await latestVersion(moduleName);
+    return version !== latest;
+  };
 
   public install() {
     if (pathExists(this.packageJsonPath)) {
       const workspaceDir: string = path.dirname(this.packageJsonPath);
-      const command: Command = {
+      const npmCommand = createNpmCommand('install');
+      const command: vscode.Command = {
         command: 'nodeDependencies.install',
         title: 'Install Dependencies',
-        arguments: [workspaceDir, `${getNpmClient()} install --registry=${getNpmRegister()}`]
+        arguments: [workspaceDir, npmCommand]
       };
       return {
         command
@@ -101,10 +111,11 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       if (pathExists(nodeModulesPath)) {
         await rimrafAsync(nodeModulesPath);
       }
-      const command: Command = {
+      const npmCommand = createNpmCommand('install');
+      const command: vscode.Command = {
         command: 'nodeDependencies.reinstall',
         title: 'Reinstall Dependencies',
-        arguments: [workspaceDir, `${getNpmClient()} install --registry=${getNpmRegister()}`]
+        arguments: [workspaceDir, npmCommand]
       };
       return {
         command
@@ -117,10 +128,14 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const npmClient = getNpmClient();
     const isYarn = npmClient === 'yarn';
     const isDevDep = depType === 'devDependencies';
-    const command: Command = {
+
+    const npmCommandAction = isYarn ? 'add' : 'install';
+    const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
+    const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
+    const command: vscode.Command = {
       command: 'nodeDependencies.addDependency',
       title: 'Add Dependency',
-      arguments: [workspaceDir, `${npmClient} ${isYarn ? 'add' : 'install'} ${packageName} -${isDevDep ? 'D' : isYarn ? '' : 'S'}`]
+      arguments: [workspaceDir, npmCommand]
     };
     return {
       command
@@ -134,6 +149,7 @@ export class DependencyNode extends vscode.TreeItem {
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly version?: string,
     public readonly command?: vscode.Command,
+    public readonly outDated?: boolean
   ) {
     super(label, collapsibleState);
   }
@@ -142,19 +158,12 @@ export class DependencyNode extends vscode.TreeItem {
     return this.version ? this.version : '';
   }
 
-  // private async getNpmOutdated(moduleName: string, version: string) {
-  //   const latest = await latestVersion(moduleName);
-  //   return version !== latest;
-  // };
+  iconPath = {
+    light: path.join(__filename, '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
+    dark: path.join(__filename, '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
+  };
 
-  get iconPath() {
-    return {
-      light: path.join(__filename, '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
-      dark: path.join(__filename, '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
-    };
-  }
-
-  contextValue = this.version ? 'dependency' : 'dependenciesDir';
+  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
 export async function setNpmClient() {
@@ -164,7 +173,7 @@ export async function setNpmClient() {
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
       // if not specify the third param, it will only save to the workspace
-      await vscode.workspace.getConfiguration().update('iceworks.npmClient', selection[0].label, vscode.ConfigurationTarget.Global);
+      await vscode.workspace.getConfiguration().update('iceworks.npmClient', selection[0].label, true);
       vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
       quickPick.hide();
     }
@@ -181,7 +190,7 @@ export async function setNpmRegister() {
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
       // if not specify the third param, it will only save to the workspace
-      await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, vscode.ConfigurationTarget.Global);
+      await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
       vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
       quickPick.hide();
     }

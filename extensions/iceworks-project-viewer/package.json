@@ -239,7 +239,7 @@
         },
         {
           "command": "nodeDependencies.upgrade",
-          "when": "view == nodeDependencies && viewItem == dependency",
+          "when": "view == nodeDependencies && viewItem == outdatedDependency",
           "group": "inline"
         }
       ]

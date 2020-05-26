@@ -26,6 +26,15 @@ export function openEntryFile(p: string) {
   }
 }
 
+export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
+  const npmClient = getNpmClient();
+  let register = '';
+  if (!(npmClient === 'cnpm' || npmClient === 'tnpm')) {
+    register = `--register=${getNpmRegister()}`;
+  }
+  return `${npmClient} ${action} ${target} ${register} ${extra}`;
+}
+
 export function getNpmClient(): string {
   return vscode.workspace.getConfiguration('iceworks').get('npmClient') || npmClients[0];
 }
