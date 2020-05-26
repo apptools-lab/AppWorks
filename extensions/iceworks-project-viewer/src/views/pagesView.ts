@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists } from './utils';
+import { pathExists } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
   private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();

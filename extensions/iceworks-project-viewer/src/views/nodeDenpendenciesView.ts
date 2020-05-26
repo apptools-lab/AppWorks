@@ -4,16 +4,16 @@ import * as rimraf from 'rimraf';
 import * as fs from 'fs';
 import * as path from 'path';
 // import latestVersion from 'latest-version';
-import { pathExists, getNpmClient, getNpmRegister } from './utils';
-import { NodeDepTypes, Command } from './types';
+import { pathExists, getNpmClient, getNpmRegister } from '../utils';
+import { NodeDepTypes, Command } from '../types';
 import { getNodeDepVersion } from 'ice-npm-utils';
-import { nodeDepTypes, npmClients, npmRegisters } from './constants';
+import { nodeDepTypes, npmClients, npmRegisters } from '../constants';
 
 const rimrafAsync = util.promisify(rimraf);
 
-export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
-  private _onDidChangeTreeData: vscode.EventEmitter<Dependency | undefined> = new vscode.EventEmitter<Dependency | undefined>();
-  readonly onDidChangeTreeData: vscode.Event<Dependency | undefined> = this._onDidChangeTreeData.event;
+export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
+  private _onDidChangeTreeData: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
+  readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this._onDidChangeTreeData.event;
 
   packageJsonPath: string;
 
@@ -25,11 +25,11 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
     this._onDidChangeTreeData.fire(undefined);
   }
 
-  getTreeItem(element: Dependency): vscode.TreeItem {
+  getTreeItem(element: DependencyNode): vscode.TreeItem {
     return element;
   }
 
-  getChildren(element?: Dependency): Thenable<Dependency[]> {
+  getChildren(element?: DependencyNode): Thenable<DependencyNode[]> {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
@@ -38,27 +38,26 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
       const { label } = element;
       return Promise.resolve(this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes)));
     } else {
-      return Promise.resolve(nodeDepTypes.map(nodeDepType => new Dependency(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
+      return Promise.resolve(nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
   }
 
   private getDepVersion(moduleName: string) {
     const nodeModulesPath = path.join(this.workspaceRoot, 'node_modules');
-
     if (!pathExists(nodeModulesPath)) {
       vscode.window.showErrorMessage('The node_modules folder is empty. Please run `npm install` first.');
+      return;
     }
-
     return getNodeDepVersion(nodeModulesPath, moduleName);
   };
 
-  private getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes): Dependency[] {
+  private getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes): DependencyNode[] {
     if (pathExists(packageJsonPath)) {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string) {
-        return new Dependency(moduleName, vscode.TreeItemCollapsibleState.None, version, {
+        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, {
           command: 'nodeDependencies.upgrade',
           title: 'Upgrade Dependency',
           arguments: [workspaceDir, `${getNpmClient()} update ${moduleName} --registry=${getNpmRegister()}`]
@@ -129,7 +128,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<Dependency> {
   }
 }
 
-export class Dependency extends vscode.TreeItem {
+export class DependencyNode extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
@@ -164,6 +163,7 @@ export async function setNpmClient() {
   quickPick.items = npmClients.map(label => ({ label, detail: `Use ${label} Client`, picked: label === currentNpmClient }));
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
+      // if not specify the third param, it will only save to the workspace
       await vscode.workspace.getConfiguration().update('iceworks.npmClient', selection[0].label, vscode.ConfigurationTarget.Global);
       vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
       quickPick.hide();
@@ -180,7 +180,7 @@ export async function setNpmRegister() {
   quickPick.items = npmRegisters.map(label => ({ label, picked: label === currentNpmRegister }));
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
-      // if not 
+      // if not specify the third param, it will only save to the workspace
       await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, vscode.ConfigurationTarget.Global);
       vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
       quickPick.hide();

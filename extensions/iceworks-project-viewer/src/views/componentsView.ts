@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists } from './utils';
+import { pathExists } from '../utils';
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();

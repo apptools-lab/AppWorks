@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists, getNpmClient } from './utils';
+import { pathExists, getNpmClient } from '../utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();

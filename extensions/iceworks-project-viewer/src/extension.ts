@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
-import { NpmScriptsProvider, Script } from './npmScripts';
-import { DepNodeProvider, Dependency, setNpmClient, setNpmRegister } from './nodeDenpendencies';
-import { ComponentsProvider } from './components';
-import { PagesProvider } from './pages';
+import { NpmScriptsProvider, Script } from './views/npmScriptsView';
+import { DepNodeProvider, DependencyNode, setNpmClient, setNpmRegister } from './views/nodeDenpendenciesView';
+import { ComponentsProvider } from './views/componentsView';
+import { PagesProvider } from './views/pagesView';
 import { executeCommand } from './executeCommand';
 import { ITerminalMap } from "./types";
 import { openEntryFile } from './utils';
@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const nodeDependenciesProvider = new DepNodeProvider(rootPath);
 	vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
 	vscode.commands.registerCommand('nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
-	vscode.commands.registerCommand('nodeDependencies.upgrade', (node: Dependency) => executeCommand(terminals, node));
+	vscode.commands.registerCommand('nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node));
 	vscode.commands.registerCommand('nodeDependencies.install', () => executeCommand(terminals, nodeDependenciesProvider.install()));
 	vscode.commands.registerCommand('nodeDependencies.reinstall', async () => {
 		const command = await nodeDependenciesProvider.reinstall();
