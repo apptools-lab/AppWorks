@@ -22,8 +22,8 @@
       "activitybar": [
         {
           "id": "projectViewer",
-          "title": "Project Viewer",
-          "icon": "assets/logo.svg"
+          "title": "iceworks Project Viewer",
+          "icon": "assets/logo.png"
         }
       ]
     },
