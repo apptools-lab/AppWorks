@@ -53,12 +53,12 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.setNpmClient', setNpmClient));
 	context.subscriptions.push(vscode.commands.registerCommand('nodeDependencies.setNpmRegister', setNpmRegister));
 
-	function addDepCommandHandler(terminals: ITerminalMap) {
+	function addDepCommandHandler() {
 		const quickPick = vscode.window.createQuickPick();
 		quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
 		quickPick.onDidChangeSelection(selection => {
 			if (selection[0]) {
-				showDepInputBox(terminals, selection[0].label as NodeDepTypes)
+				showDepInputBox(selection[0].label as NodeDepTypes)
 					.catch(console.error);
 			}
 		});
@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
 		quickPick.show();
 	};
 
-	async function showDepInputBox(terminals: ITerminalMap, depType: NodeDepTypes) {
+	async function showDepInputBox(depType: NodeDepTypes) {
 		const result = await vscode.window.showInputBox({
 			placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
 		});

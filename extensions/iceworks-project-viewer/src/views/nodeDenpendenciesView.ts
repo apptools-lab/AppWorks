@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import * as util from 'util';
 import * as rimraf from 'rimraf';
 import * as fs from 'fs';
+import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { pathExists, getNpmClient, createNpmCommand } from '../utils';
@@ -10,6 +10,7 @@ import { getNodeDepVersion } from 'ice-npm-utils';
 import { nodeDepTypes, npmClients, npmRegisters } from '../constants';
 
 const rimrafAsync = util.promisify(rimraf);
+const readFileAsync = util.promisify(fs.readFile);
 
 export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
   private _onDidChangeTreeData: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
@@ -29,14 +30,14 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     return element;
   }
 
-  async getChildren(element?: DependencyNode) {
+  getChildren(element?: DependencyNode) {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
 
     if (element) {
       const { label } = element;
-      const deps = await this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
+      const deps = this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
       return deps;
     } else {
       return Promise.resolve(nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
@@ -54,7 +55,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
 
   private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
     if (pathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      const packageJson = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string, outdated: boolean) {

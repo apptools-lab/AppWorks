@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { pathExists, getNpmClient, createNpmCommand } from '../utils';
+import * as util from 'util';
+import { pathExists, createNpmCommand } from '../utils';
+
+const readFileAsync = util.promisify(fs.readFile);
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
@@ -18,7 +21,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
     this._onDidChangeTreeData.fire(undefined);
   }
 
-  getChildren(): Thenable<Script[]> {
+  async getChildren() {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
@@ -30,9 +33,9 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
     }
   }
 
-  private getNpmScripts(packageJsonPath: string): Script[] {
+  private async getNpmScripts(packageJsonPath: string) {
     if (pathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      const packageJson = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       const toScript = (scriptName: string, scriptCommand: string): Script => {

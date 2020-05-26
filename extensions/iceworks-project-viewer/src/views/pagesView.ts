@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as util from 'util';
 import { pathExists } from '../utils';
+
+const readdir = util.promisify(fs.readdir);
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
   private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
@@ -17,24 +20,25 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
     this._onDidChangeTreeData.fire(undefined);
   }
 
-  getChildren(): Thenable<Page[]> {
+  getChildren() {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
     const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');
     if (pathExists(pagesPath)) {
-      return Promise.resolve(this.getPages(pagesPath));
+      const pages = this.getPages(pagesPath);
+      return Promise.resolve(pages);
     } else {
       return Promise.resolve([]);
     }
   }
 
-  private getPages(pagesPath: string): Page[] {
+  private async getPages(pagesPath: string) {
     if (pathExists(pagesPath)) {
       const toPage = (pageName: string) => {
         const pageEntryPath = path.join(pagesPath, pageName);
 
-        const cmdObj = {
+        const cmdObj: vscode.Command = {
           command: 'pages.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
@@ -43,7 +47,7 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
         return new Page(pageName, cmdObj);
       };
 
-      const pagesName = fs.readdirSync(pagesPath);
+      const pagesName = await readdir(pagesPath);
       return pagesName.map(pageName => toPage(pageName));
     } else {
       return [];

@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as util from 'util';
 import { pathExists } from '../utils';
+
+const readdir = util.promisify(fs.readdir);
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
@@ -18,24 +21,25 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
     return element;
   }
 
-  getChildren(): Thenable<Component[]> {
+  getChildren() {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
     const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
     if (pathExists(componentsPath)) {
-      return Promise.resolve(this.getComponents(componentsPath));
+      const components = this.getComponents(componentsPath);
+      return Promise.resolve(components);
     } else {
       return Promise.resolve([]);
     }
   }
 
-  private getComponents(componentsPath: string): Component[] {
+  private async getComponents(componentsPath: string) {
     if (pathExists(componentsPath)) {
       const toComponent = (componentName: string) => {
         const pageEntryPath = path.join(componentsPath, componentName);
 
-        const cmdObj = {
+        const cmdObj: vscode.Command = {
           command: 'components.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
@@ -44,7 +48,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
         return new Component(componentName, cmdObj);
       };
 
-      const componentsName = fs.readdirSync(componentsPath);
+      const componentsName = await readdir(componentsPath);
       return componentsName.map(componentName => toComponent(componentName));
     } else {
       return [];
