@@ -58,6 +58,7 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-design-pro": "^0.x",
+    "classnames": "^2.2.6",
     "ejs": "^3.0.1",
     "fs-extra": "^9.0.0",
     "react": "^16.8.0",

@@ -12,7 +12,7 @@ class CreateProjectForm extends React.Component<IProjectFormProps> {
   render() {
     const { field, onOpenFolderDialog } = this.props;
     return (
-      <Form field={field} className={styles.form} responsive fullWidth>
+      <Form field={field} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
           label="项目名称"
