@@ -9,6 +9,7 @@
   "categories": [
     "Other"
   ],
+  "icon": "assets/logo.png",
   "activationEvents": [
     "onView:nodeDependencies",
     "onView:scripts",
@@ -264,6 +265,10 @@
         }
       }
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
