@@ -1,0 +1,21 @@
+{
+  "outputDir": "./out/assets",
+  "publicPath": "./",
+  "devServer": {
+    "writeToDisk": true
+  },
+  "plugins": [
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": "@alifd/theme-design-pro"
+      }
+    ],
+    [
+      "build-plugin-css-assets-local",
+      {
+        "activeInDev": true
+      }
+    ]
+  ]
+}
