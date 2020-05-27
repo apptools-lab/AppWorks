@@ -1,0 +1,12 @@
+.StepForm {
+  width: 700px;
+  margin: 40px auto 24px;
+
+  .content,
+  .actions {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

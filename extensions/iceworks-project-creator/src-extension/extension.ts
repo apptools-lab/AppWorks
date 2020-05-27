@@ -14,6 +14,20 @@ export function activate(context: vscode.ExtensionContext) {
 			);
 
 			panel.webview.html = getWebviewContent(context.extensionPath);
+
+			panel.webview.onDidReceiveMessage(async message => {
+				const options: vscode.OpenDialogOptions = {
+					canSelectFolders: true,
+					canSelectFiles: false,
+					canSelectMany: false,
+					openLabel: 'Open',
+				};
+				if (message.command === 'openFolderDialog') {
+					const selectUri = await vscode.window.showOpenDialog(options);
+					const { fsPath } = selectUri[0];
+					panel.webview.postMessage({ command: 'onGetProjectPath', projectPath: fsPath });
+				}
+			}, undefined, context.subscriptions);
 		})
 	);
 }

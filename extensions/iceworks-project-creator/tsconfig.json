@@ -39,7 +39,8 @@
   },
   "include": [
     "src/*",
-    ".ice"
+    ".ice",
+    "typings.d.ts"
   ],
   "exclude": [
     "node_modules",
