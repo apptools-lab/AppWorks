@@ -1,0 +1,61 @@
+{
+	"name": "iceworks-lowcode-page-builder",
+	"displayName": "iceworks Lowcode Page Builder",
+	"description": "Build Page UI by Lowcode",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.45.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:iceworks-lowcode-page-builder.create"
+	],
+  "main": "./build/ext-src/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "iceworks-lowcode-page-builder.create",
+				"title": "Create Page"
+			}
+		]
+	},
+	"scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "npm run build:icejs && npm run compile",
+    "compile": "tsc -p tsconfig.extension.json",
+    "lint": "npm run lint:ext && npm run lint:src",
+		"lint:ext": "eslint ext-src --ext ts",
+    "lint:src": "npm run eslint:icejs && npm run stylelint:icejs",
+		"watch": "tsc -watch -p tsconfig.extension.json",
+		"pretest": "npm run compile && npm run lint",
+    "build:icejs": "icejs build",
+    "start:icejs": "icejs start",
+    "eslint:icejs": "eslint --no-eslintrc --cache --ext .js,.jsx --config ./.eslintrc.icejs.js ./",
+    "stylelint:icejs": "stylelint ./**/*.scss"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.45.0",
+		"@types/glob": "^7.1.1",
+		"@types/node": "^13.11.0",
+		"eslint": "^6.8.0",
+		"@typescript-eslint/parser": "^2.30.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+		"glob": "^7.1.6",
+		"typescript": "^3.8.3",
+    "@ice/spec": "^1.0.0",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "build-plugin-css-assets-local": "^0.1.0",
+    "ice.js": "^1.0.0",
+    "stylelint": "^13.2.0"
+  },
+  "dependencies": {
+    "@alifd/next": "^1.19.4",
+    "moment": "^2.24.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "@alifd/theme-design-pro": "^0.x"
+  }
+}
