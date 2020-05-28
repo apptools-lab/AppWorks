@@ -1,17 +1,20 @@
-.StepForm {
-  width: 700px;
-  margin: 40px auto 24px;
+.container {
+  background: white;
+  .StepForm {
+    width: 90vw;
+    margin: 40px auto 24px;
 
-  .content,
-  .actions {
-    margin-top: 30px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+    .content,
+    .actions {
+      margin-top: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
 
-  .content {
-    align-items: center;
-    min-height: 650px;
+    .content {
+      align-items: center;
+      min-height: 500px;
+    }
   }
 }

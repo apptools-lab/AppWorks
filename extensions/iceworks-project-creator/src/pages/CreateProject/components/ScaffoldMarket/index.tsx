@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { request } from 'ice';
 import styles from './index.module.scss';
 import SelectedCard from '@/components/SelectCard';
-import { officialMaterialSource } from '@/constants';
 
-function ScaffoldMarket() {
+const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialTypeSelected, setMaterialTypeSelected] = useState('PCWeb');
   const [materialSelected, setMaterialSelected] = useState(null);
+  const [scaffoldMaterials, setScaffoldMaterials] = useState({ PCWeb: [], wireless: [] });
 
   const scaffoldRegisterCard = [
     {
@@ -20,54 +19,30 @@ function ScaffoldMarket() {
       content: '无线跨端' // 描述
     }
   ];
-  let scaffoldMaterials = {
-    PCWeb: [],
-    wireless: [],
-  };
-  // const scaffoldMaterialCard = [
-  //   {
-  //     title: 'Lite',
-  //     name: 'lite',
-  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-  //   },
-  //   {
-  //     title: 'Ice Pro',
-  //     name: 'icePro',
-  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-  //   },
-  //   {
-  //     title: 'Ice Pro',
-  //     name: 'icePro1',
-  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-  //   },
-  // ];
-
-
 
   function onScaffoldTypeClick(type) {
     setMaterialTypeSelected(type.name);
   }
 
-  function onScaffoldMaterialClick(material) {
-    setMaterialSelected(material.name);
+  function onScaffoldMaterialClick(scaffold) {
+    setMaterialSelected(scaffold.name);
+    onScaffoldSelect(scaffold);
   }
   useEffect(() => {
-    async function getScaffoldMaterial() {
-      for (let key of Object.keys(officialMaterialSource)) {
-        const url = officialMaterialSource[key];
-        try {
-          const data = await request({ method: 'GET', url });
-          console.log(data);
-          scaffoldMaterials[key] = data;
-        } catch (err) {
-          console.log(err);
-        }
+    const vscode = acquireVsCodeApi();
+    vscode.postMessage({
+      command: 'getScaffolds'
+    });
+    function listener(event) {
+      const message = event.data;
+      if (message.command === 'onGetScaffolds') {
+        setScaffoldMaterials(message.scaffolds);
       }
     }
-    getScaffoldMaterial();
+    window.addEventListener('message', listener);
+    return () => {
+      window.removeEventListener('message', listener);
+    };
   }, []);
   return (
     <div className={styles.container}>
@@ -88,8 +63,8 @@ function ScaffoldMarket() {
           <SelectedCard
             key={item.name}
             title={item.title}
-            content={item.content}
-            media={item.media}
+            content={item.description}
+            media={<img height={120} src={item.screenshot} />}
             selected={materialSelected === item.name}
             width={200}
             onClick={() => onScaffoldMaterialClick(item)}
@@ -98,6 +73,6 @@ function ScaffoldMarket() {
       </div>
     </div>
   );
-}
+};
 
 export default ScaffoldMarket;

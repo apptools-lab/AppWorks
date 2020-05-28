@@ -27,6 +27,7 @@ class CreateProjectForm extends React.Component<IProjectFormProps> {
           <Input
             placeholder="请选择项目路径"
             name="projectPath"
+            aria-label="projectPath"
             innerAfter={<img src={require('@/assets/folder.svg')} onClick={onOpenFolderDialog} style={{ width: 20, height: 20, cursor: 'pointer', marginRight: 5 }} />}
           />
         </Form.Item>

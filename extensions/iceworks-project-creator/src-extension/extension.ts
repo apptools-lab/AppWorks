@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import axios from 'axios';
+import { officialMaterialSources } from './constants';
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -16,17 +18,32 @@ export function activate(context: vscode.ExtensionContext) {
 			panel.webview.html = getWebviewContent(context.extensionPath);
 
 			panel.webview.onDidReceiveMessage(async message => {
-				const options: vscode.OpenDialogOptions = {
-					canSelectFolders: true,
-					canSelectFiles: false,
-					canSelectMany: false,
-					openLabel: 'Open',
-				};
 				if (message.command === 'openFolderDialog') {
+					const options: vscode.OpenDialogOptions = {
+						canSelectFolders: true,
+						canSelectFiles: false,
+						canSelectMany: false,
+						openLabel: 'Open',
+					};
 					const selectUri = await vscode.window.showOpenDialog(options);
 					const { fsPath } = selectUri[0];
 					panel.webview.postMessage({ command: 'onGetProjectPath', projectPath: fsPath });
 				}
+
+				if (message.command === 'getScaffolds') {
+					const scaffolds = {};
+					const sourcesKeys = Object.keys(officialMaterialSources);
+					for (let key of sourcesKeys) {
+						try {
+							const response = await axios.get(officialMaterialSources[key]);
+							scaffolds[key] = response.data.scaffolds;
+						} catch (e) {
+							scaffolds[key] = [];
+						}
+					}
+					panel.webview.postMessage({ command: 'onGetScaffolds', scaffolds });
+				}
+
 			}, undefined, context.subscriptions);
 		})
 	);
@@ -59,7 +76,6 @@ function getWebviewContent(extensionPath: string) {
 		`
 	);
 }
-
 
 function getNonce(): string {
 	let text = '';

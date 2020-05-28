@@ -14,20 +14,23 @@ interface ISelectedCardProps {
 const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, width, onClick, media }) => {
   const cardBorderStyle = `1px solid ${selected ? '#1274e7' : '#e6e7eb'}`;
   return (
-    <Card
-      free
-      className={styles.card}
-      style={{ width, border: cardBorderStyle }}
-      onClick={onClick}
-    >
-      <Card.Media>
-        {media}
-      </Card.Media>
-      <Card.Header title={title} />
-      <Card.Content>
-        {content}
-      </Card.Content>
-    </Card>
+    <div>
+      <Card
+        free
+        className={styles.card}
+        style={{ width, border: cardBorderStyle }}
+        onClick={onClick}
+      >
+        {selected && <img width={30} height={30} src={require('@/assets/success.svg')} className={styles.successIcon} />}
+        <Card.Media>
+          {media}
+        </Card.Media>
+        <Card.Header title={title} />
+        <Card.Content>
+          {content}
+        </Card.Content>
+      </Card>
+    </div>
   );
 };
 

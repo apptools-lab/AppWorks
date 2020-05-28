@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Field, Step, Button } from '@alifd/next';
+import { Card, Form, Field, Step, Button, Message } from '@alifd/next';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import InitProject from './components/InitProject';
 import styles from './index.module.scss';
+import Header from './components/Header';
 
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
@@ -11,7 +12,7 @@ const CreateProject: React.FC = () => {
   const steps = [
     {
       title: '选择模板',
-      content: <ScaffoldMarket />
+      content: <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} />
     },
     {
       title: '填写信息',
@@ -30,16 +31,30 @@ const CreateProject: React.FC = () => {
     });
   }
 
+  function onScaffoldSelect(scaffold) {
+    projectField.setValue('scaffold', scaffold);
+  };
+
   const onSubmit = async () => {
     const { errors } = await projectField.validatePromise();
     if (errors) {
       return;
     }
-    const values = projectField.getValues();
-    console.log('values:', values);
-
+    // TODO:
+    const values: any = projectField.getValues();
+    console.log('values:', JSON.stringify(values.scaffold));
+    console.log('values:', values.projectName);
+    console.log('values:', values.projectPath);
     goNext();
   };
+
+  function onScaffoldSubmit() {
+    if (!projectField.getValue('scaffold')) {
+      Message.error('请选择模块');
+      return;
+    }
+    goNext();
+  }
 
   async function goNext() {
     setStep(currentStep + 1);
@@ -50,13 +65,14 @@ const CreateProject: React.FC = () => {
   };
 
   function goInitial() {
+    console.log('Init');
     setStep(0);
   };
 
   let actions;
   switch (currentStep) {
     case 0:
-      actions = <Button type="primary" onClick={goNext}>下一步</Button>;
+      actions = <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>;
       break;
     case 1:
       actions = <>
@@ -84,17 +100,20 @@ const CreateProject: React.FC = () => {
     };
   }, []);
   return (
-    <Card free>
-      <Card.Content className={styles.StepForm}>
-        <Step current={currentStep} shape="circle">
-          {steps.map((step) => (
-            <Step.Item key={step.title} title={step.title} />
-          ))}
-        </Step>
-        <div className={styles.content}>{steps[currentStep].content}</div>
-        <div className={styles.actions}>{actions}</div>
-      </Card.Content>
-    </Card>
+    <div className={styles.container}>
+      <Header />
+      <Card free>
+        <Card.Content className={styles.StepForm}>
+          <Step current={currentStep} shape="circle">
+            {steps.map((step) => (
+              <Step.Item key={step.title} title={step.title} />
+            ))}
+          </Step>
+          <div className={styles.content}>{steps[currentStep].content}</div>
+          <div className={styles.actions}>{actions}</div>
+        </Card.Content>
+      </Card>
+    </div>
   );
 };
 
