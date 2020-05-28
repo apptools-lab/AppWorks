@@ -64,7 +64,7 @@
       },
       {
         "view": "npmScripts",
-        "contents": "npm scripts could not be found in package.json"
+        "contents": "npm scripts could not be found in package.json."
       },
       {
         "view": "pages",

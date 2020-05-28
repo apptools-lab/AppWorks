@@ -53,7 +53,9 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string, outdated: boolean) {
-        const npmCommand = createNpmCommand('update', moduleName);
+        const packageManager = getCurrentPackageManager();
+        const isYarn = packageManager === 'yarn';
+        const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
         const command = outdated ?
           {
             command: 'iceworksMain.nodeDependencies.upgrade',
