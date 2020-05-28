@@ -1,70 +1,91 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+import { request } from 'ice';
 import styles from './index.module.scss';
-import MaterialScaffold from '@/components/MaterialScaffold';
+import SelectedCard from '@/components/SelectCard';
+import { officialMaterialSource } from '@/constants';
 
 function ScaffoldMarket() {
-  const [registerSelected, setRegisterSelected] = useState(null);
+  const [materialTypeSelected, setMaterialTypeSelected] = useState('PCWeb');
   const [materialSelected, setMaterialSelected] = useState(null);
 
   const scaffoldRegisterCard = [
     {
       title: 'PC Web',
       name: 'PCWeb',
-      content: '描述描述描述描述描述描述描述描述描述描述',
+      content: 'PC Web', // 描述
     },
     {
       title: '无线跨端',
       name: 'wireless',
-      content: '描述描述描述描述描述描述描述描述描述描述'
+      content: '无线跨端' // 描述
     }
   ];
+  let scaffoldMaterials = {
+    PCWeb: [],
+    wireless: [],
+  };
+  // const scaffoldMaterialCard = [
+  //   {
+  //     title: 'Lite',
+  //     name: 'lite',
+  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
+  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
+  //   },
+  //   {
+  //     title: 'Ice Pro',
+  //     name: 'icePro',
+  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
+  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
+  //   },
+  //   {
+  //     title: 'Ice Pro',
+  //     name: 'icePro1',
+  //     media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
+  //     content: '这是一段描述这是一段描述这是一段描述这是一段描述'
+  //   },
+  // ];
 
-  const scaffoldMaterialCard = [
-    {
-      title: 'Lite',
-      name: 'lite',
-      media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-      content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-    },
-    {
-      title: 'Ice Pro',
-      name: 'icePro',
-      media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-      content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-    },
-    {
-      title: 'Ice Pro',
-      name: 'icePro1',
-      media: <img height={120} src="https://img.alicdn.com/tfs/TB1FNIOSFXXXXaWXXXXXXXXXXXX-260-188.png" />,
-      content: '这是一段描述这是一段描述这是一段描述这是一段描述'
-    },
-  ];
 
-  function onScaffoldRegisterClick(register) {
-    setRegisterSelected(register.name);
+
+  function onScaffoldTypeClick(type) {
+    setMaterialTypeSelected(type.name);
   }
 
   function onScaffoldMaterialClick(material) {
     setMaterialSelected(material.name);
   }
-
+  useEffect(() => {
+    async function getScaffoldMaterial() {
+      for (let key of Object.keys(officialMaterialSource)) {
+        const url = officialMaterialSource[key];
+        try {
+          const data = await request({ method: 'GET', url });
+          console.log(data);
+          scaffoldMaterials[key] = data;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+    getScaffoldMaterial();
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.scaffoldRegister}>
         {scaffoldRegisterCard.map(item => (
-          <MaterialScaffold
+          <SelectedCard
             key={item.name}
             title={item.title}
             content={item.content}
-            selected={registerSelected === item.name}
+            selected={materialTypeSelected === item.name}
             width={180}
-            onClick={() => onScaffoldRegisterClick(item)}
+            onClick={() => onScaffoldTypeClick(item)}
           />
         ))}
       </div>
       <div className={styles.materialScaffold}>
-        {scaffoldMaterialCard.map(item => (
-          <MaterialScaffold
+        {scaffoldMaterials[materialTypeSelected].map(item => (
+          <SelectedCard
             key={item.name}
             title={item.title}
             content={item.content}

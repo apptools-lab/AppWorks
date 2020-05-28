@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Form, Input } from '@alifd/next';
 import styles from './index.module.scss';
-import CustomIcon from '@/components/CustomIcon';
 
 interface IProjectFormProps {
   field: any;
@@ -25,14 +24,12 @@ class CreateProjectForm extends React.Component<IProjectFormProps> {
         </Form.Item>
 
         <Form.Item colSpan={12} label="项目路径" required requiredMessage="请选择项目路径">
-          <Input placeholder="请选择项目路径" name="projectPath"
-            innerAfter={<CustomIcon type="icon-folder" onClick={onOpenFolderDialog} style={{ cursor: 'pointer', marginRight: 4 }} />}
+          <Input
+            placeholder="请选择项目路径"
+            name="projectPath"
+            innerAfter={<img src={require('@/assets/folder.svg')} onClick={onOpenFolderDialog} style={{ width: 20, height: 20, cursor: 'pointer', marginRight: 5 }} />}
           />
         </Form.Item>
-        {/* 
-        <Form.Item colSpan={12}>
-          {actions}
-        </Form.Item> */}
       </Form>
     );
   }

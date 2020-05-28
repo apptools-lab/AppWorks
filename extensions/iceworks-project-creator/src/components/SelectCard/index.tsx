@@ -2,7 +2,16 @@ import * as React from 'react';
 import { Card } from '@alifd/next';
 import styles from './index.module.scss';
 
-function MaterialScaffold({ title, content, selected, width, onClick, media }) {
+interface ISelectedCardProps {
+  title: string;
+  content?: string | React.ReactNode;
+  selected: boolean;
+  width: number;
+  onClick: any;
+  media?: string | React.ReactNode;
+}
+
+const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, width, onClick, media }) => {
   const cardBorderStyle = `1px solid ${selected ? '#1274e7' : '#e6e7eb'}`;
   return (
     <Card
@@ -20,6 +29,6 @@ function MaterialScaffold({ title, content, selected, width, onClick, media }) {
       </Card.Content>
     </Card>
   );
-}
+};
 
-export default MaterialScaffold;
+export default SelectedCard;
