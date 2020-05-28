@@ -31,27 +31,27 @@
       "iceworksApp": [
         {
           "id": "welcomePage",
-          "name": "Welcome Page",
+          "name": "%iceworksApp.view.welcomePage.name%",
           "when": "workbenchState == empty"
         },
         {
           "id": "npmScripts",
-          "name": "Npm Scripts",
+          "name": "%iceworksApp.view.npmScripts.name%",
           "when": "workbenchState != empty"
         },
         {
           "id": "pages",
-          "name": "Pages",
+          "name": "%iceworksApp.view.pages.name%",
           "when": "workbenchState != empty"
         },
         {
           "id": "components",
-          "name": "Components",
+          "name": "%iceworksApp.view.components.name%",
           "when": "workbenchState != empty"
         },
         {
           "id": "nodeDependencies",
-          "name": "Node Dependencies",
+          "name": "%iceworksApp.view.nodeDependencies.name%",
           "when": "workbenchState != empty"
         }
       ]
@@ -59,30 +59,30 @@
     "viewsWelcome": [
       {
         "view": "welcomePage",
-        "contents": "In order to use iceworks App, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:workbench.action.createProject)\nTo learn more about how to use iceworks in VS Code [read the docs](https://github.com/ice-lab/iceworks).",
+        "contents": "%iceworksApp.viewsWelcome.welcomePage.contents%",
         "when": "workbenchState == empty"
       },
       {
         "view": "npmScripts",
-        "contents": "npm scripts could not be found in package.json."
+        "contents": "%iceworksApp.viewsWelcome.npmScripts.contents%"
       },
       {
         "view": "pages",
-        "contents": "Pages could not be found."
+        "contents": "%iceworksApp.viewsWelcome.pages.contents%"
       },
       {
         "view": "components",
-        "contents": "Components could not be found."
+        "contents": "%iceworksApp.viewsWelcome.components.contents%"
       },
       {
         "view": "nodeDependencies",
-        "contents": "Node dependencies could not be found."
+        "contents": "%iceworksApp.viewsWelcome.nodeDependencies.contents%"
       }
     ],
     "commands": [
       {
         "command": "iceworksApp.npmScripts.refresh",
-        "title": "Refresh",
+        "title": "%iceworksApp.npmScripts.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -90,7 +90,7 @@
       },
       {
         "command": "iceworksApp.npmScripts.executeCommand",
-        "title": "Run",
+        "title": "%iceworksApp.npmScripts.executeCommand.title%",
         "icon": {
           "light": "assets/light/run.svg",
           "dark": "assets/dark/run.svg"
@@ -98,7 +98,7 @@
       },
       {
         "command": "iceworksApp.pages.add",
-        "title": "Add",
+        "title": "%iceworksApp.pages.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -106,7 +106,7 @@
       },
       {
         "command": "iceworksApp.pages.refresh",
-        "title": "Refresh",
+        "title": "%iceworksApp.pages.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -114,11 +114,11 @@
       },
       {
         "command": "iceworksApp.pages.openFile",
-        "title": "Open File"
+        "title": "%iceworksApp.pages.openFile.title%"
       },
       {
         "command": "iceworksApp.components.add",
-        "title": "Add",
+        "title": "%iceworksApp.components.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -126,7 +126,7 @@
       },
       {
         "command": "iceworksApp.components.refresh",
-        "title": "Refresh",
+        "title": "%iceworksApp.components.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -134,7 +134,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.setPackageManager",
-        "title": "Set Npm Client",
+        "title": "%iceworksApp.nodeDependencies.setPackageManager.title%",
         "icon": {
           "light": "assets/light/setting.svg",
           "dark": "assets/dark/setting.svg"
@@ -142,7 +142,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.setNpmRegister",
-        "title": "Set Npm Register",
+        "title": "%iceworksApp.nodeDependencies.setNpmRegister.title%",
         "icon": {
           "light": "assets/light/register.svg",
           "dark": "assets/dark/register.svg"
@@ -150,7 +150,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.addDependency",
-        "title": "Add Dependency",
+        "title": "%iceworksApp.nodeDependencies.addDependency.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -158,7 +158,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.install",
-        "title": "Install Dependencies",
+        "title": "%iceworksApp.nodeDependencies.install.title%",
         "icon": {
           "light": "assets/light/install.svg",
           "dark": "assets/dark/install.svg"
@@ -166,7 +166,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.reinstall",
-        "title": "Reinstall Dependencies",
+        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
         "icon": {
           "light": "assets/light/dep-reinstall.svg",
           "dark": "assets/dark/dep-reinstall.svg"
@@ -174,7 +174,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.refresh",
-        "title": "Refresh",
+        "title": "%iceworksApp.nodeDependencies.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -182,7 +182,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.upgrade",
-        "title": "Upgrade Dependency",
+        "title": "%iceworksApp.nodeDependencies.upgrade.title%",
         "icon": {
           "light": "assets/light/upgrade.svg",
           "dark": "assets/dark/upgrade.svg"
@@ -219,27 +219,27 @@
         {
           "command": "iceworksApp.nodeDependencies.setPackageManager",
           "when": "view == nodeDependencies",
-          "group": "navigation@01"
+          "group": "navigation@21"
         },
         {
           "command": "iceworksApp.nodeDependencies.setNpmRegister",
           "when": "view == nodeDependencies",
-          "group": "navigation@02"
+          "group": "navigation@22"
         },
         {
           "command": "iceworksApp.nodeDependencies.addDependency",
           "when": "view == nodeDependencies",
-          "group": "navigation"
+          "group": "navigation@11"
         },
         {
           "command": "iceworksApp.nodeDependencies.install",
           "when": "view == nodeDependencies",
-          "group": "navigation"
+          "group": "navigation@12"
         },
         {
           "command": "iceworksApp.nodeDependencies.reinstall",
           "when": "view == nodeDependencies",
-          "group": "navigation"
+          "group": "navigation@13"
         },
         {
           "command": "iceworksApp.nodeDependencies.refresh",
@@ -272,7 +272,7 @@
             "tnpm",
             "yarn"
           ],
-          "description": "iceworks npm package manager."
+          "description": "%iceworksApp.configuration.properties.iceworks.packageManager.description%"
         },
         "iceworks.npmRegister": {
           "type": "string",
@@ -281,7 +281,7 @@
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
           ],
-          "description": "iceworks npm register."
+          "description": "%iceworksApp.configuration.properties.iceworks.npmRegister.description%"
         }
       }
     }
