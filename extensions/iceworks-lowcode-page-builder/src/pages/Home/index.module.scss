@@ -1,0 +1,15 @@
+.row {
+  height: 100%;
+  .col {
+    height: 100%;
+  }
+}
+
+.blockIsDraging {
+  z-index: 99999;
+  overflow: hidden;
+
+  img {
+    width: 500px;
+  }
+}

@@ -1,17 +1,10 @@
-import BasicLayout from '@/layouts/BasicLayout';
-import Dashboard from '@/pages/Dashboard';
+import Home from '@/pages/Home';
 
 const routerConfig = [
   {
     path: '/',
-    component: BasicLayout,
-    children: [
-      {
-        path: '/',
-        exact: true,
-        component: Dashboard,
-      },
-    ],
+    exact: true,
+    component: Home,
   },
 ];
 export default routerConfig;
