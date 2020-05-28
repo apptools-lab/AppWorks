@@ -1,10 +1,8 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as util from 'util';
 import { pathExists, createNpmCommand } from '../utils';
-
-const readFileAsync = util.promisify(fs.readFile);
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
@@ -35,12 +33,12 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
 
   private async getNpmScripts(packageJsonPath: string) {
     if (pathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
+      const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       const toScript = (scriptName: string, scriptCommand: string): Script => {
         const cmdObj: vscode.Command = {
-          command: 'npmScripts.executeCommand',
+          command: 'iceworksMain.npmScripts.executeCommand',
           title: 'Run Script',
           arguments: [workspaceDir, createNpmCommand('run', scriptName)]
         };

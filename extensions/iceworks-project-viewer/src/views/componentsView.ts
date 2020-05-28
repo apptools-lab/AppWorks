@@ -1,10 +1,8 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
+import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as util from 'util';
 import { pathExists } from '../utils';
-
-const readdir = util.promisify(fs.readdir);
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
@@ -40,7 +38,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
         const pageEntryPath = path.join(componentsPath, componentName);
 
         const cmdObj: vscode.Command = {
-          command: 'components.openFile',
+          command: 'iceworksMain.components.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
         };
@@ -48,7 +46,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
         return new Component(componentName, cmdObj);
       };
 
-      const componentsName = await readdir(componentsPath);
+      const componentsName = await fse.readdir(componentsPath);
       return componentsName.map(componentName => toComponent(componentName));
     } else {
       return [];

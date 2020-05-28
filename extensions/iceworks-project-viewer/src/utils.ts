@@ -1,19 +1,47 @@
-import * as path from "path";
-import * as fs from 'fs';
+import * as path from 'path';
+import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
-import { entryFileSuffix, npmClients, npmRegisters } from './constants';
+import { Terminal, TerminalOptions } from 'vscode';
+import { entryFileSuffix } from './constants';
+import { ITerminalMap } from './types';
 
-export function makeTerminalName(cwd: string, command: string): string {
+export function createTerminalName(cwd: string, command: string): string {
   return `${path.basename(cwd)} - ${command}`;
 }
 
-export function pathExists(p: string): boolean {
+export function pathExists(p: string) {
   try {
-    fs.accessSync(p);
+    fse.accessSync(p);
   } catch (err) {
     return false;
   }
   return true;
+}
+
+export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Command) {
+  if (!script.arguments) {
+    return;
+  }
+  const args = script.arguments;
+  let [cwd, command, terminalName] = args;
+  if (!command) {
+    return;
+  }
+  terminalName = terminalName ? terminalName : command;
+  const name: string = createTerminalName(cwd, terminalName);
+
+  let terminal: Terminal;
+
+  if (terminalMapping.has(name)) {
+    terminal = terminalMapping.get(name)!;
+  } else {
+    const terminalOptions: TerminalOptions = { cwd, name };
+    terminal = vscode.window.createTerminal(terminalOptions);
+    terminalMapping.set(name, terminal);
+  }
+
+  terminal.show();
+  terminal.sendText(command);
 }
 
 export function openEntryFile(p: string) {
@@ -27,18 +55,32 @@ export function openEntryFile(p: string) {
 }
 
 export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
-  const npmClient = getNpmClient();
+  const packageManager = getCurrentPackageManager();
   let register = '';
-  if (!(npmClient === 'cnpm' || npmClient === 'tnpm' || action === 'run')) {
-    register = `--register=${getNpmRegister()}`;
+  if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
+    register = `--register=${getCurrentNpmRegister()}`;
   }
-  return `${npmClient} ${action} ${target} ${register} ${extra}`;
+  return `${packageManager} ${action} ${target} ${register} ${extra}`;
 }
 
-export function getNpmClient(): string {
-  return vscode.workspace.getConfiguration('iceworks').get('npmClient') || npmClients[0];
+export function getCurrentPackageManager() {
+  const packageManagers = getPackageManagers();
+  return vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
 }
 
-export function getNpmRegister(): string {
-  return vscode.workspace.getConfiguration('iceworks').get('npmRegister') || npmRegisters[0];
+export function getCurrentNpmRegister(): string {
+  const npmRegisters = getNpmRegisters();
+  return vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
+}
+
+export function getPackageManagers() {
+  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
+  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
+  return packageJson.contributes.configuration.properties['iceworks.packageManager'].enum;
+}
+
+export function getNpmRegisters() {
+  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
+  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
+  return packageJson.contributes.configuration.properties['iceworks.npmRegister'].enum;
 }

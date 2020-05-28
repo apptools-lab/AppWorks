@@ -232,14 +232,17 @@ function checkAliInternal(): Promise<boolean> {
 /**
  * 获取已安装在本地的模块版本号
  * 
- * @param nodeModulesPath
- * @param moduleName
+ * @param projectPath
+ * @param packageName
  */
-function getNodeDepVersion(nodeModulesPath: string, moduleName: string): string {
-  const packageJsonPath = path.join(nodeModulesPath, moduleName, 'package.json');
-
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.version;
+function getPackageLocalVersion(projectPath: string, packageName: string): string {
+  try {
+    const packageJsonPath = path.join(projectPath, 'node_modules', packageName, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    return packageJson.version;
+  } catch (err) {
+    return ''
+  }
 }
 
 export {
@@ -254,5 +257,5 @@ export {
   getNpmTarball,
   getAndExtractTarball,
   log,
-  getNodeDepVersion,
+  getPackageLocalVersion,
 };
