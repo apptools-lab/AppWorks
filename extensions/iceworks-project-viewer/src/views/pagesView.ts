@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as util from 'util';
 import { pathExists } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
