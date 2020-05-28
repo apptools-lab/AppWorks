@@ -1,8 +1,8 @@
 [English](./README.md) | 简体中文
 
-# iceworks Project Viewer
+# iceworks App
 
-它可以帮助你预览你的 React 项目，包括 npm 脚本，页面，组件和依赖信息。它还支持快速安装或升级依赖，添加新页面和组件等等。
+它可以帮助你预览你的 React 项目和 Rax 项目，包括 npm 脚本，页面，组件和依赖信息。它还支持快速安装或升级依赖，添加新页面和组件等等。
 
 ## 用法
 

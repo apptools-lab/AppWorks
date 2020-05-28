@@ -36,7 +36,7 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
         const pageEntryPath = path.join(pagesPath, pageName);
 
         const cmdObj: vscode.Command = {
-          command: 'iceworksMain.pages.openFile',
+          command: 'iceworksApp.pages.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
         };

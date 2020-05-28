@@ -58,7 +58,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
         const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
         const command = outdated ?
           {
-            command: 'iceworksMain.nodeDependencies.upgrade',
+            command: 'iceworksApp.nodeDependencies.upgrade',
             title: 'Upgrade Dependency',
             arguments: [workspaceDir, npmCommand]
           } :
@@ -96,7 +96,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const workspaceDir: string = path.dirname(this.packageJsonPath);
       const npmCommand = createNpmCommand('install');
       const command: vscode.Command = {
-        command: 'iceworksMain.nodeDependencies.install',
+        command: 'iceworksApp.nodeDependencies.install',
         title: 'Install Dependencies',
         arguments: [workspaceDir, npmCommand]
       };
@@ -113,7 +113,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       }
       const npmCommand = createNpmCommand('install');
       const command: vscode.Command = {
-        command: 'iceworksMain.nodeDependencies.reinstall',
+        command: 'iceworksApp.nodeDependencies.reinstall',
         title: 'Reinstall Dependencies',
         arguments: [workspaceDir, npmCommand]
       };
@@ -131,7 +131,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
-      command: 'iceworksMain.nodeDependencies.addDependency',
+      command: 'iceworksApp.nodeDependencies.addDependency',
       title: 'Add Dependency',
       arguments: [workspaceDir, npmCommand]
     };

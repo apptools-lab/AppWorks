@@ -21,35 +21,35 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const npmScriptsProvider = new NpmScriptsProvider(rootPath);
 	vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-	vscode.commands.registerCommand('iceworksMain.npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script.command!));
-	vscode.commands.registerCommand('iceworksMain.npmScripts.refresh', () => npmScriptsProvider.refresh());
+	vscode.commands.registerCommand('iceworksApp.npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script.command!));
+	vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
 	const componentsProvider = new ComponentsProvider(rootPath);
 	vscode.window.registerTreeDataProvider('components', componentsProvider);
-	vscode.commands.registerCommand('iceworksMain.components.add', () => { });
-	vscode.commands.registerCommand('iceworksMain.components.refresh', () => componentsProvider.refresh());
-	vscode.commands.registerCommand('iceworksMain.components.openFile', (p) => openEntryFile(p));
+	vscode.commands.registerCommand('iceworksApp.components.add', () => { });
+	vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
+	vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
 	const pagesProvider = new PagesProvider(rootPath);
 	vscode.window.registerTreeDataProvider('pages', pagesProvider);
-	vscode.commands.registerCommand('iceworksMain.pages.add', () => { });
-	vscode.commands.registerCommand('iceworksMain.pages.refresh', () => pagesProvider.refresh());
-	vscode.commands.registerCommand('iceworksMain.pages.openFile', (p) => openEntryFile(p));
+	vscode.commands.registerCommand('iceworksApp.pages.add', () => { });
+	vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
+	vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 
 	const nodeDependenciesProvider = new DepNodeProvider(rootPath);
 	vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
-	vscode.commands.registerCommand('iceworksMain.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
-	vscode.commands.registerCommand('iceworksMain.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
-	vscode.commands.registerCommand('iceworksMain.nodeDependencies.install', () => {
+	vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
+	vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
+	vscode.commands.registerCommand('iceworksApp.nodeDependencies.install', () => {
 		const script = nodeDependenciesProvider.getInstallScript();
 		executeCommand(terminals, script!);
 	});
-	vscode.commands.registerCommand('iceworksMain.nodeDependencies.reinstall', async () => {
+	vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
 		const script = await nodeDependenciesProvider.getReinstallScript();
 		executeCommand(terminals, script!);
 	});
 
-	context.subscriptions.push(vscode.commands.registerCommand('iceworksMain.nodeDependencies.addDependency', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
-	context.subscriptions.push(vscode.commands.registerCommand('iceworksMain.nodeDependencies.setPackageManager', setPackageManager));
-	context.subscriptions.push(vscode.commands.registerCommand('iceworksMain.nodeDependencies.setNpmRegister', setNpmRegister));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDependency', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setPackageManager', setPackageManager));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegister', setNpmRegister));
 }

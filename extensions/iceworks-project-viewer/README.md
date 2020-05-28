@@ -1,6 +1,6 @@
 English | [简体中文](./README.zh-CN.md)
 
-# iceworks Project Viewer
+# iceworks App
 
 It helps you preview your React app and Rax app, including the information of npm scripts, pages, components and node dependencies. It also supports quick installation or upgrade dependencies, adding new pages and components, and much more. 
 
