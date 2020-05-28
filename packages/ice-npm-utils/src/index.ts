@@ -37,7 +37,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 function getAndExtractTarball(
   destDir: string,
   tarball: string,
-  progressFunc = (state) => {},
+  progressFunc = (state) => { },
   formatFilename = (filename: string): string => {
     // 为了兼容
     if (filename === '_package.json') {
@@ -229,6 +229,22 @@ function checkAliInternal(): Promise<boolean> {
   });
 }
 
+/**
+ * 获取已安装在本地的模块版本号
+ * 
+ * @param projectPath
+ * @param packageName
+ */
+function getPackageLocalVersion(projectPath: string, packageName: string): string {
+  try {
+    const packageJsonPath = path.join(projectPath, 'node_modules', packageName, 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    return packageJson.version;
+  } catch (err) {
+    return ''
+  }
+}
+
 export {
   getLatestVersion,
   getNpmLatestSemverVersion,
@@ -241,4 +257,5 @@ export {
   getNpmTarball,
   getAndExtractTarball,
   log,
+  getPackageLocalVersion,
 };
