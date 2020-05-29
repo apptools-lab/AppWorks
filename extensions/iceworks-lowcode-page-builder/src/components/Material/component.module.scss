@@ -1,8 +1,5 @@
-@import '../../variables.scss';
-
 .container {
   position: relative;
-  background: $panel-bg;
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
@@ -11,6 +8,7 @@
   overflow: hidden;
   height: 100px;
   margin-bottom: 14px;
+  border: 1px solid $color-line1-1;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
@@ -22,7 +20,6 @@
 
 .title {
   margin: 0 0 5px;
-  color: $text-color-secondary;
   height: 30px;
   line-height: 1.6;
   font-weight: 500;
@@ -33,7 +30,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: $text-color-primary;
 }
 
 .actions {
@@ -58,12 +54,12 @@
     line-height: 35px;
     font-size: 14px;
     font-weight: bold;
-    background: $brand-color-primary;
-    color: $text-color-inverse;
+    background: $color-fill1-3;
+    color: $color-brand1-6;
     cursor: pointer;
 
     &:hover {
-      background-color: $brand-color-secondary;
+      background-color: $color-fill1-4;
     }
 
     .githubImg,

@@ -87,7 +87,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            填写页面路面名称：
+            1. 填写页面路面名称：
           </div>
           <div className={styles.field}>
             <Input
@@ -100,7 +100,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            选择区块：
+            2. 选择区块：
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
@@ -130,7 +130,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" onClick={handleCreate}>
-          创建页面
+          生成页面
         </Button>
       </div>
     </div>

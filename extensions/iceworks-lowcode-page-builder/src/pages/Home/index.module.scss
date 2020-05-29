@@ -10,6 +10,9 @@
 
     .item {
       margin-bottom: 24px;
+      &:last-child {
+        margin-bottom: 0;
+      }
       .label {
         margin-bottom: 12px;
       }

@@ -1,16 +1,14 @@
-@import '../../../../variables.scss';
-
 .pageSelected {
-  padding: 6px;
+  padding: 12px;
   height: 100%;
   overflow-y: auto;
+  border: 1px solid $color-line1-1;
 
   .empty {
     display: block;
     text-align: center;
     padding: 14px 0;
     font-size: 13px;
-    color: $text-color-primary;
 
     img {
       display: block;
@@ -31,7 +29,7 @@
     }
 
     &:hover {
-      box-shadow: 0px 0px 2px 1px $brand-color-primary;
+      box-shadow: 0px 0px 2px 1px $color-line1-1;
       z-index: 1;
 
       .delete {
@@ -59,7 +57,6 @@
       right: 10px;
       cursor: pointer;
       visibility: hidden;
-      color: $text-color-primary;
     }
 
     .name {
@@ -72,8 +69,7 @@
       bottom: 0;
       left: 0;
       visibility: hidden;
-      background-color: $panel-bg;
-      color: $text-color-primary;
+      background-color: $color-fill1-3;
 
       .input {
         flex: 1;
@@ -91,7 +87,6 @@
         right: 0;
         top: 10px;
         z-index: 1;
-        color: $text-color-primary;
       }
     }
   }

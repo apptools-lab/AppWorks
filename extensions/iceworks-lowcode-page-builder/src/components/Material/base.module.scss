@@ -1,7 +1,4 @@
-@import '../../variables.scss';
-
 .container {
-  background: $panel-bg;
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
@@ -9,6 +6,7 @@
   position: relative;
   height: 100%;
   margin-bottom: 24px;
+  border: 1px solid $color-line1-1;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
@@ -36,7 +34,6 @@
 .title {
   margin: 0;
   padding: 10px;
-  color: $text-color-secondary;
   border-top: 1px solid #4D4F61;
   text-align: center;
 }
@@ -63,12 +60,12 @@
     line-height: 45px;
     font-size: 14px;
     font-weight: bold;
-    background: $brand-color-primary;
-    color: $text-color-inverse;
+    background: $color-fill1-3;
+    color: $color-brand1-6;
     cursor: pointer;
 
     &:hover {
-      background-color: $brand-color-secondary;
+      background-color: $color-fill1-4;
     }
 
     .githubImg,
