@@ -99,7 +99,7 @@ export const installBlocksDependencies = async function(blocks: any) {
     terminal = vscode.window.createTerminal();
   }
 
-  const npmClient = vscode.workspace.getConfiguration('iceworks').get('packageManager');
+  const npmClient = vscode.workspace.getConfiguration('iceworks').get('packageManager') || 'npm';
 
   terminal.show();
   terminal.sendText(`cd ${projectPath}`, true);
