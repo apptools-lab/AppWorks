@@ -5,6 +5,10 @@ import { officialMaterialSources } from './constants';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 
 export function activate(context: vscode.ExtensionContext) {
+	const rootPath = vscode.workspace.rootPath;
+	if (!rootPath) {
+		ProjectCreatorPanel.createOrShow(context.extensionPath);
+	}
 	context.subscriptions.push(
 		vscode.commands.registerCommand('projectCreator.start', () => {
 			ProjectCreatorPanel.createOrShow(context.extensionPath);
@@ -63,7 +67,6 @@ class ProjectCreatorPanel {
 	private constructor(panel: vscode.WebviewPanel, extensionPath: string) {
 		this._panel = panel;
 		this._extensionPath = extensionPath;
-
 		// init html Content
 		this.update();
 
@@ -126,12 +129,26 @@ class ProjectCreatorPanel {
 					const projectDir = path.join(projectPath, projectName);
 					const npmName = scaffold.source.npm;
 					await downloadAndGenerateProject(projectDir, npmName);
-					panel.webview.postMessage({ command: 'createProject' });
+					panel.webview.postMessage({ command: 'createProject', res: projectDir });
 				} catch (error) {
 					panel.webview.postMessage({ command: 'createProject', error });
 					vscode.window.showErrorMessage(`command: 'createProject' error: ${error}`);
 				}
 			}
+
+			if (message.command === 'openProjectFolder') {
+				try {
+					const args = message.args;
+					const projectDir = args[0];
+					vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
+					panel.webview.postMessage({ command: 'openProjectFolder' });
+					// panel.dispose();
+				} catch (error) {
+					panel.webview.postMessage({ command: 'openProjectFolder', error });
+					vscode.window.showErrorMessage(`command: 'openProjectFolder' error: ${error}`);
+				}
+			}
+
 		}, undefined, this._disposables);
 	}
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Form, Field, Step, Button } from '@alifd/next';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
-import InitProject from './components/InitProject';
+import InitProjectSuccess from './components/InitProjectSuccess';
 import styles from './index.module.scss';
 import Header from './components/Header';
 import callService from '@/service/index';
@@ -11,6 +11,8 @@ const CreateProject: React.FC = () => {
   const projectField = Field.useField();
   const [currentStep, setStep] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [projectDir, setProjectDir] = useState('');
+
   const steps = [
     {
       title: '选择模板',
@@ -22,7 +24,7 @@ const CreateProject: React.FC = () => {
     },
     {
       title: '项目创建完成',
-      content: <InitProject />
+      content: <InitProjectSuccess projectDir={projectDir} />
     }
   ];
 
@@ -31,7 +33,7 @@ const CreateProject: React.FC = () => {
       const data = await callService('getProjectPath');
       projectField.setValue('projectPath', data);
     } catch (e) {
-
+      console.error(e);
     };
   }
 
@@ -49,7 +51,8 @@ const CreateProject: React.FC = () => {
 
     const values: any = projectField.getValues();
     try {
-      await callService('createProject', values);
+      const data: any = await callService('createProject', values);
+      setProjectDir(data);
       setLoading(false);
       goNext();
     } catch (e) {
