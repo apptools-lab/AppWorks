@@ -1,3 +1,4 @@
 import * as material from './material';
+import * as page from './page/index';
 
-export default { material };
+export default { material, page, vscode };

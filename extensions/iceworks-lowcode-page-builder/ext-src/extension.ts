@@ -41,6 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (!webviewPanel) {
       webviewPanel = window.createWebviewPanel('react', 'iceworks', ViewColumn.One, {
         enableScripts: true,
+        retainContextWhenHidden: false,
       });
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.webview.onDidReceiveMessage(

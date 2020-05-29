@@ -1,5 +1,5 @@
 import log from './log';
-
+import * as fsExtra from 'fs-extra';
 import request = require('request-promise');
 import semver = require('semver');
 import fs = require('fs');
@@ -229,6 +229,17 @@ function checkAliInternal(): Promise<boolean> {
   });
 }
 
+const packageJSONFilename = 'package.json';
+
+async function readPackageJSON(projectPath: string) {
+  const packagePath = path.join(projectPath, packageJSONFilename);
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error("Project's package.json file not found in local environment");
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
 export {
   getLatestVersion,
   getNpmLatestSemverVersion,
@@ -241,4 +252,6 @@ export {
   getNpmTarball,
   getAndExtractTarball,
   log,
+  packageJSONFilename,
+  readPackageJSON,
 };

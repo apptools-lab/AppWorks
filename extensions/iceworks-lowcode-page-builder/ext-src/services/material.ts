@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
+import packageJSON from 'package-json';
 const kebabCase = require('lodash.kebabcase');
 
 const iceMaterial = 'http://ice.alicdn.com/assets/materials/react-materials.json';
@@ -69,3 +70,15 @@ export const getData = async function(source: string) {
 
   return data;
 }
+
+export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
+  const version = source.version;
+  const registryUrl = source.registry;
+
+  const packageData: any = await packageJSON(source.npm, {
+    version,
+    registryUrl,
+  });
+
+  return packageData.dist.tarball;
+};

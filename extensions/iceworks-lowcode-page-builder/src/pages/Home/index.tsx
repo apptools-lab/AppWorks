@@ -8,10 +8,6 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-function closeWindow() {
-
-}
-
 async function getSources() {
   return await callService('material', 'getSources');
 }
@@ -64,6 +60,11 @@ const Home = () => {
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
+  function resetData() {
+    setSelectedBlocks([]);
+    setPageName('');
+  }
+
   async function handleCreate(data) {
     try {
       const data = {
@@ -76,10 +77,14 @@ const Home = () => {
         Notification.error({ content: errorMessage });
       }
 
-      closeWindow();
+      await callService('page', 'create', data);
     } catch (error) {
       Notification.error({ content: error.message });
+      throw error;
     }
+
+    Notification.success({ content: '页面生成成功！' });
+    resetData();
   }
 
   return (
