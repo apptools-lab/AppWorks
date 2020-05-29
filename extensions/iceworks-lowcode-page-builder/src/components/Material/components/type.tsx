@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
-import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase } from '../types/material';
+import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase } from '../types';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';
 import { MaterialBase } from './base';
-import { customCategory } from '../config/material';
+import { customCategory } from '../config';
 import * as styles from './type.module.scss';
 
 const { Cell } = ResponsiveGrid;

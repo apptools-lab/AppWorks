@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tab } from '@alifd/next';
-import { IMaterialSource, IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase } from './typesmaterial';
-import { MaterialType } from './components/type';
+import { IMaterialSource, IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase } from '../types';
+import { MaterialType } from './type';
 import * as styles from './view.module.scss';
 
 const { Item } = Tab;

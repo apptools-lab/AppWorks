@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Material } from './view';
-import { convertMaterialData } from './utils/material';
-import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase } from './types/material';
+import { Material } from './components/view';
+import { convertMaterialData } from './utils';
+import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase } from './types';
 import * as styles from './index.module.scss';
 
 const View : React.FC<{

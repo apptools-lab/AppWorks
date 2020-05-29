@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMaterialComponent } from '../types/material';
+import { IMaterialComponent } from '../types';
 import * as styles from './component.module.scss';
 
 export const MaterialComponent: React.FC<{

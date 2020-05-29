@@ -1,5 +1,5 @@
-import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from '../types/material';
-import { customCategory } from '../config/material';
+import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from './types';
+import { customCategory } from './config';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
   const { blocks, scaffolds, components, bases } = materialData;
