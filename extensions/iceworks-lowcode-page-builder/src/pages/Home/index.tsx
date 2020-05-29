@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button } from '@alifd/next';
+import { Grid, Notification, Button, Input } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import PageSelected from './components/PageSelected';
 import Material from '../../components/Material';
@@ -22,10 +22,20 @@ async function getData() {
   return mockMaterial;
 }
 
+function validateData({ blocks, pageName }) {
+  if (!pageName) {
+    return '请填写页面名称';
+  }
+
+  if (!blocks || !blocks.length) {
+    return '请选择区块';
+  }
+}
+
 const Home = () => {
   const [selectedBlocks, setSelectedBlocks] = useState(mockBlocks);
   const [isSorting, setIsSorting] = useState(false);
-  const [saveVisible, setSaveVisible] = useState(false);
+  const [pageName, setPageName] = useState('');
 
   // 添加区块
   function onAdd(block) {
@@ -54,48 +64,72 @@ const Home = () => {
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
-  async function handleSaveOk(data) {
+  async function handleCreate(data) {
     try {
-      // await server.createPage({ ...data, blocks: selectedBlocks });
-      setSelectedBlocks([]);
+      const data = {
+        blocks: selectedBlocks,
+        pageName,
+      };
+
+      const errorMessage = validateData(data);
+      if (errorMessage) {
+        Notification.error({ content: errorMessage });
+      }
     } catch (error) {
       Notification.error({ content: error.message });
     }
 
-    setSaveVisible(false);
     closeWindow();
-  }
-
-  function handleSaveCancel() {
-    setSaveVisible(false);
   }
 
   return (
     <div className={styles.wrap}>
-      <Row gutter={24} className={styles.row}>
-        <Col span={16} className={styles.col}>
-            <PageSelected
-              useDragHandle
-              lockAxis="y"
-              helperClass={styles.blockIsDraging}
-              blocks={selectedBlocks}
-              onDelete={onDelete}
-              onNameChange={onNameChange}
-              onSortStart={onSortStart}
-              onSortEnd={onSortEnd}
-              isSorting={isSorting}
+      <div className={styles.list}>
+        <div className={styles.item}>
+          <div className={styles.label}>
+            填写页面路面名称：
+          </div>
+          <div className={styles.field}>
+            <Input
+              placeholder="以字母 a-z 开头，不能包含中文"
+              className={styles.pageNameInput}
+              value={pageName}
+              onChange={(value) => setPageName(value)}
             />
-        </Col>
-        <Col span={8} className={styles.col}>
-          <Material
-            getSources={getSources}
-            getData={getData}
-            onBlockClick={onAdd}
-          />
-        </Col>
-      </Row>
+          </div>
+        </div>
+        <div className={styles.item}>
+          <div className={styles.label}>
+            选择区块：
+          </div>
+          <div className={styles.field}>
+            <Row gutter={24} className={styles.row}>
+              <Col span={16} className={styles.col}>
+                  <PageSelected
+                    useDragHandle
+                    lockAxis="y"
+                    helperClass={styles.blockIsDraging}
+                    blocks={selectedBlocks}
+                    onDelete={onDelete}
+                    onNameChange={onNameChange}
+                    onSortStart={onSortStart}
+                    onSortEnd={onSortEnd}
+                    isSorting={isSorting}
+                  />
+              </Col>
+              <Col span={8} className={styles.col}>
+                <Material
+                  getSources={getSources}
+                  getData={getData}
+                  onBlockClick={onAdd}
+                />
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </div>
       <div className={styles.opts}>
-        <Button type="primary">
+        <Button type="primary" onClick={handleCreate}>
           创建页面
         </Button>
       </div>

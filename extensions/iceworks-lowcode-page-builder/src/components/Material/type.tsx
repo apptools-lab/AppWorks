@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, Grid, Radio, Loading } from '@alifd/next';
+import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
 import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase, IMaterialSource } from '../../types/material';
 import { MaterialScaffold } from './scaffold';
@@ -9,7 +9,7 @@ import { MaterialBase } from './base';
 import { customCategory } from '../../config/material';
 import * as styles from './type.module.scss';
 
-const { Row, Col } = Grid;
+const { Cell } = ResponsiveGrid;
 
 interface ContentProps extends IMaterialTypeDatum {
   scrollId?: string;
@@ -74,7 +74,7 @@ const Content: React.FC<ContentProps> = ({
                 { name !== customCategory ? <div className={styles.name}>
                   {name}
                 </div> : null }
-                <Row gutter={24} className={styles.list} data-type={typeId}>
+                <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>
                   {
                     list.map((item, index) => {
                       const { source } = item;
@@ -96,13 +96,13 @@ const Content: React.FC<ContentProps> = ({
                         $ele = (<MaterialBase dataSource={item as IMaterialBase} onClick={onBaseClick} />);
                       }
                       return (
-                        <Col span={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
+                        <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
                           {$ele}
-                        </Col>
+                        </Cell>
                       );
                     })
                   }
-                </Row>
+                </ResponsiveGrid>
               </div>
             );
           })

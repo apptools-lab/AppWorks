@@ -1,13 +1,30 @@
 .wrap {
   overflow: hidden;
   padding: 20px;
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
 
-  .row {
-    height: 100%;
-    .col {
-      height: 100%;
+  .list {
+    overflow: hidden;
+
+    .item {
+      margin-bottom: 24px;
+      .label {
+        margin-bottom: 12px;
+      }
+      .pageNameInput {
+        width: 400px;
+      }
+      .row {
+        height: 560px;
+        .col {
+          height: 100%;
+        }
+      }
     }
   }
+
   .opts {
     margin-top: 24px;
     display: flex;
