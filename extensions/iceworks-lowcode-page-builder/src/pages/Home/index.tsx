@@ -108,6 +108,9 @@ const Home = () => {
             <Row gutter={24} className={styles.row}>
               <Col span={16} className={styles.col}>
                   <PageSelected
+                    useDragHandle
+                    lockAxis="y"
+                    helperClass={styles.blockIsDraging}
                     blocks={selectedBlocks}
                     onDelete={onDelete}
                     onNameChange={onNameChange}
