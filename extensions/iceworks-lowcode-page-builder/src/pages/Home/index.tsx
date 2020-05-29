@@ -30,6 +30,8 @@ function validateData({ blocks, pageName }) {
   if (!blocks || !blocks.length) {
     return '请选择区块';
   }
+
+  return '';
 }
 
 const Home = () => {
@@ -75,11 +77,11 @@ const Home = () => {
       if (errorMessage) {
         Notification.error({ content: errorMessage });
       }
+
+      closeWindow();
     } catch (error) {
       Notification.error({ content: error.message });
     }
-
-    closeWindow();
   }
 
   return (
@@ -106,9 +108,6 @@ const Home = () => {
             <Row gutter={24} className={styles.row}>
               <Col span={16} className={styles.col}>
                   <PageSelected
-                    useDragHandle
-                    lockAxis="y"
-                    helperClass={styles.blockIsDraging}
                     blocks={selectedBlocks}
                     onDelete={onDelete}
                     onNameChange={onNameChange}
