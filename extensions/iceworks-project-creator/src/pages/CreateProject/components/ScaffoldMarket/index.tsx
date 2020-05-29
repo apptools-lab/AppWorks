@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 import SelectedCard from '@/components/SelectCard';
+import callService from '@/service/index';
 
 const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialTypeSelected, setMaterialTypeSelected] = useState('PCWeb');
@@ -11,12 +12,12 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
     {
       title: 'PC Web',
       name: 'PCWeb',
-      content: 'PC Web', // 描述
+      content: 'PC Web物料',
     },
     {
       title: '无线跨端',
       name: 'wireless',
-      content: '无线跨端' // 描述
+      content: '无线跨端物料'
     }
   ];
 
@@ -29,20 +30,11 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
     onScaffoldSelect(scaffold);
   }
   useEffect(() => {
-    const vscode = acquireVsCodeApi();
-    vscode.postMessage({
-      command: 'getScaffolds'
-    });
-    function listener(event) {
-      const message = event.data;
-      if (message.command === 'onGetScaffolds') {
-        setScaffoldMaterials(message.scaffolds);
-      }
-    }
-    window.addEventListener('message', listener);
-    return () => {
-      window.removeEventListener('message', listener);
+    async function getScaffolds() {
+      const data = await callService('getScaffolds');
+      setScaffoldMaterials(data as any);
     };
+    getScaffolds();
   }, []);
   return (
     <div className={styles.container}>
@@ -53,7 +45,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
             title={item.title}
             content={item.content}
             selected={materialTypeSelected === item.name}
-            width={180}
+            style={{ width: 180 }}
             onClick={() => onScaffoldTypeClick(item)}
           />
         ))}
@@ -66,7 +58,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
             content={item.description}
             media={<img height={120} src={item.screenshot} />}
             selected={materialSelected === item.name}
-            width={200}
+            style={{ width: 200, height: 280 }}
             onClick={() => onScaffoldMaterialClick(item)}
           />
         ))}

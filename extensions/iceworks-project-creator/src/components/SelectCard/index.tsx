@@ -6,22 +6,22 @@ interface ISelectedCardProps {
   title: string;
   content?: string | React.ReactNode;
   selected: boolean;
-  width: number;
+  style: object;
   onClick: any;
   media?: string | React.ReactNode;
 }
 
-const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, width, onClick, media }) => {
-  const cardBorderStyle = `1px solid ${selected ? '#1274e7' : '#e6e7eb'}`;
+const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, onClick, media, style }) => {
+  const cardSelectedBorderStyle = `1px solid ${selected ? '#1274e7' : '#e6e7eb'}`;
   return (
     <div>
       <Card
         free
         className={styles.card}
-        style={{ width, border: cardBorderStyle }}
+        style={{ border: cardSelectedBorderStyle, ...style }}
         onClick={onClick}
       >
-        {selected && <img width={30} height={30} src={require('@/assets/success.svg')} className={styles.successIcon} />}
+        {selected && <img src={require('@/assets/success.svg')} className={styles.successIcon} />}
         <Card.Media>
           {media}
         </Card.Media>

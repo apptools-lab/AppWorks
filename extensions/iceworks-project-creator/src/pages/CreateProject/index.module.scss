@@ -1,8 +1,7 @@
 .container {
-  background: white;
-  .StepForm {
+  .step {
     width: 90vw;
-    margin: 40px auto 24px;
+    margin: 20px auto 24px;
 
     .content,
     .actions {
@@ -14,7 +13,6 @@
 
     .content {
       align-items: center;
-      min-height: 500px;
     }
   }
 }

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Form, Field, Step, Button, Message } from '@alifd/next';
+import React, { useState } from 'react';
+import { Card, Form, Field, Step, Button } from '@alifd/next';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import InitProject from './components/InitProject';
 import styles from './index.module.scss';
 import Header from './components/Header';
+import callService from '@/service/index';
 
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
   const [currentStep, setStep] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
   const steps = [
     {
       title: '选择模板',
@@ -19,16 +21,18 @@ const CreateProject: React.FC = () => {
       content: <CreateProjectForm field={projectField} onOpenFolderDialog={onOpenFolderDialog} />
     },
     {
-      title: '初始化项目',
-      content: <InitProject goInitial={goInitial} />
+      title: '项目创建完成',
+      content: <InitProject />
     }
   ];
 
   async function onOpenFolderDialog() {
-    const vscode = acquireVsCodeApi();
-    vscode.postMessage({
-      command: 'openFolderDialog'
-    });
+    try {
+      const data = await callService('getProjectPath');
+      projectField.setValue('projectPath', data);
+    } catch (e) {
+
+    };
   }
 
   function onScaffoldSelect(scaffold) {
@@ -36,21 +40,27 @@ const CreateProject: React.FC = () => {
   };
 
   const onSubmit = async () => {
+    setLoading(true);
     const { errors } = await projectField.validatePromise();
     if (errors) {
+      setLoading(false);
       return;
     }
-    // TODO:
+
     const values: any = projectField.getValues();
-    console.log('values:', JSON.stringify(values.scaffold));
-    console.log('values:', values.projectName);
-    console.log('values:', values.projectPath);
-    goNext();
+    try {
+      await callService('createProject', values);
+      setLoading(false);
+      goNext();
+    } catch (e) {
+      await callService('showErrorMessage', '创建项目失败。');
+      setLoading(false);
+    }
   };
 
-  function onScaffoldSubmit() {
+  async function onScaffoldSubmit() {
     if (!projectField.getValue('scaffold')) {
-      Message.error('请选择模块');
+      await callService('showErrorMessage', '请选择一个模块。');
       return;
     }
     goNext();
@@ -62,11 +72,6 @@ const CreateProject: React.FC = () => {
 
   function goPrev() {
     setStep(currentStep - 1);
-  };
-
-  function goInitial() {
-    console.log('Init');
-    setStep(0);
   };
 
   let actions;
@@ -81,29 +86,18 @@ const CreateProject: React.FC = () => {
           type="primary"
           onClick={onSubmit}
           validate
+          loading={loading}
         >下一步</Form.Submit>
       </>;
       break;
     default:
       break;
   }
-  useEffect(() => {
-    function listener(event) {
-      const message = event.data;
-      if (message.command === 'onGetProjectPath') {
-        projectField.setValue('projectPath', message.projectPath);
-      }
-    }
-    window.addEventListener('message', listener);
-    return () => {
-      window.removeEventListener('message', listener);
-    };
-  }, []);
   return (
     <div className={styles.container}>
       <Header />
       <Card free>
-        <Card.Content className={styles.StepForm}>
+        <Card.Content className={styles.step}>
           <Step current={currentStep} shape="circle">
             {steps.map((step) => (
               <Step.Item key={step.title} title={step.title} />
