@@ -1,0 +1,118 @@
+@import '../../variables.scss';
+
+.scaffold {
+  position: relative;
+  display: block;
+  transition: transform 0.3s ease;
+  border: 1px solid transparent;
+  background: $panel-bg;
+  overflow: hidden;
+  margin-bottom: 24px;
+  height: 240px;
+
+  &:hover {
+    transform: translateY(-6px);
+    .actions {
+      transform: translateY(0);
+    }
+    .info {
+      transform: translateY(-20px);
+    }
+  }
+
+  .body {
+    position: relative;
+    .screenshotImg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      transform: scale(0.8);
+    }
+  }
+
+  .info {
+    background: $panel-bg;
+    text-align: center;
+    padding: 12px;
+    transition: transform 0.3s ease;
+    transform: translateY(0);
+    position: relative;
+    z-index: 9;
+    .title {
+      font-size: 14px;
+      font-weight: bold;
+      color: $text-color-secondary;
+    }
+    .desc {
+      color: $text-color-primary;
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: normal;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      overflow: hidden;
+    }
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+    z-index: 10;
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      font-weight: bold;
+      background: $brand-color-primary;
+      color: $text-color-inverse;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $brand-color-secondary;
+      }
+
+      .githubImg,
+      .eyeImg,
+      .downloadImg {
+        width: 20px;
+        margin-right: 6px;
+      }
+    }
+  }
+
+  .newly {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: $brand-color-primary;
+    color: $text-color-inverse;
+    font-size: 12px;
+  }
+
+  .selected {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 9;
+  }
+}

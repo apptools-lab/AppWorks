@@ -1,7 +1,18 @@
-.row {
-  height: 100%;
-  .col {
+.wrap {
+  overflow: hidden;
+  padding: 20px;
+
+  .row {
     height: 100%;
+    .col {
+      height: 100%;
+    }
+  }
+  .opts {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

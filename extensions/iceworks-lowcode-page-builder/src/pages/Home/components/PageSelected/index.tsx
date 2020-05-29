@@ -22,13 +22,13 @@ export const SelectedBlock = SortableElement(
           />
           <Icon className={styles.icon} type="edit" />
         </div>
-        <Icon className={styles.delete} type="delete" onClick={() => onDelete(targetIndex)} />
+        <Icon className={styles.delete} type="ashbin" onClick={() => onDelete(targetIndex)} />
       </div>
     );
   },
 );
 
-export const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
+const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
   return (
     <div className={styles.pageSelected}>
       {blocks.length ? (
@@ -57,3 +57,5 @@ export const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete,
     </div>
   );
 });
+
+export default PageSelected;

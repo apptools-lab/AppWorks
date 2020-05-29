@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Notification } from '@alifd/next';
+import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
-import styles from './index.module.scss';
-import { PageSelected } from './components/PageSelected';
+import PageSelected from './components/PageSelected';
+import Material from '../../components/Material';
 import mockBlocks from '../../mocks/blocks.json';
+import mockMaterial from '../../mocks/material.json';
+import mockSources from '../../mocks/sources.json';
+import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
@@ -11,15 +14,18 @@ function closeWindow() {
 
 }
 
+async function getSources() {
+  return mockSources;
+}
+
+async function getData() {
+  return mockMaterial;
+}
+
 const Home = () => {
   const [selectedBlocks, setSelectedBlocks] = useState(mockBlocks);
   const [isSorting, setIsSorting] = useState(false);
   const [saveVisible, setSaveVisible] = useState(false);
-
-  // 页面操作确认
-  function handleOk() {
-    setSaveVisible(true);
-  }
 
   // 添加区块
   function onAdd(block) {
@@ -31,7 +37,7 @@ const Home = () => {
     setSelectedBlocks(selectedBlocks.filter((_, index) => index !== targetIndex));
   }
 
-  // 名字切换
+  // 名字更新
   function onNameChange(name, targetIndex) {
     selectedBlocks[targetIndex].name = name;
     setSelectedBlocks([...selectedBlocks]);
@@ -48,20 +54,12 @@ const Home = () => {
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
-  function showMessage(text: string) {
-    Notification.notice({ content: text });
-  }
-
-  function showError(text: string) {
-    Notification.error({ content: text });
-  }
-
   async function handleSaveOk(data) {
     try {
       // await server.createPage({ ...data, blocks: selectedBlocks });
       setSelectedBlocks([]);
     } catch (error) {
-      showError(error.message);
+      Notification.error({ content: error.message });
     }
 
     setSaveVisible(false);
@@ -73,7 +71,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className={styles.wrap}>
       <Row gutter={24} className={styles.row}>
         <Col span={16} className={styles.col}>
             <PageSelected
@@ -89,9 +87,18 @@ const Home = () => {
             />
         </Col>
         <Col span={8} className={styles.col}>
-          test
+          <Material
+            getSources={getSources}
+            getData={getData}
+            onBlockClick={onAdd}
+          />
         </Col>
       </Row>
+      <div className={styles.opts}>
+        <Button type="primary">
+          创建页面
+        </Button>
+      </div>
     </div>
   );
 };
