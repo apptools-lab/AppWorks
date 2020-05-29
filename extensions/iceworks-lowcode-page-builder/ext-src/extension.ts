@@ -2,14 +2,22 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
+import services from './services/index';
 
-const { env, commands, window, ProgressLocation, Uri, ViewColumn } = vscode;
+const { window, ViewColumn } = vscode;
+
+interface IMessage {
+  service: string;
+  method: string;
+  eventId: string;
+  [propName: string]: any;
+}
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath } = context;
-  let webviewPanel: vscode.WebviewPanel | undefined;
+  let webviewPanel: vscode.WebviewPanel;
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
@@ -35,27 +43,28 @@ export function activate(context: vscode.ExtensionContext) {
         enableScripts: true,
       });
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-      // webviewPanel.webview.onDidReceiveMessage(
-      //   async (message: IMessage) => {
-      //     const { service, method, eventId, args } = message;
-      //     const api = services[service] && services[service][method];
-      //     console.log('onDidReceiveMessage', message);
-      //     if (api) {
-      //       try {
-      //         const result = args ? await api(...args) : await api();
-      //         console.log('invoke service result', result);
-      //         webviewPanel.webview.postMessage({ eventId, result });
-      //       } catch(err) {
-      //         console.error('invoke service error', err);
-      //         webviewPanel.webview.postMessage({ eventId, errorMessage: err.message });
-      //       }
-      //     } else {
-      //       vscode.window.showErrorMessage(`invalid command ${message}`);
-      //     }
-      //   },
-      //   undefined,
-      //   context.subscriptions
-      // );
+      webviewPanel.webview.onDidReceiveMessage(
+        async (message: IMessage) => {
+          const { service, method, eventId, args } = message;
+          // @ts-ignore
+          const api = services[service] && services[service][method];
+          console.log('onDidReceiveMessage', message);
+          if (api) {
+            try {
+              const result = args ? await api(...args) : await api();
+              console.log('invoke service result', result);
+              webviewPanel.webview.postMessage({ eventId, result });
+            } catch(err) {
+              console.error('invoke service error', err);
+              webviewPanel.webview.postMessage({ eventId, errorMessage: err.message });
+            }
+          } else {
+            vscode.window.showErrorMessage(`invalid command ${message}`);
+          }
+        },
+        undefined,
+        context.subscriptions
+      );
     }
   }
   context.subscriptions.push(vscode.commands.registerCommand('iceworks-lowcode-page-builder.create', function() {

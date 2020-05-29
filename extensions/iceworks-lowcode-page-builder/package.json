@@ -19,7 +19,47 @@
         "command": "iceworks-lowcode-page-builder.create",
         "title": "Create Page"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "iceworks App",
+      "properties": {
+        "iceworks.materialSources": {
+          "type": "array",
+          "description": "Material Sources",
+          "items": {
+            "type": "object",
+            "description": "Source",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "name"
+              },
+              "type": {
+                "type": "string",
+                "description": "react or rax"
+              },
+              "source": {
+                "type": "string",
+                "description": "URL",
+                "format": "URL"
+              },
+              "description": {
+                "type": "string",
+                "description": "description"
+              }
+            }
+          },
+          "default": [
+            {
+              "name": "飞冰物料",
+              "type": "react",
+              "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
+              "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
+            }
+          ]
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
@@ -36,24 +76,26 @@
     "stylelint:icejs": "stylelint ./**/*.scss"
   },
   "devDependencies": {
-    "@types/vscode": "^1.45.0",
+    "@ice/spec": "^1.0.0",
     "@types/glob": "^7.1.1",
     "@types/node": "^13.11.0",
-    "eslint": "^6.8.0",
-    "@typescript-eslint/parser": "^2.30.0",
+    "@types/vscode": "^1.45.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "glob": "^7.1.6",
-    "typescript": "^3.8.3",
-    "@ice/spec": "^1.0.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "build-plugin-css-assets-local": "^0.1.0",
     "build-plugin-fusion": "^0.1.0",
     "build-plugin-moment-locales": "^0.1.0",
-    "build-plugin-css-assets-local": "^0.1.0",
+    "eslint": "^6.8.0",
+    "glob": "^7.1.6",
     "ice.js": "^1.0.0",
-    "stylelint": "^13.2.0"
+    "stylelint": "^13.2.0",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-design-pro": "^0.x",
+    "axios": "^0.19.2",
+    "lodash.kebabcase": "^4.1.1",
     "moment": "^2.24.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

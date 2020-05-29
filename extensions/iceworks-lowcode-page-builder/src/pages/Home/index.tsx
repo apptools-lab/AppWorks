@@ -3,9 +3,7 @@ import { Grid, Notification, Button, Input } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import PageSelected from './components/PageSelected';
 import Material from '../../components/Material';
-import mockBlocks from '../../mocks/blocks.json';
-import mockMaterial from '../../mocks/material.json';
-import mockSources from '../../mocks/sources.json';
+import callService from '../../callService';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
@@ -15,11 +13,11 @@ function closeWindow() {
 }
 
 async function getSources() {
-  return mockSources;
+  return await callService('material', 'getSources');
 }
 
-async function getData() {
-  return mockMaterial;
+async function getData(source: string) {
+  return await callService('material', 'getData', source);
 }
 
 function validateData({ blocks, pageName }) {
@@ -35,7 +33,7 @@ function validateData({ blocks, pageName }) {
 }
 
 const Home = () => {
-  const [selectedBlocks, setSelectedBlocks] = useState(mockBlocks);
+  const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
 
