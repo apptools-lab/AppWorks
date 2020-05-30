@@ -9,11 +9,15 @@ import styles from './index.module.scss';
 const { Row, Col } = Grid;
 
 async function getSources() {
-  return await callService('material', 'getSources');
+  const sources = await callService('material', 'getSources');
+  console.log('getSources', sources);
+  return sources;
 }
 
 async function getData(source: string) {
-  return await callService('material', 'getData', source);
+  const data = await callService('material', 'getData', source);
+  console.log('getData', data);
+  return data;
 }
 
 function validateData({ blocks, pageName }) {

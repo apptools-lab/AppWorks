@@ -20,7 +20,7 @@ interface IConfig {
 const templateFileName = 'template.html.ejs';
 
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
-  const { extensionPath } = context;
+  const { extensionPath, subscriptions } = context;
   const { title, services } = config;
 
   const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', title, ViewColumn.One, {
@@ -28,7 +28,11 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
     retainContextWhenHidden: false,
   });
   webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-  webviewPanel.webview.onDidReceiveMessage(
+  handleService(webviewPanel.webview, subscriptions, services);
+}
+
+export function handleService(webview, subscriptions, services) {
+  webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
       // @ts-ignore
@@ -38,21 +42,21 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
         try {
           const result = args ? await api(...args) : await api();
           console.log('invoke service result', result);
-          webviewPanel.webview.postMessage({ eventId, result });
+          webview.postMessage({ eventId, result });
         } catch(err) {
           console.error('invoke service error', err);
-          webviewPanel.webview.postMessage({ eventId, errorMessage: err.message });
+         webview.postMessage({ eventId, errorMessage: err.message });
         }
       } else {
         vscode.window.showErrorMessage(`invalid command ${message}`);
       }
     },
     undefined,
-    context.subscriptions
+    subscriptions
   );
 }
 
-function getHtmlForWebview(extensionPath: string): string {
+export function getHtmlForWebview(extensionPath: string): string {
   const basePath = path.join(extensionPath, 'build/');
 
   const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/index.js'));
