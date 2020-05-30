@@ -5,6 +5,7 @@
     {"path": "packages/config"},
     {"path": "packages/generate-project"},
     {"path": "packages/block-add"},
-    {"path": "packages/iceworks-cli"}
+    {"path": "packages/iceworks-cli"},
+    {"path": "packages/material"}
   ]
 }

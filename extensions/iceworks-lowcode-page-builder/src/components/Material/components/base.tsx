@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMaterialBase } from '../types';
+import { IMaterialBase } from '@iceworks/material/lib/common';
 import * as styles from './base.module.scss';
 
 export const MaterialBase: React.FC<{

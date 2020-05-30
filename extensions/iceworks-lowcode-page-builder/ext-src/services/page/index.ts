@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource } from '../material';
+import { getTarballURLByMaterielSource } from '@iceworks/material/lib/node';
 import {
   pagesPath,
   componentDirName,

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
-import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase } from '../types';
+import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase, CUSTOM_CATEGORY } from '@iceworks/material/lib/common';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';
 import { MaterialBase } from './base';
-import { customCategory } from '../config';
 import * as styles from './type.module.scss';
 
 const { Cell } = ResponsiveGrid;
@@ -71,7 +70,7 @@ const Content: React.FC<ContentProps> = ({
           data.map(({ name, list }, cIndex) => {
             return (
               <div key={`${name}_${cIndex}`} className={styles.category}>
-                { name !== customCategory ? <div className={styles.name}>
+                { name !== CUSTOM_CATEGORY ? <div className={styles.name}>
                   {name}
                 </div> : null }
                 <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>

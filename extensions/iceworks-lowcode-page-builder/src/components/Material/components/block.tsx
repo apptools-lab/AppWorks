@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { PLACEHOLDER_IMG } from '../config';
-import { IMaterialBlock } from '../types';
+import { IMaterialBlock, PLACEHOLDER_IMG } from '@iceworks/material/lib/common';
 import * as styles from './block.module.scss';
 
 export const MaterialBlock: React.FC<{

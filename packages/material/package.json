@@ -1,0 +1,14 @@
+{
+  "name": "@iceworks/material",
+  "version": "0.1.0",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "lodash.kebabcase": "^4.1.1",
+    "package-json": "^6.5.0"
+  }
+}

@@ -1,5 +1,5 @@
 import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from './types';
-import { customCategory } from './config';
+import { CUSTOM_CATEGORY } from './constant';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
   const { blocks, scaffolds, components, bases } = materialData;
@@ -44,7 +44,7 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
 export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialCategoryDatum[] {
   const materialCategoryData: IMaterialCategoryDatum[] = [];
   const otherMaterialCategoryDatum: IMaterialCategoryDatum = {
-    name: customCategory,
+    name: CUSTOM_CATEGORY,
     list: [],
   };
   components.forEach((component: IMaterialItem) => {

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Material } from './components/view';
-import { convertMaterialData } from './utils';
-import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase } from './types';
+import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material/lib/common';
 import * as styles from './index.module.scss';
 
 const View : React.FC<{
