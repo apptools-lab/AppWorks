@@ -4,10 +4,10 @@
     {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
     {"path": "packages/generate-project"},
-    {"path": "packages/block-add"},
     {"path": "packages/iceworks-cli"},
     {"path": "packages/material-utils"},
     {"path": "packages/material-service"},
-    {"path": "packages/page-service"}
+    {"path": "packages/page-service"},
+    {"path": "packages/vscode-webview"}
   ]
 }
