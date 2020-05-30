@@ -5,10 +5,10 @@ import { officialMaterialSources } from './constants';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 
 export function activate(context: vscode.ExtensionContext) {
-	const rootPath = vscode.workspace.rootPath;
-	if (!rootPath) {
-		ProjectCreatorPanel.createOrShow(context.extensionPath);
+	if (!(vscode.workspace.getConfiguration('iceworks').get('officialMaterialSources') as Array<any>).length) {
+		vscode.workspace.getConfiguration().update('iceworks.officialMaterialSources', officialMaterialSources, true);
 	}
+
 	context.subscriptions.push(
 		vscode.commands.registerCommand('projectCreator.start', () => {
 			ProjectCreatorPanel.createOrShow(context.extensionPath);
@@ -29,12 +29,12 @@ class ProjectCreatorPanel {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
-		// If we already have a panel, show it.
+
 		if (ProjectCreatorPanel.currentPanel) {
 			ProjectCreatorPanel.currentPanel._panel.reveal(column);
 			return;
 		}
-		// Otherwise, create a new panel.
+
 		const panel = vscode.window.createWebviewPanel(
 			ProjectCreatorPanel.viewType,
 			'iceworks Project Creator',
@@ -67,7 +67,7 @@ class ProjectCreatorPanel {
 	private constructor(panel: vscode.WebviewPanel, extensionPath: string) {
 		this._panel = panel;
 		this._extensionPath = extensionPath;
-		// init html Content
+
 		this.update();
 
 		this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
@@ -99,13 +99,18 @@ class ProjectCreatorPanel {
 				}
 			}
 
+			if (message.command === 'getScaffoldResources') {
+				const materialSources = vscode.workspace.getConfiguration('iceworks').get('officialMaterialSources', []);
+				panel.webview.postMessage({ command: 'getScaffoldResources', res: materialSources });
+			}
+
 			if (message.command === 'getScaffolds') {
 				const scaffolds = {};
-				const sourcesKeys = Object.keys(officialMaterialSources);
+				const materialSources: Array<any> = vscode.workspace.getConfiguration('iceworks').get('officialMaterialSources');
 				try {
-					for (let key of sourcesKeys) {
-						const response = await axios.get(officialMaterialSources[key]);
-						scaffolds[key] = response.data.scaffolds;
+					for (let materialSource of materialSources) {
+						const response = await axios.get(materialSource.source);
+						scaffolds[materialSource.name] = response.data.scaffolds;
 					}
 					panel.webview.postMessage({ command: 'getScaffolds', res: scaffolds });
 				} catch (error) {
@@ -142,13 +147,11 @@ class ProjectCreatorPanel {
 					const projectDir = args[0];
 					vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
 					panel.webview.postMessage({ command: 'openProjectFolder' });
-					// panel.dispose();
 				} catch (error) {
 					panel.webview.postMessage({ command: 'openProjectFolder', error });
 					vscode.window.showErrorMessage(`command: 'openProjectFolder' error: ${error}`);
 				}
 			}
-
 		}, undefined, this._disposables);
 	}
 
@@ -159,7 +162,7 @@ class ProjectCreatorPanel {
 		const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
 		const stylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/index.css'));
 		const styleUri = webview.asWebviewUri(stylePathOnDisk);
-		// Use a nonce to whitelist which scripts can be run
+
 		const nonce = getNonce();
 		return (
 			`<!DOCTYPE html>

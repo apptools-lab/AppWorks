@@ -4,7 +4,7 @@ import styles from './index.module.scss';
 
 interface IProjectFormProps {
   field: any;
-  onOpenFolderDialog: any;
+  onOpenFolderDialog: () => void;
 }
 
 class CreateProjectForm extends React.Component<IProjectFormProps> {
@@ -14,18 +14,18 @@ class CreateProjectForm extends React.Component<IProjectFormProps> {
       <Form field={field} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
-          label="项目名称"
+          label="projectName"
           required
-          requiredMessage="请输入项目名称"
+          requiredMessage="Please input the project name"
           pattern={/^[a-z]([-_a-z0-9]*)$/i}
-          patternMessage="请输入字母与数字组合，字母开头"
+          patternMessage="Please enter a combination of letters and numbers, beginning with a letter"
         >
-          <Input placeholder="请输入项目名称" name="projectName" />
+          <Input placeholder="Please input the project name" name="projectName" />
         </Form.Item>
 
-        <Form.Item colSpan={12} label="项目路径" required requiredMessage="请选择项目路径">
+        <Form.Item colSpan={12} label="projectPath" required requiredMessage="Please select the project path">
           <Input
-            placeholder="请选择项目路径"
+            placeholder="Please select the project path"
             name="projectPath"
             aria-label="projectPath"
             readOnly

@@ -1,7 +1,7 @@
 {
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
-  "description": "Quick to create a new react app.",
+  "description": "Quick to create a new React and Rax app.",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
@@ -18,9 +18,19 @@
     "commands": [
       {
         "command": "projectCreator.start",
-        "title": "Project Creator"
+        "title": "iceworks: Create React and Rax app"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "iceworks Project Creator",
+      "properties": {
+        "iceworks.officialMaterialSources": {
+          "type": "array",
+          "default": [],
+          "description": "iceworks.officialMaterialSources"
+        }
+      }
+    }
   },
   "repository": {
     "type": "git",

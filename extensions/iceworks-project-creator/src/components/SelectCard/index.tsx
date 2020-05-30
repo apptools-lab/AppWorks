@@ -6,8 +6,8 @@ interface ISelectedCardProps {
   title: string;
   content?: string | React.ReactNode;
   selected: boolean;
-  style: object;
-  onClick: any;
+  style?: object;
+  onClick?: any;
   media?: string | React.ReactNode;
 }
 

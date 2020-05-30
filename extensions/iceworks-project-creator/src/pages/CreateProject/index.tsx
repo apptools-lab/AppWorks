@@ -15,15 +15,15 @@ const CreateProject: React.FC = () => {
 
   const steps = [
     {
-      title: '选择模板',
+      title: 'Select a Scaffold',
       content: <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} />
     },
     {
-      title: '填写信息',
+      title: 'Input Project Information',
       content: <CreateProjectForm field={projectField} onOpenFolderDialog={onOpenFolderDialog} />
     },
     {
-      title: '项目创建完成',
+      title: 'Init Project Successfully',
       content: <InitProjectSuccess projectDir={projectDir} />
     }
   ];
@@ -33,7 +33,6 @@ const CreateProject: React.FC = () => {
       const data = await callService('getProjectPath');
       projectField.setValue('projectPath', data);
     } catch (e) {
-      console.error(e);
     };
   }
 
@@ -56,14 +55,14 @@ const CreateProject: React.FC = () => {
       setLoading(false);
       goNext();
     } catch (e) {
-      await callService('showErrorMessage', '创建项目失败。');
+      await callService('showErrorMessage', 'Fail to init project.');
       setLoading(false);
     }
   };
 
   async function onScaffoldSubmit() {
     if (!projectField.getValue('scaffold')) {
-      await callService('showErrorMessage', '请选择一个模块。');
+      await callService('showErrorMessage', 'Please select a scaffold.');
       return;
     }
     goNext();
@@ -80,17 +79,17 @@ const CreateProject: React.FC = () => {
   let actions;
   switch (currentStep) {
     case 0:
-      actions = <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>;
+      actions = <Button type="primary" onClick={onScaffoldSubmit}>Next Step</Button>;
       break;
     case 1:
       actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>上一步</Button>
+        <Button onClick={goPrev} style={{ marginRight: '5px' }}>Previous Step</Button>
         <Form.Submit
           type="primary"
           onClick={onSubmit}
           validate
           loading={loading}
-        >下一步</Form.Submit>
+        >Next Step</Form.Submit>
       </>;
       break;
     default:
