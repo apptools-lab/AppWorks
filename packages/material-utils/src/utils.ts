@@ -1,3 +1,5 @@
+
+import packageJSON from 'package-json';
 import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from './types';
 import { CUSTOM_CATEGORY } from './constant';
 
@@ -69,4 +71,20 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
     materialCategoryData.unshift(otherMaterialCategoryDatum);
   }
   return materialCategoryData;
+}
+export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
+  const {version, npm} = source;
+  let registryUrl = source.registry;
+
+  // Using taobao registry to increase download speed
+  if (registryUrl === 'https://registry.npmjs.org') {
+    registryUrl = 'https://registry.npm.taobao.org';
+  }
+
+  const packageData: any = await packageJSON(npm, {
+    version,
+    registryUrl,
+  });
+
+  return packageData.dist.tarball;
 }

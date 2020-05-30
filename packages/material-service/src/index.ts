@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
-import packageJSON from 'package-json';
 const kebabCase = require('lodash.kebabcase');
 
 const iceMaterial = 'http://ice.alicdn.com/assets/materials/react-materials.json';
@@ -69,21 +68,4 @@ export const getData = async function(source: string) {
   }
 
   return data;
-}
-
-export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
-  const {version, npm} = source;
-  let registryUrl = source.registry;
-
-  // Using taobao registry to increase download speed
-  if (registryUrl === 'https://registry.npmjs.org') {
-    registryUrl = 'https://registry.npm.taobao.org';
-  }
-
-  const packageData: any = await packageJSON(npm, {
-    version,
-    registryUrl,
-  });
-
-  return packageData.dist.tarball;
 }

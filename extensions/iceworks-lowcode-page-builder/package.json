@@ -64,7 +64,7 @@
   "scripts": {
     "vscode:prepublish": "npm run build",
     "build": "npm run build:icejs && npm run compile",
-    "compile": "tsc -p tsconfig.extension.json && cp ext-src/services/page/template.jsx.ejs build/ext-src/services/page/",
+    "compile": "tsc -p tsconfig.extension.json",
     "lint": "npm run lint:ext && npm run lint:src",
     "lint:ext": "eslint ext-src --ext ts",
     "lint:src": "npm run eslint:icejs && npm run stylelint:icejs",
