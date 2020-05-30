@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Create Page', ViewColumn.One, {
       enableScripts: true,
-      retainContextWhenHidden: false,
+      retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
     handleService(webviewPanel.webview, subscriptions, services);
