@@ -20,8 +20,6 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "iceworks-lowcode-page-builder" is now active!');
 
   function activeWebview() {
-    vscode.window.showInformationMessage('run iceworks example!');
-
     if (!webviewPanel) {
       webviewPanel = window.createWebviewPanel('iceworks', 'Create Page', ViewColumn.One, {
         enableScripts: true,
