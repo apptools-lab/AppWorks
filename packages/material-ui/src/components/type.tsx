@@ -14,10 +14,10 @@ interface ContentProps extends IMaterialTypeDatum {
   scrollId?: string;
   typeId: string;
   colSpan: number;
-  onComponentClick?(dataSource: IMaterialComponent): void;
-  onBaseClick?(dataSource: IMaterialBase): void;
-  onBlockClick?(dataSource: IMaterialBlock): void;
-  onScaffoldClick?(dataSource: IMaterialScaffold): void;
+  onComponentClick?: (dataSource: IMaterialComponent) => void;
+  onBaseClick?: (dataSource: IMaterialBase) => void;
+  onBlockClick?: (dataSource: IMaterialBlock) => void;
+  onScaffoldClick?: (dataSource: IMaterialScaffold) => void;
 }
 
 const Content: React.FC<ContentProps> = ({
@@ -49,7 +49,7 @@ const Content: React.FC<ContentProps> = ({
           }
 
           return false;
-        })
+        }),
       };
     });
 
@@ -79,10 +79,12 @@ const Content: React.FC<ContentProps> = ({
                       const { source } = item;
                       let $ele;
                       if (typeId === 'scaffolds') {
-                        $ele = (<MaterialScaffold dataSource={item as IMaterialScaffold} onDownload={onScaffoldClick} />);
+                        // @ts-ignore
+                        $ele = (<MaterialScaffold dataSource={item} onDownload={onScaffoldClick} />);
                       } else if (typeId === 'blocks') {
-                        const $block = <MaterialBlock dataSource={item as IMaterialBlock} onClick={onBlockClick} />;
-                        if (cIndex == 0 && index > 3 && scrollId) {
+                        // @ts-ignore
+                        const $block = <MaterialBlock dataSource={item} onClick={onBlockClick} />;
+                        if (cIndex === 0 && index > 3 && scrollId) {
                           $ele = (<LazyLoad scrollContainer={`#${scrollId}`} height={240}>
                             {$block}
                           </LazyLoad>);
@@ -90,9 +92,10 @@ const Content: React.FC<ContentProps> = ({
                           $ele = $block;
                         }
                       } else if (typeId === 'components') {
-                        $ele = (<MaterialComponent dataSource={item as IMaterialComponent} onClick={onComponentClick} />);
+                        // @ts-ignore
+                        $ele = (<MaterialComponent dataSource={item} onClick={onComponentClick} />);
                       } else if (typeId === 'bases') {
-                        $ele = (<MaterialBase dataSource={item as IMaterialBase} onClick={onBaseClick} />);
+                        $ele = (<MaterialBase dataSource={item} onClick={onBaseClick} />);
                       }
                       return (
                         <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
@@ -122,10 +125,10 @@ export const MaterialType: React.FC<{
   sourceIndex?: number;
   disableLazyLoad?: boolean;
   colSpan?: number;
-  onComponentClick?(dataSource: IMaterialComponent): void;
-  onBaseClick?(dataSource: IMaterialBase): void;
-  onBlockClick?(dataSource: IMaterialBlock): void;
-  onScaffoldClick?(dataSource: IMaterialScaffold): void;
+  onComponentClick?: (dataSource: IMaterialComponent) => void;
+  onBaseClick?: (dataSource: IMaterialBase) => void;
+  onBlockClick?: (dataSource: IMaterialBlock) => void;
+  onScaffoldClick?: (dataSource: IMaterialScaffold) => void;
 }> = ({ sourceIndex, data, disableLazyLoad, isLoadingData, onScaffoldClick, onBlockClick, onComponentClick, onBaseClick, colSpan = 8 }) => {
   const scrollId = disableLazyLoad ? '' : `iceworks_material_content_${sourceIndex}`;
   const currentId = data[0] ? data[0].id : '';

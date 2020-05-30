@@ -10,6 +10,8 @@ node_modules
 extensions/*/out
 .vscode-test
 packages/*/lib/
+packages/*/es/
+packages/*/build/
 app/main_dist/
 app/build/
 tmp

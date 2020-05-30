@@ -4,14 +4,14 @@ import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource } from '@iceworks/material-utils';
+import * as upperCamelCase from 'uppercamelcase';
+import * as ejs from 'ejs';
 import {
   pagesPath,
   componentDirName,
   templateFileName,
   projectPath,
 } from './constant';
-const upperCamelCase = require('uppercamelcase');
-const ejs = require('ejs');
 
 export const create = async function({ pageName: name, blocks }: any) {
   const pageName = upperCamelCase(name);

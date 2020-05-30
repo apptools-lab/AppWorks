@@ -5,7 +5,7 @@ import * as styles from './scaffold.module.scss';
 
 export const MaterialScaffold: React.FC<{
   dataSource: IMaterialScaffold,
-  onDownload?(dataSource: IMaterialScaffold): void,
+  onDownload?: (dataSource: IMaterialScaffold) => void,
   selected?: boolean,
   hiddenDownloadButton?: boolean,
   onClick?: any,

@@ -1,4 +1,5 @@
 // @ts-ignore
+// eslint-disable-next-line
 const vscode = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi() : null;
 
 export const callService = function(service: string, method: string, ...args) {

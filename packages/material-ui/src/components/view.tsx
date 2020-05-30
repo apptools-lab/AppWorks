@@ -14,10 +14,10 @@ export const Material: React.FC<{
   isLoadingData?: boolean;
   colSpan?: number;
   disableLazyLoad?: boolean;
-  onBaseClick?(dataSource: IMaterialBase): void,
-  onComponentClick?(dataSource: IMaterialComponent): void,
-  onBlockClick?(dataSource: IMaterialBlock): void,
-  onScaffoldClick?(dataSource: IMaterialScaffold): void,
+  onBaseClick?: (dataSource: IMaterialBase) => void,
+  onComponentClick?: (dataSource: IMaterialComponent) => void,
+  onBlockClick?: (dataSource: IMaterialBlock) => void,
+  onScaffoldClick?: (dataSource: IMaterialScaffold) => void,
 }> = ({
   sources, currentSource, data, isLoadingData,
   onChangeSource,
@@ -26,7 +26,7 @@ export const Material: React.FC<{
   onScaffoldClick,
   onBlockClick,
   onComponentClick,
-  onBaseClick
+  onBaseClick,
 }) => {
   return (
     <Tab

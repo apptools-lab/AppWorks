@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
-const ejs = require('ejs');
+import * as ejs from 'ejs';
 
 const { window, ViewColumn } = vscode;
 
@@ -14,7 +14,7 @@ interface IMessage {
 
 interface IConfig {
   title: string;
-  services?: any
+  services?: any;
 }
 
 const templateFileName = 'template.html.ejs';
@@ -45,7 +45,7 @@ export function handleService(webview, subscriptions, services) {
           webview.postMessage({ eventId, result });
         } catch(err) {
           console.error('invoke service error', err);
-         webview.postMessage({ eventId, errorMessage: err.message });
+          webview.postMessage({ eventId, errorMessage: err.message });
         }
       } else {
         vscode.window.showErrorMessage(`invalid command ${message}`);

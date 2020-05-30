@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Material } from './components/view';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
+import { Material } from './components/view';
 
 const View : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;

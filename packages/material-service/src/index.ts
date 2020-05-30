@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
-const kebabCase = require('lodash.kebabcase');
+import * as kebabCase from 'lodash.kebabcase';
 
 const iceMaterial = 'http://ice.alicdn.com/assets/materials/react-materials.json';
 const materialBaseHomePageUrl = 'https://ice.work/component';

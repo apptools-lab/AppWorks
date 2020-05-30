@@ -4,7 +4,7 @@ import * as styles from './block.module.scss';
 
 export const MaterialBlock: React.FC<{
   dataSource: IMaterialBlock,
-  onClick?(dataSource: IMaterialBlock): void,
+  onClick?: (dataSource: IMaterialBlock) => void,
 }> = ({ dataSource, onClick }) => {
   function handleClick() {
     onClick && onClick(dataSource);
