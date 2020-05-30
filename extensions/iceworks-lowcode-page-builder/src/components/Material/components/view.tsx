@@ -34,6 +34,7 @@ export const Material: React.FC<{
       activeKey={currentSource}
       onChange={onChangeSource}
       animated={false}
+      size="small"
     >
       {
         sources.map((sourceData, index) => {

@@ -5,23 +5,31 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
   const { blocks, scaffolds, components, bases } = materialData;
   const hasBase = bases && bases.length > 0;
   const componentName = hasBase ? '业务组件' : '组件';
-  const materialGroup = [
-    {
+  const materialGroup: IMaterialTypeDatum[] = [];
+
+  if (scaffolds) {
+    materialGroup.push({
       name: '模板',
       id: 'scaffolds',
       categoryData: getMaterialCategoryData(scaffolds),
-    },
-    {
+    });
+  }
+
+  if (blocks) {
+    materialGroup.push({
       name: '区块',
       id: 'blocks',
       categoryData: getMaterialCategoryData(blocks),
-    },
-    {
+    });
+  }
+
+  if (components) {
+    materialGroup.push({
       name: componentName,
       id: 'components',
       categoryData: getMaterialCategoryData(components),
-    },
-  ];
+    });
+  }
 
   if (hasBase) {
     materialGroup.push({

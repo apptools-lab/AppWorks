@@ -9,6 +9,7 @@
   .head {
     display: flex;
     justify-content: center;
+    margin-bottom: 16px;
   }
 }
 
@@ -17,7 +18,6 @@
 
   .search {
     margin: 0 12px;
-    margin-top: 18px;
 
     :global(.next-search) {
       width: 100%;
@@ -29,7 +29,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
-    padding-bottom: 144px; // hack 将两个 tab 和搜索框的高度补回来
+    padding-bottom: 124px; // hack 将两个 tab 和搜索框的高度补回来
 
     // IDE 里面有默认样式，这里重写
     &::-webkit-scrollbar {

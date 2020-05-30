@@ -142,7 +142,7 @@ export const MaterialType: React.FC<{
 
   return (
     <Loading visible={isLoadingData} className={styles.spin}>
-      <div className={styles.head}>
+      { data.length > 1 && <div className={styles.head}>
         <Radio.Group shape="button" value={typeId} onChange={handleTypeChange}>
           {
             data.map(({ name, id }) => {
@@ -154,7 +154,7 @@ export const MaterialType: React.FC<{
             })
           }
         </Radio.Group>
-      </div>
+      </div>}
       {
         data.map((item) => {
           const { name, id } = item;
