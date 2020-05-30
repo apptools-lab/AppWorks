@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon } from '@alifd/next';
-import { IMaterialScaffold, PLACEHOLDER_IMG } from '@iceworks/material/lib/common';
+import { IMaterialScaffold, PLACEHOLDER_IMG } from '@iceworks/material-utils';
 import * as styles from './scaffold.module.scss';
 
 export const MaterialScaffold: React.FC<{

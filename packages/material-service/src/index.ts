@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import axios from 'axios';
 import packageJSON from 'package-json';
 const kebabCase = require('lodash.kebabcase');
@@ -10,6 +11,13 @@ const materialBaseSource = 'https://ice.alicdn.com/assets/base-components-1.x.js
 const isIceMaterial = (source: string) => {
   return source === iceMaterial;
 };
+
+export const getSources = function (type: string) {
+  const sources = vscode.workspace.getConfiguration('iceworks').get('materialSources');
+
+  // @ts-ignore
+  return type ? sources.filter(({ type: originType }) => originType === type) : sources;
+}
 
 const cache: any = {};
 export const getData = async function(source: string) {

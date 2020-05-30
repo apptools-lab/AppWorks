@@ -1,13 +1,13 @@
+@import '~@alifd/next/lib/core/index.scss';
+
 .container {
-  position: relative;
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
-  padding: 16px;
-  text-align: left;
   overflow: hidden;
-  height: 100px;
-  margin-bottom: 14px;
+  position: relative;
+  height: 100%;
+  margin-bottom: 24px;
   border: 1px solid $color-line1-1;
   &:hover {
     text-decoration: none;
@@ -18,18 +18,26 @@
   }
 }
 
-.title {
-  margin: 0 0 5px;
-  height: 30px;
-  line-height: 1.6;
-  font-weight: 500;
+.screenshot {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 160px;
+  transition: all 0.3s ease;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
 }
 
-.desc {
-  font-size: 12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.title {
+  margin: 0;
+  padding: 10px;
+  border-top: 1px solid $color-line1-2;
+  text-align: center;
 }
 
 .actions {
@@ -50,8 +58,8 @@
     align-items: center;
     justify-content: center;
     width: 50%;
-    height: 35px;
-    line-height: 35px;
+    height: 45px;
+    line-height: 45px;
     font-size: 14px;
     font-weight: bold;
     background: $color-fill1-3;

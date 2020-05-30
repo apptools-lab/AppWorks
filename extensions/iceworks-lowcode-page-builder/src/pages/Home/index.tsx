@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Notification, Button, Input } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import PageSelected from './components/PageSelected';
-import Material from '../../components/Material';
+import Material from '@iceworks/material-ui';
 import callService from '../../callService';
 import styles from './index.module.scss';
 

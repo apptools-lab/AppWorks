@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
-import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase, CUSTOM_CATEGORY } from '@iceworks/material/lib/common';
+import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase, CUSTOM_CATEGORY } from '@iceworks/material-utils';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';

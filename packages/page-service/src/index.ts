@@ -3,13 +3,13 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource } from '@iceworks/material/lib/node';
+import { getTarballURLByMaterielSource } from '@iceworks/material-utils';
 import {
   pagesPath,
   componentDirName,
   templateFileName,
   projectPath,
-} from '../../constant';
+} from './constant';
 const upperCamelCase = require('uppercamelcase');
 const ejs = require('ejs');
 

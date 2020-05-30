@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { IMaterialBase } from '@iceworks/material/lib/common';
-import * as styles from './base.module.scss';
+import { IMaterialComponent } from '@iceworks/material-utils';
+import * as styles from './component.module.scss';
 
-export const MaterialBase: React.FC<{
-  dataSource: IMaterialBase,
-  onClick?(dataSource: IMaterialBase): void,
+export const MaterialComponent: React.FC<{
+  dataSource: IMaterialComponent,
+  onClick?(dataSource: IMaterialComponent): void,
 }> = ({ dataSource, onClick }) => {
   function handleClick() {
     onClick && onClick(dataSource);
@@ -14,7 +14,7 @@ export const MaterialBase: React.FC<{
     <div className={styles.container}>
       <div onClick={handleClick}>
         <h5 className={styles.title}>{dataSource.name}</h5>
-        <p className={styles.desc}>{dataSource.title || dataSource.name}</p>
+        <p className={styles.desc}>{dataSource.description || dataSource.name}</p>
       </div>
       <div className={styles.actions}>
         <a
@@ -23,7 +23,7 @@ export const MaterialBase: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          Docunment
+          Document
         </a>
         <a
           className={styles.button}

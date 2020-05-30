@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Material } from './components/view';
-import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material/lib/common';
-import * as styles from './index.module.scss';
+import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
 
 const View : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
@@ -52,7 +51,7 @@ const View : React.FC<{
   }, []);
 
   return (
-    <div className={styles.componentMaterialWrap}>
+    <div className="iceworks-material">
       <Material
         sources={sources}
         currentSource={currentSource}
