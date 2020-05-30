@@ -5,10 +5,12 @@ import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMa
 const View : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
-  onBlockClick: (block: IMaterialBlock) => void;
-  onComponentClick: (component: IMaterialComponent) => void;
-  onBaseClick: (base: IMaterialBase) => void;
-}> = ({ getSources, getData, ...others }) => {
+  dataWhiteList?: string[];
+  dataBlackList?: string[];
+  onBlockClick?: (block: IMaterialBlock) => void;
+  onComponentClick?: (component: IMaterialComponent) => void;
+  onBaseClick?: (base: IMaterialBase) => void;
+}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [],  ...others }) => {
   const [sources, setSources] = React.useState([]);
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
@@ -39,9 +41,7 @@ const View : React.FC<{
   async function refreshMaterialData(source: string) {
     setIsLoadingData(true);
     const materialData: IMaterialData = await getData(source);
-
-    // do not show scaffold in material panel
-    const data = convertMaterialData(materialData).filter(({ id }) => id !== 'scaffolds');
+    const data = convertMaterialData(materialData).filter(({ id }) => !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true) );
     setIsLoadingData(false);
     setData(data);
   }

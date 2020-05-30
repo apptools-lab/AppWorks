@@ -129,6 +129,7 @@ const Home = () => {
                   getSources={getSources}
                   getData={getData}
                   onBlockClick={onAdd}
+                  dataWhiteList={['blocks']}
                 />
               </Col>
             </Row>
