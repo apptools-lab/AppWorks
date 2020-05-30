@@ -18,11 +18,11 @@ async function getData(source: string) {
 
 function validateData({ blocks, pageName }) {
   if (!pageName) {
-    return '请填写页面名称';
+    return 'Please set name of page';
   }
 
   if (!blocks || !blocks.length) {
-    return '请选择区块';
+    return 'Please select blocks';
   }
 
   return '';
@@ -33,28 +33,23 @@ const Home = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
 
-  // 添加区块
   function onAdd(block) {
     setSelectedBlocks([...selectedBlocks, block]);
   }
 
-  // 删除区块
   function onDelete(targetIndex) {
     setSelectedBlocks(selectedBlocks.filter((_, index) => index !== targetIndex));
   }
 
-  // 名字更新
   function onNameChange(name, targetIndex) {
     selectedBlocks[targetIndex].name = name;
     setSelectedBlocks([...selectedBlocks]);
   }
 
-  // 开始拖拽
   function onSortStart() {
     setIsSorting(true);
   }
 
-  // 结束拖拽
   function onSortEnd({ oldIndex, newIndex }) {
     setIsSorting(false);
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
@@ -83,7 +78,7 @@ const Home = () => {
       throw error;
     }
 
-    Notification.success({ content: '页面生成成功！' });
+    Notification.success({ content: 'Page generation succeeded!' });
     resetData();
   }
 
@@ -92,11 +87,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. 填写页面路面名称：
+            1. Fill in the page name:
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="以字母 a-z 开头，不能包含中文"
+              placeholder="Starts with A-Z, cannot contain special characters"
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
@@ -105,7 +100,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. 选择区块：
+            2. Select Blocks：
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
@@ -135,7 +130,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" onClick={handleCreate}>
-          生成页面
+          Generate page
         </Button>
       </div>
     </div>

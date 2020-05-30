@@ -23,7 +23,7 @@ export const MaterialBase: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          文档
+          Docunment
         </a>
         <a
           className={styles.button}
@@ -31,7 +31,7 @@ export const MaterialBase: React.FC<{
           target="_blank"
           href={dataSource.repository}
         >
-          源码
+          Code
         </a>
       </div>
     </div>

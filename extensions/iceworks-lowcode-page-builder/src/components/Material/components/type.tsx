@@ -62,7 +62,7 @@ const Content: React.FC<ContentProps> = ({
       <div className={styles.search}>
         <Search
           shape="simple"
-          placeholder="输入关键字查找物料"
+          placeholder="Enter keywords to find materials"
           onSearch={handeSearchSubmit}
         />
       </div>
@@ -109,7 +109,7 @@ const Content: React.FC<ContentProps> = ({
         }
         {
           !categoryData.length ? <div className={styles.empty}>
-            没有数据
+            Empty
           </div> : null
         }
       </div>

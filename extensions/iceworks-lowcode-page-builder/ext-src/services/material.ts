@@ -72,10 +72,15 @@ export const getData = async function(source: string) {
 }
 
 export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
-  const version = source.version;
-  const registryUrl = source.registry;
+  const {version, npm} = source;
+  let registryUrl = source.registry;
 
-  const packageData: any = await packageJSON(source.npm, {
+  // Using taobao registry to increase download speed
+  if (registryUrl === 'https://registry.npmjs.org') {
+    registryUrl = 'https://registry.npm.taobao.org';
+  }
+
+  const packageData: any = await packageJSON(npm, {
     version,
     registryUrl,
   });

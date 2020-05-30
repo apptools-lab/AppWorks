@@ -49,9 +49,9 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
         <div className={styles.empty}>
           <img
             src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png"
-            alt="区块"
+            alt="Block"
           />
-          请从右侧选择区块
+            Please select blocks from the right slide
         </div>
       )}
     </div>

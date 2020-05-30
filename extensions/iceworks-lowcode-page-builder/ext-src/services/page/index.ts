@@ -17,12 +17,12 @@ export const create = async function({ pageName: name, blocks }: any) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
-  // 确保页面存储的根目录存在
+  // ensure that the root directory of the page store exists
   await fsExtra.mkdirp(pagePath);
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(`${name} 页面已存在，不允许覆盖。`);
+    throw new Error(`${name} page already exists, cannot overwrite.`);
   }
 
   try {
@@ -79,10 +79,11 @@ export const installBlocksDependencies = async function(blocks: any) {
   const projectPackageJSON = await readPackageJSON(projectPath);
   const { activeTerminal } = vscode.window;
 
-  // 所有区块依赖
+  // get all dependencies from blocks
   const blocksDependencies: { [packageName: string]: string } = {};
   blocks.forEach(({ dependencies }: any) => Object.assign(blocksDependencies, dependencies));
 
+  // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
   Object.keys(blocksDependencies).forEach(packageName => {
     if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
@@ -92,24 +93,28 @@ export const installBlocksDependencies = async function(blocks: any) {
     }
   });
 
-  let terminal: vscode.Terminal;
-  if (activeTerminal) {
-    terminal = activeTerminal;
+  if (filterDependencies.length > 0) {
+    let terminal: vscode.Terminal;
+    if (activeTerminal) {
+      terminal = activeTerminal;
+    } else {
+      terminal = vscode.window.createTerminal();
+    }
+
+    const npmClient = vscode.workspace.getConfiguration('iceworks').get('packageManager') || 'npm';
+
+    terminal.show();
+    terminal.sendText(`cd ${projectPath}`, true);
+
+    return await Promise.all(
+      filterDependencies.map(async dependency => {
+        const [packageName, version]: [string, string] = Object.entries(dependency)[0];
+        await terminal.sendText(`${npmClient} install ${packageName}@${version}`, true);
+      }),
+    );
   } else {
-    terminal = vscode.window.createTerminal();
+    return [];
   }
-
-  const npmClient = vscode.workspace.getConfiguration('iceworks').get('packageManager') || 'npm';
-
-  terminal.show();
-  terminal.sendText(`cd ${projectPath}`, true);
-
-  return await Promise.all(
-    filterDependencies.map(async dependency => {
-      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      await terminal.sendText(`${npmClient} install ${packageName}@${version}`, true);
-    }),
-  );
 }
 
 export const downloadBlockToPage = async function(block: any, pageName: string){
@@ -124,7 +129,7 @@ export const downloadBlockToPage = async function(block: any, pageName: string){
   try {
     tarballURL = await getTarballURLByMaterielSource(block.source);
   } catch (error) {
-    error.message = `请求区块 ${blockSourceNpm} 的 tarball 包失败，可手动克隆 ${block.repository}`;
+    error.message = `Failed to get tarball URL of ${blockSourceNpm}, you can copy ${block.repository}`;
     throw error;
   }
 
@@ -134,9 +139,9 @@ export const downloadBlockToPage = async function(block: any, pageName: string){
   try {
     await getAndExtractTarball(blockTempDir, tarballURL);
   } catch (error) {
-    error.message = `解压区块${blockName}出错，下载地址是：${tarballURL}，请重试`;
+    error.message = `Error decompressing block: ${blockName}, tarballURL is: ${tarballURL}`;
     if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-      error.message = `解压区块${blockName}超时，下载地址是：${tarballURL}，请重试`;
+      error.message = `Decompress ${blockName} timed out, tarballURL is: ${tarballURL}`;
     }
     await fsExtra.remove(blockTempDir);
     throw error;

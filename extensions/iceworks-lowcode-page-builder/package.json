@@ -1,7 +1,7 @@
 {
   "name": "iceworks-lowcode-page-builder",
   "displayName": "iceworks Lowcode Page Builder",
-  "description": "Build Page UI by Lowcode",
+  "description": "Build Page UI by LowCode",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.45.0"
@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "iceworks-lowcode-page-builder.create",
-        "title": "Create Page"
+        "title": "iceworks: Create Page"
       }
     ],
     "configuration": {

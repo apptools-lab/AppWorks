@@ -25,7 +25,7 @@ export const MaterialBlock: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          预览
+          Preview
         </a>
         <a
           href={dataSource.repository}
@@ -33,7 +33,7 @@ export const MaterialBlock: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          源码
+          Code
         </a>
       </div>
     </div>
