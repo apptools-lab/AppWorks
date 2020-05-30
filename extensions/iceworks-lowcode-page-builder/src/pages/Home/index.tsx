@@ -32,6 +32,7 @@ const Home = () => {
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
+  const [isCreating, setIsCreating] = useState(false);
 
   function onAdd(block) {
     setSelectedBlocks([...selectedBlocks, block]);
@@ -61,6 +62,7 @@ const Home = () => {
   }
 
   async function handleCreate(data) {
+    setIsCreating(true);
     try {
       const data = {
         blocks: selectedBlocks,
@@ -70,14 +72,18 @@ const Home = () => {
       const errorMessage = validateData(data);
       if (errorMessage) {
         Notification.error({ content: errorMessage });
+        setIsCreating(false);
+        return;
       }
 
       await callService('page', 'create', data);
     } catch (error) {
       Notification.error({ content: error.message });
+      setIsCreating(false);
       throw error;
     }
 
+    setIsCreating(false);
     Notification.success({ content: 'Page generation succeeded!' });
     resetData();
   }
@@ -95,6 +101,7 @@ const Home = () => {
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
+              disabled={isCreating}
             />
           </div>
         </div>
@@ -129,7 +136,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" onClick={handleCreate}>
+        <Button type="primary" loading={isCreating} onClick={handleCreate}>
           Generate page
         </Button>
       </div>

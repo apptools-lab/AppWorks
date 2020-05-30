@@ -1,5 +1,5 @@
 // @ts-ignore
-const vscode = acquireVsCodeApi ? acquireVsCodeApi() : null;
+const vscode = window.acquireVsCodeApi ? acquireVsCodeApi() : null;
 
 export default async function callService(service: string, method: string, ...args) {
   if (vscode) {
