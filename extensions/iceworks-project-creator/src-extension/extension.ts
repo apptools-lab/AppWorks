@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('projectCreator.start', () => {
+		vscode.commands.registerCommand('iceworks-project-creator.start', () => {
 			ProjectCreatorPanel.createOrShow(context.extensionPath);
 		})
 	);

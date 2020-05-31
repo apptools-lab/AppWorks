@@ -11,13 +11,13 @@
   ],
   "icon": "./public/logo.png",
   "activationEvents": [
-    "onCommand:projectCreator.start"
+    "onCommand:iceworks-project-creator.start"
   ],
   "main": "./out/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "projectCreator.start",
+        "command": "iceworks-project-creator.start",
         "title": "iceworks: Create React and Rax app"
       }
     ],
