@@ -9,13 +9,24 @@ import styles from './index.module.scss';
 const { Row, Col } = Grid;
 
 async function getSources() {
-  const sources = await callService('material', 'getSources');
+  let sources = [];
+  try {
+    sources = await callService('material', 'getSources');
+  } catch (e) {
+    Notification.error({content: 'Get Material Sourcess got error, please try aging.'});
+  }
+
   console.log('getSources', sources);
   return sources;
 }
 
 async function getData(source: string) {
-  const data = await callService('material', 'getData', source);
+  let data = {};
+  try {
+    await callService('material', 'getData', source);
+  } catch (e) {
+    data = Notification.error({content: 'Get Material Data got error, please try aging.'});
+  }
   console.log('getData', data);
   return data;
 }

@@ -70,7 +70,7 @@ export const MaterialScaffold: React.FC<{
           Code
         </a>
         {
-          hiddenDownloadButton ? null :  <a className={styles.button} onClick={handleDownload}>下载</a>
+          hiddenDownloadButton ? null :  <a className={styles.button} onClick={handleDownload}>Download</a>
         }
       </div>
     </div>
