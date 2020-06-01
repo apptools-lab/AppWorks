@@ -52,5 +52,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://unpkg.com/@iceworks/material-ui@0.1.0/build/index.html"
 }

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { handleService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import services from './services/index';
 
 const { window, ViewColumn } = vscode;
@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    handleService(webviewPanel.webview, subscriptions, services);
+    connectService(webviewPanel.webview, subscriptions, services);
   }
   context.subscriptions.push(vscode.commands.registerCommand('iceworks-lowcode-page-builder.create', function() {
     activeWebview();

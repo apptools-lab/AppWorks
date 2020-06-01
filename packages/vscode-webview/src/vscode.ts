@@ -28,10 +28,10 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
     retainContextWhenHidden: false,
   });
   webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-  handleService(webviewPanel.webview, subscriptions, services);
+  connectService(webviewPanel.webview, subscriptions, services);
 }
 
-export function handleService(webview, subscriptions, services) {
+export function connectService(webview, subscriptions, services) {
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
