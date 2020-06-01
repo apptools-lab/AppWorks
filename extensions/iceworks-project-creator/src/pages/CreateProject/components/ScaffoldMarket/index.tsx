@@ -5,8 +5,9 @@ import callService from '@/service/index';
 import { IMaterialSource, IMaterialItem } from '@/types';
 
 interface IScaffolds {
-  [key: string]: IMaterialItem
+  [key: string]: IMaterialItem[]
 }
+
 const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState('');
   const [materialSelected, setMaterialSelected] = useState(null);
