@@ -1,8 +1,8 @@
 {
   "name": "iceworks-lowcode-page-builder",
-  "displayName": "iceworks Lowcode Page Builder",
-  "description": "Build Page UI by LowCode",
-  "version": "0.0.1",
+  "displayName": "iceworks Low-Code Page Builder",
+  "description": "Build Page UI by low-code way",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
   },
@@ -23,9 +23,20 @@
     "configuration": {
       "title": "iceworks App",
       "properties": {
+        "iceworks.packageManager": {
+          "type": "string",
+          "default": "npm",
+          "enum": [
+            "npm",
+            "cnpm",
+            "tnpm",
+            "yarn"
+          ],
+          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.packageManager.description%"
+        },
         "iceworks.materialSources": {
           "type": "array",
-          "description": "Material Sources",
+          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.materialSources.description%",
           "items": {
             "type": "object",
             "description": "Source",
