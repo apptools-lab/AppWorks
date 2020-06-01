@@ -71,12 +71,8 @@
     "@alifd/theme-design-pro": "^0.x",
     "@iceworks/generate-project": "^1.0.6",
     "axios": "^0.19.2",
-    "classnames": "^2.2.6",
-    "ejs": "^3.0.1",
     "fs-extra": "^9.0.0",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "vscode": "^1.1.37",
-    "vscode-nls": "^4.1.2"
+    "react-dom": "^16.8.0"
   }
 }
