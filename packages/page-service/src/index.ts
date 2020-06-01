@@ -19,7 +19,7 @@ import {
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const create = async function({ pageName: name, blocks }: { pageName: string, blocks: IMaterialBlock[] }) {
+export const create = async function({ pageName: name, blocks }: { pageName: string; blocks: IMaterialBlock[] }) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
