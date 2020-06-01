@@ -11,10 +11,8 @@ import { run } from './fn/shell';
 
   const packagesPath = path.join(__dirname, '../packages');;
   const packageFiles = await fs.readdir(packagesPath);
-  for (const packageFile of packageFiles) {
+  return await Promise.all(packageFiles.map(async function(packageFile) {
     const cwd = path.join(packagesPath, packageFile);
-    console.log('cwd', cwd);
-
     const cwdStat = await fs.stat(cwd);
     if (cwdStat.isDirectory()) {
       const packageJSON: any = await fs.readJson(path.join(cwd, 'package.json'));
@@ -22,17 +20,23 @@ import { run } from './fn/shell';
 
       // 解决 tsc 不支持 copy 非 .ts/.tsx 文件的问题
       if (!isUIPackage) {
-        const fileParten = '*/src/**/!(*.ts|*.tsx)';
+        console.log('copy cwd', cwd);
+        const fileParten = 'src/**/!(*.ts|*.tsx)';
         const files = glob.sync(fileParten, { cwd, nodir: true });
-        for (const file of files) {
+        console.log('copy files', files);
+
+        return await Promise.all(files.map(async function(file) {
           const from = path.join(cwd, file);
           const to = path.join(cwd, file.replace(/\/src\//, '/lib/'));
+          console.log('copy from', from);
+          console.log('copy to', to);
+
           await fs.mkdirp(path.dirname(to));
-          await fs.copyFile(from, to);
-        }
+          return await fs.copyFile(from, to);
+        }));
       }
     }
-  }
+  }));
 })().catch((e) => {
   console.trace(e);
   process.exit(128);

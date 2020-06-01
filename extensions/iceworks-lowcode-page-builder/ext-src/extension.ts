@@ -4,13 +4,6 @@ import services from './services/index';
 
 const { window, ViewColumn } = vscode;
 
-interface IMessage {
-  service: string;
-  method: string;
-  eventId: string;
-  [propName: string]: any;
-}
-
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 

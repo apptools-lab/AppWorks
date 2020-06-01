@@ -1,4 +1,7 @@
 {
+  "devServer": {
+    "writeToDisk": true
+  },
   "plugins": [
     [
       "build-plugin-fusion",

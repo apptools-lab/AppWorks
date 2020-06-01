@@ -73,19 +73,13 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "npm run build && npm run compile:extension",
-    "compile:extension": "tsc -p tsconfig.extension.json",
-    "lint": "npm run lint:ext && npm run lint:src",
-    "lint:ext": "eslint ext-src --ext ts",
-    "lint:src": "npm run eslint:icejs && npm run stylelint:icejs",
-    "watch": "npm run start && npm run watch:extension",
-    "watch:extension": "tsc -watch -p tsconfig.extension.json",
-    "pretest": "npm run compile && npm run lint",
-    "build": "icejs build",
     "start": "icejs start",
-    "eslint:icejs": "eslint --no-eslintrc --cache --ext .js,.jsx --config ./.eslintrc.icejs.js ./",
-    "stylelint:icejs": "stylelint ./**/*.scss"
+    "build": "icejs build",
+    "vscode:prepublish": "rm -rf build && npm run compile && npm run build",
+    "compile": "tsc -p tsconfig.extension.json",
+    "watch": "tsc -watch -p tsconfig.extension.json",
+    "lit": "eslint --no-eslintrc --cache --ext .js,.jsx ./",
+    "pretest": "npm run compile && npm run lint"
   },
   "devDependencies": {
     "@ice/spec": "^1.0.0",
