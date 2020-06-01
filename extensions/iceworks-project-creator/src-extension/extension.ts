@@ -159,9 +159,9 @@ class ProjectCreatorPanel {
 		const basePath = path.join(this._extensionPath, 'out/assets/');
 
 		const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/index.js'));
-		const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
+		const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
 		const stylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/index.css'));
-		const styleUri = webview.asWebviewUri(stylePathOnDisk);
+		const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
 
 		const nonce = getNonce();
 		return (

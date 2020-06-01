@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
-import SelectedCard from '@/components/SelectCard';
+import SelectCard from '@/components/SelectCard';
 import callService from '@/service/index';
 import { IMaterialSource, IMaterialItem } from '@/types';
 
@@ -11,7 +11,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState('');
   const [materialSelected, setMaterialSelected] = useState(null);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
-  const [scaffoldMaterials, setScaffoldMaterials] = useState({});
+  const [scaffoldMaterials, setScaffoldMaterials] = useState<IScaffolds>({});
 
   function onScaffoldTypeClick(type) {
     setMaterialSourceSelected(type.name);
@@ -46,7 +46,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
     <div className={styles.container}>
       <div className={styles.scaffoldRegister}>
         {materialSources && materialSources.map(item => (
-          <SelectedCard
+          <SelectCard
             key={item.name}
             title={item.name}
             content={item.description}
@@ -58,7 +58,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
       </div>
       <div className={styles.materialScaffold}>
         {scaffoldMaterials[materialSourceSelected] && scaffoldMaterials[materialSourceSelected].map(item => (
-          <SelectedCard
+          <SelectCard
             key={item.name}
             title={item.title}
             content={item.description}

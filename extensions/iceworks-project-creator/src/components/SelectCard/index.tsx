@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card } from '@alifd/next';
 import styles from './index.module.scss';
 
-interface ISelectedCardProps {
+interface ISelectCardProps {
   title: string;
   content?: string | React.ReactNode;
   selected: boolean;
@@ -11,7 +11,7 @@ interface ISelectedCardProps {
   media?: string | React.ReactNode;
 }
 
-const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, onClick, media, style }) => {
+const SelectCard: React.FC<ISelectCardProps> = ({ title, content, selected, onClick, media, style }) => {
   const cardSelectedBorderStyle = `1px solid ${selected ? '#1274e7' : '#e6e7eb'}`;
   return (
     <div>
@@ -34,4 +34,4 @@ const SelectedCard: React.FC<ISelectedCardProps> = ({ title, content, selected, 
   );
 };
 
-export default SelectedCard;
+export default SelectCard;
