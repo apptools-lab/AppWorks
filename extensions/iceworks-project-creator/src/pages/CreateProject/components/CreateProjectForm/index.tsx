@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Form, Input } from '@alifd/next';
+import { Form, Input, Field } from '@alifd/next';
 import styles from './index.module.scss';
 
 interface IProjectFormProps {
-  field: any;
+  field: Field;
   onOpenFolderDialog: () => void;
 }
 

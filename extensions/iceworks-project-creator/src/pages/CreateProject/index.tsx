@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Form, Field, Step, Button } from '@alifd/next';
+import { Card, Form, Field, Step, Button, Notification } from '@alifd/next';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import InitProjectSuccess from './components/InitProjectSuccess';
@@ -55,14 +55,14 @@ const CreateProject: React.FC = () => {
       setLoading(false);
       goNext();
     } catch (e) {
-      await callService('showErrorMessage', 'Fail to init project.');
+      Notification.error({ title: 'Error', content: 'Fail to init project.' });
       setLoading(false);
     }
   };
 
   async function onScaffoldSubmit() {
     if (!projectField.getValue('scaffold')) {
-      await callService('showErrorMessage', 'Please select a scaffold.');
+      Notification.error({ title: 'Error', content: 'Please select a scaffold.' });
       return;
     }
     goNext();

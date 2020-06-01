@@ -1,4 +1,4 @@
-# iceworks-project-creator
+# iceworks Project Creator
 
 ## Quick Start
 

@@ -1,14 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
-import { officialMaterialSources } from './constants';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 
 export function activate(context: vscode.ExtensionContext) {
-	if (!(vscode.workspace.getConfiguration('iceworks').get('officialMaterialSources') as Array<any>).length) {
-		vscode.workspace.getConfiguration().update('iceworks.officialMaterialSources', officialMaterialSources, true);
-	}
-
 	context.subscriptions.push(
 		vscode.commands.registerCommand('iceworks-project-creator.start', () => {
 			ProjectCreatorPanel.createOrShow(context.extensionPath);
@@ -132,8 +127,8 @@ class ProjectCreatorPanel {
 					const data = args[0];
 					const { projectPath, projectName, scaffold } = data;
 					const projectDir = path.join(projectPath, projectName);
-					const npmName = scaffold.source.npm;
-					await downloadAndGenerateProject(projectDir, npmName);
+					const { npmName, registry, version } = scaffold.source;
+					await downloadAndGenerateProject(projectDir, npmName, version, registry);
 					panel.webview.postMessage({ command: 'createProject', res: projectDir });
 				} catch (error) {
 					panel.webview.postMessage({ command: 'createProject', error });
