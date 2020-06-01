@@ -73,16 +73,17 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run build",
-    "build": "npm run build:icejs && npm run compile",
-    "compile": "tsc -p tsconfig.extension.json",
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run build && npm run compile:extension",
+    "compile:extension": "tsc -p tsconfig.extension.json",
     "lint": "npm run lint:ext && npm run lint:src",
     "lint:ext": "eslint ext-src --ext ts",
     "lint:src": "npm run eslint:icejs && npm run stylelint:icejs",
-    "watch": "tsc -watch -p tsconfig.extension.json",
+    "watch": "npm run start && npm run watch:extension",
+    "watch:extension": "tsc -watch -p tsconfig.extension.json",
     "pretest": "npm run compile && npm run lint",
-    "build:icejs": "icejs build",
-    "start:icejs": "icejs start",
+    "build": "icejs build",
+    "start": "icejs start",
     "eslint:icejs": "eslint --no-eslintrc --cache --ext .js,.jsx --config ./.eslintrc.icejs.js ./",
     "stylelint:icejs": "stylelint ./**/*.scss"
   },

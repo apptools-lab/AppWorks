@@ -3,23 +3,10 @@
 {
 	"version": "2.0.0",
 	"tasks": [
-		{
-			"type": "npm",
-			"script": "watch",
-			"problemMatcher": "$tsc-watch",
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-    },
     {
-      "label": "npm: build",
+      "label": "npm: compile",
       "type": "shell",
-      "command": "npm run build"
+      "command": "npm run compile"
     }
 	]
 }
