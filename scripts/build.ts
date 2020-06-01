@@ -27,12 +27,12 @@ import { run } from './fn/shell';
 
         return await Promise.all(files.map(async function(file) {
           const from = path.join(cwd, file);
-          const to = path.join(cwd, file.replace(/\/src\//, '/lib/'));
+          const to = path.join(cwd, file.replace(/src\//, 'lib/'));
           console.log('copy from', from);
           console.log('copy to', to);
 
           await fs.mkdirp(path.dirname(to));
-          return await fs.copyFile(from, to);
+          await fs.copyFile(from, to);
         }));
       }
     }
