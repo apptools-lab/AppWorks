@@ -21,8 +21,8 @@ import { run } from './fn/shell';
       // 解决 tsc 不支持 copy 非 .ts/.tsx 文件的问题
       if (!isUIPackage) {
         console.log('copy cwd', cwd);
-        const fileParten = 'src/**/!(*.ts|*.tsx)';
-        const files = glob.sync(fileParten, { cwd, nodir: true });
+        const filePattern = 'src/**/!(*.ts|*.tsx)';
+        const files = glob.sync(filePattern, { cwd, nodir: true });
         console.log('copy files', files);
 
         return await Promise.all(files.map(async function(file) {
