@@ -158,7 +158,7 @@ export const MaterialType: React.FC<{
         </Radio.Group>
       </div>}
       {
-        data.map((item) => {
+        data.length > 0 ? data.map((item) => {
           const { name, id } = item;
           return typeId === id ? <Content
             {...item}
@@ -171,7 +171,9 @@ export const MaterialType: React.FC<{
             scrollId={scrollId}
             typeId={typeId}
           /> : null;
-        })
+        }) : <div className={styles.empty}>
+          Empty
+        </div>
       }
     </Loading>
   );

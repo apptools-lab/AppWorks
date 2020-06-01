@@ -6,7 +6,7 @@ import * as styles from './view.module.scss';
 
 const { Item } = Tab;
 
-export const Material: React.FC<{
+export const MaterialView: React.FC<{
   sources: IMaterialSource[];
   currentSource: string;
   data: IMaterialTypeDatum[];
@@ -33,7 +33,6 @@ export const Material: React.FC<{
       className={styles.wrap}
       activeKey={currentSource}
       onChange={onChangeSource}
-      animated={false}
       size="small"
     >
       {

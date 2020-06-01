@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource } from '@iceworks/material-utils';
+import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import {
@@ -13,7 +13,13 @@ import {
   projectPath,
 } from './constant';
 
-export const create = async function({ pageName: name, blocks }: any) {
+/**
+ * Generate page code based on blocks
+ *
+ * @param pageName {string} page name
+ * @param blocks {array} blocks information
+ */
+export const create = async function({ pageName: name, blocks }: { pageName: string, blocks: IMaterialBlock[] }) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -60,22 +66,74 @@ export const create = async function({ pageName: name, blocks }: any) {
   return pageName;
 }
 
+/**
+ * Remove page files
+ *
+ * @param name {string} Page folder name
+ */
 export const remove = async function(name: string) {
   await fsExtra.remove(path.join(pagesPath, name));
 }
 
-export const addBlocks = async function(blocks: any, pageName: string) {
+/**
+ * Generate block code
+ */
+export const addBlocks = async function(blocks: IMaterialBlock[], pageName: string) {
   await downloadBlocksToPage(blocks, pageName);
   await installBlocksDependencies(blocks);
 }
 
-export const downloadBlocksToPage = async function(blocks: any, pageName: string) {
+/**
+ * Download blocks code to page
+ */
+export const downloadBlocksToPage = async function(blocks: IMaterialBlock[], pageName: string) {
   return await Promise.all(
     blocks.map(async (block: any) => await downloadBlockToPage(block, pageName)),
   );
 }
 
-export const installBlocksDependencies = async function(blocks: any) {
+/**
+ * Download block code to page
+ */
+export const downloadBlockToPage = async function(block: IMaterialBlock, pageName: string){
+  const blockSourceNpm = block.source.npm;
+  const pagePath = path.join(pagesPath, pageName);
+  const componentsPath = path.join(pagePath, componentDirName);
+
+  await fsExtra.mkdirp(componentsPath);
+  const blockName: string = upperCamelCase(block.name);
+
+  let tarballURL: string;
+  try {
+    tarballURL = await getTarballURLByMaterielSource(block.source);
+  } catch (error) {
+    error.message = `Failed to get tarball URL of ${blockSourceNpm}, you can copy ${block.repository}`;
+    throw error;
+  }
+
+  const blockDir = path.join(componentsPath, blockName);
+  const blockTempDir = path.join(componentsPath, `.${blockName}.temp`);
+
+  try {
+    await getAndExtractTarball(blockTempDir, tarballURL);
+  } catch (error) {
+    error.message = `Error decompressing block: ${blockName}, tarballURL is: ${tarballURL}`;
+    if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+      error.message = `Decompress ${blockName} timed out, tarballURL is: ${tarballURL}`;
+    }
+    await fsExtra.remove(blockTempDir);
+    throw error;
+  }
+
+  await fsExtra.move(path.join(blockTempDir, 'src'), blockDir);
+  await fsExtra.remove(blockTempDir);
+  return blockDir;
+}
+
+/**
+ * Installation block dependencies
+ */
+export const installBlocksDependencies = async function(blocks: IMaterialBlock[]) {
   const projectPackageJSON = await readPackageJSON(projectPath);
   const { activeTerminal } = vscode.window;
 
@@ -115,39 +173,4 @@ export const installBlocksDependencies = async function(blocks: any) {
   } else {
     return [];
   }
-}
-
-export const downloadBlockToPage = async function(block: any, pageName: string){
-  const blockSourceNpm = block.source.npm;
-  const pagePath = path.join(pagesPath, pageName);
-  const componentsPath = path.join(pagePath, componentDirName);
-
-  await fsExtra.mkdirp(componentsPath);
-  const blockName: string = upperCamelCase(block.name);
-
-  let tarballURL: string;
-  try {
-    tarballURL = await getTarballURLByMaterielSource(block.source);
-  } catch (error) {
-    error.message = `Failed to get tarball URL of ${blockSourceNpm}, you can copy ${block.repository}`;
-    throw error;
-  }
-
-  const blockDir = path.join(componentsPath, blockName);
-  const blockTempDir = path.join(componentsPath, `.${blockName}.temp`);
-
-  try {
-    await getAndExtractTarball(blockTempDir, tarballURL);
-  } catch (error) {
-    error.message = `Error decompressing block: ${blockName}, tarballURL is: ${tarballURL}`;
-    if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-      error.message = `Decompress ${blockName} timed out, tarballURL is: ${tarballURL}`;
-    }
-    await fsExtra.remove(blockTempDir);
-    throw error;
-  }
-
-  await fsExtra.move(path.join(blockTempDir, 'src'), blockDir);
-  await fsExtra.remove(blockTempDir);
-  return blockDir;
 }

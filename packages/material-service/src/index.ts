@@ -1,39 +1,48 @@
 import * as vscode from 'vscode';
-import axios from 'axios';
 import * as kebabCase from 'lodash.kebabcase';
+import axios from 'axios';
+import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 
-const iceMaterial = 'http://ice.alicdn.com/assets/materials/react-materials.json';
-const materialBaseHomePageUrl = 'https://ice.work/component';
-const materialBaseRepositoryUrl = 'https://github.com/alibaba-fusion/next/tree/master/src';
-const materialBaseSource = 'https://ice.alicdn.com/assets/base-components-1.x.json';
+const ICE_MATERIAL_SOURCE = 'http://ice.alicdn.com/assets/materials/react-materials.json';
+const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
+const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
+const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
+
+const dataCache: {[source: string]: IMaterialData} = {};
 
 const isIceMaterial = (source: string) => {
-  return source === iceMaterial;
+  return source === ICE_MATERIAL_SOURCE;
 };
 
-export const getSources = function (type: string) {
-  const sources = vscode.workspace.getConfiguration('iceworks').get('materialSources');
-
-  // @ts-ignore
-  return type ? sources.filter(({ type: originType }) => originType === type) : sources;
+/**
+ * Get material sources list
+ *
+ * @param specifiedType {string} react/rax/other...
+ */
+export const getSources = function(specifiedType?: string): IMaterialSource[] {
+  const sources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources') || [];
+  return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
-const cache: any = {};
-export const getData = async function(source: string) {
-  let data;
-  if (cache[source]) {
-    data = cache[source];
+/**
+ * Get material source data
+ *
+ * @param source {string} source URL
+ */
+export const getData = async function(source: string): Promise<IMaterialData> {
+  let data: IMaterialData;
+  if (dataCache[source]) {
+    data = dataCache[source];
   }
 
   if (!data) {
     const result = await axios({ url: source });
     const materialData = result.data;
 
-    // TODO 飞冰物料源添加基础组件
-    let bases;
+    let bases: IMaterialBase[];
     if (isIceMaterial(source)) {
       try {
-        const result = await axios({ url: materialBaseSource });
+        const result = await axios({ url: ICE_BASE_COMPONENTS_SOURCE });
         bases = result.data.map((base: any) => {
           const { name, title, type, importStatement } = base;
           return {
@@ -41,8 +50,8 @@ export const getData = async function(source: string) {
             title,
             categories: [type],
             importStatement,
-            homepage: `${materialBaseHomePageUrl}/${name.toLowerCase()}`,
-            repository: `${materialBaseRepositoryUrl}/${kebabCase(name)}`,
+            homepage: `${MATERIAL_BASE_HOME_URL}/${name.toLowerCase()}`,
+            repository: `${MATERIAL_BASE_REPOSITORY_URL}/${kebabCase(name)}`,
             source: {
               type: 'npm',
               npm: '@alifd/next',
@@ -52,7 +61,7 @@ export const getData = async function(source: string) {
           };
         });
       } catch (error) {
-        // TODO 上报错误，但是在前台不显示
+        // ignore error
       }
     }
 
@@ -64,7 +73,7 @@ export const getData = async function(source: string) {
       bases,
     };
 
-    cache[source] = data;
+    dataCache[source] = data;
   }
 
   return data;

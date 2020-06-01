@@ -1,4 +1,3 @@
-
 import packageJSON from 'package-json';
 import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from './types';
 import { CUSTOM_CATEGORY } from './constant';

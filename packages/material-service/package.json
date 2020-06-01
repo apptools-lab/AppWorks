@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/material-service",
-  "version": "0.1.0-beta-2",
-  "description": "material service for vscode",
+  "version": "0.1.0",
+  "description": "iceworks material service for VSCode extension.",
   "files": [
     "lib"
   ],
@@ -9,7 +9,8 @@
   "typings": "lib/index.d.ts",
   "dependencies": {
     "axios": "^0.19.2",
-    "lodash.kebabcase": "^4.1.1"
+    "lodash.kebabcase": "^4.1.1",
+    "@iceworks/material-utils": "^0.1.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"

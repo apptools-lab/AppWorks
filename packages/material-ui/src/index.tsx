@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
-import { Material } from './components/view';
+import { MaterialView } from './components/view';
 
 const View : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
@@ -17,7 +17,7 @@ const View : React.FC<{
   const [isLoadingData, setIsLoadingData] = React.useState(false);
 
   async function refreshSources() {
-    const sources = await getSources();
+    const sources = await getSources() || [];
     resetSources(sources);
   }
 
@@ -52,7 +52,7 @@ const View : React.FC<{
 
   return (
     <div className="iceworks-material">
-      <Material
+      <MaterialView
         sources={sources}
         currentSource={currentSource}
         data={data}
