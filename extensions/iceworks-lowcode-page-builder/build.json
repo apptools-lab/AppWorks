@@ -2,6 +2,7 @@
   "devServer": {
     "writeToDisk": true
   },
+  "publicPath": "./",
   "plugins": [
     [
       "build-plugin-fusion",

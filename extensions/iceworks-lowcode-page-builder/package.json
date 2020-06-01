@@ -73,7 +73,7 @@
     }
   },
   "scripts": {
-    "start": "icejs start",
+    "start": "icejs start --disable-reload",
     "build": "icejs build",
     "vscode:prepublish": "rm -rf build && npm run compile && npm run build",
     "compile": "tsc -p tsconfig.extension.json",
