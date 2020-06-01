@@ -4,9 +4,9 @@ import * as fse from 'fs-extra';
 import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
+import { getPackageLocalVersion } from 'ice-npm-utils';
 import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegisters } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
-import { getPackageLocalVersion } from 'ice-npm-utils';
 import { nodeDepTypes } from '../constants';
 
 const rimrafAsync = util.promisify(rimraf);
@@ -43,8 +43,13 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     }
   }
 
-  private getDepVersion(moduleName: string) {
-    return getPackageLocalVersion(this.workspaceRoot, moduleName);
+  private getDepVersion(moduleName: string): string {
+    try {
+      const version = getPackageLocalVersion(this.workspaceRoot, moduleName);
+      return version;
+    } catch (err) {
+      return '-';
+    }
   };
 
   private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
@@ -66,7 +71,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
         return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
       };
 
-      let deps: DependencyNode[] = [];
+      const deps: DependencyNode[] = [];
       if (packageJson[label]) {
         for (const dep of Object.keys(packageJson[label])) {
           const version = this.getDepVersion(dep) || '';
