@@ -248,13 +248,9 @@ async function readPackageJSON(projectPath: string) {
  * @param packageName
  */
 function getPackageLocalVersion(projectPath: string, packageName: string): string {
-  try {
-    const packageJsonPath = path.join(projectPath, 'node_modules', packageName, packageJSONFilename);
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-    return packageJson.version;
-  } catch (err) {
-    return ''
-  }
+  const packageJsonPath = path.join(projectPath, 'node_modules', packageName, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  return packageJson.version;
 }
 
 export {
