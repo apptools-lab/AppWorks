@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Card } from '@alifd/next';
-import classNames from 'classnames';
+import classnames from 'classnames';
 import styles from './index.module.scss';
 
 interface ISelectCardProps {
@@ -18,9 +18,7 @@ const SelectCard: React.FC<ISelectCardProps> = ({ title, content, selected, onCl
       <Card
         free
         style={{ ...style }}
-        className={
-          classNames(styles.card, { [styles.active]: selected })
-        }
+        className={classnames(styles.card, { [styles.active]: selected })}
         onClick={onClick}
       >
         {selected && <img src={require('@/assets/success.svg')} className={styles.successIcon} />}

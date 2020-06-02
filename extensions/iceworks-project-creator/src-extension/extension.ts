@@ -114,13 +114,6 @@ class ProjectCreatorPanel {
 				}
 			}
 
-			if (message.command === 'showErrorMessage') {
-				const args = message.args;
-				const errorMessage = args[0];
-				vscode.window.showErrorMessage(errorMessage);
-				panel.webview.postMessage({ command: 'showErrorMessage' });
-			}
-
 			if (message.command === 'createProject') {
 				try {
 					const args = message.args;
