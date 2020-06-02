@@ -1,6 +1,6 @@
 {
-  "name": "iceworks-lowcode-page-builder",
-  "displayName": "iceworks Low-Code Page Builder",
+  "name": "iceworks-page-builder",
+  "displayName": "iceworks Page Builder",
   "description": "Build Page UI by low-code way",
   "publisher": "iceworks",
   "version": "0.1.0",
@@ -12,13 +12,13 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-lowcode-page-builder.create"
+    "onCommand:iceworks-page-builder.create"
   ],
   "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-lowcode-page-builder.create",
+        "command": "iceworks-page-builder.create",
         "title": "iceworks: Create Page"
       }
     ],
