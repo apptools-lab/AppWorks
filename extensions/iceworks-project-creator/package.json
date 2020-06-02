@@ -2,6 +2,7 @@
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
   "description": "Quick to create a new React and Rax app.",
+  "publisher": "iceworks",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
