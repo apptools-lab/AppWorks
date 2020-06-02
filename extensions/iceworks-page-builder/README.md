@@ -1,6 +1,6 @@
 English | [简体中文](./README.zh-CN.md)
 
-# iceworks Low-code Page Builder
+# iceworks Page Builder
 
 Create a web page view in a low-code way.
 

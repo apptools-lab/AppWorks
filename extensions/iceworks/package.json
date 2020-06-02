@@ -18,7 +18,7 @@
   ],
   "extensionPack": [
     "iceworks.iceworks-app",
-    "iceworks.iceworks-lowcode-page-builder",
+    "iceworks.iceworks-page-builder",
     "iceworks.iceworks-project-creator"
   ]
 }
