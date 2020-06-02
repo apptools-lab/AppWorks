@@ -27,12 +27,12 @@ export const MaterialScaffold: React.FC<{
           ) : null}
           {dataSource.screenshots && dataSource.screenshots.length
             ?
-              <img
-                alt={dataSource.title}
-                src={dataSource.screenshots[0] || PLACEHOLDER_IMG}
-                draggable={false}
-                className={styles.screenshotImg}
-              />
+            <img
+              alt={dataSource.title}
+              src={dataSource.screenshots[0] || PLACEHOLDER_IMG}
+              draggable={false}
+              className={styles.screenshotImg}
+            />
             : (
               <img
                 alt={dataSource.title}
@@ -70,7 +70,7 @@ export const MaterialScaffold: React.FC<{
           Code
         </a>
         {
-          hiddenDownloadButton ? null :  <a className={styles.button} onClick={handleDownload}>Download</a>
+          hiddenDownloadButton ? null : <a className={styles.button} onClick={handleDownload}>Download</a>
         }
       </div>
     </div>

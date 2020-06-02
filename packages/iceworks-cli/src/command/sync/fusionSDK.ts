@@ -69,6 +69,7 @@ export default class FusionSDK {
     };
 
     log.verbose('fetch fusion sites start', options as any);
+    // @ts-ignore
     const { data: body } = await requestFusion(options, this.fusionHost);
     log.verbose('fetch fusion sites success', body);
 
@@ -157,7 +158,7 @@ export default class FusionSDK {
 
       // 访问物料的地址
       return url;
-    } catch(err) {
+    } catch (err) {
       spinner.fail('物料上传失败！');
       throw err;
     }
@@ -169,7 +170,7 @@ async function requestFusion(options: AxiosRequestConfig, fusionHost: string) {
   try {
     const response = await axios(options);
     return response;
-  } catch(err) {
+  } catch (err) {
     if (err.response && (err.response.status === 403 || err.response.status === 401)) {
       err.noAuth = true;
       console.log();

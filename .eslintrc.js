@@ -4,6 +4,8 @@ const commonRules = {
   'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx', '.tsx'] }],
   'react/jsx-no-target-blank': [0],
   'prefer-object-spread': 0,
+  '@typescript-eslint/array-type': 0,
+  '@typescript-eslint/no-non-null-assertion': 0
 };
 
 const jsRules = deepmerge(eslint, {
@@ -22,6 +24,7 @@ const tsRules = deepmerge(tslint, {
   rules: {
     ...commonRules,
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/array-type': 0
   },
 });
 

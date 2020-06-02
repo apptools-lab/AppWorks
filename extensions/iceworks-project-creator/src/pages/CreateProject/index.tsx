@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Card, Form, Field, Step, Button, Notification } from '@alifd/next';
+import callService from '@/callService';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import InitProjectSuccess from './components/InitProjectSuccess';
-import styles from './index.module.scss';
 import Header from './components/Header';
-import callService from '@/service/index';
+import styles from './index.module.scss';
 
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
@@ -28,36 +28,8 @@ const CreateProject: React.FC = () => {
     }
   ];
 
-  async function onOpenFolderDialog() {
-    try {
-      const data = await callService('getProjectPath');
-      projectField.setValue('projectPath', data);
-    } catch (e) {
-    };
-  }
-
   function onScaffoldSelect(scaffold) {
     projectField.setValue('scaffold', scaffold);
-  };
-
-  const onSubmit = async () => {
-    setLoading(true);
-    const { errors } = await projectField.validatePromise();
-    if (errors) {
-      setLoading(false);
-      return;
-    }
-
-    const values: any = projectField.getValues();
-    try {
-      const data: any = await callService('createProject', values);
-      setProjectDir(data);
-      setLoading(false);
-      goNext();
-    } catch (e) {
-      Notification.error({ title: 'Error', content: 'Fail to init project.' });
-      setLoading(false);
-    }
   };
 
   async function onScaffoldSubmit() {
@@ -67,6 +39,33 @@ const CreateProject: React.FC = () => {
     }
     goNext();
   }
+
+  async function onOpenFolderDialog() {
+    try {
+      const data = await callService('project', 'getProjectPath');
+      projectField.setValue('projectPath', data);
+    } catch (e) {
+    };
+  }
+
+  const onSubmit = async () => {
+    setLoading(true);
+    const { errors } = await projectField.validatePromise();
+    if (errors) {
+      setLoading(false);
+      return;
+    }
+    const values: any = projectField.getValues();
+    try {
+      const projectDir: any = await callService('project', 'createProject', values);
+      setProjectDir(projectDir);
+      setLoading(false);
+      goNext();
+    } catch (e) {
+      Notification.error({ title: 'Error', content: 'Fail to init project.' });
+      setLoading(false);
+    }
+  };
 
   async function goNext() {
     setStep(currentStep + 1);

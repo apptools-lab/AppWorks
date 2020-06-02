@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Icon, Typography } from '@alifd/next';
 import styles from './index.module.scss';
-import callService from '@/service';
+import callService from '@/callService';
 
 interface IInitProjectSuccessProps {
   projectDir: string
@@ -9,7 +9,7 @@ interface IInitProjectSuccessProps {
 
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
-    callService('openProjectFolder', projectDir);
+    callService('project', 'openLocalProjectFolder', projectDir);
   }, []);
   return (
     <Box align="center">

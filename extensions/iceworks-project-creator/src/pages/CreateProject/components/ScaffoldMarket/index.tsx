@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 import SelectCard from '@/components/SelectCard';
-import callService from '@/service/index';
-import { IMaterialSource, IMaterialItem } from '@/types';
-
-interface IScaffolds {
-  [key: string]: IMaterialItem[]
-}
+import callService from '@/callService';
+import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
 
 const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState('');
   const [materialSelected, setMaterialSelected] = useState(null);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
-  const [scaffoldMaterials, setScaffoldMaterials] = useState<IScaffolds>({});
+  const [scaffoldMaterials, setScaffoldMaterials] = useState<IMaterialScaffold[]>([]);
 
-  function onScaffoldTypeClick(type) {
-    setMaterialSourceSelected(type.name);
+  async function onMaterialSourceClick(scaffold: IMaterialSource) {
+    setMaterialSourceSelected(scaffold.name);
+    const data = await getScaffold(scaffold.source);
+    setScaffoldMaterials(data);
   }
 
   function onScaffoldMaterialClick(scaffold) {
@@ -23,25 +21,35 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
     onScaffoldSelect(scaffold);
   }
 
+  async function getScaffoldResources() {
+    const materialSources: any = await callService('project', 'getScaffoldResources') as IMaterialSource[];
+    return materialSources;
+  }
+
+  async function getScaffold(source: string) {
+    try {
+      const data = await callService('project', 'getScaffold', source) as IMaterialScaffold[];
+      return data;
+    } catch (e) {
+      return [];
+    }
+  }
+
   useEffect(() => {
-    async function getMaterialSources() {
+    async function initData() {
       try {
-        const data: any = await callService('getScaffoldResources') as IMaterialSource[];
-        setMaterialSources(data);
-        setMaterialSourceSelected(data[0].name);
+        const materialSources = await getScaffoldResources();
+        setMaterialSources(materialSources);
+        setMaterialSourceSelected(materialSources[0].name);
+        const source = materialSources[0].source;
+
+        const data = await getScaffold(source);
+        setScaffoldMaterials(data);
       } catch (error) {
       }
     }
 
-    async function getScaffolds() {
-      try {
-        const data = await callService('getScaffolds') as IScaffolds;
-        setScaffoldMaterials(data);
-      } catch (error) {
-      }
-    };
-    getMaterialSources();
-    getScaffolds();
+    initData();
   }, []);
   return (
     <div className={styles.container}>
@@ -53,12 +61,12 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
             content={item.description}
             selected={materialSourceSelected === item.name}
             style={{ width: 180 }}
-            onClick={() => onScaffoldTypeClick(item)}
+            onClick={() => onMaterialSourceClick(item)}
           />
         ))}
       </div>
       <div className={styles.materialScaffold}>
-        {scaffoldMaterials[materialSourceSelected] && scaffoldMaterials[materialSourceSelected].map(item => (
+        {scaffoldMaterials && scaffoldMaterials.map(item => (
           <SelectCard
             key={item.name}
             title={item.title}

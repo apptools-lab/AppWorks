@@ -1,5 +1,4 @@
 {
-  "outputDir": "./out/assets",
   "publicPath": "./",
   "devServer": {
     "writeToDisk": true
