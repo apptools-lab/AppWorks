@@ -1,0 +1,4 @@
+{
+  "iceworksLowCodePageBuilder.configuration.properties.iceworks.packageManager.description": "iceworks npm 包管理工具.",
+  "iceworksLowCodePageBuilder.configuration.properties.iceworks.materialSources.description": "iceworks 物料源，决定使用哪些物料。"
+}

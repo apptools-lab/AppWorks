@@ -1,0 +1,13 @@
+{
+  "name": "@iceworks/vscode-webview",
+  "version": "0.1.0",
+  "description": "Webview related API for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  }
+}
