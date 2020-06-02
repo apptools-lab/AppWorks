@@ -10,6 +10,7 @@
   "categories": [
     "Other"
   ],
+  "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-lowcode-page-builder.create"
   ],

@@ -10,7 +10,7 @@
   "categories": [
     "Other"
   ],
-  "icon": "./public/logo.png",
+  "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-project-creator.start"
   ],
