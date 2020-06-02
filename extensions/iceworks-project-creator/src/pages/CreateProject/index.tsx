@@ -16,7 +16,8 @@ const CreateProject: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
-  const [currentProjectField, setCurrentProjectField] = useState({});
+  // todo add currentProjectField type
+  const [currentProjectField, setCurrentProjectField] = useState<any>(null);
 
   const steps = [
     {
@@ -70,7 +71,7 @@ const CreateProject: React.FC = () => {
     const values: any = projectField.getValues();
     try {
       if (!isAliInternal) {
-        const projectDir: any = await callService('project', 'createProject', values);
+        const projectDir = await callService('project', 'createProject', values);
         setProjectDir(projectDir);
       } else {
         setCurrentProjectField(values);
@@ -78,7 +79,7 @@ const CreateProject: React.FC = () => {
       setLoading(false);
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: 'Fail to init project.' });
+      Notification.error({ title: 'Error', content: e.message });
       setLoading(false);
     }
   };
@@ -91,8 +92,12 @@ const CreateProject: React.FC = () => {
       return;
     }
     const values: any = DEFProjectField.getValues();
+    const { group, project } = values;
+    const { projectPath } = currentProjectField;
     try {
-      await callService('project', 'createDEFProject', values);
+      const projectDir = await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: '8ea74f33dea670f4bfc99092cea1314e953e3c1a4b8b6b60c48384543114a4e8' });
+      await callService('project', 'cloneRepositoryToLocal', projectPath, group, project);
+      setProjectDir(projectDir);
       setLoading(false);
       goNext();
     } catch (e) {
