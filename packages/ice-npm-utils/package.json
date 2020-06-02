@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "@types/npmlog": "^4.1.2",
+    "fs-extra": "^9.0.0",
     "mkdirp": "^0.5.1",
     "npmlog": "^4.1.2",
     "request": "^2.88.0",

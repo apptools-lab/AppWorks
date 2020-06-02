@@ -16,6 +16,7 @@
     "publish": "npm run packages:build && lerna publish --no-git-tag-version",
     "publish:beta": "npm run packages:build && lerna publish --dist-tag beta --no-git-tag-version",
     "lint": "eslint --cache --ext .ts,.tsx,.js ./ --quiet",
+    "lint:fix": "eslint --cache --ext .ts,.tsx,.js ./ --quiet --fix",
     "coverage": "codecov",
     "owner": "ts-node ./scripts/owner.ts",
     "sync": "ts-node ./scripts/sync.ts",

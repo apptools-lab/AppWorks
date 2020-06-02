@@ -1,3 +1,4 @@
+import * as fsExtra from 'fs-extra';
 import log from './log';
 
 import request = require('request-promise');
@@ -229,9 +230,20 @@ function checkAliInternal(): Promise<boolean> {
   });
 }
 
+const packageJSONFilename = 'package.json';
+
+async function readPackageJSON(projectPath: string) {
+  const packagePath = path.join(projectPath, packageJSONFilename);
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error('Project\'s package.json file not found in local environment');
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
 /**
  * 获取已安装在本地的模块版本号
- * 
+ *
  * @param projectPath
  * @param packageName
  */
@@ -253,5 +265,7 @@ export {
   getNpmTarball,
   getAndExtractTarball,
   log,
+  packageJSONFilename,
+  readPackageJSON,
   getPackageLocalVersion,
 };
