@@ -21,3 +21,4 @@ extensions/*/out
 **/.ice/
 
 **/package-lock.json
+**/build

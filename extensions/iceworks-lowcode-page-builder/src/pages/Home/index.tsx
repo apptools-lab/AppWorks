@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Grid, Notification, Button, Input } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
-import PageSelected from './components/PageSelected';
 import Material from '@iceworks/material-ui';
+import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
@@ -13,7 +13,7 @@ async function getSources() {
   try {
     sources = await callService('material', 'getSources');
   } catch (e) {
-    Notification.error({content: 'Get Material Sourcess got error, please try aging.'});
+    Notification.error({ content: 'Get Material Sourcess got error, please try aging.' });
   }
 
   console.log('getSources', sources);
@@ -25,7 +25,7 @@ async function getData(source: string) {
   try {
     await callService('material', 'getData', source);
   } catch (e) {
-    data = Notification.error({content: 'Get Material Data got error, please try aging.'});
+    data = Notification.error({ content: 'Get Material Data got error, please try aging.' });
   }
   console.log('getData', data);
   return data;
@@ -127,17 +127,17 @@ const Home = () => {
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
               <Col span={16} className={styles.col}>
-                  <PageSelected
-                    useDragHandle
-                    lockAxis="y"
-                    helperClass={styles.blockIsDraging}
-                    blocks={selectedBlocks}
-                    onDelete={onDelete}
-                    onNameChange={onNameChange}
-                    onSortStart={onSortStart}
-                    onSortEnd={onSortEnd}
-                    isSorting={isSorting}
-                  />
+                <PageSelected
+                  useDragHandle
+                  lockAxis="y"
+                  helperClass={styles.blockIsDraging}
+                  blocks={selectedBlocks}
+                  onDelete={onDelete}
+                  onNameChange={onNameChange}
+                  onSortStart={onSortStart}
+                  onSortEnd={onSortEnd}
+                  isSorting={isSorting}
+                />
               </Col>
               <Col span={8} className={styles.col}>
                 <Material

@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"outDir": "build",
+		"lib": [
+			"es6"
+		],
+		"sourceMap": true,
+		"rootDir": "./",
+		"strict": true
+	},
+	"include": [
+		"src-extension"
+	],
+	"exclude": [
+		"node_modules",
+		".vscode-test",
+		"src",
+		"public",
+		".ice"
+	]
+}
