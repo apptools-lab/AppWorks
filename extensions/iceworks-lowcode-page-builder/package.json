@@ -12,7 +12,7 @@
   "activationEvents": [
     "onCommand:iceworks-lowcode-page-builder.create"
   ],
-  "main": "./build/ext-src/extension.js",
+  "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
