@@ -19,7 +19,7 @@
     "commands": [
       {
         "command": "iceworks-project-creator.start",
-        "title": "iceworks: Create React and Rax app"
+        "title": "iceworks: Create Project"
       }
     ],
     "configuration": {
