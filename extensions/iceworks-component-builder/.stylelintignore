@@ -1,0 +1,10 @@
+# 忽略目录
+build/
+tests/
+demo/
+
+# node 覆盖率文件
+coverage/
+
+# 插件目录
+src-extension/

@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button, Input } from '@alifd/next';
-import { arrayMove } from 'react-sortable-hoc';
+import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
-import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
-
-const { Row, Col } = Grid;
 
 async function getSources() {
   let sources = [];
@@ -25,7 +21,7 @@ async function getData(source: string) {
   try {
     data = await callService('material', 'getData', source);
   } catch (e) {
-    Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    data = Notification.error({ content: 'Get Material Data got error, please try aging.' });
   }
   console.log('getData', data);
   return data;
@@ -45,30 +41,11 @@ function validateData({ blocks, pageName }) {
 
 const Home = () => {
   const [selectedBlocks, setSelectedBlocks] = useState([]);
-  const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
   function onAdd(block) {
     setSelectedBlocks([...selectedBlocks, block]);
-  }
-
-  function onDelete(targetIndex) {
-    setSelectedBlocks(selectedBlocks.filter((_, index) => index !== targetIndex));
-  }
-
-  function onNameChange(name, targetIndex) {
-    selectedBlocks[targetIndex].name = name;
-    setSelectedBlocks([...selectedBlocks]);
-  }
-
-  function onSortStart() {
-    setIsSorting(true);
-  }
-
-  function onSortEnd({ oldIndex, newIndex }) {
-    setIsSorting(false);
-    setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
   function resetData() {
@@ -108,7 +85,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. Fill in the page name:
+            1. Fill in the component name:
           </div>
           <div className={styles.field}>
             <Input
@@ -122,38 +99,21 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. Select Blocks：
+            2. Select Block：
           </div>
           <div className={styles.field}>
-            <Row gutter={24} className={styles.row}>
-              <Col span={16} className={styles.col}>
-                <PageSelected
-                  useDragHandle
-                  lockAxis="y"
-                  helperClass={styles.blockIsDraging}
-                  blocks={selectedBlocks}
-                  onDelete={onDelete}
-                  onNameChange={onNameChange}
-                  onSortStart={onSortStart}
-                  onSortEnd={onSortEnd}
-                  isSorting={isSorting}
-                />
-              </Col>
-              <Col span={8} className={styles.col}>
-                <Material
-                  getSources={getSources}
-                  getData={getData}
-                  onBlockClick={onAdd}
-                  dataWhiteList={['blocks']}
-                />
-              </Col>
-            </Row>
+            <Material
+              getSources={getSources}
+              getData={getData}
+              onBlockClick={onAdd}
+              dataWhiteList={['blocks']}
+            />
           </div>
         </div>
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          Generate page
+          Generate component
         </Button>
       </div>
     </div>
