@@ -69,7 +69,6 @@ export default class FusionSDK {
     };
 
     log.verbose('fetch fusion sites start', options as any);
-    // @ts-ignore
     const { data: body } = await requestFusion(options, this.fusionHost);
     log.verbose('fetch fusion sites success', body);
 

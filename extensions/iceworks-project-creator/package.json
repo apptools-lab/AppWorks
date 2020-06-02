@@ -24,7 +24,7 @@
     "configuration": {
       "title": "iceworks Project Creator",
       "properties": {
-        "iceworks.scaffoldSources": {
+        "iceworks.materialSources": {
           "type": "array",
           "default": [
             {
@@ -86,6 +86,7 @@
     "@iceworks/material-utils": "^0.1.0",
     "@iceworks/generate-project": "^1.0.6",
     "@iceworks/vscode-webview": "0.1.0-beta-2",
+    "@iceworks/project-service": "^0.1.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "fs-extra": "^9.0.0",

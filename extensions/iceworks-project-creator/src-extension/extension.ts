@@ -12,12 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
 			enableScripts: true,
 			retainContextWhenHidden: true,
 		});
-		try {
-			webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-			connectService(webviewPanel.webview, subscriptions, services);
-		} catch (e) {
-			console.log(e);
-		}
+		webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+		connectService(webviewPanel.webview, subscriptions, services);
 	}
 
 	context.subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {

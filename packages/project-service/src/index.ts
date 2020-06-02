@@ -5,11 +5,11 @@ import * as fse from 'fs-extra';
 import axios from 'axios';
 
 export function getScaffoldResources(): object[] {
-  const materialSources = vscode.workspace.getConfiguration('iceworks').get('scaffoldSources', []);
+  const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   return materialSources;
 }
 
-export async function getScaffold(source: string) {
+export async function getScaffolds(source: string) {
   const response = await axios.get(source);
   return response.data.scaffolds;
 }
@@ -35,7 +35,7 @@ export async function createProject(data): Promise<string> {
 }
 
 export async function openLocalProjectFolder(projectDir: string): Promise<void> {
-  const isProjectDirExists = await pathExists(projectDir);
+  const isProjectDirExists = await fse.pathExists(projectDir);
   if (!isProjectDirExists) {
     throw new Error('The project directory does not exist.')
   }

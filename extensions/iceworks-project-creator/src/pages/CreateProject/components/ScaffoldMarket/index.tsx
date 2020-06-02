@@ -12,7 +12,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     setMaterialSourceSelected(scaffold.name);
-    const data = await getScaffold(scaffold.source);
+    const data = await getScaffolds(scaffold.source);
     setScaffoldMaterials(data);
   }
 
@@ -26,9 +26,9 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
     return materialSources;
   }
 
-  async function getScaffold(source: string) {
+  async function getScaffolds(source: string) {
     try {
-      const data = await callService('project', 'getScaffold', source) as IMaterialScaffold[];
+      const data = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
       return data;
     } catch (e) {
       return [];
@@ -43,7 +43,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
         setMaterialSourceSelected(materialSources[0].name);
         const source = materialSources[0].source;
 
-        const data = await getScaffold(source);
+        const data = await getScaffolds(source);
         setScaffoldMaterials(data);
       } catch (error) {
       }
