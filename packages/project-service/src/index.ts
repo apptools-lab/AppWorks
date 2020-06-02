@@ -4,11 +4,6 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import axios from 'axios';
 
-export function getScaffoldResources(): object[] {
-  const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
-  return materialSources;
-}
-
 export async function getScaffolds(source: string) {
   const response = await axios.get(source);
   return response.data.scaffolds;
@@ -40,8 +35,4 @@ export async function openLocalProjectFolder(projectDir: string): Promise<void> 
     throw new Error('The project directory does not exist.')
   }
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
-}
-
-async function pathExists(p: string): Promise<boolean> {
-  return await fse.pathExists(p)
 }

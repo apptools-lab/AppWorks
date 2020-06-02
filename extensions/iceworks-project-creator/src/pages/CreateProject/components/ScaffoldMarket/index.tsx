@@ -22,7 +22,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
   }
 
   async function getScaffoldResources() {
-    const materialSources: any = await callService('project', 'getScaffoldResources') as IMaterialSource[];
+    const materialSources: any = await callService('material', 'getSources') as IMaterialSource[];
     return materialSources;
   }
 

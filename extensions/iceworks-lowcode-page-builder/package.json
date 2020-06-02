@@ -2,6 +2,7 @@
   "name": "iceworks-lowcode-page-builder",
   "displayName": "iceworks Low-Code Page Builder",
   "description": "Build Page UI by low-code way",
+  "publisher": "iceworks",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
@@ -9,10 +10,11 @@
   "categories": [
     "Other"
   ],
+  "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-lowcode-page-builder.create"
   ],
-  "main": "./build/ext-src/extension.js",
+  "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
@@ -100,10 +102,10 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-design-pro": "^0.x",
-    "@iceworks/material-service": "0.1.0-beta-2",
-    "@iceworks/page-service": "0.1.0-beta-2",
-    "@iceworks/material-ui": "0.1.0-beta-2",
-    "@iceworks/vscode-webview": "0.1.0-beta-2",
+    "@iceworks/material-service": "^0.1.0",
+    "@iceworks/page-service": "^0.1.0",
+    "@iceworks/material-ui": "^0.1.0",
+    "@iceworks/vscode-webview": "^0.1.0",
     "moment": "^2.24.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
