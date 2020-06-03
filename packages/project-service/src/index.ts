@@ -63,15 +63,24 @@ export async function openLocalProjectFolder(projectDir: string): Promise<void> 
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
 }
 
-export async function createDEFProject(DEFProjectField: IDEFProjectField): Promise<string> {
-  const { clientToken, projectPath, projectName, group, project } = DEFProjectField;
+export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
+  const { projectPath, projectName, group, project } = DEFProjectField;
   const projectDir = path.join(projectPath, projectName);
+  const isProjectDirExists = await checkPathExists(projectDir);
+  if (isProjectDirExists) {
+    throw new Error(`${projectDir} directory exists!`)
+  }
+  await createDEFProject(DEFProjectField);
+  await cloneRepositoryToLocal(projectDir, group, project);
+  return projectDir
+}
+
+export async function createDEFProject(DEFProjectField: IDEFProjectField): Promise<void> {
+  const { clientToken } = DEFProjectField;
   const response = await generatorCreatetask(DEFProjectField);
   const { data } = response.data;
   const taskId = data.task_id;
-  await getGeneratorTaskStatus(taskId, clientToken, projectDir);
-  await cloneRepositoryToLocal(projectDir, group, project)
-  return projectDir
+  await getGeneratorTaskStatus(taskId, clientToken);
 }
 
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
@@ -112,7 +121,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
   return response;
 }
 
-function getGeneratorTaskStatus(taskId: number, clientToken: string, projectDir: string): Promise<any> {
+function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<any> {
   return new Promise((resolve, reject) => {
     const interval = setInterval(async () => {
       try {
@@ -135,7 +144,7 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string, projectDir:
             reject(new Error('Project Create timeout'))
           }
           if (status === GeneratorTaskStatus.Success) {
-            resolve(projectDir)
+            resolve()
           }
         }
       } catch (error) {

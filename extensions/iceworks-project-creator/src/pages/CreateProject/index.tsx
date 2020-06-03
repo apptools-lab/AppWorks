@@ -107,7 +107,7 @@ const CreateProject: React.FC = () => {
     const values: any = DEFProjectField.getValues();
     const { empId, account, gitlabToken } = values;
     try {
-      const projectDir = await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
+      const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
       await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken })
       setProjectDir(projectDir);
       setLoading(false);
