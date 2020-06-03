@@ -43,14 +43,14 @@
           ],
           "description": "iceworks materialSources"
         },
-        "iceworks.userDEFDetail": {
+        "iceworks.user": {
           "type": "object",
           "default": {
             "empId": "",
             "account": "",
             "gitlabToken": ""
           },
-          "description": "iceworks userDEFDetail"
+          "description": "iceworks user detail. Include the empId(工号)、account(域账号)、gitlabToken(gitlab个人Token)"
         }
       }
     }
