@@ -91,7 +91,7 @@ const Home = () => {
         return;
       }
 
-      await callService('page', 'create', data);
+      await callService('page', 'generate', data);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);

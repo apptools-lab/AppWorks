@@ -9,7 +9,7 @@ import * as upperCamelCase from 'uppercamelcase';
 /**
  * Generate block code
  */
-export const bulkCreate = async function(blocks: IMaterialBlock[], localPath: string) {
+export const bulkGenerate = async function(blocks: IMaterialBlock[], localPath: string) {
   await bulkDownload(blocks, localPath);
   await bulkInstallDependencies(blocks);
 }

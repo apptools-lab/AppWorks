@@ -2,8 +2,8 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, componentDirName } from '@iceworks/project-service';
-import { bulkCreate } from '@iceworks/block-service';
+import { pagesPath, COMPONENT_DIR_NAME } from '@iceworks/project-service';
+import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import { templateFileName } from './constant';
@@ -14,7 +14,7 @@ import { templateFileName } from './constant';
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const create = async function({ pageName: name, blocks }: { pageName: string; blocks: IMaterialBlock[] }) {
+export const generate = async function({ pageName: name, blocks }: { pageName: string; blocks: IMaterialBlock[] }) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -37,7 +37,7 @@ export const create = async function({ pageName: name, blocks }: { pageName: str
         return {
           ...block,
           className: blockName,
-          relativePath: `./${componentDirName}/${blockName}`,
+          relativePath: `./${COMPONENT_DIR_NAME}/${blockName}`,
         };
       }),
       className: pageName,
@@ -71,5 +71,5 @@ export const remove = async function(name: string) {
 }
 
 export const addBlocks = async function(blocks: IMaterialBlock[], pageName: string) {
-  return await bulkCreate(blocks, path.join(pagesPath, pageName, componentDirName));
+  return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
 }
