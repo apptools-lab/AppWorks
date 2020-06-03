@@ -1,17 +1,23 @@
 import * as React from 'react';
 import { IMaterialBlock, PLACEHOLDER_IMG } from '@iceworks/material-utils';
+import classnames from 'classnames';
 import * as styles from './block.module.scss';
 
 export const MaterialBlock: React.FC<{
   dataSource: IMaterialBlock,
   onClick?: (dataSource: IMaterialBlock) => void,
-}> = ({ dataSource, onClick }) => {
+  selected?: boolean,
+}> = ({ dataSource, onClick, selected }) => {
   function handleClick() {
     onClick && onClick(dataSource);
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classnames({
+      [styles.container]: true,
+      [styles.selected]: selected,
+      'selected': selected,
+    })}>
       <div className={styles.screenshot} onClick={handleClick}>
         {dataSource.isNewly ? <div className={styles.newly}>NEW</div> : null}
         <img draggable={false} alt={dataSource.title} src={dataSource.screenshot || PLACEHOLDER_IMG} />

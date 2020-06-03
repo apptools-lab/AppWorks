@@ -16,6 +16,10 @@
       transform: translateY(0);
     }
   }
+
+  &.selected {
+    border-color: $color-brand1-6;
+  }
 }
 
 .screenshot {

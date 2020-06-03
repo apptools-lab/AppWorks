@@ -23,9 +23,9 @@ async function getSources() {
 async function getData(source: string) {
   let data = {};
   try {
-    await callService('material', 'getData', source);
+    data = await callService('material', 'getData', source);
   } catch (e) {
-    data = Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    Notification.error({ content: 'Get Material Data got error, please try aging.' });
   }
   console.log('getData', data);
   return data;
@@ -91,7 +91,7 @@ const Home = () => {
         return;
       }
 
-      await callService('page', 'create', data);
+      await callService('page', 'generate', data);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
