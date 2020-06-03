@@ -50,7 +50,21 @@
             "account": "",
             "gitlabToken": ""
           },
-          "description": "iceworks user detail. Include the empId(工号)、account(域账号)、gitlabToken(gitlab个人Token)"
+          "properties": {
+            "empId": {
+              "type": "string",
+              "description": "工号"
+            },
+            "account": {
+              "type": "string",
+              "description": "域账号"
+            },
+            "gitlabToken": {
+              "type": "string",
+              "description": "gitlab 个人 token"
+            }
+          },
+          "description": "iceworks user detail"
         }
       }
     }
