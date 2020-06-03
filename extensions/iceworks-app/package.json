@@ -1,7 +1,8 @@
 {
   "name": "iceworks-app",
   "displayName": "iceworks App",
-  "description": "Quick to view and build your react app and rax app.",
+  "description": "Quick to view and build your front-end project.",
+  "publisher": "iceworks",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"

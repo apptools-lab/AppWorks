@@ -15,4 +15,4 @@ package-lock.json
 yarn.lock
 
 # 插件目录
-ext-src/
+src-extension/

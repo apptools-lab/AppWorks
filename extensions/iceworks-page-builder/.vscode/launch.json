@@ -13,7 +13,7 @@
       "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
       "stopOnEntry": false,
       "sourceMaps": true,
-      "outDir": "${workspaceRoot}/ext-src",
+      "outDir": "${workspaceRoot}/src-extension",
 			"preLaunchTask": "${defaultBuildTask}"
     }
 	]
