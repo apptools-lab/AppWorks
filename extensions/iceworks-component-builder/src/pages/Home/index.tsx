@@ -68,7 +68,10 @@ const Home = () => {
         return;
       }
 
-      await callService('component', 'create', data);
+      await callService('block', 'bulkGenerate', [{
+        ...selectedBlock,
+        name: componentName
+      }]);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);

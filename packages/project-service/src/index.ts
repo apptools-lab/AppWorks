@@ -4,6 +4,8 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import axios from 'axios';
 
+export * from './constant';
+
 export async function getScaffolds(source: string) {
   const response = await axios.get(source);
   return response.data.scaffolds;
