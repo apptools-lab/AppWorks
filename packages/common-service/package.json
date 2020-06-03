@@ -1,0 +1,18 @@
+{
+  "name": "@iceworks/common-service",
+  "version": "0.1.0",
+  "description": "iceworks common service for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "ice-npm-utils": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  }
+}
