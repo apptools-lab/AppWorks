@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Field, Step, Button, Notification } from '@alifd/next';
+import { IMaterialScaffold } from '@/iceworks/material-utils';
 import callService from '@/callService';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
@@ -8,6 +9,13 @@ import InitProjectSuccess from './components/InitProjectSuccess';
 import Header from './components/Header';
 import styles from './index.module.scss';
 
+const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
+
+interface IProjectField {
+  projectName: string;
+  projectPath: string;
+  scaffold: IMaterialScaffold
+}
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
   const DEFProjectField = Field.useField();
@@ -16,8 +24,7 @@ const CreateProject: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
-  // todo add currentProjectField type
-  const [currentProjectField, setCurrentProjectField] = useState<any>(null);
+  const [currentProjectField, setCurrentProjectField] = useState({});
 
   const steps = [
     {
@@ -68,8 +75,14 @@ const CreateProject: React.FC = () => {
       setLoading(false);
       return;
     }
-    const values: any = projectField.getValues();
+    const values: IProjectField = projectField.getValues();
+    const { projectPath, projectName } = values;
     try {
+      const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
+
+      if (isPathExists) {
+        throw new Error('The path exists. Please input a new path.')
+      }
       if (!isAliInternal) {
         const projectDir = await callService('project', 'createProject', values);
         setProjectDir(projectDir);
@@ -86,17 +99,18 @@ const CreateProject: React.FC = () => {
 
   async function onDEFProjectDetailSubmit() {
     setLoading(true);
-    const { errors } = await projectField.validatePromise();
+    const { errors } = await DEFProjectField.validatePromise();
     if (errors) {
       setLoading(false);
       return;
     }
     const values: any = DEFProjectField.getValues();
-    const { group, project } = values;
-    const { projectPath } = currentProjectField;
+    const { group, project, empId, account, gitlabToken } = values;
+    const { projectPath, projectName } = currentProjectField as IProjectField;
     try {
-      const projectDir = await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: '8ea74f33dea670f4bfc99092cea1314e953e3c1a4b8b6b60c48384543114a4e8' });
-      await callService('project', 'cloneRepositoryToLocal', projectPath, group, project);
+      await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
+      const projectDir = await callService('project', 'cloneRepositoryToLocal', projectPath, projectName, group, project);
+      await callService('common', 'saveDataToSettingJson', 'userDEFDetail', { empId, account, gitlabToken })
       setProjectDir(projectDir);
       setLoading(false);
       goNext();
@@ -149,6 +163,10 @@ const CreateProject: React.FC = () => {
       try {
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         setIsAliInternal(isAliInternal);
+        if (isAliInternal) {
+          const data = await callService('common', 'getDataFromSettingJson', 'userDEFDetail') || {};
+          DEFProjectField.setValues(data)
+        }
       } catch (error) {
       }
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Field } from '@alifd/next';
+import { Form, Input, Field, Balloon, Icon } from '@alifd/next';
 import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
@@ -27,23 +27,25 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ field }) =
       </Form.Item>
       <Form.Item
         colSpan={12}
-        label="group"
+        label="gitlabGroup"
         required
-        requiredMessage="Please input the group"
+        requiredMessage="Please input the gitlab group"
       >
-        <Input placeholder="Please input the group" name="group" />
+        <Input placeholder="Please input the gitlab group" name="group" />
       </Form.Item>
       <Form.Item
         colSpan={12}
-        label="projectName"
-        required requiredMessage="Please input the project name"
+        label="repositoryName(仓库名)"
+        required
+        requiredMessage="Please input the repository name"
       >
-        <Input placeholder="Please input the project name" name="project" />
+        <Input placeholder="Please input the repository name" name="project" />
       </Form.Item>
       <Form.Item
         colSpan={12}
-        label="gitlabToken"
-        required requiredMessage="Please input the gitlab token"
+        label={<span>gitlabToken <Balloon type="primary" trigger={<Icon type="help" />} closable={false}><a href="http://gitlab.alibaba-inc.com/profile/account" target="_blank">How to get your gitlab token?</a> (cmd or ctrl + 鼠标左键)</Balloon></span>}
+        required
+        requiredMessage="Please input the gitlab token"
       >
         <Input placeholder="Please input the gitlab token" name="gitlabToken" />
       </Form.Item>

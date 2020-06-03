@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as vscode from 'vscode';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
+import { checkPathExists } from '@iceworks/common-service';
+import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import axios from 'axios';
 
 interface IDEFProjectField {
@@ -43,22 +43,17 @@ export async function getProjectPath(): Promise<string> {
   return fsPath;
 }
 
-export async function cloneRepositoryToLocal(group: string, project: string) {
-  const { activeTerminal } = vscode.window;
-  let terminal: vscode.Terminal;
-  if (activeTerminal) {
-    terminal = activeTerminal;
-  } else {
-    terminal = vscode.window.createTerminal();
-  }
-  terminal.show();
-  await terminal.sendText(`git clone git@gitlab.alibaba-inc.com:${group}/${project}.git`, true);
+export async function cloneRepositoryToLocal(projectPath, projectName, group, project): Promise<string> {
+  const projectDir = path.join(projectPath, projectName)
+  const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
+  await simpleGit().clone(repoPath, projectDir)
+  return projectDir;
 }
 
 export async function createProject(data): Promise<string> {
   const { projectPath, projectName, scaffold } = data;
   const projectDir: string = path.join(projectPath, projectName);
-  const isProjectDirExists = await fse.pathExists(projectDir);
+  const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
     throw new Error(`${projectDir} directory exists`)
   }
@@ -68,9 +63,9 @@ export async function createProject(data): Promise<string> {
 }
 
 export async function openLocalProjectFolder(projectDir: string): Promise<void> {
-  const isProjectDirExists = await fse.pathExists(projectDir);
+  const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
-    throw new Error('The project directory does not exist.')
+    throw new Error(`${projectDir} directory exists`)
   }
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
 }
@@ -78,6 +73,10 @@ export async function openLocalProjectFolder(projectDir: string): Promise<void> 
 export async function createDEFProject(DEFProjectField: IDEFProjectField): Promise<boolean> {
   const { clientToken, projectPath, projectName } = DEFProjectField;
   const projectDir = path.join(projectPath, projectName)
+  const isProjectDirExists = await checkPathExists(projectDir);
+  if (isProjectDirExists) {
+    throw new Error(`${projectDir} directory exists`)
+  }
   const response = await generatorCreatetask(DEFProjectField);
   const { data } = response.data;
   const taskId = data.task_id;

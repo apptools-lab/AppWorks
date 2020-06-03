@@ -40,7 +40,16 @@
               "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
             }
           ],
-          "description": "iceworks.materialSources"
+          "description": "iceworks materialSources"
+        },
+        "iceworks.userDEFDetail": {
+          "type": "object",
+          "default": {
+            "empId": "",
+            "account": "",
+            "gitlabToken": ""
+          },
+          "description": "iceworks userDEFDetail"
         }
       }
     }
@@ -86,6 +95,7 @@
     "@iceworks/material-utils": "^0.1.0",
     "@iceworks/generate-project": "^1.0.6",
     "@iceworks/vscode-webview": "0.1.0-beta-2",
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
