@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 async function getSources() {
   let sources = [];
   try {
-    sources = await callService('material', 'getSources');
+    sources = await callService('material', 'getSourcesByProjectType');
   } catch (e) {
     Notification.error({ content: 'Get Material Sourcess got error, please try aging.' });
   }

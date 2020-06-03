@@ -12,7 +12,8 @@
     "@iceworks/material-utils": "^0.1.0",
     "@iceworks/common-service": "^0.1.0",
     "axios": "^0.19.2",
-    "simple-git": "^2.5.0"
+    "simple-git": "^2.5.0",
+    "ice-npm-utils": "^1.4.1"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"
