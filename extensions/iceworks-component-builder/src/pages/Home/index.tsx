@@ -21,18 +21,18 @@ async function getData(source: string) {
   try {
     data = await callService('material', 'getData', source);
   } catch (e) {
-    data = Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    Notification.error({ content: 'Get Material Data got error, please try aging.' });
   }
   console.log('getData', data);
   return data;
 }
 
-function validateData({ blocks, pageName }) {
-  if (!pageName) {
-    return 'Please set name of page';
+function validateData({ block, componentName }) {
+  if (!componentName) {
+    return 'Please set name of component';
   }
 
-  if (!blocks || !blocks.length) {
+  if (!block) {
     return 'Please select blocks';
   }
 
@@ -40,25 +40,25 @@ function validateData({ blocks, pageName }) {
 }
 
 const Home = () => {
-  const [selectedBlocks, setSelectedBlocks] = useState([]);
-  const [pageName, setPageName] = useState('');
+  const [selectedBlock, setSelectedBlock] = useState();
+  const [componentName, setComponentName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
-  function onAdd(block) {
-    setSelectedBlocks([...selectedBlocks, block]);
+  function onSelect(block) {
+    setSelectedBlock(block);
   }
 
   function resetData() {
-    setSelectedBlocks([]);
-    setPageName('');
+    setSelectedBlock(undefined);
+    setComponentName('');
   }
 
   async function handleCreate(data) {
     setIsCreating(true);
     try {
       const data = {
-        blocks: selectedBlocks,
-        pageName,
+        block: selectedBlock,
+        componentName,
       };
 
       const errorMessage = validateData(data);
@@ -68,7 +68,7 @@ const Home = () => {
         return;
       }
 
-      await callService('page', 'create', data);
+      await callService('component', 'create', data);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
@@ -76,7 +76,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: 'Page generation succeeded!' });
+    Notification.success({ content: 'Component generation succeeded!' });
     resetData();
   }
 
@@ -91,8 +91,8 @@ const Home = () => {
             <Input
               placeholder="Starts with A-Z, cannot contain special characters"
               className={styles.pageNameInput}
-              value={pageName}
-              onChange={(value) => setPageName(value)}
+              value={componentName}
+              onChange={(value) => setComponentName(value)}
               disabled={isCreating}
             />
           </div>
@@ -101,11 +101,12 @@ const Home = () => {
           <div className={styles.label}>
             2. Select Block：
           </div>
-          <div className={styles.field}>
+          <div className={styles.select}>
             <Material
               getSources={getSources}
               getData={getData}
-              onBlockClick={onAdd}
+              onBlockClick={onSelect}
+              selectedBlocks={selectedBlock ? [selectedBlock] : []}
               dataWhiteList={['blocks']}
             />
           </div>

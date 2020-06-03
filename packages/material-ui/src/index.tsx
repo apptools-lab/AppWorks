@@ -2,9 +2,12 @@ import * as React from 'react';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
 import { MaterialView } from './components/view';
 
-const View : React.FC<{
+const Index : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
+  selectedBlocks?: IMaterialBlock[];
+  selectedComponents?: IMaterialComponent[];
+  selectedBases?: IMaterialBase[];
   dataWhiteList?: string[];
   dataBlackList?: string[];
   onBlockClick?: (block: IMaterialBlock) => void;
@@ -65,4 +68,4 @@ const View : React.FC<{
   );
 };
 
-export default View;
+export default Index;

@@ -1,17 +1,23 @@
 import * as React from 'react';
 import { IMaterialBase } from '@iceworks/material-utils';
+import classnames from 'classnames';
 import * as styles from './base.module.scss';
 
 export const MaterialBase: React.FC<{
   dataSource: IMaterialBase,
   onClick?: (dataSource: IMaterialBase) => void,
-}> = ({ dataSource, onClick }) => {
+  selected?: boolean,
+}> = ({ dataSource, onClick, selected }) => {
   function handleClick() {
     onClick && onClick(dataSource);
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classnames({
+      [styles.container]: true,
+      [styles.selected]: selected,
+      'selected': selected,
+    })}>
       <div onClick={handleClick}>
         <h5 className={styles.title}>{dataSource.name}</h5>
         <p className={styles.desc}>{dataSource.title || dataSource.name}</p>
