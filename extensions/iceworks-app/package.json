@@ -2,7 +2,7 @@
   "name": "iceworks-app",
   "displayName": "iceworks App",
   "description": "Quick to view and build your front-end project.",
-  "publisher": "iceworks",
+  "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
