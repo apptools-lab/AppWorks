@@ -2,10 +2,11 @@ import * as vscode from 'vscode';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists } from '@iceworks/common-service';
+import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus } from './constant';
+import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath } from './constant';
 
 export * from './constant';
 
@@ -19,6 +20,19 @@ interface IDEFProjectField {
   clientToken: string;
   projectPath: string;
   projectName: string;
+}
+
+export async function getProjectType() {
+  const { dependencies } = await readPackageJSON(projectPath);
+  if (dependencies) {
+    if (dependencies.rax) {
+      return 'rax';
+    }
+    if (dependencies.react) {
+      return 'react';
+    }
+  }
+  return 'unknown';
 }
 
 export function getScaffoldResources(): object[] {
