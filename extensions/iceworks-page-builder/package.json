@@ -2,7 +2,7 @@
   "name": "iceworks-page-builder",
   "displayName": "iceworks Page Builder",
   "description": "Build Page UI by low-code way",
-  "publisher": "iceworks",
+  "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"

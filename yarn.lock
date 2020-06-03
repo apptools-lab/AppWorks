@@ -1738,13 +1738,6 @@
   resolved "https://registry.npm.taobao.org/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
-"@iceworks/project-service@^0.1.0":
-  version "0.1.0-beta-0"
-  dependencies:
-    "@iceworks/generate-project" "^1.0.6"
-    axios "^0.19.2"
-    fs-extra "^9.0.0"
-
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@istanbuljs/load-nyc-config/download/@istanbuljs/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"
@@ -2064,6 +2057,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
+
+"@kwsites/exec-p@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.npm.taobao.org/@kwsites/exec-p/download/@kwsites/exec-p-0.4.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40kwsites%2Fexec-p%2Fdownload%2F%40kwsites%2Fexec-p-0.4.0.tgz#ab3765d482849ba6e825721077c248cf9f3323b7"
+  integrity sha1-qzdl1IKEm6boJXIQd8JIz58zI7c=
 
 "@lerna/add@3.20.0":
   version "3.20.0"
@@ -14571,6 +14569,14 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
+
+simple-git@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.npm.taobao.org/simple-git/download/simple-git-2.5.0.tgz#538b14b25f83916a56f30eca53f13796db6712f6"
+  integrity sha1-U4sUsl+DkWpW8w7KU/E3lttnEvY=
+  dependencies:
+    "@kwsites/exec-p" "^0.4.0"
+    debug "^4.0.1"
 
 simple-swizzle@^0.2.2:
   version "0.2.2"

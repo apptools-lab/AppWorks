@@ -3,10 +3,11 @@
 
 # iceworks
 
-Universal Low-Code Development Pack.
+Universal Development Pack, using low-code technology.
 
 Includes following feature:
 
 - Project Viewer: Quick to view and build your front-end project
 - Project Creator: Quick to create a new front-end project
-- Low-Code Page Builder: Build Page UI by low-code way
+- Page Builder: Build Page UI by low-code way
+- Component Builder: Build Component UI by low-code way

@@ -5,5 +5,6 @@
 Initialization version, includes the following extensions:
 
 - iceworks-app
-- iceworks-lowcode-page-builder
+- iceworks-component-builder
+- iceworks-page-builder
 - iceworks-project-creator

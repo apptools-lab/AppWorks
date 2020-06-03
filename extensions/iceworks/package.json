@@ -2,8 +2,8 @@
 {
   "name": "iceworks",
   "displayName": "iceworks",
-  "description": "Universal Low-Code Development Pack",
-  "publisher": "iceworks",
+  "description": "Universal Development Pack, using low-code technology.",
+  "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
@@ -17,8 +17,9 @@
     "Extension Packs"
   ],
   "extensionPack": [
-    "iceworks.iceworks-app",
-    "iceworks.iceworks-page-builder",
-    "iceworks.iceworks-project-creator"
+    "iceworks-team.iceworks-app",
+    "iceworks-team.iceworks-component-builder",
+    "iceworks-team.iceworks-page-builder",
+    "iceworks-team.iceworks-project-creator"
   ]
 }
