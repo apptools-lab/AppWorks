@@ -1,8 +1,7 @@
 {
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
-  "description": "Quick to create a front-end project.",
-  "publisher": "iceworks",
+  "description": "Quick to create a new React and Rax app.",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
@@ -10,7 +9,7 @@
   "categories": [
     "Other"
   ],
-  "icon": "assets/logo.png",
+  "icon": "./public/logo.png",
   "activationEvents": [
     "onCommand:iceworks-project-creator.start"
   ],
@@ -19,7 +18,7 @@
     "commands": [
       {
         "command": "iceworks-project-creator.start",
-        "title": "iceworks: Create Project"
+        "title": "iceworks: Create React and Rax app"
       }
     ],
     "configuration": {
@@ -98,7 +97,6 @@
     "@iceworks/vscode-webview": "0.1.0-beta-2",
     "@iceworks/common-service": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
-    "@iceworks/material-service": "^0.1.0",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "fs-extra": "^9.0.0",
