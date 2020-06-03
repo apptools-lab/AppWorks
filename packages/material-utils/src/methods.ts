@@ -40,7 +40,7 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
     });
   }
   return materialGroup;
-};
+}
 
 export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialCategoryDatum[] {
   const materialCategoryData: IMaterialCategoryDatum[] = [];
@@ -71,6 +71,7 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
   }
   return materialCategoryData;
 }
+
 export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
   const {version, npm} = source;
   let registryUrl = source.registry;

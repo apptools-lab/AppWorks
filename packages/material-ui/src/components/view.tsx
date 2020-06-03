@@ -14,19 +14,18 @@ export const MaterialView: React.FC<{
   isLoadingData?: boolean;
   colSpan?: number;
   disableLazyLoad?: boolean;
+  selectedBlocks?: IMaterialBlock[];
+  selectedComponents?: IMaterialComponent[];
+  selectedBases?: IMaterialBase[];
   onBaseClick?: (dataSource: IMaterialBase) => void,
   onComponentClick?: (dataSource: IMaterialComponent) => void,
   onBlockClick?: (dataSource: IMaterialBlock) => void,
   onScaffoldClick?: (dataSource: IMaterialScaffold) => void,
 }> = ({
-  sources, currentSource, data, isLoadingData,
+  sources,
+  currentSource,
   onChangeSource,
-  colSpan,
-  disableLazyLoad,
-  onScaffoldClick,
-  onBlockClick,
-  onComponentClick,
-  onBaseClick,
+  ...others
 }) => {
   return (
     <Tab
@@ -47,14 +46,7 @@ export const MaterialView: React.FC<{
               {
                 (currentSource === source ? <MaterialType
                   sourceIndex={index}
-                  colSpan={colSpan}
-                  data={data}
-                  disableLazyLoad={disableLazyLoad}
-                  isLoadingData={isLoadingData}
-                  onComponentClick={onComponentClick}
-                  onBaseClick={onBaseClick}
-                  onBlockClick={onBlockClick}
-                  onScaffoldClick={onScaffoldClick}
+                  {...others}
                 /> : null)
               }
             </Item>

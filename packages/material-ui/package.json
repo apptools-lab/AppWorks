@@ -23,9 +23,10 @@
     "component"
   ],
   "dependencies": {
+    "@iceworks/material-utils": "^0.1.0",
+    "classnames": "^2.2.6",
     "prop-types": "^15.5.8",
-    "react-lazyload": "^2.6.7",
-    "@iceworks/material-utils": "^0.1.0"
+    "react-lazyload": "^2.6.7"
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.3",

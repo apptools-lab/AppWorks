@@ -5,6 +5,9 @@ import { checkPathExists } from '@iceworks/common-service';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
+import { generatorCreatetaskUrl, generatorTaskResultUrl } from './constant';
+
+export * from './constant';
 
 interface IDEFProjectField {
   empId: string;
@@ -17,9 +20,6 @@ interface IDEFProjectField {
   projectPath: string;
   projectName: string;
 }
-
-const generatorCreatetaskUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/createtask';
-const generatorTaskResultUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/task';
 
 export function getScaffoldResources(): object[] {
   const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);

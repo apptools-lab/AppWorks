@@ -1738,6 +1738,13 @@
   resolved "https://registry.npm.taobao.org/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
+"@iceworks/project-service@^0.1.0":
+  version "0.1.0-beta-0"
+  dependencies:
+    "@iceworks/generate-project" "^1.0.6"
+    axios "^0.19.2"
+    fs-extra "^9.0.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@istanbuljs/load-nyc-config/download/@istanbuljs/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"
@@ -5000,7 +5007,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.3:
+classnames@^2.2.3, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=

@@ -1,0 +1,44 @@
+.wrap {
+  overflow: hidden;
+  padding: 20px;
+  width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .list {
+    overflow: hidden;
+
+    .item {
+      margin-bottom: 24px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .label {
+        margin-bottom: 12px;
+      }
+      .select {
+        height: 560px;
+      }
+      .pageNameInput {
+        width: 400px;
+      }
+    }
+  }
+
+  .opts {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.blockIsDraging {
+  z-index: 99999;
+  overflow: hidden;
+  border: 1px solid $color-line1-1;
+
+  img {
+    width: 607px;
+  }
+}

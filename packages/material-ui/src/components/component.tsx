@@ -1,17 +1,23 @@
 import * as React from 'react';
 import { IMaterialComponent } from '@iceworks/material-utils';
+import classnames from 'classnames';
 import * as styles from './component.module.scss';
 
 export const MaterialComponent: React.FC<{
   dataSource: IMaterialComponent,
   onClick?: (dataSource: IMaterialComponent) => void,
-}> = ({ dataSource, onClick }) => {
+  selected?: boolean,
+}> = ({ dataSource, onClick, selected }) => {
   function handleClick() {
     onClick && onClick(dataSource);
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classnames({
+      [styles.container]: true,
+      [styles.selected]: selected,
+      'selected': selected,
+    })}>
       <div onClick={handleClick}>
         <h5 className={styles.title}>{dataSource.name}</h5>
         <p className={styles.desc}>{dataSource.description || dataSource.name}</p>
