@@ -12,14 +12,14 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-component-builder.download"
+    "onCommand:iceworks-component-builder.generate"
   ],
   "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-component-builder.download",
-        "title": "iceworks: Download Block"
+        "command": "iceworks-component-builder.generate",
+        "title": "iceworks: Generate Block"
       }
     ],
     "configuration": {
