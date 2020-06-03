@@ -1,0 +1,14 @@
+[
+  {
+    "name": "飞冰物料",
+    "type": "react",
+    "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
+    "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
+  },
+  {
+    "name": "Rax物料",
+    "type": "react",
+    "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
+    "description": "基于 Fusion 基础组件和 Rax 脚手架的官方物料"
+  }
+]

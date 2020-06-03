@@ -174,7 +174,7 @@ const CreateProject: React.FC = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <Card free>
+      <Card free className={styles.card}>
         <Card.Content className={styles.step}>
           <Step current={currentStep} shape="circle">
             {steps.map((step) => (
