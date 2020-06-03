@@ -5,7 +5,7 @@ import { checkPathExists } from '@iceworks/common-service';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl } from './constant';
+import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus } from './constant';
 
 export * from './constant';
 
@@ -43,19 +43,12 @@ export async function getProjectPath(): Promise<string> {
   return fsPath;
 }
 
-export async function cloneRepositoryToLocal(projectPath, projectName, group, project): Promise<string> {
-  const projectDir = path.join(projectPath, projectName)
-  const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
-  await simpleGit().clone(repoPath, projectDir)
-  return projectDir;
-}
-
 export async function createProject(data): Promise<string> {
   const { projectPath, projectName, scaffold } = data;
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists`)
+    throw new Error(`${projectDir} directory exists!`)
   }
   const { npm, registry, version } = scaffold.source;
   await downloadAndGenerateProject(projectDir, npm, version, registry);
@@ -65,22 +58,29 @@ export async function createProject(data): Promise<string> {
 export async function openLocalProjectFolder(projectDir: string): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists`)
+    throw new Error(`${projectDir} directory doesn't exist!`)
   }
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
 }
 
-export async function createDEFProject(DEFProjectField: IDEFProjectField): Promise<boolean> {
-  const { clientToken, projectPath, projectName } = DEFProjectField;
-  const projectDir = path.join(projectPath, projectName)
-  const isProjectDirExists = await checkPathExists(projectDir);
-  if (isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists`)
-  }
+export async function createDEFProject(DEFProjectField: IDEFProjectField): Promise<string> {
+  const { clientToken, projectPath, projectName, group, project } = DEFProjectField;
+  const projectDir = path.join(projectPath, projectName);
   const response = await generatorCreatetask(DEFProjectField);
   const { data } = response.data;
   const taskId = data.task_id;
-  return await getGeneratorTaskStatus(taskId, clientToken, projectDir);
+  await getGeneratorTaskStatus(taskId, clientToken, projectDir);
+  await cloneRepositoryToLocal(projectDir, group, project)
+  return projectDir
+}
+
+async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
+  const isProjectDirExists = await checkPathExists(projectDir);
+  if (!isProjectDirExists) {
+    throw new Error(`${projectDir} directory doesn't exist!`)
+  }
+  const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
+  await simpleGit().clone(repoPath, projectDir)
 }
 
 async function generatorCreatetask(field: IDEFProjectField) {
@@ -126,15 +126,15 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string, projectDir:
         if (error) {
           reject(new Error(error))
         }
-        if (status !== 2 && status !== 1) {
+        if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
-          if (status === 4) {
+          if (status === GeneratorTaskStatus.Failed) {
             reject(new Error('Project Create failed'))
           }
-          if (status === 5) {
+          if (status === GeneratorTaskStatus.Timeout) {
             reject(new Error('Project Create timeout'))
           }
-          if (status === 3) {
+          if (status === GeneratorTaskStatus.Success) {
             resolve(projectDir)
           }
         }

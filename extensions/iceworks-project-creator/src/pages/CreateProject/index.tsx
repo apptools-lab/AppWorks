@@ -105,12 +105,10 @@ const CreateProject: React.FC = () => {
       return;
     }
     const values: any = DEFProjectField.getValues();
-    const { group, project, empId, account, gitlabToken } = values;
-    const { projectPath, projectName } = currentProjectField as IProjectField;
+    const { empId, account, gitlabToken } = values;
     try {
-      await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
-      const projectDir = await callService('project', 'cloneRepositoryToLocal', projectPath, projectName, group, project);
-      await callService('common', 'saveDataToSettingJson', 'userDEFDetail', { empId, account, gitlabToken })
+      const projectDir = await callService('project', 'createDEFProject', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
+      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken })
       setProjectDir(projectDir);
       setLoading(false);
       goNext();
@@ -164,7 +162,7 @@ const CreateProject: React.FC = () => {
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         setIsAliInternal(isAliInternal);
         if (isAliInternal) {
-          const data = await callService('common', 'getDataFromSettingJson', 'userDEFDetail') || {};
+          const data = await callService('common', 'getDataFromSettingJson', 'user') || {};
           DEFProjectField.setValues(data)
         }
       } catch (error) {
