@@ -85,8 +85,8 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
 
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
-  if (!isProjectDirExists) {
-    throw new Error(`${projectDir} directory doesn't exist!`)
+  if (isProjectDirExists) {
+    throw new Error(`${projectDir} directory exists!`)
   }
   const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
