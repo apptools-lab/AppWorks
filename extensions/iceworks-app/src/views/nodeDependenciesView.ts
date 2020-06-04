@@ -17,8 +17,11 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
 
   packageJsonPath: string;
 
+  defaultVersion: string;
+
   constructor(private workspaceRoot: string) {
     this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
+    this.defaultVersion = '-';
   }
 
   refresh(): void {
@@ -48,7 +51,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const version = getPackageLocalVersion(this.workspaceRoot, moduleName);
       return version;
     } catch (err) {
-      return '-';  // when the package version is not found, it shows '-'
+      return this.defaultVersion;  // when the package version is not found, it shows defaultVersion
     }
   };
 
@@ -76,7 +79,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
         for (const dep of Object.keys(packageJson[label])) {
           const version = this.getDepVersion(dep);
           let outdated: boolean;
-          if (version === '-') {  // when the package version is '-', don't show the outdated
+          if (version === this.defaultVersion) {  // when the package version is defaultVersion, don't show the outdated
             outdated = false;
           } else {
             outdated = await this.getNpmOutdated(dep, version);
