@@ -58,7 +58,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
   const packageManager = getCurrentPackageManager();
   let register = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    register = `--register=${getCurrentNpmRegister()}`;
+    register = `--register=${getCurrentNpmRegistry()}`;
   }
   return `${packageManager} ${action} ${target} ${register} ${extra}`;
 }
@@ -68,8 +68,8 @@ export function getCurrentPackageManager() {
   return vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
 }
 
-export function getCurrentNpmRegister(): string {
-  const npmRegisters = getNpmRegisters();
+export function getCurrentNpmRegistry(): string {
+  const npmRegisters = getNpmRegistries();
   return vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
 }
 
@@ -79,7 +79,7 @@ export function getPackageManagers() {
   return packageJson.contributes.configuration.properties['iceworks.packageManager'].enum;
 }
 
-export function getNpmRegisters() {
+export function getNpmRegistries() {
   const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties['iceworks.npmRegister'].enum;

@@ -5,7 +5,7 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegisters } from '../utils';
+import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -175,21 +175,21 @@ export class DependencyNode extends vscode.TreeItem {
   contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
-export async function setPackageManager() {
-  const quickPick = vscode.window.createQuickPick();
-  const packageManagers: string[] = getPackageManagers();
-  const currentpackageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-  quickPick.items = packageManagers.map(label => ({ label, picked: label === currentpackageManager }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
-      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
+// export async function setPackageManager() {
+//   const quickPick = vscode.window.createQuickPick();
+//   const packageManagers: string[] = getPackageManagers();
+//   const currentpackageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
+//   quickPick.items = packageManagers.map(label => ({ label, picked: label === currentpackageManager }));
+//   quickPick.onDidChangeSelection(async selection => {
+//     if (selection[0]) {
+//       await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
+//       vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
+//       quickPick.hide();
+//     }
+//   });
+//   quickPick.onDidHide(() => quickPick.dispose());
+//   quickPick.show();
+// };
 
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
@@ -214,24 +214,24 @@ async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
 
-export async function setNpmRegister() {
-  const quickPick = vscode.window.createQuickPick();
-  const npmRegisters: string[] = getNpmRegisters();
-  const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
-  const addOtherRegisterLabel = 'Add Other Register...';
-  quickPick.items = [...npmRegisters, addOtherRegisterLabel].map(label => ({ label, picked: label === currentNpmRegister }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      if (selection[0].label === addOtherRegisterLabel) {
-        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegister');
-      } else {
-        await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
-        vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
-      }
+// export async function setNpmRegister() {
+//   const quickPick = vscode.window.createQuickPick();
+//   const npmRegisters: string[] = getNpmRegisters();
+//   const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
+//   const addOtherRegisterLabel = 'Add Other Register...';
+//   quickPick.items = [...npmRegisters, addOtherRegisterLabel].map(label => ({ label, picked: label === currentNpmRegister }));
+//   quickPick.onDidChangeSelection(async selection => {
+//     if (selection[0]) {
+//       if (selection[0].label === addOtherRegisterLabel) {
+//         vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegister');
+//       } else {
+//         await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
+//         vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
+//       }
 
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
+//       quickPick.hide();
+//     }
+//   });
+//   quickPick.onDidHide(() => quickPick.dispose());
+//   quickPick.show();
+// };

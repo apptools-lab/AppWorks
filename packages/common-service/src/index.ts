@@ -22,3 +22,39 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
 export function getDataFromSettingJson(section: string): string {
   return vscode.workspace.getConfiguration('iceworks').get(section);
 }
+
+export async function setPackageManager(packageManagers: string[]): Promise<void> {
+  const quickPick = vscode.window.createQuickPick();
+
+  quickPick.items = packageManagers.map(label => ({ label }));
+  quickPick.onDidChangeSelection(async selection => {
+    if (selection[0]) {
+      await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
+      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
+      quickPick.hide();
+    }
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+};
+
+export async function setNpmRegistry(npmRegistrys: string[]): Promise<void> {
+  const quickPick = vscode.window.createQuickPick();
+
+  const addOtherRegistryLabel = 'Add Other Registry...';
+  quickPick.items = [...npmRegistrys, addOtherRegistryLabel].map(label => ({ label }));
+  quickPick.onDidChangeSelection(async selection => {
+    if (selection[0]) {
+      if (selection[0].label === addOtherRegistryLabel) {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegistry');
+      } else {
+        await vscode.workspace.getConfiguration().update('iceworks.npmRegistry', selection[0].label, true);
+        vscode.window.showInformationMessage(`Setting ${selection[0].label} Registry successfully!`);
+      }
+
+      quickPick.hide();
+    }
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+};
