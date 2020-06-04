@@ -49,9 +49,9 @@ const Home = () => {
   const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
-  function onSettingsClick() {
+  async function onSettingsClick() {
     try {
-      callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
+      await callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
     } catch (e) {
       Notification.error({ content: e.message });
     }
