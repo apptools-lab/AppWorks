@@ -177,7 +177,8 @@ const CreateProject: React.FC = () => {
     }
 
     checkAliInternal();
-  }, [DEFProjectField])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div className={styles.container}>
       <Header />

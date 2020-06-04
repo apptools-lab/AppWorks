@@ -71,5 +71,5 @@ class Page extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'page.svg')
   };
 
-  ontextValue = 'page';
+  contextValue = 'page';
 }

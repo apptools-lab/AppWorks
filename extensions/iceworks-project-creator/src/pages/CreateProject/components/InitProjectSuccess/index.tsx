@@ -10,7 +10,7 @@ interface IInitProjectSuccessProps {
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
     callService('project', 'openLocalProjectFolder', projectDir);
-  }, [projectDir]);
+  }, []);
   return (
     <Box align="center">
       <Icon type="success-filling" size={72} className={styles.succesIcon} />
