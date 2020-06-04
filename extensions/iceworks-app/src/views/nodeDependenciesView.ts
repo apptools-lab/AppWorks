@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as rimraf from 'rimraf';
 import * as fse from 'fs-extra';
@@ -12,12 +13,16 @@ import { nodeDepTypes } from '../constants';
 const rimrafAsync = util.promisify(rimraf);
 
 export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
+  private workspaceRoot: string;
+
   private _onDidChangeTreeData: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
+
   readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this._onDidChangeTreeData.event;
 
-  packageJsonPath: string;
+  private packageJsonPath: string;
 
-  constructor(private workspaceRoot: string) {
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot;
     this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
   }
 
@@ -57,27 +62,13 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
-      function toDep(moduleName: string, version: string, outdated: boolean) {
-        const packageManager = getCurrentPackageManager();
-        const isYarn = packageManager === 'yarn';
-        const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
-        const command = outdated ?
-          {
-            command: 'iceworksApp.nodeDependencies.upgrade',
-            title: 'Upgrade Dependency',
-            arguments: [workspaceDir, npmCommand]
-          } :
-          undefined;
-        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
-      };
-
       const deps: DependencyNode[] = [];
       if (packageJson[label]) {
-        for (const dep of Object.keys(packageJson[label])) {
+        Object.keys(packageJson[label]).forEach(async dep => {
           const version = this.getDepVersion(dep) || '';
           const outdated = await this.getNpmOutdated(dep, version);
-          deps.push(toDep(dep, version, outdated));
-        }
+          deps.push(toDep(workspaceDir, dep, version, outdated));
+        })
       }
 
       return deps;
@@ -133,7 +124,12 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const isDevDep = depType === 'devDependencies';
 
     const npmCommandAction = isYarn ? 'add' : 'install';
-    const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
+    let extraAction = '';
+    if (isDevDep) {
+      extraAction = '-D'
+    } else if (!isYarn) {
+      extraAction = '-S'
+    }
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
       command: 'iceworksApp.nodeDependencies.addDependency',
@@ -164,7 +160,15 @@ export class DependencyNode extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
 
-  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
+  get contextValue(): string {
+    if (this.version) {
+      if (this.outDated)
+        return 'outdatedDependency'
+      else
+        return 'dependency'
+    }
+    return 'dependenciesDir'
+  }
 }
 
 export async function setPackageManager() {
@@ -226,4 +230,18 @@ export async function setNpmRegister() {
   });
   quickPick.onDidHide(() => quickPick.dispose());
   quickPick.show();
+};
+
+function toDep(workspaceDir: string, moduleName: string, version: string, outdated: boolean) {
+  const packageManager = getCurrentPackageManager();
+  const isYarn = packageManager === 'yarn';
+  const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
+  const command = outdated ?
+    {
+      command: 'iceworksApp.nodeDependencies.upgrade',
+      title: 'Upgrade Dependency',
+      arguments: [workspaceDir, npmCommand]
+    } :
+    undefined;
+  return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
 };

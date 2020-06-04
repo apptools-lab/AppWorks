@@ -5,7 +5,9 @@ const commonRules = {
   'react/jsx-no-target-blank': [0],
   'prefer-object-spread': 0,
   '@typescript-eslint/array-type': 0,
-  '@typescript-eslint/no-non-null-assertion': 0
+  '@typescript-eslint/no-non-null-assertion': 0,
+  'max-classes-per-file': 0,
+  'class-methods-use-this': 0
 };
 
 const jsRules = deepmerge(eslint, {
@@ -25,7 +27,9 @@ const tsRules = deepmerge(tslint, {
     ...commonRules,
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/array-type': 0,
-    "@typescript-eslint/explicit-function-return-type": 0
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-member-accessibility': 0,
+    '@typescript-eslint/no-parameter-properties': 0
   },
 });
 

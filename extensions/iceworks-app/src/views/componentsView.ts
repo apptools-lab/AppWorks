@@ -1,14 +1,18 @@
+/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as util from 'util';
 import { pathExists } from '../utils';
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
+  private workspaceRoot: string;
+
   private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
+
   readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) {
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot
   }
 
   refresh(): void {

@@ -1,13 +1,18 @@
+/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { pathExists, createNpmCommand } from '../utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
+  private workspaceRoot: string;
+
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
+
   readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) {
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot
   }
 
   getTreeItem(element: Script): vscode.TreeItem {

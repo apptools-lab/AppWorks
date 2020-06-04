@@ -1,13 +1,19 @@
+/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { pathExists } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
+  private workspaceRoot: string;
+
   private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
+
   readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this._onDidChangeTreeData.event;
 
-  constructor(private workspaceRoot: string) { }
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot
+  }
 
   getTreeItem(element: Page): vscode.TreeItem {
     return element;
@@ -65,5 +71,5 @@ class Page extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'page.svg')
   };
 
-  contextValue = 'page';
+  ontextValue = 'page';
 }
