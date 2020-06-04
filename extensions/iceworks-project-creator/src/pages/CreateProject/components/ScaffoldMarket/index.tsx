@@ -53,7 +53,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
   }, []);
   return (
     <div className={styles.container}>
-      <div className={styles.scaffoldRegister}>
+      <div className={styles.scaffoldRegistry}>
         {materialSources && materialSources.map(item => (
           <SelectCard
             key={item.name}

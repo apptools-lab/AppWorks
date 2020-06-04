@@ -17,7 +17,7 @@
   "iceworksApp.components.add.title": "Add Components",
   "iceworksApp.components.refresh.title": "Refresh",
   "iceworksApp.nodeDependencies.setPackageManager.title": "Set npm Package Manager",
-  "iceworksApp.nodeDependencies.setNpmRegister.title": "Set npm Register",
+  "iceworksApp.nodeDependencies.setNpmRegistry.title": "Set npm Registry",
   "iceworksApp.nodeDependencies.addDependency.title": "Add Dependency",
   "iceworksApp.nodeDependencies.install.title": "Install Dependencies",
   "iceworksApp.nodeDependencies.reinstall.title": "Reinstall Dependencies",

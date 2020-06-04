@@ -25,7 +25,7 @@ It helps you preview your front-end project, including the information of npm sc
 - Support viewing the project dependency information
 - Support installing new dependencies and upgrading dependencies
 - Support installing and reinstalling dependencies
-- Support setting npm client and npm register
+- Support setting npm client and npm registry
 
 ![nodeDependencies.gif](https://img.alicdn.com/tfs/TB1SLgPXj39YK4jSZPcXXXrUFXa-1274-805.gif)
 

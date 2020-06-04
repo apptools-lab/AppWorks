@@ -17,7 +17,7 @@
   "iceworksApp.components.add.title": "添加组件",
   "iceworksApp.components.refresh.title": "刷新",
   "iceworksApp.nodeDependencies.setPackageManager.title": "设置npm包管理工具",
-  "iceworksApp.nodeDependencies.setNpmRegister.title": "设置npm镜像源",
+  "iceworksApp.nodeDependencies.setNpmRegistry.title": "设置npm镜像源",
   "iceworksApp.nodeDependencies.addDependency.title": "添加依赖",
   "iceworksApp.nodeDependencies.install.title": "安装依赖",
   "iceworksApp.nodeDependencies.reinstall.title": "重装依赖",

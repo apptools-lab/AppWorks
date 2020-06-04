@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
-import { DepNodeProvider, DependencyNode, setPackageManager, setNpmRegister, addDepCommandHandler } from './views/nodeDependenciesView';
+import { DepNodeProvider, DependencyNode, setPackageManager, setNpmRegistry, addDepCommandHandler } from './views/nodeDependenciesView';
 import { ComponentsProvider } from './views/componentsView';
 import { PagesProvider } from './views/pagesView';
 import { ITerminalMap } from "./types";
@@ -51,5 +51,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDependency', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
 	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setPackageManager', setPackageManager));
-	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegister', setNpmRegister));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegistry', setNpmRegistry));
 }
