@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button, Input } from '@alifd/next';
+import { Grid, Notification, Button, Input, Icon } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
 import PageSelected from './components/PageSelected';
@@ -48,6 +48,14 @@ const Home = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+
+  function onSettingsClick() {
+    try {
+      callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
 
   function onAdd(block) {
     setSelectedBlocks([...selectedBlocks, block]);
@@ -143,6 +151,7 @@ const Home = () => {
                 <div className={styles.material}>
                   <Material
                     getSources={getSources}
+                    onSettingsClick={onSettingsClick}
                     getData={getData}
                     onBlockClick={onAdd}
                     dataWhiteList={['blocks']}

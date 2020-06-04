@@ -12,6 +12,7 @@ export const MaterialView: React.FC<{
   data: IMaterialTypeDatum[];
   onChangeSource(source: string): void,
   isLoadingData?: boolean;
+  extra?: any;
   colSpan?: number;
   disableLazyLoad?: boolean;
   selectedBlocks?: IMaterialBlock[];
@@ -25,6 +26,7 @@ export const MaterialView: React.FC<{
   sources,
   currentSource,
   onChangeSource,
+  extra,
   ...others
 }) => {
   return (
@@ -33,6 +35,7 @@ export const MaterialView: React.FC<{
       activeKey={currentSource}
       onChange={onChangeSource}
       size="small"
+      extra={extra}
     >
       {
         sources.map((sourceData, index) => {

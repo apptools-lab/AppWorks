@@ -22,3 +22,7 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
 export function getDataFromSettingJson(section: string): string {
   return vscode.workspace.getConfiguration('iceworks').get(section);
 }
+
+export function executeCommand(...arg: any[]) {
+  return vscode.commands.executeCommand.apply(null, arg);
+}

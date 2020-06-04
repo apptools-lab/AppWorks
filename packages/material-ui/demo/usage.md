@@ -13,6 +13,7 @@ class App extends Component {
     return (
       <div>
         <Material
+          onSettingsClick={() => null}
           getSources={() => [
             {
               "name": "飞冰物料",
