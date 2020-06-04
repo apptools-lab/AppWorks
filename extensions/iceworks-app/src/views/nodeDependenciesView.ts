@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable */
 import * as vscode from 'vscode';
 import * as rimraf from 'rimraf';
 import * as fse from 'fs-extra';
@@ -62,9 +62,23 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
+      function toDep(moduleName: string, version: string, outdated: boolean) {
+        const packageManager = getCurrentPackageManager();
+        const isYarn = packageManager === 'yarn';
+        const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
+        const command = outdated ?
+          {
+            command: 'iceworksApp.nodeDependencies.upgrade',
+            title: 'Upgrade Dependency',
+            arguments: [workspaceDir, npmCommand]
+          } :
+          undefined;
+        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
+      };
+
       const deps: DependencyNode[] = [];
       if (packageJson[label]) {
-        Object.keys(packageJson[label]).forEach(async dep => {
+        for (const dep of Object.keys(packageJson[label])) {
           const version = this.getDepVersion(dep);
           let outdated: boolean;
           if (version === this.defaultVersion) {  // when the package version is defaultVersion, don't show the outdated
@@ -72,8 +86,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
           } else {
             outdated = await this.getNpmOutdated(dep, version);
           }
-          deps.push(toDep(workspaceDir, dep, version, outdated));
-        })
+          deps.push(toDep(dep, version, outdated));
+        }
       }
 
       return deps;
@@ -129,12 +143,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const isDevDep = depType === 'devDependencies';
 
     const npmCommandAction = isYarn ? 'add' : 'install';
-    let extraAction = '';
-    if (isDevDep) {
-      extraAction = '-D'
-    } else if (!isYarn) {
-      extraAction = '-S'
-    }
+    const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
       command: 'iceworksApp.nodeDependencies.addDependency',
@@ -165,15 +174,7 @@ export class DependencyNode extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
 
-  get contextValue() {
-    if (!this.version) {
-      return 'dependenciesDir'
-    } else if (this.outDated) {
-      return 'outdatedDependency'
-    } else {
-      return 'dependency'
-    }
-  }
+  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
 export async function setPackageManager() {
@@ -235,18 +236,4 @@ export async function setNpmRegister() {
   });
   quickPick.onDidHide(() => quickPick.dispose());
   quickPick.show();
-};
-
-function toDep(workspaceDir: string, moduleName: string, version: string, outdated: boolean) {
-  const packageManager = getCurrentPackageManager();
-  const isYarn = packageManager === 'yarn';
-  const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
-  const command = outdated ?
-    {
-      command: 'iceworksApp.nodeDependencies.upgrade',
-      title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand]
-    } :
-    undefined;
-  return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
 };
