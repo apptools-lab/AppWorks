@@ -13,17 +13,17 @@ import { nodeDepTypes } from '../constants';
 const rimrafAsync = util.promisify(rimraf);
 
 export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
-  private workspaceRoot: string;
-
   private _onDidChangeTreeData: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this._onDidChangeTreeData.event;
 
-  private packageJsonPath: string;
+  packageJsonPath: string;
 
-  constructor(workspaceRoot: string) {
-    this.workspaceRoot = workspaceRoot;
+  defaultVersion: string;
+
+  constructor(private workspaceRoot: string) {
     this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
+    this.defaultVersion = '-';
   }
 
   refresh(): void {
@@ -53,7 +53,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const version = getPackageLocalVersion(this.workspaceRoot, moduleName);
       return version;
     } catch (err) {
-      return '-';
+      return this.defaultVersion;  // when the package version is not found, it shows defaultVersion
     }
   };
 
@@ -65,8 +65,13 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const deps: DependencyNode[] = [];
       if (packageJson[label]) {
         Object.keys(packageJson[label]).forEach(async dep => {
-          const version = this.getDepVersion(dep) || '';
-          const outdated = await this.getNpmOutdated(dep, version);
+          const version = this.getDepVersion(dep);
+          let outdated: boolean;
+          if (version === this.defaultVersion) {  // when the package version is defaultVersion, don't show the outdated
+            outdated = false;
+          } else {
+            outdated = await this.getNpmOutdated(dep, version);
+          }
           deps.push(toDep(workspaceDir, dep, version, outdated));
         })
       }
@@ -160,14 +165,14 @@ export class DependencyNode extends vscode.TreeItem {
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
 
-  get contextValue(): string {
-    if (this.version) {
-      if (this.outDated)
-        return 'outdatedDependency'
-      else
-        return 'dependency'
+  get contextValue() {
+    if (!this.version) {
+      return 'dependenciesDir'
+    } else if (this.outDated) {
+      return 'outdatedDependency'
+    } else {
+      return 'dependency'
     }
-    return 'dependenciesDir'
   }
 }
 
