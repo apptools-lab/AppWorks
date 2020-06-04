@@ -2,7 +2,7 @@
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
   "description": "Quick to create a front-end project.",
-  "publisher": "iceworks",
+  "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.45.0"
@@ -29,19 +29,42 @@
           "type": "array",
           "default": [
             {
-              "name": "PC web",
+              "name": "飞冰物料",
               "type": "react",
               "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
               "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
             },
             {
               "name": "无线终端",
-              "type": "react",
-              "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
-              "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
+              "type": "rax",
+              "source": "https://fusion.alibaba-inc.com/api/v1/sites/1194/materials",
+              "description": "基于 Rax 组件和 rax 脚手架的官方物料"
             }
           ],
-          "description": "iceworks.materialSources"
+          "description": "iceworks materialSources"
+        },
+        "iceworks.user": {
+          "type": "object",
+          "default": {
+            "empId": "",
+            "account": "",
+            "gitlabToken": ""
+          },
+          "properties": {
+            "empId": {
+              "type": "string",
+              "description": "工号"
+            },
+            "account": {
+              "type": "string",
+              "description": "域账号"
+            },
+            "gitlabToken": {
+              "type": "string",
+              "description": "gitlab 个人 token"
+            }
+          },
+          "description": "iceworks user detail"
         }
       }
     }
@@ -61,7 +84,6 @@
     "test": "node ./build/test/runTest.js"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.10",
     "@types/ejs": "^3.0.1",
     "@types/fs-extra": "^8.1.0",
@@ -84,10 +106,10 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-design-pro": "^0.x",
-    "@iceworks/vscode-webview": "^0.1.0",
+    "@iceworks/material-utils": "^0.1.0",
+    "@iceworks/vscode-webview": "0.1.0",
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
-    "@iceworks/material-service": "^0.1.0",
-    "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "fs-extra": "^9.0.0",
     "react": "^16.8.0",

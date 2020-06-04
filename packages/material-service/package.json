@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "lodash.kebabcase": "^4.1.1",
+    "@iceworks/project-service": "^0.1.0",
     "@iceworks/material-utils": "^0.1.0"
   },
   "devDependencies": {
