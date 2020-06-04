@@ -48,6 +48,11 @@
 
 .material {
   :global {
+    .next-tabs-nav-extra {
+      .next-icon {
+        color: $color-text1-4 !important;
+      }
+    }
     .next-tabs-tab.active {
       color: $color-text1-4 !important;
       &:before {

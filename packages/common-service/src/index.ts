@@ -23,6 +23,10 @@ export function getDataFromSettingJson(section: string): string {
   return vscode.workspace.getConfiguration('iceworks').get(section);
 }
 
+export function executeCommand(...arg: any[]) {
+  return vscode.commands.executeCommand.apply(null, arg);
+}
+
 export async function setPackageManager(packageManagers: string[]): Promise<void> {
   const quickPick = vscode.window.createQuickPick();
 

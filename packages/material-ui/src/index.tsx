@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon } from '@alifd/next';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
 import { MaterialView } from './components/view';
 
@@ -13,7 +14,8 @@ const Index : React.FC<{
   onBlockClick?: (block: IMaterialBlock) => void;
   onComponentClick?: (component: IMaterialComponent) => void;
   onBaseClick?: (base: IMaterialBase) => void;
-}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [],  ...others }) => {
+  onSettingsClick?: () => void;
+}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [], onSettingsClick, ...others }) => {
   const [sources, setSources] = React.useState([]);
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
@@ -62,6 +64,14 @@ const Index : React.FC<{
         isLoadingData={isLoadingData}
         colSpan={24}
         onChangeSource={handleChangeSource}
+        extra={
+          <div className="extra-wrap">
+            {onSettingsClick &&
+              <Icon type="set" size="small" title="Setings Material Sources" onClick={onSettingsClick} />
+            }
+            <Icon type="refresh" size="small" title="refresh Material Sources" onClick={refreshSources} style={{marginLeft: 6}} />
+          </div>
+        }
         {...others}
       />
     </div>
