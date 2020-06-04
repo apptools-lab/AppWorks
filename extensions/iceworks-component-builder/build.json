@@ -7,7 +7,11 @@
     [
       "build-plugin-fusion",
       {
-        "themePackage": "@alifd/theme-design-pro"
+        "themePackage": [
+          {
+            "name": "@alifd/theme-iceworks-dark"
+          }
+        ]
       }
     ],
     [

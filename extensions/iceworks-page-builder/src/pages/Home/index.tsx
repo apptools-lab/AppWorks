@@ -140,12 +140,14 @@ const Home = () => {
                 />
               </Col>
               <Col span={8} className={styles.col}>
-                <Material
-                  getSources={getSources}
-                  getData={getData}
-                  onBlockClick={onAdd}
-                  dataWhiteList={['blocks']}
-                />
+                <div className={styles.material}>
+                  <Material
+                    getSources={getSources}
+                    getData={getData}
+                    onBlockClick={onAdd}
+                    dataWhiteList={['blocks']}
+                  />
+                </div>
               </Col>
             </Row>
           </div>

@@ -2,8 +2,14 @@
   "plugins": [
     "build-plugin-component",
     "build-plugin-fusion",
-    ["build-plugin-moment-locales", {
-      "locales": ["zh-cn"]
-    }]
+    [
+      "build-plugin-moment-locales",
+      {
+        "locales": [
+          "zh-cn"
+        ]
+      }
+    ],
+    "./build.plugin.js"
   ]
 }
