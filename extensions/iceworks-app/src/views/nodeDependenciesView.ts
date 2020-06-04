@@ -176,22 +176,6 @@ export class DependencyNode extends vscode.TreeItem {
   contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
-// export async function setPackageManager() {
-//   const quickPick = vscode.window.createQuickPick();
-//   const packageManagers: string[] = getPackageManagers();
-//   const currentpackageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-//   quickPick.items = packageManagers.map(label => ({ label, picked: label === currentpackageManager }));
-//   quickPick.onDidChangeSelection(async selection => {
-//     if (selection[0]) {
-//       await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
-//       vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
-//       quickPick.hide();
-//     }
-//   });
-//   quickPick.onDidHide(() => quickPick.dispose());
-//   quickPick.show();
-// };
-
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
   quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
