@@ -65,13 +65,11 @@ const Index : React.FC<{
         colSpan={24}
         onChangeSource={handleChangeSource}
         extra={
-          <div>
-            {onSettingsClick && <a href="javascript:void(0)" onClick={onSettingsClick}>
-              <Icon type="set" size="small" title="Setings Material Sources" />
-            </a>}
-            <a href="javascript:void(0)" onClick={refreshSources} style={{marginLeft: 6}}>
-              <Icon type="refresh" size="small" title="refresh Material Sources" />
-            </a>
+          <div className="extra-wrap">
+            {onSettingsClick &&
+              <Icon type="set" size="small" title="Setings Material Sources" onClick={onSettingsClick} />
+            }
+            <Icon type="refresh" size="small" title="refresh Material Sources" onClick={refreshSources} style={{marginLeft: 6}} />
           </div>
         }
         {...others}
