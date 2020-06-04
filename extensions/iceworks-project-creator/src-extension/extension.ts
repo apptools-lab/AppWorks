@@ -5,18 +5,18 @@ import services from './services/index';
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-	const { extensionPath, subscriptions } = context;
+  const { extensionPath, subscriptions } = context;
 
-	function activeWebview() {
-		const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Create Project', ViewColumn.One, {
-			enableScripts: true,
-			retainContextWhenHidden: true,
-		});
-		webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-		connectService(webviewPanel.webview, subscriptions, services);
-	}
+  function activeWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Create Project', ViewColumn.One, {
+      enableScripts: true,
+      retainContextWhenHidden: true,
+    });
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+    connectService(webviewPanel.webview, subscriptions, services);
+  }
 
-	context.subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {
-		activeWebview();
-	}));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {
+    activeWebview();
+  }));
 }

@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Box, Icon, Typography } from '@alifd/next';
-import styles from './index.module.scss';
 import callService from '@/callService';
+import styles from './index.module.scss';
 
 interface IInitProjectSuccessProps {
-  projectDir: string
+  projectDir: string;
 }
 
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
     callService('project', 'openLocalProjectFolder', projectDir);
-  }, []);
+  }, [projectDir]);
   return (
     <Box align="center">
       <Icon type="success-filling" size={72} className={styles.succesIcon} />

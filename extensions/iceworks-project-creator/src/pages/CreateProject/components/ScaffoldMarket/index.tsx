@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from './index.module.scss';
 import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
+import styles from './index.module.scss';
 
 const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState('');
@@ -46,6 +46,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
         const data = await getScaffolds(source);
         setScaffoldMaterials(data);
       } catch (error) {
+        // ignore
       }
     }
 
@@ -71,7 +72,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
             key={item.name}
             title={item.title}
             content={item.description}
-            media={<img height={120} src={item.screenshot} />}
+            media={<img height={120} src={item.screenshot} alt='screenshot' />}
             selected={materialSelected === item.name}
             style={{ width: 200, height: 280 }}
             onClick={() => onScaffoldMaterialClick(item)}

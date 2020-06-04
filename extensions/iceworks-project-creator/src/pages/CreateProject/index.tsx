@@ -14,7 +14,7 @@ const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 interface IProjectField {
   projectName: string;
   projectPath: string;
-  scaffold: IMaterialScaffold
+  scaffold: IMaterialScaffold;
 }
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
@@ -65,6 +65,7 @@ const CreateProject: React.FC = () => {
       const data = await callService('project', 'getProjectPath');
       projectField.setValue('projectPath', data);
     } catch (e) {
+      // ignore
     };
   }
 
@@ -84,10 +85,11 @@ const CreateProject: React.FC = () => {
         throw new Error('The path exists. Please input a new path.')
       }
       if (!isAliInternal) {
-        const projectDir = await callService('project', 'createProject', values);
+        const projectDir = await callService('project', 'createProject', values) as string;
         setProjectDir(projectDir);
       } else {
         setCurrentProjectField(values);
+        DEFProjectField.setValue('project', values.projectName); // set the repositoryName default value
       }
       setLoading(false);
       goNext();
@@ -107,7 +109,11 @@ const CreateProject: React.FC = () => {
     const values: any = DEFProjectField.getValues();
     const { empId, account, gitlabToken } = values;
     try {
-      const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
+      const projectDir = await callService(
+        'project',
+        'CreateDEFProjectAndCloneRepository',
+        { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN }
+      ) as string;
       await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken })
       setProjectDir(projectDir);
       setLoading(false);
@@ -166,11 +172,12 @@ const CreateProject: React.FC = () => {
           DEFProjectField.setValues(data)
         }
       } catch (error) {
+        // ignore
       }
     }
 
     checkAliInternal();
-  }, [])
+  }, [DEFProjectField])
   return (
     <div className={styles.container}>
       <Header />

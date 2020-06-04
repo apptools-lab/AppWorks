@@ -24,7 +24,8 @@ const tsRules = deepmerge(tslint, {
   rules: {
     ...commonRules,
     '@typescript-eslint/ban-ts-ignore': 0,
-    '@typescript-eslint/array-type': 0
+    '@typescript-eslint/array-type': 0,
+    "@typescript-eslint/explicit-function-return-type": 0
   },
 });
 
