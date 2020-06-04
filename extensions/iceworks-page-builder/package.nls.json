@@ -1,5 +1,5 @@
 {
   "iceworksPageBuilder.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
-  "iceworksPageBuilder.configuration.properties.iceworks.npmRegister.description": "iceworks npm register.",
+  "iceworksPageBuilder.configuration.properties.iceworks.npmRegistry.description": "iceworks npm register.",
   "iceworksPageBuilder.configuration.properties.iceworks.materialSources.description": "iceworks material sources, decide which materials to use."
 }

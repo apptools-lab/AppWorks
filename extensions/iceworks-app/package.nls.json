@@ -24,5 +24,5 @@
   "iceworksApp.nodeDependencies.refresh.title": "Refresh",
   "iceworksApp.nodeDependencies.upgrade.title": "Upgrade Dependency",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
-  "iceworksApp.configuration.properties.iceworks.npmRegister.description": "iceworks npm register."
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "iceworks npm registry."
 }

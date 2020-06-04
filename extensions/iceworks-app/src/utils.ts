@@ -70,7 +70,7 @@ export function getCurrentPackageManager() {
 
 export function getCurrentNpmRegister(): string {
   const npmRegisters = getNpmRegisters();
-  return vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
+  return vscode.workspace.getConfiguration('iceworks').get('npmRegistry', npmRegisters[0]);
 }
 
 export function getPackageManagers() {
@@ -82,5 +82,5 @@ export function getPackageManagers() {
 export function getNpmRegisters() {
   const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties['iceworks.npmRegister'].enum;
+  return packageJson.contributes.configuration.properties['iceworks.npmRegistry'].enum;
 }

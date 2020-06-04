@@ -24,5 +24,5 @@
   "iceworksApp.nodeDependencies.refresh.title": "刷新",
   "iceworksApp.nodeDependencies.upgrade.title": "升级依赖",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "iceworks npm 包管理工具",
-  "iceworksApp.configuration.properties.iceworks.npmRegister.description": "iceworks npm 镜像源"
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "iceworks npm 镜像源"
 }

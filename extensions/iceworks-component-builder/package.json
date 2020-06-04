@@ -36,14 +36,14 @@
           ],
           "description": "%iceworksComponentBuilder.configuration.properties.iceworks.packageManager.description%"
         },
-        "iceworks.npmRegister": {
+        "iceworks.npmRegistry": {
           "type": "string",
           "default": "https://registry.npmjs.org",
           "enum": [
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
           ],
-          "description": "%iceworksComponentBuilder.configuration.properties.iceworks.npmRegister.description%"
+          "description": "%iceworksComponentBuilder.configuration.properties.iceworks.npmRegistry.description%"
         },
         "iceworks.materialSources": {
           "type": "array",

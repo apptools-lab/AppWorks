@@ -275,14 +275,14 @@
           ],
           "description": "%iceworksApp.configuration.properties.iceworks.packageManager.description%"
         },
-        "iceworks.npmRegister": {
+        "iceworks.npmRegistry": {
           "type": "string",
           "default": "https://registry.npmjs.org",
           "enum": [
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
           ],
-          "description": "%iceworksApp.configuration.properties.iceworks.npmRegister.description%"
+          "description": "%iceworksApp.configuration.properties.iceworks.npmRegistry.description%"
         }
       }
     }
