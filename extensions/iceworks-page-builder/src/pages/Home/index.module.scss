@@ -45,3 +45,19 @@
     width: 607px;
   }
 }
+
+.material {
+  :global {
+    .next-tabs-tab.active {
+      color: $color-text1-4 !important;
+      &:before {
+        border-bottom-color: $color-text1-4 !important;
+      }
+    }
+  }
+
+  a[rel="noopener noreferrer"] {
+    color: $color-text1-4;
+    text-decoration: none;
+  }
+}

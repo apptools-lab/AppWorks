@@ -107,10 +107,10 @@
   },
   "dependencies": {
     "@alifd/next": "^1.19.4",
-    "@alifd/theme-design-pro": "^0.x",
+    "@alifd/theme-iceworks-dark": "^0.2.1",
     "@iceworks/material-service": "^0.1.0",
-    "@iceworks/page-service": "^0.1.0",
     "@iceworks/material-ui": "^0.1.0",
+    "@iceworks/page-service": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.0",
     "moment": "^2.24.0",
     "react": "^16.4.1",

@@ -20,6 +20,7 @@ const CreateProject: React.FC = () => {
   const projectField = Field.useField();
   const DEFProjectField = Field.useField();
 
+  const [scaffoldTypeSelected, setScaffoldTypeSelected] = useState('');
   const [currentStep, setStep] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
@@ -48,8 +49,9 @@ const CreateProject: React.FC = () => {
     })
   }
 
-  function onScaffoldSelect(scaffold) {
+  function onScaffoldSelect(scaffoldType, scaffold) {
     projectField.setValue('scaffold', scaffold);
+    projectField.setValue('scaffoldType', scaffoldType);
   };
 
   async function onScaffoldSubmit() {
@@ -57,6 +59,7 @@ const CreateProject: React.FC = () => {
       Notification.error({ title: 'Error', content: 'Please select a scaffold.' });
       return;
     }
+    setScaffoldTypeSelected(projectField.getValue('scaffoldType'))
     goNext();
   }
 
@@ -123,6 +126,9 @@ const CreateProject: React.FC = () => {
   };
 
   function goPrev() {
+    if (currentStep - 1 == 0) {
+      setScaffoldTypeSelected('')
+    }
     setStep(currentStep - 1);
   };
 
@@ -173,8 +179,8 @@ const CreateProject: React.FC = () => {
   }, [])
   return (
     <div className={styles.container}>
-      <Header />
-      <Card free>
+      <Header scaffoldTypeSelected={scaffoldTypeSelected} />
+      <Card free className={styles.card}>
         <Card.Content className={styles.step}>
           <Step current={currentStep} shape="circle">
             {steps.map((step) => (
