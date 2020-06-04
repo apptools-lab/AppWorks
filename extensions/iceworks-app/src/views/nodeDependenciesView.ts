@@ -5,7 +5,8 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand } from '../utils';
+import { pathExists, createNpmCommand, executeCommand } from '../utils';
+import { getCurrentPackageManager } from '@iceworks/common-service';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -213,25 +214,3 @@ async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance
   }
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
-
-// export async function setNpmRegister() {
-//   const quickPick = vscode.window.createQuickPick();
-//   const npmRegisters: string[] = getNpmRegisters();
-//   const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
-//   const addOtherRegisterLabel = 'Add Other Register...';
-//   quickPick.items = [...npmRegisters, addOtherRegisterLabel].map(label => ({ label, picked: label === currentNpmRegister }));
-//   quickPick.onDidChangeSelection(async selection => {
-//     if (selection[0]) {
-//       if (selection[0].label === addOtherRegisterLabel) {
-//         vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegister');
-//       } else {
-//         await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
-//         vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
-//       }
-
-//       quickPick.hide();
-//     }
-//   });
-//   quickPick.onDidHide(() => quickPick.dispose());
-//   quickPick.show();
-// };

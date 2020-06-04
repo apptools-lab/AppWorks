@@ -105,11 +105,10 @@ function getAndExtractTarball(
 }
 
 /**
- * 从 register 获取 npm 的信息
+ * 从 registry 获取 npm 的信息
  */
 function getNpmInfo(npm: string, registry?: string): Promise<any> {
-  const register = registry || getNpmRegistry(npm);
-  const url = `${register}/${npm}`;
+  const url = `${registry || getNpmRegistry(npm)}/${npm}`;
 
   return request.get(url).then((response) => {
     let body;

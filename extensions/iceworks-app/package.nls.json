@@ -17,12 +17,12 @@
   "iceworksApp.components.add.title": "Add Components",
   "iceworksApp.components.refresh.title": "Refresh",
   "iceworksApp.nodeDependencies.setPackageManager.title": "Set npm Package Manager",
-  "iceworksApp.nodeDependencies.setNpmRegister.title": "Set npm Register",
+  "iceworksApp.nodeDependencies.setNpmRegistry.title": "Set npm Registry",
   "iceworksApp.nodeDependencies.addDependency.title": "Add Dependency",
   "iceworksApp.nodeDependencies.install.title": "Install Dependencies",
   "iceworksApp.nodeDependencies.reinstall.title": "Reinstall Dependencies",
   "iceworksApp.nodeDependencies.refresh.title": "Refresh",
   "iceworksApp.nodeDependencies.upgrade.title": "Upgrade Dependency",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
-  "iceworksApp.configuration.properties.iceworks.npmRegister.description": "iceworks npm register."
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "iceworks npm registry."
 }
