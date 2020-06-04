@@ -3,7 +3,6 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import services from './services/index';
 
 const { window, ViewColumn } = vscode;
-console.log(11111);
 
 export function activate(context: vscode.ExtensionContext) {
 	const { extensionPath, subscriptions } = context;
