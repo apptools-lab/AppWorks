@@ -14,7 +14,7 @@ const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 interface IProjectField {
   projectName: string;
   projectPath: string;
-  scaffold: IMaterialScaffold
+  scaffold: IMaterialScaffold;
 }
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
@@ -29,22 +29,22 @@ const CreateProject: React.FC = () => {
 
   const steps = [
     {
-      title: 'Select a Scaffold',
+      title: '选择模板',
       content: <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} />
     },
     {
-      title: 'Input Project Information',
+      title: '填写信息',
       content: <CreateProjectForm field={projectField} onOpenFolderDialog={onOpenFolderDialog} />
     },
     {
-      title: 'Init Project Successfully',
+      title: '初始化项目成功',
       content: <InitProjectSuccess projectDir={projectDir} />
     }
   ];
 
   if (isAliInternal) {
     steps.splice(2, 0, {
-      title: 'Create DEF Project',
+      title: '创建DEF项目',
       content: <CreateDEFProjectForm field={DEFProjectField} />
     })
   }
@@ -56,7 +56,7 @@ const CreateProject: React.FC = () => {
 
   async function onScaffoldSubmit() {
     if (!projectField.getValue('scaffold')) {
-      Notification.error({ title: 'Error', content: 'Please select a scaffold.' });
+      Notification.error({ title: 'Error', content: '请选择一个模板！' });
       return;
     }
     setScaffoldTypeSelected(projectField.getValue('scaffoldType'))
@@ -84,7 +84,7 @@ const CreateProject: React.FC = () => {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
 
       if (isPathExists) {
-        throw new Error('The path exists. Please input a new path.')
+        throw new Error('该路径已存在，请重新选择！')
       }
       if (!isAliInternal) {
         const projectDir = await callService('project', 'createProject', values);
@@ -116,7 +116,7 @@ const CreateProject: React.FC = () => {
       setLoading(false);
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: 'Fail to create DEF project.' });
+      Notification.error({ title: 'Error', content: e.message });
       setLoading(false);
     }
   }
@@ -135,28 +135,28 @@ const CreateProject: React.FC = () => {
   let actions;
   switch (currentStep) {
     case 0:
-      actions = <Button type="primary" onClick={onScaffoldSubmit}>Next Step</Button>;
+      actions = <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>;
       break;
     case 1:
       actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>Previous Step</Button>
+        <Button onClick={goPrev} style={{ marginRight: '5px' }}>上一步</Button>
         <Form.Submit
           type="primary"
           onClick={onProjectDetailSubmit}
           validate
           loading={loading}
-        >Next Step</Form.Submit>
+        >下一步</Form.Submit>
       </>;
       break;
     case 2:
       actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>Previous Step</Button>
+        <Button onClick={goPrev} style={{ marginRight: '5px' }}>上一步</Button>
         <Form.Submit
           type="primary"
           onClick={onDEFProjectDetailSubmit}
           validate
           loading={loading}
-        >Next Step</Form.Submit>
+        >下一步</Form.Submit>
       </>;
       break;
     default:
