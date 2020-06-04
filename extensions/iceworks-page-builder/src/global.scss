@@ -1,8 +1,8 @@
 // 引入默认全局样式
-@import '@alifd/next/reset.scss';
+@import "@alifd/next/reset.scss";
 
 body {
   -webkit-font-smoothing: antialiased;
-  background-color: #fff;
+  background-color: $color-brand1-1;
+  color: $color-text1-4;
 }
-
