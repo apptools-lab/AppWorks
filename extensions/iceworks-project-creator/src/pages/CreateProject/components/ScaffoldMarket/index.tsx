@@ -11,14 +11,14 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
   const [scaffoldMaterials, setScaffoldMaterials] = useState<IMaterialScaffold[]>([]);
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
-    setMaterialSourceSelected(scaffold.name);
+    setMaterialSourceSelected(scaffold.type);
     const data = await getScaffolds(scaffold.source);
     setScaffoldMaterials(data);
   }
 
   function onScaffoldMaterialClick(scaffold) {
     setMaterialSelected(scaffold.name);
-    onScaffoldSelect(scaffold);
+    onScaffoldSelect(materialSourceSelected, scaffold);
   }
 
   async function getScaffoldResources() {
@@ -40,7 +40,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
       try {
         const materialSources = await getScaffoldResources();
         setMaterialSources(materialSources);
-        setMaterialSourceSelected(materialSources[0].name);
+        setMaterialSourceSelected(materialSources[0].type);
         const source = materialSources[0].source;
 
         const data = await getScaffolds(source);
@@ -59,7 +59,7 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
             key={item.name}
             title={item.name}
             content={item.description}
-            selected={materialSourceSelected === item.name}
+            selected={materialSourceSelected === item.type}
             style={{ width: 180 }}
             onClick={() => onMaterialSourceClick(item)}
           />
