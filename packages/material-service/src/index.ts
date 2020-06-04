@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as kebabCase from 'lodash.kebabcase';
 import axios from 'axios';
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
+import { getProjectType } from '@iceworks/project-service';
 
 const ICE_MATERIAL_SOURCE = 'http://ice.alicdn.com/assets/materials/react-materials.json';
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
@@ -13,6 +14,11 @@ const dataCache: {[source: string]: IMaterialData} = {};
 const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
 };
+
+export const getSourcesByProjectType = async function() {
+  const type = await getProjectType();
+  return getSources(type);
+}
 
 /**
  * Get material sources list
