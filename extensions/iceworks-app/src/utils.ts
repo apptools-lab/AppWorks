@@ -58,7 +58,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
   const packageManager = getCurrentPackageManager();
   let register = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    register = `--register=${getCurrentNpmRegister()}`;
+    register = `--registry ${getCurrentNpmRegister()}`;
   }
   return `${packageManager} ${action} ${target} ${register} ${extra}`;
 }
