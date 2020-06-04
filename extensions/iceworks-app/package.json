@@ -142,8 +142,8 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.setNpmRegister",
-        "title": "%iceworksApp.nodeDependencies.setNpmRegister.title%",
+        "command": "iceworksApp.nodeDependencies.setNpmRegistry",
+        "title": "%iceworksApp.nodeDependencies.setNpmRegistry.title%",
         "icon": {
           "light": "assets/light/register.svg",
           "dark": "assets/dark/register.svg"
@@ -223,7 +223,7 @@
           "group": "navigation@21"
         },
         {
-          "command": "iceworksApp.nodeDependencies.setNpmRegister",
+          "command": "iceworksApp.nodeDependencies.setNpmRegistry",
           "when": "view == nodeDependencies",
           "group": "navigation@22"
         },
@@ -275,14 +275,14 @@
           ],
           "description": "%iceworksApp.configuration.properties.iceworks.packageManager.description%"
         },
-        "iceworks.npmRegister": {
+        "iceworks.npmRegistry": {
           "type": "string",
           "default": "https://registry.npmjs.org",
           "enum": [
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
           ],
-          "description": "%iceworksApp.configuration.properties.iceworks.npmRegister.description%"
+          "description": "%iceworksApp.configuration.properties.iceworks.npmRegistry.description%"
         }
       }
     }

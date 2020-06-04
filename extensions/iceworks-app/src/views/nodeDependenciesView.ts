@@ -5,7 +5,7 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegisters } from '../utils';
+import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegistries } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -214,19 +214,19 @@ async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
 
-export async function setNpmRegister() {
+export async function setNpmRegistry() {
   const quickPick = vscode.window.createQuickPick();
-  const npmRegisters: string[] = getNpmRegisters();
-  const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
-  const addOtherRegisterLabel = 'Add Other Register...';
-  quickPick.items = [...npmRegisters, addOtherRegisterLabel].map(label => ({ label, picked: label === currentNpmRegister }));
+  const npmRegistries: string[] = getNpmRegistries();
+  const currentNpmRegistry = vscode.workspace.getConfiguration('iceworks').get('npmRegistry', npmRegistries[0]);
+  const addOtherRegistryLabel = 'Add Other Registry...';
+  quickPick.items = [...npmRegistries, addOtherRegistryLabel].map(label => ({ label, picked: label === currentNpmRegistry }));
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
-      if (selection[0].label === addOtherRegisterLabel) {
-        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegister');
+      if (selection[0].label === addOtherRegistryLabel) {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegistry');
       } else {
-        await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
-        vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
+        await vscode.workspace.getConfiguration().update('iceworks.npmRegistry', selection[0].label, true);
+        vscode.window.showInformationMessage(`Setting ${selection[0].label} registry successfully!`);
       }
 
       quickPick.hide();

@@ -1,4 +1,5 @@
-English | [简体中文](./README.zh-CN.md)
+
+[English](./README.md) | 简体中文
 
 <p align="center">
   <a href="https://ice.work">
@@ -8,7 +9,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">iceworks</h1>
 
-<p align="center">Universal Development Pack</p>
+<p align="center">终端研发套件</p>
 
 <p align="center">
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
@@ -17,46 +18,44 @@ English | [简体中文](./README.zh-CN.md)
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
 
-## Quick Start
+## 快速开始
 
-### iceworks Pack
+### iceworks 套件
 
-Use VC Code pack to develop projects quickly.
+使用 VS Code 套件快速开发项目。
 
 ### iceworks CLI
 
-Use CLI to develop custom material collections.
+使用 CLI 开发自定义物料集合。
 
-- Installation:
+- 安装工具：
 
   ```bash
   $ npm i -g iceworks
   ```
-- Initialize material collections
+- 初始化物料集合：
 
   ```
   $ mkdir materials-example && cd materials-example
   $ iceworks init material
   ```
 
-See [《物料开发》](https://ice.work/docs/materials/about) for more details.
+更多详细说明，请参考[《物料开发》](https://ice.work/docs/materials/about)。
 
-ate).
+## 参与贡献
 
-## Contributors
+欢迎通过 [issue](https://github.com/ice-lab/iceworks/issues/new) 反馈问题。
 
-Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on icestore.
+如果对 `iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
-
-## ICE Ecosystem
+## ICE 生态
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | A universal framework based on react.js |
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | Alibaba Group Unified Form Solution |
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
+| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | 能力完备性能出众的表单解决方案 |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -78,9 +77,9 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
 
-## Community
+## 社区
 
-| DingTalk community                               | GitHub issues |  Gitter |
+| 钉钉群	                             | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 | <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
