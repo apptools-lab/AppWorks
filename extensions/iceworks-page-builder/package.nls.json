@@ -1,4 +1,5 @@
 {
-  "iceworksLowCodePageBuilder.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
-  "iceworksLowCodePageBuilder.configuration.properties.iceworks.materialSources.description": "iceworks material sources, decide which materials to use."
+  "iceworksPageBuilder.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
+  "iceworksPageBuilder.configuration.properties.iceworks.npmRegister.description": "iceworks npm register.",
+  "iceworksPageBuilder.configuration.properties.iceworks.materialSources.description": "iceworks material sources, decide which materials to use."
 }

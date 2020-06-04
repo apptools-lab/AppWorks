@@ -34,11 +34,20 @@
             "tnpm",
             "yarn"
           ],
-          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.packageManager.description%"
+          "description": "%iceworksPageBuilder.configuration.properties.iceworks.packageManager.description%"
+        },
+        "iceworks.npmRegister": {
+          "type": "string",
+          "default": "https://registry.npmjs.org",
+          "enum": [
+            "https://registry.npmjs.org",
+            "https://registry.npm.taobao.org"
+          ],
+          "description": "%iceworksPageBuilder.configuration.properties.iceworks.npmRegister.description%"
         },
         "iceworks.materialSources": {
           "type": "array",
-          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.materialSources.description%",
+          "description": "%iceworksPageBuilder.configuration.properties.iceworks.materialSources.description%",
           "items": {
             "type": "object",
             "description": "Source",
