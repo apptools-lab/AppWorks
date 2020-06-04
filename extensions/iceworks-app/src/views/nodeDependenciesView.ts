@@ -6,7 +6,7 @@ import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import { pathExists, createNpmCommand, executeCommand } from '../utils';
-import { getCurrentPackageManager } from '@iceworks/common-service';
+import { getDataFromSettingJson } from '@iceworks/common-service';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -62,7 +62,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string, outdated: boolean) {
-        const packageManager = getCurrentPackageManager();
+        const packageManager = getDataFromSettingJson('packageManager');
         const isYarn = packageManager === 'yarn';
         const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
         const command = outdated ?
@@ -137,7 +137,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getCurrentPackageManager();
+    const packageManager = getDataFromSettingJson('packageManager');
     const isYarn = packageManager === 'yarn';
     const isDevDep = depType === 'devDependencies';
 

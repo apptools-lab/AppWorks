@@ -59,20 +59,12 @@ export async function setNpmRegistry(npmRegistrys: string[]): Promise<void> {
   quickPick.show();
 };
 
-export function getPackageManagers(packageJsonPath: string): string[] {
+export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties['iceworks.packageManager'].enum;
 }
 
-export function getNpmRegistries(packageJsonPath: string): string[] {
+export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties['iceworks.npmRegistry'].enum;
-}
-
-export function getCurrentPackageManager(): string {
-  return vscode.workspace.getConfiguration('iceworks').get('packageManager');
-}
-
-export function getCurrentNpmRegistry(): string {
-  return vscode.workspace.getConfiguration('iceworks').get('npmRegistry');
 }
