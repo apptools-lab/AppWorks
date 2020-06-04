@@ -5,7 +5,8 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegistries } from '../utils';
+import { pathExists, createNpmCommand, executeCommand } from '../utils';
+import { getDataFromSettingJson } from '@iceworks/common-service';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -61,7 +62,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string, outdated: boolean) {
-        const packageManager = getCurrentPackageManager();
+        const packageManager = getDataFromSettingJson('packageManager');
         const isYarn = packageManager === 'yarn';
         const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
         const command = outdated ?
@@ -136,7 +137,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getCurrentPackageManager();
+    const packageManager = getDataFromSettingJson('packageManager');
     const isYarn = packageManager === 'yarn';
     const isDevDep = depType === 'devDependencies';
 
@@ -175,22 +176,6 @@ export class DependencyNode extends vscode.TreeItem {
   contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
-export async function setPackageManager() {
-  const quickPick = vscode.window.createQuickPick();
-  const packageManagers: string[] = getPackageManagers();
-  const currentpackageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-  quickPick.items = packageManagers.map(label => ({ label, picked: label === currentpackageManager }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
-      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
-
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
   quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
@@ -213,25 +198,3 @@ async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance
   }
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
-
-export async function setNpmRegistry() {
-  const quickPick = vscode.window.createQuickPick();
-  const npmRegistries: string[] = getNpmRegistries();
-  const currentNpmRegistry = vscode.workspace.getConfiguration('iceworks').get('npmRegistry', npmRegistries[0]);
-  const addOtherRegistryLabel = 'Add Other Registry...';
-  quickPick.items = [...npmRegistries, addOtherRegistryLabel].map(label => ({ label, picked: label === currentNpmRegistry }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      if (selection[0].label === addOtherRegistryLabel) {
-        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegistry');
-      } else {
-        await vscode.workspace.getConfiguration().update('iceworks.npmRegistry', selection[0].label, true);
-        vscode.window.showInformationMessage(`Setting ${selection[0].label} registry successfully!`);
-      }
-
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};

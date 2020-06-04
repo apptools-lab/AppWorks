@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { Terminal, TerminalOptions } from 'vscode';
 import { entryFileSuffix } from './constants';
 import { ITerminalMap } from './types';
+import { getDataFromSettingJson } from '@iceworks/common-service';
 
 export function createTerminalName(cwd: string, command: string): string {
   return `${path.basename(cwd)} - ${command}`;
@@ -55,32 +56,14 @@ export function openEntryFile(p: string) {
 }
 
 export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
-  const packageManager = getCurrentPackageManager();
+  const packageManager = getDataFromSettingJson('packageManager');
   let registry = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    registry = `--registry ${getCurrentNpmRegistry()}`;
+    registry = `--registry ${getDataFromSettingJson('npmRegistry')}`;
   }
   return `${packageManager} ${action} ${target} ${registry} ${extra}`;
 }
 
-export function getCurrentPackageManager() {
-  const packageManagers = getPackageManagers();
-  return vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-}
 
-export function getCurrentNpmRegistry(): string {
-  const npmRegistries = getNpmRegistries();
-  return vscode.workspace.getConfiguration('iceworks').get('npmRegistry', npmRegistries[0]);
-}
 
-export function getPackageManagers() {
-  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
-  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties['iceworks.packageManager'].enum;
-}
 
-export function getNpmRegistries() {
-  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
-  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties['iceworks.npmRegistry'].enum;
-}
