@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as util from 'util';
 import { pathExists } from '../utils';
 
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
@@ -48,9 +47,9 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
       const dirNames = await fse.readdir(componentsPath);
       // except file
       const componentNames = dirNames.filter(dirname => {
-        const stat = fse.statSync(path.join(componentsPath, dirname))
+        const stat = fse.statSync(path.join(componentsPath, dirname));
         return stat.isDirectory();
-      })
+      });
       return componentNames.map(componentName => toComponent(componentName));
     } else {
       return [];

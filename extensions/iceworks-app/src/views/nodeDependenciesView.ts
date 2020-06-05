@@ -5,8 +5,8 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, createNpmCommand, executeCommand } from '../utils';
-import { getDataFromSettingJson } from '@iceworks/common-service';
+import { pathExists, executeCommand } from '../utils';
+import { getDataFromSettingJson, createNpmCommand } from '@iceworks/common-service';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -106,34 +106,35 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     };
   };
 
+  public packageJsonExists() {
+    return pathExists(this.packageJsonPath);
+  }
+
   public getInstallScript() {
-    if (pathExists(this.packageJsonPath)) {
-      const workspaceDir: string = path.dirname(this.packageJsonPath);
-      const npmCommand = createNpmCommand('install');
-      const command: vscode.Command = {
-        command: 'iceworksApp.nodeDependencies.install',
-        title: 'Install Dependencies',
-        arguments: [workspaceDir, npmCommand]
-      };
-      return command;
-    }
+    const workspaceDir: string = path.dirname(this.packageJsonPath);
+    const npmCommand = createNpmCommand('install');
+    const command: vscode.Command = {
+      command: 'iceworksApp.nodeDependencies.install',
+      title: 'Install Dependencies',
+      arguments: [workspaceDir, npmCommand]
+    };
+    return command;
   }
 
   public async getReinstallScript() {
-    if (pathExists(this.packageJsonPath)) {
-      const workspaceDir: string = path.dirname(this.packageJsonPath);
-      const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-      if (pathExists(nodeModulesPath)) {
-        await rimrafAsync(nodeModulesPath);
-      }
-      const npmCommand = createNpmCommand('install');
-      const command: vscode.Command = {
-        command: 'iceworksApp.nodeDependencies.reinstall',
-        title: 'Reinstall Dependencies',
-        arguments: [workspaceDir, npmCommand]
-      };
-      return command;
+    const workspaceDir: string = path.dirname(this.packageJsonPath);
+    const nodeModulesPath = path.join(workspaceDir, 'node_modules');
+    if (pathExists(nodeModulesPath)) {
+      await rimrafAsync(nodeModulesPath);
     }
+    const npmCommand = createNpmCommand('install');
+    const command: vscode.Command = {
+      command: 'iceworksApp.nodeDependencies.reinstall',
+      title: 'Reinstall Dependencies',
+      arguments: [workspaceDir, npmCommand]
+    };
+    return command;
+
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
