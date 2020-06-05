@@ -43,7 +43,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const deps = this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
       return deps;
     } else {
-      return Promise.resolve(nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
+      return Promise.resolve(
+        nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
   }
 
@@ -72,7 +73,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
             arguments: [workspaceDir, npmCommand]
           } :
           undefined;
-        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
+        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, command, version, outdated);
       };
 
       const deps: DependencyNode[] = [];
@@ -145,7 +146,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.addDependency',
+      command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
       title: 'Add Dependency',
       arguments: [workspaceDir, npmCommand]
     };
@@ -157,8 +158,8 @@ export class DependencyNode extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly version?: string,
     public readonly command?: vscode.Command,
+    public readonly version?: string,
     public readonly outDated?: boolean
   ) {
     super(label, collapsibleState);
@@ -168,12 +169,12 @@ export class DependencyNode extends vscode.TreeItem {
     return this.version ? this.version : '';
   }
 
+  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : this.label;
+
   iconPath = {
     light: path.join(__filename, '..', '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
-
-  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
 
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
@@ -189,7 +190,7 @@ export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesIn
   quickPick.show();
 };
 
-async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
+export async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
   const result = await vscode.window.showInputBox({
     placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
   });

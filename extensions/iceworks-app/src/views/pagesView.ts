@@ -40,12 +40,15 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
           title: 'Open File',
           arguments: [pageEntryPath]
         };
-
         return new Page(pageName, cmdObj);
       };
-
-      const pagesName = await fse.readdir(pagesPath);
-      return pagesName.map(pageName => toPage(pageName));
+      const dirNames = await fse.readdir(pagesPath);
+      // except the file
+      const pageNames = dirNames.filter(dirname => {
+        const stat = fse.statSync(path.join(pagesPath, dirname))
+        return stat.isDirectory();
+      })
+      return pageNames.map(pageName => toPage(pageName));
     } else {
       return [];
     }

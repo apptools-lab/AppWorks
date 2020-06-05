@@ -3,7 +3,7 @@ import { Terminal } from 'vscode';
 import * as path from 'path';
 import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration } from '@iceworks/common-service';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
-import { DepNodeProvider, DependencyNode, addDepCommandHandler } from './views/nodeDependenciesView';
+import { DepNodeProvider, DependencyNode, addDepCommandHandler, showDepInputBox } from './views/nodeDependenciesView';
 import { ComponentsProvider } from './views/componentsView';
 import { PagesProvider } from './views/pagesView';
 import { ITerminalMap } from "./types";
@@ -55,7 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
 
-	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDependency', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
+	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
 	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setPackageManager', () => setPackageManager(getPackageManagersDefaultFromPackageJson(packageJsonPath))));
 	context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegistry', () => setNpmRegistry(getNpmRegistriesDefaultFromPckageJson(packageJsonPath))));
 }

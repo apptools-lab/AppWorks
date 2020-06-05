@@ -98,8 +98,8 @@
         }
       },
       {
-        "command": "iceworksApp.pages.add",
-        "title": "%iceworksApp.pages.add.title%",
+        "command": "iceworks-page-builder.create",
+        "title": "%iceworks-page-builder.create.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -118,8 +118,8 @@
         "title": "%iceworksApp.pages.openFile.title%"
       },
       {
-        "command": "iceworksApp.components.add",
-        "title": "%iceworksApp.components.add.title%",
+        "command": "iceworks-component-builder.generate",
+        "title": "%iceworks-component-builder.generate.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -150,8 +150,8 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.addDependency",
-        "title": "%iceworksApp.nodeDependencies.addDependency.title%",
+        "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
+        "title": "%iceworksApp.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -182,6 +182,22 @@
         }
       },
       {
+        "command": "iceworksApp.nodeDependencies.dependencies.add",
+        "title": "%iceworksApp.nodeDependencies.dependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.devDependencies.add",
+        "title": "%iceworksApp.nodeDependencies.devDependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
         "command": "iceworksApp.nodeDependencies.upgrade",
         "title": "%iceworksApp.nodeDependencies.upgrade.title%",
         "icon": {
@@ -198,7 +214,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworksApp.pages.add",
+          "command": "iceworks-page-builder.create",
           "when": "view == pages",
           "group": "navigation"
         },
@@ -208,7 +224,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworksApp.components.add",
+          "command": "iceworks-component-builder.generate",
           "when": "view == components",
           "group": "navigation"
         },
@@ -228,7 +244,7 @@
           "group": "navigation@22"
         },
         {
-          "command": "iceworksApp.nodeDependencies.addDependency",
+          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
           "when": "view == nodeDependencies",
           "group": "navigation@11"
         },
@@ -257,6 +273,16 @@
         {
           "command": "iceworksApp.nodeDependencies.upgrade",
           "when": "view == nodeDependencies && viewItem == outdatedDependency",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.dependencies.add",
+          "when": "view == nodeDependencies && viewItem == dependencies",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.devDependencies.add",
+          "when": "view == nodeDependencies && viewItem == devDependencies",
           "group": "inline"
         }
       ]
@@ -300,18 +326,13 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/glob": "^7.1.1",
-    "@types/mocha": "^7.0.2",
     "@types/node": "^13.11.0",
     "@types/rimraf": "^3.0.0",
     "@types/vscode": "^1.45.0",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
-    "glob": "^7.1.6",
-    "mocha": "^7.1.2",
-    "typescript": "^3.8.3",
-    "vscode-test": "^1.3.0"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.0",

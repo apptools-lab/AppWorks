@@ -45,9 +45,13 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
 
         return new Component(componentName, cmdObj);
       };
-
-      const componentsName = await fse.readdir(componentsPath);
-      return componentsName.map(componentName => toComponent(componentName));
+      const dirNames = await fse.readdir(componentsPath);
+      // except file
+      const componentNames = dirNames.filter(dirname => {
+        const stat = fse.statSync(path.join(componentsPath, dirname))
+        return stat.isDirectory();
+      })
+      return componentNames.map(componentName => toComponent(componentName));
     } else {
       return [];
     }
