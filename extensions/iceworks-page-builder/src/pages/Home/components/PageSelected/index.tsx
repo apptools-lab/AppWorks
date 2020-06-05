@@ -32,19 +32,23 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
   return (
     <div className={styles.pageSelected}>
       {blocks.length ? (
-        blocks.map((block, index) => {
-          return (
-            <SelectedBlock
-              {...block}
-              key={block.name}
-              index={index}
-              targetIndex={index}
-              onNameChange={onNameChange}
-              onDelete={onDelete}
-              isSorting={isSorting}
-            />
-          );
-        })
+        <div className={styles.list}>
+          {
+            blocks.map((block, index) => {
+              return (
+                <SelectedBlock
+                  {...block}
+                  key={block.name}
+                  index={index}
+                  targetIndex={index}
+                  onNameChange={onNameChange}
+                  onDelete={onDelete}
+                  isSorting={isSorting}
+                />
+              );
+            })
+          }
+        </div>
       ) : (
         <div className={styles.empty}>
           <img

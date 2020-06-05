@@ -150,6 +150,7 @@ const Home = () => {
               <Col span={8} className={styles.col}>
                 <div className={styles.material}>
                   <Material
+                    disableLazyLoad
                     getSources={getSources}
                     onSettingsClick={onSettingsClick}
                     getData={getData}
@@ -163,7 +164,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" loading={isCreating} onClick={handleCreate}>
+        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
           Generate page
         </Button>
       </div>

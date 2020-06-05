@@ -19,7 +19,7 @@
     "commands": [
       {
         "command": "iceworks-component-builder.generate",
-        "title": "iceworks: Generate Block"
+        "title": "iceworks: Generate Component"
       }
     ],
     "configuration": {

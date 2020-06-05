@@ -25,8 +25,9 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }
 
-export function getDataFromSettingJson(section: string): string {
-  return vscode.workspace.getConfiguration(CONFIGURATION_SECTION).get(section);
+
+export function getDataFromSettingJson(section: string, defaultValue?: any): string {
+  return vscode.workspace.getConfiguration(CONFIGURATION_SECTION).get(section, defaultValue);
 }
 
 export function executeCommand(...arg: any[]) {
@@ -123,4 +124,13 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
       globalState.update(stateKey, true);
     }
   });
+}
+
+export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
+  const packageManager = getDataFromSettingJson('packageManager', 'npm');
+  let registry = '';
+  if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
+    registry = `--registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
+  }
+  return `${packageManager} ${action} ${target} ${registry} ${extra}`;
 }

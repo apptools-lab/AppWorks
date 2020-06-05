@@ -4,6 +4,7 @@ import * as fsExtra from 'fs-extra';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
 import { projectPath } from '@iceworks/project-service';
+import { createNpmCommand } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 
 /**
@@ -80,8 +81,6 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
       return `${packageName}@${version}`;
     });
-    const packageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', 'npm');
-    const npmRegistry = vscode.workspace.getConfiguration('iceworks').get('npmRegistry', 'https://registry.npm.taobao.org');
 
     let terminal: vscode.Terminal;
     if (activeTerminal) {
@@ -92,7 +91,7 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
 
     terminal.show();
     terminal.sendText(`cd ${projectPath}`, true);
-    terminal.sendText(`${packageManager} install ${deps.join(' ')} --registry ${npmRegistry} --save`, true);
+    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
   } else {
     return [];
   }

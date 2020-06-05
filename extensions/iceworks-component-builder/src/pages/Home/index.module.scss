@@ -14,13 +14,32 @@
         margin-bottom: 0;
       }
       .label {
-        margin-bottom: 12px;
+        margin-bottom: 14px;
+        font-size: 14px;
       }
       .select {
         height: 560px;
+        :global {
+          .next-tabs-nav-extra {
+            .next-icon {
+              color: $color-text1-4 !important;
+            }
+          }
+          .next-tabs-tab.active {
+            color: $color-text1-4 !important;
+            &:before {
+              border-bottom-color: $color-text1-4 !important;
+            }
+          }
+        }
+
+        a[rel="noopener noreferrer"] {
+          color: $color-text1-4;
+          text-decoration: none;
+        }
       }
       .pageNameInput {
-        width: 400px;
+        width: 100%;
       }
     }
   }
@@ -40,26 +59,5 @@
 
   img {
     width: 607px;
-  }
-}
-
-.material {
-  :global {
-    .next-tabs-nav-extra {
-      .next-icon {
-        color: $color-text1-4 !important;
-      }
-    }
-    .next-tabs-tab.active {
-      color: $color-text1-4 !important;
-      &:before {
-        border-bottom-color: $color-text1-4 !important;
-      }
-    }
-  }
-
-  a[rel="noopener noreferrer"] {
-    color: $color-text1-4;
-    text-decoration: none;
   }
 }
