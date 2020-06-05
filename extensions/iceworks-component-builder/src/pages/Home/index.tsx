@@ -106,7 +106,7 @@ const Home = () => {
           </div>
           <div className={styles.select}>
             <Material
-              disableLazyLoad={true}
+              disableLazyLoad
               getSources={getSources}
               getData={getData}
               onBlockClick={onSelect}
