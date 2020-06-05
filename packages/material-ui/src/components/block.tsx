@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IMaterialBlock, PLACEHOLDER_IMG } from '@iceworks/material-utils';
 import classnames from 'classnames';
+import { Icon } from '@alifd/next';
 import * as styles from './block.module.scss';
 
 export const MaterialBlock: React.FC<{
@@ -18,6 +19,14 @@ export const MaterialBlock: React.FC<{
       [styles.selected]: selected,
       'selected': selected,
     })}>
+      {selected && <Icon
+        type="select"
+        size="small"
+        className={classnames({
+          [styles.selectedIcon]: true,
+          'selected-icon': true,
+        })}
+      />}
       <div className={styles.screenshot} onClick={handleClick}>
         {dataSource.isNewly ? <div className={styles.newly}>NEW</div> : null}
         <img draggable={false} alt={dataSource.title} src={dataSource.screenshot || PLACEHOLDER_IMG} />
