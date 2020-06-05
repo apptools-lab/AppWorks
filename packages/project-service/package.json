@@ -8,14 +8,17 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "dependencies": {
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/generate-project": "^1.0.6",
     "@iceworks/material-utils": "^0.1.0",
-    "@iceworks/common-service": "^0.1.0",
     "axios": "^0.19.2",
-    "simple-git": "^2.5.0",
-    "ice-npm-utils": "^1.4.1"
+    "ice-npm-utils": "^1.4.2",
+    "simple-git": "^2.5.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
