@@ -38,7 +38,7 @@
         },
         "iceworks.npmRegistry": {
           "type": "string",
-          "default": "https://registry.npmjs.org",
+          "default": "https://registry.npm.taobao.org",
           "enum": [
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
@@ -117,6 +117,7 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-iceworks-dark": "^0.2.1",
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/block-service": "^0.1.0",
     "@iceworks/material-service": "^0.1.0",
     "@iceworks/material-ui": "^0.1.0",
