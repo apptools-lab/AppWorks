@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import * as path from 'path';
-import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson } from '@iceworks/common-service';
+import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration } from '@iceworks/common-service';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
 import { DepNodeProvider, DependencyNode, addDepCommandHandler } from './views/nodeDependenciesView';
 import { ComponentsProvider } from './views/componentsView';
@@ -15,7 +15,9 @@ export function activate(context: vscode.ExtensionContext) {
 	if (!rootPath) {
 		vscode.window.showInformationMessage('The root path is empty. Please open a project or create a project.');
 		return;
-	}
+  }
+
+  autoSetNpmConfiguration(context.globalState);
 
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 

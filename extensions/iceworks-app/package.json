@@ -277,7 +277,7 @@
         },
         "iceworks.npmRegistry": {
           "type": "string",
-          "default": "https://registry.npmjs.org",
+          "default": "https://registry.npm.taobao.org",
           "enum": [
             "https://registry.npmjs.org",
             "https://registry.npm.taobao.org"
