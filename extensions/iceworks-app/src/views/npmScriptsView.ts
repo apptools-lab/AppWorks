@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { pathExists, createNpmCommand } from '../utils';
+import { createNpmCommand } from '@iceworks/common-service'
+import { pathExists } from '../utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
