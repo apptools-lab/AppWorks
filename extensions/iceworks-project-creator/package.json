@@ -38,7 +38,7 @@
               "name": "无线跨端",
               "type": "rax",
               "source": "https://fusion.alibaba-inc.com/api/v1/sites/1194/materials",
-              "description": "基于 Rax 组件和 rax 脚手架的官方物料"
+              "description": "基于 Rax 组件和 Rax 脚手架的官方物料"
             }
           ],
           "description": "iceworks materialSources"
