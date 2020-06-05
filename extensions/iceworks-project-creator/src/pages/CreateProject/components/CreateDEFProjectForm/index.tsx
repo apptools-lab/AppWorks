@@ -1,56 +1,63 @@
 import React from 'react';
-import { Form, Input, Field, Balloon, Icon } from '@alifd/next';
+import { Form, Input } from '@alifd/next';
 import styles from './index.module.scss';
+import { IDEFProjectField } from '@/types';
 
 interface ICreateDEFProjectFormProps {
-  field: Field;
+  value: IDEFProjectField;
+  onChange: (value: IDEFProjectField) => void;
+  children: React.ReactNode;
 }
 
-const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ field }) => {
+const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, children, onChange }) => {
   return (
-    <Form field={field} className={styles.form} responsive fullWidth labelAlign="top">
+    <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
       <Form.Item
         colSpan={12}
-        label="empId(工号)"
+        label="工号"
         required
-        requiredMessage="Please input the empId"
+        requiredMessage="请输入工号"
       >
         <Input placeholder="Please input the id" name="empId" />
       </Form.Item>
       <Form.Item
         colSpan={12}
-        label="account(域账号)"
+        label="域账号"
         required
-        requiredMessage="Please input the account"
+        requiredMessage="请输入域账号"
       >
-        <Input placeholder="Please input the account" name="account" />
+        <Input placeholder="请输入域账号" name="account" />
+      </Form.Item>
+      <Form.Item
+        colSpan={6}
+        label="GitLab Group"
+        required
+        requiredMessage="请输入 GitLab Group"
+      >
+        <Input placeholder="请输入 GitLab Group" name="group" />
+      </Form.Item>
+      <Form.Item
+        colSpan={6}
+        label="仓库名"
+        required
+        requiredMessage="请输入仓库名"
+      >
+        <Input placeholder="请输入仓库名" name="project" />
       </Form.Item>
       <Form.Item
         colSpan={12}
-        label="gitlabGroup"
+        label="GitLab Token"
+        help={<span className={styles.help}>打开 <a href="http://gitlab.alibaba-inc.com/profile/account" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 复制页面的 <b>Private Token</b></span>}
         required
-        requiredMessage="Please input the gitlab group"
+        requiredMessage="请输入GitLab Token"
       >
-        <Input placeholder="Please input the gitlab group" name="group" />
+        <Input placeholder="请输入GitLab Token" name="gitlabToken" />
       </Form.Item>
-      <Form.Item
-        colSpan={12}
-        label="repositoryName(仓库名)"
-        required
-        requiredMessage="Please input the repository name"
-      >
-        <Input placeholder="Please input the repository name" name="project" />
-      </Form.Item>
-      <Form.Item
-        colSpan={12}
-        label={<span>gitlabToken <Balloon type="primary" trigger={<Icon type="help" />} closable={false}><a href="http://gitlab.alibaba-inc.com/profile/account" target="_blank">How to get your gitlab token?</a> (cmd or ctrl + 鼠标左键)</Balloon></span>}
-        required
-        requiredMessage="Please input the gitlab token"
-      >
-        <Input placeholder="Please input the gitlab token" name="gitlabToken" />
-      </Form.Item>
+      <div className={styles.action}>
+        {children}
+      </div>
     </Form>
   );
-};
+}
 
 export default CreateDEFProjectForm;

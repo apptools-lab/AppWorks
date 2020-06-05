@@ -13,9 +13,9 @@ const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) 
   }, []);
   return (
     <Box align="center">
-      <Icon type="success-filling" size={72} className={styles.succesIcon} />
-      <Typography.H1>Project has been created.</Typography.H1>
-      <Typography.H5>About to automatically jump to the project...</Typography.H5>
+      <Icon type="success-filling" size={50} className={styles.succesIcon} />
+      <Typography.H1>项目创建完成</Typography.H1>
+      <Typography.H5>正在自动跳转至项目...</Typography.H5>
     </Box>
   );
 };
