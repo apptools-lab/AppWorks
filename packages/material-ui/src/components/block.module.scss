@@ -19,6 +19,15 @@
 
   &.selected {
     border-color: $color-line1-3;
+
+    .selectedIcon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      border: 1px solid $color-line1-3;
+      border-radius: 50%;
+      padding: 4px;
+    }
   }
 }
 

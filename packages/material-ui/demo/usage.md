@@ -8,6 +8,27 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Material from '@iceworks/material-ui';
 
+const bloks = [
+  {
+    "name": "AdvancedDetailHead",
+    "title": "AdvancedDetailHead",
+    "category": "Information",
+    "screenshot": "https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png",
+    "description": "intro block",
+    "homepage": "https://unpkg.com/@alifd/fusion-advanced-detail@0.1.9/build/index.html",
+    "categories": [
+      "Information"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/blocks/AdvancedDetail",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/fusion-advanced-detail",
+      "version": "0.1.9",
+      "registry": "https://registry.npmjs.org"
+    }
+  },
+];
+
 class App extends Component {
   render() {
     return (
@@ -32,26 +53,7 @@ class App extends Component {
             "type": "react",
             "name": "materials",
             "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料",
-            "blocks": [
-              {
-                "name": "AdvancedDetailHead",
-                "title": "AdvancedDetailHead",
-                "category": "Information",
-                "screenshot": "https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png",
-                "description": "intro block",
-                "homepage": "https://unpkg.com/@alifd/fusion-advanced-detail@0.1.9/build/index.html",
-                "categories": [
-                  "Information"
-                ],
-                "repository": "https://github.com/alibaba-fusion/materials/tree/master/blocks/AdvancedDetail",
-                "source": {
-                  "type": "npm",
-                  "npm": "@alifd/fusion-advanced-detail",
-                  "version": "0.1.9",
-                  "registry": "https://registry.npmjs.org"
-                }
-              },
-            ],
+            "blocks": bloks,
             "components": [
               {
                 "name": "Anchor",
@@ -94,6 +96,7 @@ class App extends Component {
               }
             ]
           })}
+          selectedBlocks={bloks}
         />
       </div>
     );
