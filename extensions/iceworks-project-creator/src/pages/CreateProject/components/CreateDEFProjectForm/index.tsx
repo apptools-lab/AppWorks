@@ -6,7 +6,7 @@ import { IDEFProjectField } from '@/types';
 interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
   onChange: (value: IDEFProjectField) => void;
-  children: any;
+  children: React.ReactNode;
 }
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, children, onChange }) => {

@@ -5,7 +5,7 @@ import { IProjectField } from '@/types';
 
 interface IProjectFormProps {
   value: IProjectField;
-  children: any;
+  children: React.ReactNode;
   onChange: (value: { projectName: string, projectPath: string }) => void;
   onOpenFolderDialog: () => void;
 }
@@ -32,12 +32,9 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
           innerAfter={<img onClick={onOpenFolderDialog} className={styles.folderIcon} src={require('@/assets/folder.svg')} />}
         />
       </Form.Item>
-      {/* <Form.Item colSpan={12} className={styles.action}> */}
       <div className={styles.action}>
         {children}
       </div>
-
-      {/* </Form.Item> */}
     </Form>
   );
 };
