@@ -150,7 +150,7 @@ const Home = () => {
               <Col span={8} className={styles.col}>
                 <div className={styles.material}>
                   <Material
-                    disableLazyLoad={true}
+                    disableLazyLoad
                     getSources={getSources}
                     onSettingsClick={onSettingsClick}
                     getData={getData}
