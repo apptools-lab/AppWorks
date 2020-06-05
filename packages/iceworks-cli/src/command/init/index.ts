@@ -116,7 +116,7 @@ async function selectTemplate(type: string): Promise<string> {
       npmName: '@icedesign/ice-vue-material-template',
       description: 'Vue material template',
     }, {
-      npmName: 'rax-template',
+      npmName: '@icedesign/template-raxlate',
       description: 'Rax material template',
     }, {
       npmName: '@icedesign/ice-react-ts-material-template',
@@ -127,7 +127,7 @@ async function selectTemplate(type: string): Promise<string> {
       description: 'React component template',
       default: true,
     }, {
-      npmName: 'rax-template',
+      npmName: '@icedesign/template-raxlate',
       description: 'Rax component template',
     }, {
       npmName: '@icedesign/ice-react-ts-material-template',
