@@ -43,16 +43,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const deps = this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
       return deps;
     } else {
-      console.log(1)
       return Promise.resolve(
-        nodeDepTypes.map(
-          nodeDepType => {
-            const command = {
-              command: `iceworksApp.nodeDependencies.${nodeDepType}.add`,
-              title: `Add ${nodeDepType}`,
-            }
-            return new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)
-          }));
+        nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
   }
 
