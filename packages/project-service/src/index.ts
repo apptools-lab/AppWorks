@@ -128,7 +128,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
     'emp_id': empId,
     'client_token': clientToken
   });
-
+  console.log('generatorCreatetaskResponse', response);
   if (response.data.error) {
     throw new Error(response.data.error)
   }
@@ -145,6 +145,7 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
             'client_token': clientToken
           }
         })
+        console.log('generatorTaskResultResponse', response);
         const { data: { status }, error } = response.data;
         if (error) {
           reject(new Error(error))
@@ -152,10 +153,10 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error('Project Create failed'))
+            reject(new Error(`Project Create failed. task_id: ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error('Project Create timeout'))
+            reject(new Error(`Project Create timeout. task_id: ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()

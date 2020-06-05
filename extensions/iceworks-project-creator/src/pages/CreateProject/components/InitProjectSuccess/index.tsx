@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { Box, Icon, Typography } from '@alifd/next';
-import styles from './index.module.scss';
 import callService from '@/callService';
+import styles from './index.module.scss';
 
 interface IInitProjectSuccessProps {
-  projectDir: string
+  projectDir: string;
 }
 
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
     callService('project', 'openLocalProjectFolder', projectDir);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box align="center">

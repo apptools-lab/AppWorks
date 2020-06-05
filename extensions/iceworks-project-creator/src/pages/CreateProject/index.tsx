@@ -23,8 +23,8 @@ const CreateProject: React.FC = () => {
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
-  const [curProjectField, setCurProjectField] = useState<IProjectField>({} as IProjectField);
-  const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as IDEFProjectField);
+  const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
+  const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [settingJsonData, setSettingJsonData] = useState<ISettingJsonData>(defaultSettingJsonData)
   const steps = [
     {
@@ -98,6 +98,7 @@ const CreateProject: React.FC = () => {
       const projectPath = await callService('project', 'getProjectPath');
       setCurProjectField({ ...curProjectField, projectPath })
     } catch (e) {
+      // ignore
     };
   }
 
@@ -114,7 +115,7 @@ const CreateProject: React.FC = () => {
         throw new Error('该路径已存在，请重新选择！')
       }
       if (!isAliInternal) {
-        await createProject(values!)
+        await createProject(values)
       } else {
         setCurProjectField(values);
         setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName })
@@ -130,7 +131,7 @@ const CreateProject: React.FC = () => {
   async function skipCreateDEFProject() {
     setCreateProjectLoading(true);
     try {
-      await createProject(curProjectField!)
+      await createProject(curProjectField)
       setCreateProjectLoading(false);
       goNext();
     } catch (e) {
@@ -199,6 +200,7 @@ const CreateProject: React.FC = () => {
     }
     const isAliInternal = checkAliInternal();
     setDefaultFields(isAliInternal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className={styles.container}>

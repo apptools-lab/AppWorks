@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input } from '@alifd/next';
-import styles from './index.module.scss';
 import { IDEFProjectField } from '@/types';
+import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
@@ -47,7 +47,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
       <Form.Item
         colSpan={12}
         label="GitLab Token"
-        help={<span className={styles.help}>打开 <a href="http://gitlab.alibaba-inc.com/profile/account" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 复制页面的 <b>Private Token</b></span>}
+        help={<span className={styles.help}>打开 <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 复制页面的 <b>Private Token</b></span>}
         required
         requiredMessage="请输入GitLab Token"
       >
