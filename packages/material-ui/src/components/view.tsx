@@ -34,7 +34,7 @@ export const MaterialView: React.FC<{
       className={styles.wrap}
       activeKey={currentSource}
       onChange={onChangeSource}
-      size="small"
+      size="medium"
       extra={extra}
     >
       {

@@ -105,15 +105,14 @@ const Home = () => {
             2. Select Block：
           </div>
           <div className={styles.select}>
-            <div className={styles.material}>
-              <Material
-                getSources={getSources}
-                getData={getData}
-                onBlockClick={onSelect}
-                selectedBlocks={selectedBlock ? [selectedBlock] : []}
-                dataWhiteList={['blocks']}
-              />
-            </div>
+            <Material
+              disableLazyLoad={true}
+              getSources={getSources}
+              getData={getData}
+              onBlockClick={onSelect}
+              selectedBlocks={selectedBlock ? [selectedBlock] : []}
+              dataWhiteList={['blocks']}
+            />
           </div>
         </div>
       </div>
