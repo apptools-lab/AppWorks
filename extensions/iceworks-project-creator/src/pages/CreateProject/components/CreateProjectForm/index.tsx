@@ -1,15 +1,18 @@
 import * as React from 'react';
-import { Form, Input, Field } from '@alifd/next';
+import { Form, Input } from '@alifd/next';
 import styles from './index.module.scss';
+import { IProjectField } from '@/types';
 
 interface IProjectFormProps {
-  field: any;
+  value: IProjectField;
+  children: any;
+  onChange: (value: { projectName: string, projectPath: string }) => void;
   onOpenFolderDialog: () => void;
 }
 
-const CreateProjectForm: React.FC<IProjectFormProps> = ({ field, onOpenFolderDialog }) => {
+const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDialog, children, onChange }) => {
   return (
-    <Form field={field} className={styles.form} responsive fullWidth labelAlign="top">
+    <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
       <Form.Item
         colSpan={12}
         label="项目名称"
@@ -29,6 +32,12 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ field, onOpenFolderDia
           innerAfter={<img onClick={onOpenFolderDialog} className={styles.folderIcon} src={require('@/assets/folder.svg')} />}
         />
       </Form.Item>
+      {/* <Form.Item colSpan={12} className={styles.action}> */}
+      <div className={styles.action}>
+        {children}
+      </div>
+
+      {/* </Form.Item> */}
     </Form>
   );
 };

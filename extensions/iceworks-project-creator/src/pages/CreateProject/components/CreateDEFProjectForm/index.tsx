@@ -1,14 +1,17 @@
 import React from 'react';
-import { Form, Input, Field } from '@alifd/next';
+import { Form, Input } from '@alifd/next';
 import styles from './index.module.scss';
+import { IDEFProjectField } from '@/types';
 
 interface ICreateDEFProjectFormProps {
-  field: Field;
+  value: IDEFProjectField;
+  onChange: (value: IDEFProjectField) => void;
+  children: any;
 }
 
-const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ field }) => {
+const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, children, onChange }) => {
   return (
-    <Form field={field} className={styles.form} responsive fullWidth labelAlign="top">
+    <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
       <Form.Item
         colSpan={12}
         label="工号"
@@ -50,6 +53,9 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ field }) =
       >
         <Input placeholder="请输入GitLab Token" name="gitlabToken" />
       </Form.Item>
+      <div className={styles.action}>
+        {children}
+      </div>
     </Form>
   );
 }

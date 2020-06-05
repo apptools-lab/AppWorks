@@ -4,7 +4,7 @@ import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
 
-const ScaffoldMarket = ({ onScaffoldSelect }) => {
+const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState<IMaterialSource>({});
   const [materialSelected, setMaterialSelected] = useState(null);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
@@ -53,30 +53,35 @@ const ScaffoldMarket = ({ onScaffoldSelect }) => {
   }, []);
   return (
     <div className={styles.container}>
-      <div className={styles.scaffoldRegistry}>
-        {materialSources && materialSources.map(item => (
-          <SelectCard
-            key={item.name}
-            title={item.name}
-            content={item.description}
-            selected={materialSourceSelected.name === item.name}
-            style={{ width: 180 }}
-            onClick={() => onMaterialSourceClick(item)}
-          />
-        ))}
+      <div className={styles.content}>
+        <div className={styles.scaffoldRegistry}>
+          {materialSources && materialSources.map(item => (
+            <SelectCard
+              key={item.name}
+              title={item.name}
+              content={item.description}
+              selected={materialSourceSelected.name === item.name}
+              style={{ width: 180 }}
+              onClick={() => onMaterialSourceClick(item)}
+            />
+          ))}
+        </div>
+        <div className={styles.materialScaffold}>
+          {scaffoldMaterials && scaffoldMaterials.map(item => (
+            <SelectCard
+              key={item.name}
+              title={item.title}
+              content={item.description}
+              media={<img height={120} src={item.screenshot} />}
+              selected={materialSelected === item.name}
+              style={{ width: 200, height: 280 }}
+              onClick={() => onScaffoldMaterialClick(item)}
+            />
+          ))}
+        </div>
       </div>
-      <div className={styles.materialScaffold}>
-        {scaffoldMaterials && scaffoldMaterials.map(item => (
-          <SelectCard
-            key={item.name}
-            title={item.title}
-            content={item.description}
-            media={<img height={120} src={item.screenshot} />}
-            selected={materialSelected === item.name}
-            style={{ width: 200, height: 280 }}
-            onClick={() => onScaffoldMaterialClick(item)}
-          />
-        ))}
+      <div className={styles.action}>
+        {children}
       </div>
     </div>
   );
