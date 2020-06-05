@@ -108,6 +108,7 @@
     "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^0.2.1",
     "@iceworks/common-service": "^0.1.0",
+    "@iceworks/material-service": "^0.1.0",
     "@iceworks/material-utils": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.0",
