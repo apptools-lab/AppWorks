@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { callService as originCallService } from '@iceworks/vscode-webview/lib/webview';
 
 export default async function callService(service: string, method: string, ...args) {

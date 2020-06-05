@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Form, Input } from '@alifd/next';
-import styles from './index.module.scss';
 import { IProjectField } from '@/types';
+import folderIcon from '@/assets/folder.svg';
+import styles from './index.module.scss';
 
 interface IProjectFormProps {
   value: IProjectField;
   children: React.ReactNode;
-  onChange: (value: { projectName: string, projectPath: string }) => void;
+  onChange: (value: { projectName: string; projectPath: string }) => void;
   onOpenFolderDialog: () => void;
 }
 
@@ -29,7 +30,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
           name="projectPath"
           aria-label="projectPath"
           readOnly
-          innerAfter={<img onClick={onOpenFolderDialog} className={styles.folderIcon} src={require('@/assets/folder.svg')} />}
+          innerAfter={<img onClick={onOpenFolderDialog} className={styles.folderIcon} src={folderIcon} alt="folder" />}
         />
       </Form.Item>
       <div className={styles.action}>
