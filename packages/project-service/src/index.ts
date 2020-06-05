@@ -128,7 +128,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
     'emp_id': empId,
     'client_token': clientToken
   });
-
+  console.log('generatorCreatetaskResponse', response);
   if (response.data.error) {
     throw new Error(response.data.error)
   }
@@ -145,7 +145,8 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
             'client_token': clientToken
           }
         })
-        const { data: { status, task_id: taskId }, error } = response.data;
+        console.log('generatorTaskResultResponse', response);
+        const { data: { status }, error } = response.data;
         if (error) {
           reject(new Error(error))
         }
