@@ -145,17 +145,17 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
             'client_token': clientToken
           }
         })
-        const { data: { status }, error } = response.data;
+        const { data: { status, task_id: taskId }, error } = response.data;
         if (error) {
           reject(new Error(error))
         }
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error('Project Create failed'))
+            reject(new Error(`Project Create failed. task_id: ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error('Project Create timeout'))
+            reject(new Error(`Project Create timeout. task_id: ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()
