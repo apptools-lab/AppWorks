@@ -10,7 +10,8 @@ interface IInitProjectSuccessProps {
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
     callService('project', 'openLocalProjectFolder', projectDir);
-  }, [projectDir]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Box align="center">
       <Icon type="success-filling" size={50} className={styles.succesIcon} />

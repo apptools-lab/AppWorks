@@ -200,7 +200,8 @@ const CreateProject: React.FC = () => {
     }
     const isAliInternal = checkAliInternal();
     setDefaultFields(isAliInternal);
-  }, [curDEFProjectField, curProjectField]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className={styles.container}>
       <Header scaffoldTypeSelected={scaffoldTypeSelected} />
