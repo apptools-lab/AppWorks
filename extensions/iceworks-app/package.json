@@ -150,8 +150,8 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.addDependency",
-        "title": "%iceworksApp.nodeDependencies.addDependency.title%",
+        "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
+        "title": "%iceworksApp.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -179,6 +179,22 @@
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.dependencies.add",
+        "title": "%iceworksApp.nodeDependencies.dependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.devDependencies.add",
+        "title": "%iceworksApp.nodeDependencies.devDependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
         }
       },
       {
@@ -228,7 +244,7 @@
           "group": "navigation@22"
         },
         {
-          "command": "iceworksApp.nodeDependencies.addDependency",
+          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
           "when": "view == nodeDependencies",
           "group": "navigation@11"
         },
@@ -257,6 +273,16 @@
         {
           "command": "iceworksApp.nodeDependencies.upgrade",
           "when": "view == nodeDependencies && viewItem == outdatedDependency",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.dependencies.add",
+          "when": "view == nodeDependencies && viewItem == dependencies",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.devDependencies.add",
+          "when": "view == nodeDependencies && viewItem == devDependencies",
           "group": "inline"
         }
       ]
