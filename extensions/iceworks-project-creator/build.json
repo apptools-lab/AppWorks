@@ -1,8 +1,8 @@
 {
-  "publicPath": "./",
   "devServer": {
     "writeToDisk": true
   },
+  "publicPath": "./",
   "plugins": [
     [
       "build-plugin-fusion",
@@ -11,6 +11,14 @@
           {
             "name": "@alifd/theme-iceworks-dark"
           }
+        ]
+      }
+    ],
+    [
+      "build-plugin-moment-locales",
+      {
+        "locales": [
+          "zh-cn"
         ]
       }
     ],
