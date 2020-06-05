@@ -9,5 +9,8 @@
   "typings": "lib/index.d.ts",
   "dependencies": {
     "package-json": "^6.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

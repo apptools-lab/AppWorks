@@ -14,6 +14,10 @@
   "activationEvents": [
     "onCommand:iceworks-component-builder.generate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ice-lab/iceworks.git"
+  },
   "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
@@ -92,7 +96,7 @@
   "scripts": {
     "start": "icejs start --disable-reload",
     "build": "icejs build",
-    "vscode:prepublish": "rm -rf build && npm run compile && npm run build",
+    "vscode:prepublish": "rm -rf build && npm run build && npm run compile",
     "compile": "tsc -p tsconfig.extension.json",
     "watch": "tsc -watch -p tsconfig.extension.json",
     "lit": "eslint --no-eslintrc --cache --ext .js,.jsx ./",
@@ -115,7 +119,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@alifd/next": "^1.19.4",
+    "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^0.2.1",
     "@iceworks/common-service": "^0.1.0",
     "@iceworks/block-service": "^0.1.0",

@@ -10,9 +10,12 @@
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^1.4.1"
+    "ice-npm-utils": "^1.4.2"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -22,3 +22,5 @@ extensions/*/out
 
 **/package-lock.json
 **/build
+
+*.vsix
