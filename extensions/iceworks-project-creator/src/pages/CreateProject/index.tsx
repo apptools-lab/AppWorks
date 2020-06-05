@@ -117,7 +117,6 @@ const CreateProject: React.FC = () => {
         await createProject(values!)
       } else {
         setCurProjectField(values);
-        console.log('curDEFProjectField', curDEFProjectField)
         setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName })
       }
       setCreateProjectLoading(false);
