@@ -9,6 +9,7 @@
   "typings": "lib/index.d.ts",
   "dependencies": {
     "@iceworks/material-utils": "^0.1.0",
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
     "fs-extra": "^8.1.0",
     "uppercamelcase": "^3.0.0",

@@ -19,8 +19,8 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
   vscode.workspace.getConfiguration('iceworks').update(section, data, configurationTarget);
 }
 
-export function getDataFromSettingJson(section: string): string {
-  return vscode.workspace.getConfiguration('iceworks').get(section);
+export function getDataFromSettingJson(section: string, defaultValue?: any): string {
+  return vscode.workspace.getConfiguration('iceworks').get(section, defaultValue);
 }
 
 export function executeCommand(...arg: any[]) {
@@ -71,4 +71,13 @@ export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string
 export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties['iceworks.npmRegistry'].enum;
+}
+
+export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
+  const packageManager = getDataFromSettingJson('packageManager', 'npm');
+  let registry = '';
+  if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
+    registry = `--registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
+  }
+  return `${packageManager} ${action} ${target} ${registry} ${extra}`;
 }
