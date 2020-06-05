@@ -15,9 +15,9 @@ export function activate(context: vscode.ExtensionContext) {
 	if (!rootPath) {
 		vscode.window.showInformationMessage('The root path is empty. Please open a project or create a project.');
 		return;
-  }
+	}
 
-  autoSetNpmConfiguration(context.globalState);
+	autoSetNpmConfiguration(context.globalState);
 
 	const terminals: ITerminalMap = new Map<string, Terminal>();
 
@@ -45,12 +45,16 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
 	vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
 	vscode.commands.registerCommand('iceworksApp.nodeDependencies.install', () => {
-		const script = nodeDependenciesProvider.getInstallScript();
-		executeCommand(terminals, script!);
+		if (nodeDependenciesProvider.packageJsonExists()) {
+			const script = nodeDependenciesProvider.getInstallScript();
+			executeCommand(terminals, script!);
+		}
 	});
 	vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
-		const script = await nodeDependenciesProvider.getReinstallScript();
-		executeCommand(terminals, script!);
+		if (nodeDependenciesProvider.packageJsonExists()) {
+			const script = await nodeDependenciesProvider.getReinstallScript();
+			executeCommand(terminals, script!);
+		}
 	});
 
 	const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');

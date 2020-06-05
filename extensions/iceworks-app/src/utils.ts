@@ -53,8 +53,3 @@ export function openEntryFile(p: string) {
     vscode.window.showErrorMessage('Entry file not found.');
   }
 }
-
-
-
-
-
