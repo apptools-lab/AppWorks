@@ -3,7 +3,7 @@ import { Form, Input, Field } from '@alifd/next';
 import styles from './index.module.scss';
 
 interface IProjectFormProps {
-  field: Field;
+  field: any;
   onOpenFolderDialog: () => void;
 }
 

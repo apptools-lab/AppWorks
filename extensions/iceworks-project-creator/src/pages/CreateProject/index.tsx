@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Field, Step, Button, Notification } from '@alifd/next';
-import { IMaterialScaffold } from '@/iceworks/material-utils';
 import callService from '@/callService';
+import { IProjectField, IDEFProjectField, ISettingJsonData } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -10,11 +10,11 @@ import Header from './components/Header';
 import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
-
-interface IProjectField {
-  projectName: string;
-  projectPath: string;
-  scaffold: IMaterialScaffold;
+const defaultSettingJsonData = {
+  projectPath: '',
+  empId: '',
+  account: '',
+  gitlabToken: ''
 }
 const CreateProject: React.FC = () => {
   const projectField = Field.useField();
@@ -22,11 +22,12 @@ const CreateProject: React.FC = () => {
 
   const [scaffoldTypeSelected, setScaffoldTypeSelected] = useState('');
   const [currentStep, setStep] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
+  const [createProjectLoading, setCreateProjectLoading] = useState(false);
+  const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
-  const [currentProjectField, setCurrentProjectField] = useState({});
-
+  const [currentProjectField, setCurrentProjectField] = useState<IProjectField>();
+  const [settingJsonData, setSettingJsonData] = useState<ISettingJsonData>(defaultSettingJsonData)
   const steps = [
     {
       title: '选择模板',
@@ -56,7 +57,7 @@ const CreateProject: React.FC = () => {
 
   async function onScaffoldSubmit() {
     if (!projectField.getValue('scaffold')) {
-      Notification.error({ title: 'Error', content: '请选择一个模板！' });
+      Notification.error({ content: '请选择一个模板！' });
       return;
     }
     setScaffoldTypeSelected(projectField.getValue('scaffoldType'))
@@ -72,52 +73,71 @@ const CreateProject: React.FC = () => {
   }
 
   async function onProjectDetailSubmit() {
-    setLoading(true);
+    setCreateProjectLoading(true);
     const { errors } = await projectField.validatePromise();
     if (errors) {
-      setLoading(false);
+      setCreateProjectLoading(false);
       return;
     }
     const values: IProjectField = projectField.getValues();
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
-
       if (isPathExists) {
         throw new Error('该路径已存在，请重新选择！')
       }
       if (!isAliInternal) {
-        const projectDir = await callService('project', 'createProject', values);
-        setProjectDir(projectDir);
+        await createProject(currentProjectField!)
       } else {
         setCurrentProjectField(values);
+        DEFProjectField.setValue('project', values.projectName)
       }
-      setLoading(false);
+      setCreateProjectLoading(false);
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: e.message });
-      setLoading(false);
+      Notification.error({ content: e.message });
+      setCreateProjectLoading(false);
     }
   };
 
+  async function skipCreateDEFProject() {
+    setCreateProjectLoading(true);
+    try {
+      await createProject(currentProjectField!)
+      setCreateProjectLoading(false);
+      goNext();
+    } catch (e) {
+      Notification.error({ content: e.message });
+      setCreateProjectLoading(false);
+    }
+  }
+
+  async function createProject(data: IProjectField) {
+    const projectDir = await callService('project', 'createProject', data);
+    setProjectDir(projectDir);
+    const { projectPath } = data;
+    await callService('common', 'saveDataToSettingJson', 'user', { ...settingJsonData, projectPath })
+  }
+
   async function onDEFProjectDetailSubmit() {
-    setLoading(true);
+    setCreateDEFProjectLoading(true);
     const { errors } = await DEFProjectField.validatePromise();
     if (errors) {
-      setLoading(false);
+      setCreateDEFProjectLoading(false);
       return;
     }
-    const values: any = DEFProjectField.getValues();
+    const { projectPath } = currentProjectField as IProjectField;
+    const values: IDEFProjectField = DEFProjectField.getValues();
     const { empId, account, gitlabToken } = values;
     try {
       const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN });
-      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken })
+      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken, projectPath })
       setProjectDir(projectDir);
-      setLoading(false);
+      setCreateDEFProjectLoading(false);
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: e.message });
-      setLoading(false);
+      Notification.error({ content: e.message });
+      setCreateDEFProjectLoading(false);
     }
   }
 
@@ -126,7 +146,7 @@ const CreateProject: React.FC = () => {
   };
 
   function goPrev() {
-    if (currentStep - 1 == 0) {
+    if (currentStep === 1) {
       setScaffoldTypeSelected('')
     }
     setStep(currentStep - 1);
@@ -139,23 +159,24 @@ const CreateProject: React.FC = () => {
       break;
     case 1:
       actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>上一步</Button>
+        <Button onClick={goPrev} className={styles.btn}>上一步</Button>
         <Form.Submit
           type="primary"
           onClick={onProjectDetailSubmit}
           validate
-          loading={loading}
+          loading={createProjectLoading}
         >下一步</Form.Submit>
       </>;
       break;
     case 2:
       actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>上一步</Button>
+        <Button onClick={goPrev} className={styles.btn}>上一步</Button>
+        <Button onClick={skipCreateDEFProject} className={styles.btn} loading={createProjectLoading}>跳过创建DEF项目</Button>
         <Form.Submit
           type="primary"
           onClick={onDEFProjectDetailSubmit}
           validate
-          loading={loading}
+          loading={createDEFProjectLoading}
         >下一步</Form.Submit>
       </>;
       break;
@@ -167,16 +188,25 @@ const CreateProject: React.FC = () => {
       try {
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         setIsAliInternal(isAliInternal);
-        if (isAliInternal) {
-          const data = await callService('common', 'getDataFromSettingJson', 'user') || {};
-          DEFProjectField.setValues(data)
-        }
-      } catch (error) {
+      } catch (e) {
+        Notification.error({ content: e.message })
       }
     }
-
     checkAliInternal();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    async function setDefaultFields() {
+      const data = await callService('common', 'getDataFromSettingJson', 'user') || {};
+      const { empId, account, projectPath, gitlabToken } = data;
+      projectField.setValues({ projectPath })
+      setSettingJsonData(data)
+      if (isAliInternal) {
+        DEFProjectField.setValues({ empId, account, gitlabToken })
+      }
+    }
+    setDefaultFields()
+  }, [currentStep])
   return (
     <div className={styles.container}>
       <Header scaffoldTypeSelected={scaffoldTypeSelected} />

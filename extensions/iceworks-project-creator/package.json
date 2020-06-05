@@ -46,11 +46,16 @@
         "iceworks.user": {
           "type": "object",
           "default": {
+            "projectPath": "",
             "empId": "",
             "account": "",
             "gitlabToken": ""
           },
           "properties": {
+            "projectPath": {
+              "type": "string",
+              "description": "默认项目路径"
+            },
             "empId": {
               "type": "string",
               "description": "工号"
@@ -61,7 +66,7 @@
             },
             "gitlabToken": {
               "type": "string",
-              "description": "gitlab 个人 token"
+              "description": "gitlab 私人 token"
             }
           },
           "description": "iceworks user detail"
