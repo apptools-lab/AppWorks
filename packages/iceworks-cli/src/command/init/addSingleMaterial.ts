@@ -1,7 +1,7 @@
 /**
  * material add [block|component|scaffold]:
  *  1. get options by materialType
- *  2. 仅 component: add rax options & adaptor
+ *  2. 仅 component: adaptor
  *  3. copy and ejsRender，文件名称转换：
  *    - _package.json -> package.json
  *    - xxx.js.ejs -> xxx.js
@@ -10,7 +10,7 @@
  *
  * init component:
  *  1. get options by materialType
- *  2. add rax options & adaptor
+ *  2. adaptor
  *  3. copy and ejsRender，文件名称转换
  *
  */
@@ -62,17 +62,6 @@ export default async function({
   options.kebabCaseName = decamelize(options.name, '-');
   // @ali/test-component
   options.npmName = generateNpmName(options.name, npmScope);
-
-  if (materialType === 'component' || materialType === 'scaffold') {
-    options = Object.assign({}, options, {
-      // 补全 rax 组件的几个字段
-      projectName: options.npmName,
-      projectAuthor: 'rax',
-      projectTargets: ['web'],
-      projectFeatures: [],
-      scaffoldType: 'lite',
-    });
-  }
 
   log.verbose('addSingleMaterial options', options);
 
