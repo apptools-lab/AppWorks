@@ -30,7 +30,7 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
       try {
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = `Failed to get tarball URL of ${blockSourceNpm}, you can copy ${block.repository}`;
+        error.message = `从 ${blockSourceNpm} 获取压缩包链接失败，您可以尝试手动克隆 ${block.repository} 仓库`;
         throw error;
       }
 
@@ -40,9 +40,9 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
       try {
         await getAndExtractTarball(blockTempDir, tarballURL);
       } catch (error) {
-        error.message = `Error decompressing block: ${blockName}, tarballURL is: ${tarballURL}`;
+        error.message = `解压 ${blockName} 失败，压缩包链接地址是：${tarballURL}`;
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = `Decompress ${blockName} timed out, tarballURL is: ${tarballURL}`;
+          error.message = `解压 ${blockName} 超时，压缩包链接地址是：${tarballURL}`;
         }
         await fsExtra.remove(blockTempDir);
         throw error;
