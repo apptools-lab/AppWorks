@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists } from '@iceworks/common-service';
@@ -22,15 +23,40 @@ interface IDEFProjectField {
   projectName: string;
 }
 
+export async function getProjectLanguageType() {
+  const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
+
+  const framework = await getProjectFramework();
+  let isTypescript = false;
+  if (framework === 'icejs') {
+    // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+    const hasAppJs = fsExtra.existsSync(path.join(projectPath, 'src/app.js')) || fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
+    isTypescript = hasTsconfig && !hasAppJs;
+  } else {
+    isTypescript = hasTsconfig;
+  }
+
+  return isTypescript ? 'ts' : 'js';
+}
+
 export async function getProjectType() {
-  const { dependencies } = await readPackageJSON(projectPath);
-  if (dependencies) {
-    if (dependencies.rax) {
-      return 'rax';
-    }
-    if (dependencies.react) {
-      return 'react';
-    }
+  const { dependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies.rax) {
+    return 'rax';
+  }
+  if (dependencies.react) {
+    return 'react';
+  }
+  return 'unknown';
+}
+
+export async function getProjectFramework() {
+  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies['rax-app']) {
+    return 'rax-app';
+  }
+  if (devDependencies['ice.js'] || dependencies['ice.js']) {
+    return 'icejs';
   }
   return 'unknown';
 }

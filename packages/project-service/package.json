@@ -12,6 +12,7 @@
     "@iceworks/generate-project": "^1.0.6",
     "@iceworks/material-utils": "^0.1.0",
     "axios": "^0.19.2",
+    "fs-extra": "^9.0.0",
     "ice-npm-utils": "^1.4.2",
     "simple-git": "^2.5.0"
   },

@@ -11,7 +11,10 @@
     "@iceworks/common-service": "^0.1.0",
     "@iceworks/material-utils": "^0.1.0",
     "@iceworks/project-service": "^0.1.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
+    "fs-readdir-recursive": "^1.1.0",
+    "glob": "^7.1.4",
+    "sylvanas": "^0.4.3",
     "ice-npm-utils": "^1.4.2",
     "uppercamelcase": "^3.0.0"
   },
