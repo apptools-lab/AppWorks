@@ -75,7 +75,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
               content={item.description}
               media={<img height={120} src={item.screenshot} alt="screenshot" />}
               selected={materialSelected === item.name}
-              style={{ width: 200, height: 280 }}
+              style={{ width: 180, height: 250 }}
               onClick={() => onScaffoldMaterialClick(item)}
             />
           ))}

@@ -43,19 +43,19 @@
           ],
           "description": "iceworks materialSources"
         },
+        "iceworks.workspace": {
+          "type": "string",
+          "default": "",
+          "description": "iceworks workspace"
+        },
         "iceworks.user": {
           "type": "object",
           "default": {
-            "projectPath": "",
             "empId": "",
             "account": "",
             "gitlabToken": ""
           },
           "properties": {
-            "projectPath": {
-              "type": "string",
-              "description": "默认项目路径"
-            },
             "empId": {
               "type": "string",
               "description": "工号"
@@ -106,7 +106,7 @@
   },
   "dependencies": {
     "@alifd/next": "~1.19.2",
-    "@alifd/theme-iceworks-dark": "^0.2.1",
+    "@alifd/theme-iceworks-dark": "^1.1.0",
     "@iceworks/common-service": "^0.1.0",
     "@iceworks/material-service": "^0.1.0",
     "@iceworks/material-utils": "^0.1.0",

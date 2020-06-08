@@ -14,10 +14,3 @@ export interface IDEFProjectField {
   project: string;
   gitlabToken: string;
 }
-
-export interface ISettingJsonData {
-  empId: string;
-  projectPath: string;
-  account: string;
-  gitlabToken: string;
-}

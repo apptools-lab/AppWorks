@@ -32,12 +32,6 @@
                   color: $color-text1-4 !important;
                 }
               }
-              .next-tabs-tab.active {
-                color: $color-text1-4 !important;
-                &:before {
-                  border-bottom-color: $color-text1-4 !important;
-                }
-              }
             }
 
             a[rel="noopener noreferrer"] {
