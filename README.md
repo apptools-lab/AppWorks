@@ -41,8 +41,6 @@ Use CLI to develop custom material collections.
 
 See [《物料开发》](https://ice.work/docs/materials/about) for more details.
 
-ate).
-
 ## Contributors
 
 Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on icestore.
