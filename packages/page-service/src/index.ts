@@ -23,7 +23,7 @@ export const generate = async function({ pageName: name, blocks }: { pageName: s
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(`${name} page already exists, cannot overwrite.`);
+    throw new Error(`页面文件夹「${name}」已存在，无法覆盖，请输入新的页面名称。`);
   }
 
   try {

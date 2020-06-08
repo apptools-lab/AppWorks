@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
   autoSetNpmConfiguration(context.globalState);
 
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Generate Component', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '生成组件', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

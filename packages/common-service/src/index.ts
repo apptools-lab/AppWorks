@@ -41,7 +41,7 @@ export async function setPackageManager(packageManagers: string[]): Promise<void
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
       saveDataToSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER, selection[0].label);
-      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
+      vscode.window.showInformationMessage(`设置 ${selection[0].label} 客户端成功！`);
       quickPick.hide();
     }
   });
@@ -52,7 +52,7 @@ export async function setPackageManager(packageManagers: string[]): Promise<void
 export async function setNpmRegistry(npmRegistrys: string[]): Promise<void> {
   const quickPick = vscode.window.createQuickPick();
 
-  const addOtherRegistryLabel = 'Add Other Registry...';
+  const addOtherRegistryLabel = '添加其他源...';
   quickPick.items = [...npmRegistrys, addOtherRegistryLabel].map(label => ({ label }));
   quickPick.onDidChangeSelection(async selection => {
     if (selection[0]) {
@@ -60,7 +60,7 @@ export async function setNpmRegistry(npmRegistrys: string[]): Promise<void> {
         vscode.commands.executeCommand('workbench.action.openSettings', CONFIGURATION_SECTION_NPM_REGISTRY);
       } else {
         saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, selection[0].label);
-        vscode.window.showInformationMessage(`Setting ${selection[0].label} Registry successfully!`);
+        vscode.window.showInformationMessage(`设置 ${selection[0].label} 源成功！`);
       }
 
       quickPick.hide();

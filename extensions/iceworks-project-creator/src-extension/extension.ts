@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Create Project', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建项目', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

@@ -68,9 +68,9 @@ const Index : React.FC<{
         extra={
           <div className="extra-wrap">
             {onSettingsClick &&
-              <Icon type="set" size="small" title="Setings Material Sources" onClick={onSettingsClick} />
+              <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />
             }
-            <Icon type="refresh" size="small" title="refresh Material Sources" onClick={refreshSources} style={{marginLeft: 6}} />
+            <Icon type="refresh" size="small" title="获取最新物料源信息" onClick={refreshSources} style={{marginLeft: 6}} />
           </div>
         }
         {...others}
