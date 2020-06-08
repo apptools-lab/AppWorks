@@ -9,7 +9,7 @@
 
 <h1 align="center">iceworks</h1>
 
-<p align="center">终端研发套件</p>
+<p align="center">多端研发套件</p>
 
 <p align="center">
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
