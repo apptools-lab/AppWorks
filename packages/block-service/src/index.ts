@@ -1,10 +1,24 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
+import * as glob from 'glob';
+import * as readFiles from 'fs-readdir-recursive';
+import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
-import { projectPath } from '@iceworks/project-service';
+import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
+import { createNpmCommand } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+
+function getBlockType(blockSourceSrcPath) {
+  const files = readFiles(blockSourceSrcPath);
+
+  const index = files.findIndex(item => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+}
 
 /**
  * Generate block code
@@ -29,7 +43,7 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
       try {
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = `Failed to get tarball URL of ${blockSourceNpm}, you can copy ${block.repository}`;
+        error.message = `从 ${blockSourceNpm} 获取压缩包链接失败，您可以尝试手动克隆 ${block.repository} 仓库`;
         throw error;
       }
 
@@ -39,15 +53,36 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
       try {
         await getAndExtractTarball(blockTempDir, tarballURL);
       } catch (error) {
-        error.message = `Error decompressing block: ${blockName}, tarballURL is: ${tarballURL}`;
+        error.message = `解压 ${blockName} 失败，压缩包链接地址是：${tarballURL}`;
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = `Decompress ${blockName} timed out, tarballURL is: ${tarballURL}`;
+          error.message = `解压 ${blockName} 超时，压缩包链接地址是：${tarballURL}`;
         }
         await fsExtra.remove(blockTempDir);
         throw error;
       }
 
-      await fsExtra.move(path.join(blockTempDir, 'src'), blockDir);
+      const blockSourceSrcPath = path.join(blockTempDir, 'src');
+      const blockType = getBlockType(blockSourceSrcPath);
+      const projectType = await getProjectLanguageType();
+
+      console.log('blockType: ', blockType, 'projectType: ', projectType);
+
+      // transfrom ts to js
+      if (blockType === 'ts' && projectType === 'js') {
+        const files = glob.sync('**/*.@(ts|tsx)', {
+          cwd: blockSourceSrcPath,
+        });
+
+        console.log('transfrom ts to js', files.join(','));
+
+        transfromTsToJs(files, {
+          cwd: blockSourceSrcPath,
+          outDir: blockSourceSrcPath,
+          action: 'overwrite',
+        });
+      }
+
+      await fsExtra.move(blockSourceSrcPath, blockDir);
       await fsExtra.remove(blockTempDir);
       return blockDir;
     }),
@@ -80,7 +115,6 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
       return `${packageName}@${version}`;
     });
-    const npmClient = vscode.workspace.getConfiguration('iceworks').get('packageManager') || 'npm';
 
     let terminal: vscode.Terminal;
     if (activeTerminal) {
@@ -91,7 +125,7 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
 
     terminal.show();
     terminal.sendText(`cd ${projectPath}`, true);
-    terminal.sendText(`${npmClient} install ${deps.join(' ')} --save`, true);
+    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
   } else {
     return [];
   }

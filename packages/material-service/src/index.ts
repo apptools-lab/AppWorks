@@ -26,7 +26,7 @@ export const getSourcesByProjectType = async function() {
  * @param specifiedType {string} react/rax/other...
  */
 export const getSources = function(specifiedType?: string): IMaterialSource[] {
-  const sources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources') || [];
+  const sources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 

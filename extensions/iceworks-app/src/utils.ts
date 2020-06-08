@@ -54,34 +54,3 @@ export function openEntryFile(p: string) {
     vscode.window.showErrorMessage('Entry file not found.');
   }
 }
-
-export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
-  const packageManager = getCurrentPackageManager();
-  let register = '';
-  if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    register = `--register=${getCurrentNpmRegister()}`;
-  }
-  return `${packageManager} ${action} ${target} ${register} ${extra}`;
-}
-
-export function getCurrentPackageManager() {
-  const packageManagers = getPackageManagers();
-  return vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-}
-
-export function getCurrentNpmRegister(): string {
-  const npmRegisters = getNpmRegisters();
-  return vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
-}
-
-export function getPackageManagers() {
-  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
-  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties['iceworks.packageManager'].enum;
-}
-
-export function getNpmRegisters() {
-  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
-  const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties['iceworks.npmRegister'].enum;
-}

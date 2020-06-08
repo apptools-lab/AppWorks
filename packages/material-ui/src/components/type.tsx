@@ -67,79 +67,81 @@ const Content: React.FC<ContentProps> = ({
       <div className={styles.search}>
         <Search
           shape="simple"
-          placeholder="Enter keywords to find materials"
+          placeholder="输入关键字查找物料"
           onSearch={handeSearchSubmit}
         />
       </div>
       <div className={styles.content} id={scrollId}>
-        {
-          data.map(({ name, list }, cIndex) => {
-            return (
-              <div key={`${name}_${cIndex}`} className={styles.category}>
-                { name !== CUSTOM_CATEGORY ? <div className={styles.name}>
-                  {name}
-                </div> : null }
-                <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>
-                  {
-                    list.map((item, index) => {
-                      const { source } = item;
-                      let $ele;
-                      if (typeId === 'scaffolds') {
-                        // @ts-ignore
-                        $ele = (<MaterialScaffold dataSource={item} onDownload={onScaffoldClick} />);
-                      } else if (typeId === 'blocks') {
-                        const $block = <MaterialBlock
+        <div className={styles.scroll}>
+          {
+            data.map(({ name, list }, cIndex) => {
+              return (
+                <div key={`${name}_${cIndex}`} className={styles.category}>
+                  { name !== CUSTOM_CATEGORY ? <div className={styles.name}>
+                    {name}
+                  </div> : null }
+                  <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>
+                    {
+                      list.map((item, index) => {
+                        const { source } = item;
+                        let $ele;
+                        if (typeId === 'scaffolds') {
                           // @ts-ignore
-                          dataSource={item}
-                          selected={
-                            selectedBlocks ?
-                              !!selectedBlocks.find((selectedBlock) => selectedBlock.name === item.name) :
-                              false
+                          $ele = (<MaterialScaffold dataSource={item} onDownload={onScaffoldClick} />);
+                        } else if (typeId === 'blocks') {
+                          const $block = <MaterialBlock
+                            // @ts-ignore
+                            dataSource={item}
+                            selected={
+                              selectedBlocks ?
+                                !!selectedBlocks.find((selectedBlock) => selectedBlock.name === item.name) :
+                                false
+                            }
+                            onClick={onBlockClick}
+                          />;
+                          if (cIndex === 0 && index > 3 && scrollId) {
+                            $ele = (<LazyLoad scrollContainer={`#${scrollId}`} height={240}>
+                              {$block}
+                            </LazyLoad>);
+                          } else {
+                            $ele = $block;
                           }
-                          onClick={onBlockClick}
-                        />;
-                        if (cIndex === 0 && index > 3 && scrollId) {
-                          $ele = (<LazyLoad scrollContainer={`#${scrollId}`} height={240}>
-                            {$block}
-                          </LazyLoad>);
-                        } else {
-                          $ele = $block;
+                        } else if (typeId === 'components') {
+                          $ele = (<MaterialComponent
+                            // @ts-ignore
+                            dataSource={item}
+                            selected={
+                              selectedComponents ?
+                                !!selectedComponents.find((selectedComponent) => selectedComponent.name === item.name) :
+                                false
+                            }
+                            onClick={onComponentClick}
+                          />);
+                        } else if (typeId === 'bases') {
+                          $ele = (<MaterialBase
+                            // @ts-ignore
+                            dataSource={item}
+                            selected={
+                              selectedBases ?
+                                !!selectedBases.find((selectedBase) => selectedBase.name === item.name) :
+                                false
+                            }
+                            onClick={onBaseClick}
+                          />);
                         }
-                      } else if (typeId === 'components') {
-                        $ele = (<MaterialComponent
-                          // @ts-ignore
-                          dataSource={item}
-                          selected={
-                            selectedComponents ?
-                              !!selectedComponents.find((selectedComponent) => selectedComponent.name === item.name) :
-                              false
-                          }
-                          onClick={onComponentClick}
-                        />);
-                      } else if (typeId === 'bases') {
-                        $ele = (<MaterialBase
-                          // @ts-ignore
-                          dataSource={item}
-                          selected={
-                            selectedBases ?
-                              !!selectedBases.find((selectedBase) => selectedBase.name === item.name) :
-                              false
-                          }
-                          onClick={onBaseClick}
-                        />);
-                      }
-                      return (
-                        <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
-                          {$ele}
-                        </Cell>
-                      );
-                    })
-                  }
-                </ResponsiveGrid>
-              </div>
-            );
-          })
-        }
+                        return (
+                          <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
+                            {$ele}
+                          </Cell>
+                        );
+                      })
+                    }
+                  </ResponsiveGrid>
+                </div>
+              );
+            })
+          }
+        </div>
         {
           !categoryData.length ? <div className={styles.empty}>
             Empty

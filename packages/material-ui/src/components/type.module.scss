@@ -21,6 +21,8 @@
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 
   .search {
@@ -33,24 +35,31 @@
   .content {
     margin: 0 12px;
     margin-top: 18px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-    padding-bottom: 124px; // hack 将两个 tab 和搜索框的高度补回来
+    border: 1px solid $color-line1-3;
+    border-radius: 2px;
+    padding: 6px;
+    flex: 1;
+    overflow: hidden;
 
-    // IDE 里面有默认样式，这里重写
-    &::-webkit-scrollbar {
-      width: 3px;
-      display: block;
-    }
+    .scroll {
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
 
-    .category {
-      .name {
-        margin-bottom: 18px;
+      // IDE 里面有默认样式，这里重写
+      &::-webkit-scrollbar {
+        width: 3px;
+        display: block;
       }
 
-      .list {
-        padding: 0 12px;
+      .category {
+        .name {
+          margin-bottom: 18px;
+        }
+
+        .list {
+          padding: 0 12px;
+        }
       }
     }
 

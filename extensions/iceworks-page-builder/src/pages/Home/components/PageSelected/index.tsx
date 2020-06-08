@@ -32,26 +32,30 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
   return (
     <div className={styles.pageSelected}>
       {blocks.length ? (
-        blocks.map((block, index) => {
-          return (
-            <SelectedBlock
-              {...block}
-              key={block.name}
-              index={index}
-              targetIndex={index}
-              onNameChange={onNameChange}
-              onDelete={onDelete}
-              isSorting={isSorting}
-            />
-          );
-        })
+        <div className={styles.list}>
+          {
+            blocks.map((block, index) => {
+              return (
+                <SelectedBlock
+                  {...block}
+                  key={block.name}
+                  index={index}
+                  targetIndex={index}
+                  onNameChange={onNameChange}
+                  onDelete={onDelete}
+                  isSorting={isSorting}
+                />
+              );
+            })
+          }
+        </div>
       ) : (
         <div className={styles.empty}>
           <img
             src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png"
             alt="Block"
           />
-            Please select blocks from the right slide
+            请从右侧选择区块。
         </div>
       )}
     </div>

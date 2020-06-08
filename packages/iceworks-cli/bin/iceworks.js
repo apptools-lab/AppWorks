@@ -4,8 +4,8 @@ const program = require('commander');
 const semver = require('semver');
 const fse = require('fs-extra');
 const packageConfig = require('../package');
-const checkVersion = require('../lib/utils/checkVersion');
-const log = require('../lib/utils/log');
+const checkVersion = require('../lib/utils/checkVersion').default;
+const log = require('../lib/utils/log').default;
 const { TEMP_PATH } = require('../lib/utils/constants');
 
 program.version(packageConfig.version).usage('<command> [options]');
@@ -29,7 +29,7 @@ program
   .action(async (version, cmd) => {
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/start')();
+      await require('../lib/command/start').default();
     }  catch (err) {
       log.error('iceworks start error', err.message);
       console.error(err.stack);
@@ -60,7 +60,7 @@ program
 
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/init')(options);
+      await require('../lib/command/init').default(options);
     }  catch (err) {
       await fse.remove(TEMP_PATH);
       log.error('iceworks init error', err.message);
@@ -97,7 +97,7 @@ program
 
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/add')(options);
+      await require('../lib/command/add').default(options);
     }  catch (err) {
       await fse.remove(TEMP_PATH);
       log.error('iceworks add error', err.message);
@@ -117,7 +117,7 @@ program
   .action(async () => {
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/generate')();
+      await require('../lib/command/generate').default();
     }  catch (err) {
       log.error('iceworks generate error', err.message);
       console.error(err.stack);
@@ -142,7 +142,7 @@ program
     const options = cleanArgs(cmd);
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/sync')(options);
+      await require('../lib/command/sync').default(options);
     }  catch (err) {
       log.error('iceworks sync error', err.message);
       console.error(err.stack);
@@ -165,7 +165,7 @@ program
     options.version = version;
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/start')(options);
+      await require('../lib/command/start').default(options);
     }  catch (err) {
       log.error('iceworks start error', err.message);
       console.error(err.stack);
@@ -192,7 +192,7 @@ program
     options.value = value;
     try {
       // eslint-disable-next-line global-require
-      await require('../lib/command/config')(options);
+      await require('../lib/command/config').default(options);
     }  catch (err) {
       log.error('iceworks config error', err.message);
       console.error(err.stack);

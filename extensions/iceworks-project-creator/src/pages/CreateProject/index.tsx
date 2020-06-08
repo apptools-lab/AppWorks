@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Field, Step, Button, Notification } from '@alifd/next';
-import { IMaterialScaffold } from '@/iceworks/material-utils';
+import { Card, Form, Step, Button, Notification } from '@alifd/next';
 import callService from '@/callService';
+import { IProjectField, IDEFProjectField } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -11,119 +11,171 @@ import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 
-interface IProjectField {
-  projectName: string;
-  projectPath: string;
-  scaffold: IMaterialScaffold;
-}
 const CreateProject: React.FC = () => {
-  const projectField = Field.useField();
-  const DEFProjectField = Field.useField();
-
   const [scaffoldTypeSelected, setScaffoldTypeSelected] = useState('');
   const [currentStep, setStep] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
+  const [createProjectLoading, setCreateProjectLoading] = useState(false);
+  const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
   const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
-  const [currentProjectField, setCurrentProjectField] = useState({});
-
+  const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
+  const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
+  const [createProjectBtnDisabled, setCreateProjectBtnDisabled] = useState(false);
+  const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
   const steps = [
     {
-      title: 'Select a Scaffold',
-      content: <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} />
+      title: '选择模板',
+      content: (
+        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect}>
+          <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
+        </ScaffoldMarket>
+      )
     },
     {
-      title: 'Input Project Information',
-      content: <CreateProjectForm field={projectField} onOpenFolderDialog={onOpenFolderDialog} />
+      title: '填写信息',
+      content: (
+        <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange}>
+          <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+          <Form.Submit
+            type="primary"
+            onClick={onProjectDetailSubmit}
+            validate
+            loading={createProjectLoading}
+            disabled={createProjectBtnDisabled}
+          >下一步</Form.Submit>
+        </CreateProjectForm>
+      )
     },
     {
-      title: 'Init Project Successfully',
+      title: '初始化项目成功',
       content: <InitProjectSuccess projectDir={projectDir} />
     }
   ];
 
   if (isAliInternal) {
     steps.splice(2, 0, {
-      title: 'Create DEF Project',
-      content: <CreateDEFProjectForm field={DEFProjectField} />
+      title: '创建DEF项目',
+      content: (
+        <CreateDEFProjectForm value={curDEFProjectField} onChange={onDEFProjectFormChange}>
+          <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+          <Form.Submit
+            type="primary"
+            onClick={onDEFProjectDetailSubmit}
+            validate
+            loading={createDEFProjectLoading}
+            disabled={createDEFProjectDisabled}
+            className={styles.btn}
+          >下一步</Form.Submit>
+          <Button onClick={skipCreateDEFProject} loading={createProjectLoading} disabled={createProjectBtnDisabled}>跳过创建DEF项目</Button>
+        </CreateDEFProjectForm>
+      )
     })
   }
 
+  function onProjectFormChange(value) {
+    setCurProjectField({ ...curProjectField, ...value })
+  }
+  function onDEFProjectFormChange(value) {
+    setCurDEFProjectField({ ...curDEFProjectField, ...value })
+  }
+
   function onScaffoldSelect(scaffoldType, scaffold) {
-    projectField.setValue('scaffold', scaffold);
-    projectField.setValue('scaffoldType', scaffoldType);
+    setCurProjectField({ ...curProjectField, scaffold, scaffoldType })
   };
 
   async function onScaffoldSubmit() {
-    if (!projectField.getValue('scaffold')) {
-      Notification.error({ title: 'Error', content: 'Please select a scaffold.' });
+    if (!curProjectField.scaffold) {
+      Notification.error({ content: '请选择一个模板！' });
       return;
     }
-    setScaffoldTypeSelected(projectField.getValue('scaffoldType'))
+    setScaffoldTypeSelected(curProjectField.scaffoldType)
     goNext();
   }
 
   async function onOpenFolderDialog() {
     try {
-      const data = await callService('project', 'getProjectPath');
-      projectField.setValue('projectPath', data);
+      const projectPath = await callService('project', 'getProjectPath');
+      setCurProjectField({ ...curProjectField, projectPath })
     } catch (e) {
       // ignore
     };
   }
 
-  async function onProjectDetailSubmit() {
-    setLoading(true);
-    const { errors } = await projectField.validatePromise();
+  async function onProjectDetailSubmit(values: any, errors: any) {
     if (errors) {
-      setLoading(false);
+      setCreateProjectLoading(false);
       return;
     }
-    const values: IProjectField = projectField.getValues();
+    setCreateProjectLoading(true);
+    setPrevBtnDisabled(true);
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
-
       if (isPathExists) {
-        throw new Error('The path exists. Please input a new path.')
+        throw new Error('该路径已存在，请重新选择！')
       }
       if (!isAliInternal) {
-        const projectDir = await callService('project', 'createProject', values) as string;
-        setProjectDir(projectDir);
+        await createProject(values)
       } else {
-        setCurrentProjectField(values);
-        DEFProjectField.setValue('project', values.projectName); // set the repositoryName default value
+        setCurProjectField(values);
+        setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName })
       }
-      setLoading(false);
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: e.message });
-      setLoading(false);
+      Notification.error({ content: e.message });
+    } finally {
+      setCreateProjectLoading(false);
+      setPrevBtnDisabled(false);
     }
   };
 
-  async function onDEFProjectDetailSubmit() {
-    setLoading(true);
-    const { errors } = await DEFProjectField.validatePromise();
-    if (errors) {
-      setLoading(false);
-      return;
-    }
-    const values: any = DEFProjectField.getValues();
-    const { empId, account, gitlabToken } = values;
+  async function skipCreateDEFProject() {
+    setCreateProjectLoading(true);
+    setPrevBtnDisabled(true);
+    setCreateDEFProjectDisabled(true);
     try {
-      const projectDir = await callService(
-        'project',
-        'CreateDEFProjectAndCloneRepository',
-        { ...values, ...currentProjectField, clientToken: CLIENT_TOKEN }
-      ) as string;
-      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken })
-      setProjectDir(projectDir);
-      setLoading(false);
+      await createProject(curProjectField)
       goNext();
     } catch (e) {
-      Notification.error({ title: 'Error', content: 'Fail to create DEF project.' });
-      setLoading(false);
+      Notification.error({ content: e.message });
+    } finally {
+      setCreateProjectLoading(false);
+      setPrevBtnDisabled(false);
+      setCreateDEFProjectDisabled(false);
+    }
+  }
+
+  async function createProject(data: IProjectField) {
+    const projectDir = await callService('project', 'createProject', data);
+    setProjectDir(projectDir);
+    const { projectPath } = data;
+    await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
+  }
+
+  async function onDEFProjectDetailSubmit(values: any, errors: any) {
+    if (errors) {
+      setCreateDEFProjectLoading(false);
+      return;
+    }
+    setCreateDEFProjectLoading(true);
+    setPrevBtnDisabled(true);
+    setCreateProjectBtnDisabled(true);
+    const { projectPath } = curProjectField as IProjectField;
+    const { empId, account, gitlabToken } = values;
+    try {
+      const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
+      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken });
+      await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
+      setProjectDir(projectDir);
+      setCreateDEFProjectLoading(false);
+      goNext();
+    } catch (e) {
+      Notification.error({ content: e.message });
+      setCreateDEFProjectLoading(false);
+    } finally {
+      setPrevBtnDisabled(false);
+      setCreateProjectBtnDisabled(false);
     }
   }
 
@@ -138,53 +190,30 @@ const CreateProject: React.FC = () => {
     setStep(currentStep - 1);
   };
 
-  let actions;
-  switch (currentStep) {
-    case 0:
-      actions = <Button type="primary" onClick={onScaffoldSubmit}>Next Step</Button>;
-      break;
-    case 1:
-      actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>Previous Step</Button>
-        <Form.Submit
-          type="primary"
-          onClick={onProjectDetailSubmit}
-          validate
-          loading={loading}
-        >Next Step</Form.Submit>
-      </>;
-      break;
-    case 2:
-      actions = <>
-        <Button onClick={goPrev} style={{ marginRight: '5px' }}>Previous Step</Button>
-        <Form.Submit
-          type="primary"
-          onClick={onDEFProjectDetailSubmit}
-          validate
-          loading={loading}
-        >Next Step</Form.Submit>
-      </>;
-      break;
-    default:
-      break;
-  }
   useEffect(() => {
     async function checkAliInternal() {
       try {
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         setIsAliInternal(isAliInternal);
-        if (isAliInternal) {
-          const data = await callService('common', 'getDataFromSettingJson', 'user') || {};
-          DEFProjectField.setValues(data)
-        }
-      } catch (error) {
-        // ignore
+        return isAliInternal;
+      } catch (e) {
+        Notification.error({ content: e.message })
+      }
+      return false
+    }
+    async function setDefaultFields(isAliInternal) {
+      const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
+      const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
+      const { empId, account, gitlabToken } = userData;
+      setCurProjectField({ ...curProjectField, projectPath: workspace })
+      if (isAliInternal) {
+        setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken })
       }
     }
-
-    checkAliInternal();
+    const isAliInternal = checkAliInternal();
+    setDefaultFields(isAliInternal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
   return (
     <div className={styles.container}>
       <Header scaffoldTypeSelected={scaffoldTypeSelected} />
@@ -196,7 +225,6 @@ const CreateProject: React.FC = () => {
             ))}
           </Step>
           <div className={styles.content}>{steps[currentStep].content}</div>
-          <div className={styles.actions}>{actions}</div>
         </Card.Content>
       </Card>
     </div>

@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { autoSetNpmConfiguration } from '@iceworks/common-service';
 import services from './services/index';
 
 const { window, ViewColumn } = vscode;
@@ -9,8 +10,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
 
+  autoSetNpmConfiguration(context.globalState);
+
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Generate Component', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '生成组件', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

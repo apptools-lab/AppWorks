@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists } from '@iceworks/common-service';
@@ -22,15 +23,40 @@ interface IDEFProjectField {
   projectName: string;
 }
 
+export async function getProjectLanguageType() {
+  const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
+
+  const framework = await getProjectFramework();
+  let isTypescript = false;
+  if (framework === 'icejs') {
+    // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+    const hasAppJs = fsExtra.existsSync(path.join(projectPath, 'src/app.js')) || fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
+    isTypescript = hasTsconfig && !hasAppJs;
+  } else {
+    isTypescript = hasTsconfig;
+  }
+
+  return isTypescript ? 'ts' : 'js';
+}
+
 export async function getProjectType() {
-  const { dependencies } = await readPackageJSON(projectPath);
-  if (dependencies) {
-    if (dependencies.rax) {
-      return 'rax';
-    }
-    if (dependencies.react) {
-      return 'react';
-    }
+  const { dependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies.rax) {
+    return 'rax';
+  }
+  if (dependencies.react) {
+    return 'react';
+  }
+  return 'unknown';
+}
+
+export async function getProjectFramework() {
+  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies['rax-app']) {
+    return 'rax-app';
+  }
+  if (devDependencies['ice.js'] || dependencies['ice.js']) {
+    return 'icejs';
   }
   return 'unknown';
 }
@@ -62,7 +88,7 @@ export async function createProject(data): Promise<string> {
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists!`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
   }
   const { npm, registry, version } = scaffold.source;
   await downloadAndGenerateProject(projectDir, npm, version, registry);
@@ -72,7 +98,7 @@ export async function createProject(data): Promise<string> {
 export async function openLocalProjectFolder(projectDir: string): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
-    throw new Error(`${projectDir} directory doesn't exist!`)
+    throw new Error(`本地不存在「${projectDir}」目录！`)
   }
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), true);
 }
@@ -82,7 +108,7 @@ export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFPr
   const projectDir = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists!`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
   }
   await createDEFProject(DEFProjectField);
   await cloneRepositoryToLocal(projectDir, group, project);
@@ -100,7 +126,7 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`${projectDir} directory exists!`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
   }
   const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
@@ -128,7 +154,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
     'emp_id': empId,
     'client_token': clientToken
   });
-
+  console.log('generatorCreatetaskResponse', response);
   if (response.data.error) {
     throw new Error(response.data.error)
   }
@@ -145,6 +171,7 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
             'client_token': clientToken
           }
         })
+        console.log('generatorTaskResultResponse', response);
         const { data: { status }, error } = response.data;
         if (error) {
           reject(new Error(error))
@@ -152,10 +179,10 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error('Project Create failed'))
+            reject(new Error(`创建项目失败，任务 ID 是： ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error('Project Create timeout'))
+            reject(new Error(`创建项目超时，任务 ID 是：${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()

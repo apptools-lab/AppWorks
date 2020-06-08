@@ -22,7 +22,7 @@ const SelectCard: React.FC<ISelectCardProps> = ({ title, content, selected, onCl
         className={classnames(styles.card, { [styles.active]: selected })}
         onClick={onClick}
       >
-        {selected && <img src={successIcon} alt="success" className={styles.successIcon} />}
+        {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
         <Card.Media>
           {media}
         </Card.Media>

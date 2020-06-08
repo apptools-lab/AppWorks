@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { Icon } from '@alifd/next';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
 import { MaterialView } from './components/view';
 
 const Index : React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
+  disableLazyLoad?: boolean;
   selectedBlocks?: IMaterialBlock[];
   selectedComponents?: IMaterialComponent[];
   selectedBases?: IMaterialBase[];
@@ -13,7 +15,8 @@ const Index : React.FC<{
   onBlockClick?: (block: IMaterialBlock) => void;
   onComponentClick?: (component: IMaterialComponent) => void;
   onBaseClick?: (base: IMaterialBase) => void;
-}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [],  ...others }) => {
+  onSettingsClick?: () => void;
+}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [], onSettingsClick, ...others }) => {
   const [sources, setSources] = React.useState([]);
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
@@ -62,6 +65,14 @@ const Index : React.FC<{
         isLoadingData={isLoadingData}
         colSpan={24}
         onChangeSource={handleChangeSource}
+        extra={
+          <div className="extra-wrap">
+            {onSettingsClick &&
+              <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />
+            }
+            <Icon type="refresh" size="small" title="获取最新物料源信息" onClick={refreshSources} style={{marginLeft: 6}} />
+          </div>
+        }
         {...others}
       />
     </div>

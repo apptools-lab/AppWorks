@@ -6,7 +6,8 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { pathExists, getCurrentPackageManager, createNpmCommand, executeCommand, getPackageManagers, getNpmRegisters } from '../utils';
+import { pathExists, executeCommand } from '../utils';
+import { getDataFromSettingJson, createNpmCommand } from '@iceworks/common-service';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -44,7 +45,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const deps = this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
       return deps;
     } else {
-      return Promise.resolve(nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
+      return Promise.resolve(
+        nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
   }
 
@@ -63,7 +65,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       function toDep(moduleName: string, version: string, outdated: boolean) {
-        const packageManager = getCurrentPackageManager();
+        const packageManager = getDataFromSettingJson('packageManager');
         const isYarn = packageManager === 'yarn';
         const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
         const command = outdated ?
@@ -73,7 +75,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
             arguments: [workspaceDir, npmCommand]
           } :
           undefined;
-        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, version, command, outdated);
+        return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, command, version, outdated);
       };
 
       const deps: DependencyNode[] = [];
@@ -106,39 +108,40 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     };
   };
 
+  public packageJsonExists() {
+    return pathExists(this.packageJsonPath);
+  }
+
   public getInstallScript() {
-    if (pathExists(this.packageJsonPath)) {
-      const workspaceDir: string = path.dirname(this.packageJsonPath);
-      const npmCommand = createNpmCommand('install');
-      const command: vscode.Command = {
-        command: 'iceworksApp.nodeDependencies.install',
-        title: 'Install Dependencies',
-        arguments: [workspaceDir, npmCommand]
-      };
-      return command;
-    }
+    const workspaceDir: string = path.dirname(this.packageJsonPath);
+    const npmCommand = createNpmCommand('install');
+    const command: vscode.Command = {
+      command: 'iceworksApp.nodeDependencies.install',
+      title: 'Install Dependencies',
+      arguments: [workspaceDir, npmCommand]
+    };
+    return command;
   }
 
   public async getReinstallScript() {
-    if (pathExists(this.packageJsonPath)) {
-      const workspaceDir: string = path.dirname(this.packageJsonPath);
-      const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-      if (pathExists(nodeModulesPath)) {
-        await rimrafAsync(nodeModulesPath);
-      }
-      const npmCommand = createNpmCommand('install');
-      const command: vscode.Command = {
-        command: 'iceworksApp.nodeDependencies.reinstall',
-        title: 'Reinstall Dependencies',
-        arguments: [workspaceDir, npmCommand]
-      };
-      return command;
+    const workspaceDir: string = path.dirname(this.packageJsonPath);
+    const nodeModulesPath = path.join(workspaceDir, 'node_modules');
+    if (pathExists(nodeModulesPath)) {
+      await rimrafAsync(nodeModulesPath);
     }
+    const npmCommand = createNpmCommand('install');
+    const command: vscode.Command = {
+      command: 'iceworksApp.nodeDependencies.reinstall',
+      title: 'Reinstall Dependencies',
+      arguments: [workspaceDir, npmCommand]
+    };
+    return command;
+
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getCurrentPackageManager();
+    const packageManager = getDataFromSettingJson('packageManager');
     const isYarn = packageManager === 'yarn';
     const isDevDep = depType === 'devDependencies';
 
@@ -146,7 +149,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     const extraAction = isDevDep ? '-D' : isYarn ? '' : '-S';
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.addDependency',
+      command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
       title: 'Add Dependency',
       arguments: [workspaceDir, npmCommand]
     };
@@ -158,8 +161,8 @@ export class DependencyNode extends vscode.TreeItem {
   constructor(
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly version?: string,
     public readonly command?: vscode.Command,
+    public readonly version?: string,
     public readonly outDated?: boolean
   ) {
     super(label, collapsibleState);
@@ -169,29 +172,13 @@ export class DependencyNode extends vscode.TreeItem {
     return this.version ? this.version : '';
   }
 
+  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : this.label;
+
   iconPath = {
     light: path.join(__filename, '..', '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
     dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
   };
-
-  contextValue = this.version ? this.outDated ? 'outdatedDependency' : 'dependency' : 'dependenciesDir';
 }
-
-export async function setPackageManager() {
-  const quickPick = vscode.window.createQuickPick();
-  const packageManagers: string[] = getPackageManagers();
-  const currentpackageManager = vscode.workspace.getConfiguration('iceworks').get('packageManager', packageManagers[0]);
-  quickPick.items = packageManagers.map(label => ({ label, picked: label === currentpackageManager }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      await vscode.workspace.getConfiguration().update('iceworks.packageManager', selection[0].label, true);
-      vscode.window.showInformationMessage(`Setting ${selection[0].label} client successfully!`);
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
 
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
@@ -206,7 +193,7 @@ export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesIn
   quickPick.show();
 };
 
-async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
+export async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
   const result = await vscode.window.showInputBox({
     placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
   });
@@ -215,25 +202,3 @@ async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance
   }
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
-
-export async function setNpmRegister() {
-  const quickPick = vscode.window.createQuickPick();
-  const npmRegisters: string[] = getNpmRegisters();
-  const currentNpmRegister = vscode.workspace.getConfiguration('iceworks').get('npmRegister', npmRegisters[0]);
-  const addOtherRegisterLabel = 'Add Other Register...';
-  quickPick.items = [...npmRegisters, addOtherRegisterLabel].map(label => ({ label, picked: label === currentNpmRegister }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      if (selection[0].label === addOtherRegisterLabel) {
-        vscode.commands.executeCommand('workbench.action.openSettings', 'iceworks.npmRegister');
-      } else {
-        await vscode.workspace.getConfiguration().update('iceworks.npmRegister', selection[0].label, true);
-        vscode.window.showInformationMessage(`Setting ${selection[0].label} register successfully!`);
-      }
-
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};

@@ -10,12 +10,13 @@ interface IInitProjectSuccessProps {
 const InitProjectSuccess: React.FC<IInitProjectSuccessProps> = ({ projectDir }) => {
   useEffect(() => {
     callService('project', 'openLocalProjectFolder', projectDir);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box align="center">
-      <Icon type="success-filling" size={72} className={styles.succesIcon} />
-      <Typography.H1>Project has been created.</Typography.H1>
-      <Typography.H5>About to automatically jump to the project...</Typography.H5>
+      <Icon type="success-filling" size={50} className={styles.succesIcon} />
+      <Typography.H1>项目创建完成</Typography.H1>
+      <Typography.H5>正在自动跳转至项目...</Typography.H5>
     </Box>
   );
 };

@@ -14,12 +14,16 @@
   "activationEvents": [
     "onCommand:iceworks-component-builder.generate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ice-lab/iceworks.git"
+  },
   "main": "./build/src-extension/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "iceworks-component-builder.generate",
-        "title": "iceworks: Generate Block"
+        "title": "iceworks: Generate Component"
       }
     ],
     "configuration": {
@@ -34,11 +38,20 @@
             "tnpm",
             "yarn"
           ],
-          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.packageManager.description%"
+          "description": "%iceworksComponentBuilder.configuration.properties.iceworks.packageManager.description%"
+        },
+        "iceworks.npmRegistry": {
+          "type": "string",
+          "default": "https://registry.npm.taobao.org",
+          "enum": [
+            "https://registry.npmjs.org",
+            "https://registry.npm.taobao.org"
+          ],
+          "description": "%iceworksComponentBuilder.configuration.properties.iceworks.npmRegistry.description%"
         },
         "iceworks.materialSources": {
           "type": "array",
-          "description": "%iceworksLowCodePageBuilder.configuration.properties.iceworks.materialSources.description%",
+          "description": "%iceworksComponentBuilder.configuration.properties.iceworks.materialSources.description%",
           "items": {
             "type": "object",
             "description": "Source",
@@ -64,16 +77,16 @@
           },
           "default": [
             {
-              "name": "飞冰物料",
+              "name": "PC Web",
               "type": "react",
               "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
               "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
             },
             {
-              "name": "无线终端",
+              "name": "无线跨端",
               "type": "rax",
               "source": "https://fusion.alibaba-inc.com/api/v1/sites/1194/materials",
-              "description": "基于 Rax 组件和 rax 脚手架的官方物料"
+              "description": "基于 Rax 组件和 Rax 脚手架的官方物料"
             }
           ]
         }
@@ -83,7 +96,7 @@
   "scripts": {
     "start": "icejs start --disable-reload",
     "build": "icejs build",
-    "vscode:prepublish": "rm -rf build && npm run compile && npm run build",
+    "vscode:prepublish": "rm -rf build && npm run build && npm run compile",
     "compile": "tsc -p tsconfig.extension.json",
     "watch": "tsc -watch -p tsconfig.extension.json",
     "pretest": "npm run compile && npm run lint"
@@ -102,8 +115,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@alifd/next": "^1.19.4",
-    "@alifd/theme-iceworks-dark": "^0.2.1",
+    "@alifd/next": "~1.19.2",
+    "@alifd/theme-iceworks-dark": "^1.1.0",
+    "@iceworks/common-service": "^0.1.0",
     "@iceworks/block-service": "^0.1.0",
     "@iceworks/material-service": "^0.1.0",
     "@iceworks/material-ui": "^0.1.0",

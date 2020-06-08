@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button, Input } from '@alifd/next';
+import { Grid, Notification, Button, Input, Icon } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
 import PageSelected from './components/PageSelected';
@@ -13,7 +13,7 @@ async function getSources() {
   try {
     sources = await callService('material', 'getSourcesByProjectType');
   } catch (e) {
-    Notification.error({ content: 'Get Material Sourcess got error, please try aging.' });
+    Notification.error({ content: '获取物料源失败，请稍后再试。' });
   }
 
   console.log('getSources', sources);
@@ -25,7 +25,7 @@ async function getData(source: string) {
   try {
     data = await callService('material', 'getData', source);
   } catch (e) {
-    Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
   }
   console.log('getData', data);
   return data;
@@ -33,11 +33,11 @@ async function getData(source: string) {
 
 function validateData({ blocks, pageName }) {
   if (!pageName) {
-    return 'Please set name of page';
+    return '请填写页面名称。';
   }
 
   if (!blocks || !blocks.length) {
-    return 'Please select blocks';
+    return '请选择使用的区块。';
   }
 
   return '';
@@ -48,6 +48,14 @@ const Home = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+
+  async function onSettingsClick() {
+    try {
+      await callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
 
   function onAdd(block) {
     setSelectedBlocks([...selectedBlocks, block]);
@@ -99,7 +107,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: 'Page generation succeeded!' });
+    Notification.success({ content: '页面生成成功！' });
     resetData();
   }
 
@@ -108,11 +116,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. Fill in the page name:
+            1. 填写页面名称：
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="Starts with A-Z, cannot contain special characters"
+              placeholder="名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
@@ -122,7 +130,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. Select Blocks：
+            2. 选择区块：
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
@@ -142,7 +150,9 @@ const Home = () => {
               <Col span={8} className={styles.col}>
                 <div className={styles.material}>
                   <Material
+                    disableLazyLoad
                     getSources={getSources}
+                    onSettingsClick={onSettingsClick}
                     getData={getData}
                     onBlockClick={onAdd}
                     dataWhiteList={['blocks']}
@@ -154,8 +164,8 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          Generate page
+        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
+          生成页面
         </Button>
       </div>
     </div>

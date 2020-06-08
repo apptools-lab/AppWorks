@@ -1,13 +1,13 @@
 .wrap {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   :global(.next-tabs-bar) {
     margin-bottom: 16px;
   }
 
   :global(.next-tabs-content) {
-    height: 100%;
-
     :global(.next-tabs-tabpane.active) {
       height: 100%;
     }
