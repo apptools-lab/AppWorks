@@ -130,7 +130,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. Select Blocks：
+            2. 选择区块：
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
