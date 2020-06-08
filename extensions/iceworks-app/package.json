@@ -1,7 +1,7 @@
 {
   "name": "iceworks-app",
   "displayName": "iceworks App",
-  "description": "Quick to view and build your front-end project.",
+  "description": "iceworks for Visual Studio Code.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
@@ -336,5 +336,10 @@
     "latest-version": "^5.1.0",
     "rimraf": "^3.0.2",
     "util": "^0.12.3"
-  }
+  },
+  "extensionDependencies": [
+    "iceworks-team.iceworks-project-creator",
+    "iceworks-team.iceworks-component-builder",
+    "iceworks-team.iceworks-page-builder"
+  ]
 }
