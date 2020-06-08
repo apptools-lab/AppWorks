@@ -3,7 +3,7 @@
 
 # iceworks
 
-Universal Development Pack, using low-code technology.
+Front-end Development Pack, using low-code technology.
 
 Includes following feature:
 

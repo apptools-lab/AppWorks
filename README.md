@@ -8,7 +8,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">iceworks</h1>
 
-<p align="center">Universal Development Pack</p>
+<p align="center">Front-end Development Pack</p>
 
 <p align="center">
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
