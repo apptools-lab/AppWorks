@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Step, Button, Notification } from '@alifd/next';
 import callService from '@/callService';
-import { IProjectField, IDEFProjectField, ISettingJsonData } from '@/types';
+import { IProjectField, IDEFProjectField } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -10,11 +10,7 @@ import Header from './components/Header';
 import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
-const defaultSettingJsonData = {
-  empId: '',
-  account: '',
-  gitlabToken: ''
-}
+
 const CreateProject: React.FC = () => {
   const [scaffoldTypeSelected, setScaffoldTypeSelected] = useState('');
   const [currentStep, setStep] = useState<number>(0);
@@ -24,7 +20,6 @@ const CreateProject: React.FC = () => {
   const [isAliInternal, setIsAliInternal] = useState(false)
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
-  const [settingJsonData, setSettingJsonData] = useState<ISettingJsonData>(defaultSettingJsonData);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [createProjectBtnDisabled, setCreateProjectBtnDisabled] = useState(false);
   const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
@@ -211,7 +206,6 @@ const CreateProject: React.FC = () => {
       const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
       const { empId, account, gitlabToken } = userData;
       setCurProjectField({ ...curProjectField, projectPath: workspace })
-      setSettingJsonData(userData)
       if (isAliInternal) {
         setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken })
       }
