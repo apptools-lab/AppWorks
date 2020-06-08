@@ -28,34 +28,35 @@ export async function getProjectLanguageType() {
   const hasAppJs = fsExtra.existsSync(path.join(projectPath, 'src/app.js')) || fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
 
   const framework = await getProjectFramework();
+  let isTypescript = false;
   if (framework === 'icejs') {
     // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
-    return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';;
+    isTypescript =  (hasTsconfig && !hasAppJs);
   } else {
-    return hasTsconfig;
+    isTypescript = hasTsconfig;
   }
+
+  return isTypescript ? 'ts' : 'js';
 }
 
 export async function getProjectType() {
-  const { dependencies } = await readPackageJSON(projectPath);
-  if (dependencies) {
-    if (dependencies.rax) {
-      return 'rax';
-    }
-    if (dependencies.react) {
-      return 'react';
-    }
+  const { dependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies.rax) {
+    return 'rax';
+  }
+  if (dependencies.react) {
+    return 'react';
   }
   return 'unknown';
 }
 
 export async function getProjectFramework() {
-  const { dependencies, devDependencies } = await readPackageJSON(projectPath);
-  if (dependencies && dependencies['rax-app']) {
+  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+  if (dependencies['rax-app']) {
     return 'rax-app';
   }
 
-  if ((devDependencies && devDependencies['ice.js']) || (dependencies && dependencies['ice.js'])) {
+  if (devDependencies['ice.js'] || dependencies['ice.js']) {
     return 'icejs';
   }
 
