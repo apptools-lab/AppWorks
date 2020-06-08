@@ -63,7 +63,7 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
 
       const blockSourceSrcPath = path.join(blockTempDir, 'src');
       const blockType = getBlockType(blockSourceSrcPath);
-      const projectType = getProjectLanguageType();
+      const projectType = await getProjectLanguageType();
 
       console.log('blockType: ', blockType, 'projectType: ', projectType);
 

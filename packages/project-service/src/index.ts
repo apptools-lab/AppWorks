@@ -23,12 +23,17 @@ interface IDEFProjectField {
   projectName: string;
 }
 
-export function getProjectLanguageType() {
+export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
   const hasAppJs = fsExtra.existsSync(path.join(projectPath, 'src/app.js')) || fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
 
-  // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
-  return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';
+  const framework = await getProjectFramework();
+  if (framework === 'icejs') {
+    // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+    return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';;
+  } else {
+    return hasTsconfig;
+  }
 }
 
 export async function getProjectType() {
@@ -41,6 +46,19 @@ export async function getProjectType() {
       return 'react';
     }
   }
+  return 'unknown';
+}
+
+export async function getProjectFramework() {
+  const { dependencies, devDependencies } = await readPackageJSON(projectPath);
+  if (dependencies && dependencies['rax-app']) {
+    return 'rax-app';
+  }
+
+  if (devDependencies && devDependencies['ice.js']) {
+    return 'icejs';
+  }
+
   return 'unknown';
 }
 
