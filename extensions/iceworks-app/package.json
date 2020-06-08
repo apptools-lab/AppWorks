@@ -1,7 +1,7 @@
 {
   "name": "iceworks-app",
   "displayName": "iceworks App",
-  "description": "iceworks for Visual Studio Code.",
+  "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {

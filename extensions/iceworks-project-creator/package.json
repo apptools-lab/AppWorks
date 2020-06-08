@@ -1,7 +1,7 @@
 {
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
-  "description": "Quick create a front-end project(React/Rax/Vue, etc).",
+  "description": "Quick create a Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {

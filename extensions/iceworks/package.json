@@ -2,7 +2,7 @@
 {
   "name": "iceworks",
   "displayName": "iceworks",
-  "description": "Universal Development Pack, using low-code technology.",
+  "description": "Universal Application Development Pack, using low-code technology.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
