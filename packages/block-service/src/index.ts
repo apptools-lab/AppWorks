@@ -1,11 +1,24 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
+import * as glob from 'glob';
+import * as readFiles from 'fs-readdir-recursive';
+import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
 import { projectPath } from '@iceworks/project-service';
-import { createNpmCommand } from '@iceworks/common-service';
+import { createNpmCommand, getProjectLanguageType } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+
+function getBlockType(blockSourceSrcPath) {
+  const files = readFiles(blockSourceSrcPath);
+
+  const index = files.findIndex(item => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+}
 
 /**
  * Generate block code
@@ -48,7 +61,28 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
         throw error;
       }
 
-      await fsExtra.move(path.join(blockTempDir, 'src'), blockDir);
+      const blockSourceSrcPath = path.join(blockTempDir, 'src');
+      const blockType = getBlockType(blockSourceSrcPath);
+      const projectType = getProjectLanguageType();
+
+      console.log('blockType: ', blockType, 'projectType: ', projectType);
+
+      // transfrom ts to js
+      if (blockType === 'ts' && projectType === 'js') {
+        const files = glob.sync('**/*.@(ts|tsx)', {
+          cwd: blockSourceSrcPath,
+        });
+
+        console.log('transfrom ts to js', files.join(','));
+
+        transfromTsToJs(files, {
+          cwd: blockSourceSrcPath,
+          outDir: blockSourceSrcPath,
+          action: 'overwrite',
+        });
+      }
+
+      await fsExtra.move(blockSourceSrcPath, blockDir);
       await fsExtra.remove(blockTempDir);
       return blockDir;
     }),

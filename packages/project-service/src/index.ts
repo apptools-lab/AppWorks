@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists } from '@iceworks/common-service';
@@ -20,6 +21,14 @@ interface IDEFProjectField {
   clientToken: string;
   projectPath: string;
   projectName: string;
+}
+
+export function getProjectLanguageType() {
+  const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
+  const hasAppJs = fsExtra.existsSync(path.join(projectPath, 'src/app.js')) || fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
+
+  // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+  return (hasTsconfig && !hasAppJs) ? 'ts' : 'js';
 }
 
 export async function getProjectType() {
