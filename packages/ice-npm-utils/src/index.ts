@@ -1,3 +1,4 @@
+import * as fsExtra from 'fs-extra';
 import log from './log';
 
 import request = require('request-promise');
@@ -38,7 +39,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 function getAndExtractTarball(
   destDir: string,
   tarball: string,
-  progressFunc = (state) => {},
+  progressFunc = (state) => { },
   formatFilename = (filename: string): string => {
     // 为了兼容
     if (filename === '_package.json') {
@@ -105,7 +106,7 @@ function getAndExtractTarball(
 }
 
 /**
- * 从 register 获取 npm 的信息
+ * 从 registry 获取 npm 的信息
  */
 function getNpmInfo(npm: string, registry?: string): Promise<any> {
   const register = registry || getNpmRegistry(npm);
@@ -230,6 +231,29 @@ function checkAliInternal(): Promise<boolean> {
   });
 }
 
+const packageJSONFilename = 'package.json';
+
+async function readPackageJSON(projectPath: string) {
+  const packagePath = path.join(projectPath, packageJSONFilename);
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error('Project\'s package.json file not found in local environment');
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
+/**
+ * 获取已安装在本地的模块版本号
+ *
+ * @param projectPath
+ * @param packageName
+ */
+function getPackageLocalVersion(projectPath: string, packageName: string): string {
+  const packageJsonPath = path.join(projectPath, 'node_modules', packageName, 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+  return packageJson.version;
+}
+
 export {
   getLatestVersion,
   getNpmLatestSemverVersion,
@@ -242,4 +266,7 @@ export {
   getNpmTarball,
   getAndExtractTarball,
   log,
+  packageJSONFilename,
+  readPackageJSON,
+  getPackageLocalVersion,
 };

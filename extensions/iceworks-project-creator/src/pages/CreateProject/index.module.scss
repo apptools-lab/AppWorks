@@ -1,0 +1,25 @@
+.container {
+  .card {
+    background-color: $color-brand1-1;
+    .step {
+      width: 90vw;
+      margin: 20px auto 24px;
+
+      .content,
+      .actions {
+        margin-top: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
+      .content {
+        align-items: center;
+      }
+    }
+  }
+}
+
+.btn {
+  margin-right: 5px;
+}

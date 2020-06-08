@@ -1,0 +1,16 @@
+{
+  "name": "@iceworks/material-utils",
+  "version": "0.1.1",
+  "description": "General tool library for materials.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "package-json": "^6.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

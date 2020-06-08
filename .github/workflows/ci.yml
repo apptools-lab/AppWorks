@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+      env:
+        CLIENT_TOKEN: ${{ secrets.DEF_CLIENT_TOKEN }}
     - run: |
         npm run setup
         npm run lint

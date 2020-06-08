@@ -1,0 +1,24 @@
+{
+  "name": "@iceworks/block-service",
+  "version": "0.1.1",
+  "description": "iceworks block service for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "@iceworks/common-service": "^0.1.0",
+    "@iceworks/material-utils": "^0.1.0",
+    "@iceworks/project-service": "^0.1.0",
+    "fs-extra": "^8.1.0",
+    "ice-npm-utils": "^1.4.2",
+    "uppercamelcase": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

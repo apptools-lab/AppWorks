@@ -3,8 +3,14 @@
   "references": [
     {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
+    {"path": "packages/vscode-webview"},
     {"path": "packages/generate-project"},
-    {"path": "packages/block-add"},
-    {"path": "packages/iceworks-cli"}
+    {"path": "packages/iceworks-cli"},
+    {"path": "packages/material-utils"},
+    {"path": "packages/common-service"},
+    {"path": "packages/project-service"},
+    {"path": "packages/material-service"},
+    {"path": "packages/block-service"},
+    {"path": "packages/page-service"},
   ]
 }

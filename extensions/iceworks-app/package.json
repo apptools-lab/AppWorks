@@ -1,0 +1,346 @@
+{
+  "name": "iceworks-app",
+  "displayName": "iceworks App",
+  "description": "Quick to view and build your front-end project.",
+  "publisher": "iceworks-team",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onView:nodeDependencies",
+    "onView:scripts",
+    "onView:pages",
+    "onView:components"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "iceworksApp",
+          "title": "iceworks App",
+          "icon": "assets/sidebar-logo.png"
+        }
+      ]
+    },
+    "views": {
+      "iceworksApp": [
+        {
+          "id": "welcomePage",
+          "name": "%iceworksApp.view.welcomePage.name%",
+          "when": "workbenchState == empty"
+        },
+        {
+          "id": "npmScripts",
+          "name": "%iceworksApp.view.npmScripts.name%",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "pages",
+          "name": "%iceworksApp.view.pages.name%",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "components",
+          "name": "%iceworksApp.view.components.name%",
+          "when": "workbenchState != empty"
+        },
+        {
+          "id": "nodeDependencies",
+          "name": "%iceworksApp.view.nodeDependencies.name%",
+          "when": "workbenchState != empty"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "welcomePage",
+        "contents": "%iceworksApp.viewsWelcome.welcomePage.contents%",
+        "when": "workbenchState == empty"
+      },
+      {
+        "view": "npmScripts",
+        "contents": "%iceworksApp.viewsWelcome.npmScripts.contents%"
+      },
+      {
+        "view": "pages",
+        "contents": "%iceworksApp.viewsWelcome.pages.contents%"
+      },
+      {
+        "view": "components",
+        "contents": "%iceworksApp.viewsWelcome.components.contents%"
+      },
+      {
+        "view": "nodeDependencies",
+        "contents": "%iceworksApp.viewsWelcome.nodeDependencies.contents%"
+      }
+    ],
+    "commands": [
+      {
+        "command": "iceworksApp.npmScripts.refresh",
+        "title": "%iceworksApp.npmScripts.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.executeCommand",
+        "title": "%iceworksApp.npmScripts.executeCommand.title%",
+        "icon": {
+          "light": "assets/light/run.svg",
+          "dark": "assets/dark/run.svg"
+        }
+      },
+      {
+        "command": "iceworks-page-builder.create",
+        "title": "%iceworks-page-builder.create.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.pages.refresh",
+        "title": "%iceworksApp.pages.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.pages.openFile",
+        "title": "%iceworksApp.pages.openFile.title%"
+      },
+      {
+        "command": "iceworks-component-builder.generate",
+        "title": "%iceworks-component-builder.generate.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.components.refresh",
+        "title": "%iceworksApp.components.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.setPackageManager",
+        "title": "%iceworksApp.nodeDependencies.setPackageManager.title%",
+        "icon": {
+          "light": "assets/light/setting.svg",
+          "dark": "assets/dark/setting.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.setNpmRegistry",
+        "title": "%iceworksApp.nodeDependencies.setNpmRegistry.title%",
+        "icon": {
+          "light": "assets/light/registry.svg",
+          "dark": "assets/dark/registry.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
+        "title": "%iceworksApp.nodeDependencies.addDepsAndDevDeps.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.install",
+        "title": "%iceworksApp.nodeDependencies.install.title%",
+        "icon": {
+          "light": "assets/light/install.svg",
+          "dark": "assets/dark/install.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.reinstall",
+        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
+        "icon": {
+          "light": "assets/light/dep-reinstall.svg",
+          "dark": "assets/dark/dep-reinstall.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.refresh",
+        "title": "%iceworksApp.nodeDependencies.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.dependencies.add",
+        "title": "%iceworksApp.nodeDependencies.dependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.devDependencies.add",
+        "title": "%iceworksApp.nodeDependencies.devDependencies.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.nodeDependencies.upgrade",
+        "title": "%iceworksApp.nodeDependencies.upgrade.title%",
+        "icon": {
+          "light": "assets/light/upgrade.svg",
+          "dark": "assets/dark/upgrade.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "iceworksApp.npmScripts.refresh",
+          "when": "view == npmScripts",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-page-builder.create",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworksApp.pages.refresh",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-component-builder.generate",
+          "when": "view == components",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworksApp.components.refresh",
+          "when": "view == components",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.setPackageManager",
+          "when": "view == nodeDependencies",
+          "group": "navigation@21"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.setNpmRegistry",
+          "when": "view == nodeDependencies",
+          "group": "navigation@22"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
+          "when": "view == nodeDependencies",
+          "group": "navigation@11"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.install",
+          "when": "view == nodeDependencies",
+          "group": "navigation@12"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.reinstall",
+          "when": "view == nodeDependencies",
+          "group": "navigation@13"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.refresh",
+          "when": "view == nodeDependencies",
+          "group": "navigation@99"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "iceworksApp.npmScripts.executeCommand",
+          "when": "view == npmScripts && viewItem == script",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.upgrade",
+          "when": "view == nodeDependencies && viewItem == outdatedDependency",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.dependencies.add",
+          "when": "view == nodeDependencies && viewItem == dependencies",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.devDependencies.add",
+          "when": "view == nodeDependencies && viewItem == devDependencies",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "iceworks App",
+      "properties": {
+        "iceworks.packageManager": {
+          "type": "string",
+          "default": "npm",
+          "enum": [
+            "npm",
+            "cnpm",
+            "tnpm",
+            "yarn"
+          ],
+          "description": "%iceworksApp.configuration.properties.iceworks.packageManager.description%"
+        },
+        "iceworks.npmRegistry": {
+          "type": "string",
+          "default": "https://registry.npm.taobao.org",
+          "enum": [
+            "https://registry.npmjs.org",
+            "https://registry.npm.taobao.org"
+          ],
+          "description": "%iceworksApp.configuration.properties.iceworks.npmRegistry.description%"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf out && npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/rimraf": "^3.0.0",
+    "@types/vscode": "^1.45.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@iceworks/common-service": "^0.1.0",
+    "@types/latest-version": "^4.0.1",
+    "fs-extra": "^9.0.0",
+    "ice-npm-utils": "^1.4.1",
+    "latest-version": "^5.1.0",
+    "rimraf": "^3.0.2",
+    "util": "^0.12.3"
+  }
+}
