@@ -13,6 +13,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
   const pkgData = fse.readJsonSync(pkgPath);
   const isAliInternal = await checkAliInternal();
 
+  pkgData.dependencies = pkgData.dependencies || {};
   pkgData.devDependencies = pkgData.devDependencies || {};
 
   log.info('', 'clean package.json...');
