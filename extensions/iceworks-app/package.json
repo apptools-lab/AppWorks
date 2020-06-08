@@ -169,17 +169,13 @@
         "command": "iceworksApp.nodeDependencies.reinstall",
         "title": "%iceworksApp.nodeDependencies.reinstall.title%",
         "icon": {
-          "light": "assets/light/dep-reinstall.svg",
-          "dark": "assets/dark/dep-reinstall.svg"
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
         }
       },
       {
         "command": "iceworksApp.nodeDependencies.refresh",
-        "title": "%iceworksApp.nodeDependencies.refresh.title%",
-        "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
-        }
+        "title": "%iceworksApp.nodeDependencies.refresh.title%"
       },
       {
         "command": "iceworksApp.nodeDependencies.dependencies.add",
@@ -260,8 +256,7 @@
         },
         {
           "command": "iceworksApp.nodeDependencies.refresh",
-          "when": "view == nodeDependencies",
-          "group": "navigation@99"
+          "when": "view == nodeDependencies"
         }
       ],
       "view/item/context": [
