@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const rootPath = vscode.workspace.rootPath;
 
 	if (!rootPath) {
-		vscode.window.showInformationMessage('The root path is empty. Please open a project or create a project.');
+		vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
 		return;
 	}
 

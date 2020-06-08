@@ -43,19 +43,19 @@
           ],
           "description": "iceworks materialSources"
         },
+        "iceworks.workspace": {
+          "type": "string",
+          "default": "",
+          "description": "iceworks workspace"
+        },
         "iceworks.user": {
           "type": "object",
           "default": {
-            "projectPath": "",
             "empId": "",
             "account": "",
             "gitlabToken": ""
           },
           "properties": {
-            "projectPath": {
-              "type": "string",
-              "description": "默认项目路径"
-            },
             "empId": {
               "type": "string",
               "description": "工号"

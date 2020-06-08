@@ -11,7 +11,6 @@ import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 const defaultSettingJsonData = {
-  projectPath: '',
   empId: '',
   account: '',
   gitlabToken: ''
@@ -156,7 +155,7 @@ const CreateProject: React.FC = () => {
     const projectDir = await callService('project', 'createProject', data);
     setProjectDir(projectDir);
     const { projectPath } = data;
-    await callService('common', 'saveDataToSettingJson', 'user', { ...settingJsonData, projectPath });
+    await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
   }
 
   async function onDEFProjectDetailSubmit(values: any, errors: any) {
@@ -171,7 +170,8 @@ const CreateProject: React.FC = () => {
     const { empId, account, gitlabToken } = values;
     try {
       const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
-      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken, projectPath })
+      await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken });
+      await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
       setProjectDir(projectDir);
       setCreateDEFProjectLoading(false);
       goNext();
@@ -207,10 +207,11 @@ const CreateProject: React.FC = () => {
       return false
     }
     async function setDefaultFields(isAliInternal) {
-      const data = await callService('common', 'getDataFromSettingJson', 'user') || {};
-      const { empId, account, projectPath, gitlabToken } = data;
-      setCurProjectField({ ...curProjectField, projectPath })
-      setSettingJsonData(data)
+      const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
+      const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
+      const { empId, account, gitlabToken } = userData;
+      setCurProjectField({ ...curProjectField, projectPath: workspace })
+      setSettingJsonData(userData)
       if (isAliInternal) {
         setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken })
       }

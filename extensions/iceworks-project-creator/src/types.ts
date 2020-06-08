@@ -17,7 +17,6 @@ export interface IDEFProjectField {
 
 export interface ISettingJsonData {
   empId: string;
-  projectPath: string;
   account: string;
   gitlabToken: string;
 }
