@@ -67,7 +67,7 @@ const Content: React.FC<ContentProps> = ({
       <div className={styles.search}>
         <Search
           shape="simple"
-          placeholder="Enter keywords to find materials"
+          placeholder="输入关键字查找物料"
           onSearch={handeSearchSubmit}
         />
       </div>

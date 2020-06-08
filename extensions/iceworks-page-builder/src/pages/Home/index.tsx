@@ -13,7 +13,7 @@ async function getSources() {
   try {
     sources = await callService('material', 'getSourcesByProjectType');
   } catch (e) {
-    Notification.error({ content: 'Get Material Sourcess got error, please try aging.' });
+    Notification.error({ content: '获取物料源失败，请稍后再试。' });
   }
 
   console.log('getSources', sources);
@@ -25,7 +25,7 @@ async function getData(source: string) {
   try {
     data = await callService('material', 'getData', source);
   } catch (e) {
-    Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
   }
   console.log('getData', data);
   return data;
@@ -33,11 +33,11 @@ async function getData(source: string) {
 
 function validateData({ blocks, pageName }) {
   if (!pageName) {
-    return 'Please set name of page';
+    return '请填写页面名称。';
   }
 
   if (!blocks || !blocks.length) {
-    return 'Please select blocks';
+    return '请选择使用的区块。';
   }
 
   return '';
@@ -107,7 +107,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: 'Page generation succeeded!' });
+    Notification.success({ content: '页面生成成功！' });
     resetData();
   }
 
@@ -116,11 +116,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. Fill in the page name:
+            1. 填写页面名称：
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="Starts with A-Z, cannot contain special characters"
+              placeholder="名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
@@ -165,7 +165,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
-          Generate page
+          生成页面
         </Button>
       </div>
     </div>

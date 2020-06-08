@@ -55,7 +55,7 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
             src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png"
             alt="Block"
           />
-            Please select blocks from the right slide
+            请从右侧选择区块。
         </div>
       )}
     </div>

@@ -9,7 +9,7 @@ async function getSources() {
   try {
     sources = await callService('material', 'getSourcesByProjectType');
   } catch (e) {
-    Notification.error({ content: 'Get Material Sourcess got error, please try aging.' });
+    Notification.error({ content: '获取物料源信息失败，请稍后再试。' });
   }
 
   console.log('getSources', sources);
@@ -21,7 +21,7 @@ async function getData(source: string) {
   try {
     data = await callService('material', 'getData', source);
   } catch (e) {
-    Notification.error({ content: 'Get Material Data got error, please try aging.' });
+    Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
   }
   console.log('getData', data);
   return data;
@@ -29,11 +29,11 @@ async function getData(source: string) {
 
 function validateData({ block, componentName }) {
   if (!componentName) {
-    return 'Please set name of component';
+    return '请填写组件名。';
   }
 
   if (!block) {
-    return 'Please select blocks';
+    return '请选择使用的区块。';
   }
 
   return '';
@@ -79,7 +79,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: 'Component generation succeeded!' });
+    Notification.success({ content: '组件生成成功！' });
     resetData();
   }
 
@@ -88,11 +88,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. Fill in the component name:
+            1. 填写组件名：
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="Starts with A-Z, cannot contain special characters"
+              placeholder="名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
               className={styles.pageNameInput}
               value={componentName}
               onChange={(value) => setComponentName(value)}
@@ -102,7 +102,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. Select Block：
+            2. 选择使用的区块：
           </div>
           <div className={styles.select}>
             <Material
@@ -118,7 +118,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          Generate component
+          生成组件
         </Button>
       </div>
     </div>
