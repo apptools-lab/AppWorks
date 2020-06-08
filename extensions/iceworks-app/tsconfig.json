@@ -1,13 +1,9 @@
 {
+	"extends": "../../tsconfig.extension.json",
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es2019",
-		"lib": [
-			"ES2019"
-		],
 		"outDir": "build",
-		"sourceMap": true,
-		"rootDir": "src"
+		"rootDir": "src",
+		"noImplicitAny": false
 	},
 	"exclude": [
 		"node_modules",

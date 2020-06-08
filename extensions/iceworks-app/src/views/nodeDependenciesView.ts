@@ -64,7 +64,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
-      let deps: DependencyNode[];
+      let deps: DependencyNode[] = [];
       if (packageJson[label]) {
         deps = await Promise.all(Object.keys(packageJson[label]).map(async dep => {
           const version = this.getDepVersion(dep);
@@ -79,7 +79,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
         )
       }
 
-      return deps || [];
+      return deps;
     } else {
       return [];
     }

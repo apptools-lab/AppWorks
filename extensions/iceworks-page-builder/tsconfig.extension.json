@@ -1,13 +1,14 @@
 {
+	"extends": "../../tsconfig.extension.json",
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es6",
-    "outDir": "build",
-		"lib": [ "es6" ],
-		"sourceMap": true,
-    "rootDir": ".",
-		"strict": true   /* enable all strict type-checking options */
+		"rootDir": ".",
+		"outDir": "build"
 	},
-  "include": ["src-extension"],
-  "exclude": ["node_modules", ".vscode-test"]
+	"include": [
+		"src-extension"
+	],
+	"exclude": [
+		"node_modules",
+		".vscode-test"
+	]
 }
