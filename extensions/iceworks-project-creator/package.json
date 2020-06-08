@@ -80,7 +80,7 @@
   },
   "scripts": {
     "start": "icejs start --disable-reload",
-    "build": "cross-env CLIENT_TOKEN=8ea74f33dea670f4bfc99092cea1314e953e3c1a4b8b6b60c48384543114a4e8 icejs build",
+    "build": "icejs build",
     "vscode:prepublish": "rm -rf build && npm run build && npm run compile",
     "compile": "tsc -p tsconfig.extension.json",
     "lint": "eslint src --ext ts",
