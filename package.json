@@ -23,6 +23,9 @@
     "sync": "ts-node ./scripts/sync.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts"
   },
+  "resolutions": {
+    "eslint-plugin-import": "2.20.2"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
