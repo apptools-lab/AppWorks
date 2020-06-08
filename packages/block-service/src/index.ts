@@ -6,8 +6,8 @@ import * as readFiles from 'fs-readdir-recursive';
 import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
-import { projectPath } from '@iceworks/project-service';
-import { createNpmCommand, getProjectLanguageType } from '@iceworks/common-service';
+import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
+import { createNpmCommand } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 
 function getBlockType(blockSourceSrcPath) {
