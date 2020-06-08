@@ -55,7 +55,7 @@ export async function getProjectFramework() {
     return 'rax-app';
   }
 
-  if (devDependencies && devDependencies['ice.js']) {
+  if ((devDependencies && devDependencies['ice.js']) || (dependencies && dependencies['ice.js'])) {
     return 'icejs';
   }
 
