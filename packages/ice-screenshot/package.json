@@ -1,6 +1,6 @@
 {
   "name": "@ice/screenshot",
-  "version": "0.1.6",
+  "version": "0.1.7-alpha.0",
   "description": "Take a screenshot of web page",
   "main": "bin/index.js",
   "bin": {
@@ -32,5 +32,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "http://registry.npmjs.com"
-  }
+  },
+  "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }
