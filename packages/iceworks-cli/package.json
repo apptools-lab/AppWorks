@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "3.2.1",
+  "version": "3.2.2-alpha.2",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
@@ -14,11 +14,11 @@
   "scripts": {},
   "license": "MIT",
   "dependencies": {
-    "@iceworks/generate-project": "^1.0.6",
+    "@iceworks/generate-project": "^1.0.7-alpha.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.5",
     "camelcase": "^5.3.1",
-    "chalk": "^2.4.2",
+    "chalk": "^4.0.0",
     "commander": "^2.20.0",
     "cross-spawn": "^6.0.5",
     "decamelize": "^3.2.0",
@@ -26,7 +26,7 @@
     "fs-extra": "^8.0.1",
     "fs-readdir-recursive": "^1.1.0",
     "glob": "^7.1.4",
-    "ice-npm-utils": "^1.4.2",
+    "ice-npm-utils": "^1.4.4",
     "inquirer": "^6.5.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
@@ -43,6 +43,7 @@
     "tar": "^2.0.0",
     "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0",
+    "url-join": "^4.0.1",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0",
     "zlib": "^1.0.5"
@@ -50,5 +51,6 @@
   "engines": {
     "node": ">=8.3.0"
   },
-  "__npminstall_done": false
+  "__npminstall_done": false,
+  "gitHead": "1096f88f2d5a7ee82270d656c5b6c52218d817d1"
 }

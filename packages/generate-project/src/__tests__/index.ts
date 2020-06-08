@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { downloadAndGenerateProject } from '..';
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(60 * 1000);
 
 const tmpPath = path.resolve(__dirname, '../../.tmp');
 fs.removeSync(tmpPath);

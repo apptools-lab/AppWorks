@@ -15,10 +15,12 @@
     "request-progress": "^3.0.0",
     "request-promise": "^4.2.4",
     "semver": "^6.0.0",
-    "tar": "^4.4.8"
+    "tar": "^4.4.8",
+    "url-join": "^4.0.1"
   },
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "1096f88f2d5a7ee82270d656c5b6c52218d817d1"
 }

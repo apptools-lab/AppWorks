@@ -6,6 +6,7 @@ import semver = require('semver');
 import fs = require('fs');
 import mkdirp = require('mkdirp');
 import path = require('path');
+import urlJoin = require('url-join');
 import progress = require('request-progress');
 import zlib = require('zlib');
 import tar = require('tar');
@@ -108,7 +109,8 @@ function getAndExtractTarball(
  * 从 registry 获取 npm 的信息
  */
 function getNpmInfo(npm: string, registry?: string): Promise<any> {
-  const url = `${registry || getNpmRegistry(npm)}/${npm}`;
+  const register = registry || getNpmRegistry(npm);
+  const url = urlJoin(register, npm);
 
   return request.get(url).then((response) => {
     let body;
