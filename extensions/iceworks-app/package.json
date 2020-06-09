@@ -98,8 +98,8 @@
         }
       },
       {
-        "command": "iceworks-page-builder.create",
-        "title": "%iceworks-page-builder.create.title%",
+        "command": "iceworksApp.pages.add",
+        "title": "%iceworksApp.pages.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -118,8 +118,8 @@
         "title": "%iceworksApp.pages.openFile.title%"
       },
       {
-        "command": "iceworks-component-builder.generate",
-        "title": "%iceworks-component-builder.generate.title%",
+        "command": "iceworksApp.components.add",
+        "title": "%iceworksApp.components.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -210,7 +210,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworks-page-builder.create",
+          "command": "iceworksApp.pages.add",
           "when": "view == pages",
           "group": "navigation"
         },
@@ -220,7 +220,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworks-component-builder.generate",
+          "command": "iceworksApp.components.add",
           "when": "view == components",
           "group": "navigation"
         },
