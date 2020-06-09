@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
@@ -7,9 +6,9 @@ import { pathExists } from '../utils';
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
   private workspaceRoot: string;
 
-  private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
+  private onDidChange: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this._onDidChangeTreeData.event;
+  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this.onDidChange.event;
 
   constructor(workspaceRoot: string) {
     this.workspaceRoot = workspaceRoot
@@ -20,7 +19,7 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
   }
 
   refresh(): void {
-    this._onDidChangeTreeData.fire(undefined);
+    this.onDidChange.fire(undefined);
   }
 
   getChildren() {

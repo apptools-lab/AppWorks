@@ -88,16 +88,12 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
-    "@types/glob": "^7.1.1",
     "@types/node": "^13.11.0",
     "@types/react": "^16.9.35",
     "@types/vscode": "^1.45.0",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
     "build-plugin-css-assets-local": "^0.1.0",
     "build-plugin-fusion": "^0.1.3",
     "build-plugin-moment-locales": "^0.1.0",
-    "glob": "^7.1.6",
     "ice.js": "^1.0.0",
     "typescript": "^3.8.3"
   },

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
@@ -7,16 +6,16 @@ import { pathExists } from '../utils';
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private workspaceRoot: string;
 
-  private _onDidChangeTreeData: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
+  private onDidChange: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this._onDidChangeTreeData.event;
+  readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this.onDidChange.event;
 
   constructor(workspaceRoot: string) {
     this.workspaceRoot = workspaceRoot
   }
 
   refresh(): void {
-    this._onDidChangeTreeData.fire(undefined);
+    this.onDidChange.fire(undefined);
   }
 
   getTreeItem(element: Component): vscode.TreeItem {

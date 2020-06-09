@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as vscode from 'vscode';
 import * as rimraf from 'rimraf';
 import * as fse from 'fs-extra';
@@ -14,9 +13,9 @@ import { nodeDepTypes } from '../constants';
 const rimrafAsync = util.promisify(rimraf);
 
 export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
-  private _onDidChangeTreeData: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
+  private onDidChange: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this._onDidChangeTreeData.event;
+  readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this.onDidChange.event;
 
   packageJsonPath: string;
 
@@ -28,7 +27,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
   }
 
   refresh(): void {
-    this._onDidChangeTreeData.fire(undefined);
+    this.onDidChange.fire(undefined);
   }
 
   getTreeItem(element: DependencyNode): vscode.TreeItem {
