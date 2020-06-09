@@ -21,7 +21,7 @@ interface IExtensionInfo {
 function checkVersionExists(extension: string, version: string, retry = 0): Promise<boolean> {
   return axios.get(
     // Use VS Code Extension assets icon check version.
-    `http://rax.gallery.vsassets.io/_apis/public/gallery/publisher/Rax/extension/${encodeURIComponent(extension)}/${encodeURIComponent(version)}/assetbyname/Microsoft.VisualStudio.Services.Icons.Default`,
+    `http://iceworks-team.gallery.vsassets.io/_apis/public/gallery/publisher/iceworks-team/extension/${encodeURIComponent(extension)}/${encodeURIComponent(version)}/assetbyname/Microsoft.VisualStudio.Services.Icons.Default`,
     { timeout: TIMEOUT },
   )
     .then(res => res.status === 200)
@@ -73,18 +73,23 @@ async function getExtensionInfos(): Promise<IExtensionInfo[]> {
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
   } else {
-    const extensionNames: string[] = readdirSync(TARGET_DIRECTORY).filter((filename) => filename[0] !== '.');
+    const extensionFolders: string[] = readdirSync(TARGET_DIRECTORY).filter((filename) => filename[0] !== '.');
 
     console.log('[PUBLISH] Start check with following extensions:');
-    await Promise.all(extensionNames.map(async (extensionName) => {
-      console.log(`- ${extensionName}`);
+    await Promise.all(extensionFolders.map(async (extensionFolder) => {
 
-      const directory = join(TARGET_DIRECTORY, extensionName);
+
+      const directory = join(TARGET_DIRECTORY, extensionFolder);
       const packageInfoPath = join(directory, 'package.json');
 
       // Process extension info.
       if (existsSync(packageInfoPath)) {
+
         const packageInfo = JSON.parse(readFileSync(packageInfoPath, 'utf8'));
+        const extensionName = packageInfo.name || extensionFolder;
+
+        console.log(`- ${extensionName}`);
+        
         try {
           extensionInfos.push({
             name: extensionName,
@@ -98,7 +103,7 @@ async function getExtensionInfos(): Promise<IExtensionInfo[]> {
           console.log(`[ERROR] get ${extensionName} information failed: `, e);
         }
       } else {
-        console.log(`[ERROR] ${extensionName}'s package.json not found.`);
+        console.log(`[ERROR] ${extensionFolder}'s package.json not found.`);
       }
     }));
   }

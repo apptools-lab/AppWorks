@@ -1,4 +1,4 @@
-name: Extension Auto Publisher
+name: Auto Publisher
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm i -g vsce
-      - run: npm run publish:extension
+      - run: npm run publish
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
