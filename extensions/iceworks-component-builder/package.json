@@ -3,7 +3,7 @@
   "displayName": "iceworks Component Builder",
   "description": "Build Component UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.45.0"
   },

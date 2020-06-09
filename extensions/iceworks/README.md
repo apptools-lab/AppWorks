@@ -1,5 +1,5 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
 
 # iceworks
 
