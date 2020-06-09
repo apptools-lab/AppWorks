@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -10,12 +10,13 @@
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^1.4.2"
+    "ice-npm-utils": "^1.4.5-alpha.2"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }
