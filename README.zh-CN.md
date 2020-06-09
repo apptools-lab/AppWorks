@@ -24,9 +24,9 @@
 
 使用 VS Code 套件快速开发多端项目。
 
-![Dashboard](https://img.alicdn.com/tfs/TB1BiVDJQL0gK0jSZFtXXXQCXXa-2880-1754.png)
+![iceworks](https://img.alicdn.com/tfs/TB1NjqkJHY1gK0jSZTEXXXDQVXa-2880-1754.png)
 
-1. 打开 VS Code 插件市场中的 [iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)页面；
+1. 打开 VS Code 套件市场中的 [iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
 2. 点击页面上的「安装」按钮；
 3. 安装成功后，点击 VS Code 界面左侧活动栏上的「iceworks 图标」，开始使用。
 

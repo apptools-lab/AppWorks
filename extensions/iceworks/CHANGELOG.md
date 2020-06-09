@@ -2,6 +2,10 @@
 
 ## 0.1.0
 
+Update link for logo in README.md.
+
+## 0.1.0
+
 Initialization version, includes the following extensions:
 
 - iceworks-app
