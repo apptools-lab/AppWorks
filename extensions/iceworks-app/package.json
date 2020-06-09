@@ -316,16 +316,12 @@
     "vscode:prepublish": "rm -rf build && npm run compile",
     "compile": "tsc -p ./tsconfig.json",
     "lint": "eslint src --ext ts",
-    "watch": "tsc -watch -p ./tsconfig.json",
-    "pretest": "npm run compile && npm run lint"
+    "watch": "tsc -watch -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
     "@types/rimraf": "^3.0.0",
     "@types/vscode": "^1.45.0",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
-    "eslint": "^6.8.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {

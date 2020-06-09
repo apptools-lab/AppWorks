@@ -4,17 +4,22 @@ import * as path from 'path';
 import { pathExists } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
-  private _onDidChangeTreeData: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
-  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this._onDidChangeTreeData.event;
+  private workspaceRoot: string;
 
-  constructor(private workspaceRoot: string) { }
+  private onDidChange: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
+
+  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this.onDidChange.event;
+
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot
+  }
 
   getTreeItem(element: Page): vscode.TreeItem {
     return element;
   }
 
   refresh(): void {
-    this._onDidChangeTreeData.fire(undefined);
+    this.onDidChange.fire(undefined);
   }
 
   getChildren() {

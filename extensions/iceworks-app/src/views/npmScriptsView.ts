@@ -5,10 +5,14 @@ import { createNpmCommand } from '@iceworks/common-service'
 import { pathExists } from '../utils';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
-  private _onDidChangeTreeData: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
-  readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this._onDidChangeTreeData.event;
+  private workspaceRoot: string;
 
-  constructor(private workspaceRoot: string) {
+  private onDidChange: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
+
+  readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this.onDidChange.event;
+
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = workspaceRoot
   }
 
   getTreeItem(element: Script): vscode.TreeItem {
@@ -16,7 +20,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   }
 
   refresh(): void {
-    this._onDidChangeTreeData.fire(undefined);
+    this.onDidChange.fire(undefined);
   }
 
   async getChildren() {

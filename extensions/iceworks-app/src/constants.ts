@@ -1,4 +1,5 @@
 import { NodeDepTypes } from './types';
+
 export const entryFileSuffix = [
   '.jsx',
   '.js',

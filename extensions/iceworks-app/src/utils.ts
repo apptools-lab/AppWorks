@@ -23,11 +23,12 @@ export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Com
     return;
   }
   const args = script.arguments;
-  let [cwd, command, terminalName] = args;
+  const [cwd, command] = args;
+  let terminalName = args[2];
   if (!command) {
     return;
   }
-  terminalName = terminalName ? terminalName : command;
+  terminalName = terminalName || command;
   const name: string = createTerminalName(cwd, terminalName);
 
   let terminal: Terminal;
