@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as chalk from 'chalk';
+import * as urlJoin from 'url-join';
 import axios from 'axios';
 import getNpmRegistry from '../../utils/getNpmRegistry';
 import getUnpkgHost from '../../utils/getUnpkgHost';
@@ -76,7 +77,8 @@ function hasScreenshot(cwd) {
  * @return {array} [code, resute]
  */
 function getNpmPublishTime(npm, version = 'latest', registry) {
-  const url = `${registry}/${npm}`;
+  const url = urlJoin(registry, npm);
+  log.verbose('getNpmPublishTime', url);
   return axios.get(url)
     .then((response) => {
       const { data } = response;

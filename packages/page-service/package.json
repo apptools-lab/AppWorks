@@ -1,0 +1,26 @@
+{
+  "name": "@iceworks/page-service",
+  "version": "0.1.5",
+  "description": "iceworks page service for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "@iceworks/block-service": "^0.1.5",
+    "@iceworks/material-utils": "^0.1.3",
+    "@iceworks/project-service": "^0.1.4",
+    "ejs": "^3.1.3",
+    "fs-extra": "^9.0.0",
+    "prettier": "^2.0.5",
+    "uppercamelcase": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
+}

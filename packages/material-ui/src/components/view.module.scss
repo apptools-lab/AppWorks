@@ -1,0 +1,15 @@
+.wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  :global(.next-tabs-bar) {
+    margin-bottom: 16px;
+  }
+
+  :global(.next-tabs-content) {
+    :global(.next-tabs-tabpane.active) {
+      height: 100%;
+    }
+  }
+}

@@ -13,6 +13,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
   const pkgData = fse.readJsonSync(pkgPath);
   const isAliInternal = await checkAliInternal();
 
+  pkgData.dependencies = pkgData.dependencies || {};
   pkgData.devDependencies = pkgData.devDependencies || {};
 
   log.info('', 'clean package.json...');
@@ -41,14 +42,32 @@ export default async function formatProject(projectDir: string): Promise<void> {
     delete buildData.publicPath;
 
     if (isAliInternal) {
-      abcData = {
-        type: 'ice-app',
-        builder: '@ali/builder-ice-app',
-      };
 
-      // add @ali/build-plugin-ice-def
-      pkgData.devDependencies['@ali/build-plugin-ice-def'] = '^0.1.0';
-      buildData.plugins.push('@ali/build-plugin-ice-def');
+      if (pkgData.dependencies.rax) {
+        // For Rax project
+        abcData = {
+          type: 'rax',
+          builder: '@ali/builder-rax-v1',
+          info: {
+            raxVersion: '1.x'
+          }
+        };
+
+        // add @ali/build-plugin-rax-app-def
+        pkgData.devDependencies['@ali/build-plugin-rax-app-def'] = '^1.0.2';
+        buildData.plugins.push('@ali/build-plugin-rax-app-def');
+
+      } else {
+
+        abcData = {
+          type: 'ice-app',
+          builder: '@ali/builder-ice-app',
+        };
+
+        // add @ali/build-plugin-ice-def
+        pkgData.devDependencies['@ali/build-plugin-ice-def'] = '^0.1.0';
+        buildData.plugins.push('@ali/build-plugin-ice-def');
+      } 
     }
 
     // delete build-plugin-fusion-material

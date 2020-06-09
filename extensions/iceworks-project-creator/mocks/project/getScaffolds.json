@@ -1,0 +1,549 @@
+[
+  {
+    "name": "Fusion Design Pro - JS",
+    "title": "Fusion Design Pro - JS",
+    "category": "Basic",
+    "screenshot": "https://img.alicdn.com/tfs/TB16ftixUY1gK0jSZFMXXaWcVXa-2880-1800.png",
+    "views": [
+      {
+        "title": "分析页面",
+        "path": "#/dashboard/analysis",
+        "screenshot": "build/views/page0.png",
+        "html": "build/views/page0.html"
+      },
+      {
+        "title": "监控页面",
+        "path": "#/dashboard/monitor",
+        "screenshot": "build/views/page1.png",
+        "html": "build/views/page1.html"
+      },
+      {
+        "title": "工作台",
+        "path": "#/dashboard/workplace",
+        "screenshot": "build/views/page2.png",
+        "html": "build/views/page2.html"
+      },
+      {
+        "title": "单列表单",
+        "path": "#/form/basic",
+        "screenshot": "build/views/page3.png",
+        "html": "build/views/page3.html"
+      },
+      {
+        "title": "两列表单",
+        "path": "#/form/two",
+        "screenshot": "build/views/page4.png",
+        "html": "build/views/page4.html"
+      },
+      {
+        "title": "三列表单",
+        "path": "#/form/three",
+        "screenshot": "build/views/page5.png",
+        "html": "build/views/page5.html"
+      },
+      {
+        "title": "四列表单",
+        "path": "#/form/four",
+        "screenshot": "build/views/page6.png",
+        "html": "build/views/page6.html"
+      },
+      {
+        "title": "分步表单",
+        "path": "#/form/step",
+        "screenshot": "build/views/page7.png",
+        "html": "build/views/page7.html"
+      },
+      {
+        "title": "分类表单",
+        "path": "#/form/classified",
+        "screenshot": "build/views/page8.png",
+        "html": "build/views/page8.html"
+      },
+      {
+        "title": "分组表单",
+        "path": "#/form/group",
+        "screenshot": "build/views/page9.png",
+        "html": "build/views/page9.html"
+      },
+      {
+        "title": "流程表单",
+        "path": "#/form/flow",
+        "screenshot": "build/views/page10.png",
+        "html": "build/views/page10.html"
+      },
+      {
+        "title": "分级表单",
+        "path": "#/form/hierarchical",
+        "screenshot": "build/views/page11.png",
+        "html": "build/views/page11.html"
+      },
+      {
+        "title": "基础列表",
+        "path": "#/list/basic",
+        "screenshot": "build/views/page12.png",
+        "html": "build/views/page12.html"
+      },
+      {
+        "title": "卡片列表",
+        "path": "#/list/card",
+        "screenshot": "build/views/page13.png",
+        "html": "build/views/page13.html"
+      },
+      {
+        "title": "表格列表",
+        "path": "#/list/table",
+        "screenshot": "build/views/page14.png",
+        "html": "build/views/page14.html"
+      },
+      {
+        "title": "基础详情",
+        "path": "#/detail/basic",
+        "screenshot": "build/views/page15.png",
+        "html": "build/views/page15.html"
+      },
+      {
+        "title": "高级详情",
+        "path": "#/detail/advanced",
+        "screenshot": "build/views/page16.png",
+        "html": "build/views/page16.html"
+      },
+      {
+        "title": "成功页面",
+        "path": "#/feedback/success",
+        "screenshot": "build/views/page17.png",
+        "html": "build/views/page17.html"
+      },
+      {
+        "title": "失败页面",
+        "path": "#/feedback/fail",
+        "screenshot": "build/views/page18.png",
+        "html": "build/views/page18.html"
+      },
+      {
+        "title": "403",
+        "path": "#/feedback/403",
+        "screenshot": "build/views/page19.png",
+        "html": "build/views/page19.html"
+      },
+      {
+        "title": "404",
+        "path": "#/feedback/404",
+        "screenshot": "build/views/page20.png",
+        "html": "build/views/page20.html"
+      },
+      {
+        "title": "500",
+        "path": "#/feedback/500",
+        "screenshot": "build/views/page21.png",
+        "html": "build/views/page21.html"
+      },
+      {
+        "title": "系统设置",
+        "path": "#/settings",
+        "screenshot": "build/views/page22.png",
+        "html": "build/views/page22.html"
+      },
+      {
+        "title": "个人设置",
+        "path": "#/person",
+        "screenshot": "build/views/page23.png",
+        "html": "build/views/page23.html"
+      },
+      {
+        "title": "登录",
+        "path": "#/login",
+        "screenshot": "build/views/page24.png",
+        "html": "build/views/page24.html"
+      },
+      {
+        "title": "注册",
+        "path": "#/register",
+        "screenshot": "build/views/page25.png",
+        "html": "build/views/page25.html"
+      }
+    ],
+    "description": "使用 JavaScript，包含大量 UI 区块，比如图表、表单等。",
+    "homepage": "https://unpkg.com/@alifd/fusion-design-pro-js@0.1.16/build/index.html",
+    "categories": [
+      "Basic"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/fusion-design-pro-js",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/fusion-design-pro-js",
+      "version": "0.1.16",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.19.4",
+      "moment": "^2.24.0",
+      "react": "^16.4.1",
+      "react-dom": "^16.4.1",
+      "@antv/data-set": "^0.10.2",
+      "bizcharts": "^3.5.6",
+      "@alifd/theme-design-pro": "^0.6.2",
+      "react-intl": "^2.8.0",
+      "prop-types": "^15.5.8",
+      "@types/react": "^16.9.13",
+      "@types/react-dom": "^16.9.4"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB16ftixUY1gK0jSZFMXXaWcVXa-2880-1800.png"
+    ],
+    "publishTime": "2019-12-27T08:53:04.370Z",
+    "updateTime": "2020-04-08T05:25:39.472Z"
+  },
+  {
+    "name": "Fusion Design Pro - TS",
+    "title": "Fusion Design Pro - TS",
+    "category": "Basic",
+    "screenshot": "https://img.alicdn.com/tfs/TB16ftixUY1gK0jSZFMXXaWcVXa-2880-1800.png",
+    "views": [
+      {
+        "title": "分析页面",
+        "path": "#/dashboard/analysis",
+        "screenshot": "build/views/page0.png",
+        "html": "build/views/page0.html"
+      },
+      {
+        "title": "监控页面",
+        "path": "#/dashboard/monitor",
+        "screenshot": "build/views/page1.png",
+        "html": "build/views/page1.html"
+      },
+      {
+        "title": "工作台",
+        "path": "#/dashboard/workplace",
+        "screenshot": "build/views/page2.png",
+        "html": "build/views/page2.html"
+      },
+      {
+        "title": "单列表单",
+        "path": "#/form/basic",
+        "screenshot": "build/views/page3.png",
+        "html": "build/views/page3.html"
+      },
+      {
+        "title": "两列表单",
+        "path": "#/form/two",
+        "screenshot": "build/views/page4.png",
+        "html": "build/views/page4.html"
+      },
+      {
+        "title": "三列表单",
+        "path": "#/form/three",
+        "screenshot": "build/views/page5.png",
+        "html": "build/views/page5.html"
+      },
+      {
+        "title": "四列表单",
+        "path": "#/form/four",
+        "screenshot": "build/views/page6.png",
+        "html": "build/views/page6.html"
+      },
+      {
+        "title": "分步表单",
+        "path": "#/form/step",
+        "screenshot": "build/views/page7.png",
+        "html": "build/views/page7.html"
+      },
+      {
+        "title": "分类表单",
+        "path": "#/form/classified",
+        "screenshot": "build/views/page8.png",
+        "html": "build/views/page8.html"
+      },
+      {
+        "title": "分组表单",
+        "path": "#/form/group",
+        "screenshot": "build/views/page9.png",
+        "html": "build/views/page9.html"
+      },
+      {
+        "title": "流程表单",
+        "path": "#/form/flow",
+        "screenshot": "build/views/page10.png",
+        "html": "build/views/page10.html"
+      },
+      {
+        "title": "分级表单",
+        "path": "#/form/hierarchical",
+        "screenshot": "build/views/page11.png",
+        "html": "build/views/page11.html"
+      },
+      {
+        "title": "基础列表",
+        "path": "#/list/basic",
+        "screenshot": "build/views/page12.png",
+        "html": "build/views/page12.html"
+      },
+      {
+        "title": "卡片列表",
+        "path": "#/list/card",
+        "screenshot": "build/views/page13.png",
+        "html": "build/views/page13.html"
+      },
+      {
+        "title": "表格列表",
+        "path": "#/list/table",
+        "screenshot": "build/views/page14.png",
+        "html": "build/views/page14.html"
+      },
+      {
+        "title": "基础详情",
+        "path": "#/detail/basic",
+        "screenshot": "build/views/page15.png",
+        "html": "build/views/page15.html"
+      },
+      {
+        "title": "高级详情",
+        "path": "#/detail/advanced",
+        "screenshot": "build/views/page16.png",
+        "html": "build/views/page16.html"
+      },
+      {
+        "title": "成功页面",
+        "path": "#/feedback/success",
+        "screenshot": "build/views/page17.png",
+        "html": "build/views/page17.html"
+      },
+      {
+        "title": "失败页面",
+        "path": "#/feedback/fail",
+        "screenshot": "build/views/page18.png",
+        "html": "build/views/page18.html"
+      },
+      {
+        "title": "403",
+        "path": "#/feedback/403",
+        "screenshot": "build/views/page19.png",
+        "html": "build/views/page19.html"
+      },
+      {
+        "title": "404",
+        "path": "#/feedback/404",
+        "screenshot": "build/views/page20.png",
+        "html": "build/views/page20.html"
+      },
+      {
+        "title": "500",
+        "path": "#/feedback/500",
+        "screenshot": "build/views/page21.png",
+        "html": "build/views/page21.html"
+      },
+      {
+        "title": "系统设置",
+        "path": "#/settings",
+        "screenshot": "build/views/page22.png",
+        "html": "build/views/page22.html"
+      },
+      {
+        "title": "个人设置",
+        "path": "#/person",
+        "screenshot": "build/views/page23.png",
+        "html": "build/views/page23.html"
+      },
+      {
+        "title": "登录",
+        "path": "#/login",
+        "screenshot": "build/views/page24.png",
+        "html": "build/views/page24.html"
+      },
+      {
+        "title": "注册",
+        "path": "#/register",
+        "screenshot": "build/views/page25.png",
+        "html": "build/views/page25.html"
+      }
+    ],
+    "description": "使用 TypeScript，包含大量 UI 区块，比如图表、表单等。",
+    "homepage": "https://unpkg.com/@alifd/fusion-design-pro@0.1.29/build/index.html",
+    "categories": [
+      "Basic"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/fusion-design-pro",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/fusion-design-pro",
+      "version": "0.1.29",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.19.4",
+      "moment": "^2.24.0",
+      "react": "^16.4.1",
+      "react-dom": "^16.4.1",
+      "react-intl": "^2.8.0",
+      "@antv/data-set": "^0.10.2",
+      "bizcharts": "^3.5.6",
+      "@alifd/theme-design-pro": "^0.6.2",
+      "prop-types": "^15.5.8",
+      "@types/react": "^16.9.13",
+      "@types/react-dom": "^16.9.4"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB16ftixUY1gK0jSZFMXXaWcVXa-2880-1800.png"
+    ],
+    "publishTime": "2019-11-07T09:05:00.572Z",
+    "updateTime": "2020-04-08T05:28:38.818Z"
+  },
+  {
+    "name": "ice-stark-child",
+    "title": "icestark 子应用",
+    "categories": [
+      "icestark"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB1X5.paYr1gK0jSZFDXXb9yVXa-2480-1200.png",
+    "description": "微前端方案 icestark 的子应用模板，用于快速初始化微应用",
+    "homepage": "https://unpkg.com/@icedesign/stark-child-scaffold@latest/build/index.html",
+    "category": "icestark",
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/ice-stark-child",
+    "source": {
+      "type": "npm",
+      "npm": "@icedesign/stark-child-scaffold",
+      "version": "3.0.5",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.x",
+      "@alifd/theme-design-pro": "^0.x",
+      "@icedesign/container": "^1.0.4",
+      "@types/react": "^16.9.20",
+      "@types/react-dom": "^16.9.5",
+      "axios": "^0.17.1",
+      "moment": "^2.24.0",
+      "react": "^16.6.0",
+      "react-dom": "^16.6.0"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1X5.paYr1gK0jSZFDXXb9yVXa-2480-1200.png"
+    ],
+    "publishTime": "2019-07-22T07:13:43.198Z",
+    "updateTime": "2020-03-10T07:26:23.963Z"
+  },
+  {
+    "builder": "ice-scripts",
+    "name": "ice-stark-layout",
+    "title": "icestark 框架应用",
+    "categories": [
+      "icestark"
+    ],
+    "screenshot": "https://img.alicdn.com/tfs/TB11qbKv.T1gK0jSZFrXXcNCXXa-2878-1640.png",
+    "description": "微前端方案 icestark 的框架应用模板，用于快速初始化框架应用",
+    "homepage": "https://ice-lab.zeroling.com/",
+    "category": "icestark",
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/ice-stark-layout",
+    "source": {
+      "type": "npm",
+      "npm": "@icedesign/stark-layout-scaffold",
+      "version": "3.0.11",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.x",
+      "@alifd/theme-design-pro": "^0.x",
+      "@icedesign/container": "^1.x",
+      "@types/react": "^16.9.20",
+      "@types/react-dom": "^16.9.5",
+      "classnames": "^2.2.5",
+      "moment": "^2.24.0",
+      "prop-types": "^15.5.8",
+      "react": "^16.8.0",
+      "react-dom": "^16.8.0"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB11qbKv.T1gK0jSZFrXXcNCXXa-2878-1640.png"
+    ],
+    "publishTime": "2019-07-22T04:24:57.724Z",
+    "updateTime": "2020-03-26T11:38:55.281Z"
+  },
+  {
+    "name": "Scaffold Lite - JS",
+    "title": "Scaffold Lite - JS",
+    "category": "Basic",
+    "screenshot": "https://img.alicdn.com/tfs/TB12CtTsEY1gK0jSZFMXXaWcVXa-2480-1200.png",
+    "description": "轻量级模板，使用 JavaScript，仅包含基础的 Layout。",
+    "homepage": "https://unpkg.com/@alifd/scaffold-lite-js@0.1.6/build/index.html",
+    "categories": [
+      "Basic"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-lite-js",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/scaffold-lite-js",
+      "version": "0.1.6",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.19.4",
+      "moment": "^2.24.0",
+      "react": "^16.4.1",
+      "react-dom": "^16.4.1",
+      "@alifd/theme-design-pro": "^0.x"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB12CtTsEY1gK0jSZFMXXaWcVXa-2480-1200.png"
+    ],
+    "publishTime": "2020-02-15T10:40:59.375Z",
+    "updateTime": "2020-03-08T17:13:22.276Z"
+  },
+  {
+    "name": "Scaffold Lite - TS",
+    "title": "Scaffold Lite - TS",
+    "category": "Basic",
+    "screenshot": "https://img.alicdn.com/tfs/TB12CtTsEY1gK0jSZFMXXaWcVXa-2480-1200.png",
+    "description": "轻量级模板，使用 TypeScript，仅包含基础的 Layout。",
+    "homepage": "https://unpkg.com/@alifd/scaffold-lite@0.1.6/build/index.html",
+    "categories": [
+      "Basic"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-lite",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/scaffold-lite",
+      "version": "0.1.6",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@alifd/next": "^1.19.4",
+      "moment": "^2.24.0",
+      "react": "^16.4.1",
+      "react-dom": "^16.4.1",
+      "@alifd/theme-design-pro": "^0.x"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB12CtTsEY1gK0jSZFMXXaWcVXa-2480-1200.png"
+    ],
+    "publishTime": "2019-12-27T08:44:59.425Z",
+    "updateTime": "2020-03-08T17:12:55.437Z"
+  },
+  {
+    "name": "Scaffold Simple",
+    "title": "Scaffold Simple",
+    "category": "Basic",
+    "screenshot": "https://img.alicdn.com/tfs/TB1qdRsv.Y1gK0jSZFCXXcwqXXa-2878-1590.png",
+    "description": "使用 TypeScript，未使用任何 UI 库。",
+    "homepage": "https://unpkg.com/@alifd/scaffold-simple@0.1.6/build/index.html",
+    "categories": [
+      "Basic"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-simple",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/scaffold-simple",
+      "version": "0.1.6",
+      "registry": "https://registry.npmjs.org"
+    },
+    "dependencies": {
+      "@types/react": "^16.9.20",
+      "@types/react-dom": "^16.9.5",
+      "react": "^16.4.1",
+      "react-dom": "^16.4.1"
+    },
+    "screenshots": [
+      "https://img.alicdn.com/tfs/TB1qdRsv.Y1gK0jSZFCXXcwqXXa-2878-1590.png"
+    ],
+    "publishTime": "2020-02-19T07:56:43.292Z",
+    "updateTime": "2020-03-04T14:54:12.698Z"
+  }
+]

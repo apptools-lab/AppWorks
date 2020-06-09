@@ -19,3 +19,8 @@ extensions/*/out
 .vscode-test
 
 **/.ice/
+
+**/package-lock.json
+**/build
+
+*.vsix
