@@ -23,7 +23,7 @@ English | [简体中文](./README.zh-CN.md)
 
 Use VC Code pack to develop Universal Application projects quickly.
 
-![iceworks](https://img.alicdn.com/tfs/TB1NjqkJHY1gK0jSZTEXXXDQVXa-2880-1754.png)
+![iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 
 1. Open [iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
 2. Click the "install" button on page
