@@ -84,7 +84,7 @@ test('init material', async () => {
     await generate({
       rootDir: projectDir,
     });
-  } catch(err) {
+  } catch (err) {
     console.error('generate error', err);
     expect(err.message).toMatch('未发布');
   }

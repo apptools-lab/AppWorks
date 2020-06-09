@@ -1,0 +1,25 @@
+
+{
+  "name": "iceworks",
+  "displayName": "iceworks",
+  "description": "Universal Application Development Pack, using low-code technology.",
+  "publisher": "iceworks-team",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.45.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "icon": "assets/logo.png",
+  "categories": [
+    "Extension Packs"
+  ],
+  "extensionPack": [
+    "iceworks-team.iceworks-app",
+    "iceworks-team.iceworks-component-builder",
+    "iceworks-team.iceworks-page-builder",
+    "iceworks-team.iceworks-project-creator"
+  ]
+}

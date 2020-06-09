@@ -6,9 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "setup": "npm run install:deps && lerna clean --yes && npm run packages:build && npm run packages:link",
+    "setup": "npm run install:deps && lerna clean --yes && npm run packages:link && npm run packages:build",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
-    "install:deps": "rm -rf node_modules && yarn install --registry=http://registry.npm.taobao.org",
+    "install:deps": "rm -rf node_modules && rm -rf ./packages/*/node_modules && SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ yarn install --registry=http://registry.npm.taobao.org",
     "packages:link": "lerna link",
     "packages:watch": "ts-node ./scripts/watch.ts",
     "packages:build": "npm run packages:clean && ts-node ./scripts/build.ts",
@@ -17,10 +17,14 @@
     "publish:package": " ts-node ./scripts/package-publish.ts",
     "publish:extension": "ts-node ./scripts/extension-publish.ts",
     "lint": "eslint --cache --ext .ts,.tsx,.js ./ --quiet",
+    "lint:fix": "eslint --cache --ext .ts,.tsx,.js ./ --quiet --fix",
     "coverage": "codecov",
     "owner": "ts-node ./scripts/owner.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts"
+  },
+  "resolutions": {
+    "eslint-plugin-import": "2.20.2"
   },
   "husky": {
     "hooks": {
