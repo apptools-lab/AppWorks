@@ -30,13 +30,19 @@ export function activate(context: vscode.ExtensionContext) {
 
   const componentsProvider = new ComponentsProvider(rootPath);
   vscode.window.registerTreeDataProvider('components', componentsProvider);
-  vscode.commands.registerCommand('iceworksApp.components.add', () => { });
+  vscode.commands.registerCommand('iceworksApp.components.add', () => {
+    console.log('iceworksApp: activate iceworks-component-builder.generate');
+    vscode.commands.executeCommand('iceworks-component-builder.generate');
+  });
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
   const pagesProvider = new PagesProvider(rootPath);
   vscode.window.registerTreeDataProvider('pages', pagesProvider);
-  vscode.commands.registerCommand('iceworksApp.pages.add', () => { });
+  vscode.commands.registerCommand('iceworksApp.pages.add', () => {
+    console.log('iceworksApp: activate iceworks-page-builder.create');
+    vscode.commands.executeCommand('iceworks-page-builder.create');
+  });
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 

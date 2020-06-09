@@ -1,7 +1,9 @@
 # iceworks Project Creator
-Quick create a front-end project(React/Rax/Vue, etc).
+
+Quick create a Universal Application project(React/Rax/Vue, etc).
 
 ## Quick Start
+
 1. Select a scaffold
 2. Input your project Infomation
 3. Open project automatically

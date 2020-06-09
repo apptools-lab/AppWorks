@@ -6,7 +6,7 @@
 
 ## 用法
 
-![创建页面](https://img.alicdn.com/tfs/TB1W1VGIHj1gK0jSZFOXXc7GpXa-960-600.gif)
+![创建页面](https://img.alicdn.com/tfs/TB1mdpDJKT2gK0jSZFvXXXnFXXa-960-600.gif)
 
 1. 输入页面名称（将用作文件夹名）
 2. 从右侧区块列表中选择页面需要使用的区块，添加到左侧页面预览区

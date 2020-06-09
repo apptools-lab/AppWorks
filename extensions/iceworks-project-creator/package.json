@@ -1,7 +1,7 @@
 {
   "name": "iceworks-project-creator",
   "displayName": "iceworks Project Creator",
-  "description": "Quick create a front-end project(React/Rax/Vue, etc).",
+  "description": "Quick create a Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
@@ -84,8 +84,7 @@
     "vscode:prepublish": "rm -rf build && npm run build && npm run compile",
     "compile": "tsc -p tsconfig.extension.json",
     "lint": "eslint src --ext ts",
-    "watch": "tsc -watch -p tsconfig.extension.json",
-    "pretest": "npm run compile && npm run lint"
+    "watch": "tsc -watch -p tsconfig.extension.json"
   },
   "devDependencies": {
     "@ice/spec": "^1.0.0",
@@ -107,11 +106,11 @@
   "dependencies": {
     "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^1.1.0",
-    "@iceworks/common-service": "^0.1.0",
-    "@iceworks/material-service": "^0.1.0",
-    "@iceworks/material-utils": "^0.1.0",
-    "@iceworks/project-service": "^0.1.0",
-    "@iceworks/vscode-webview": "^0.1.0",
+    "@iceworks/common-service": "^0.1.2",
+    "@iceworks/material-service": "^0.1.2",
+    "@iceworks/material-utils": "^0.1.2",
+    "@iceworks/project-service": "^0.1.2",
+    "@iceworks/vscode-webview": "^0.1.1",
     "moment": "^2.24.0",
     "classnames": "^2.2.6",
     "react": "^16.8.0",

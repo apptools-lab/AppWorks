@@ -1,7 +1,7 @@
 {
   "name": "iceworks-app",
   "displayName": "iceworks App",
-  "description": "iceworks for Visual Studio Code.",
+  "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
@@ -98,8 +98,8 @@
         }
       },
       {
-        "command": "iceworks-page-builder.create",
-        "title": "%iceworks-page-builder.create.title%",
+        "command": "iceworksApp.pages.add",
+        "title": "%iceworksApp.pages.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -118,8 +118,8 @@
         "title": "%iceworksApp.pages.openFile.title%"
       },
       {
-        "command": "iceworks-component-builder.generate",
-        "title": "%iceworks-component-builder.generate.title%",
+        "command": "iceworksApp.components.add",
+        "title": "%iceworksApp.components.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -210,7 +210,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworks-page-builder.create",
+          "command": "iceworksApp.pages.add",
           "when": "view == pages",
           "group": "navigation"
         },
@@ -220,7 +220,7 @@
           "group": "navigation"
         },
         {
-          "command": "iceworks-component-builder.generate",
+          "command": "iceworksApp.components.add",
           "when": "view == components",
           "group": "navigation"
         },
@@ -316,8 +316,7 @@
     "vscode:prepublish": "rm -rf build && npm run compile",
     "compile": "tsc -p ./tsconfig.json",
     "lint": "eslint src --ext ts",
-    "watch": "tsc -watch -p ./tsconfig.json",
-    "pretest": "npm run compile && npm run lint"
+    "watch": "tsc -watch -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
@@ -329,10 +328,10 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.1.0",
+    "@iceworks/common-service": "^0.1.2",
     "@types/latest-version": "^4.0.1",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^1.4.1",
+    "ice-npm-utils": "^1.4.5-alpha.2",
     "latest-version": "^5.1.0",
     "rimraf": "^3.0.2",
     "util": "^0.12.3"

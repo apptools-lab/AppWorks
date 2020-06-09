@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/material-utils",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "General tool library for materials.",
   "files": [
     "lib"
@@ -12,5 +12,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }

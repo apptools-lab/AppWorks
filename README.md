@@ -8,7 +8,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">iceworks</h1>
 
-<p align="center">Universal Development Pack</p>
+<p align="center">Universal Application Development Pack</p>
 
 <p align="center">
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
@@ -21,7 +21,13 @@ English | [简体中文](./README.zh-CN.md)
 
 ### iceworks Pack
 
-Use VC Code pack to develop projects quickly.
+Use VC Code pack to develop Universal Application projects quickly.
+
+![Dashboard](https://img.alicdn.com/tfs/TB1BiVDJQL0gK0jSZFtXXXQCXXa-2880-1754.png)
+
+1. Open [iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
+2. Click the "install" button on page
+3. After installation is successful, click the "iceworks icon" on Activity Bar of VS Code interface to start
 
 ### iceworks CLI
 
