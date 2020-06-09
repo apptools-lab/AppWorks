@@ -19,9 +19,9 @@ function checkBuildSuccess(directory: string, mainFile: string): boolean {
   return existsSync(join(directory, mainFile));
 }
 
-function checkVersionExists(pkg: string, version: string): Promise<boolean> {
+function checkVersionExists(pkg: string, version: string, mainFile: string): Promise<boolean> {
   return axios(
-    `https://unpkg.com/${pkg}@${version}/lib/index.js`,
+    `https://unpkg.com/${pkg}@${version}/${mainFile}`,
     { timeout: TIMEOUT }
   )
     .then((res) => res.status === 200)
@@ -67,7 +67,9 @@ async function getPackageInfos(): Promise<IPackageInfo[]> {
             localVersion: packageInfo.version,
             mainFile: packageInfo.main,
             // If localVersion not exist, publish it
-            shouldPublish: checkBuildSuccess(directory, packageInfo.main) && !await checkVersionExists(packageName, packageInfo.version)
+            shouldPublish:
+              checkBuildSuccess(directory, packageInfo.main) &&
+              !await checkVersionExists(packageName, packageInfo.version, packageInfo.main)
           });
         } catch (e) {
           console.log(`[ERROR] get ${packageName} information failed: `, e);
