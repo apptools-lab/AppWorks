@@ -1,16 +1,14 @@
 {
   "name": "ice-npm-utils",
-  "version": "1.4.5",
+  "version": "2.0.0",
   "description": "npm utils for ice",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "dependencies": {
-    "@types/npmlog": "^4.1.2",
     "fs-extra": "^8.1.0",
     "mkdirp": "^0.5.1",
-    "npmlog": "^4.1.2",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",
     "request-promise": "^4.2.4",

@@ -1,8 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import {
-  checkAliInternal, log,
-} from 'ice-npm-utils';
+import { checkAliInternal } from 'ice-npm-utils';
 
 export default async function formatProject(projectDir: string): Promise<void> {
   await fse.remove(path.join(projectDir, 'build'));
@@ -16,7 +14,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
   pkgData.dependencies = pkgData.dependencies || {};
   pkgData.devDependencies = pkgData.devDependencies || {};
 
-  log.info('', 'clean package.json...');
+  console.info('clean package.json...');
 
   // modify package.json
   pkgData.private = true;
@@ -33,7 +31,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
 
   const buildJsonPath = path.join(projectDir, 'build.json');
   if (fse.existsSync(buildJsonPath)) {
-    log.verbose('formatProject', 'build-scripts project');
+    console.debug('formatProject', 'build-scripts project');
 
     const buildJsonPath = path.join(projectDir, 'build.json');
     const buildData = fse.readJsonSync(buildJsonPath);
@@ -67,7 +65,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
         // add @ali/build-plugin-ice-def
         pkgData.devDependencies['@ali/build-plugin-ice-def'] = '^0.1.0';
         buildData.plugins.push('@ali/build-plugin-ice-def');
-      } 
+      }
     }
 
     // delete build-plugin-fusion-material
@@ -84,7 +82,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
       spaces: 2,
     });
   } else if (pkgData.devDependencies['ice-scripts']) {
-    log.verbose('formatProject', 'ice-scripts project');
+    console.debug('formatProject', 'ice-scripts project');
     const buildVersion = pkgData.devDependencies['ice-scripts'];
     // ^1.y.z, ~1.y.z, 1.x
     const is1X = /^(\^|~|)1\./.test(buildVersion);
@@ -95,7 +93,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
 
     if (!is1X) {
       // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath；
-      log.info('', 'If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+      console.info('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
     } else if (pkgData.buildConfig) {
       delete pkgData.buildConfig.output;
       delete pkgData.buildConfig.localization;

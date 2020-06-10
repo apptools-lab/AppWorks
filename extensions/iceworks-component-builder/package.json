@@ -3,9 +3,9 @@
   "displayName": "iceworks Component Builder",
   "description": "Build Component UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
-    "vscode": "^1.45.0"
+    "vscode": "^1.41.0"
   },
   "categories": [
     "Other"
@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.41.0",
     "build-plugin-css-assets-local": "^0.1.0",
     "build-plugin-fusion": "^0.1.0",
     "build-plugin-moment-locales": "^0.1.0",

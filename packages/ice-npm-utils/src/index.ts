@@ -1,5 +1,4 @@
 import * as fsExtra from 'fs-extra';
-import log from './log';
 
 import request = require('request-promise');
 import semver = require('semver');
@@ -169,7 +168,7 @@ function getNpmLatestSemverVersion(npm: string, baseVersion: string, registry?: 
 function getLatestVersion(npm, registry?: string): Promise<string> {
   return getNpmInfo(npm, registry).then((data) => {
     if (!data['dist-tags'] || !data['dist-tags'].latest) {
-      log.error('没有 latest 版本号', data);
+      console.error('没有 latest 版本号', data);
       return Promise.reject(new Error('Error: 没有 latest 版本号'));
     }
 
@@ -224,7 +223,7 @@ function checkAliInternal(): Promise<boolean> {
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {
-    log.verbose('checkAliInternal error: ', err.message);
+    console.debug('checkAliInternal error: ', err.message);
     return false;
   }).then((response) => {
     return response.statusCode === 200 && /success/.test(response.body);
@@ -265,7 +264,6 @@ export {
   checkAliInternal,
   getNpmTarball,
   getAndExtractTarball,
-  log,
   packageJSONFilename,
   readPackageJSON,
   getPackageLocalVersion,
