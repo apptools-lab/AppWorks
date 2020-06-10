@@ -1,13 +1,13 @@
-# iceworks CLI
+# Iceworks CLI
 
-CLI for iceworks.
+CLI for Iceworks.
 
 ## Features
 
 - init project by scaffold
 - develop material collection
 - init single component by scaffold
-- start iceworks ui
+- start Iceworks ui
 
 ## Usage
 

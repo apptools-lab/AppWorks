@@ -37,14 +37,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/iceworks-next.git"
+    "url": "git+https://github.com/ice-lab/iceworks.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ice-lab/iceworks-next/issues"
+    "url": "https://github.com/ice-lab/iceworks/issues"
   },
-  "homepage": "https://github.com/ice-lab/iceworks-next#readme",
+  "homepage": "https://github.com/ice-lab/iceworks#readme",
   "devDependencies": {
     "@ice/spec": "^1.0.1",
     "@types/execa": "^2.0.0",

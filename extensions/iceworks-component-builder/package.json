@@ -1,6 +1,6 @@
 {
   "name": "iceworks-component-builder",
-  "displayName": "iceworks Component Builder",
+  "displayName": "Iceworks Component Builder",
   "description": "Build Component UI by low-code way",
   "publisher": "iceworks-team",
   "version": "0.1.2",
@@ -23,11 +23,11 @@
     "commands": [
       {
         "command": "iceworks-component-builder.generate",
-        "title": "iceworks: Generate Component"
+        "title": "Iceworks: Generate Component"
       }
     ],
     "configuration": {
-      "title": "iceworks App",
+      "title": "Iceworks App",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

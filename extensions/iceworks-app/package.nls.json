@@ -4,7 +4,7 @@
   "iceworksApp.view.pages.name": "Pages",
   "iceworksApp.view.components.name": "Components",
   "iceworksApp.view.nodeDependencies.name": "Node Dependencies",
-  "iceworksApp.viewsWelcome.welcomePage.contents": "In order to use iceworks App, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:iceworks-project-creator.start)\nRead the [docs](https://github.com/ice-lab/iceworks) to learn more about how to use iceworks app in VS Code.",
+  "iceworksApp.viewsWelcome.welcomePage.contents": "In order to use Iceworks App, you have to open a folder or create a new project first.\n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:iceworks-project-creator.start)\nRead the [docs](https://github.com/ice-lab/iceworks) to learn more about how to use Iceworks app in VS Code.",
   "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json.",
   "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found.",
   "iceworksApp.viewsWelcome.components.contents": "Components could not be found.",
@@ -25,6 +25,6 @@
   "iceworksApp.nodeDependencies.reinstall.title": "Reinstall Dependencies",
   "iceworksApp.nodeDependencies.refresh.title": "Refresh",
   "iceworksApp.nodeDependencies.upgrade.title": "Upgrade Dependency",
-  "iceworksApp.configuration.properties.iceworks.packageManager.description": "iceworks npm package manager.",
-  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "iceworks npm registry."
+  "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry."
 }

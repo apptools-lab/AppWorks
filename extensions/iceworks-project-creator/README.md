@@ -1,4 +1,4 @@
-# iceworks Project Creator
+# Iceworks Project Creator
 
 Quick create a Universal Application project(React/Rax/Vue, etc).
 

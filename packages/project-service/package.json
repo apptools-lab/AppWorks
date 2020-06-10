@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/project-service",
   "version": "0.1.6",
-  "description": "iceworks project service for VSCode extension.",
+  "description": "Iceworks project service for VSCode extension.",
   "files": [
     "lib"
   ],

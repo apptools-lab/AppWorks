@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "version": "3.2.3",
-  "description": "iceworks CLI for develop project/material-collection/component.",
+  "description": "Iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
     "iceworks": "bin/iceworks.js",
