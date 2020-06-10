@@ -38,8 +38,6 @@ function publish(extension: string, directory: string, version: string): void {
   // npm install
   spawnSync('npm', [
     'install',
-    '--registry',
-    'http://registry.npm.taobao.org',
   ], {
     stdio: 'inherit',
     cwd: directory,
