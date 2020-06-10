@@ -16,6 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm i
       - run: npm i -g vsce
+      - run: npm run setup
       - run: npm run publish
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}

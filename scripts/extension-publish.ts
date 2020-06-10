@@ -14,7 +14,6 @@ interface IExtensionInfo {
   name: string;
   directory: string;
   localVersion: string;
-  shouldBuild: boolean; // If extension exists script build, need run build then publish.
   shouldPublish: boolean;
 }
 
@@ -35,7 +34,7 @@ function checkVersionExists(extension: string, version: string, retry = 0): Prom
     });
 }
 
-function publish(extension: string, directory: string, version: string, shouldBuild: boolean): void {
+function publish(extension: string, directory: string, version: string): void {
   // npm install
   spawnSync('npm', [
     'install',
@@ -43,17 +42,6 @@ function publish(extension: string, directory: string, version: string, shouldBu
     stdio: 'inherit',
     cwd: directory,
   });
-
-  // npm run build
-  if (shouldBuild) {
-    spawnSync('npm', [
-      'run',
-      'build',
-    ], {
-      stdio: 'inherit',
-      cwd: directory,
-    });
-  }
 
   // vsce publish
   console.log('[VSCE] PUBLISH: ', `${extension}@${version}`);
@@ -89,13 +77,12 @@ async function getExtensionInfos(): Promise<IExtensionInfo[]> {
         const extensionName = packageInfo.name || extensionFolder;
 
         console.log(`- ${extensionName}`);
-        
+
         try {
           extensionInfos.push({
             name: extensionName,
             directory,
             localVersion: packageInfo.version,
-            shouldBuild: !!(packageInfo.scripts && packageInfo.scripts.build),
             // If localVersion not exist, publish it
             shouldPublish: !await checkVersionExists(extensionName, packageInfo.version)
           });
@@ -121,10 +108,10 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
   }
 
   for (let i = 0; i < extensionInfos.length; i++) {
-    const { name, directory, localVersion, shouldBuild, shouldPublish } = extensionInfos[i];
+    const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
     if (shouldPublish) {
       console.log(`--- ${name}@${localVersion} ---`);
-      publish(name, directory, localVersion, shouldBuild);
+      publish(name, directory, localVersion);
     }
   }
 });
