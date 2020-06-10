@@ -21,7 +21,7 @@ export async function checkPathExists(p: string, folderName?: string): Promise<b
   return await fse.pathExists(p);
 }
 
-export function saveDataToSettingJson(section: string, data: any, configurationTarget: boolean = true): void {
+export function saveDataToSettingJson(section: string, data: any, configurationTarget = true): void {
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }
 
@@ -126,7 +126,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   });
 }
 
-export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
+export function createNpmCommand(action: string, target: '', extra: ''): string {
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
