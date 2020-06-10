@@ -18,7 +18,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
         required
         requiredMessage="请输入工号"
       >
-        <Input placeholder="Please input the id" name="empId" />
+        <Input placeholder="请输入工号" name="empId" />
       </Form.Item>
       <Form.Item
         colSpan={12}
