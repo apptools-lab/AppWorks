@@ -100,7 +100,8 @@ export async function openLocalProjectFolder(projectDir: string): Promise<void> 
   if (!isProjectDirExists) {
     throw new Error(`本地不存在「${projectDir}」目录！`)
   }
-  vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), false);
+  const newWindow = !!vscode.workspace.rootPath;
+  vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), newWindow);
 }
 
 export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
