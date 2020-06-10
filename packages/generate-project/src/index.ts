@@ -1,6 +1,6 @@
 import * as ora from 'ora';
 import {
-  isAliNpm, getNpmTarball, getAndExtractTarball, log,
+  isAliNpm, getNpmTarball, getAndExtractTarball
 } from 'ice-npm-utils';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
@@ -16,7 +16,7 @@ export async function downloadAndGenerateProject(
   registry = registry || await getNpmRegistry(npmName);
   const tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
 
-  log.verbose('download tarballURL', tarballURL);
+  console.debug('download tarballURL', tarballURL);
 
   const spinner = ora('download npm tarball start').start();
   await getAndExtractTarball(
@@ -32,8 +32,7 @@ export async function downloadAndGenerateProject(
   try {
     await formatProject(projectDir);
   } catch (err) {
-    log.warn('', 'formatProject error');
-    console.log(err);
+    console.warn('formatProject error');
   }
 };
 

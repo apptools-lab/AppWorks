@@ -1,6 +1,6 @@
 {
   "name": "iceworks",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "iceworks CLI for develop project/material-collection/component.",
   "main": "bin/iceworks.js",
   "bin": {
@@ -26,7 +26,7 @@
     "fs-extra": "^8.0.1",
     "fs-readdir-recursive": "^1.1.0",
     "glob": "^7.1.4",
-    "ice-npm-utils": "^1.4.5",
+    "ice-npm-utils": "^2.0.0",
     "inquirer": "^6.5.0",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
