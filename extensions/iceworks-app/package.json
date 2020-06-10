@@ -319,6 +319,7 @@
     "watch": "tsc -watch -p ./tsconfig.json"
   },
   "devDependencies": {
+    "@types/latest-version": "^4.0.1",
     "@types/node": "^13.11.0",
     "@types/rimraf": "^3.0.0",
     "@types/vscode": "^1.45.0",
