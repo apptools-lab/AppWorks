@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { checkAliInternal } from 'ice-npm-utils';
 
-export default async function formatProject(projectDir: string): Promise<void> {
+export default async function formatProject(projectDir: string, npmName?: string): Promise<void> {
   await fse.remove(path.join(projectDir, 'build'));
 
   let abcData = {};
@@ -10,6 +10,7 @@ export default async function formatProject(projectDir: string): Promise<void> {
   const pkgPath = path.join(projectDir, 'package.json');
   const pkgData = fse.readJsonSync(pkgPath);
   const isAliInternal = await checkAliInternal();
+  const initialVersion = '0.1.0';
 
   pkgData.dependencies = pkgData.dependencies || {};
   pkgData.devDependencies = pkgData.devDependencies || {};
@@ -19,6 +20,10 @@ export default async function formatProject(projectDir: string): Promise<void> {
   // modify package.json
   pkgData.private = true;
   pkgData.originTemplate = pkgData.name;
+  if (npmName) {
+    pkgData.name = npmName;
+  }
+  pkgData.version = initialVersion;
   delete pkgData.files;
   delete pkgData.publishConfig;
   delete pkgData.scaffoldConfig;
