@@ -1,6 +1,8 @@
 .form {
   width: 400px;
-  margin: 40px auto 24px;
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .help {

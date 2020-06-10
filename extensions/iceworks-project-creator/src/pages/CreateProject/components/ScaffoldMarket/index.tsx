@@ -28,8 +28,9 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
 
   async function getScaffolds(source: string) {
     try {
-      const data = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      return data;
+      const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
+      const whitelist = ['Fusion Design Pro - TS', 'Scaffold Lite - TS', 'Scaffold Simple', 'Rax basic app']
+      return scaffolds.filter(scaffold => whitelist.includes(scaffold.name));
     } catch (e) {
       return [];
     }
@@ -62,7 +63,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
               title={item.name}
               content={item.description}
               selected={materialSourceSelected.name === item.name}
-              style={{ width: 180 }}
+              style={{ width: 160 }}
               onClick={() => onMaterialSourceClick(item)}
             />
           ))}
@@ -73,7 +74,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
               key={item.name}
               title={item.title}
               content={item.description}
-              media={<img height={120} src={item.screenshot} alt="screenshot" />}
+              media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
               selected={materialSelected === item.name}
               style={{ width: 180, height: 250 }}
               onClick={() => onScaffoldMaterialClick(item)}
