@@ -1,5 +1,9 @@
 # Change Log
 
-## Version 0.1.0
+## 0.1.3
 
-- Initial release
+Spelling of unified brand name: Iceworks.
+
+## 0.1.0
+
+Initial release
