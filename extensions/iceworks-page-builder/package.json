@@ -3,7 +3,7 @@
   "displayName": "iceworks Page Builder",
   "description": "Build Page UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ice-lab/iceworks.git"
@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.41.0",
     "build-plugin-css-assets-local": "^0.1.0",
     "build-plugin-fusion": "^0.1.0",
     "build-plugin-moment-locales": "^0.1.0",

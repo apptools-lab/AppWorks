@@ -3,7 +3,7 @@
   "displayName": "iceworks App",
   "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -322,7 +322,7 @@
     "@types/latest-version": "^4.0.1",
     "@types/node": "^13.11.0",
     "@types/rimraf": "^3.0.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.41.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
