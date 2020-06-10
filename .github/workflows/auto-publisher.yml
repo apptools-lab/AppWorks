@@ -21,3 +21,4 @@ jobs:
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          CLIENT_TOKEN: ${{ secrets.DEF_CLIENT_TOKEN }}
