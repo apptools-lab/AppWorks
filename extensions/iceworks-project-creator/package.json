@@ -1,6 +1,6 @@
 {
   "name": "iceworks-project-creator",
-  "displayName": "iceworks Project Creator",
+  "displayName": "Iceworks Project Creator",
   "description": "Quick create a Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.1.1",
@@ -19,11 +19,11 @@
     "commands": [
       {
         "command": "iceworks-project-creator.start",
-        "title": "iceworks: Create Project"
+        "title": "Iceworks: Create Project"
       }
     ],
     "configuration": {
-      "title": "iceworks Project Creator",
+      "title": "Iceworks Project Creator",
       "properties": {
         "iceworks.materialSources": {
           "type": "array",
@@ -41,12 +41,12 @@
               "description": "基于 Rax 组件和 Rax 脚手架的官方物料"
             }
           ],
-          "description": "iceworks materialSources"
+          "description": "Iceworks materialSources"
         },
         "iceworks.workspace": {
           "type": "string",
           "default": "",
-          "description": "iceworks workspace"
+          "description": "Iceworks workspace"
         },
         "iceworks.user": {
           "type": "object",
@@ -69,7 +69,7 @@
               "description": "gitlab 私人 token"
             }
           },
-          "description": "iceworks user detail"
+          "description": "Iceworks user information"
         }
       }
     }

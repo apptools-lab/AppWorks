@@ -1,6 +1,6 @@
 English | [简体中文](./README.zh-CN.md)
 
-# iceworks Component Builder
+# Iceworks Component Builder
 
 Create a component in a low-code way.
 
