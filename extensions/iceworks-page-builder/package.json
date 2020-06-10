@@ -9,7 +9,7 @@
     "url": "git+https://github.com/ice-lab/iceworks.git"
   },
   "engines": {
-    "vscode": "^1.45.0"
+    "vscode": "^1.41.0"
   },
   "categories": [
     "Other"
