@@ -11,3 +11,11 @@ Quick create a Universal Application project(React/Rax/Vue, etc).
 3. Open project automatically
 
 ![project-creator](https://img.alicdn.com/tfs/TB1hCMnJuT2gK0jSZFvXXXnFXXa-1378-874.gif)
+
+## More
+
+See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+
+## License
+
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

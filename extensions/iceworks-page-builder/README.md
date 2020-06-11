@@ -12,6 +12,10 @@
 2. 从右侧区块列表中选择页面需要使用的区块，添加到左侧页面预览区
 3. 点击“生成页面”按钮，生成页面代码
 
+## 更多
+
+访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

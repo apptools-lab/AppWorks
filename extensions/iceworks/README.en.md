@@ -26,3 +26,7 @@ Includes following feature:
   ![](https://img.alicdn.com/tfs/TB1hScTJKH2gK0jSZJnXXaT1FXa-1024-768.png)
 5. More operations can be obtained by search 'iceworks' in the Command Panel
   ![](https://img.alicdn.com/tfs/TB16h7PJFP7gK0jSZFjXXc5aXXa-1024-768.png)
+
+## License
+
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
