@@ -2,12 +2,11 @@ English | [简体中文](./README.md)
 
 # Iceworks Material Helper
 
-xx
+* Auto complete pros.
 
 ## Usage
 
-![create-component](https://img.alicdn.com/tfs/TB1.WORe5cKOu4jSZKbXXc19XXa-960-600.gif)
+![img01](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
 
-xx
 
 

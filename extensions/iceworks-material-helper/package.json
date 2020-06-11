@@ -12,13 +12,16 @@
 	],
 	"icon": "assets/logo.png",
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact"
 	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/ice-lab/iceworks.git"
 	},
-	"main": "./build/extension.js",
+	"main": "./build/index.js",
 	"contributes": {
 		"commands": [
 			{
@@ -33,8 +36,14 @@
 		"watch": "tsc -watch -p ./tsconfig.json"
 	},
 	"devDependencies": {
+		"@types/babel-traverse": "^6.25.5",
 		"@types/node": "^12.11.7",
 		"@types/vscode": "^1.41.0",
 		"typescript": "^3.6.4"
+	},
+	"dependencies": {
+		"@babel/parser": "^7.10.2",
+		"@babel/traverse": "^7.10.1",
+		"@babel/types": "^7.10.2"
 	}
 }
