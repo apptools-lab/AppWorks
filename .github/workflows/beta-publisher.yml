@@ -1,4 +1,4 @@
-name: Auto Publisher
+name: Beta Publisher
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - releases/*
 
 jobs:
-  build-and-publish:
+  build-and-publish-beta:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
