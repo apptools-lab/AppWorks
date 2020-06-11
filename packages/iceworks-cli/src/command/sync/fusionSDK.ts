@@ -60,12 +60,10 @@ export default class FusionSDK {
   public async getSite(token) {
     const options = {
       method: 'GET',
-      uri: `${this.fusionHost}/api/v1/mysites`,
+      url: `${this.fusionHost}/api/v1/mysites`,
       headers: {
         'x-auth-token': token,
-      },
-      json: true,
-      followRedirect: false,
+      }
     };
 
     log.verbose('fetch fusion sites start', options as any);

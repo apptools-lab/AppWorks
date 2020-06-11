@@ -1,24 +1,23 @@
-.container {
-  .card {
-    .step {
-      width: 90vw;
-      margin: 20px auto 24px;
+.cardContent {
+  margin: 40px auto 24px;
 
-      .content,
-      .actions {
-        margin-top: 30px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
+  .step {
+    width: 100%;
+    margin-left: -40px;
+  }
+  .content,
+  .actions {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
-      .content {
-        align-items: center;
-      }
-    }
+  .content {
+    width: 90vw;
+    margin: 60px auto 10px;
   }
 }
-
 .btn {
   margin-right: 5px;
 }

@@ -1,7 +1,7 @@
 <!--
 issue feedback:
 
-- iceworks: here
+- Iceworks: here
 - icejs: https://github.com/alibaba/ice/issues
 - fusion components: https://fusion.design/feedback
 -->
@@ -12,7 +12,7 @@ issue feedback:
 
 If the current behavior is a bug, please provide the steps to reproduce and if possible a minimal demo of the problem.
 
-* iceworks CLI version：
+* Iceworks CLI version：
 * Node verson：
 * Platform：
 

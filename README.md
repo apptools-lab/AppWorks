@@ -2,11 +2,11 @@ English | [简体中文](./README.zh-CN.md)
 
 <p align="center">
   <a href="https://ice.work">
-    <img alt="iceworks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
+    <img alt="Iceworks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
   </a>
 </p>
 
-<h1 align="center">iceworks</h1>
+<h1 align="center">Iceworks</h1>
 
 <p align="center">Universal Application Development Pack</p>
 
@@ -19,17 +19,19 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Quick Start
 
-### iceworks Pack
+### Iceworks Pack
 
 Use VC Code pack to develop Universal Application projects quickly.
 
-![iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
+![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 
-1. Open [iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
+1. Open [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
 2. Click the "install" button on page
-3. After installation is successful, click the "iceworks icon" on Activity Bar of VS Code interface to start
+3. After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start
 
-### iceworks CLI
+See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
+
+### Iceworks CLI
 
 Use CLI to develop custom material collections.
 

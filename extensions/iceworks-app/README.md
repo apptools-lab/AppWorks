@@ -1,34 +1,38 @@
-English | [简体中文](./README.zh-CN.md)
+简体中文 | [English](./README.en.md)
 
-# iceworks App
+# Iceworks App
 
-It helps you preview your Universal Application project, including the information of npm scripts, pages, components and node dependencies. It also supports quick installation or upgrade dependencies, adding new pages and components, and much more. 
+它可以帮助你预览你的前端项目，包括 npm 脚本，页面，组件和依赖信息。它还支持快速安装或升级依赖，添加新页面和组件等等。
 
-## Usage
+## 用法
 
-### npm Scripts
+### npm 脚本信息
 
-- Support viewing the executable npm scripts of your app
-- Support execute the npm scripts
+- 支持查看项目可执行的 npm 脚本
+- 支持快速执行 npm 脚本
 
 ![script.gif](https://img.alicdn.com/tfs/TB1of.nHFT7gK0jSZFpXXaTkpXa-1272-786.gif)
 
-###  Pages and Components
+###  页面和组件信息
 
-- Support jumping to corresponding pages and components
-- Support adding pages and components(TODO)
+- 支持快速跳转至对应的页面和组件
+- 支持快速添加页面和组件 (TODO)
 
 ![pages&components.gif](https://img.alicdn.com/tfs/TB1tfArHHY1gK0jSZTEXXXDQVXa-1265-760.gif)
 
-### Node Dependencies
+### 项目依赖信息
 
-- Support viewing the project dependency information
-- Support installing new dependencies and upgrading dependencies
-- Support installing and reinstalling dependencies
-- Support setting npm client and npm registry
+- 支持查看项目的依赖信息
+- 支持安装新依赖和升级依赖
+- 支持一键安装和重装依赖
+- 支持设置 npm 包管理工具和镜像地址
 
 ![nodeDependencies.gif](https://img.alicdn.com/tfs/TB1SLgPXj39YK4jSZPcXXXrUFXa-1274-805.gif)
 
+## 更多
+
+访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
