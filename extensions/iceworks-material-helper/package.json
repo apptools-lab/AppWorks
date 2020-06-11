@@ -21,15 +21,7 @@
 		"type": "git",
 		"url": "git+https://github.com/ice-lab/iceworks.git"
 	},
-	"main": "./build/index.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
+	"main": "./build/index.js",	
 	"scripts": {
 		"vscode:prepublish": "rm -rf build && npm run compile",
 		"compile": "tsc -p ./",
