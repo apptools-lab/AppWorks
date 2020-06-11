@@ -4,7 +4,7 @@
   "iceworksApp.view.pages.name": "页面列表",
   "iceworksApp.view.components.name": "组件列表",
   "iceworksApp.view.nodeDependencies.name": "依赖列表",
-  "iceworksApp.viewsWelcome.welcomePage.contents": "要使用 Iceworks app，你需要先打开一个文件夹或创建一个新项目。\n[打开文件夹](command:vscode.openFolder)\n[创建新项目](command:iceworks-project-creator.start)\n查看[文档](https://github.com/ice-lab/iceworks)以学习如何在 VS Code 中如何使用 Iceworks app。",
+  "iceworksApp.viewsWelcome.welcomePage.contents": "要使用 Iceworks App，你需要先打开一个文件夹或创建一个新项目。\n[打开文件夹](command:vscode.openFolder)\n[创建新项目](command:iceworks-project-creator.start)\n查看[文档](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)以学习如何在 VS Code 中如何使用 Iceworks App。",
   "iceworksApp.viewsWelcome.npmScripts.contents": "没找到 npm 脚本。",
   "iceworksApp.viewsWelcome.pages.contents": "没找到页面。",
   "iceworksApp.viewsWelcome.components.contents": "没找到组件。",
