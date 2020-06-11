@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.2
+
+Spelling of unified brand name: Iceworks.
+
 ## 0.1.1
 
 Update link for logo in README.md.

@@ -6,13 +6,11 @@ import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import InitProjectSuccess from './components/InitProjectSuccess';
-import Header from './components/Header';
 import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 
 const CreateProject: React.FC = () => {
-  const [scaffoldTypeSelected, setScaffoldTypeSelected] = useState('');
   const [currentStep, setStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
@@ -55,9 +53,15 @@ const CreateProject: React.FC = () => {
 
   if (isAliInternal) {
     steps.splice(2, 0, {
-      title: '创建DEF项目',
+      title: '创建 DEF 项目',
       content: (
-        <CreateDEFProjectForm value={curDEFProjectField} onChange={onDEFProjectFormChange}>
+        <CreateDEFProjectForm
+          value={curDEFProjectField}
+          onChange={onDEFProjectFormChange}
+          skipCreateDEFProject={skipCreateDEFProject}
+          createProjectLoading={createProjectLoading}
+          createProjectBtnDisabled={createProjectBtnDisabled}
+        >
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
           <Form.Submit
             type="primary"
@@ -67,7 +71,6 @@ const CreateProject: React.FC = () => {
             disabled={createDEFProjectDisabled}
             className={styles.btn}
           >下一步</Form.Submit>
-          <Button onClick={skipCreateDEFProject} loading={createProjectLoading} disabled={createProjectBtnDisabled}>跳过创建DEF项目</Button>
         </CreateDEFProjectForm>
       )
     })
@@ -80,8 +83,8 @@ const CreateProject: React.FC = () => {
     setCurDEFProjectField({ ...curDEFProjectField, ...value })
   }
 
-  function onScaffoldSelect(scaffoldType, scaffold) {
-    setCurProjectField({ ...curProjectField, scaffold, scaffoldType })
+  function onScaffoldSelect(scaffold) {
+    setCurProjectField({ ...curProjectField, scaffold })
   };
 
   async function onScaffoldSubmit() {
@@ -89,7 +92,6 @@ const CreateProject: React.FC = () => {
       Notification.error({ content: '请选择一个模板！' });
       return;
     }
-    setScaffoldTypeSelected(curProjectField.scaffoldType)
     goNext();
   }
 
@@ -185,7 +187,7 @@ const CreateProject: React.FC = () => {
 
   function goPrev() {
     if (currentStep === 1) {
-      setScaffoldTypeSelected('')
+      setCurProjectField({ ...curProjectField, scaffold: null });
     }
     setStep(currentStep - 1);
   };
@@ -215,19 +217,16 @@ const CreateProject: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={styles.container}>
-      <Header scaffoldTypeSelected={scaffoldTypeSelected} />
-      <Card free className={styles.card}>
-        <Card.Content className={styles.step}>
-          <Step current={currentStep} shape="circle">
-            {steps.map((step) => (
-              <Step.Item key={step.title} title={step.title} />
-            ))}
-          </Step>
-          <div className={styles.content}>{steps[currentStep].content}</div>
-        </Card.Content>
-      </Card>
-    </div>
+    <Card free>
+      <Card.Content className={styles.cardContent}>
+        <Step current={currentStep} shape="circle" className={styles.step} readOnly>
+          {steps.map((step) => (
+            <Step.Item key={step.title} title={step.title} />
+          ))}
+        </Step>
+        <div className={styles.content}>{steps[currentStep].content}</div>
+      </Card.Content>
+    </Card>
   );
 };
 

@@ -2,7 +2,7 @@
 
 [Docs](https://ice.work/docs/materials/about).
 
-## Install iceworks
+## Install Iceworks
 
 ```bash
 $ npm i -g iceworks
@@ -48,6 +48,6 @@ $ iceworks generate
 $ iceworks sync
 ```
 
-## Use materials in iceworks
+## Use materials in Iceworks
 
-Add the materials data url to iceworks.
+Add the materials data url to Iceworks.

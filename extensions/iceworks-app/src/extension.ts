@@ -50,12 +50,6 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.install', () => {
-    if (nodeDependenciesProvider.packageJsonExists()) {
-      const script = nodeDependenciesProvider.getInstallScript();
-      executeCommand(terminals, script!);
-    }
-  });
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();

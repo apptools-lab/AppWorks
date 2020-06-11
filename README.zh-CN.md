@@ -3,11 +3,11 @@
 
 <p align="center">
   <a href="https://ice.work">
-    <img alt="iceworks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
+    <img alt="Iceworks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
   </a>
 </p>
 
-<h1 align="center">iceworks</h1>
+<h1 align="center">Iceworks</h1>
 
 <p align="center">多端研发套件</p>
 
@@ -20,17 +20,19 @@
 
 ## 快速开始
 
-### iceworks 套件
+### Iceworks 套件
 
 使用 VS Code 套件快速开发多端项目。
 
-![iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
+![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 
-1. 打开 VS Code 套件市场中的 [iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
+1. 打开 VS Code 套件市场中的 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
 2. 点击页面上的「安装」按钮；
 3. 安装成功后，点击 VS Code 界面左侧活动栏上的「iceworks 图标」，开始使用。
 
-### iceworks CLI
+查看 [Iceworks Pack 文档](extensions/iceworks/README.md)阅读更多详细介绍。
+
+### Iceworks CLI
 
 使用 CLI 开发自定义物料集合。
 
@@ -52,7 +54,7 @@
 
 欢迎通过 [issue](https://github.com/ice-lab/iceworks/issues/new) 反馈问题。
 
-如果对 `iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
+如果对 `Iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
 ## ICE 生态
 

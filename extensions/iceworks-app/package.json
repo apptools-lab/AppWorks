@@ -1,9 +1,9 @@
 {
   "name": "iceworks-app",
-  "displayName": "iceworks App",
+  "displayName": "Iceworks App",
   "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -23,7 +23,7 @@
       "activitybar": [
         {
           "id": "iceworksApp",
-          "title": "iceworks App",
+          "title": "Iceworks App",
           "icon": "assets/sidebar-logo.png"
         }
       ]
@@ -158,24 +158,20 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.install",
-        "title": "%iceworksApp.nodeDependencies.install.title%",
+        "command": "iceworksApp.nodeDependencies.reinstall",
+        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
         "icon": {
           "light": "assets/light/install.svg",
           "dark": "assets/dark/install.svg"
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.reinstall",
-        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
+        "command": "iceworksApp.nodeDependencies.refresh",
+        "title": "%iceworksApp.nodeDependencies.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
         }
-      },
-      {
-        "command": "iceworksApp.nodeDependencies.refresh",
-        "title": "%iceworksApp.nodeDependencies.refresh.title%"
       },
       {
         "command": "iceworksApp.nodeDependencies.dependencies.add",
@@ -245,18 +241,14 @@
           "group": "navigation@11"
         },
         {
-          "command": "iceworksApp.nodeDependencies.install",
+          "command": "iceworksApp.nodeDependencies.reinstall",
           "when": "view == nodeDependencies",
           "group": "navigation@12"
         },
         {
-          "command": "iceworksApp.nodeDependencies.reinstall",
-          "when": "view == nodeDependencies",
-          "group": "navigation@13"
-        },
-        {
           "command": "iceworksApp.nodeDependencies.refresh",
-          "when": "view == nodeDependencies"
+          "when": "view == nodeDependencies",
+          "group": "navigation@99"
         }
       ],
       "view/item/context": [
@@ -283,7 +275,7 @@
       ]
     },
     "configuration": {
-      "title": "iceworks App",
+      "title": "Iceworks App",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

@@ -11,14 +11,19 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   const [scaffoldMaterials, setScaffoldMaterials] = useState<IMaterialScaffold[]>([]);
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
-    setMaterialSourceSelected(scaffold);
-    const data = await getScaffolds(scaffold.source);
-    setScaffoldMaterials(data);
+    try {
+      setMaterialSourceSelected(scaffold);
+      const data = await getScaffolds(scaffold.source);
+      setScaffoldMaterials(data);
+      setMaterialSelected(null)
+    } catch (err) {
+      // ignore
+    }
   }
 
   function onScaffoldMaterialClick(scaffold) {
     setMaterialSelected(scaffold.name);
-    onScaffoldSelect(materialSourceSelected.type, scaffold);
+    onScaffoldSelect(scaffold);
   }
 
   async function getScaffoldResources() {
@@ -28,8 +33,9 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
 
   async function getScaffolds(source: string) {
     try {
-      const data = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      return data;
+      const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
+      const whitelist = ['@alifd/fusion-design-pro', '@alifd/scaffold-lite', '@alifd/scaffold-simple', '@rax-materials/scaffolds-basic-app']
+      return scaffolds.filter(scaffold => whitelist.includes(scaffold.source.npm));
     } catch (e) {
       return [];
     }
@@ -60,9 +66,9 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
             <SelectCard
               key={item.name}
               title={item.name}
-              content={item.description}
+              content={<span className={styles.userSelect}>{item.description}</span>}
               selected={materialSourceSelected.name === item.name}
-              style={{ width: 180 }}
+              style={{ width: 160 }}
               onClick={() => onMaterialSourceClick(item)}
             />
           ))}
@@ -72,8 +78,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
             <SelectCard
               key={item.name}
               title={item.title}
-              content={item.description}
-              media={<img height={120} src={item.screenshot} alt="screenshot" />}
+              content={<span className={styles.userSelect}>{item.description}</span>}
+              media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
               selected={materialSelected === item.name}
               style={{ width: 180, height: 250 }}
               onClick={() => onScaffoldMaterialClick(item)}
