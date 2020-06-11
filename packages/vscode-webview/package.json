@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/vscode-webview",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "Webview related API for VSCode extension.",
   "files": [
     "lib"
