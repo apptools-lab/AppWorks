@@ -26,6 +26,8 @@
     "@iceworks/material-utils": "^0.1.3",
     "classnames": "^2.2.6",
     "prop-types": "^15.5.8",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
     "react-lazyload": "^2.6.7"
   },
   "devDependencies": {
@@ -37,9 +39,7 @@
     "build-plugin-component": "^0.2.0",
     "build-plugin-fusion": "^0.1.0",
     "build-plugin-moment-locales": "^0.1.0",
-    "eslint": "^6.0.1",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "eslint": "^6.0.1"
   },
   "peerDependencies": {
     "@alifd/next": "1.x",
