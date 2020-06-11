@@ -22,3 +22,5 @@ jobs:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           CLIENT_TOKEN: ${{ secrets.DEF_CLIENT_TOKEN }}
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
