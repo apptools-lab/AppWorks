@@ -98,7 +98,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     return pathExists(this.packageJsonPath);
   }
 
-  public async getInstallScript() {
+  public async getReinstallScript() {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
     const nodeModulesPath = path.join(workspaceDir, 'node_modules');
     if (pathExists(nodeModulesPath)) {
@@ -106,8 +106,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     }
     const npmCommand = createNpmCommand('install');
     const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.install',
-      title: 'Install Dependencies',
+      command: 'iceworksApp.nodeDependencies.reinstall',
+      title: 'Reinstall Dependencies',
       arguments: [workspaceDir, npmCommand]
     };
     return command;

@@ -158,8 +158,8 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.install",
-        "title": "%iceworksApp.nodeDependencies.install.title%",
+        "command": "iceworksApp.nodeDependencies.reinstall",
+        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
         "icon": {
           "light": "assets/light/install.svg",
           "dark": "assets/dark/install.svg"
@@ -241,7 +241,7 @@
           "group": "navigation@11"
         },
         {
-          "command": "iceworksApp.nodeDependencies.install",
+          "command": "iceworksApp.nodeDependencies.reinstall",
           "when": "view == nodeDependencies",
           "group": "navigation@12"
         },

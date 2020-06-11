@@ -34,8 +34,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   async function getScaffolds(source: string) {
     try {
       const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      const whitelist = ['Fusion Design Pro - TS', 'Scaffold Lite - TS', 'Scaffold Simple', 'Rax basic app']
-      return scaffolds.filter(scaffold => whitelist.includes(scaffold.name));
+      const whitelist = ['@alifd/fusion-design-pro', '@alifd/scaffold-lite', '@alifd/scaffold-simple', '@rax-materials/scaffolds-basic-app']
+      return scaffolds.filter(scaffold => whitelist.includes(scaffold.source.npm));
     } catch (e) {
       return [];
     }
