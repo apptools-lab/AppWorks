@@ -12,6 +12,10 @@ Create a web page view in a low-code way.
 2. Select the block to be used for the page from the block list on the right, click to add it to the page preview area on the left
 3. Click "generate page" button to generate page code
 
+## More
+
+See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

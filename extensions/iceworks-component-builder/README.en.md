@@ -12,6 +12,10 @@ Create a component in a low-code way.
 2. Select the block to be download
 3. Click "generate component" button to generate component code
 
+## More
+
+See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
