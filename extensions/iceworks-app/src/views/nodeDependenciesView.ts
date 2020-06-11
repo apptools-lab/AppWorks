@@ -98,17 +98,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
     return pathExists(this.packageJsonPath);
   }
 
-  public getInstallScript() {
-    const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const npmCommand = createNpmCommand('install');
-    const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.install',
-      title: 'Install Dependencies',
-      arguments: [workspaceDir, npmCommand]
-    };
-    return command;
-  }
-
   public async getReinstallScript() {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
     const nodeModulesPath = path.join(workspaceDir, 'node_modules');
@@ -122,7 +111,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       arguments: [workspaceDir, npmCommand]
     };
     return command;
-
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
