@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { checkAliInternal } from 'ice-npm-utils';
 
-export default async function formatProject(projectDir: string, npmName?: string): Promise<void> {
+export default async function formatProject(projectDir: string, projectName?: string): Promise<void> {
   await fse.remove(path.join(projectDir, 'build'));
 
   let abcData = {};
@@ -20,8 +20,8 @@ export default async function formatProject(projectDir: string, npmName?: string
   // modify package.json
   pkgData.private = true;
   pkgData.originTemplate = pkgData.name;
-  if (npmName) {
-    pkgData.name = npmName;
+  if (projectName) {
+    pkgData.name = projectName;
   }
   pkgData.version = initialVersion;
   delete pkgData.files;

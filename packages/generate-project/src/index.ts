@@ -11,7 +11,7 @@ export {
 };
 
 export async function downloadAndGenerateProject(
-  projectDir: string, npmName: string, version?: string, registry?: string
+  projectDir: string, npmName: string, version?: string, registry?: string, projectName?: string
 ): Promise<void> {
   registry = registry || await getNpmRegistry(npmName);
   const tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
@@ -30,7 +30,7 @@ export async function downloadAndGenerateProject(
   spinner.succeed('download npm tarball successfully.');
 
   try {
-    await formatProject(projectDir, npmName);
+    await formatProject(projectDir, projectName);
   } catch (err) {
     console.warn('formatProject error');
   }
