@@ -21,6 +21,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   createProjectBtnDisabled
 }) => {
   return (
+<<<<<<< HEAD
     <div className={styles.form}>
       <div>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">

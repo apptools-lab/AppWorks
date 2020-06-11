@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/block-service",
-  "version": "0.1.6",
-  "description": "iceworks block service for VSCode extension.",
+  "version": "0.1.7",
+  "description": "Iceworks block service for VSCode extension.",
   "files": [
     "lib"
   ],

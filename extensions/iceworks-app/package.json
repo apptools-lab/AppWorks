@@ -1,9 +1,9 @@
 {
   "name": "iceworks-app",
-  "displayName": "iceworks App",
+  "displayName": "Iceworks App",
   "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -23,7 +23,7 @@
       "activitybar": [
         {
           "id": "iceworksApp",
-          "title": "iceworks App",
+          "title": "Iceworks App",
           "icon": "assets/sidebar-logo.png"
         }
       ]
@@ -275,7 +275,7 @@
       ]
     },
     "configuration": {
-      "title": "iceworks App",
+      "title": "Iceworks App",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

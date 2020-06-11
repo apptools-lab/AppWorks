@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/page-service",
-  "version": "0.1.5",
-  "description": "iceworks page service for VSCode extension.",
+  "version": "0.1.6",
+  "description": "Iceworks page service for VSCode extension.",
   "files": [
     "lib"
   ],

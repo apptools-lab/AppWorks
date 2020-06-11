@@ -1,16 +1,16 @@
-English | [简体中文](./README.zh-CN.md)
+简体中文 | [English](./README.en.md)
 
-# iceworks Component Builder
+# Iceworks 组件创建器
 
-Create a component in a low-code way.
+使用低代码的方式创建前端组件。
 
-## Usage
+## 用法
 
 ![create-component](https://img.alicdn.com/tfs/TB1.WORe5cKOu4jSZKbXXc19XXa-960-600.gif)
 
-1. Enter the component name (to be used as the folder name)
-2. Select the block to be download
-3. Click "generate component" button to generate component code
+1. 输入组件名（将用作文件夹名）
+2. 选择区块
+3. 点击「生成组件」按钮，生成组件代码
 
 ## License
 
