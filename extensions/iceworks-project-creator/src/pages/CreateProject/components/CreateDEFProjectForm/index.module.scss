@@ -14,3 +14,9 @@
   display: flex;
   justify-content: center;
 }
+
+.btn {
+  &:hover {
+    color: $color-notice-4 !important;
+  }
+}

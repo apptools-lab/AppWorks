@@ -83,8 +83,8 @@ const CreateProject: React.FC = () => {
     setCurDEFProjectField({ ...curDEFProjectField, ...value })
   }
 
-  function onScaffoldSelect(scaffoldType, scaffold) {
-    setCurProjectField({ ...curProjectField, scaffold, scaffoldType })
+  function onScaffoldSelect(scaffold) {
+    setCurProjectField({ ...curProjectField, scaffold })
   };
 
   async function onScaffoldSubmit() {
@@ -186,6 +186,9 @@ const CreateProject: React.FC = () => {
   };
 
   function goPrev() {
+    if (currentStep === 1) {
+      setCurProjectField({ ...curProjectField, scaffold: null });
+    }
     setStep(currentStep - 1);
   };
 
