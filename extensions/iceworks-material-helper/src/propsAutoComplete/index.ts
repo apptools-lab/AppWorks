@@ -15,7 +15,7 @@ async function provideCompletionItems(document, position): Promise<vscode.Comple
   if (
     currentJsxElement &&
     currentJsxElement.loc &&
-    // Only works in Rax Component (begin with capital letters).
+    // Only works in React/Rax Component (begin with capital letters).
     currentJsxElementTagName[0] === currentJsxElementTagName[0].toUpperCase()
   ) {
     const definitions = await getDefinitions(
