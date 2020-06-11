@@ -1,11 +1,11 @@
 {
-	"extends": "../../tsconfig.extension.json",
-	"compilerOptions": {
-		"outDir": "build",
-		"rootDir": "src",
-		"noImplicitAny": false
-	},
-	"exclude": [
-		"node_modules"
-	]
+  "extends": "../../tsconfig.extension.json",
+  "compilerOptions": {
+    "outDir": "build",
+    "rootDir": "src",
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
