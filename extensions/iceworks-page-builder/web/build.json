@@ -3,6 +3,7 @@
     "writeToDisk": true
   },
   "publicPath": "./",
+  "outputDir": "../build",
   "plugins": [
     [
       "build-plugin-fusion",
