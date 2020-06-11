@@ -3,7 +3,7 @@
   "displayName": "Iceworks App",
   "description": "Universal Application Development Extension.",
   "publisher": "iceworks-team",
-  "version": "0.1.23",
+  "version": "0.1.22",
   "engines": {
     "vscode": "^1.41.0"
   },

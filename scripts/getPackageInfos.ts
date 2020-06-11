@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import axios from 'axios';
 
-const TIMEOUT = 5000; // ms
+const TIMEOUT = 8000; // ms
 const TARGET_DIRECTORY = join(__dirname, '../packages');
 
 export interface IPackageInfo {

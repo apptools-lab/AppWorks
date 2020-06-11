@@ -4,7 +4,7 @@ import { join } from 'path';
 import axios from 'axios';
 
 const RETRY_LIMIT = 3;
-const TIMEOUT = 5000; // ms
+const TIMEOUT = 8000; // ms
 const TARGET_DIRECTORY = join(__dirname, '../extensions');
 
 export interface IExtensionInfo {
