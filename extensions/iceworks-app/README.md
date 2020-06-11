@@ -29,6 +29,10 @@
 
 ![nodeDependencies.gif](https://img.alicdn.com/tfs/TB1SLgPXj39YK4jSZPcXXXrUFXa-1274-805.gif)
 
+## 更多
+
+访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

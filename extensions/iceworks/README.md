@@ -26,3 +26,7 @@
   ![](https://img.alicdn.com/tfs/TB1hScTJKH2gK0jSZJnXXaT1FXa-1024-768.png)
 5. 更多能力，可以在命名面板中搜索 `Iceworks` 获取
   ![](https://img.alicdn.com/tfs/TB16h7PJFP7gK0jSZFjXXc5aXXa-1024-768.png)
+
+## License
+
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
