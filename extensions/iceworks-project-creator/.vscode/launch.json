@@ -15,7 +15,7 @@
 			],
 			"stopOnEntry": false,
 			"sourceMaps": true,
-			"outDir": "${workspaceRoot}/src-extension",
+			"outDir": "${workspaceRoot}/src",
 			"preLaunchTask": "${defaultBuildTask}"
 		}
 	]
