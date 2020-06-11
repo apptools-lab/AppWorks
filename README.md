@@ -29,6 +29,8 @@ Use VC Code pack to develop Universal Application projects quickly.
 2. Click the "install" button on page
 3. After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start
 
+See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
+
 ### Iceworks CLI
 
 Use CLI to develop custom material collections.

@@ -29,6 +29,10 @@ It helps you preview your Universal Application project, including the informati
 
 ![nodeDependencies.gif](https://img.alicdn.com/tfs/TB1SLgPXj39YK4jSZPcXXXrUFXa-1274-805.gif)
 
+## More
+
+See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

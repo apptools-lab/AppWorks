@@ -30,6 +30,8 @@
 2. 点击页面上的「安装」按钮；
 3. 安装成功后，点击 VS Code 界面左侧活动栏上的「iceworks 图标」，开始使用。
 
+查看 [Iceworks Pack 文档](extensions/iceworks/README.md)阅读更多详细介绍。
+
 ### Iceworks CLI
 
 使用 CLI 开发自定义物料集合。
