@@ -2,8 +2,6 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "build",
     "module": "esnext",
     "target": "es6",
     "jsx": "react",
