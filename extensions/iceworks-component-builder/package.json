@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/ice-lab/iceworks.git"
   },
-  "main": "./build/src-extension/extension.js",
+  "main": "./build/src/extension.js",
   "contributes": {
     "commands": [
       {

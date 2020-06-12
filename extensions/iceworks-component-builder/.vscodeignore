@@ -4,3 +4,4 @@
 **/*.map
 **/*.ts
 web/**
+**/tsconfig.json
