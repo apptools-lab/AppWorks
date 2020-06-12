@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.web.json",
+  "extends": "../../../tsconfig.webview.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build",
