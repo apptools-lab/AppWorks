@@ -35,13 +35,24 @@ function checkVersionExists(extension: string, version: string, retry = 0): Prom
 }
 
 function publish(extension: string, directory: string, version: string): void {
-  // npm install
+  // vscode extension: npm install
   spawnSync('npm', [
     'install',
   ], {
     stdio: 'inherit',
     cwd: directory,
   });
+
+  const webDir = join(directory, 'web');
+  if (existsSync(webDir)) {
+    // webview: npm install
+    spawnSync('npm', [
+      'install',
+    ], {
+      stdio: 'inherit',
+      cwd: webDir,
+    });
+  }
 
   // vsce publish
   console.log('[VSCE] PUBLISH: ', `${extension}@${version}`);
