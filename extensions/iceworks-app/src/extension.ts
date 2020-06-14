@@ -23,12 +23,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
 
-  const npmScriptsProvider = new NpmScriptsProvider(rootPath);
+  const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
   vscode.commands.registerCommand('iceworksApp.npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script.command!));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
-  const componentsProvider = new ComponentsProvider(rootPath);
+  const componentsProvider = new ComponentsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('components', componentsProvider);
   vscode.commands.registerCommand('iceworksApp.components.add', () => {
     console.log('iceworksApp: activate iceworks-component-builder.generate');
@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
-  const pagesProvider = new PagesProvider(rootPath);
+  const pagesProvider = new PagesProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('pages', pagesProvider);
   vscode.commands.registerCommand('iceworksApp.pages.add', () => {
     console.log('iceworksApp: activate iceworks-page-builder.create');
@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 
-  const nodeDependenciesProvider = new DepNodeProvider(rootPath);
+  const nodeDependenciesProvider = new DepNodeProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
