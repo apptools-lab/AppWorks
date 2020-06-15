@@ -43,14 +43,14 @@ function publish(extension: string, directory: string, version: string): void {
     cwd: directory,
   });
 
-  const webDir = join(directory, 'web');
-  if (existsSync(webDir)) {
+  const webviewDir = join(directory, 'web');
+  if (existsSync(webviewDir)) {
     // webview: npm install
     spawnSync('npm', [
       'install',
     ], {
       stdio: 'inherit',
-      cwd: webDir,
+      cwd: webviewDir,
     });
   }
 
