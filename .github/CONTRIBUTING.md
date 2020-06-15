@@ -66,7 +66,7 @@ TODO
   }
   ```
   - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto publish it's beta version.
+  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
 
 ## Issue Reporting Guidelines
 
