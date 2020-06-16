@@ -12,7 +12,7 @@ import * as spawn from 'cross-spawn';
     const cwdStat = await fse.stat(cwd);
     if (cwdStat.isDirectory()) {
       const packageJSON: any = await fse.readJson(path.join(cwd, 'package.json'));
-      if (packageJSON.devDependencies) {
+      if (packageJSON.dependencies) {
         const packageNames = Reflect.ownKeys(packageJSON.dependencies).filter((moduleName: string) => {
           return /^@iceworks/.test(moduleName);
         });
