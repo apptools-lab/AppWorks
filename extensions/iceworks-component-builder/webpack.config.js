@@ -13,10 +13,16 @@ const config = {
   },
   devtool: 'source-map',
   externals: {
-    vscode: 'commonjs vscode'
+    vscode: 'commonjs vscode',
+    // ref: https://code.visualstudio.com/api/working-with-extensions/bundling-extension#webpack-critical-dependencies
+    // got: 'got',
+    // prettier: 'prettier',
+    // eslint: 'eslint',
+    // '@babel': '@babel',
+    // 'import-fresh': 'import-fresh'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [

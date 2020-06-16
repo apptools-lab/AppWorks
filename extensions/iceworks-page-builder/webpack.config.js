@@ -1,9 +1,11 @@
 const path = require('path');
 
 const tsConfigPath = path.join(__dirname, 'tsconfig.json');
-
 const config = {
   target: 'node',
+  node: {
+    path: false
+  },
   entry: './src/extension.ts',
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -13,10 +15,11 @@ const config = {
   },
   devtool: 'source-map',
   externals: {
-    vscode: 'commonjs vscode'
+    vscode: 'commonjs vscode',
+    '@iceworks/vscode-webview': 'commonjs @iceworks/vscode-webview'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [

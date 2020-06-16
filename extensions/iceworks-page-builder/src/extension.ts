@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
       enableScripts: true,
       retainContextWhenHidden: true,
     });
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+    webviewPanel.webview.html = '';
     connectService(webviewPanel.webview, subscriptions, services);
   }
   context.subscriptions.push(vscode.commands.registerCommand('iceworks-page-builder.create', function () {
