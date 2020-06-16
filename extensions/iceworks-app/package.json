@@ -33,35 +33,34 @@
         {
           "id": "welcomePage",
           "name": "%iceworksApp.view.welcomePage.name%",
-          "when": "workbenchState == empty"
+          "when": "workbenchState == empty || iceworks:isNotTargetProject"
         },
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "workbenchState != empty"
+          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "workbenchState != empty"
+          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "workbenchState != empty"
+          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "workbenchState != empty"
+          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
         }
       ]
     },
     "viewsWelcome": [
       {
         "view": "welcomePage",
-        "contents": "%iceworksApp.viewsWelcome.welcomePage.contents%",
-        "when": "workbenchState == empty"
+        "contents": "%iceworksApp.viewsWelcome.welcomePage.contents%"
       },
       {
         "view": "npmScripts",
@@ -322,6 +321,7 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.4",
+    "@iceworks/project-service": "^0.1.6",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",

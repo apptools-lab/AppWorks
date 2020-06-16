@@ -1,5 +1,6 @@
 const path = require('path');
 
+const tsConfigPath = path.join(__dirname, 'tsconfig.json');
 const config = {
   target: 'node',
   entry: './src/extension.ts',
@@ -20,10 +21,13 @@ const config = {
     rules: [
       {
         test: /\.ts$/,
-        exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader'
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              configFile: tsConfigPath,
+            },
           }
         ]
       }

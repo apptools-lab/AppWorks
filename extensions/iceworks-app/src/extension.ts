@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import * as path from 'path';
+import { getProjectType } from '@iceworks/project-service';
 import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration } from '@iceworks/common-service';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
 import { DepNodeProvider, DependencyNode, addDepCommandHandler, showDepInputBox } from './views/nodeDependenciesView';
@@ -9,16 +10,21 @@ import { PagesProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
 import { openEntryFile, executeCommand } from './utils';
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   const rootPath = vscode.workspace.rootPath;
 
   if (!rootPath) {
     vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
     return;
   }
+  try {
+    const projectType = await getProjectType();
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
+  } catch (e) {
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+  }
 
   autoSetNpmConfiguration(context.globalState);
-
   const terminals: ITerminalMap = new Map<string, Terminal>();
 
   vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
