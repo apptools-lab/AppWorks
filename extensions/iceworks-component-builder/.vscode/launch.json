@@ -11,12 +11,12 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--extensionDevelopmentPath=${workspaceRoot}"
       ],
-      "outFiles": [
-        "${workspaceFolder}/build/*.js"
-      ],
-      "preLaunchTask": "npm: webpack"
-    },
+      "stopOnEntry": false,
+      "sourceMaps": true,
+      "outDir": "${workspaceRoot}/src",
+      "preLaunchTask": "${defaultBuildTask}"
+    }
   ]
 }

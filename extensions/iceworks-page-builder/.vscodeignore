@@ -4,4 +4,3 @@
 **/*.map
 **/*.ts
 web/**
-node_modules
