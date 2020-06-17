@@ -4,20 +4,24 @@ import { autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
 import services from './services/index';
 
 // eslint-disable-next-line
-const packageJSON = require('../package.json');
+const { name, version } = require('../package.json');
 
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
-  const logger = new Logger(globalState, { namespace: packageJSON.name, version: packageJSON.version });
+
+  console.log('Congratulations, your extension "iceworks-page-builder" is now active!');
+
+  const logger = new Logger(globalState, name);
   logger.dau();
   logger.log({
     module: 'main',
-    action: 'activate'
+    action: 'activate',
+    data: {
+      version,
+    }
   });
-
-  console.log('Congratulations, your extension "iceworks-page-builder" is now active!');
 
   autoSetNpmConfiguration(globalState);
 

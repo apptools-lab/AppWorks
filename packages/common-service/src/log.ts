@@ -71,7 +71,7 @@ export async function log(originParam: IGoldlogParam) {
   }
 }
 
-export async function dau(storage: IStorage, data?: { version: string }) {
+export async function dau(storage: IStorage) {
   const nowtDate = new Date().toDateString();
   const dauKey = 'dauRecordTime';
   const lastDate = storage.get(dauKey);
@@ -83,7 +83,6 @@ export async function dau(storage: IStorage, data?: { version: string }) {
       action: 'dau',
       data: {
         platform: process.platform,
-        ...data,
       },
     });
   }
@@ -99,22 +98,19 @@ export class Logger {
 
   private namespace: string;
 
-  private version: string;
-
-  constructor(storage: IStorage, config: { namespace: string; version: string }) {
+  constructor(storage: IStorage, namespace: string) {
     this.storage = storage;
-    this.namespace = config.namespace;
-    this.version = config.version;
+    this.namespace = namespace;
   }
 
   public log(param: ILogParam) {
-    log({
+    return log({
       namespace: this.namespace,
       ...param
     })
   }
 
   public dau() {
-    return dau(this.storage, { version: this.version });
+    return dau(this.storage);
   }
 }
