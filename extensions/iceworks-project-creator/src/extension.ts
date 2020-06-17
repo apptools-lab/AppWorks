@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import services from './services/index';
 
