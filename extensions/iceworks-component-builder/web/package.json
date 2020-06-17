@@ -2,6 +2,7 @@
   "name": "web-for-iceworks-component-builder",
   "version": "0.1.3",
   "description": "web for Iceworks component builder",
+  "private": true,
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/react": "^16.8.0",

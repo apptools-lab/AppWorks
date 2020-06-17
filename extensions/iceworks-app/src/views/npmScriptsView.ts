@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand } from '@iceworks/common-service'
