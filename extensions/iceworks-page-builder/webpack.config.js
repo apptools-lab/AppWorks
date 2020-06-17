@@ -15,8 +15,7 @@ const config = {
   },
   devtool: 'source-map',
   externals: {
-    vscode: 'commonjs vscode',
-    '@iceworks/vscode-webview': 'commonjs @iceworks/vscode-webview'
+    vscode: 'commonjs vscode'
   },
   resolve: {
     extensions: ['.ts', '.js', '.json']
