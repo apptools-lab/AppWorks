@@ -1,7 +1,7 @@
 {
 	"name": "iceworks-style-helper",
 	"displayName": "Iceworks Style Helper",
-	"description": "Easily write styles in iceworks.",
+	"description": "Easily write styles in Iceworks.",
 	"publisher": "iceworks-team",
 	"version": "0.1.0",
 	"engines": {
