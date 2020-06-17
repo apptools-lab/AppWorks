@@ -13,15 +13,22 @@ import { nodeDepTypes } from '../constants';
 const rimrafAsync = util.promisify(rimraf);
 
 export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
+  private workspaceRoot: string;
+
+  private extensionContext: vscode.ExtensionContext;
+
   private onDidChange: vscode.EventEmitter<DependencyNode | undefined> = new vscode.EventEmitter<DependencyNode | undefined>();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyNode | undefined> = this.onDidChange.event;
+
 
   packageJsonPath: string;
 
   defaultVersion: string;
 
-  constructor(private workspaceRoot: string) {
+  constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
+    this.extensionContext = context;
+    this.workspaceRoot = workspaceRoot;
     this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
     this.defaultVersion = '-';
   }
@@ -45,7 +52,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
       return deps;
     } else {
       return Promise.resolve(
-        nodeDepTypes.map(nodeDepType => new DependencyNode(nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
+        nodeDepTypes.map(nodeDepType => new DependencyNode(this.extensionContext, nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
     }
   }
 
@@ -73,7 +80,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
           } else {
             outdated = await this.getNpmOutdated(dep, version);
           }
-          return toDep(workspaceDir, dep, version, outdated);
+          return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
         })
         )
       }
@@ -138,6 +145,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
 
 export class DependencyNode extends vscode.TreeItem {
   constructor(
+    public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
     public readonly command?: vscode.Command,
@@ -160,8 +168,8 @@ export class DependencyNode extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', '..', 'assets', 'light', this.version ? 'dependency.svg' : 'dependency-entry.svg'),
-    dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', this.version ? 'dependency.svg' : 'dependency-entry.svg')
+    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`)),
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`))
   };
 }
 
@@ -188,7 +196,7 @@ export async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesI
   executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
 
-function toDep(workspaceDir: string, moduleName: string, version: string, outdated: boolean) {
+function toDep(extensionContext: vscode.ExtensionContext, workspaceDir: string, moduleName: string, version: string, outdated: boolean) {
   const packageManager = getDataFromSettingJson('packageManager');
   const isYarn = packageManager === 'yarn';
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
@@ -199,5 +207,5 @@ function toDep(workspaceDir: string, moduleName: string, version: string, outdat
       arguments: [workspaceDir, npmCommand]
     } :
     undefined;
-  return new DependencyNode(moduleName, vscode.TreeItemCollapsibleState.None, command, version, outdated);
+  return new DependencyNode(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, command, version, outdated);
 };

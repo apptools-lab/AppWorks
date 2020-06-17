@@ -6,12 +6,15 @@ import { pathExists } from '../utils';
 export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private workspaceRoot: string;
 
+  private extensionContext: vscode.ExtensionContext;
+
   private onDidChange: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
 
   readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this.onDidChange.event;
 
-  constructor(workspaceRoot: string) {
-    this.workspaceRoot = workspaceRoot
+  constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
+    this.extensionContext = context;
+    this.workspaceRoot = workspaceRoot;
   }
 
   refresh(): void {
@@ -46,7 +49,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
           arguments: [pageEntryPath]
         };
 
-        return new Component(componentName, cmdObj);
+        return new Component(this.extensionContext, componentName, cmdObj);
       };
       const dirNames = await fse.readdir(componentsPath);
       // except file
@@ -63,6 +66,7 @@ export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
 
 class Component extends vscode.TreeItem {
   constructor(
+    public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command?: vscode.Command
   ) {
@@ -70,8 +74,8 @@ class Component extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', '..', 'assets', 'light', 'component.svg'),
-    dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'component.svg')
+    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/component.svg')),
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/component.svg'))
   };
 
   contextValue = 'component';

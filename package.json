@@ -6,13 +6,16 @@
     "packages/*"
   ],
   "scripts": {
-    "setup": "npm run install:deps && lerna clean --yes && npm run packages:link && npm run packages:build",
+    "setup": "npm run install:deps && lerna clean --yes && npm run packages:link && npm run packages:build && npm run extensions:link",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
-    "install:deps": "rm -rf node_modules && rm -rf ./packages/*/node_modules && SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ yarn install --registry=http://registry.npm.taobao.org",
+    "install:deps": "npm run packages:install && npm run extensions:install",
+    "packages:install": "rm -rf node_modules && rm -rf ./packages/*/node_modules && SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ yarn install --registry=http://registry.npm.taobao.org",
     "packages:link": "lerna link",
     "packages:watch": "ts-node ./scripts/watch.ts",
     "packages:build": "npm run packages:clean && ts-node ./scripts/build.ts",
     "packages:clean": "rm -rf ./packages/*/lib",
+    "extensions:install": " rm -rf ./extensions/*/node_modules && rm -rf ./extensions/*/web/node_modules && ts-node ./scripts/extension-deps-install.ts",
+    "extensions:link": "ts-node ./scripts/extension-link-package.ts",
     "publish": "npm run publish:package && npm run publish:extension",
     "publish:package": "ts-node ./scripts/package-publish.ts",
     "publish:extension": "ts-node ./scripts/extension-publish.ts",
