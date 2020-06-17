@@ -10,47 +10,13 @@ import * as spawn from 'cross-spawn';
 
   return await Promise.all(extensionFiles.map(async extensionFile => {
     const cwd = path.join(extensionsPath, extensionFile);
-    const cwdStat = await fse.stat(cwd);
-    if (cwdStat.isDirectory()) {
-      const packageJSON: any = await fse.readJson(path.join(cwd, 'package.json'));
-      if (packageJSON.dependencies) {
-        const packageNames = Reflect.ownKeys(packageJSON.dependencies).filter((moduleName: string) => {
-          return /^@iceworks/.test(moduleName);
-        });
-        // link packages to extension
-        if (packageNames.length) {
-          packageNames.forEach((packageName: string) => {
-            packageName = packageName.replace('@iceworks/', '');
-            if (packageFiles.includes(packageName)) {
-              console.log('extension:', extensionFile, 'link package:', packageName);
-              spawn.sync('npm', ['link', path.join(cwd, '../../', 'packages', packageName)], {
-                stdio: 'inherit',
-                cwd,
-              });
-            }
-          })
-        }
-      }
+    if (fse.existsSync(cwd)) {
+      // link packages to extension
+      await runNpmLink(cwd, packageFiles, path.join(cwd, '../../', 'packages'));
       const webviewPath = path.join(cwd, 'web');
-      const webviewStat = await fse.stat(webviewPath);
-      if (fse.existsSync(webviewPath) && webviewStat.isDirectory()) {
-        const packageJSON: any = await fse.readJson(path.join(webviewPath, 'package.json'));
-        const packageNames = Reflect.ownKeys(packageJSON.dependencies).filter((moduleName: string) => {
-          return /^@iceworks/.test(moduleName);
-        });
-        // link packages to extension webview
-        if (packageNames.length) {
-          packageNames.forEach((packageName: string) => {
-            packageName = packageName.replace('@iceworks/', '');
-            if (packageFiles.includes(packageName)) {
-              console.log('extension web:', extensionFile, 'link package:', packageName);
-              spawn.sync('npm', ['link', path.join(webviewPath, '../../../', 'packages', packageName)], {
-                stdio: 'inherit',
-                cwd: webviewPath,
-              });
-            }
-          })
-        }
+      if (fse.existsSync(webviewPath)) {
+        // link packages to extension webview 
+        await runNpmLink(webviewPath, packageFiles, path.join(webviewPath, '../../../', 'packages'));
       }
     }
   }))
@@ -58,3 +24,27 @@ import * as spawn from 'cross-spawn';
   console.trace(e);
   process.exit(128);
 })
+
+async function runNpmLink(cwd: string, packageFiles: string[], linkPath: string) {
+  const cwdStat = await fse.stat(cwd);
+  if (cwdStat.isDirectory()) {
+    const packageJSON: any = await fse.readJson(path.join(cwd, 'package.json'));
+    if (packageJSON.dependencies) {
+      const packageNames = Reflect.ownKeys(packageJSON.dependencies).filter((moduleName: string) => {
+        return /^@iceworks/.test(moduleName);
+      });
+      if (packageNames.length) {
+        packageNames.forEach((packageName: string) => {
+          packageName = packageName.replace('@iceworks/', '');
+          if (packageFiles.includes(packageName)) {
+            console.log('\n extension', cwd, 'link package:', packageName, '\n');
+            spawn.sync('npm', ['link', path.join(linkPath, packageName)], {
+              stdio: 'inherit',
+              cwd,
+            });
+          }
+        })
+      }
+    }
+  }
+}
