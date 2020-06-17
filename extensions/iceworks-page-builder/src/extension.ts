@@ -1,16 +1,24 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { autoSetNpmConfiguration } from '@iceworks/common-service';
+import { autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
 import services from './services/index';
+
+const packageJSON = require('../package.json');
 
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const { extensionPath, subscriptions } = context;
+  const { extensionPath, subscriptions, globalState } = context;
+  const logger = new Logger(globalState, { namespace: packageJSON.name, version: packageJSON.version });
+  logger.dau();
+  logger.log({
+    module: 'main',
+    action: 'activate'
+  });
 
   console.log('Congratulations, your extension "iceworks-page-builder" is now active!');
 
-  autoSetNpmConfiguration(context.globalState);
+  autoSetNpmConfiguration(globalState);
 
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建页面', ViewColumn.One, {
@@ -18,9 +26,9 @@ export function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, services);
+    connectService(webviewPanel.webview, subscriptions, { services, logger });
   }
-  context.subscriptions.push(vscode.commands.registerCommand('iceworks-page-builder.create', function () {
+  subscriptions.push(vscode.commands.registerCommand('iceworks-page-builder.create', function () {
     activeWebview();
   }));
 }
