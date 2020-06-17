@@ -5,7 +5,7 @@ import successIcon from '@/assets/success.svg';
 import styles from './index.module.scss';
 
 interface ISelectCardProps {
-  title: string;
+  title: string | React.ReactNode;
   content?: string | React.ReactNode;
   selected: boolean;
   style?: object;

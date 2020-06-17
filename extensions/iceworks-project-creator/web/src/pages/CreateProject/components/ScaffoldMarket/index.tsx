@@ -3,7 +3,18 @@ import { Collapse } from '@alifd/next';
 import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
+import JSSvg from '@/assets/js.svg';
+import TSSvg from '@/assets/ts.svg';
 import styles from './index.module.scss';
+
+const whitelist = [
+  '@alifd/fusion-design-pro',
+  '@alifd/scaffold-lite',
+  '@alifd/scaffold-simple',
+  '@rax-materials/scaffolds-basic-app',
+  '@icedesign/stark-layout-scaffold',
+  '@icedesign/stark-child-scaffold'
+]
 
 const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState<IMaterialSource>({});
@@ -38,7 +49,6 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   async function getScaffolds(source: string) {
     try {
       const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      const whitelist = ['@alifd/fusion-design-pro', '@alifd/scaffold-lite', '@alifd/scaffold-simple', '@rax-materials/scaffolds-basic-app']
       const main = scaffolds.filter(scaffold => whitelist.includes(scaffold.source.npm));
       const other = scaffolds.filter(scaffold => !whitelist.includes(scaffold.source.npm));
       return { mainScaffolds: main, otherScaffolds: other }
@@ -81,28 +91,44 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
           ))}
         </div>
         <div className={styles.mainScaffolds}>
-          {mainScaffolds && mainScaffolds.map(item => (
-            <SelectCard
-              key={item.name}
-              title={item.title}
-              content={<span className={styles.userSelect}>{item.description}</span>}
-              media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-              selected={materialSelected === item.name}
-              style={{ width: 180, height: 250 }}
-              onClick={() => onScaffoldMaterialClick(item)}
-            />
-          ))}
+          {mainScaffolds && mainScaffolds.map(item => {
+            return (
+              <SelectCard
+                key={item.name}
+                title={
+                  <div>
+                    <img className={styles.cardProjectType} src={TSSvg} alt="projectType" width={20} height={20} />
+                    <span className={styles.cardTitle}>{item.title.replace(' - TS', '')}</span>
+                  </div>
+                }
+                content={<span className={styles.userSelect}>{item.description}</span>}
+                media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
+                selected={materialSelected === item.name}
+                style={{ width: 190, height: 250 }}
+                onClick={() => onScaffoldMaterialClick(item)}
+              />
+            )
+          })}
           <Collapse className={styles.collapse}>
             <Collapse.Panel title="查看更多">
               <div className={styles.otherScaffolds}>
                 {otherScaffolds && otherScaffolds.map(item => (
                   <SelectCard
                     key={item.name}
-                    title={item.title}
-                    content={<span className={styles.userSelect}>{item.description}</span>}
+                    title={
+                      <div>
+                        <img className={styles.cardProjectType} src={JSSvg} alt="projectType" width={20} height={20} />
+                        <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
+                      </div>
+                    }
+                    content={
+                      <div>
+                        <span className={styles.userSelect}>{item.description}</span>
+                      </div>
+                    }
                     media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
                     selected={materialSelected === item.name}
-                    style={{ width: 180, height: 250 }}
+                    style={{ width: 190, height: 250 }}
                     onClick={() => onScaffoldMaterialClick(item)}
                   />
                 ))}
