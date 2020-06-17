@@ -10,6 +10,7 @@ interface ICreateDEFProjectFormProps {
   skipCreateDEFProject: () => void;
   createProjectLoading: boolean;
   createProjectBtnDisabled: boolean;
+  errorMsg?: string;
 };
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
@@ -18,11 +19,12 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   onChange,
   skipCreateDEFProject,
   createProjectLoading,
-  createProjectBtnDisabled
+  createProjectBtnDisabled,
+  errorMsg
 }) => {
   return (
     <div className={styles.form}>
-      <div>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
+      <div className={styles.tip}>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
@@ -65,9 +67,15 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         >
           <Input placeholder="请输入GitLab Token" name="gitlabToken" />
         </Form.Item>
-        <div className={styles.action}>
-          {children}
-        </div>
+        <Form.Item>
+          {errorMsg && <div className={styles.errorMsg}>
+            {errorMsg}
+          </div>
+          }
+          <div className={styles.action}>
+            {children}
+          </div>
+        </Form.Item>
       </Form>
     </div>
   );
