@@ -96,10 +96,12 @@ interface IStorage {
 
 export class Logger {
   private storage: IStorage;
+
   private namespace: string;
+
   private version: string;
 
-  constructor(storage: IStorage, config: { namespace: string; version: string; }) {
+  constructor(storage: IStorage, config: { namespace: string; version: string }) {
     this.storage = storage;
     this.namespace = config.namespace;
     this.version = config.version;

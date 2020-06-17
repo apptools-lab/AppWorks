@@ -3,6 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
 import services from './services/index';
 
+// eslint-disable-next-line
 const packageJSON = require('../package.json');
 
 const { window, ViewColumn } = vscode;
