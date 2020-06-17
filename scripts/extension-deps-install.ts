@@ -7,11 +7,22 @@ import * as spawn from 'cross-spawn';
   const extensionFiles = await fse.readdir(extensionsPath);
   for (let i = 0; i < extensionFiles.length; i++) {
     const cwd = path.join(extensionsPath, extensionFiles[i]);
-    console.log(cwd);
+    console.log('Installing extension\'s dependencies', cwd);
     spawn.sync('npm', ['install'], {
       stdio: 'inherit',
       cwd,
     });
+    const webviewPath = path.join(cwd, 'web');
+    if (fse.existsSync(webviewPath)) {
+      // webview: npm install
+      console.log('Installing extension webview\'s dependencies', webviewPath);
+      spawn.sync('npm', [
+        'install',
+      ], {
+        stdio: 'inherit',
+        cwd: webviewPath,
+      });
+    }
   }
 })().catch(e => {
   console.trace(e);
