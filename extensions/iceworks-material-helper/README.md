@@ -1,8 +1,8 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks 辅料开发辅助器
+# Iceworks 物料使用辅助器
 
-* 自动补全 prop 属性
+* 代码编辑时自动补全组件属性
 
 ## 用法
 

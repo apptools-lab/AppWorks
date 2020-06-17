@@ -1,7 +1,7 @@
 {
 	"name": "iceworks-material-helper",
 	"displayName": "Iceworks Material Helper",
-	"description": "Easily use materials in iceworks.",
+	"description": "Easily use materials in Iceworks.",
 	"publisher": "iceworks-team",
 	"version": "0.1.0",
 	"engines": {

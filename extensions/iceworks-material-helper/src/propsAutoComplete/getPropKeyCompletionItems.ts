@@ -7,13 +7,11 @@ import getPropKeysFromDefinition from './getPropKeysFromDefinition';
 export default function getPropKeys(componentPath, componentName): vscode.CompletionItem[] {
   let propKeys: string[] = [];
 
-  // Use Identifier
   if (/\.(js|jsx)$/.test(componentPath)) {
+    // Use Identifier
     propKeys = getPropKeysFromCode(componentPath, componentName);
-  }
-
-  // Use .d.ts
-  if (componentPath.endsWith('.d.ts')) {
+  } else if (componentPath.endsWith('.d.ts')) {
+    // Use .d.ts
     propKeys = getPropKeysFromDefinition(componentPath);
   }
 
