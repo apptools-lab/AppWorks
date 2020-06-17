@@ -31,8 +31,8 @@
     "views": {
       "iceworksApp": [
         {
-          "id": "welcomePage",
-          "name": "%iceworksApp.view.welcomePage.name%",
+          "id": "welcome",
+          "name": "%iceworksApp.view.welcome.name%",
           "when": "workbenchState == empty || iceworks:isNotTargetProject"
         },
         {
@@ -59,8 +59,8 @@
     },
     "viewsWelcome": [
       {
-        "view": "welcomePage",
-        "contents": "%iceworksApp.viewsWelcome.welcomePage.contents%"
+        "view": "welcome",
+        "contents": "%iceworksApp.viewsWelcome.welcome.contents%"
       },
       {
         "view": "npmScripts",

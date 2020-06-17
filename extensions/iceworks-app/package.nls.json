@@ -1,10 +1,10 @@
 {
-  "iceworksApp.view.welcomePage.name": "Welcome Page",
+  "iceworksApp.view.welcome.name": "Welcome",
   "iceworksApp.view.npmScripts.name": "npm Scripts",
   "iceworksApp.view.pages.name": "Pages",
   "iceworksApp.view.components.name": "Components",
   "iceworksApp.view.nodeDependencies.name": "Node Dependencies",
-  "iceworksApp.viewsWelcome.welcomePage.contents": "To use Iceworks App, you need to open a folder or create a new project first. \n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:iceworks-project-creator.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks App in VS Code.",
+  "iceworksApp.viewsWelcome.welcome.contents": "To use Iceworks App, you need to open a folder or create a new project first. \n[Open a Folder](command:vscode.openFolder)\n[Create New Project](command:iceworks-project-creator.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks App in VS Code.",
   "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json.",
   "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found.",
   "iceworksApp.viewsWelcome.components.contents": "Components could not be found.",

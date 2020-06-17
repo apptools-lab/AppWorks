@@ -15,6 +15,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   if (!rootPath) {
     vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     return;
   }
   try {
