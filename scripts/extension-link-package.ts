@@ -22,7 +22,7 @@ import * as spawn from 'cross-spawn';
           packageNames.forEach((packageName: string) => {
             packageName = packageName.replace('@iceworks/', '');
             if (packageFiles.includes(packageName)) {
-              console.log('extension: ', extensionFile, 'link package:', packageName);
+              console.log('extension:', extensionFile, 'link package: ', packageName);
               spawn.sync('npm', ['link', path.join(cwd, '../../', 'packages', packageName)], {
                 stdio: 'inherit',
                 cwd,
