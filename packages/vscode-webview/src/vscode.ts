@@ -1,7 +1,5 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import * as fsExtra from 'fs-extra';
-import * as ejs from 'ejs';
 
 const { window, ViewColumn } = vscode;
 
@@ -16,8 +14,6 @@ interface IConfig {
   title: string;
   services?: any;
 }
-
-const templateFileName = 'template.html.ejs';
 
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
   const { extensionPath, subscriptions } = context;
@@ -43,7 +39,7 @@ export function connectService(webview, subscriptions, services) {
           const result = args ? await api(...args) : await api();
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
-        } catch(err) {
+        } catch (err) {
           console.error('invoke service error', err);
           webview.postMessage({ eventId, errorMessage: err.message });
         }
@@ -67,9 +63,21 @@ export function getHtmlForWebview(extensionPath: string): string {
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
-  const templatePath = path.join(__dirname, templateFileName);
-  const fileStr = fsExtra.readFileSync(templatePath, 'utf-8');
-  const fileContent = ejs.compile(fileStr)({styleUri, scriptUri, nonce});
+  const fileContent = `<!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+      <meta name="theme-color" content="#000000">
+      <title>Iceworks</title>
+      <link rel="stylesheet" type="text/css" href="${styleUri}">
+    </head>
+    <body>
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div id="ice-container"></div>
+      <script nonce="${nonce}" src="${scriptUri}"></script>
+    </body>
+  </html>`;
   return fileContent;
 }
 
