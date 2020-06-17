@@ -2,7 +2,7 @@ English | [简体中文](./README.md)
 
 # Iceworks Style Helper
 
-Easily write styles in iceworks.
+Write styles easier in iceworks.
 
 ## Usage
 
