@@ -1,16 +1,31 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { autoSetNpmConfiguration } from '@iceworks/common-service';
+import { autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
 import services from './services/index';
+
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
 
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const { extensionPath, subscriptions } = context;
+  const { extensionPath, subscriptions, globalState } = context;
 
   console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
 
-  autoSetNpmConfiguration(context.globalState);
+  // data collection
+  const logger = new Logger(globalState, name);
+  logger.dau();
+  logger.log({
+    module: 'main',
+    action: 'activate',
+    data: {
+      version,
+    }
+  });
+
+  // auto set configuration
+  autoSetNpmConfiguration(globalState);
 
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '生成组件', ViewColumn.One, {
@@ -18,9 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, services);
+    connectService(webviewPanel.webview, subscriptions, { services, logger });
   }
-  context.subscriptions.push(vscode.commands.registerCommand('iceworks-component-builder.generate', function () {
+  subscriptions.push(vscode.commands.registerCommand('iceworks-component-builder.generate', function () {
     activeWebview();
   }));
 }

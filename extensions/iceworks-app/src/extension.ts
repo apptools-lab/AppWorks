@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import * as path from 'path';
 import { getProjectType } from '@iceworks/project-service';
-import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration } from '@iceworks/common-service';
+import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
 import { DepNodeProvider, DependencyNode, addDepCommandHandler, showDepInputBox } from './views/nodeDependenciesView';
 import { ComponentsProvider } from './views/componentsView';
@@ -10,7 +10,11 @@ import { PagesProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
 import { openEntryFile, executeCommand } from './utils';
 
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
+
 export async function activate(context: vscode.ExtensionContext) {
+  const { globalState } = context;
   const rootPath = vscode.workspace.rootPath;
 
   if (!rootPath) {
@@ -25,7 +29,20 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
   }
 
-  autoSetNpmConfiguration(context.globalState);
+  // data collection
+  const logger = new Logger(globalState, name);
+  logger.dau();
+  logger.log({
+    module: 'main',
+    action: 'activate',
+    data: {
+      version,
+    }
+  });
+
+  // auto set configuration
+  autoSetNpmConfiguration(globalState);
+
   const terminals: ITerminalMap = new Map<string, Terminal>();
 
   vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));

@@ -13,6 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "iceworks-page-builder" is now active!');
 
+  // data collection
   const logger = new Logger(globalState, name);
   logger.dau();
   logger.log({
@@ -23,6 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
 
+  // auto set configuration
   autoSetNpmConfiguration(globalState);
 
   function activeWebview() {
