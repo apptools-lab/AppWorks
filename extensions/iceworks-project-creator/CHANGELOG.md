@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.1.3
+## 0.1.4
 - style: better styles of the webview
 - feat: Support select GitLab group and check the GitLab Repo name
  
