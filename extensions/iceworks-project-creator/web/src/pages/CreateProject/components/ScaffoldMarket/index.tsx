@@ -78,63 +78,65 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <div className={styles.scaffoldRegistry}>
+        <div className={styles.scaffoldsSource}>
           {materialSources && materialSources.map(item => (
             <SelectCard
               key={item.name}
               title={item.name}
               content={<span className={styles.userSelect}>{item.description}</span>}
               selected={materialSourceSelected.name === item.name}
-              style={{ width: 160 }}
+              style={{ width: 150 }}
               onClick={() => onMaterialSourceClick(item)}
             />
           ))}
         </div>
-        <div className={styles.mainScaffolds}>
-          {mainScaffolds && mainScaffolds.map(item => {
-            return (
-              <SelectCard
-                key={item.name}
-                title={
-                  <div>
-                    <img className={styles.cardProjectType} src={TSSvg} alt="projectType" width={20} height={20} />
-                    <span className={styles.cardTitle}>{item.title.replace(' - TS', '')}</span>
-                  </div>
-                }
-                content={<span className={styles.userSelect}>{item.description}</span>}
-                media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-                selected={materialSelected === item.name}
-                style={{ width: 190, height: 250 }}
-                onClick={() => onScaffoldMaterialClick(item)}
-              />
-            )
-          })}
-          <Collapse className={styles.collapse}>
-            <Collapse.Panel title="查看更多">
-              <div className={styles.otherScaffolds}>
-                {otherScaffolds && otherScaffolds.map(item => (
-                  <SelectCard
-                    key={item.name}
-                    title={
-                      <div>
-                        <img className={styles.cardProjectType} src={JSSvg} alt="projectType" width={20} height={20} />
-                        <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
-                      </div>
-                    }
-                    content={
-                      <div>
-                        <span className={styles.userSelect}>{item.description}</span>
-                      </div>
-                    }
-                    media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-                    selected={materialSelected === item.name}
-                    style={{ width: 190, height: 250 }}
-                    onClick={() => onScaffoldMaterialClick(item)}
-                  />
-                ))}
-              </div>
-            </Collapse.Panel>
-          </Collapse>
+        <div className={styles.scaffolds}>
+          <div className={styles.mainScaffolds}>
+            {mainScaffolds && mainScaffolds.map(item => {
+              return (
+                <SelectCard
+                  key={item.name}
+                  title={
+                    <div>
+                      <img className={styles.cardProjectType} src={TSSvg} alt="projectType" width={20} height={20} />
+                      <span className={styles.cardTitle}>{item.title.replace(' - TS', '')}</span>
+                    </div>
+                  }
+                  content={<span className={styles.userSelect}>{item.description}</span>}
+                  media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
+                  selected={materialSelected === item.name}
+                  style={{ width: 190, height: 250 }}
+                  onClick={() => onScaffoldMaterialClick(item)}
+                />
+              )
+            })}
+            {!!otherScaffolds.length && <Collapse className={styles.collapse}>
+              <Collapse.Panel title="查看更多">
+                <div className={styles.otherScaffolds}>
+                  {otherScaffolds.map(item => (
+                    <SelectCard
+                      key={item.name}
+                      title={
+                        <div>
+                          <img className={styles.cardProjectType} src={JSSvg} alt="projectType" width={20} height={20} />
+                          <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
+                        </div>
+                      }
+                      content={
+                        <div>
+                          <span className={styles.userSelect}>{item.description}</span>
+                        </div>
+                      }
+                      media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
+                      selected={materialSelected === item.name}
+                      style={{ width: 190, height: 250 }}
+                      onClick={() => onScaffoldMaterialClick(item)}
+                    />
+                  ))}
+                </div>
+              </Collapse.Panel>
+            </Collapse>}
+          </div>
         </div>
       </div>
       <div className={styles.action}>

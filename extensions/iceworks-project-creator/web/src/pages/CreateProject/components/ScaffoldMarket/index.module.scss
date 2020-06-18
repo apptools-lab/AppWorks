@@ -1,5 +1,5 @@
 .container {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -7,28 +7,37 @@
     display: flex;
     justify-content: flex-start;
 
-    .mainScaffolds {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-left: 30px;
-      min-width: 300px;
+    .scaffoldsSource {
+      width: 180px;
+      height: 100%;
     }
-    .collapse {
-      width: 100%;
-      border: none;
-      :global {
-        .next-collapse-panel-expanded > .next-collapse-panel-content {
-          padding: 12px 0;
-        }
-        .next-collapse-panel-title:hover {
-          background: $color-brand1-1;
-        }
-      }
-      .otherScaffolds {
+    .scaffolds {
+      height: 500px;
+      overflow: scroll;
+      width: calc(100% - 180px);
+      .mainScaffolds {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
+        margin-left: 10px;
+        min-width: 300px;
+      }
+      .collapse {
+        width: 100%;
+        border: none;
+        :global {
+          .next-collapse-panel-expanded > .next-collapse-panel-content {
+            padding: 12px 0;
+          }
+          .next-collapse-panel-title:hover {
+            background: $color-brand1-1;
+          }
+        }
+        .otherScaffolds {
+          display: flex;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+        }
       }
     }
   }

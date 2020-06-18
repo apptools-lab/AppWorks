@@ -2,6 +2,7 @@ import { checkAliInternal } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import axios from 'axios';
 
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
@@ -96,7 +97,7 @@ async function autoSetPackageManagerConfiguration(globalState: vscode.Memento, i
     saveDataToSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER, 'tnpm');
   }
 
-  vscode.workspace.onDidChangeConfiguration(function(event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_PCKAGE_MANAGER);
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
@@ -116,7 +117,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
     saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, 'https://registry.npm.alibaba-inc.com');
   }
 
-  vscode.workspace.onDidChangeConfiguration(function(event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_NPM_REGISTRY);
     if (isTrue) {
       console.log('autoSetNpmRegistry: did change');
@@ -133,4 +134,24 @@ export function createNpmCommand(action: string, target: string = '', extra: str
     registry = `--registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
   }
   return `${packageManager} ${action} ${target} ${registry} ${extra}`;
+}
+
+export async function getGitLabGroups(token: string) {
+  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/groups', {
+    params: {
+      'private_token': token
+    }
+  });
+  console.log('gitLab groups', res.data)
+  return res.data;
+}
+
+export async function getExistProjects(token: string) {
+  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/projects', {
+    params: {
+      'private_token': token
+    }
+  })
+  console.log('exist projects', res.data)
+  return res.data;
 }
