@@ -21,6 +21,9 @@ interface IGoldlogParam extends ILogParam {
   namespace: string;
 }
 
+const MAIN_KEY = 'main';
+const LOGGER_MODULE_KEY = 'logger';
+
 export async function log(originParam: IGoldlogParam) {
   const param = {
     ...originParam,
@@ -83,8 +86,8 @@ export function once(originParam: IGoldlogParam, storage: IStorage) {
 
 export function dau(storage: IStorage) {
   return once({
-    namespace: 'main',
-    module: 'logger',
+    namespace: MAIN_KEY,
+    module: LOGGER_MODULE_KEY,
     action: 'dau',
     data: {
       platform: process.platform,
@@ -100,11 +103,13 @@ interface IStorage {
 export class Logger {
   private storage: IStorage;
 
-  private namespace: string;
+  private namespace: string = MAIN_KEY;
 
-  constructor(storage: IStorage, namespace: string) {
+  constructor(storage?: IStorage, namespace?: string) {
     this.storage = storage;
-    this.namespace = namespace;
+    if (namespace) {
+      this.namespace = namespace;
+    }
   }
 
   public log(param: ILogParam) {
@@ -115,6 +120,10 @@ export class Logger {
   }
 
   public once(param: ILogParam) {
+    if (!this.storage) {
+      console.error('You need to set the storage before calling this method!');
+      return;
+    }
     return once(
       {
         namespace: this.namespace,
@@ -125,6 +134,10 @@ export class Logger {
   }
 
   public dau() {
+    if (!this.storage) {
+      console.error('You need to set the storage before calling this method!');
+      return;
+    }
     return dau(this.storage);
   }
 }
