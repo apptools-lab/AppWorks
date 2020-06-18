@@ -8,7 +8,7 @@ import * as spawn from 'cross-spawn';
   for (let i = 0; i < extensionFiles.length; i++) {
     const cwd = path.join(extensionsPath, extensionFiles[i]);
     console.log('Installing extension\'s dependencies', cwd);
-    spawn.sync('npm', ['install'], {
+    spawn.sync('npm', ['install', '--registry', 'http://registry.npm.taobao.org'], {
       stdio: 'inherit',
       cwd,
     });
