@@ -14,3 +14,17 @@ export interface IDEFProjectField {
   project: string;
   gitlabToken: string;
 }
+
+export interface IGitLabExistProject {
+  name: string;
+  id: string;
+}
+
+export interface IGitLabGroup {
+  'avatar_url': string;
+  'description': string;
+  'id': number;
+  'name': string;
+  'path': string;
+  'web_url': string;
+}

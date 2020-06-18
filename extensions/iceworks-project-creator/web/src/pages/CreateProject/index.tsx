@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, Form, Step, Button, Notification } from '@alifd/next';
 import callService from '@/callService';
-import { IProjectField, IDEFProjectField } from '@/types';
+import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
-import InitProjectSuccess from './components/InitProjectSuccess';
 import styles from './index.module.scss';
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
@@ -14,13 +13,16 @@ const CreateProject: React.FC = () => {
   const [currentStep, setStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
-  const [projectDir, setProjectDir] = useState('');
   const [isAliInternal, setIsAliInternal] = useState(false)
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [createProjectBtnDisabled, setCreateProjectBtnDisabled] = useState(false);
   const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
+  const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
+  const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
+  const [groupDataSource, setGroupDataSource] = useState([]);
+  const existProjectsRef = useRef([]);
   const steps = [
     {
       title: '选择模板',
@@ -33,7 +35,7 @@ const CreateProject: React.FC = () => {
     {
       title: '填写信息',
       content: (
-        <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange}>
+        <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
           <Form.Submit
             type="primary"
@@ -41,13 +43,9 @@ const CreateProject: React.FC = () => {
             validate
             loading={createProjectLoading}
             disabled={createProjectBtnDisabled}
-          >下一步</Form.Submit>
+          >{isAliInternal ? '下一步' : '完成'}</Form.Submit>
         </CreateProjectForm>
       )
-    },
-    {
-      title: '初始化项目成功',
-      content: <InitProjectSuccess projectDir={projectDir} />
     }
   ];
 
@@ -61,6 +59,10 @@ const CreateProject: React.FC = () => {
           skipCreateDEFProject={skipCreateDEFProject}
           createProjectLoading={createProjectLoading}
           createProjectBtnDisabled={createProjectBtnDisabled}
+          errorMsg={DEFFormErrorMsg}
+          onAccountBlur={onAccountBlur}
+          onValidateProjectName={onValidateProjectName}
+          dataSource={groupDataSource}
         >
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
           <Form.Submit
@@ -70,18 +72,22 @@ const CreateProject: React.FC = () => {
             loading={createDEFProjectLoading}
             disabled={createDEFProjectDisabled}
             className={styles.btn}
-          >下一步</Form.Submit>
+          >完成</Form.Submit>
         </CreateDEFProjectForm>
       )
     })
   }
 
-  function onProjectFormChange(value) {
-    setCurProjectField({ ...curProjectField, ...value })
-  }
-  function onDEFProjectFormChange(value) {
-    setCurDEFProjectField({ ...curDEFProjectField, ...value })
-  }
+  function goNext() {
+    setStep(currentStep + 1);
+  };
+
+  function goPrev() {
+    if (currentStep === 1) {
+      setCurProjectField({ ...curProjectField, scaffold: null });
+    }
+    setStep(currentStep - 1);
+  };
 
   function onScaffoldSelect(scaffold) {
     setCurProjectField({ ...curProjectField, scaffold })
@@ -104,7 +110,12 @@ const CreateProject: React.FC = () => {
     };
   }
 
+  function onProjectFormChange(value) {
+    setCurProjectField({ ...curProjectField, ...value })
+  }
+
   async function onProjectDetailSubmit(values: any, errors: any) {
+    setProjectFormErrorMsg('');
     if (errors) {
       setCreateProjectLoading(false);
       return;
@@ -115,32 +126,55 @@ const CreateProject: React.FC = () => {
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
-        throw new Error('该路径已存在，请重新选择！')
+        throw new Error('该项目路径已存在，请重新选择！');
       }
       if (!isAliInternal) {
         await createProject(values)
       } else {
         setCurProjectField(values);
-        setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName })
+        setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName });
+        goNext();
       }
-      goNext();
     } catch (e) {
       Notification.error({ content: e.message });
+      setProjectFormErrorMsg(e.message);
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
     }
   };
 
+  async function onAccountBlur() {
+    try {
+      const { gitlabToken } = curDEFProjectField;
+      const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
+      setGroupDataSource(dataSource);
+    } catch (e) {
+      setGroupDataSource([]);
+    }
+  }
+
+  function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
+    if (existProjectsRef.current.filter((item: IGitLabExistProject) => item.name === value).length) {
+      return callback('已存在相同的仓库名，请重新输入')
+    }
+    return callback()
+  };
+
+  function onDEFProjectFormChange(value) {
+    setCurDEFProjectField({ ...curDEFProjectField, ...value })
+  }
+
   async function skipCreateDEFProject() {
+    setDEFFormErrorMsg('');
     setCreateProjectLoading(true);
     setPrevBtnDisabled(true);
     setCreateDEFProjectDisabled(true);
     try {
-      await createProject(curProjectField)
-      goNext();
+      await createProject(curProjectField);
     } catch (e) {
       Notification.error({ content: e.message });
+      setDEFFormErrorMsg(e.message);
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
@@ -150,12 +184,13 @@ const CreateProject: React.FC = () => {
 
   async function createProject(data: IProjectField) {
     const projectDir = await callService('project', 'createProject', data);
-    setProjectDir(projectDir);
     const { projectPath } = data;
     await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
+    await callService('project', 'openLocalProjectFolder', projectDir);
   }
 
   async function onDEFProjectDetailSubmit(values: any, errors: any) {
+    setDEFFormErrorMsg('');
     if (errors) {
       setCreateDEFProjectLoading(false);
       return;
@@ -165,32 +200,21 @@ const CreateProject: React.FC = () => {
     setCreateProjectBtnDisabled(true);
     const { projectPath } = curProjectField as IProjectField;
     const { empId, account, gitlabToken } = values;
+    let projectDir = '';
     try {
-      const projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
+      projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
       await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken });
       await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
-      setProjectDir(projectDir);
-      setCreateDEFProjectLoading(false);
-      goNext();
+      await callService('project', 'openLocalProjectFolder', projectDir);
     } catch (e) {
       Notification.error({ content: e.message });
-      setCreateDEFProjectLoading(false);
+      setDEFFormErrorMsg(e.message);
     } finally {
       setPrevBtnDisabled(false);
       setCreateProjectBtnDisabled(false);
+      setCreateDEFProjectLoading(false);
     }
   }
-
-  async function goNext() {
-    setStep(currentStep + 1);
-  };
-
-  function goPrev() {
-    if (currentStep === 1) {
-      setCurProjectField({ ...curProjectField, scaffold: null });
-    }
-    setStep(currentStep - 1);
-  };
 
   useEffect(() => {
     async function checkAliInternal() {
@@ -204,12 +228,19 @@ const CreateProject: React.FC = () => {
       return false
     }
     async function setDefaultFields(isAliInternal) {
-      const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
-      const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
-      const { empId, account, gitlabToken } = userData;
-      setCurProjectField({ ...curProjectField, projectPath: workspace })
-      if (isAliInternal) {
-        setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken })
+      try {
+        const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
+        const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
+        const { empId, account, gitlabToken } = userData;
+        setCurProjectField({ ...curProjectField, projectPath: workspace })
+        if (isAliInternal) {
+          setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });
+          const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
+          setGroupDataSource(dataSource);
+          existProjectsRef.current = await callService('common', 'getExistProjects', gitlabToken);
+        }
+      } catch (e) {
+        // ignore
       }
     }
     const isAliInternal = checkAliInternal();

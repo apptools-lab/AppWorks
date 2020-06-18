@@ -1,9 +1,12 @@
 .cardContent {
-  margin: 40px auto 24px;
+  margin: 20px auto 24px;
 
   .step {
     width: 100%;
-    margin-left: -40px;
+    padding: 0 !important;
+    margin-bottom: 22px;
+    width: 120vw;
+    margin-left: -15vw;
   }
   .content,
   .actions {
@@ -14,8 +17,7 @@
   }
 
   .content {
-    width: 90vw;
-    margin: 60px auto 10px;
+    margin: 5px auto 10px;
   }
 }
 .btn {

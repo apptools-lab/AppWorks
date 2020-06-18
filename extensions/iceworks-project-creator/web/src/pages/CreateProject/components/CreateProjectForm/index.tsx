@@ -9,9 +9,10 @@ interface IProjectFormProps {
   children: React.ReactNode;
   onChange: (value: { projectName: string; projectPath: string }) => void;
   onOpenFolderDialog: () => void;
+  errorMsg?: string;
 }
 
-const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDialog, children, onChange }) => {
+const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDialog, children, onChange, errorMsg }) => {
   return (
     <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
       <Form.Item
@@ -33,9 +34,15 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
           innerAfter={<img onClick={onOpenFolderDialog} className={styles.folderIcon} src={folderIcon} alt="folder" />}
         />
       </Form.Item>
-      <div className={styles.action}>
-        {children}
-      </div>
+      <Form.Item>
+        {errorMsg && <div className={styles.errorMsg}>
+          {errorMsg}
+        </div>
+        }
+        <div className={styles.action}>
+          {children}
+        </div>
+      </Form.Item>
     </Form>
   );
 };
