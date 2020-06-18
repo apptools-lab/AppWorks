@@ -31,20 +31,22 @@ $ yarn add <npmName> -D -W
 ### Develop Packages
 
 ```bash
-# watch packages
 $ npm run packages:watch
 
 $ npm run packages:build
 
-# or npm run publish:beta
-$ npm run publish
-
-$ npm run sync
+$ npm run publish:package # or npm run publish-beta:package
 ```
 
 ### Develop VS Code extensions
 
-TODO
+```bash
+# watch webview if require
+$ npm run watch:web
+```
+
+Debugging the extension: https://code.visualstudio.com/api/get-started/your-first-extension#debugging-the-extension
+
 
 ## Pull Request Guidelines
 
@@ -60,13 +62,13 @@ TODO
   - Add appropriate test coverage if applicable.
 - Auto Publish
   - Add "publisher": "iceworks-team" into your extension package.json:
-  ```json
-  {
-    "publisher": "iceworks-team"
-  }
-  ```
+    ```json
+    {
+      "publisher": "iceworks-team"
+    }
+    ```
   - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
+  - When your PR has been merged into `release/*`, changed packages will be auto publish its beta version.
 
 ## Issue Reporting Guidelines
 
