@@ -76,7 +76,7 @@ export async function dau(storage: IStorage) {
   const dauKey = 'dauRecordTime';
   const lastDate = storage.get(dauKey);
   if(nowtDate !== lastDate) {
-    storage.set(dauKey, nowtDate);
+    storage.update(dauKey, nowtDate);
     log({
       namespace: 'main',
       module: 'log',
@@ -90,7 +90,7 @@ export async function dau(storage: IStorage) {
 
 interface IStorage {
   get: (key: string) => any;
-  set: (key: string, value: any) => void;
+  update: (key: string, value: any) => void;
 }
 
 export class Logger {
