@@ -31,20 +31,36 @@ $ yarn add <npmName> -D -W
 ### Develop Packages
 
 ```bash
-# watch packages
 $ npm run packages:watch
 
 $ npm run packages:build
 
-# or npm run publish:beta
-$ npm run publish
-
-$ npm run sync
+$ npm run publish:package # or npm run publish-beta:package
 ```
 
 ### Develop VS Code extensions
 
-TODO
+You can add the VS Code Extension of Iceworks to the directory `extension`.
+
+### 1. Initialization
+
+Install [Yeoman](http://yeoman.io/) and [VS Code Extension Generator](https://www.npmjs.com/package/generator-code)：
+
+```shell
+npm install -g yo generator-code
+```
+
+In the `extensions/` Directory, execute `yo code` to initialize the extension
+
+```shell
+yo code
+```
+
+### 2. Development and Debugging
+
+Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api)
+
+Use the VS Code to develop the extension project, and enable extension debugging through `F5`.
 
 ## Pull Request Guidelines
 
@@ -60,13 +76,13 @@ TODO
   - Add appropriate test coverage if applicable.
 - Auto Publish
   - Add "publisher": "iceworks-team" into your extension package.json:
-  ```json
-  {
-    "publisher": "iceworks-team"
-  }
-  ```
+    ```json
+    {
+      "publisher": "iceworks-team"
+    }
+    ```
   - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
+  - When your PR has been merged into `release/*`, changed packages will be auto publish its beta version.
 
 ## Issue Reporting Guidelines
 
