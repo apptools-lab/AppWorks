@@ -128,11 +128,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
                             <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
                           </div>
                         }
-                        content={
-                          <div>
-                            <span className={styles.userSelect}>{item.description}</span>
-                          </div>
-                        }
+                        content={<span className={styles.userSelect}>{item.description}</span>}
                         media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
                         selected={materialSelected === item.name}
                         style={{ width: 190, height: 250 }}

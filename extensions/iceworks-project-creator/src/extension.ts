@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import axios from 'axios';
 import services from './services/index';
 
 const { window, ViewColumn } = vscode;
