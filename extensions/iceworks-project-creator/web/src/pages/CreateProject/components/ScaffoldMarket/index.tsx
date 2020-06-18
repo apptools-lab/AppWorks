@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Collapse } from '@alifd/next';
 import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
-import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
+import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import styles from './index.module.scss';
 
 const tsScaffolds = [
