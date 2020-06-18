@@ -9,8 +9,10 @@
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^2.0.0"
+    "ice-npm-utils": "^2.0.0",
+    "is-electron": "^2.2.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0"

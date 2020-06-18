@@ -27,7 +27,7 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
   connectService(webviewPanel.webview, subscriptions, services);
 }
 
-export function connectService(webview, subscriptions, services) {
+export function connectService(webview, subscriptions, { services, logger }) {
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -36,6 +36,10 @@ export function connectService(webview, subscriptions, services) {
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
+          logger.log({
+            module: service,
+            action:method,
+          });
           const result = args ? await api(...args) : await api();
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
