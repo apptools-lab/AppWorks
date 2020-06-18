@@ -1,0 +1,26 @@
+name: Beta Publisher
+
+on:
+  push:
+    branches:
+      - beta
+
+jobs:
+  build-and-publish-beta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+          registry-url: https://registry.npmjs.org/
+      - run: npm i
+      - run: npm i -g vsce
+      - run: npm run setup
+      - run: npm run publish-beta
+        env:
+          VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          CLIENT_TOKEN: ${{ secrets.DEF_CLIENT_TOKEN }}
+          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
