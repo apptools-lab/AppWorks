@@ -71,21 +71,25 @@ export async function log(originParam: IGoldlogParam) {
   }
 }
 
-export async function dau(storage: IStorage) {
+export function once(originParam: IGoldlogParam, storage: IStorage) {
   const nowtDate = new Date().toDateString();
-  const dauKey = 'dauRecordTime';
+  const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
   const lastDate = storage.get(dauKey);
   if(nowtDate !== lastDate) {
     storage.update(dauKey, nowtDate);
-    log({
-      namespace: 'main',
-      module: 'log',
-      action: 'dau',
-      data: {
-        platform: process.platform,
-      },
-    });
+    return log(originParam);
   }
+}
+
+export function dau(storage: IStorage) {
+  return once({
+    namespace: 'main',
+    module: 'logger',
+    action: 'dau',
+    data: {
+      platform: process.platform,
+    },
+  }, storage);
 }
 
 interface IStorage {
@@ -107,7 +111,17 @@ export class Logger {
     return log({
       namespace: this.namespace,
       ...param
-    })
+    });
+  }
+
+  public once(param: ILogParam) {
+    return once(
+      {
+        namespace: this.namespace,
+        ...param
+      },
+      this.storage
+    );
   }
 
   public dau() {
