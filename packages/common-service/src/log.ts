@@ -11,7 +11,6 @@ let isAlibaba: boolean;
 
 
 interface ILogParam {
-  namespace?: string;
   module: string;
   action: string;
   data?: any;
@@ -101,8 +100,15 @@ interface IStorage {
 }
 
 export class Logger {
+  /**
+   * The storage is used to save the record of marking
+   * like https://code.visualstudio.com/api/references/vscode-api#Memento
+   */
   private storage: IStorage;
 
+  /**
+   * Namespace for logger
+   */
   private namespace: string = MAIN_KEY;
 
   constructor(storage?: IStorage, namespace?: string) {
@@ -112,13 +118,19 @@ export class Logger {
     }
   }
 
-  public log(param: ILogParam) {
+  /**
+   * Make a record
+   */
+  public record(param: ILogParam) {
     return log({
       namespace: this.namespace,
       ...param
     });
   }
 
+  /**
+   * Record once, only once a day
+   */
   public once(param: ILogParam) {
     if (!this.storage) {
       console.error('You need to set the storage before calling this method!');
@@ -133,6 +145,9 @@ export class Logger {
     );
   }
 
+  /**
+   * Record a day's activity
+   */
   public dau() {
     if (!this.storage) {
       console.error('You need to set the storage before calling this method!');
