@@ -30,13 +30,16 @@ console.log('[PUBLISH] Start:');
 getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
   // Publish
   let publishedCount = 0;
+  const publishedExtensions = [];
   for (let i = 0; i < extensionInfos.length; i++) {
     const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, directory, localVersion);
+      publishedExtensions.push(`${name}@${localVersion}`);
     }
   }
-  console.log(`[PUBLISH] Complete (count=${publishedCount}).`);
+  console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
+  console.log(`${publishedExtensions.join('\n')}`);
 });

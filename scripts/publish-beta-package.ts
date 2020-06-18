@@ -57,13 +57,16 @@ console.log('[PUBLISH BETA] Start:');
 getPackageInfos().then((packageInfos: IPackageInfo[]) => {
   // Publish
   let publishedCount = 0;
+  const publishedPackages = [];
   for (let i = 0; i < packageInfos.length; i++) {
     const { name, directory, localVersion, shouldPublish } = packageInfos[i];
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, localVersion, directory);
+      publishedPackages.push(`${name}@${localVersion}`);
     }
   }
-  console.log(`[PUBLISH BETA] Complete (count=${publishedCount}).`)
+  console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`)
+  console.log(`${publishedPackages.join('\n')}`);
 });
