@@ -23,7 +23,7 @@ interface IGoldlogParam extends ILogParam {
 const MAIN_KEY = 'main';
 const LOGGER_MODULE_KEY = 'logger';
 
-export async function log(originParam: IGoldlogParam) {
+export async function record(originParam: IGoldlogParam) {
   const param = {
     ...originParam,
     cache: Math.random(),
@@ -73,7 +73,7 @@ export async function log(originParam: IGoldlogParam) {
   }
 }
 
-export function once(originParam: IGoldlogParam, storage: IStorage) {
+export function recordOnce(originParam: IGoldlogParam, storage: IStorage) {
   const nowtDate = new Date().toDateString();
   const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
   const lastDate = storage.get(dauKey);
@@ -83,7 +83,7 @@ export function once(originParam: IGoldlogParam, storage: IStorage) {
   }
 }
 
-export function dau(storage: IStorage) {
+export function recordDAU(storage: IStorage) {
   return once({
     namespace: MAIN_KEY,
     module: LOGGER_MODULE_KEY,
@@ -123,7 +123,7 @@ export class Logger {
    * Make a record
    */
   public record(param: ILogParam) {
-    return log({
+    return record({
       namespace: this.namespace,
       ...param
     });
@@ -132,12 +132,12 @@ export class Logger {
   /**
    * Record once, only once a day
    */
-  public once(param: ILogParam) {
+  public recordOnce(param: ILogParam) {
     if (!this.storage) {
       console.error('You need to set the storage before calling this method!');
       return;
     }
-    return once(
+    return recordOnce(
       {
         namespace: this.namespace,
         ...param
@@ -149,11 +149,11 @@ export class Logger {
   /**
    * Record a day's activity
    */
-  public dau() {
+  public recordDAU() {
     if (!this.storage) {
       console.error('You need to set the storage before calling this method!');
       return;
     }
-    return dau(this.storage);
+    return recordDAU(this.storage);
   }
 }

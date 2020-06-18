@@ -31,8 +31,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // data collection
   const logger = new Logger(name, globalState);
-  logger.dau();
-  logger.once({
+  logger.recordDAU();
+  logger.recordOnce({
     module: 'main',
     action: 'activate',
     data: {
