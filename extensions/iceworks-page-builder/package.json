@@ -3,7 +3,7 @@
   "displayName": "Iceworks Page Builder",
   "description": "Build Page UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ice-lab/iceworks.git"
