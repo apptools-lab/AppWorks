@@ -40,13 +40,27 @@ $ npm run publish:package # or npm run publish-beta:package
 
 ### Develop VS Code extensions
 
-```bash
-# watch webview if require
-$ npm run watch:web
+You can add the VS Code Extension of Iceworks to the directory `extension`.
+
+### 1. Initialization
+
+Install [Yeoman](http://yeoman.io/) and [VS Code Extension Generator](https://www.npmjs.com/package/generator-code)：
+
+```shell
+npm install -g yo generator-code
 ```
 
-Debugging the extension: https://code.visualstudio.com/api/get-started/your-first-extension#debugging-the-extension
+In the `extensions/` Directory, execute `yo code` to initialize the extension
 
+```shell
+yo code
+```
+
+### 2. Development and Debugging
+
+Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api)
+
+Use the VS Code to develop the extension project, and enable extension debugging through `F5`.
 
 ## Pull Request Guidelines
 
