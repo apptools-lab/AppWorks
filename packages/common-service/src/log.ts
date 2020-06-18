@@ -111,11 +111,12 @@ export class Logger {
    */
   private namespace: string = MAIN_KEY;
 
-  constructor(storage?: IStorage, namespace?: string) {
-    this.storage = storage;
+  constructor(namespace?: string, storage?: IStorage) {
     if (namespace) {
       this.namespace = namespace;
     }
+
+    this.storage = storage;
   }
 
   /**

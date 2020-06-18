@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
 
   // data collection
-  const logger = new Logger(globalState, name);
+  const logger = new Logger(name, globalState);
   logger.dau();
   logger.once({
     module: 'main',
