@@ -36,7 +36,7 @@ export function connectService(webview, subscriptions, { services, logger }) {
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
-          logger.log({
+          logger.record({
             module: service,
             action:method,
           });
