@@ -85,7 +85,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
               title={item.name}
               content={<span className={styles.userSelect}>{item.description}</span>}
               selected={materialSourceSelected.name === item.name}
-              style={{ width: 150 }}
+              style={{ width: 160 }}
               onClick={() => onMaterialSourceClick(item)}
             />
           ))}

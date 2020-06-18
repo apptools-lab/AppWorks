@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Select } from '@alifd/next';
-import { IDEFProjectField } from '@/types';
+import { IDEFProjectField, IGitLabGroup } from '@/types';
 import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
@@ -9,11 +9,11 @@ interface ICreateDEFProjectFormProps {
   createProjectLoading: boolean;
   createProjectBtnDisabled: boolean;
   errorMsg?: string;
-  dataSource: any[];
+  dataSource: IGitLabGroup[];
   skipCreateDEFProject: () => void;
   onChange: (value: IDEFProjectField) => void;
   onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onValidateProjectName: (rule: any, value: string, callback: (errors: string) => void) => any;
+  onValidateProjectName: (rule: object, value: string, callback: (errors: string) => void) => any;
 };
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
@@ -28,6 +28,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   onValidateProjectName,
   skipCreateDEFProject,
 }) => {
+  console.log(dataSource)
   return (
     <div className={styles.form}>
       <div className={styles.tip}>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
@@ -68,7 +69,12 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
             placeholder="请选择 GitLab Group"
             name="group"
             fillProps="name"
-            dataSource={dataSource} />
+            key="name"
+          >
+            {dataSource.map(item => (
+              <Select.Option value={item.name}>{item.name}</Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           colSpan={6}

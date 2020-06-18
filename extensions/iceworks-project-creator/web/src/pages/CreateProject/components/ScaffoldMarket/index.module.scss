@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  max-width: 80vw;
   display: flex;
   flex-direction: column;
 
@@ -20,7 +20,7 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         margin-left: 10px;
-        min-width: 300px;
+        min-width: 500px;
       }
       .collapse {
         width: 100%;
