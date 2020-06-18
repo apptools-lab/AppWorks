@@ -13,6 +13,8 @@
 - [应用创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：通过图像界面引导创建多端应用
 - [页面创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)：通过区块拼装的方式生成页面
 - [组件创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)：通过选择区块的方式生成组件
+- [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：行内样式编写时的自动补全提醒
+- [物料使用辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：组件属性编写时的自动补全提醒
 
 ## 快速使用
 
