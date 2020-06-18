@@ -1,5 +1,5 @@
 /**
- * Scripts to check unpublished version and run beta publish  
+ * Scripts to check unpublished version and run beta publish
  */
 import * as oss from 'ali-oss';
 import * as path from 'path';
@@ -15,14 +15,6 @@ const ossClient = oss({
 });
 
 function publish(extension: string, directory: string, version: string): void {
-  // npm install
-  spawnSync('npm', [
-    'install',
-  ], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
-
   // vsce package
   console.log('[VSCE] PACKAGE: ', `${extension}@${version}`);
   spawnSync('vsce', [
@@ -50,13 +42,16 @@ console.log('[PUBLISH BETA] Start:');
 getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
   // Publish
   let publishedCount = 0;
+  const publishedExtensions = [];
   for (let i = 0; i < extensionInfos.length; i++) {
     const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, directory, localVersion);
+      publishedExtensions.push(`${name}@${localVersion}`);
     }
   }
-  console.log(`[PUBLISH BETA] Complete (count=${publishedCount}).`);
+  console.log(`[PUBLISH EXTENSION BETA] Complete (count=${publishedCount}):`);
+  console.log(`${publishedExtensions.join('\n')}`);
 });
