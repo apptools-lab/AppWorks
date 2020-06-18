@@ -79,12 +79,12 @@ export function recordOnce(originParam: IGoldlogParam, storage: IStorage) {
   const lastDate = storage.get(dauKey);
   if(nowtDate !== lastDate) {
     storage.update(dauKey, nowtDate);
-    return log(originParam);
+    return record(originParam);
   }
 }
 
 export function recordDAU(storage: IStorage) {
-  return once({
+  return recordOnce({
     namespace: MAIN_KEY,
     module: LOGGER_MODULE_KEY,
     action: 'dau',
