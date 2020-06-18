@@ -1,13 +1,11 @@
-
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { spawnSync } from 'child_process';
 import axios from 'axios';
 
-const TIMEOUT = 5000; // ms
+const TIMEOUT = 8000; // ms
 const TARGET_DIRECTORY = join(__dirname, '../packages');
 
-interface IPackageInfo {
+export interface IPackageInfo {
   name: string;
   directory: string;
   localVersion: string;
@@ -28,19 +26,7 @@ function checkVersionExists(pkg: string, version: string, mainFile: string): Pro
     .catch(() => false);
 }
 
-function publish(pkg: string, version: string, directory: string): void {
-  console.log('[PUBLISH]', `${pkg}@${version}`);
-
-  spawnSync('npm', [
-    'publish',
-    // use default registry
-  ], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
-}
-
-async function getPackageInfos(): Promise<IPackageInfo[]> {
+export async function getPackageInfos(): Promise<IPackageInfo[]> {
   const packageInfos: IPackageInfo[] = [];
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
@@ -81,15 +67,3 @@ async function getPackageInfos(): Promise<IPackageInfo[]> {
   }
   return packageInfos;
 }
-
-// Entry
-getPackageInfos().then((packageInfos: IPackageInfo[]) => {
-  // Publish
-  for (let i = 0; i < packageInfos.length; i++) {
-    const { name, directory, localVersion, shouldPublish } = packageInfos[i];
-    if (shouldPublish) {
-      console.log(`--- ${name}@${localVersion} ---`);
-      publish(name, localVersion, directory);
-    }
-  }
-});

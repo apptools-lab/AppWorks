@@ -58,6 +58,15 @@ TODO
   - If you are resolving a special issue, add `(fix #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
+- Auto Publish
+  - Add "publisher": "iceworks-team" into your extension package.json:
+  ```json
+  {
+    "publisher": "iceworks-team"
+  }
+  ```
+  - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
+  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
 
 ## Issue Reporting Guidelines
 
