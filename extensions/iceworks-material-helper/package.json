@@ -1,0 +1,41 @@
+{
+	"name": "iceworks-material-helper",
+	"displayName": "Iceworks Material Helper",
+	"description": "Easily use materials in Iceworks.",
+	"publisher": "iceworks-team",
+	"version": "0.1.0",
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"icon": "assets/logo.png",
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ice-lab/iceworks.git"
+	},
+	"main": "./build/index.js",	
+	"scripts": {
+		"vscode:prepublish": "rm -rf build && npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./tsconfig.json"
+	},
+	"devDependencies": {
+		"@types/babel-traverse": "^6.25.5",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.41.0",
+		"typescript": "^3.6.4"
+	},
+	"dependencies": {
+		"@babel/parser": "^7.10.2",
+		"@babel/traverse": "^7.10.1",
+		"@babel/types": "^7.10.2"
+	}
+}

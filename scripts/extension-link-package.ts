@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as spawn from 'cross-spawn';
+import { run } from './fn/shell';
 
 (async function () {
   const extensionsPath = path.join(__dirname, '../extensions')
@@ -12,11 +13,11 @@ import * as spawn from 'cross-spawn';
     const cwd = path.join(extensionsPath, extensionFile);
     if (fse.existsSync(cwd)) {
       // link packages to extension
-      await runNpmLink(cwd, packageFiles, path.join(cwd, '../../', 'packages'));
+      await runNpmLink(cwd, packageFiles);
       const webviewPath = path.join(cwd, 'web');
       if (fse.existsSync(webviewPath)) {
-        // link packages to extension webview 
-        await runNpmLink(webviewPath, packageFiles, path.join(webviewPath, '../../../', 'packages'));
+        // link packages to extension webview
+        await runNpmLink(webviewPath, packageFiles);
       }
     }
   }))
@@ -25,7 +26,7 @@ import * as spawn from 'cross-spawn';
   process.exit(128);
 })
 
-async function runNpmLink(cwd: string, packageFiles: string[], linkPath: string) {
+async function runNpmLink(cwd: string, packageFiles: string[]) {
   const cwdStat = await fse.stat(cwd);
   if (cwdStat.isDirectory()) {
     const packageJSON: any = await fse.readJson(path.join(cwd, 'package.json'));
@@ -34,14 +35,11 @@ async function runNpmLink(cwd: string, packageFiles: string[], linkPath: string)
         return /^@iceworks/.test(moduleName);
       });
       if (packageNames.length) {
-        packageNames.forEach((packageName: string) => {
-          packageName = packageName.replace('@iceworks/', '');
-          if (packageFiles.includes(packageName)) {
-            console.log('\n extension', cwd, 'link package:', packageName, '\n');
-            spawn.sync('npm', ['link', path.join(linkPath, packageName)], {
-              stdio: 'inherit',
-              cwd,
-            });
+        packageNames.map(async (packageName: string) => {
+          const packageOrginName = packageName.replace('@iceworks/', '');
+          if (packageFiles.includes(packageOrginName)) {
+            console.log('\n extension', cwd, 'link package:', packageOrginName, '\n');
+            await run(`cd ${cwd} && rm -rf node_modules/${packageName}`);
           }
         })
       }

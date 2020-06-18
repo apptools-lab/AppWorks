@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
 
+export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
