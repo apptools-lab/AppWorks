@@ -1,4 +1,4 @@
-import { IMaterialScaffold } from '@/iceworks/material-utils';
+import { IMaterialScaffold } from '@iceworks/material-utils';
 
 export interface IProjectField {
   projectName: string;
