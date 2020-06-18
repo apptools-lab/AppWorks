@@ -1,19 +1,18 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Collapse } from '@alifd/next';
 import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@/iceworks/material-utils';
-import JSSvg from '@/assets/js.svg';
-import TSSvg from '@/assets/ts.svg';
 import styles from './index.module.scss';
 
-const whitelist = [
+const tsScaffolds = [
   '@alifd/fusion-design-pro',
   '@alifd/scaffold-lite',
-  '@alifd/scaffold-simple',
-  '@rax-materials/scaffolds-basic-app',
-  '@icedesign/stark-layout-scaffold',
-  '@icedesign/stark-child-scaffold'
+]
+const jsScaffolds = [
+  '@alifd/fusion-design-pro-js',
+  '@alifd/scaffold-lite-js'
 ]
 
 const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
@@ -49,8 +48,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
   async function getScaffolds(source: string) {
     try {
       const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      const main = scaffolds.filter(scaffold => whitelist.includes(scaffold.source.npm));
-      const other = scaffolds.filter(scaffold => !whitelist.includes(scaffold.source.npm));
+      const main = scaffolds.filter(scaffold => !jsScaffolds.includes(scaffold.source.npm));
+      const other = scaffolds.filter(scaffold => jsScaffolds.includes(scaffold.source.npm));
       return { mainScaffolds: main, otherScaffolds: other }
     } catch (e) {
       return [];
@@ -93,12 +92,15 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
         <div className={styles.scaffolds}>
           <div className={styles.mainScaffolds}>
             {mainScaffolds && mainScaffolds.map(item => {
+              const scaffoldType = tsScaffolds.includes(item.source.npm) ? 'ts' :
+                jsScaffolds.includes(item.source.npm) ? 'js' :
+                  ''
               return (
                 <SelectCard
                   key={item.name}
                   title={
                     <div>
-                      <img className={styles.cardProjectType} src={TSSvg} alt="projectType" width={20} height={20} />
+                      {scaffoldType && <img className={styles.cardProjectType} src={require(`@/assets/${scaffoldType}.svg`)} alt="projectType" width={20} height={20} />}
                       <span className={styles.cardTitle}>{item.title.replace(' - TS', '')}</span>
                     </div>
                   }
@@ -113,26 +115,31 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
             {!!otherScaffolds.length && <Collapse className={styles.collapse}>
               <Collapse.Panel title="查看更多">
                 <div className={styles.otherScaffolds}>
-                  {otherScaffolds.map(item => (
-                    <SelectCard
-                      key={item.name}
-                      title={
-                        <div>
-                          <img className={styles.cardProjectType} src={JSSvg} alt="projectType" width={20} height={20} />
-                          <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
-                        </div>
-                      }
-                      content={
-                        <div>
-                          <span className={styles.userSelect}>{item.description}</span>
-                        </div>
-                      }
-                      media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-                      selected={materialSelected === item.name}
-                      style={{ width: 190, height: 250 }}
-                      onClick={() => onScaffoldMaterialClick(item)}
-                    />
-                  ))}
+                  {otherScaffolds.map(item => {
+                    const scaffoldType = tsScaffolds.includes(item.source.npm) ? 'ts' :
+                      jsScaffolds.includes(item.source.npm) ? 'js' :
+                        ''
+                    return (
+                      <SelectCard
+                        key={item.name}
+                        title={
+                          <div>
+                            {scaffoldType && <img className={styles.cardProjectType} src={require(`@/assets/${scaffoldType}.svg`)} alt="projectType" width={20} height={20} />}
+                            <span className={styles.cardTitle}>{item.title.replace(' - JS', '')}</span>
+                          </div>
+                        }
+                        content={
+                          <div>
+                            <span className={styles.userSelect}>{item.description}</span>
+                          </div>
+                        }
+                        media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
+                        selected={materialSelected === item.name}
+                        style={{ width: 190, height: 250 }}
+                        onClick={() => onScaffoldMaterialClick(item)}
+                      />
+                    )
+                  })}
                 </div>
               </Collapse.Panel>
             </Collapse>}

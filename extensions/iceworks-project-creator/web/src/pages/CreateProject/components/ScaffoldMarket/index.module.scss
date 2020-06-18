@@ -1,5 +1,6 @@
 .container {
-  max-width: 80vw;
+  width: 100%;
+  max-width: 90vw;
   display: flex;
   flex-direction: column;
 
@@ -8,13 +9,13 @@
     justify-content: flex-start;
 
     .scaffoldsSource {
-      width: 180px;
+      width: 170px;
       height: 100%;
     }
     .scaffolds {
-      height: 500px;
+      height: 450px;
       overflow: scroll;
-      width: calc(100% - 180px);
+      width: calc(100% - 170px);
       .mainScaffolds {
         display: flex;
         justify-content: flex-start;
