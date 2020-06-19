@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import extensionDepsInstall from './fn/extension-deps-install';
 
 const ossClient = oss({
   bucket: 'iceworks',
@@ -14,7 +15,6 @@ const ossClient = oss({
   accessKeySecret: process.env.ACCESS_KEY_SECRET,
   timeout: '120s',
 });
-
 
 function updateBetaDependencies(extension: string, directory: string) {
   try {
@@ -41,6 +41,9 @@ function updateBetaDependencies(extension: string, directory: string) {
 };
 
 function publish(extension: string, directory: string, version: string): void {
+  // npm install
+  extensionDepsInstall();
+
   // vsce package
   console.log('[VSCE] PACKAGE: ', `${extension}@${version}`);
   spawnSync('vsce', [

@@ -3,15 +3,11 @@
  */
 import { spawnSync } from 'child_process';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import extensionDepsInstall from './fn/extension-deps-install';
 
 function publish(extension: string, directory: string, version: string): void {
   // npm install
-  spawnSync('npm', [
-    'install',
-  ], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
+  extensionDepsInstall();
 
   // vsce publish
   console.log('[VSCE] PUBLISH: ', `${extension}@${version}`);
