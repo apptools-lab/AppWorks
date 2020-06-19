@@ -6,7 +6,7 @@ import * as spawn from 'cross-spawn';
   const extensionsPath = path.join(__dirname, '../extensions')
   const extensionFiles = await fse.readdir(extensionsPath);
   const installCommonds = ['install'];
-  if (!process.env.TRAVIS) {
+  if (!process.env.CI) {
     installCommonds.push('--registry');
     installCommonds.push('http://registry.npm.taobao.org');
   }
