@@ -70,5 +70,5 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
   console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
   // Write temp file
-  fs.writeFileSync('publishedPackages.temp.json', JSON.stringify(publishedPackages));
+  fs.writeFileSync(path.join(__dirname, 'publishedPackages.temp.json'), JSON.stringify(publishedPackages));
 });

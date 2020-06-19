@@ -18,7 +18,7 @@ const ossClient = oss({
 
 function updateBetaDependencies(extension: string, directory: string) {
   try {
-    const publishedPackages: string[] = JSON.parse(fs.readFileSync('publishedPackages.temp.json', 'utf-8'));
+    const publishedPackages: string[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'publishedPackages.temp.json'), 'utf-8'));
     const packageFile = path.join(directory, 'package.json');
     const packageData = fs.readJsonSync(packageFile);
 
