@@ -29,9 +29,9 @@ function updateBetaDependencies(extension: string, directory: string) {
         const name = info[0];
         const version = info[1];
 
-        if (packageData.dependencies[name]) {
+        if (packageData.dependencies && packageData.dependencies[name]) {
           packageData.dependencies[name] = version;
-        } else if (packageData.devDependencies[name]) {
+        } else if (packageData.devDependencies && packageData.devDependencies[name]) {
           packageData.devDependencies[name] = version;
         }
       });
@@ -79,10 +79,10 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
-      
+
       updateBetaDependencies(name, directory);
       // Update inside web project package json
-      updateBetaDependencies(name,  path.join(directory, 'web'));
+      updateBetaDependencies(name, path.join(directory, 'web'));
 
       publish(name, directory, localVersion);
       publishedExtensions.push(`${name}:${localVersion}`);
