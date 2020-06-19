@@ -96,6 +96,7 @@
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build:web && npm run compile",
     "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
     "watch": "tsc -watch -p tsconfig.json",
     "compile": "tsc -p ./tsconfig.json"
   },
