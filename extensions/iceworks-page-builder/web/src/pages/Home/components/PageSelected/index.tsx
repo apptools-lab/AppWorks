@@ -16,6 +16,7 @@ export const SelectedBlock = SortableElement(
         <BlockDragHandle title={title} screenshot={screenshot} />
         <div className={styles.name}>
           <Input
+            autoFocus
             value={name}
             className={styles.input}
             onChange={value => onNameChange(value, targetIndex)}

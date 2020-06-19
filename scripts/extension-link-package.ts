@@ -13,7 +13,7 @@ import { run } from './fn/shell';
     const cwd = path.join(extensionsPath, extensionFile);
     if (fse.existsSync(cwd)) {
       // link packages to extension
-      if (process.env.TRAVIS) {
+      if (process.env.CI) {
         await runNpmLink(cwd, packageFiles, path.join(cwd, '../../', 'packages'));
       } else {
         await removeIceworks(cwd);
@@ -21,7 +21,7 @@ import { run } from './fn/shell';
       const webviewPath = path.join(cwd, 'web');
       if (fse.existsSync(webviewPath)) {
         // link packages to extension webview
-        if (process.env.TRAVIS) {
+        if (process.env.CI) {
           await runNpmLink(webviewPath, packageFiles, path.join(webviewPath, '../../../', 'packages'));
         } else {
           await removeIceworks(webviewPath);

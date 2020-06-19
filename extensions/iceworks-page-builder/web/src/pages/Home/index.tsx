@@ -35,11 +35,6 @@ function validateData({ blocks, pageName }) {
   if (!pageName) {
     return '请填写页面名称。';
   }
-
-  if (!blocks || !blocks.length) {
-    return '请选择使用的区块。';
-  }
-
   return '';
 }
 
