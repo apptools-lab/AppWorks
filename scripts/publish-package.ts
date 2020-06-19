@@ -28,7 +28,7 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, localVersion, directory);
-      publishedPackages.push(`${name}@${localVersion}`);
+      publishedPackages.push(`${name}:${localVersion}`);
     }
   }
   console.log(`[PUBLISH PACKAGE PRODUCTION] Complete (count=${publishedCount}):`)
