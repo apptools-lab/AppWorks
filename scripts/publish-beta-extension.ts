@@ -1,8 +1,9 @@
 /**
  * Scripts to check unpublished version and run beta publish
  */
-import * as oss from 'ali-oss';
+// import * as oss from 'ali-oss';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 
@@ -13,6 +14,31 @@ const ossClient = oss({
   accessKeySecret: process.env.ACCESS_KEY_SECRET,
   timeout: '120s',
 });
+
+
+function updateBetaDependencies(extension: string, directory: string) {
+  try {
+    const publishedPackages: string[] = JSON.parse(fs.readFileSync('publishedPackages.temp.json', 'utf-8'));
+    const packageFile = path.join(directory, 'package.json');
+    const packageData = fs.readJsonSync(packageFile);
+
+    publishedPackages.forEach((publishedPackage: string) => {
+      const info = publishedPackage.split(':');
+      const name = info[0];
+      const version = info[1];
+
+      if (packageData.dependencies[name]) {
+        packageData.dependencies[name] = version;
+      } else if (packageData.devDependencies[name]) {
+        packageData.devDependencies[name] = version;
+      }
+    });
+    fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+
+  } catch (e) {
+    console.log(`[ERROR] ${extension} upload beta package dependencies failed.`, e);
+  }
+};
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce package
@@ -48,8 +74,9 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
+      updateBetaDependencies(name, directory);
       publish(name, directory, localVersion);
-      publishedExtensions.push(`${name}@${localVersion}`);
+      publishedExtensions.push(`${name}:${localVersion}`);
     }
   }
   console.log(`[PUBLISH EXTENSION BETA] Complete (count=${publishedCount}):`);

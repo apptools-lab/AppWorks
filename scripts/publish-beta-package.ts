@@ -24,7 +24,7 @@ function publish(pkg: string, localVersion: string, directory: string): void {
       });
       const distTags = JSON.parse(childProcess.stdout) || {};
       const matched = (distTags.beta || '').match(BETA_REG);
-      
+
       // 1.0.0-beta.1 -> ["1.0.0-beta.1", "1.0.0", "1"] -> 1.0.0-beta.2
       if (matched && matched[1] === localVersion && matched[2]) {
         betaVersion = Number(matched[2]) + 1;
@@ -64,9 +64,11 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, localVersion, directory);
-      publishedPackages.push(`${name}@${localVersion}`);
+      publishedPackages.push(`${name}:${localVersion}`);
     }
   }
-  console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`)
+  console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
+  // Write temp file
+  fs.writeFileSync('publishedPackages.temp.json', JSON.stringify(publishedPackages));
 });

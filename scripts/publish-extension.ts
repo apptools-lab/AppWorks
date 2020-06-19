@@ -37,7 +37,7 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
       publish(name, directory, localVersion);
-      publishedExtensions.push(`${name}@${localVersion}`);
+      publishedExtensions.push(`${name}:${localVersion}`);
     }
   }
   console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
