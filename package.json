@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "setup": "npm run install:deps && lerna clean --yes && npm run packages:link && npm run packages:build && npm run extensions:link",
+    "setup": "npm run env && npm run install:deps && lerna clean --yes && npm run packages:link && npm run packages:build && npm run extensions:link",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
     "install:deps": "npm run packages:install && npm run extensions:install",
     "packages:install": "rm -rf node_modules && rm -rf ./packages/*/node_modules && SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ yarn install --registry=http://registry.npm.taobao.org",
@@ -27,7 +27,8 @@
     "coverage": "codecov",
     "owner": "ts-node ./scripts/owner.ts",
     "sync": "ts-node ./scripts/sync.ts",
-    "dependency:check": "ts-node ./scripts/dependency-check.ts"
+    "dependency:check": "ts-node ./scripts/dependency-check.ts",
+    "env": "ts-node ./scripts/env.ts"
   },
   "resolutions": {
     "eslint-plugin-import": "2.20.2"
