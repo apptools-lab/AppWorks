@@ -1,7 +1,7 @@
 /**
  * Scripts to check unpublished version and run beta publish
  */
-// import * as oss from 'ali-oss';
+import * as oss from 'ali-oss';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
