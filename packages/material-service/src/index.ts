@@ -49,9 +49,9 @@ export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
  *
  * @param specifiedType {string} react/rax/other...
  */
-export function getSources(specifiedType?: string): IMaterialSource[] {
+export async function getSources(specifiedType?: string): Promise<IMaterialSource[]> {
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
-  if (!checkAliInternal()) {
+  if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
