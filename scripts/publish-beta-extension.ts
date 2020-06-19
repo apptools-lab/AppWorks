@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import extensionDepsInstall from './fn/extension-deps-install';
 
 const ossClient = oss({
   bucket: 'iceworks',
@@ -15,28 +16,29 @@ const ossClient = oss({
   timeout: '120s',
 });
 
-
 function updateBetaDependencies(extension: string, directory: string) {
   try {
     const publishedPackages: string[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'publishedPackages.temp.json'), 'utf-8'));
-    const packageFile = path.join(directory, 'package.json');
-    const packageData = fs.readJsonSync(packageFile);
 
-    publishedPackages.forEach((publishedPackage: string) => {
-      const info = publishedPackage.split(':');
-      const name = info[0];
-      const version = info[1];
+    if (fs.existsSync(directory)) {
+      const packageFile = path.join(directory, 'package.json');
+      const packageData = fs.readJsonSync(packageFile);
 
-      if (packageData.dependencies[name]) {
-        packageData.dependencies[name] = version;
-      } else if (packageData.devDependencies[name]) {
-        packageData.devDependencies[name] = version;
-      }
-    });
-    fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+      publishedPackages.forEach((publishedPackage: string) => {
+        const info = publishedPackage.split(':');
+        const name = info[0];
+        const version = info[1];
 
+        if (packageData.dependencies[name]) {
+          packageData.dependencies[name] = version;
+        } else if (packageData.devDependencies[name]) {
+          packageData.devDependencies[name] = version;
+        }
+      });
+      fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+    }
   } catch (e) {
-    console.log(`[ERROR] ${extension} upload beta package dependencies failed.`, e);
+    console.log(`[ERROR] ${extension} update beta package dependencies failed.`, e);
   }
 };
 
@@ -66,6 +68,9 @@ function publish(extension: string, directory: string, version: string): void {
 // Entry
 console.log('[PUBLISH BETA] Start:');
 getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
+  // npm install
+  extensionDepsInstall();
+
   // Publish
   let publishedCount = 0;
   const publishedExtensions = [];
@@ -74,7 +79,11 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
+      
       updateBetaDependencies(name, directory);
+      // Update inside web project package json
+      updateBetaDependencies(name,  path.join(directory, 'web'));
+
       publish(name, directory, localVersion);
       publishedExtensions.push(`${name}:${localVersion}`);
     }
