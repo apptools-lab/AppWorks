@@ -6,7 +6,7 @@ export interface IMaterialSource {
   name: string;
   type: string;
   source: string;
-  official: boolean;
+  official?: boolean;
   checked?: boolean;
   description?: string;
   isEditing?: boolean;
@@ -89,7 +89,7 @@ export interface IMaterialBlock {
 export interface IMaterialData {
   type: string;
   name: string;
-  blocks:  IMaterialBlock[];
+  blocks: IMaterialBlock[];
   components: IMaterialComponent[];
   scaffolds: IMaterialScaffold[];
   bases?: IMaterialBase[];
@@ -99,7 +99,7 @@ export interface IMaterialData {
  *  ----------------------- 物料渲染数据结构 -----------------------
  */
 
-export type IMaterialItem = IMaterialBlock|IMaterialComponent|IMaterialScaffold|IMaterialBase;
+export type IMaterialItem = IMaterialBlock | IMaterialComponent | IMaterialScaffold | IMaterialBase;
 
 export interface IMaterialCategoryDatum {
   name: string;

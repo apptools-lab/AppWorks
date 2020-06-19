@@ -8,25 +8,42 @@ const ICE_MATERIAL_SOURCE = 'http://ice.alicdn.com/assets/materials/react-materi
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
-
-const dataCache: {[source: string]: IMaterialData} = {};
+const OFFICE_MATERIAL_SOURCES = [
+  {
+    'name': 'PC Web',
+    'type': 'react',
+    'source': 'http://ice.alicdn.com/assets/materials/react-materials.json',
+    'description': '基于 Fusion 基础组件和 ice 脚手架的官方物料'
+  },
+  {
+    'name': '无线跨端',
+    'type': 'rax',
+    'source': 'http://ice.alicdn.com/assets/materials/rax-materials.json',
+    'description': '基于 Rax 组件和 Rax 脚手架的官方物料'
+  }
+]
+const dataCache: { [source: string]: IMaterialData } = {};
 
 const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
 };
 
-export const getSourcesByProjectType = async function() {
+export const getSourcesByProjectType = async function () {
   const type = await getProjectType();
   return getSources(type);
 }
+
+export const getOfficalMaterialSources = () => OFFICE_MATERIAL_SOURCES;
 
 /**
  * Get material sources list
  *
  * @param specifiedType {string} react/rax/other...
  */
-export const getSources = function(specifiedType?: string): IMaterialSource[] {
-  const sources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
+export function getSources(specifiedType?: string): IMaterialSource[] {
+  const officalsources: IMaterialSource[] = getOfficalMaterialSources();
+  const userSources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
+  const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
@@ -35,7 +52,7 @@ export const getSources = function(specifiedType?: string): IMaterialSource[] {
  *
  * @param source {string} source URL
  */
-export const getData = async function(source: string): Promise<IMaterialData> {
+export const getData = async function (source: string): Promise<IMaterialData> {
   let data: IMaterialData;
   if (dataCache[source]) {
     data = dataCache[source];
