@@ -4,7 +4,7 @@ import axios from 'axios';
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 import { getProjectType } from '@iceworks/project-service';
 
-const ICE_MATERIAL_SOURCE = 'http://ice.alicdn.com/assets/materials/react-materials.json';
+const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
@@ -12,13 +12,13 @@ const OFFICE_MATERIAL_SOURCES = [
   {
     'name': 'PC Web',
     'type': 'react',
-    'source': 'http://ice.alicdn.com/assets/materials/react-materials.json',
+    'source': ICE_MATERIAL_SOURCE,
     'description': '基于 Fusion 基础组件和 ice 脚手架的官方物料'
   },
   {
     'name': '无线跨端',
     'type': 'rax',
-    'source': 'http://ice.alicdn.com/assets/materials/rax-materials.json',
+    'source': 'https://ice.alicdn.com/assets/materials/rax-materials.json',
     'description': '基于 Rax 组件和 Rax 脚手架的官方物料'
   }
 ]
