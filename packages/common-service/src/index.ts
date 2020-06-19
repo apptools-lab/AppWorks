@@ -1,5 +1,4 @@
 import { checkAliInternal } from 'ice-npm-utils';
-import { OFFICAL_MATERIAL_SOURCES } from '@iceworks/material-service';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -83,7 +82,7 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function init(globalState: vscode.Memento) {
+export async function initExtensionConfiguration(globalState: vscode.Memento) {
   await autoInitMaterialSource(globalState);
   await autoSetNpmConfiguration(globalState);
 }
@@ -94,14 +93,18 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
   const materialSourceIsSet = globalState.get(stateKey);
   if (!materialSourceIsSet) {
     console.log('autoInitMaterialSource: do');
-    const materialSources = getDataFromSettingJson(CONFIGURATION_SETION_MATERIAL_SOURCES);
-    const officalMaterialSources = OFFICAL_MATERIAL_SOURCES.map(materialSource => materialSource.source);
-    const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource));
-    saveDataToSettingJson(CONFIGURATION_SETION_MATERIAL_SOURCES, newSources);
+    const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+    // old materialSources and remove it from the previous users
+    const officalMaterialSources = [
+      'http://ice.alicdn.com/assets/materials/react-materials.json',
+      'https://fusion.alibaba-inc.com/api/v1/sites/1194/materials'
+    ];
+    const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource.source));
+    saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
-    const isTrue = event.affectsConfiguration(CONFIGURATION_SETION_MATERIAL_SOURCES);
+    const isTrue = event.affectsConfiguration(CONFIGURATION_KEY_MATERIAL_SOURCES);
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
 
