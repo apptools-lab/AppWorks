@@ -8,10 +8,11 @@ import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 
 const BETA_REG = /([^-]+)-beta\.(\d+)/; // '1.0.0-beta.1'
 
-function publish(pkg: string, localVersion: string, directory: string): void {
-
+function publish(pkg: string, localVersion: string, directory: string): { version: string } {
   let version: string = localVersion;
   let betaVersion = 1;
+  const packageFile = path.join(directory, 'package.json');
+  const packageData = fs.readJsonSync(packageFile);
 
   try {
     if (!BETA_REG.test(localVersion)) {
@@ -33,8 +34,6 @@ function publish(pkg: string, localVersion: string, directory: string): void {
     }
 
     // Set beta version
-    const packageFile = path.join(directory, 'package.json');
-    const packageData = fs.readJsonSync(packageFile);
     packageData.version = version;
     fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
 
@@ -50,6 +49,8 @@ function publish(pkg: string, localVersion: string, directory: string): void {
   } catch (e) {
     console.log('[ERROR]', e);
   }
+
+  return packageData;
 }
 
 // Entry
@@ -63,8 +64,8 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
     if (shouldPublish) {
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);
-      publish(name, localVersion, directory);
-      publishedPackages.push(`${name}:${localVersion}`);
+      const { version } = publish(name, localVersion, directory);
+      publishedPackages.push(`${name}:${version}`);
     }
   }
   console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
