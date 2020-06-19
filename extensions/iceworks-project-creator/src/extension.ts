@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
+import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
 import services from './services/index';
 
 // eslint-disable-next-line
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   // auto set configuration
-  autoSetNpmConfiguration(globalState);
+  initExtensionConfiguration(globalState);
 
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建项目', ViewColumn.One, {

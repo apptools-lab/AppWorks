@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal } from 'vscode';
 import * as path from 'path';
 import { getProjectType } from '@iceworks/project-service';
-import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, autoSetNpmConfiguration, Logger } from '@iceworks/common-service';
+import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, initExtensionConfiguration, Logger } from '@iceworks/common-service';
 import { NpmScriptsProvider, Script } from './views/npmScriptsView';
 import { DepNodeProvider, DependencyNode, addDepCommandHandler, showDepInputBox } from './views/nodeDependenciesView';
 import { ComponentsProvider } from './views/componentsView';
@@ -41,7 +41,7 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   // auto set configuration
-  autoSetNpmConfiguration(globalState);
+  initExtensionConfiguration(globalState);
 
   const terminals: ITerminalMap = new Map<string, Terminal>();
 
