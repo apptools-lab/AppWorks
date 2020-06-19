@@ -34,10 +34,32 @@ export const MaterialView: React.FC<{
   isLoadingSources,
   ...others
 }) => {
+  const sourceActiveKey = sources.length ? currentSource : EMPTY_TAB_KEY;
+  const tabItems = sources.length > 0 ?
+    sources.map((sourceData, index) => {
+      const { name, source } = sourceData;
+      return (
+        <Item tab={
+          <div>
+            {name}
+          </div>
+        } key={source}>
+          {
+            (currentSource === source ? <MaterialType
+              sourceIndex={index}
+              {...others}
+            /> : null)
+          }
+        </Item>
+      );
+    }) :
+    <Item title="没有数据" key={EMPTY_TAB_KEY}>
+      没有找到物料源数据，请配置后再试。
+    </Item>;
   return (
     <Tab
       className={styles.wrap}
-      activeKey={isLoadingSources ? LOADING_TAB_KEY : (sources.length ? currentSource : EMPTY_TAB_KEY)}
+      activeKey={isLoadingSources ? LOADING_TAB_KEY : sourceActiveKey}
       onChange={onChangeSource}
       size="medium"
       extra={extra}
@@ -45,27 +67,7 @@ export const MaterialView: React.FC<{
       {
         isLoadingSources ?
           <Item title="加载中……" key={LOADING_TAB_KEY}/> :
-          sources.length > 0 ?
-            sources.map((sourceData, index) => {
-              const { name, source } = sourceData;
-              return (
-                <Item tab={
-                  <div>
-                    {name}
-                  </div>
-                } key={source}>
-                  {
-                    (currentSource === source ? <MaterialType
-                      sourceIndex={index}
-                      {...others}
-                    /> : null)
-                  }
-                </Item>
-              );
-            }) :
-            <Item title="没有数据" key={EMPTY_TAB_KEY}>
-              没有找到物料源数据，请配置后再试。
-            </Item>
+          tabItems
       }
     </Tab>
   );

@@ -178,6 +178,20 @@ export const MaterialType: React.FC<{
     setTypeId(value);
   }
 
+  const content = data.length > 0 ? data.map((item) => {
+    const { name, id } = item;
+    return typeId === id ? <Content
+      {...item}
+      key={`${name}_${id}`}
+      scrollId={scrollId}
+      typeId={typeId}
+      colSpan={colSpan}
+      {...others}
+    /> : null;
+  }) : <div className={styles.empty}>
+    没有数据
+  </div>;
+
   return (
     <Loading visible={isLoadingData} className={styles.spin}>
       { data.length > 1 && <div className={styles.head}>
@@ -195,22 +209,10 @@ export const MaterialType: React.FC<{
       </div>}
       {
         isLoadingData ?
-        <div className={styles.empty}>
-          加载中……
-        </div>:
-          data.length > 0 ? data.map((item) => {
-            const { name, id } = item;
-            return typeId === id ? <Content
-              {...item}
-              key={`${name}_${id}`}
-              scrollId={scrollId}
-              typeId={typeId}
-              colSpan={colSpan}
-              {...others}
-            /> : null;
-          }) : <div className={styles.empty}>
-            没有数据
-          </div>
+          <div className={styles.empty}>
+            加载中……
+          </div>:
+          content
       }
     </Loading>
   );
