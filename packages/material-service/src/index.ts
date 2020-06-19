@@ -17,6 +17,7 @@ const isIceMaterial = (source: string) => {
 
 export const getSourcesByProjectType = async function() {
   const type = await getProjectType();
+  console.log('project type is:', type);
   return getSources(type);
 }
 
