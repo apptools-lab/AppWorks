@@ -47,6 +47,9 @@ export async function getProjectType() {
   if (dependencies.react) {
     return 'react';
   }
+  if (dependencies.vue) {
+    return 'vue';
+  }
   return 'unknown';
 }
 
