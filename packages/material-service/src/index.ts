@@ -9,7 +9,7 @@ const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-mater
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
-const OFFICE_MATERIAL_SOURCES = [
+export const OFFICAL_MATERIAL_SOURCES = [
   {
     name: 'PC Web',
     type: 'react',
@@ -21,14 +21,14 @@ const OFFICE_MATERIAL_SOURCES = [
     type: 'rax',
     source: 'https://ice.alicdn.com/assets/materials/rax-materials.json',
     description: '基于 Rax 组件和 Rax 脚手架的官方物料'
+  },
+  {
+    name: 'Vue 物料源',
+    type: 'vue',
+    source: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
+    description: '基于 Element, Vue CLI 的 Vue 官方物料'
   }
 ]
-const VUE_MATERIAL_SOURCES = {
-  name: 'Vue 物料源',
-  type: 'vue',
-  source: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
-  description: '基于 Element, Vue CLI 的 Vue 官方物料'
-}
 
 const dataCache: { [source: string]: IMaterialData } = {};
 
@@ -41,7 +41,7 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 }
 
-export const getOfficalMaterialSources = () => OFFICE_MATERIAL_SOURCES;
+export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
 
 /**
  * Get material sources list
@@ -50,8 +50,8 @@ export const getOfficalMaterialSources = () => OFFICE_MATERIAL_SOURCES;
  */
 export function getSources(specifiedType?: string): IMaterialSource[] {
   const officalsources: IMaterialSource[] = getOfficalMaterialSources();
-  if (!checkAliInternal()) {
-    officalsources.push(VUE_MATERIAL_SOURCES);
+  if (checkAliInternal()) {
+    officalsources.splice(2, 1);
   }
   const userSources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   const sources = officalsources.concat(userSources);

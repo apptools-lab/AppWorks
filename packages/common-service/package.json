@@ -9,6 +9,7 @@
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@iceworks/material-service": "^0.1.4",
     "axios": "^0.19.2",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",

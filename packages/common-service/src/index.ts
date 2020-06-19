@@ -1,4 +1,5 @@
 import { checkAliInternal } from 'ice-npm-utils';
+import { OFFICAL_MATERIAL_SOURCES } from '@iceworks/material-service';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -8,9 +9,10 @@ export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
+export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
-
+export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 export async function checkIsAliInternal(): Promise<boolean> {
   const isAliInternal = await checkAliInternal();
   return isAliInternal;
@@ -27,8 +29,7 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }
 
-
-export function getDataFromSettingJson(section: string, defaultValue?: any): string {
+export function getDataFromSettingJson(section: string, defaultValue?: any): any {
   return vscode.workspace.getConfiguration(CONFIGURATION_SECTION).get(section, defaultValue);
 }
 
@@ -80,6 +81,33 @@ export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string
 export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
+}
+
+export async function init(globalState: vscode.Memento) {
+  await autoInitMaterialSource(globalState);
+  await autoSetNpmConfiguration(globalState);
+}
+
+export async function autoInitMaterialSource(globalState: vscode.Memento) {
+  console.log('autoInitMaterialSource: run');
+  const stateKey = 'iceworks.materialSourceIsSet';
+  const materialSourceIsSet = globalState.get(stateKey);
+  if (!materialSourceIsSet) {
+    console.log('autoInitMaterialSource: do');
+    const materialSources = getDataFromSettingJson(CONFIGURATION_SETION_MATERIAL_SOURCES);
+    const officalMaterialSources = OFFICAL_MATERIAL_SOURCES.map(materialSource => materialSource.source);
+    const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource));
+    saveDataToSettingJson(CONFIGURATION_SETION_MATERIAL_SOURCES, newSources);
+  }
+
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
+    const isTrue = event.affectsConfiguration(CONFIGURATION_SETION_MATERIAL_SOURCES);
+    if (isTrue) {
+      console.log('autoSetPackageManager: did change');
+
+      globalState.update(stateKey, true);
+    }
+  });
 }
 
 export async function autoSetNpmConfiguration(globalState: vscode.Memento) {
