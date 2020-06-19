@@ -6,11 +6,15 @@ import * as styles from './view.module.scss';
 
 const { Item } = Tab;
 
+const LOADING_TAB_KEY = 'loading';
+const EMPTY_TAB_KEY = 'empty';
+
 export const MaterialView: React.FC<{
   sources: IMaterialSource[];
   currentSource: string;
   data: IMaterialTypeDatum[];
   onChangeSource(source: string): void,
+  isLoadingSources?: boolean;
   isLoadingData?: boolean;
   extra?: any;
   colSpan?: number;
@@ -27,34 +31,41 @@ export const MaterialView: React.FC<{
   currentSource,
   onChangeSource,
   extra,
+  isLoadingSources,
   ...others
 }) => {
   return (
     <Tab
       className={styles.wrap}
-      activeKey={currentSource}
+      activeKey={isLoadingSources ? LOADING_TAB_KEY : (sources.length ? currentSource : EMPTY_TAB_KEY)}
       onChange={onChangeSource}
       size="medium"
       extra={extra}
     >
       {
-        sources.map((sourceData, index) => {
-          const { name, source } = sourceData;
-          return (
-            <Item tab={
-              <div>
-                {name}
-              </div>
-            } key={source}>
-              {
-                (currentSource === source ? <MaterialType
-                  sourceIndex={index}
-                  {...others}
-                /> : null)
-              }
+        isLoadingSources ?
+          <Item title="加载中……" key={LOADING_TAB_KEY}/> :
+          sources.length > 0 ?
+            sources.map((sourceData, index) => {
+              const { name, source } = sourceData;
+              return (
+                <Item tab={
+                  <div>
+                    {name}
+                  </div>
+                } key={source}>
+                  {
+                    (currentSource === source ? <MaterialType
+                      sourceIndex={index}
+                      {...others}
+                    /> : null)
+                  }
+                </Item>
+              );
+            }) :
+            <Item title="没有数据" key={EMPTY_TAB_KEY}>
+              没有找到物料源数据，请配置后再试。
             </Item>
-          );
-        })
       }
     </Tab>
   );

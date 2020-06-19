@@ -194,19 +194,23 @@ export const MaterialType: React.FC<{
         </Radio.Group>
       </div>}
       {
-        data.length > 0 ? data.map((item) => {
-          const { name, id } = item;
-          return typeId === id ? <Content
-            {...item}
-            key={`${name}_${id}`}
-            scrollId={scrollId}
-            typeId={typeId}
-            colSpan={colSpan}
-            {...others}
-          /> : null;
-        }) : <div className={styles.empty}>
-          Empty
-        </div>
+        isLoadingData ?
+        <div className={styles.empty}>
+          加载中……
+        </div>:
+          data.length > 0 ? data.map((item) => {
+            const { name, id } = item;
+            return typeId === id ? <Content
+              {...item}
+              key={`${name}_${id}`}
+              scrollId={scrollId}
+              typeId={typeId}
+              colSpan={colSpan}
+              {...others}
+            /> : null;
+          }) : <div className={styles.empty}>
+            没有数据
+          </div>
       }
     </Loading>
   );
