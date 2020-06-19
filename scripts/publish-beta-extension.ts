@@ -41,9 +41,6 @@ function updateBetaDependencies(extension: string, directory: string) {
 };
 
 function publish(extension: string, directory: string, version: string): void {
-  // npm install
-  extensionDepsInstall();
-
   // vsce package
   console.log('[VSCE] PACKAGE: ', `${extension}@${version}`);
   spawnSync('vsce', [
@@ -69,6 +66,9 @@ function publish(extension: string, directory: string, version: string): void {
 // Entry
 console.log('[PUBLISH BETA] Start:');
 getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
+  // npm install
+  extensionDepsInstall();
+
   // Publish
   let publishedCount = 0;
   const publishedExtensions = [];
