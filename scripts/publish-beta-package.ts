@@ -52,9 +52,9 @@ function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
       const dependenceName = betaPackageInfos[i].name;
       const dependenceVersion = betaPackageInfos[i].betaVersion;
 
-      if (packageData.dependencies[dependenceName]) {
+      if (packageData.dependencies && packageData.dependencies[dependenceName]) {
         packageData.dependencies[dependenceName] = dependenceVersion;
-      } else if (packageData.devDependencies[dependenceName]) {
+      } else if (packageData.devDependencies && packageData.devDependencies[dependenceName]) {
         packageData.devDependencies[dependenceName] = dependenceVersion;
       }
     }
