@@ -7,22 +7,26 @@
   .content {
     display: flex;
     justify-content: flex-start;
+    height: calc(100vh - 200px);
 
     .scaffoldsSource {
-      width: 170px;
-      height: 100%;
+      width: 180px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
     }
+
     .scaffolds {
-      height: 450px;
-      overflow: scroll;
       width: calc(100% - 170px);
+      overflow-y: auto;
       .mainScaffolds {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
         margin-left: 10px;
-        min-width: 500px;
       }
+
       .collapse {
         width: 100%;
         border: none;
@@ -44,7 +48,7 @@
   }
 
   .action {
-    margin-top: 30px;
+    margin-top: 15px;
     width: 100%;
     display: flex;
     justify-content: center;
