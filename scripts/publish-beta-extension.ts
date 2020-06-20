@@ -68,25 +68,33 @@ function publish(extension: string, directory: string, version: string): void {
 // Entry
 console.log('[PUBLISH BETA] Start:');
 getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
+  const shouldPublishPackages: IExtensionInfo[] = [];
+
+  for (let i = 0; i < extensionInfos.length; i++) {
+    const { name, directory, shouldPublish } = extensionInfos[i];
+    if (shouldPublish) {
+      // Update extension package json
+      updateBetaDependencies(name, directory);
+      // Update inside web project package json
+      updateBetaDependencies(name, path.join(directory, 'web'));
+      
+      shouldPublishPackages.push(extensionInfos[i]);
+    }
+  }
+
   // npm install
   extensionDepsInstall();
 
   // Publish
   let publishedCount = 0;
   const publishedExtensions = [];
-  for (let i = 0; i < extensionInfos.length; i++) {
-    const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
-    if (shouldPublish) {
-      publishedCount++;
-      console.log(`--- ${name}@${localVersion} ---`);
+  for (let i = 0; i < shouldPublishPackages.length; i++) {
+    const { name, directory, localVersion } = shouldPublishPackages[i];
+    publishedCount++;
+    console.log(`--- ${name}@${localVersion} ---`);
 
-      updateBetaDependencies(name, directory);
-      // Update inside web project package json
-      updateBetaDependencies(name, path.join(directory, 'web'));
-
-      publish(name, directory, localVersion);
-      publishedExtensions.push(`${name}:${localVersion}`);
-    }
+    publish(name, directory, localVersion);
+    publishedExtensions.push(`${name}:${localVersion}`);
   }
   console.log(`[PUBLISH EXTENSION BETA] Complete (count=${publishedCount}):`);
   console.log(`${publishedExtensions.join('\n')}`);
