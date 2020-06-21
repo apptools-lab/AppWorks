@@ -10,11 +10,8 @@
     height: calc(100vh - 200px);
 
     .scaffoldsSource {
-      width: 180px;
+      width: 200px;
       overflow-y: auto;
-      &::-webkit-scrollbar {
-        width: 0;
-      }
     }
 
     .scaffolds {
