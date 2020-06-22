@@ -24,6 +24,7 @@ function publish(extension: string, directory: string, version: string): void {
 }
 
 // Wait 10s for npm
+console.log('Wait for npm publish');
 sleep(10000).then(() => {
   // Entry
   console.log('[PUBLISH] Start:');
