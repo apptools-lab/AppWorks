@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.1.30
+## 0.1.31
 
 - Fix: Not show the welcome when the current workspace is not React or Rax App.
 
