@@ -5,6 +5,11 @@ import { spawnSync } from 'child_process';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
 
+// Wait for npm module publish and sync.
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 function publish(extension: string, directory: string, version: string): void {
   // vsce publish
   console.log('[VSCE] PUBLISH: ', `${extension}@${version}`);
@@ -18,24 +23,28 @@ function publish(extension: string, directory: string, version: string): void {
   });
 }
 
-// Entry
-console.log('[PUBLISH] Start:');
-getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
-  // npm install
-  extensionDepsInstall();
+// Wait 10s for npm
+console.log('Wait for npm publish');
+sleep(10000).then(() => {
+  // Entry
+  console.log('[PUBLISH] Start:');
+  getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
+    // npm install
+    extensionDepsInstall();
 
-  // Publish
-  let publishedCount = 0;
-  const publishedExtensions = [];
-  for (let i = 0; i < extensionInfos.length; i++) {
-    const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
-    if (shouldPublish) {
-      publishedCount++;
-      console.log(`--- ${name}@${localVersion} ---`);
-      publish(name, directory, localVersion);
-      publishedExtensions.push(`${name}:${localVersion}`);
+    // Publish
+    let publishedCount = 0;
+    const publishedExtensions = [];
+    for (let i = 0; i < extensionInfos.length; i++) {
+      const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
+      if (shouldPublish) {
+        publishedCount++;
+        console.log(`--- ${name}@${localVersion} ---`);
+        publish(name, directory, localVersion);
+        publishedExtensions.push(`${name}:${localVersion}`);
+      }
     }
-  }
-  console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
-  console.log(`${publishedExtensions.join('\n')}`);
+    console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
+    console.log(`${publishedExtensions.join('\n')}`);
+  });
 });

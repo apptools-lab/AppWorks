@@ -3,7 +3,7 @@ name: Beta Publisher
 on:
   push:
     branches:
-      - release/*
+      - beta
 
 jobs:
   build-and-publish-beta:
