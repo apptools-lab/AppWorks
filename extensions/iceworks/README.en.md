@@ -18,16 +18,25 @@ Includes following feature:
 
 ## Quick start
 
-1. New Window in VS Code(`⇧⌘P`)
-  ![](https://img.alicdn.com/tfs/TB1blgMJNz1gK0jSZSgXXavwpXa-1024-768.png)
-2. Click Iceworks icon on the Activity Bar to open the Side Bar
-  ![](https://img.alicdn.com/tfs/TB1G2cValBh1e4jSZFhXXcC9VXa-1024-768.png)
-3. Click the "Create Project" button to start create a Universal Application
-  ![](https://img.alicdn.com/tfs/TB1Y4oSJUY1gK0jSZFCXXcwqXXa-1024-768.png)
-4. After the project is created, NPM script execution, page creation, component creation and other operations are performed in Iceworks Side Bar
-  ![](https://img.alicdn.com/tfs/TB1hScTJKH2gK0jSZJnXXaT1FXa-1024-768.png)
-5. More operations can be obtained by search 'iceworks' in the Command Panel
-  ![](https://img.alicdn.com/tfs/TB16h7PJFP7gK0jSZFjXXc5aXXa-1024-768.png)
+Setp 1: New Window in VS Code(`⇧⌘P`)
+
+![](https://img.alicdn.com/tfs/TB1blgMJNz1gK0jSZSgXXavwpXa-1024-768.png)
+
+Setp 2: Click Iceworks icon on the Activity Bar to open the Side Bar
+
+![](https://img.alicdn.com/tfs/TB1G2cValBh1e4jSZFhXXcC9VXa-1024-768.png)
+
+Setp 3: Click the "Create Project" button to start create a Universal Application
+
+![](https://img.alicdn.com/tfs/TB1Y4oSJUY1gK0jSZFCXXcwqXXa-1024-768.png)
+
+Setp 4: After the project is created, NPM script execution, page creation, component creation and other operations are performed in Iceworks Side Bar
+
+![](https://img.alicdn.com/tfs/TB1hScTJKH2gK0jSZJnXXaT1FXa-1024-768.png)
+
+Setp 5: More operations can be obtained by search 'iceworks' in the Command Panel
+
+![](https://img.alicdn.com/tfs/TB16h7PJFP7gK0jSZFjXXc5aXXa-1024-768.png)
 
 ## License
 
