@@ -23,8 +23,8 @@ function publish(extension: string, directory: string, version: string): void {
   });
 }
 
-// Wait 5s for npm
-sleep(5000).then(() => {
+// Wait 10s for npm
+sleep(10000).then(() => {
   // Entry
   console.log('[PUBLISH] Start:');
   getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
