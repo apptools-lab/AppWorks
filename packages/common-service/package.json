@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -9,10 +9,13 @@
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^2.0.0"
+    "ice-npm-utils": "^2.0.0",
+    "is-electron": "^2.2.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/vscode": "^1.45.0"
   },
   "publishConfig": {

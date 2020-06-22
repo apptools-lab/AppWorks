@@ -7,12 +7,15 @@ import { pathExists } from '../utils';
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   private workspaceRoot: string;
 
+  private extensionContext: vscode.ExtensionContext;
+
   private onDidChange: vscode.EventEmitter<Script | undefined> = new vscode.EventEmitter<Script | undefined>();
 
   readonly onDidChangeTreeData: vscode.Event<Script | undefined> = this.onDidChange.event;
 
-  constructor(workspaceRoot: string) {
-    this.workspaceRoot = workspaceRoot
+  constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
+    this.extensionContext = context;
+    this.workspaceRoot = workspaceRoot;
   }
 
   getTreeItem(element: Script): vscode.TreeItem {
@@ -47,6 +50,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
           arguments: [workspaceDir, createNpmCommand('run', scriptName)]
         };
         return new Script(
+          this.extensionContext,
           scriptName,
           scriptCommand,
           cmdObj
@@ -65,6 +69,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
 
 export class Script extends vscode.TreeItem {
   constructor(
+    public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly tooltip: string,
     public readonly command?: vscode.Command
@@ -73,8 +78,8 @@ export class Script extends vscode.TreeItem {
   }
 
   iconPath = {
-    light: path.join(__filename, '..', '..', '..', 'assets', 'light', 'tool.svg'),
-    dark: path.join(__filename, '..', '..', '..', 'assets', 'dark', 'tool.svg')
+    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/tool.svg')),
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/tool.svg'))
   };
 
   contextValue = 'script';

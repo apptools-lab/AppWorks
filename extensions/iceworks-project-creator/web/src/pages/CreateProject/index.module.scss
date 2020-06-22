@@ -1,0 +1,25 @@
+.cardContent {
+  margin: 20px auto 0;
+
+  .step {
+    width: 100%;
+    padding: 0 !important;
+    margin-bottom: 22px;
+    width: 120vw;
+    margin-left: -15vw;
+  }
+  .content,
+  .actions {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .content {
+    margin: 5px auto 10px;
+  }
+}
+.btn {
+  margin-right: 5px;
+}

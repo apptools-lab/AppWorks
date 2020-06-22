@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon } from '@alifd/next';
+import { Icon, Loading } from '@alifd/next';
 import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
 import { MaterialView } from './components/view';
 
@@ -21,9 +21,12 @@ const Index : React.FC<{
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
   const [isLoadingData, setIsLoadingData] = React.useState(false);
+  const [isLoadingSources, setIsLoadingSources] = React.useState(false);
 
   async function refreshSources() {
+    setIsLoadingSources(true);
     const sources = await getSources() || [];
+    setIsLoadingSources(false);
     resetSources(sources);
   }
 
@@ -57,12 +60,13 @@ const Index : React.FC<{
   }, []);
 
   return (
-    <div className="iceworks-material">
+    <Loading visible={isLoadingSources} className="iceworks-material">
       <MaterialView
         sources={sources}
         currentSource={currentSource}
         data={data}
         isLoadingData={isLoadingData}
+        isLoadingSources={isLoadingSources}
         colSpan={24}
         onChangeSource={handleChangeSource}
         extra={
@@ -75,7 +79,7 @@ const Index : React.FC<{
         }
         {...others}
       />
-    </div>
+    </Loading>
   );
 };
 

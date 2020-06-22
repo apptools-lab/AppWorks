@@ -8,62 +8,97 @@ import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 
 const BETA_REG = /([^-]+)-beta\.(\d+)/; // '1.0.0-beta.1'
 
-function publish(pkg: string, localVersion: string, directory: string): void {
+interface IBetaPackageInfo extends IPackageInfo {
+  betaVersion: string;
+}
 
-  let version: string = localVersion;
-  let betaVersion = 1;
+function getBetaVersionInfo(packageInfo: IPackageInfo): IBetaPackageInfo {
+  const { name, localVersion } = packageInfo;
 
-  try {
-    if (!BETA_REG.test(localVersion)) {
-      // Add beta version
-      const childProcess = spawnSync('npm', [
-        'show', pkg, 'dist-tags',
-        '--json',
-      ], {
-        encoding: 'utf-8'
-      });
-      const distTags = JSON.parse(childProcess.stdout) || {};
-      const matched = (distTags.beta || '').match(BETA_REG);
-      
-      // 1.0.0-beta.1 -> ["1.0.0-beta.1", "1.0.0", "1"] -> 1.0.0-beta.2
-      if (matched && matched[1] === localVersion && matched[2]) {
-        betaVersion = Number(matched[2]) + 1;
-      }
-      version += `-beta.${betaVersion}`;
+  let version = localVersion;
+
+  if (!BETA_REG.test(localVersion)) {
+    // Add beta version
+    let betaVersion = 1;
+    const childProcess = spawnSync('npm', [
+      'show', name, 'dist-tags',
+      '--json',
+    ], {
+      encoding: 'utf-8'
+    });
+    const distTags = JSON.parse(childProcess.stdout) || {};
+    const matched = (distTags.beta || '').match(BETA_REG);
+
+    // 1.0.0-beta.1 -> ["1.0.0-beta.1", "1.0.0", "1"] -> 1.0.0-beta.2
+    if (matched && matched[1] === localVersion && matched[2]) {
+      betaVersion = Number(matched[2]) + 1;
     }
+    version += `-beta.${betaVersion}`;
+  }
 
-    // Set beta version
+  return Object.assign({}, packageInfo, { betaVersion: version });
+}
+
+function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
+  betaPackageInfos.forEach((betaPackageInfo: IBetaPackageInfo) => {
+    const { directory, betaVersion } = betaPackageInfo;
+
     const packageFile = path.join(directory, 'package.json');
     const packageData = fs.readJsonSync(packageFile);
-    packageData.version = version;
+
+    packageData.version = betaVersion;
+
+    for (let i = 0; i < betaPackageInfos.length; i++) {
+      const dependenceName = betaPackageInfos[i].name;
+      const dependenceVersion = betaPackageInfos[i].betaVersion;
+
+      if (packageData.dependencies && packageData.dependencies[dependenceName]) {
+        packageData.dependencies[dependenceName] = dependenceVersion;
+      } else if (packageData.devDependencies && packageData.devDependencies[dependenceName]) {
+        packageData.devDependencies[dependenceName] = dependenceVersion;
+      }
+    }
+
     fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+  })
+};
 
-    console.log('[PUBLISH BETA]', `${pkg}@${version}`);
+function publish(pkg: string, betaVersion: string, directory: string): void {
 
-    spawnSync('npm', [
-      'publish',
-      '--tag=beta',
-    ], {
-      stdio: 'inherit',
-      cwd: directory,
-    });
-  } catch (e) {
-    console.log('[ERROR]', e);
-  }
+  console.log('[PUBLISH BETA]', `${pkg}@${betaVersion}`);
+  spawnSync('npm', [
+    'publish',
+    '--tag=beta',
+  ], {
+    stdio: 'inherit',
+    cwd: directory,
+  });
 }
 
 // Entry
 console.log('[PUBLISH BETA] Start:');
 getPackageInfos().then((packageInfos: IPackageInfo[]) => {
+
+  const shouldPublishPackages = packageInfos
+    .filter(packageInfo => packageInfo.shouldPublish)
+    .map(packageInfo => getBetaVersionInfo(packageInfo))
+
+  updatePackageJson(shouldPublishPackages);
+
   // Publish
   let publishedCount = 0;
-  for (let i = 0; i < packageInfos.length; i++) {
-    const { name, directory, localVersion, shouldPublish } = packageInfos[i];
-    if (shouldPublish) {
-      publishedCount++;
-      console.log(`--- ${name}@${localVersion} ---`);
-      publish(name, localVersion, directory);
-    }
-  }
-  console.log(`[PUBLISH BETA] Complete (count=${publishedCount}).`)
+  const publishedPackages = [];
+  shouldPublishPackages.forEach((packageInfo) => {
+    const { name, directory, betaVersion } = packageInfo;
+    publishedCount++;
+    console.log(`--- ${name}@${betaVersion} ---`);
+    publish(name, betaVersion, directory);
+    publishedPackages.push(`${name}:${betaVersion}`);
+  });
+
+
+  console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
+  console.log(`${publishedPackages.join('\n')}`);
+  // Write temp file
+  fs.writeFileSync(path.join(__dirname, 'publishedPackages.temp.json'), JSON.stringify(publishedPackages));
 });

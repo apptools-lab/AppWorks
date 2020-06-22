@@ -1,7 +1,7 @@
 English | [简体中文](./README.md)
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks.iceworks)
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 
 # Iceworks
 
@@ -13,6 +13,8 @@ Includes following feature:
 - [Project Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator): Quick to create a new Universal Application project
 - [Page Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder): Build Page UI by low-code way
 - [Component Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder): Build Component UI by low-code way
+- [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style
+- [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties
 
 ## Quick start
 

@@ -17,6 +17,10 @@
   .empty {
     font-size: 14px;
     text-align: center;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -61,13 +65,6 @@
           padding: 0 12px;
         }
       }
-    }
-
-    .empty {
-      height: 200px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
   }
 }

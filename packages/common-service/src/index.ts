@@ -2,13 +2,16 @@ import { checkAliInternal } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import axios from 'axios';
 
+export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
+export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
-
+export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 export async function checkIsAliInternal(): Promise<boolean> {
   const isAliInternal = await checkAliInternal();
   return isAliInternal;
@@ -25,8 +28,7 @@ export function saveDataToSettingJson(section: string, data: any, configurationT
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }
 
-
-export function getDataFromSettingJson(section: string, defaultValue?: any): string {
+export function getDataFromSettingJson(section: string, defaultValue?: any): any {
   return vscode.workspace.getConfiguration(CONFIGURATION_SECTION).get(section, defaultValue);
 }
 
@@ -80,6 +82,37 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
+export async function initExtensionConfiguration(globalState: vscode.Memento) {
+  await autoInitMaterialSource(globalState);
+  await autoSetNpmConfiguration(globalState);
+}
+
+export async function autoInitMaterialSource(globalState: vscode.Memento) {
+  console.log('autoInitMaterialSource: run');
+  const stateKey = 'iceworks.materialSourceIsSet';
+  const materialSourceIsSet = globalState.get(stateKey);
+  if (!materialSourceIsSet) {
+    console.log('autoInitMaterialSource: do');
+    const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+    // old materialSources and remove it from the previous users
+    const officalMaterialSources = [
+      'http://ice.alicdn.com/assets/materials/react-materials.json',
+      'https://fusion.alibaba-inc.com/api/v1/sites/1194/materials'
+    ];
+    const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource.source));
+    saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
+  }
+
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
+    const isTrue = event.affectsConfiguration(CONFIGURATION_KEY_MATERIAL_SOURCES);
+    if (isTrue) {
+      console.log('autoSetPackageManager: did change');
+
+      globalState.update(stateKey, true);
+    }
+  });
+}
+
 export async function autoSetNpmConfiguration(globalState: vscode.Memento) {
   const isAliInternal = await checkAliInternal();
   autoSetPackageManagerConfiguration(globalState, isAliInternal);
@@ -96,7 +129,7 @@ async function autoSetPackageManagerConfiguration(globalState: vscode.Memento, i
     saveDataToSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER, 'tnpm');
   }
 
-  vscode.workspace.onDidChangeConfiguration(function(event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_PCKAGE_MANAGER);
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
@@ -116,7 +149,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
     saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, 'https://registry.npm.alibaba-inc.com');
   }
 
-  vscode.workspace.onDidChangeConfiguration(function(event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_NPM_REGISTRY);
     if (isTrue) {
       console.log('autoSetNpmRegistry: did change');
@@ -133,4 +166,24 @@ export function createNpmCommand(action: string, target: string = '', extra: str
     registry = `--registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
   }
   return `${packageManager} ${action} ${target} ${registry} ${extra}`;
+}
+
+export async function getGitLabGroups(token: string) {
+  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/groups', {
+    params: {
+      'private_token': token
+    }
+  });
+  console.log('gitLab groups', res.data)
+  return res.data;
+}
+
+export async function getExistProjects(token: string) {
+  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/projects', {
+    params: {
+      'private_token': token
+    }
+  })
+  console.log('exist projects', res.data)
+  return res.data;
 }

@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.1.3
+
+Add the following extensions:
+
+- [iceworks-style-helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+- [iceworks-material-helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
+
 ## 0.1.2
 
 Spelling of unified brand name: Iceworks.
@@ -12,7 +19,7 @@ Update link for logo in README.md.
 
 Initialization version, includes the following extensions:
 
-- iceworks-app
-- iceworks-component-builder
-- iceworks-page-builder
-- iceworks-project-creator
+- [iceworks-app](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+- [iceworks-component-builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+- [iceworks-page-builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)
+- [iceworks-project-creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
