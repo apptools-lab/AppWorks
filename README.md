@@ -1,4 +1,5 @@
-English | [简体中文](./README.zh-CN.md)
+
+简体中文 | [English](./README.en.md)
 
 <p align="center">
   <a href="https://ice.work">
@@ -8,61 +9,62 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">Universal Application Development Pack</p>
+<p align="center">多端研发套件</p>
 
 <p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
   <a href="https://github.com/alibaba/ice/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
 
-## Quick Start
+## 快速开始
 
-### Iceworks Pack
+### Iceworks 套件
 
-Use VC Code pack to develop Universal Application projects quickly.
+使用 VS Code 套件快速开发多端项目。
 
 ![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 
-1. Open [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
-2. Click the "install" button on page
-3. After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start
+1. 打开 VS Code 套件市场中的 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
+2. 点击页面上的[「安装」](vscode:extension/iceworks-team.iceworks)按钮；
+3. 安装成功后，点击 VS Code 界面左侧活动栏上的「iceworks 图标」，开始使用。
 
-See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
+查看 [Iceworks Pack 文档](extensions/iceworks/README.md)阅读更多详细介绍。
 
 ### Iceworks CLI
 
-Use CLI to develop custom material collections.
+使用 CLI 开发自定义物料集合。
 
-- Installation:
+- 安装工具：
 
   ```bash
   $ npm i -g iceworks
   ```
-- Initialize material collections
+- 初始化物料集合：
 
   ```
   $ mkdir materials-example && cd materials-example
   $ iceworks init material
   ```
 
-See [《物料开发》](https://ice.work/docs/materials/about) for more details.
+更多详细说明，请参考[《物料开发》](https://ice.work/docs/materials/about)。
 
-## Contributors
+## 参与贡献
 
-Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on icestore.
+欢迎通过 [issue](https://github.com/ice-lab/iceworks/issues/new) 反馈问题。
 
-If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
+如果对 `Iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## ICE Ecosystem
+## ICE 生态
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | A universal framework based on react.js |
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | Alibaba Group Unified Form Solution |
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
+| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | 能力完备性能出众的表单解决方案 |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -84,9 +86,9 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
 
-## Community
+## 社区
 
-| DingTalk community                               | GitHub issues |  Gitter |
+| 钉钉群	                             | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 | <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
