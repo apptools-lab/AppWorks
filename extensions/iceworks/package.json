@@ -7,14 +7,21 @@
   "engines": {
     "vscode": "^1.41.0"
   },
+  "categories": [
+    "Extension Packs"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "Low-code",
+    "lowcode"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
   "icon": "assets/logo.png",
-  "categories": [
-    "Extension Packs"
-  ],
   "extensionPack": [
     "iceworks-team.iceworks-app",
     "iceworks-team.iceworks-component-builder",

@@ -1,12 +1,15 @@
 {
-	"name": "iceworks-style-helper",
-	"displayName": "Iceworks Style Helper",
-	"description": "Easily write styles in JSX.",
-	"publisher": "iceworks-team",
-	"version": "0.1.1",
-	"engines": {
-		"vscode": "^1.41.0"
+  "name": "iceworks-style-helper",
+  "displayName": "Iceworks Style Helper",
+  "description": "Easily write styles in JSX.",
+  "publisher": "iceworks-team",
+  "version": "0.1.1",
+  "engines": {
+    "vscode": "^1.41.0"
   },
+  "categories": [
+    "Other"
+  ],
   "keywords": [
     "ICE",
     "Rax",
@@ -14,32 +17,29 @@
     "JSX",
     "Inline Style"
   ],
-	"categories": [
-		"Other"
-	],
-	"icon": "assets/logo.png",
-	"activationEvents": [
-		"onLanguage:javascript",
-		"onLanguage:javascriptreact",
-		"onLanguage:typescript",
-		"onLanguage:typescriptreact"
-	],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
-	"main": "./build/index.js",
-	"scripts": {
-		"vscode:prepublish": "rm -rf build && npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./tsconfig.json"
-	},
-	"devDependencies": {
-		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.41.0",
-		"typescript": "^3.6.4"
-	},
-	"dependencies": {
-		"vscode-web-custom-data": "^0.1.4"
-	}
+  "main": "./build/index.js",
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "vscode-web-custom-data": "^0.1.4"
+  }
 }
