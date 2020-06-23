@@ -3,11 +3,13 @@
   "displayName": "Iceworks Material Helper",
   "description": "Easily use materials in JSX.",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "main": "./build/index.js",
   "engines": {
     "vscode": "^1.41.0"
   },
   "categories": [
+    "Programming Languages",
     "Other"
   ],
   "keywords": [
@@ -24,11 +26,6 @@
     "onLanguage:typescript",
     "onLanguage:typescriptreact"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ice-lab/iceworks.git"
-  },
-  "main": "./build/index.js",
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run compile",
     "compile": "tsc -p ./",
@@ -44,5 +41,14 @@
     "@babel/parser": "^7.10.2",
     "@babel/traverse": "^7.10.1",
     "@babel/types": "^7.10.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-material-helper/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
   }
 }

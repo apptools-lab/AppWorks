@@ -10,7 +10,7 @@
 
 在 JSX 文件中编辑组件的属性时将给予自动补全提醒：
 
-![使用示例]](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
+![使用示例](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
 
 ## 更多
 
