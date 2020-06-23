@@ -5,14 +5,21 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { getDataFromSettingJson, createNpmCommand } from '@iceworks/common-service';
+import {
+  getDataFromSettingJson, createNpmCommand,
+  setPackageManager,
+  setNpmRegistry,
+  getPackageManagersDefaultFromPackageJson,
+  getNpmRegistriesDefaultFromPckageJson,
+} from '@iceworks/common-service';
 import { pathExists, executeCommand } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
+
 const rimrafAsync = util.promisify(rimraf);
 
-export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
+class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
@@ -143,7 +150,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> 
   }
 }
 
-export class DependencyNode extends vscode.TreeItem {
+class DependencyNode extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
@@ -173,6 +180,27 @@ export class DependencyNode extends vscode.TreeItem {
   };
 }
 
+export function createNodeDependenciesTreeProvider(context, rootPath, terminals) {
+  const nodeDependenciesProvider = new DepNodeProvider(context, rootPath);
+  vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
+    if (nodeDependenciesProvider.packageJsonExists()) {
+      const script = await nodeDependenciesProvider.getReinstallScript();
+      executeCommand(terminals, script!);
+    }
+  });
+
+  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
+
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setPackageManager', () => setPackageManager(getPackageManagersDefaultFromPackageJson(packageJsonPath))));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegistry', () => setNpmRegistry(getNpmRegistriesDefaultFromPckageJson(packageJsonPath))));
+}
+
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
   quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
@@ -186,7 +214,7 @@ export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesIn
   quickPick.show();
 };
 
-export async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
+async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
   const result = await vscode.window.showInputBox({
     placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
   });

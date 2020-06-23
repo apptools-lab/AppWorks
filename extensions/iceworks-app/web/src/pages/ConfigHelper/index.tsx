@@ -20,7 +20,7 @@ export default () => {
   return (
     <div className={styles.container}>
       <CustomMaterialSource sources={materialSources} onMaterialSourceAdd={onMaterialSourceAdd} />
-      <Form {...formItemLayout} labelTextAlign="left" size="large">
+      <Form {...formItemLayout} labelTextAlign="left" size="medium">
         <FormItem label="Iceworks npm 包管理工具">
           <Select placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
             <option value="china">China</option>

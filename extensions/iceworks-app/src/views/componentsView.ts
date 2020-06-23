@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { pathExists } from '../utils';
+import { pathExists, openEntryFile } from '../utils';
 
-export class ComponentsProvider implements vscode.TreeDataProvider<Component> {
+class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
@@ -79,4 +79,15 @@ class Component extends vscode.TreeItem {
   };
 
   contextValue = 'component';
+}
+
+export function createComponentsTreeProvider(context: vscode.ExtensionContext, rootPath: string) {
+  const componentsProvider = new ComponentsProvider(context, rootPath);
+  vscode.window.registerTreeDataProvider('components', componentsProvider);
+  vscode.commands.registerCommand('iceworksApp.components.add', () => {
+    console.log('iceworksApp: activate iceworks-component-builder.generate');
+    vscode.commands.executeCommand('iceworks-component-builder.generate');
+  });
+  vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
+  vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 }

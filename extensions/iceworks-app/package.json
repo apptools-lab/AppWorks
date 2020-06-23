@@ -15,7 +15,8 @@
     "onView:nodeDependencies",
     "onView:scripts",
     "onView:pages",
-    "onView:components"
+    "onView:components",
+    "onCommand:iceworks-app.config-helper.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -80,6 +81,10 @@
       }
     ],
     "commands": [
+      {
+        "command": "iceworks-app.config-helper.start",
+        "title": "Iceworks: Set Iceworks Configuration"
+      },
       {
         "command": "iceworksApp.npmScripts.refresh",
         "title": "%iceworksApp.npmScripts.refresh.title%",
@@ -324,6 +329,7 @@
   "dependencies": {
     "@iceworks/common-service": "^0.1.4",
     "@iceworks/project-service": "^0.1.6",
+    "@iceworks/vscode-webview": "^0.1.2",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
