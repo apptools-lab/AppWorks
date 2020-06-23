@@ -10,6 +10,10 @@ When editing the 'style' attribute of a component in a JSX file, an automatic co
 
 ![demo](https://img.alicdn.com/tfs/TB1oyRBF1H2gK0jSZFEXXcqMpXa-1000-586.gif)
 
+When editing the 'class' name of a CSS, LESS or SASS file, an automatic completion reminder will be given:
+
+![demo](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
+
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

@@ -10,6 +10,10 @@
 
 ![使用示例](https://img.alicdn.com/tfs/TB1oyRBF1H2gK0jSZFEXXcqMpXa-1000-586.gif)
 
+在 CSS、LESS、SASS 文件中编辑 `class` 名称时给予自动补全提醒：
+
+![使用示例](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
+
 ## 更多
 
 访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
