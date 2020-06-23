@@ -1,12 +1,19 @@
 {
 	"name": "iceworks-style-helper",
 	"displayName": "Iceworks Style Helper",
-	"description": "Easily write styles in Iceworks.",
+	"description": "Easily write styles in JSX.",
 	"publisher": "iceworks-team",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"engines": {
 		"vscode": "^1.41.0"
-	},
+  },
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "JSX",
+    "Inline Style"
+  ],
 	"categories": [
 		"Other"
 	],
@@ -17,10 +24,10 @@
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact"
 	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ice-lab/iceworks.git"
-	},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
 	"main": "./build/index.js",
 	"scripts": {
 		"vscode:prepublish": "rm -rf build && npm run compile",

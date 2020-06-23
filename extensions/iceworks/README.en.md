@@ -13,8 +13,8 @@ Includes following feature:
 - [Project Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator): Quick to create a new Universal Application project
 - [Page Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder): Build Page UI by low-code way
 - [Component Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder): Build Component UI by low-code way
-- [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style
-- [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties
+- [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style in JSX
+- [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties JSX
 
 ## Quick start
 
