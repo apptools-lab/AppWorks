@@ -3,7 +3,7 @@
   "displayName": "Iceworks Material Helper",
   "description": "Easily use materials in JSX.",
   "publisher": "iceworks-team",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.41.0"
   },
