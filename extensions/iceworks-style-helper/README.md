@@ -14,6 +14,12 @@
 
 ![使用示例](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
 
+在 JSX 文件中编辑组件的样式名时给予补全提醒并可通过 `cmd + 点击`（ Windows: `ctrl + 点击` ）跳转：
+
+![使用示例](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
+
+![使用示例](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
+
 ## 更多
 
 访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。

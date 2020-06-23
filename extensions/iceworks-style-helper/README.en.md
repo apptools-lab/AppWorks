@@ -14,6 +14,12 @@ When editing the 'class' name of a CSS, LESS or SASS file, an automatic completi
 
 ![demo](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
 
+Automatic completion When editing the 'style' name of a component in a JSX file, Use `cmd + click`  (Windows: `ctrl + click`) jump to the identifier under the cursor.
+
+![demo](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
+
+![demo](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
+
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
