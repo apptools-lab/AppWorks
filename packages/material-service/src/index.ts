@@ -116,7 +116,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   return data;
 }
 
-export const addMaterialSource = async function (materialSource: IMaterialSource) {
+export const addSource = async function (materialSource: IMaterialSource) {
   const { source, name } = materialSource;
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === source);
@@ -133,12 +133,12 @@ export const addMaterialSource = async function (materialSource: IMaterialSource
     throw Error('物料源数据错误。');
   }
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-  materialSources.push(materialSource);
+  materialSources.push({ ...materialSource, type });
   saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, materialSources);
   return materialSources;
 }
 
-export const updateMaterialSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
+export const updateSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source);
   if (existedSource) {
@@ -160,6 +160,7 @@ export const updateMaterialSource = async function (newMaterialSource: IMaterial
       return {
         ...item,
         ...newMaterialSource,
+        type
       };
     }
     return item;
@@ -168,7 +169,7 @@ export const updateMaterialSource = async function (newMaterialSource: IMaterial
   return newSources;
 }
 
-export async function removeMaterialSource(source: string): Promise<IMaterialSource[]> {
+export async function removeSource(source: string): Promise<IMaterialSource[]> {
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
   const newSources = materialSources.filter(item => item.source !== source);
   saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
