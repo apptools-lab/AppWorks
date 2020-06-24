@@ -1,7 +1,7 @@
 {
   "name": "iceworks-app",
   "displayName": "Iceworks Project Viewer",
-  "description": "Universal Application Development Extension.",
+  "description": "Quick view your Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.1.32",
   "engines": {
@@ -16,7 +16,7 @@
     "onView:scripts",
     "onView:pages",
     "onView:components",
-    "onCommand:iceworks-app.config-helper.start"
+    "onCommand:iceworksApp.configHelper.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -24,7 +24,7 @@
       "activitybar": [
         {
           "id": "iceworksApp",
-          "title": "Iceworks App",
+          "title": "Iceworks",
           "icon": "assets/sidebar-logo.png"
         }
       ]
@@ -33,7 +33,7 @@
       "iceworksApp": [
         {
           "id": "welcome",
-          "name": "%iceworksApp.view.welcome.name%",
+          "name": "",
           "when": "workbenchState == empty || iceworks:isNotTargetProject"
         },
         {
@@ -82,7 +82,7 @@
     ],
     "commands": [
       {
-        "command": "iceworks-app.config-helper.start",
+        "command": "iceworksApp.configHelper.start",
         "title": "Iceworks: Set Iceworks Configuration"
       },
       {
@@ -203,6 +203,12 @@
       }
     ],
     "menus": {
+      "explorer/context": [
+        {
+          "command": "iceworksApp.configHelper.start",
+          "group": "navigation"
+        }
+      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",

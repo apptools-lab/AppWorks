@@ -5,7 +5,6 @@ export const npmRegistries = [
   'https://registry.npm.taobao.org'
 ]
 
-export const materialTypes = ['react', 'vue', 'rax'];
-
 export const AliNpmRegistry = 'https://registry.npm.alibaba-inc.com';
+
 export const AliPackageManager = 'tnpm';

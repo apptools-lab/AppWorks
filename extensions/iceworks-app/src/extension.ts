@@ -57,7 +57,7 @@ export async function activate(context: vscode.ExtensionContext) {
     connectService(webviewPanel.webview, subscriptions, { services, logger });
   }
 
-  subscriptions.push(vscode.commands.registerCommand('iceworks-app.config-helper.start', function () {
+  subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
     activeWebview();
   }));
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Dialog, Form, Input, Select, Button } from '@alifd/next';
+import { Dialog, Form, Input, Button } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
-import { materialTypes } from '@/constants';
 import styles from './MaterialSourceForm.module.scss';
 
 interface IMaterialSourceForm {
@@ -35,11 +34,6 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
         </Form.Item>
         <Form.Item label="物料地址：" required requiredMessage="请输入物料地址" format="url">
           <Input name="source" placeholder="请输入物料地址" />
-        </Form.Item>
-        <Form.Item label="物料类型：" required requiredMessage="请选择物料类型">
-          <Select name="type">
-            {materialTypes.map(item => (<Select.Option value={item} key={item}>{item}</Select.Option>))}
-          </Select>
         </Form.Item>
         <Form.Item label="物料描述：">
           <Input.TextArea name="description" placeholder="请输入物料描述" />

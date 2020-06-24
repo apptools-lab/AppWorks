@@ -1,3 +1,10 @@
 .container {
-  margin: 50px 30px 10px;
+  margin: 50px auto 10px;
+  width: 80%;
+  :global {
+    .next-form-item-label {
+      color: $color-text1-4;
+      font-size: 14px;
+    }
+  }
 }
