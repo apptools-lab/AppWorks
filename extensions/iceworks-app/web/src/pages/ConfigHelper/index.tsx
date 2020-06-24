@@ -10,8 +10,8 @@ import styles from './index.module.scss';
 const FormItem = Form.Item;
 
 const formItemLayout = {
-  labelCol: { span: 16 },
-  wrapperCol: { span: 8 }
+  labelCol: { span: 14 },
+  wrapperCol: { span: 10 }
 };
 const CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY = 'customNpmRegistry';
 const CUSTOM_NPM_REGISTRY_SELECT_KEY = 'npm - 自定义物料源';
@@ -91,7 +91,7 @@ const ConfigHelper = () => {
         }
         setFields({ packageManager: curPackageManager, npmRegistry: curNpmRegistry, customNpmRegistry });
       } catch (e) {
-        throw new Error(e)
+        Notification.error({ content: e.message });
       }
     }
 
