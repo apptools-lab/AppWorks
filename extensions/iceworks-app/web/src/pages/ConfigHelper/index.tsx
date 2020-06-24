@@ -20,10 +20,9 @@ const ConfigHelper = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [fields, setFields] = useState<any>({});
 
-  const onMaterialSourceAdd = async (values: IMaterialSource) => {
+  const onMaterialSourceAdd = async (materialSource: IMaterialSource) => {
     try {
-      const newMaterialSources = [...materialSources, values];
-      await callService('common', 'saveDataToSettingJson', 'materialSources', newMaterialSources);
+      const newMaterialSources = await callService('material', 'addMaterialSource', materialSource);
       setMaterialSources(newMaterialSources);
       Notification.success({ content: '新增物料源成功' });
     } catch (e) {
@@ -31,11 +30,9 @@ const ConfigHelper = () => {
     }
   }
 
-  const onMaterialSourceEdit = async (values: IMaterialSource, index: number) => {
+  const onMaterialSourceEdit = async (materialSource: IMaterialSource, originMaterialSource: IMaterialSource) => {
     try {
-      const newMaterialSources = [...materialSources];
-      newMaterialSources.splice(index, 1, values);
-      await callService('common', 'saveDataToSettingJson', 'materialSources', newMaterialSources);
+      const newMaterialSources = await callService('material', 'updateMaterialSource', materialSource, originMaterialSource);
       setMaterialSources(newMaterialSources);
       Notification.success({ content: '修改物料源成功' });
     } catch (e) {
@@ -43,11 +40,9 @@ const ConfigHelper = () => {
     }
   }
 
-  const onMaterialSourceDelete = async (index: number) => {
+  const onMaterialSourceDelete = async (materialSource: IMaterialSource) => {
     try {
-      const newMaterialSources = [...materialSources];
-      newMaterialSources.splice(index, 1);
-      await callService('common', 'saveDataToSettingJson', 'materialSources', newMaterialSources);
+      const newMaterialSources = await callService('material', 'removeMaterialSource', materialSource.source);
       setMaterialSources(newMaterialSources);
       Notification.success({ content: '删除物料源成功' });
     } catch (e) {
@@ -70,32 +65,18 @@ const ConfigHelper = () => {
       } else {
         await callService('common', 'saveDataToSettingJson', name, value);
       }
-
       Notification.success({ content: '设置成功' });
     } catch (e) {
       Notification.error({ content: e.message });
     }
   })
 
-  // const debounceCustomNpmRegistryChange = debounce(1500, true, async (value: string) => {
-  //   if (!/^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value)) {
-  //     return;
-  //   }
-  //   try {
-  //     await callService('common', 'saveDataToSettingJson', 'npmRegistry', value);
-  //     Notification.success({ content: '设置成功' });
-
-  //   } catch (e) {
-  //     Notification.error({ content: e.message });
-  //   }
-  // });
-
   useEffect(() => {
     async function initFormData() {
       try {
         const curPackageManager = await callService('common', 'getDataFromSettingJson', 'packageManager');
         let curNpmRegistry = await callService('common', 'getDataFromSettingJson', 'npmRegistry');
-        const curMaterialSources = await callService('common', 'getDataFromSettingJson', 'materialSources');
+        const curMaterialSources = await callService('material', 'getUserMaterialSources');
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         if (isAliInternal) {
           npmRegistries.push(AliNpmRegistry);

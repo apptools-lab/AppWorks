@@ -15,8 +15,8 @@ enum Operation {
 interface ICustomMaterialSource {
   sources: IMaterialSource[];
   onMaterialSourceAdd: (values: IMaterialSource) => void;
-  onMaterialSourceEdit: (values: IMaterialSource, index: number) => void;
-  onMaterialSourceDelete: (index: number) => void;
+  onMaterialSourceEdit: (values: IMaterialSource, originMaterialSource: IMaterialSource) => void;
+  onMaterialSourceDelete: (materialSource: IMaterialSource) => void;
 }
 
 const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
@@ -27,7 +27,6 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
-  const [currentSourceIndex, setCurrentSourceIndex] = useState<number>();
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
 
   const onDialogShow = () => setVisible(true);
@@ -39,19 +38,9 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
       onMaterialSourceAdd(values);
     }
     if (Operation.Edit === operation) {
-      onMaterialSourceEdit(values, currentSourceIndex!)
+      onMaterialSourceEdit(values, currentMaterialSource as IMaterialSource)
     }
     onDialogCancel();
-  }
-
-  const onSourceValidator = (rule: object, value: string, callback: (errors?: string) => void) => {
-    if (operation !== Operation.Create) {
-      return callback();
-    }
-    if (sources.filter((item) => item.name === value).length) {
-      return callback('已存在相同的物料源名称，请重新输入');
-    }
-    return callback();
   }
 
   const onSourceAdd = () => {
@@ -60,18 +49,17 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
     onDialogShow()
   }
 
-  const onSourceEdit = (source: IMaterialSource, index: number) => {
+  const onSourceEdit = (materialSource: IMaterialSource) => {
     setOperation(Operation.Edit);
-    setCurrentMaterialSource(source);
-    setCurrentSourceIndex(index);
+    setCurrentMaterialSource(materialSource);
     onDialogShow();
   }
 
-  const onSourceDelete = (index: number) => {
+  const onSourceDelete = (materialSource: IMaterialSource) => {
     Dialog.confirm({
       title: 'Confirm',
       content: '是否确定删除该物料源？',
-      onOk: () => onMaterialSourceDelete(index)
+      onOk: () => onMaterialSourceDelete(materialSource)
     });
   }
   const dialogTitle = `${operation === Operation.Edit ? '编辑' : '新增'}物料源`
@@ -83,13 +71,13 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
       </div>
       <div className={styles.sourcesList}>
         <List size="small">
-          {sources.map((source: IMaterialSource, index: number) => (
+          {sources.map((source: IMaterialSource) => (
             <List.Item
               media={<Avatar className={styles.listItemMedia}>{source.name.slice(0, 1).toLocaleUpperCase()}</Avatar>}
               extra={
                 <div>
-                  <img className={styles.icon} src={editIcon} alt="edit" onClick={() => onSourceEdit(source, index)} />
-                  <img className={styles.icon} src={deleteIcon} alt="delete" onClick={() => onSourceDelete(index)} />
+                  <img className={styles.icon} src={editIcon} alt="edit" onClick={() => onSourceEdit(source)} />
+                  <img className={styles.icon} src={deleteIcon} alt="delete" onClick={() => onSourceDelete(source)} />
                 </div>
               }
               title={source.name}
@@ -105,7 +93,6 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
           value={currentMaterialSource}
           title={dialogTitle}
           visible={visible}
-          onSourceValidator={onSourceValidator}
           onSubmit={onFormSubmit}
           onCancel={onDialogCancel}
         />

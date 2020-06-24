@@ -10,10 +10,9 @@ interface IMaterialSourceForm {
   visible: boolean;
   onSubmit: (value: any) => void;
   onCancel: () => void;
-  onSourceValidator: (rule: object, value: string, callback: (errors: string) => void) => any;
 }
 
-const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel, onSourceValidator }) => {
+const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel }) => {
   const onFormSubmit = (values, errors) => {
     if (errors) {
       return;
@@ -31,7 +30,7 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
       onClose={onCancel}
     >
       <Form value={value} fullWidth className={styles.form}>
-        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称" validator={onSourceValidator}>
+        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称">
           <Input name="name" placeholder="请输入物料名称" />
         </Form.Item>
         <Form.Item label="物料地址：" required requiredMessage="请输入物料地址" format="url">

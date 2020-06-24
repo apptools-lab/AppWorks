@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as kebabCase from 'lodash.kebabcase';
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
+import { saveDataToSettingJson, getDataFromSettingJson, CONFIGURATION_KEY_MATERIAL_SOURCES } from '@iceworks/common-service';
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 import { getProjectType } from '@iceworks/project-service';
 
@@ -44,7 +45,7 @@ export const getSourcesByProjectType = async function () {
 }
 
 export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
-
+export const getUserMaterialSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 /**
  * Get material sources list
  *
@@ -55,7 +56,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
-  const userSources: IMaterialSource[] = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
+  const userSources: IMaterialSource[] = getUserMaterialSources();
   const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
@@ -113,4 +114,63 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   }
 
   return data;
+}
+
+export const addMaterialSource = async function (materialSource: IMaterialSource) {
+  const { source, name } = materialSource;
+  const sources: IMaterialSource[] = await getSources();
+  const existedSource = sources.some(({ source: defaultSource }) => defaultSource === source);
+  if (existedSource) {
+    throw Error('物料源已存在。');
+  }
+  const existedName = sources.some(({ name: defaultName }) => defaultName === name);
+  if (existedName) {
+    throw Error('物料源名称已存在。');
+  }
+
+  const { type } = await getData(source);
+  if (!type) {
+    throw Error('物料源数据错误。');
+  }
+  const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+  materialSources.push(materialSource);
+  saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, materialSources);
+  return materialSources;
+}
+
+export const updateMaterialSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
+  const sources: IMaterialSource[] = await getSources();
+  const existedSource = sources.some(({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source);
+  if (existedSource) {
+    throw Error('物料源已存在。');
+  }
+  const existedName = sources.some(({ name: defaultName }) => defaultName === newMaterialSource.name && defaultName !== originSource.name);
+  if (existedName) {
+    throw Error('物料源名称已存在。');
+  }
+
+  const { type } = await getData(newMaterialSource.source);
+  if (!type) {
+    throw Error('物料源数据错误。');
+  }
+
+  const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+  const newSources = materialSources.map(item => {
+    if (item.source === newMaterialSource.source) {
+      return {
+        ...item,
+        ...newMaterialSource,
+      };
+    }
+    return item;
+  });
+  saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
+  return newSources;
+}
+
+export async function removeMaterialSource(source: string): Promise<IMaterialSource[]> {
+  const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+  const newSources = materialSources.filter(item => item.source !== source);
+  saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
+  return newSources;
 }
