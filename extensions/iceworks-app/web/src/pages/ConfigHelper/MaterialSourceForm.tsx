@@ -1,42 +1,40 @@
 import React from 'react';
-import { Dialog, Form, Input, Select, Field } from '@alifd/next';
+import { Dialog, Form, Input, Select, Button } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
+import { materialTypes } from '@/constants';
 import styles from './MaterialSourceForm.module.scss';
 
 interface IMaterialSourceForm {
-  values?: IMaterialSource;
+  title: string;
+  value: IMaterialSource | object;
   visible: boolean;
   onSubmit: (value: any) => void;
   onCancel: () => void;
+  onSourceValidator: (rule: object, value: string, callback: (errors: string) => void) => any;
 }
-const materialTypes = ['react', 'vue', 'rax'];
 
-const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ values = {}, onSubmit, visible, onCancel }) => {
-  const field = Field.useField({ values });
-
-  const submit = async () => {
-    const { errors } = await field.validatePromise();
-    if (errors && errors.length > 0) {
+const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel, onSourceValidator }) => {
+  const onFormSubmit = (values, errors) => {
+    if (errors) {
       return;
     }
-
-    onSubmit(field.getValues());
+    onSubmit(values);
   };
 
   return (
     <Dialog
+      footer={false}
       visible={visible}
-      title="新增物料"
+      title={title}
       className={styles.dialog}
-      onOk={submit}
       onCancel={onCancel}
       onClose={onCancel}
     >
-      <Form field={field} fullWidth className={styles.form}>
-        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称">
+      <Form value={value} fullWidth className={styles.form}>
+        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称" validator={onSourceValidator}>
           <Input name="name" placeholder="请输入物料名称" />
         </Form.Item>
-        <Form.Item label="物料地址：" required requiredMessage="请输入物料地址">
+        <Form.Item label="物料地址：" required requiredMessage="请输入物料地址" format="url">
           <Input name="source" placeholder="请输入物料地址" />
         </Form.Item>
         <Form.Item label="物料类型：" required requiredMessage="请选择物料类型">
@@ -45,7 +43,17 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ values = {}, onSubm
           </Select>
         </Form.Item>
         <Form.Item label="物料描述：">
-          <Input.TextArea name="description" placeholder="请输入物料描述" rows={3} />
+          <Input.TextArea name="description" placeholder="请输入物料描述" />
+        </Form.Item>
+        <Form.Item className={styles.formBtns}>
+          <Form.Submit
+            type="primary"
+            onClick={onFormSubmit}
+            validate
+          >
+            确定
+          </Form.Submit>
+          <Button onClick={onCancel} className={styles.btn}>取消</Button>
         </Form.Item>
       </Form>
     </Dialog>

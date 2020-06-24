@@ -5,3 +5,13 @@
     padding: 0 30px;
   }
 }
+
+.formBtns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .btn {
+    margin-left: 5px;
+  }
+}

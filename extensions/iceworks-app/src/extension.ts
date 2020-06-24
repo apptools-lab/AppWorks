@@ -49,7 +49,7 @@ export async function activate(context: vscode.ExtensionContext) {
   createPagesTreeProvider(context, rootPath);
   createNodeDependenciesTreeProvider(context, rootPath, terminals);
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建项目', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置面板', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

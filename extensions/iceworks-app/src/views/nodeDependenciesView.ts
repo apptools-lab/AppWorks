@@ -6,7 +6,8 @@ import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import {
-  getDataFromSettingJson, createNpmCommand,
+  getDataFromSettingJson,
+  createNpmCommand,
   setPackageManager,
   setNpmRegistry,
   getPackageManagersDefaultFromPackageJson,
