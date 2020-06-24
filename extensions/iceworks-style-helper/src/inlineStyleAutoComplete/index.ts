@@ -102,7 +102,6 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       })
     }
   }
-  console.log(completions);
   return completions;
 }
 
