@@ -36,42 +36,6 @@ export function executeCommand(...arg: any[]) {
   return vscode.commands.executeCommand.apply(null, arg);
 }
 
-export async function setPackageManager(packageManagers: string[]): Promise<void> {
-  const quickPick = vscode.window.createQuickPick();
-
-  quickPick.items = packageManagers.map(label => ({ label }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      saveDataToSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER, selection[0].label);
-      vscode.window.showInformationMessage(`设置 ${selection[0].label} 客户端成功！`);
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
-
-export async function setNpmRegistry(npmRegistrys: string[]): Promise<void> {
-  const quickPick = vscode.window.createQuickPick();
-
-  const addOtherRegistryLabel = '添加其他源...';
-  quickPick.items = [...npmRegistrys, addOtherRegistryLabel].map(label => ({ label }));
-  quickPick.onDidChangeSelection(async selection => {
-    if (selection[0]) {
-      if (selection[0].label === addOtherRegistryLabel) {
-        vscode.commands.executeCommand('workbench.action.openSettings', CONFIGURATION_SECTION_NPM_REGISTRY);
-      } else {
-        saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, selection[0].label);
-        vscode.window.showInformationMessage(`设置 ${selection[0].label} 源成功！`);
-      }
-
-      quickPick.hide();
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
-
 export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_PCKAGE_MANAGER].enum;
@@ -186,4 +150,8 @@ export async function getExistProjects(token: string) {
   })
   console.log('exist projects', res.data)
   return res.data;
+}
+
+export function openConfigPanel() {
+  vscode.commands.executeCommand('iceworksApp.configHelper.start');
 }

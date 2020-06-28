@@ -1,0 +1,19 @@
+.customMaterialSource {
+  margin: 20px 0;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sourcesList {
+    margin: 10px;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}

@@ -28,7 +28,6 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   onValidateProjectName,
   skipCreateDEFProject,
 }) => {
-  console.log(dataSource)
   return (
     <div className={styles.form}>
       <div className={styles.tip}>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
