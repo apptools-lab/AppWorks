@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { pathExists } from '../utils';
+import { pathExists, openEntryFile } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
   private workspaceRoot: string;
@@ -78,4 +78,15 @@ class Page extends vscode.TreeItem {
   };
 
   contextValue = 'page';
+}
+
+export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPath: string) {
+  const pagesProvider = new PagesProvider(context, rootPath);
+  vscode.window.registerTreeDataProvider('pages', pagesProvider);
+  vscode.commands.registerCommand('iceworksApp.pages.add', () => {
+    console.log('iceworksApp: activate iceworks-page-builder.create');
+    vscode.commands.executeCommand('iceworks-page-builder.create');
+  });
+  vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
+  vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 }

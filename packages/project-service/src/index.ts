@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { IMaterialScaffold } from '@iceworks/material-utils';
-import { checkPathExists } from '@iceworks/common-service';
+import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
@@ -93,7 +93,8 @@ export async function createProject(data): Promise<string> {
   if (isProjectDirExists) {
     throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
   }
-  const { npm, registry, version } = scaffold.source;
+  const { npm, version } = scaffold.source;
+  const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
   await downloadAndGenerateProject(projectDir, npm, version, registry);
   return projectDir;
 }
