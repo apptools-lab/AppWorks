@@ -46,6 +46,8 @@
       .screenshot {
         width: 100%;
         cursor: move;
+        display: flex;
+        justify-content: center;
 
         img {
           display: block;
