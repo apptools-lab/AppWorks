@@ -10,6 +10,14 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "Low-code",
+    "lowcode",
+    "visual"
+  ],
   "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-component-builder.generate"

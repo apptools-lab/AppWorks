@@ -1,6 +1,6 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks 物料使用辅助器
+# Iceworks 物料使用辅助插件
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写组件属性，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 

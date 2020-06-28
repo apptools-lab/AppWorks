@@ -1,6 +1,6 @@
 English | [简体中文](./README.md)
 
-# Iceworks App
+# Iceworks Application Viewer
 
 It helps you preview your Universal Application, including the information of npm scripts, pages, components and node dependencies. It also supports quick installation or upgrade dependencies, adding new pages and components, and much more. 
 

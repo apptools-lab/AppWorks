@@ -1,6 +1,6 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks Project Creator
+# Iceworks 创建应用插件
 
 快速创建多端应用（例如：React/Rax/Vue...）
 
@@ -10,7 +10,7 @@
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
-![project-creator](https://img.alicdn.com/tfs/TB1hCMnJuT2gK0jSZFvXXXnFXXa-1378-874.gif)
+![application-creator](https://img.alicdn.com/tfs/TB1hCMnJuT2gK0jSZFvXXXnFXXa-1378-874.gif)
 
 ## 更多
 

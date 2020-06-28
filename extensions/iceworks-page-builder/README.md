@@ -1,6 +1,6 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks 页面创建器
+# Iceworks 页面生成插件
 
 使用低代码的方式创建网页视图。
 
