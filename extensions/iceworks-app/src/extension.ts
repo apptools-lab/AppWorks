@@ -30,7 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
   });
   // init webview
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置面板', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks 设置', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

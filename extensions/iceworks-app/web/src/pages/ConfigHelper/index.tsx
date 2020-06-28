@@ -101,14 +101,14 @@ const ConfigHelper = () => {
   return (
     <div className={styles.container}>
       <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-        <FormItem label="Iceworks npm 包管理工具">
+        <FormItem label="npm 包管理工具">
           <Select name="packageManager" placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
             {packageManagers.map(item => (
               <Select.Option key={item} value={item}>{item}</Select.Option>
             ))}
           </Select>
         </FormItem>
-        <FormItem label="Iceworks npm 镜像源">
+        <FormItem label="npm 镜像源">
           <Select name="npmRegistry" placeholder="请选择 npm 镜像源" style={{ width: '100%' }}>
             {npmRegistries.map(item => (
               <Select.Option key={item} value={item}>{item}</Select.Option>
