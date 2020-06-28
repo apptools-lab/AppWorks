@@ -1,8 +1,12 @@
 # Change Log
 
+## 0.1.32
+
+- feat: add Settings page
+
 ## 0.1.31
 
-- Fix: Not show the welcome when the current workspace is not React or Rax App.
+- fix: Not show the welcome when the current workspace is not React or Rax App.
 
 ## 0.1.22
 
