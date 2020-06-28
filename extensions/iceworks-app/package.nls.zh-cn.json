@@ -15,8 +15,6 @@
   "iceworksApp.pages.openFile.title": "打开文件",
   "iceworksApp.components.add.title": "添加组件",
   "iceworksApp.components.refresh.title": "刷新",
-  "iceworksApp.nodeDependencies.setPackageManager.title": "设置npm包管理工具",
-  "iceworksApp.nodeDependencies.setNpmRegistry.title": "设置npm镜像源",
   "iceworksApp.nodeDependencies.addDepsAndDevDeps.title": "添加依赖",
   "iceworksApp.nodeDependencies.dependencies.add.title": "添加dependency",
   "iceworksApp.nodeDependencies.devDependencies.add.title": "添加devDependency",

@@ -15,8 +15,6 @@
   "iceworksApp.pages.openFile.title": "Open File",
   "iceworksApp.components.add.title": "Add Components",
   "iceworksApp.components.refresh.title": "Refresh",
-  "iceworksApp.nodeDependencies.setPackageManager.title": "Set npm Package Manager",
-  "iceworksApp.nodeDependencies.setNpmRegistry.title": "Set npm Registry",
   "iceworksApp.nodeDependencies.addDepsAndDevDeps.title": "Add Dependencies",
   "iceworksApp.nodeDependencies.dependencies.add.title": "Add Dependency",
   "iceworksApp.nodeDependencies.devDependencies.add.title": "Add DevDependency",
