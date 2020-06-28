@@ -11,6 +11,7 @@ English | [简体中文](./README.md)
 <p align="center">Universal Application Development Pack</p>
 
 <p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
@@ -20,35 +21,20 @@ English | [简体中文](./README.md)
 
 ## Quick Start
 
-### Iceworks Pack
-
-Use VC Code pack to develop Universal Application quickly.
-
-![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
+Use Iceworks to develop Universal Application quickly:
 
 1. Open [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
 2. Click the ["install"](vscode:extension/iceworks-team.iceworks) button on page
-3. After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start
+3. Allow browser to open VS Code
+4. click "Install" on the Iceworks pack page of VS Code
+
+![install demo](https://img.alicdn.com/tfs/TB1XSy3a8Bh1e4jSZFhXXcC9VXa-960-600.gif)
+
+After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start:
+
+![Iceworks](https://img.alicdn.com/tfs/TB14Sp0LRr0gK0jSZFnXXbRRXXa-2880-1754.png)
 
 See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
-
-### Iceworks CLI
-
-Use CLI to develop custom material collections.
-
-- Installation:
-
-  ```bash
-  $ npm i -g iceworks
-  ```
-- Initialize material collections
-
-  ```
-  $ mkdir materials-example && cd materials-example
-  $ iceworks init material
-  ```
-
-See [《物料开发》](https://ice.work/docs/materials/about) for more details.
 
 ## Contributors
 
@@ -58,12 +44,12 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 
 ## ICE Ecosystem
 
-|    Project         |    Version      |     Docs    |   Description       |
-|----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | A universal framework based on react.js |
+| Project    | Version                                | Docs                  | Description                                    |
+| ---------- | -------------------------------------- | --------------------- | ---------------------------------------------- |
+| [icejs]    | [![icejs-status]][icejs-package]       | [docs][icejs-docs]    | A universal framework based on react.js        |
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | Alibaba Group Unified Form Solution |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React            |
+| [formily]  | [![formily-status]][formily-package]   | [docs][formily-docs]  | Alibaba Group Unified Form Solution            |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -87,9 +73,9 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 
 ## Community
 
-| DingTalk community                               | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
+| DingTalk community                                                                                                                      | GitHub issues | Gitter   |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]      | [gitter] |
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice

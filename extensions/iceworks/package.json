@@ -3,7 +3,7 @@
   "displayName": "Iceworks",
   "description": "Universal Application Development Pack, using low-code technology.",
   "publisher": "iceworks-team",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -29,5 +29,10 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-style-helper",
     "iceworks-team.iceworks-material-helper"
-  ]
+  ],
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
 }

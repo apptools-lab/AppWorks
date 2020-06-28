@@ -9,9 +9,10 @@
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">多端研发套件</p>
+<p align="center">基于 VS Code 的多端研发套件</p>
 
 <p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
@@ -21,35 +22,20 @@
 
 ## 快速开始
 
-### Iceworks 套件
-
-使用 VS Code 套件快速开发多端应用。
-
-![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
+使用 VS Code 套件快速开发多端应用：
 
 1. 打开 VS Code 套件市场中的 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
-2. 点击页面上的[「安装」](vscode:extension/iceworks-team.iceworks)按钮；
-3. 安装成功后，点击 VS Code 界面左侧活动栏上的「iceworks 图标」，开始使用。
+2. 点击页面上的[「Install」](vscode:extension/iceworks-team.iceworks)按钮；
+3. 允许浏览器打开 VS Code；
+4. 在 VS Code 的 Iceworks Pack 页面点击「安装」。
 
-查看 [Iceworks Pack 文档](extensions/iceworks/README.md)阅读更多详细介绍。
+![安装指引](https://img.alicdn.com/tfs/TB1XSy3a8Bh1e4jSZFhXXcC9VXa-960-600.gif)
 
-### Iceworks CLI
+安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
 
-使用 CLI 开发自定义物料集合。
+![Iceworks](https://img.alicdn.com/tfs/TB14Sp0LRr0gK0jSZFnXXbRRXXa-2880-1754.png)
 
-- 安装工具：
-
-  ```bash
-  $ npm i -g iceworks
-  ```
-- 初始化物料集合：
-
-  ```
-  $ mkdir materials-example && cd materials-example
-  $ iceworks init material
-  ```
-
-更多详细说明，请参考[《物料开发》](https://ice.work/docs/materials/about)。
+查看 [Iceworks Pack](extensions/iceworks/README.md) 阅读更多详细介绍。
 
 ## 参与贡献
 
@@ -59,12 +45,12 @@
 
 ## ICE 生态
 
-|    Project         |    Version      |     Docs    |   Description       |
-|----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | 能力完备性能出众的表单解决方案 |
+| Project    | Version                                | Docs                  | Description                    |
+| ---------- | -------------------------------------- | --------------------- | ------------------------------ |
+| [icejs]    | [![icejs-status]][icejs-package]       | [docs][icejs-docs]    | 基于 React 的企业级研发框架    |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案   |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案   |
+| [formily]  | [![formily-status]][formily-package]   | [docs][formily-docs]  | 能力完备性能出众的表单解决方案 |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -88,9 +74,9 @@
 
 ## 社区
 
-| 钉钉群	                             | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
+| 钉钉群                                                                                                                                  | GitHub issues | Gitter   |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]      | [gitter] |
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
