@@ -1,4 +1,3 @@
-import * as vscode from 'vscode';
 import * as kebabCase from 'lodash.kebabcase';
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';

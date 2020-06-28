@@ -15,9 +15,6 @@
     "ice-npm-utils": "^2.0.0",
     "lodash.kebabcase": "^4.1.1"
   },
-  "devDependencies": {
-    "@types/vscode": "^1.45.0"
-  },
   "publishConfig": {
     "access": "public"
   },

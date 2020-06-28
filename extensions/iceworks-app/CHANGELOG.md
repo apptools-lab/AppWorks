@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.1.32
+## 0.1.33
 
 - feat: add Settings page
 
