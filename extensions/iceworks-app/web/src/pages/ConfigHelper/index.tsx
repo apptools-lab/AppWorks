@@ -20,7 +20,7 @@ const ConfigHelper = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [fields, setFields] = useState<any>({});
 
-  const onMaterialSourceAdd = async (materialSource: IMaterialSource) => {
+  const onSourceAdd = async (materialSource: IMaterialSource) => {
     try {
       const newMaterialSources = await callService('material', 'addSource', materialSource);
       setMaterialSources(newMaterialSources);
@@ -76,7 +76,7 @@ const ConfigHelper = () => {
       try {
         const curPackageManager = await callService('common', 'getDataFromSettingJson', 'packageManager');
         let curNpmRegistry = await callService('common', 'getDataFromSettingJson', 'npmRegistry');
-        const curMaterialSources = await callService('material', 'getUserMaterialSources');
+        const curMaterialSources = await callService('material', 'getUserSources');
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         if (isAliInternal) {
           npmRegistries.push(AliNpmRegistry);
@@ -123,7 +123,7 @@ const ConfigHelper = () => {
       </Form>
       <CustomMaterialSource
         sources={materialSources}
-        onSourceAdd={onMaterialSourceAdd}
+        onSourceAdd={onSourceAdd}
         onSourceDelete={onMaterialSourceDelete}
         onSourceEdit={onMaterialSourceEdit}
       />

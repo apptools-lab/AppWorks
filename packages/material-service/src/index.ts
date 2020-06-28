@@ -45,7 +45,7 @@ export const getSourcesByProjectType = async function () {
 }
 
 export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
-export const getUserMaterialSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 /**
  * Get material sources list
  *
@@ -56,7 +56,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
-  const userSources: IMaterialSource[] = getUserMaterialSources();
+  const userSources: IMaterialSource[] = getUserSources();
   const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
