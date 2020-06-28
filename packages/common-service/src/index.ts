@@ -187,3 +187,7 @@ export async function getExistProjects(token: string) {
   console.log('exist projects', res.data)
   return res.data;
 }
+
+export function openConfigPanel() {
+  vscode.commands.executeCommand('iceworksApp.configHelper.start');
+}

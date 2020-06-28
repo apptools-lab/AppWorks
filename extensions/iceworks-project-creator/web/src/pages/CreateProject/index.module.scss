@@ -1,6 +1,19 @@
 .cardContent {
   margin: 20px auto 0;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 38px;
+    height: 50px;
+    line-height: 50px;
+
+    .headerTitle {
+      font-size: 25px;
+    }
+  }
+
   .step {
     width: 100%;
     padding: 0 !important;
@@ -8,6 +21,7 @@
     width: 120vw;
     margin-left: -15vw;
   }
+
   .content,
   .actions {
     margin-top: 30px;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Step, Button, Notification } from '@alifd/next';
+import { Card, Form, Step, Button, Notification, Icon } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
@@ -27,7 +27,7 @@ const CreateProject: React.FC = () => {
     {
       title: '选择模板',
       content: (
-        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect}>
+        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel}>
           <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
         </ScaffoldMarket>
       )
@@ -216,6 +216,14 @@ const CreateProject: React.FC = () => {
     }
   }
 
+  async function onOpenConfigPanel() {
+    try {
+      await callService('common', 'openConfigPanel');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   useEffect(() => {
     async function checkAliInternal() {
       try {
@@ -250,6 +258,10 @@ const CreateProject: React.FC = () => {
   return (
     <Card free>
       <Card.Content className={styles.cardContent}>
+        <div className={styles.header}>
+          <span className={styles.headerTitle}>创建项目</span>
+          <Button text onClick={onOpenConfigPanel}><Icon type="set" />设置</Button>
+        </div>
         <Step current={currentStep} shape="circle" className={styles.step} readOnly>
           {steps.map((step) => (
             <Step.Item key={step.title} title={step.title} />

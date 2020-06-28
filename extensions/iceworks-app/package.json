@@ -138,22 +138,6 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.setPackageManager",
-        "title": "%iceworksApp.nodeDependencies.setPackageManager.title%",
-        "icon": {
-          "light": "assets/light/setting.svg",
-          "dark": "assets/dark/setting.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.nodeDependencies.setNpmRegistry",
-        "title": "%iceworksApp.nodeDependencies.setNpmRegistry.title%",
-        "icon": {
-          "light": "assets/light/registry.svg",
-          "dark": "assets/dark/registry.svg"
-        }
-      },
-      {
         "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
         "title": "%iceworksApp.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
@@ -203,12 +187,6 @@
       }
     ],
     "menus": {
-      "explorer/context": [
-        {
-          "command": "iceworksApp.configHelper.start",
-          "group": "navigation"
-        }
-      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",
@@ -234,16 +212,6 @@
           "command": "iceworksApp.components.refresh",
           "when": "view == components",
           "group": "navigation"
-        },
-        {
-          "command": "iceworksApp.nodeDependencies.setPackageManager",
-          "when": "view == nodeDependencies",
-          "group": "navigation@21"
-        },
-        {
-          "command": "iceworksApp.nodeDependencies.setNpmRegistry",
-          "when": "view == nodeDependencies",
-          "group": "navigation@22"
         },
         {
           "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
@@ -285,7 +253,7 @@
       ]
     },
     "configuration": {
-      "title": "Iceworks App",
+      "title": "Iceworks",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

@@ -16,19 +16,8 @@ const { name, version } = require('../package.json');
 export async function activate(context: vscode.ExtensionContext) {
   const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-
-  if (!rootPath) {
-    vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-    return;
-  }
-  try {
-    const projectType = await getProjectType();
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
-  } catch (e) {
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-  }
-
+  // auto set configuration
+  initExtensionConfiguration(globalState);
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();
@@ -39,15 +28,7 @@ export async function activate(context: vscode.ExtensionContext) {
       version,
     }
   });
-  // auto set configuration
-  initExtensionConfiguration(globalState);
-
-  const terminals: ITerminalMap = new Map<string, Terminal>();
-  // init tree data providers
-  createNpmScriptsTreeProvider(context, rootPath, terminals);
-  createComponentsTreeProvider(context, rootPath);
-  createPagesTreeProvider(context, rootPath);
-  createNodeDependenciesTreeProvider(context, rootPath, terminals);
+  // init webview
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置面板', ViewColumn.One, {
       enableScripts: true,
@@ -60,4 +41,22 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
     activeWebview();
   }));
+
+  if (!rootPath) {
+    vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+    return;
+  }
+  try {
+    const projectType = await getProjectType();
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
+  } catch (e) {
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+  }
+  const terminals: ITerminalMap = new Map<string, Terminal>();
+  // init tree data providers
+  createNpmScriptsTreeProvider(context, rootPath, terminals);
+  createComponentsTreeProvider(context, rootPath);
+  createPagesTreeProvider(context, rootPath);
+  createNodeDependenciesTreeProvider(context, rootPath, terminals);
 }

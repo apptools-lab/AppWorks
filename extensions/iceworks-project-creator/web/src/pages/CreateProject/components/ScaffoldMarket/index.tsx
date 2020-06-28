@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Notification, Loading } from '@alifd/next';
+import { Collapse, Notification, Loading, Button, Icon } from '@alifd/next';
 import SelectCard from '@/components/SelectCard';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
@@ -15,13 +15,14 @@ const jsScaffolds = [
   '@alifd/scaffold-lite-js'
 ]
 
-const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
+const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
   const [materialSourceSelected, setMaterialSourceSelected] = useState<IMaterialSource>({});
   const [materialSelected, setMaterialSelected] = useState(null);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     try {
       setMaterialSourceSelected(scaffold);
@@ -55,26 +56,30 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
       return [];
     }
   }
+  async function initData() {
+    setLoading(true);
+    try {
+      const materialSources = await getScaffoldResources();
+      setMaterialSources(materialSources);
+      setMaterialSourceSelected(materialSources[0]);
+      const source = materialSources[0].source;
+
+      const data = await getScaffolds(source);
+      const { mainScaffolds, otherScaffolds } = data as any;
+      setMainScaffolds(mainScaffolds);
+      setOtherScaffolds(otherScaffolds);
+    } catch (error) {
+      Notification.error({ content: error.message });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function onRefreshMaterialSource() {
+    initData();
+  }
 
   useEffect(() => {
-    async function initData() {
-      setLoading(true);
-      try {
-        const materialSources = await getScaffoldResources();
-        setMaterialSources(materialSources);
-        setMaterialSourceSelected(materialSources[0]);
-        const source = materialSources[0].source;
-
-        const data = await getScaffolds(source);
-        const { mainScaffolds, otherScaffolds } = data as any;
-        setMainScaffolds(mainScaffolds);
-        setOtherScaffolds(otherScaffolds);
-      } catch (error) {
-        Notification.error({ content: error.message });
-      } finally {
-        setLoading(false);
-      }
-    }
     initData();
   }, []);
   return (
@@ -82,16 +87,24 @@ const ScaffoldMarket = ({ onScaffoldSelect, children }) => {
       <Loading visible={loading}>
         <div className={styles.content}>
           <div className={styles.scaffoldsSource}>
-            {materialSources && materialSources.map(item => (
-              <SelectCard
-                key={item.name}
-                title={item.name}
-                content={<span className={styles.userSelect}>{item.description}</span>}
-                selected={materialSourceSelected.name === item.name}
-                style={{ width: 160 }}
-                onClick={() => onMaterialSourceClick(item)}
-              />
-            ))}
+            <div className={styles.btn}>
+              <Button text onClick={onRefreshMaterialSource}><Icon type="refresh" />刷新</Button>
+            </div>
+            <div className={styles.scaffoldsList}>
+              {materialSources && materialSources.map(item => (
+                <SelectCard
+                  key={item.name}
+                  title={item.name}
+                  content={<span className={styles.userSelect}>{item.description}</span>}
+                  selected={materialSourceSelected.name === item.name}
+                  style={{ width: 160 }}
+                  onClick={() => onMaterialSourceClick(item)}
+                />
+              ))}
+            </div>
+            <div style={{ margin: 10 }}>
+              <Button style={{ width: 160 }} onClick={onOpenConfigPanel}><Icon type="add" /></Button>
+            </div>
           </div>
           <div className={styles.scaffolds}>
             <div className={styles.mainScaffolds}>
