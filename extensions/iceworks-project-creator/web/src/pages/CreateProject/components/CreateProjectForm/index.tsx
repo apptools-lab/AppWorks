@@ -25,9 +25,9 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
       >
         <Input placeholder="请输入应用名称" name="projectName" />
       </Form.Item>
-      <Form.Item colSpan={12} label="应用路径" required requiredMessage="请选择应用路径">
+      <Form.Item colSpan={12} label="本地路径" required requiredMessage="请选择应用存储的本地路径">
         <Input
-          placeholder="请选择应用路径"
+          placeholder="请选择应用存储的本地路径"
           name="projectPath"
           aria-label="projectPath"
           readOnly

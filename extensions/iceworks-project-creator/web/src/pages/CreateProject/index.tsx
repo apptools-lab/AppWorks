@@ -126,7 +126,7 @@ const CreateProject: React.FC = () => {
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
-        throw new Error('该路径已存在，请重新选择！');
+        throw new Error('该本地路径已存在，请重新选择！');
       }
       if (!isAliInternal) {
         await createProject(values)
