@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.5
+
+Update Extension Manifest: homepage and repository
+
 ## 0.1.4
 
 Optimize internal implementation

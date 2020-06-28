@@ -1,21 +1,29 @@
 {
   "name": "iceworks-app",
-  "displayName": "Iceworks App",
-  "description": "Universal Application Development Extension.",
+  "displayName": "Iceworks Application Viewer",
+  "description": "Quick view your Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "engines": {
     "vscode": "^1.41.0"
   },
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "Low-code",
+    "lowcode"
+  ],
   "icon": "assets/logo.png",
   "activationEvents": [
     "onView:nodeDependencies",
     "onView:scripts",
     "onView:pages",
-    "onView:components"
+    "onView:components",
+    "onCommand:iceworksApp.configHelper.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -23,7 +31,7 @@
       "activitybar": [
         {
           "id": "iceworksApp",
-          "title": "Iceworks App",
+          "title": "Iceworks",
           "icon": "assets/sidebar-logo.png"
         }
       ]
@@ -32,7 +40,7 @@
       "iceworksApp": [
         {
           "id": "welcome",
-          "name": "%iceworksApp.view.welcome.name%",
+          "name": "",
           "when": "workbenchState == empty || iceworks:isNotTargetProject"
         },
         {
@@ -80,6 +88,10 @@
       }
     ],
     "commands": [
+      {
+        "command": "iceworksApp.configHelper.start",
+        "title": "Iceworks: Set Iceworks Configuration"
+      },
       {
         "command": "iceworksApp.npmScripts.refresh",
         "title": "%iceworksApp.npmScripts.refresh.title%",
@@ -130,22 +142,6 @@
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.nodeDependencies.setPackageManager",
-        "title": "%iceworksApp.nodeDependencies.setPackageManager.title%",
-        "icon": {
-          "light": "assets/light/setting.svg",
-          "dark": "assets/dark/setting.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.nodeDependencies.setNpmRegistry",
-        "title": "%iceworksApp.nodeDependencies.setNpmRegistry.title%",
-        "icon": {
-          "light": "assets/light/registry.svg",
-          "dark": "assets/dark/registry.svg"
         }
       },
       {
@@ -225,16 +221,6 @@
           "group": "navigation"
         },
         {
-          "command": "iceworksApp.nodeDependencies.setPackageManager",
-          "when": "view == nodeDependencies",
-          "group": "navigation@21"
-        },
-        {
-          "command": "iceworksApp.nodeDependencies.setNpmRegistry",
-          "when": "view == nodeDependencies",
-          "group": "navigation@22"
-        },
-        {
           "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
           "when": "view == nodeDependencies",
           "group": "navigation@11"
@@ -274,7 +260,7 @@
       ]
     },
     "configuration": {
-      "title": "Iceworks App",
+      "title": "Iceworks",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",
@@ -304,7 +290,9 @@
     "url": "https://github.com/ice-lab/iceworks.git"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && webpack --mode production",
+    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./tsconfig.json"
@@ -321,7 +309,9 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.4",
+    "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
+    "@iceworks/vscode-webview": "^0.1.2",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
@@ -332,5 +322,10 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-component-builder",
     "iceworks-team.iceworks-page-builder"
-  ]
+  ],
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
 }

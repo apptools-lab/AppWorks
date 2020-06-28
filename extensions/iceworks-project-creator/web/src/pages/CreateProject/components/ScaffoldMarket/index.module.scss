@@ -7,11 +7,22 @@
   .content {
     display: flex;
     justify-content: flex-start;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 250px);
 
     .scaffoldsSource {
       width: 200px;
       overflow-y: auto;
+      position: relative;
+
+      .btn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+      }
+
+      .scaffoldsList {
+        margin-top: 25px;
+      }
     }
 
     .scaffolds {

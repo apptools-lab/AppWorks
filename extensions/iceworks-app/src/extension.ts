@@ -1,34 +1,23 @@
 import * as vscode from 'vscode';
-import { Terminal } from 'vscode';
-import * as path from 'path';
+import { Terminal, window, ViewColumn } from 'vscode';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { setPackageManager, setNpmRegistry, getPackageManagersDefaultFromPackageJson, getNpmRegistriesDefaultFromPckageJson, initExtensionConfiguration, Logger } from '@iceworks/common-service';
-import { NpmScriptsProvider, Script } from './views/npmScriptsView';
-import { DepNodeProvider, DependencyNode, addDepCommandHandler, showDepInputBox } from './views/nodeDependenciesView';
-import { ComponentsProvider } from './views/componentsView';
-import { PagesProvider } from './views/pagesView';
+import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
+import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
+import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
+import { createComponentsTreeProvider } from './views/componentsView';
+import { createPagesTreeProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
-import { openEntryFile, executeCommand } from './utils';
+import services from './services';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
 
 export async function activate(context: vscode.ExtensionContext) {
-  const { globalState } = context;
+  const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-
-  if (!rootPath) {
-    vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-    return;
-  }
-  try {
-    const projectType = await getProjectType();
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
-  } catch (e) {
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-  }
-
+  // auto set configuration
+  initExtensionConfiguration(globalState);
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();
@@ -39,53 +28,35 @@ export async function activate(context: vscode.ExtensionContext) {
       version,
     }
   });
+  // init webview
+  function activeWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks 设置', ViewColumn.One, {
+      enableScripts: true,
+      retainContextWhenHidden: true,
+    });
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+    connectService(webviewPanel.webview, subscriptions, { services, logger });
+  }
 
-  // auto set configuration
-  initExtensionConfiguration(globalState);
+  subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
+    activeWebview();
+  }));
 
+  if (!rootPath) {
+    vscode.window.showInformationMessage('当前工作区为空，请打开应用或新建应用。');
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+    return;
+  }
+  try {
+    const projectType = await getProjectType();
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
+  } catch (e) {
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+  }
   const terminals: ITerminalMap = new Map<string, Terminal>();
-
-  vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
-
-  const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-  vscode.commands.registerCommand('iceworksApp.npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script.command!));
-  vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
-
-  const componentsProvider = new ComponentsProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('components', componentsProvider);
-  vscode.commands.registerCommand('iceworksApp.components.add', () => {
-    console.log('iceworksApp: activate iceworks-component-builder.generate');
-    vscode.commands.executeCommand('iceworks-component-builder.generate');
-  });
-  vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
-
-  const pagesProvider = new PagesProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('pages', pagesProvider);
-  vscode.commands.registerCommand('iceworksApp.pages.add', () => {
-    console.log('iceworksApp: activate iceworks-page-builder.create');
-    vscode.commands.executeCommand('iceworks-page-builder.create');
-  });
-  vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
-
-  const nodeDependenciesProvider = new DepNodeProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
-    if (nodeDependenciesProvider.packageJsonExists()) {
-      const script = await nodeDependenciesProvider.getReinstallScript();
-      executeCommand(terminals, script!);
-    }
-  });
-
-  const packageJsonPath: string = path.join(__filename, '..', '..', 'package.json');
-
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setPackageManager', () => setPackageManager(getPackageManagersDefaultFromPackageJson(packageJsonPath))));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.setNpmRegistry', () => setNpmRegistry(getNpmRegistriesDefaultFromPckageJson(packageJsonPath))));
+  // init tree data providers
+  createNpmScriptsTreeProvider(context, rootPath, terminals);
+  createComponentsTreeProvider(context, rootPath);
+  createPagesTreeProvider(context, rootPath);
+  createNodeDependenciesTreeProvider(context, rootPath, terminals);
 }

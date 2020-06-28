@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Step, Button, Notification } from '@alifd/next';
+import { Card, Form, Step, Button, Notification, Icon } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
 import ScaffoldMarket from './components/ScaffoldMarket';
@@ -27,7 +27,7 @@ const CreateProject: React.FC = () => {
     {
       title: '选择模板',
       content: (
-        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect}>
+        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel}>
           <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
         </ScaffoldMarket>
       )
@@ -51,7 +51,7 @@ const CreateProject: React.FC = () => {
 
   if (isAliInternal) {
     steps.splice(2, 0, {
-      title: '创建 DEF 项目',
+      title: '创建 DEF 应用',
       content: (
         <CreateDEFProjectForm
           value={curDEFProjectField}
@@ -126,7 +126,7 @@ const CreateProject: React.FC = () => {
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
-        throw new Error('该项目路径已存在，请重新选择！');
+        throw new Error('该本地路径已存在，请重新选择！');
       }
       if (!isAliInternal) {
         await createProject(values)
@@ -216,6 +216,14 @@ const CreateProject: React.FC = () => {
     }
   }
 
+  async function onOpenConfigPanel() {
+    try {
+      await callService('common', 'openConfigPanel');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   useEffect(() => {
     async function checkAliInternal() {
       try {
@@ -250,6 +258,10 @@ const CreateProject: React.FC = () => {
   return (
     <Card free>
       <Card.Content className={styles.cardContent}>
+        <div className={styles.header}>
+          <span className={styles.headerTitle}>创建应用</span>
+          <Button text onClick={onOpenConfigPanel}><Icon type="set" />设置</Button>
+        </div>
         <Step current={currentStep} shape="circle" className={styles.step} readOnly>
           {steps.map((step) => (
             <Step.Item key={step.title} title={step.title} />
