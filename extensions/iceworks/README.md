@@ -9,7 +9,7 @@
 
 包含以下功能：
 
-- [应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：预览和构建你的多端应用
+- [项目大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：预览和构建你的多端应用
 - [应用创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：通过图像界面引导创建多端应用
 - [页面创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)：通过区块拼装的方式生成页面
 - [组件创建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)：通过选择区块的方式生成组件
