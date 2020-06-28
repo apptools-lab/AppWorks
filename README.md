@@ -45,12 +45,12 @@
 
 ## ICE 生态
 
-| Project    | Version                                | Docs                  | Description                    |
-| ---------- | -------------------------------------- | --------------------- | ------------------------------ |
-| [icejs]    | [![icejs-status]][icejs-package]       | [docs][icejs-docs]    | 基于 React 的企业级研发框架    |
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案   |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案   |
-| [formily]  | [![formily-status]][formily-package]   | [docs][formily-docs]  | 能力完备性能出众的表单解决方案 |
+|    Project         |    Version      |     Docs    |   Description       |
+|----------------|------------------|--------------|-----------|
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
+| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | 能力完备性能出众的表单解决方案 |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -74,9 +74,9 @@
 
 ## 社区
 
-| 钉钉群                                                                                                                                  | GitHub issues | Gitter   |
-| --------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]      | [gitter] |
+| 钉钉群	                             | GitHub issues |  Gitter |
+|-------------------------------------|--------------|---------|
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
