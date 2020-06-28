@@ -4,7 +4,6 @@
 
 Add `class` name completions.
 
-
 ## 0.1.0
 
 Initial release
