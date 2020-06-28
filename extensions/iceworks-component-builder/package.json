@@ -3,7 +3,7 @@
   "displayName": "Iceworks Component Builder",
   "description": "Build Component UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -16,7 +16,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/iceworks.git"
+    "url": "https://github.com/ice-lab/iceworks.git"
   },
   "main": "./build/extension.js",
   "contributes": {
@@ -97,5 +97,10 @@
     "@iceworks/material-service": "^0.1.3",
     "@iceworks/project-service": "^0.1.4",
     "@iceworks/vscode-webview": "^0.1.1"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-component-builder/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
   }
 }

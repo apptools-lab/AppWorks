@@ -315,5 +315,10 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-component-builder",
     "iceworks-team.iceworks-page-builder"
-  ]
+  ],
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
 }
