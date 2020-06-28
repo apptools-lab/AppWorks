@@ -1,8 +1,8 @@
 # Change Log
 
-## 0.1.5
+## 0.1.6
 
-- fix: Compatible scenarios with empty component screenshot
+fix: Compatible scenarios with empty component screenshot
 
 ## 0.1.5
 
