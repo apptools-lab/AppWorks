@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Icon, Input } from '@alifd/next';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
+import { PLACEHOLDER_IMG } from '@iceworks/material-utils';
 import * as styles from './index.module.scss';
 
 export const BlockDragHandle = SortableHandle(({ title, screenshot }) => (
@@ -13,7 +14,7 @@ export const SelectedBlock = SortableElement(
   ({ title, screenshot, name, onNameChange, onDelete, targetIndex, isSorting }) => {
     return (
       <div className={`${styles.item} ${isSorting ? styles.isSorting : ''}`}>
-        <BlockDragHandle title={title} screenshot={screenshot} />
+        <BlockDragHandle title={title} screenshot={screenshot || PLACEHOLDER_IMG} />
         <div className={styles.name}>
           <Input
             autoFocus

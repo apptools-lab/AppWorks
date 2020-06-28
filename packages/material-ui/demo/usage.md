@@ -36,7 +36,7 @@ const bloks = [
 class App extends Component {
   render() {
     return (
-      <div>
+      <div style={{width: '750px'}}>
         <Material
           onSettingsClick={() => null}
           getSources={async function() {
@@ -107,6 +107,7 @@ class App extends Component {
             };
           }}
           selectedBlocks={bloks}
+          onBlockClick={function() { alert('block click!!!'); }}
         />
       </div>
     );
