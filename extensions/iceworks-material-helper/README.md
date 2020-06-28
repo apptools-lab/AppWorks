@@ -2,7 +2,7 @@
 
 # Iceworks 物料使用辅助器
 
-在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写组件属性，对 React 和 [Rax](https://rax.js.org/) 项目友好。
+在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写组件属性，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
 > 什么是[物料](https://ice.alibaba-inc.com/docs/materials/about)？
 

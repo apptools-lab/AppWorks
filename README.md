@@ -23,7 +23,7 @@
 
 ### Iceworks 套件
 
-使用 VS Code 套件快速开发多端项目。
+使用 VS Code 套件快速开发多端应用。
 
 ![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 

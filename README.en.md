@@ -22,7 +22,7 @@ English | [简体中文](./README.md)
 
 ### Iceworks Pack
 
-Use VC Code pack to develop Universal Application projects quickly.
+Use VC Code pack to develop Universal Application quickly.
 
 ![Iceworks](https://img.alicdn.com/tfs/TB12Z1jJFP7gK0jSZFjXXc5aXXa-2880-1754.png)
 
@@ -58,12 +58,12 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 
 ## ICE Ecosystem
 
-|    Project         |    Version      |     Docs    |   Description       |
-|----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | A universal framework based on react.js |
+| Project    | Version                                | Docs                  | Description                                    |
+| ---------- | -------------------------------------- | --------------------- | ---------------------------------------------- |
+| [icejs]    | [![icejs-status]][icejs-package]       | [docs][icejs-docs]    | A universal framework based on react.js        |
 | [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | Alibaba Group Unified Form Solution |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React            |
+| [formily]  | [![formily-status]][formily-package]   | [docs][formily-docs]  | Alibaba Group Unified Form Solution            |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -87,9 +87,9 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 
 ## Community
 
-| DingTalk community                               | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
+| DingTalk community                                                                                                                      | GitHub issues | Gitter   |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]      | [gitter] |
 
 [issues]: https://github.com/alibaba/ice/issues
 [gitter]: https://gitter.im/alibaba/ice
