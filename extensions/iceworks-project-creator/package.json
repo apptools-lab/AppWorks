@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Creator",
   "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.41.0"
   },
