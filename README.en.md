@@ -21,7 +21,7 @@ English | [简体中文](./README.md)
 
 ## Quick Start
 
-Use Iceworks to develop Universal Application projects quickly:
+Use Iceworks to develop Universal Application quickly:
 
 1. Open [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
 2. Click the ["install"](vscode:extension/iceworks-team.iceworks) button on page

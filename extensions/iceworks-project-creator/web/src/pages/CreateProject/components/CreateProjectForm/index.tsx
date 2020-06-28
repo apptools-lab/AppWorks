@@ -17,17 +17,17 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
     <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
       <Form.Item
         colSpan={12}
-        label="项目名称"
+        label="应用名称"
         required
-        requiredMessage="请输入项目名称"
+        requiredMessage="请输入应用名称"
         pattern={/^[a-z]([-_a-z0-9]*)$/i}
         patternMessage="请输入字母和数字的组合，以字母开头"
       >
-        <Input placeholder="请输入项目名称" name="projectName" />
+        <Input placeholder="请输入应用名称" name="projectName" />
       </Form.Item>
-      <Form.Item colSpan={12} label="项目路径" required requiredMessage="请选择项目路径">
+      <Form.Item colSpan={12} label="本地路径" required requiredMessage="请选择应用存储的本地路径">
         <Input
-          placeholder="请选择项目路径"
+          placeholder="请选择应用存储的本地路径"
           name="projectPath"
           aria-label="projectPath"
           readOnly

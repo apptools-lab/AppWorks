@@ -22,7 +22,7 @@
 
 ## 快速开始
 
-使用 VS Code 套件快速开发多端项目：
+使用 VS Code 套件快速开发多端应用：
 
 1. 打开 VS Code 套件市场中的 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 页面；
 2. 点击页面上的[「Install」](vscode:extension/iceworks-team.iceworks)按钮；

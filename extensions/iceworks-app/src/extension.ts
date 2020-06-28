@@ -30,7 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
   });
   // init webview
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置面板', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks 设置', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });
@@ -43,7 +43,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }));
 
   if (!rootPath) {
-    vscode.window.showInformationMessage('当前工作区为空，请打开项目或新建项目。');
+    vscode.window.showInformationMessage('当前工作区为空，请打开应用或新建应用。');
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     return;
   }

@@ -91,7 +91,7 @@ export async function createProject(data): Promise<string> {
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
   }
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
@@ -113,7 +113,7 @@ export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFPr
   const projectDir = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
   }
   await createDEFProject(DEFProjectField);
   await cloneRepositoryToLocal(projectDir, group, project);
@@ -131,7 +131,7 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入项目名称。`)
+    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
   }
   const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
@@ -184,10 +184,10 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error(`创建项目失败，任务 ID 是： ${taskId}.`))
+            reject(new Error(`创建 DEF 应用失败，任务 ID 是： ${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error(`创建项目超时，任务 ID 是：${taskId}.`))
+            reject(new Error(`创建 DEF 应用超时，任务 ID 是：${taskId}.`))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()
