@@ -18,8 +18,9 @@
     "ICE",
     "Rax",
     "React",
-    "JSX",
-    "Props"
+    "Low-code",
+    "lowcode",
+    "visual"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
