@@ -2,6 +2,10 @@
 
 ## 0.1.5
 
+- fix: Compatible scenarios with empty component screenshot
+
+## 0.1.5
+
 Update Extension Manifest: homepage and repository
 
 ## 0.1.4
