@@ -1,6 +1,6 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks 样式开发辅助器
+# Iceworks 样式开发辅助插件
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写内联样式，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 

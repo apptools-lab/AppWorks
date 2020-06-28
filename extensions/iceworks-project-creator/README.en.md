@@ -1,6 +1,6 @@
 English | [简体中文](./README.md)
 
-# Iceworks Project Creator
+# Iceworks Application Creator
 
 Quick create a Universal Application(React/Rax/Vue, etc).
 

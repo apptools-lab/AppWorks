@@ -1,6 +1,6 @@
 {
   "name": "iceworks-project-creator",
-  "displayName": "Iceworks Project Creator",
+  "displayName": "Iceworks Application Creator",
   "description": "Quick create a Universal Application project(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.1.6",
@@ -9,6 +9,13 @@
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "JSX",
+    "Props"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

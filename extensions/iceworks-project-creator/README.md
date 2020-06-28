@@ -1,6 +1,6 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks Project Creator
+# Iceworks 创建应用插件
 
 快速创建多端应用（例如：React/Rax/Vue...）
 
