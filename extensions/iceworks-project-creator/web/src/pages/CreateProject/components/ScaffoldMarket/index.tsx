@@ -34,7 +34,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
       setOtherScaffolds(otherScaffolds);
       setMaterialSelected(null);
     } catch (err) {
-      Notification.error({ content: err.message })
+      // ignore
     } finally {
       setLoading(false);
     }
@@ -59,6 +59,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
       const other = scaffolds.filter(scaffold => jsScaffolds.includes(scaffold.source.npm));
       return { mainScaffolds: main, otherScaffolds: other }
     } catch (e) {
+      Notification.error({ content: e.message });
       return { mainScaffolds: [], otherScaffolds: [] }
     }
   }
