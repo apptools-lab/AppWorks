@@ -14,20 +14,34 @@
       overflow-y: auto;
       position: relative;
 
-      .btn {
+      .refreshBtn {
         position: absolute;
         top: 0;
         right: 25px;
       }
 
-      .scaffoldsList {
+      .sourcesList {
         margin-top: 25px;
+      }
+
+      .addSource {
+        margin: 10px;
+
+        .btn {
+          width: 160px;
+        }
       }
     }
 
     .scaffolds {
       width: calc(100% - 170px);
       overflow-y: auto;
+
+      .loading {
+        width: 100%;
+        height: 100%;
+      }
+
       .mainScaffolds {
         display: flex;
         justify-content: flex-start;
@@ -46,7 +60,7 @@
             background: $color-brand1-1;
           }
         }
-        .otherScaffolds {
+        .collapseScaffolds {
           display: flex;
           justify-content: flex-start;
           flex-wrap: wrap;
