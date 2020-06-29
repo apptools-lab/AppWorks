@@ -6,8 +6,8 @@ export default ({ description }) => {
     <div className={styles.container}>
       <img
         src="https://img.alicdn.com/tfs/TB1WNNxjBHH8KJjy0FbXXcqlpXa-780-780.png"
-        width="250"
-        height="250"
+        width="160"
+        height="160"
         alt=""
       />
       <div className={styles.description}>{description}</div>
