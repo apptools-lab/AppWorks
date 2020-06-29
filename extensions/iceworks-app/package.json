@@ -90,7 +90,7 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "Iceworks: Set Iceworks Configuration"
+        "title": "Iceworks: Set Configuration"
       },
       {
         "command": "iceworksApp.npmScripts.refresh",
@@ -260,7 +260,7 @@
       ]
     },
     "configuration": {
-      "title": "Iceworks",
+      "title": "Iceworks Application Viewer",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",
