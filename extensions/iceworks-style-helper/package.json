@@ -25,7 +25,8 @@
     "onLanguage:typescriptreact",
     "onLanguage:css",
     "onLanguage:less",
-    "onLanguage:sass"
+    "onLanguage:sass",
+    "onLanguage:scss"
   ],
   "repository": {
     "type": "git",

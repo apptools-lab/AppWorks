@@ -79,7 +79,8 @@ export default function cssClassAutoCompete(context: vscode.ExtensionContext): v
       [
         { scheme: 'file', language: 'css' },
         { scheme: 'file', language: 'less' },
-        { scheme: 'file', language: 'sass' }
+        { scheme: 'file', language: 'sass' },
+        { scheme: 'file', language: 'scss' }
       ],
       { provideCompletionItems },
       '.'
