@@ -26,11 +26,11 @@
     "commands": [
       {
         "command": "iceworks-project-creator.start",
-        "title": "Iceworks: Create Project"
+        "title": "Iceworks: Create Application"
       }
     ],
     "configuration": {
-      "title": "Iceworks Project Creator",
+      "title": "Iceworks Application Creator",
       "properties": {
         "iceworks.materialSources": {
           "type": "array",
