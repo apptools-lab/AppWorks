@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.8
+
+- style: add loading status of loading the scaffolds
+
 ## 0.1.7
 
 - feat: ade refresh && settings
