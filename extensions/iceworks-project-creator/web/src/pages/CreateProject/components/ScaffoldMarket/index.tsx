@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Collapse, Notification, Loading, Button, Icon } from '@alifd/next';
-import SelectCard from '@/components/SelectCard';
+import MobileScaffoldCard from '@/components/MobileScaffoldCard';
+import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
@@ -17,8 +18,8 @@ const jsScaffolds = [
 ]
 
 const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
-  const [materialSourceSelected, setMaterialSourceSelected] = useState<any>({});
-  const [materialSelected, setMaterialSelected] = useState(null);
+  const [selectedSource, setSelectedSource] = useState<any>({});
+  const [SelectedMaterial, setSelectedMaterial] = useState(null);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
@@ -27,12 +28,12 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     try {
       setLoading(true);
-      setMaterialSourceSelected(scaffold);
+      setSelectedSource(scaffold);
       const data = await getScaffolds(scaffold.source);
       const { mainScaffolds, otherScaffolds } = data as any;
       setMainScaffolds(mainScaffolds);
       setOtherScaffolds(otherScaffolds);
-      setMaterialSelected(null);
+      setSelectedMaterial(null);
     } catch (err) {
       // ignore
     } finally {
@@ -41,14 +42,14 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
   }
 
   function onScaffoldMaterialClick(scaffold) {
-    setMaterialSelected(scaffold.name);
+    setSelectedMaterial(scaffold.name);
     onScaffoldSelect(scaffold);
   }
 
   async function getScaffoldSources() {
     const materialSources: any = await callService('material', 'getSources') as IMaterialSource[];
     setMaterialSources(materialSources);
-    setMaterialSourceSelected(materialSources[0]);
+    setSelectedSource(materialSources[0]);
     return materialSources;
   }
 
@@ -97,12 +98,12 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
           </div>
           <div className={styles.sourcesList}>
             {materialSources && materialSources.map(item => (
-              <SelectCard
+              <ScaffoldCard
                 key={item.name}
                 title={item.name}
-                content={<span className={styles.userSelect}>{item.description}</span>}
-                selected={materialSourceSelected['name'] && materialSourceSelected.name === item.name}
-                style={{ width: 160 }}
+                content={<div className={styles.userSelect}>{item.description}</div>}
+                selected={selectedSource.name && selectedSource.name === item.name}
+                style={{ width: 160, height: 100 }}
                 onClick={() => onMaterialSourceClick(item)}
               />
             ))}
@@ -118,9 +119,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
               {!!mainScaffolds.length ? mainScaffolds.map(item => {
                 const scaffoldType = tsScaffolds.includes(item.source.npm) ? 'ts' :
                   jsScaffolds.includes(item.source.npm) ? 'js' :
-                    ''
+                    '';
+                const isRax = selectedSource.type === 'rax';
+                const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
                 return (
-                  <SelectCard
+                  <CardComponent
                     key={item.name}
                     title={
                       <div>
@@ -128,10 +131,9 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
                         <span className={styles.cardTitle}>{item.title.replace(' - TS', '')}</span>
                       </div>
                     }
-                    content={<span className={styles.userSelect}>{item.description}</span>}
-                    media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-                    selected={materialSelected === item.name}
-                    style={{ width: 190, height: 250 }}
+                    content={<div className={styles.userSelect}>{item.description}</div>}
+                    media={item.screenshot}
+                    selected={SelectedMaterial === item.name}
                     onClick={() => onScaffoldMaterialClick(item)}
                   />
                 )
@@ -145,9 +147,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
                   {otherScaffolds.map(item => {
                     const scaffoldType = tsScaffolds.includes(item.source.npm) ? 'ts' :
                       jsScaffolds.includes(item.source.npm) ? 'js' :
-                        ''
+                        '';
+                    const isRax = selectedSource.type === 'rax';
+                    const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
                     return (
-                      <SelectCard
+                      <CardComponent
                         key={item.name}
                         title={
                           <div>
@@ -156,9 +160,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel }) => {
                           </div>
                         }
                         content={<span className={styles.userSelect}>{item.description}</span>}
-                        media={<img height={120} src={item.screenshot} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-                        selected={materialSelected === item.name}
-                        style={{ width: 190, height: 250 }}
+                        media={item.screenshot}
+                        selected={SelectedMaterial === item.name}
                         onClick={() => onScaffoldMaterialClick(item)}
                       />
                     )
