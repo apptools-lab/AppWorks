@@ -1,37 +1,57 @@
-import React, { useEffect } from 'react';
-import { Tab } from '@alifd/next';
-import { IMaterialSource } from '@iceworks/material-utils';
+import React from 'react';
+import { Notification } from '@alifd/next';
 import callService from '@/callService';
 import styles from './index.module.scss';
+import Material from '@iceworks/material-ui';
+import { IMaterialData, IMaterialBlock, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
 
-interface IMaterialsPane {
-  source: IMaterialSource
-}
-
-const tabs = [
-  { tab: '区块', key: 'blocks', content: '' },
-  { tab: '组件', key: 'components', content: '' }
-]
-const MaterialsPane: React.FC<IMaterialsPane> = ({ source }) => {
-  useEffect(() => {
-    async function getData() {
-      try {
-        const data = await callService('material', 'getData', source.source);
-
-      } catch (e) {
-        // ignore
-      }
+const MaterialsPane: React.FC<any> = () => {
+  async function getSources() {
+    let sources = [];
+    try {
+      sources = await callService('material', 'getSourcesByProjectType');
+    } catch (e) {
+      Notification.error({ content: '获取物料源信息失败，请稍后再试。' });
     }
-    getData();
-  }, []);
+    console.log('getSources', sources);
+    return sources;
+  }
+
+  async function getData(source: string): Promise<IMaterialData> {
+    let data = {} as IMaterialData;
+    try {
+      data = await callService('material', 'getData', source);
+    } catch (e) {
+      Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
+    }
+    console.log('getData', data);
+    return data;
+  }
+
+  const onComponentClick = (component: IMaterialComponent) => {
+
+  }
+
+  const onBlockClick = (block: IMaterialBlock) => {
+
+  }
+
+  const onBaseClick = (base: IMaterialBase) => {
+
+  }
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <Tab shape="capsule" size="small" className={styles.materialTab}>
-          {tabs.map(item => <Tab.Item key={item.key} title={item.tab}>{item.content}</Tab.Item>)}
-        </Tab>
+      <div className={styles.materialsList}>
+        <Material
+          disableLazyLoad
+          getSources={getSources}
+          getData={getData}
+          onBlockClick={onBlockClick}
+          onBaseClick={onBaseClick}
+          onComponentClick={onComponentClick}
+          dataWhiteList={['blocks', 'components', 'bases']}
+        />
       </div>
-
     </div>
   )
 }

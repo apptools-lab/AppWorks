@@ -12,19 +12,21 @@ function Home() {
       try {
         const sources = await callService('material', 'getSources');
         sources.forEach((source: IMaterialSource) => {
-          tabs.push({ tab: source.name, key: source.name, content: <MaterialsPane source={source} /> })
+          tabs.push({ tab: source.name, key: source.name, content: <MaterialsPane materialSource={source} /> })
         });
         setTabs([...tabs])
       } catch (e) {
-        // ignore
+        // ignore   
       }
     }
     getSources();
   }, []);
   return (
-    <Tab>
-      {tabs.map(item => <Tab.Item key={item.key} title={item.tab}>{item.content}</Tab.Item>)}
-    </Tab>
+    // <Tab>
+    //   {tabs.map(item => <Tab.Item key={item.key} title={item.tab}>{item.content}</Tab.Item>)}
+
+    // </Tab>
+    <MaterialsPane />
   )
 }
 

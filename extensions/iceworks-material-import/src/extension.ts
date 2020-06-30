@@ -25,8 +25,14 @@ export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtensionConfiguration(globalState);
   // init webview
+  let webviewPanel: vscode.WebviewPanel | undefined = undefined;
+
+  const columnToShowIn = vscode.window.activeTextEditor
+    ? ViewColumn.Beside
+    : ViewColumn.One;
+
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '导入物料', ViewColumn.One, {
+    webviewPanel = window.createWebviewPanel('iceworks', '导入物料', columnToShowIn, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

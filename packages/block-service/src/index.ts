@@ -5,10 +5,15 @@ import * as glob from 'glob';
 import * as readFiles from 'fs-readdir-recursive';
 import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
+import { getTarballURLByMaterielSource, IMaterialBlock, IMaterialBase, IMaterialComponent } from '@iceworks/material-utils';
 import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
 import { createNpmCommand } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+import { pagesPath, componentDirName, dependencyDir, packageJSONFilename } from './utils/constant';
+import { generateBlockName } from './utils/generateBlockName';
+import { downloadBlock } from './utils/downloadBlock';
+
+const { window, Position } = vscode;
 
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
@@ -23,7 +28,7 @@ function getBlockType(blockSourceSrcPath) {
 /**
  * Generate block code
  */
-export const bulkGenerate = async function(blocks: IMaterialBlock[], localPath: string) {
+export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   await bulkDownload(blocks, localPath);
   await bulkInstallDependencies(blocks);
 }
@@ -31,7 +36,7 @@ export const bulkGenerate = async function(blocks: IMaterialBlock[], localPath: 
 /**
  * Download blocks code to page
  */
-export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: string) {
+export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string) {
   return await Promise.all(
     blocks.map(async (block: any) => {
       const blockSourceNpm = block.source.npm;
@@ -92,7 +97,7 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
 /**
  * Installation block dependencies
  */
-export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) {
+export const bulkInstallDependencies = async function (blocks: IMaterialBlock[]) {
   const projectPackageJSON = await readPackageJSON(projectPath);
   const { activeTerminal } = vscode.window;
 
@@ -129,4 +134,206 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
   } else {
     return [];
   }
+}
+
+export async function insertComponent(activeTextEditor: vscode.TextEditor, name: string, npm: string) {
+  const { position: importDeclarationPosition, declarations: importDeclarations } = await this.getImportInfos(activeTextEditor.document.getText());
+  const componentImportDeclaration = importDeclarations.find(({ source }) => source.value === npm);
+  let componentName = this.generateComponentName(name);
+  if (componentImportDeclaration) {
+    // TODO 当前所有的 component 引入都是默认导出
+    componentName = componentImportDeclaration.specifiers[0].local.name;
+  }
+
+  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+    if (!componentImportDeclaration) {
+      editBuilder.insert(
+        importDeclarationPosition,
+        this.getImportTemplate(componentName, npm)
+      );
+    }
+
+    const { selection } = activeTextEditor;
+    if (selection && selection.active) {
+      const insertPosition = new Position(selection.active.line, selection.active.character);
+      editBuilder.insert(
+        insertPosition,
+        this.getTagTemplate(componentName)
+      );
+    }
+  });
+}
+
+export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {
+  const { position: importDeclarationPosition } = await this.getImportInfos(activeTextEditor.document.getText());
+  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+    editBuilder.insert(
+      importDeclarationPosition,
+      this.getImportTemplate(blockName, `./components/${blockName}`)
+    );
+
+    const { selection } = activeTextEditor;
+    if (selection && selection.active) {
+      const insertPosition = new Position(selection.active.line, selection.active.character);
+      editBuilder.insert(
+        insertPosition,
+        this.getTagTemplate(blockName)
+      );
+    }
+  });
+}
+
+export async function addBlock(block: IMaterialBlock, isLocal?: boolean) {
+  const templateError = `只能向 ${this.templateExtnames.join(',')} 文件添加区块代码`;
+  const { activeTextEditor } = window;
+  console.log('addBlock....');
+  if (!activeTextEditor) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  const fsPath = activeTextEditor.document.uri.fsPath;
+
+  const isTemplate = this.checkTemplate(fsPath);
+  if (!isTemplate) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  const pageName = path.basename(path.dirname(fsPath));
+  const pagePath = path.join(
+    pagesPath,
+    pageName
+  );
+  const isPageFile = await fsExtra.pathExists(pagePath);
+  if (!isPageFile) {
+    this.componentProxy.showError(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
+    return;
+  }
+
+  // 插入代码
+  const blockName: string = await generateBlockName(pageName, block.name);
+  await this.insertBlock(activeTextEditor, blockName);
+
+  // 下载区块
+  const componentsPath = path.join(pagePath, componentDirName);
+  const materialOutputChannel = window.createOutputChannel('material');
+  materialOutputChannel.show();
+  materialOutputChannel.appendLine('> 开始获取区块代码');
+  try {
+    // const downloadMethod = isLocal ? downloadLocalBlock : downloadBlock;
+    const downloadMethod = downloadBlock;
+    // const blockDir = await downloadMethod({ ...block, name: blockName, oriName: block.name }, componentsPath, (text) => {
+    const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
+      materialOutputChannel.appendLine(`> ${text}`);
+    });
+    materialOutputChannel.appendLine(`> 已将区块代码下载到：${blockDir}`);
+  } catch (error) {
+    materialOutputChannel.appendLine(`> Error: ${error.message}`);
+  }
+}
+
+export async function addComponent(dataSource: IMaterialComponent) {
+  const templateError = `只能向 ${this.templateExtnames.join(',')} 文件添加组件代码`;
+  const { name, source } = dataSource;
+  const { npm, version } = source;
+  const { activeTextEditor, activeTerminal } = window;
+
+  if (!activeTextEditor) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  const fsPath = activeTextEditor.document.uri.fsPath;
+
+  const isTemplate = this.checkTemplate(fsPath);
+  if (!isTemplate) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  // 插入代码
+  await this.insertComponent(activeTextEditor, name, npm);
+
+  // 安装依赖
+  const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
+  try {
+    const packageJSON = await fsExtra.readJSON(packageJSONPath);
+    if (packageJSON.version === version) {
+      return;
+    }
+  } catch {
+    // ignore
+  }
+
+  let terminal;
+  if (activeTerminal) {
+    terminal = activeTerminal;
+  } else {
+    terminal = window.createTerminal();
+  }
+
+  const npmClient = this.storageService.get('npmClient');
+
+  terminal.show();
+  terminal.sendText(`cd ${projectPath}`, true);
+  terminal.sendText(`${npmClient} install ${npm}@${version}`, true);
+}
+
+export async function addBase(dataSource: IMaterialBase) {
+  const templateError = `只能向 ${this.templateExtnames.join(',')} 文件添加组件代码`;
+  const { activeTextEditor } = window;
+
+  if (!activeTextEditor) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  const { active } = activeTextEditor.selection;
+  const fsPath = activeTextEditor.document.uri.fsPath;
+  const isTemplate = this.checkTemplate(fsPath);
+  if (!isTemplate) {
+    this.componentProxy.showError(templateError);
+    return;
+  }
+
+  const { importStatement, name, source } = dataSource;
+  const { npm } = source;
+  const { position: importDeclarationPosition, declarations: importDeclarations } = await this.getImportInfos(activeTextEditor.document.getText());
+  const baseImportDeclaration = importDeclarations.find(({ source }) => {
+    return source.value === npm;
+  });
+
+  const insertPosition = new Position(active.line, active.character);
+  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+    let existImportedName = '';
+    if (!baseImportDeclaration) {
+      editBuilder.insert(
+        importDeclarationPosition,
+        `${importStatement}\n`
+      );
+    } else {
+      const baseSpecifiers = baseImportDeclaration.specifiers;
+      baseSpecifiers.forEach(({ imported, local }) => {
+        if (imported.name === name) {
+          existImportedName = local.name;
+        }
+      });
+
+      if (!existImportedName) {
+        const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
+        const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
+
+        editBuilder.insert(
+          new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
+          `, ${name}`,
+        );
+      }
+    }
+
+    editBuilder.insert(
+      insertPosition,
+      this.getTagTemplate(existImportedName || name)
+    );
+  });
 }
