@@ -9,6 +9,10 @@ import findVariables, { IVariables } from './findVariables';
 let FUSION_VARIABLES: IVariables = {};
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
 
+function getMarkdownInfo(key: string, value: string): string {
+  return `### Sass variable \n **${key}**: ${value};`;
+}
+
 // Variable definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
@@ -33,9 +37,34 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
-    return new vscode.Hover(`### Sass variable \n **${word}**: ${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value};`);
+    return new vscode.Hover(
+      getMarkdownInfo(
+        word,
+        `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`
+      )
+    );
   }
 }
+
+// Variables auto Complete
+function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+
+  const { fileName } = getFocusCodeInfo(document, position);
+  const variables = Object.assign({}, FUSION_VARIABLES, findVariables(fileName));
+
+  return Object.keys(variables).map((variable) => {
+    const variableValue = variables[variable].value;
+    const variableValueText = `${colorPreviewDisplay(variableValue)}${variableValue}`;
+
+    const completionItem = new vscode.CompletionItem(variable, vscode.CompletionItemKind.Variable);
+    
+    completionItem.filterText = `${variable}: ${variableValue};`;
+    completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
+
+    return completionItem;
+  });
+}
+
 
 // Process fusion component. https://ice.work/docs/guide/advance/fusion
 function processFusionVariables() {
@@ -44,7 +73,7 @@ function processFusionVariables() {
     const buildConfig = JSON.parse(fs.readFileSync(path.join(rootPath, 'build.json'), 'utf-8'));
     const fusionConfig = buildConfig.plugins.find(plugin => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion');
     if (fusionConfig[1].themePackage) {
-      FUSION_VARIABLES = findVariables(getFullModulePath(`~${fusionConfig[1].themePackage}`));
+      FUSION_VARIABLES = findVariables(getFullModulePath(`~${fusionConfig[1].themePackage} `));
     }
   } catch (e) {
     // ignore
@@ -66,6 +95,12 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
     // Set provideHover
     context.subscriptions.push(
       vscode.languages.registerHoverProvider(language, { provideHover })
+    );
+    // Styles auto Complete
+    context.subscriptions.push(
+      vscode.languages.registerCompletionItemProvider(
+        language, { provideCompletionItems }, '.'
+      )
     );
   })
 }
