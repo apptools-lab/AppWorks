@@ -6,15 +6,15 @@
 
 ## 用法
 
-### 悬停说明
+### 悬停信息
 
-当您将鼠标悬停在某个 JSON 的字段上时在悬浮小部件中显示字段的描述：
+当您将鼠标悬停在某个 JSON 的字段上时，会出现悬浮小部件显示字段的描述：
 
 ![img01](https://img.alicdn.com/tfs/TB1e1wYvEY1gK0jSZFCXXcwqXXa-1140-592.gif)
 
 ### 输入提示
 
-当您输入时，显示与您的配置相关的建议：
+当您在输入时，显示与您的配置相关的建议：
 
 ![img02](https://img.alicdn.com/tfs/TB188ZZvrj1gK0jSZFuXXcrHpXa-1132-774.gif)
 

@@ -1,18 +1,18 @@
-简体中文 | [English](./README.en.md)
+English | [简体中文](./README.md)
 
 # Iceworks Config Helper
 
-For icejs and rax app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other functions.
+For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features.
 
-## Use
+## Usage
 
-### Hover widget
+### Hover Widget
 
 Whenever you hover over some JSON key, shows the description in a Hover widget.
 
 ![img01](https://img.alicdn.com/tfs/TB1e1wYvEY1gK0jSZFCXXcwqXXa-1140-592.gif)
 
-### Auto complete
+### Code Completion
 
 When you input it will show key suggestions related to your config.
 

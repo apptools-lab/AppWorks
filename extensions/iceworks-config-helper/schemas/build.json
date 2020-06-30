@@ -7,11 +7,6 @@
     "plugins"
   ],
   "properties": {
-    "inlineStyle": {
-      "type": "boolean",
-      "description": "Whether to convert css to inline style when compiling.",
-      "default": false
-    },
     "publicPath": {
       "type": "string",
       "description": "The public URL of the output directory.",
