@@ -9,6 +9,22 @@ import findVariables, { IVariables } from './findVariables';
 let FUSION_VARIABLES: IVariables = {};
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
 
+
+// Cmd+Click jump to style definition
+function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
+  const { word, fileName } = getFocusCodeInfo(document, position);
+
+  if (!/^\$/.test(word)) return;
+
+  const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
+  if (matchedVariable) {
+    return new vscode.Location(
+      vscode.Uri.file(matchedVariable.filePath),
+      matchedVariable.position
+    );
+  }
+}
+
 // Show current variable on hover over
 function provideHover(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
@@ -37,6 +53,14 @@ function processFusionVariables() {
 
 export default function sassVariablesViewer(context: vscode.ExtensionContext): void {
   processFusionVariables();
+
+  // Cmd+Click jump to style definition
+  context.subscriptions.push(
+    vscode.languages.registerDefinitionProvider(
+      SUPPORT_LANGUAGES,
+      { provideDefinition }
+    )
+  );
 
   SUPPORT_LANGUAGES.forEach((language) => {
     // Set provideHover
