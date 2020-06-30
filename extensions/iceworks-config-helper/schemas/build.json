@@ -1,0 +1,267 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "The build.json Schema",
+  "required": [
+    "plugins"
+  ],
+  "properties": {
+    "inlineStyle": {
+      "type": "boolean",
+      "description": "Whether to convert css to inline style when compiling.",
+      "default": false
+    },
+    "publicPath": {
+      "type": "string",
+      "description": "The public URL of the output directory.",
+      "default": "/"
+    },
+    "devPublicPath": {
+      "type": "string",
+      "description": "The public URL of the dev server output directory.",
+      "default": "/"
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "The build file directory",
+      "default": "",
+      "examples": [
+        "build"
+      ]
+    },
+    "hash": {
+      "type": "boolean",
+      "description": "Whether each webpack build generates a unique hash",
+      "default": false
+    },
+    "alias": {
+      "type": "object",
+      "description": "Create aliases to import or require certain modules more easily.",
+      "default": {},
+      "examples": [
+        {
+          "@components": "src/components/"
+        }
+      ]
+    },
+    "devServer": {
+      "type": "object",
+      "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
+      "properties": {
+        "compress": {
+          "type": "boolean",
+          "description": "Enable gzip compression for everything served",
+          "default": false
+        },
+        "disableHostCheck": {
+          "type": "boolean",
+          "description": "When set to true this option bypasses host checking. THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks.",
+          "default": false
+        },
+        "clientLogLevel": {
+          "type": "string",
+          "description": "The the console in your DevTools will show different level messages.",
+          "default": "error",
+          "pattern": "^(info|silent|trace|debug|info|warn|error|none|warning)$"
+        },
+        "hot": {
+          "type": "boolean",
+          "description": "Enable webpack's Hot Module Replacement feature",
+          "default": false
+        },
+        "quiet": {
+          "type": "boolean",
+          "description": "With devServer.quiet enabled, nothing except the initial startup information will be written to the console.",
+          "default": false
+        },
+        "overlay": {
+          "type": "boolean",
+          "description": "Shows a full-screen overlay in the browser when there are compiler errors or warnings. If you want to show only compiler errors.",
+          "default": false
+        },
+        "port": {
+          "type": "integer",
+          "description": "Specify a port number to listen for requests on.",
+          "default": 9999
+        }
+      }
+    },
+    "plugins": {
+      "type": "array",
+      "description": "Compiler plugins",
+      "additionalItems": true,
+      "items": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "string",
+                "description": "Build Rax App",
+                "enum": [
+                  "build-plugin-rax-app"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "Platform targets",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "web",
+                        "weex",
+                        "miniapp",
+                        "wechat-miniprogram",
+                        "kraken"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "targets"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "string",
+                "description": "Rax PWA Plugin",
+                "enum": [
+                  "build-plugin-rax-pwa"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "snapshot": {
+                    "type": "boolean",
+                    "description": "Render element snapshot, see https://rax.js.org/docs/en-guide/pwa-snapshot",
+                    "default": false
+                  },
+                  "manifest": {
+                    "type": "object",
+                    "description": "Save to desktop, see https://rax.js.org/docs/en-guide/save-to-desktop",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "short_name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "background_color": {
+                        "type": "string"
+                      },
+                      "icon": {
+                        "type": "string"
+                      },
+                      "start_url": {
+                        "type": "string"
+                      },
+                      "display": {
+                        "type": "string",
+                        "default": "standalone"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "short_name",
+                      "description",
+                      "icon",
+                      "start_url"
+                    ]
+                  },
+                  "serviceWorker": {
+                    "type": "object",
+                    "description": "Control the cache through Service Worker for faster loading. see: https://rax.js.org/docs/en-guide/pwa-cache",
+                    "properties": {
+                      "cacheId": {
+                        "type": "string"
+                      },
+                      "skipWaiting": {
+                        "type": "boolean"
+                      },
+                      "clientsClaim": {
+                        "type": "boolean"
+                      },
+                      "preCacheUrlList": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "ignorePatternList": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "savedCachePatternList": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "unregister": {
+                        "type": "boolean"
+                      },
+                      "comboPattern": {
+                        "type": "string"
+                      },
+                      "comboSplitSeparator": {
+                        "type": "string"
+                      },
+                      "htmlLoadingTimeout": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "examples": [
+              [
+                "build-plugin-rax-pwa",
+                {
+                  "snapshot": false,
+                  "manifest": {
+                    "name": "",
+                    "short_name": "",
+                    "description": "",
+                    "icon": "",
+                    "start_url": ""
+                  },
+                  "serviceWorker": {
+                    "preCacheUrlList": []
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "type": "array"
+          },
+          {
+            "type": "string",
+            "examples": [
+              "build-plugin-rax-compat-react",
+              "build-plugin-rax-ssr",
+              "build-plugin-rax-multi-pages"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
