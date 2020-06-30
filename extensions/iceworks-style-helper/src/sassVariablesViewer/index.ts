@@ -9,8 +9,7 @@ import findVariables, { IVariables } from './findVariables';
 let FUSION_VARIABLES: IVariables = {};
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
 
-
-// Cmd+Click jump to style definition
+// Variable definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
 
@@ -38,6 +37,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   }
 }
 
+// Process fusion component. https://ice.work/docs/guide/advance/fusion
 function processFusionVariables() {
   const rootPath = vscode.workspace.rootPath || '';
   try {
@@ -54,7 +54,7 @@ function processFusionVariables() {
 export default function sassVariablesViewer(context: vscode.ExtensionContext): void {
   processFusionVariables();
 
-  // Cmd+Click jump to style definition
+  // Set definitionProvider
   context.subscriptions.push(
     vscode.languages.registerDefinitionProvider(
       SUPPORT_LANGUAGES,
