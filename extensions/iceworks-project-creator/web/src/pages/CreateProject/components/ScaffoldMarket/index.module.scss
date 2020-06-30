@@ -74,11 +74,11 @@
 }
 
 .cardTitle {
-  display: flex;
-  align-items: center;
+  display: inline-flex;
 
   img {
     margin-right: 5px;
+    vertical-align: baseline;
   }
   div {
     width: 100%;

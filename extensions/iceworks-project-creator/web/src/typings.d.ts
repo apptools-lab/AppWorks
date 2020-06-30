@@ -11,3 +11,4 @@ interface IVScode {
 declare const vscode: IVScode;
 
 declare module '*.svg';
+declare module '*.png';

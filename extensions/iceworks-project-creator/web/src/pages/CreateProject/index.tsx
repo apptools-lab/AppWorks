@@ -18,7 +18,6 @@ const CreateProject: React.FC = () => {
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
-  const [createProjectBtnDisabled, setCreateProjectBtnDisabled] = useState(false);
   const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
@@ -40,19 +39,17 @@ const CreateProject: React.FC = () => {
         <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
           <Form.Submit
-            type="primary"
-            onClick={onProjectDetailSubmit}
+            className={styles.btn}
+            onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
             validate
-            loading={createProjectLoading}
-            disabled={createProjectBtnDisabled}
+            disabled={createDEFProjectDisabled}
           >创建 DEF 应用</Form.Submit>
           <Form.Submit
             type="primary"
-            onClick={onProjectDetailSubmit}
+            onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
             validate
             loading={createProjectLoading}
-            disabled={createProjectBtnDisabled}
-          >{isAliInternal ? '下一步' : '完成'}</Form.Submit>
+          >完成</Form.Submit>
         </CreateProjectForm>
       )
     }
@@ -65,9 +62,6 @@ const CreateProject: React.FC = () => {
         <CreateDEFProjectForm
           value={curDEFProjectField}
           onChange={onDEFProjectFormChange}
-          skipCreateDEFProject={skipCreateDEFProject}
-          createProjectLoading={createProjectLoading}
-          createProjectBtnDisabled={createProjectBtnDisabled}
           errorMsg={DEFFormErrorMsg}
           onAccountBlur={onAccountBlur}
           onValidateProjectName={onValidateProjectName}
@@ -123,21 +117,21 @@ const CreateProject: React.FC = () => {
     setCurProjectField({ ...curProjectField, ...value })
   }
 
-  async function onProjectDetailSubmit(values: any, errors: any) {
+  async function onProjectDetailSubmit(values: any, errors: any, isCreateDEFProject: boolean) {
     setProjectFormErrorMsg('');
     if (errors) {
-      setCreateProjectLoading(false);
       return;
     }
     setCreateProjectLoading(true);
     setPrevBtnDisabled(true);
+    setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
         throw new Error('该本地路径已存在，请重新选择！');
       }
-      if (!isAliInternal) {
+      if (!isCreateDEFProject) {
         await createProject(values)
       } else {
         setCurProjectField(values);
@@ -150,6 +144,7 @@ const CreateProject: React.FC = () => {
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
+      setCreateDEFProjectDisabled(false);
     }
   };
 
@@ -174,23 +169,6 @@ const CreateProject: React.FC = () => {
     setCurDEFProjectField({ ...curDEFProjectField, ...value })
   }
 
-  async function skipCreateDEFProject() {
-    setDEFFormErrorMsg('');
-    setCreateProjectLoading(true);
-    setPrevBtnDisabled(true);
-    setCreateDEFProjectDisabled(true);
-    try {
-      await createProject(curProjectField);
-    } catch (e) {
-      Notification.error({ content: e.message });
-      setDEFFormErrorMsg(e.message);
-    } finally {
-      setCreateProjectLoading(false);
-      setPrevBtnDisabled(false);
-      setCreateDEFProjectDisabled(false);
-    }
-  }
-
   async function createProject(data: IProjectField) {
     const projectDir = await callService('project', 'createProject', data);
     const { projectPath } = data;
@@ -206,7 +184,6 @@ const CreateProject: React.FC = () => {
     }
     setCreateDEFProjectLoading(true);
     setPrevBtnDisabled(true);
-    setCreateProjectBtnDisabled(true);
     const { projectPath } = curProjectField as IProjectField;
     const { empId, account, gitlabToken } = values;
     let projectDir = '';
@@ -220,7 +197,6 @@ const CreateProject: React.FC = () => {
       setDEFFormErrorMsg(e.message);
     } finally {
       setPrevBtnDisabled(false);
-      setCreateProjectBtnDisabled(false);
       setCreateDEFProjectLoading(false);
     }
   }
@@ -242,6 +218,7 @@ const CreateProject: React.FC = () => {
     const sources = await getMaterialSources();
     setMaterialSources(sources);
   }
+
   useEffect(() => {
     async function checkAliInternal() {
       try {

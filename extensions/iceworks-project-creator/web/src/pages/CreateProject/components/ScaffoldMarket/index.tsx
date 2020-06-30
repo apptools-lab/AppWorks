@@ -86,13 +86,13 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                 key={item.name}
                 title={
                   <div className={styles.cardTitle}>
-                    {<img src={require(`@/assets/${item.type ? item.type.toLocaleLowerCase() : 'default'}.svg`)} alt="frameworkType" width={30} height={30} />}
+                    {<img src={require(`@/assets/${item.type ? item.type.toLocaleLowerCase() + '.svg' : 'logo.png'}`)} alt="frameworkType" width={25} height={25} />}
                     <div >{item.name}</div>
                   </div>
                 }
-                content={<div className={styles.userSelect}>{item.description}</div>}
+                content={item.description}
                 selected={selectedSource.name && selectedSource.name === item.name}
-                style={{ width: 160, height: 100 }}
+                style={{ width: 160, height: 110 }}
                 onClick={() => onMaterialSourceClick(item)}
               />
             ))}

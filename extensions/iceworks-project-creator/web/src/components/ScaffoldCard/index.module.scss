@@ -32,6 +32,10 @@
     -webkit-line-clamp: 3;
     width: 100%;
   }
+
+  &:hover {
+    @extend .active;
+  }
 }
 
 .active {
