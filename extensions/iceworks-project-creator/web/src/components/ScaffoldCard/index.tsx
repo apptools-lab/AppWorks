@@ -28,7 +28,7 @@ const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, 
         </Card.Media>
         <Card.Header title={title} />
         <Card.Content>
-          {content}
+          <div className={styles.content}>{content}</div>
         </Card.Content>
       </Card>
     </div>

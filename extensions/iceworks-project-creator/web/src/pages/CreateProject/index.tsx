@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Step, Button, Notification, Icon } from '@alifd/next';
+import { Card, Form, Button, Notification, Icon } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
+import { IMaterialSource } from '@iceworks/material-utils';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -22,12 +23,13 @@ const CreateProject: React.FC = () => {
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
   const [groupDataSource, setGroupDataSource] = useState([]);
+  const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const existProjectsRef = useRef([]);
   const steps = [
     {
       title: '选择模板',
       content: (
-        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel}>
+        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
           <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
         </ScaffoldMarket>
       )
@@ -37,6 +39,13 @@ const CreateProject: React.FC = () => {
       content: (
         <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+          <Form.Submit
+            type="primary"
+            onClick={onProjectDetailSubmit}
+            validate
+            loading={createProjectLoading}
+            disabled={createProjectBtnDisabled}
+          >创建 DEF 应用</Form.Submit>
           <Form.Submit
             type="primary"
             onClick={onProjectDetailSubmit}
@@ -224,6 +233,15 @@ const CreateProject: React.FC = () => {
     }
   }
 
+  async function getMaterialSources() {
+    const materialSources: any = await callService('material', 'getSources') as IMaterialSource[];
+    setMaterialSources(materialSources);
+    return materialSources;
+  }
+  async function refreshMaterialSources() {
+    const sources = await getMaterialSources();
+    setMaterialSources(sources);
+  }
   useEffect(() => {
     async function checkAliInternal() {
       try {
@@ -251,7 +269,12 @@ const CreateProject: React.FC = () => {
         // ignore
       }
     }
+    async function initMaterialSources() {
+      const materialSources = await getMaterialSources();
+      setMaterialSources(materialSources);
+    }
     const isAliInternal = checkAliInternal();
+    initMaterialSources();
     setDefaultFields(isAliInternal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -259,14 +282,15 @@ const CreateProject: React.FC = () => {
     <Card free>
       <Card.Content className={styles.cardContent}>
         <div className={styles.header}>
-          <span className={styles.headerTitle}>创建应用</span>
-          <Button text onClick={onOpenConfigPanel}><Icon type="set" />设置</Button>
+          <div>
+            <div className={styles.title}>创建应用</div>
+            <div className={styles.subTitle}>海量可复用物料，搭配研发套件极速构建多端应用。</div>
+          </div>
+          <div className={styles.headerBtns}>
+            <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
+            {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
+          </div>
         </div>
-        <Step current={currentStep} shape="circle" className={styles.step} readOnly>
-          {steps.map((step) => (
-            <Step.Item key={step.title} title={step.title} />
-          ))}
-        </Step>
         <div className={styles.content}>{steps[currentStep].content}</div>
       </Card.Content>
     </Card>

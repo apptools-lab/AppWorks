@@ -1,32 +1,37 @@
-.form {
-  width: 400px;
-  margin: 0 auto 24px;
-  display: flex;
-  flex-direction: column;
-}
-.tip {
-  margin-bottom: 20px;
-}
+.container {
+  width: 100%;
+  position: relative;
 
-.help {
-  font-size: 12px;
-}
+  .tip {
+    height: 50px;
+    width: 400px;
+    margin: 0 auto;
 
-.action {
-  margin-top: 30px;
-  width: 400px;
-  display: flex;
-  justify-content: center;
-}
-
-.btn {
-  &:hover {
-    color: $color-notice-4 !important;
+    .btn {
+      &:hover {
+        color: $color-notice-4 !important;
+      }
+    }
   }
-}
+  .form {
+    width: 400px;
+    margin: 0 auto;
+    height: calc(100vh - 160px);
 
-.errorMsg {
-  width: 400px;
-  font-size: 13px;
-  color: red;
+    .help {
+      font-size: 12px;
+    }
+
+    .errorMsg {
+      width: 400px;
+      font-size: 13px;
+      color: red;
+    }
+  }
+
+  .action {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }

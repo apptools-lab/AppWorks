@@ -1,13 +1,14 @@
 .container {
   width: 100%;
-  max-width: 90vw;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 160px);
+  position: relative;
 
   .content {
     display: flex;
     justify-content: flex-start;
-    height: calc(100vh - 250px);
+    height: calc(100vh - 200px);
 
     .scaffoldsSource {
       width: 200px;
@@ -18,10 +19,6 @@
         position: absolute;
         top: 0;
         right: 25px;
-      }
-
-      .sourcesList {
-        margin-top: 25px;
       }
 
       .addSource {
@@ -36,6 +33,7 @@
     .scaffolds {
       width: calc(100% - 170px);
       overflow-y: auto;
+      margin-left: 10px;
 
       .loading {
         width: 100%;
@@ -46,7 +44,6 @@
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        margin-left: 10px;
       }
 
       .collapse {
@@ -70,21 +67,24 @@
   }
 
   .action {
-    margin-top: 15px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 
-.userSelect {
-  user-select: none;
-}
-
 .cardTitle {
-  margin-left: 5px;
-}
+  display: flex;
+  align-items: center;
 
-.cardProjectType {
-  vertical-align: middle;
+  img {
+    margin-right: 5px;
+  }
+  div {
+    width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
 }

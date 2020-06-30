@@ -1,9 +1,9 @@
 .successIcon {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 3px;
+  top: 3px;
 }
 
 .card {
@@ -11,8 +11,7 @@
   width: 200px;
   height: 300px;
   border: 1px solid $color-fill1-4;
-  border-radius: 5px;
-  margin: 10px;
+  margin: 0 10px 20px 10px;
   cursor: pointer;
   position: relative;
   background-color: white;
@@ -44,6 +43,7 @@
     .content {
       margin: 100px 20px 0;
       width: 100%;
+      user-select: none;
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
