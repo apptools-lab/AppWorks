@@ -41,7 +41,7 @@ function getClassNames(filePath: string): string[] {
   const reg = new RegExp('className="([\\w- ]+)"', 'g');
 
   let classNames: string[] = [];
-  let matched: RegExpExecArray | null;;
+  let matched: RegExpExecArray | null;
 
   // eslint-disable-next-line
   while ((matched = reg.exec(code)) !== null) {
