@@ -10,7 +10,7 @@ interface ICreateDEFProjectFormProps {
   dataSource: IGitLabGroup[];
   onChange: (value: IDEFProjectField) => void;
   onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onValidateProjectName: (rule: object, value: string, callback: (errors: string) => void) => any;
+  onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({

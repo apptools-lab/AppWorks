@@ -137,7 +137,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                     const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
                       tsScaffoldsList.includes(item.source.npm) ? 'js' :
                         '';
-                    const isRax = selectedSource.type === 'rax';
+                    const isRax = selectedSource.toLocaleLowerCase() === 'rax';
                     const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
                     return (
                       <CardComponent
@@ -157,10 +157,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                   })}
                 </div>
               </Collapse.Panel>
-            </Collapse>
-            }
-          </>
-          }
+            </Collapse>}
+          </>}
         </div>
       </div>
       <div className={styles.action}>
