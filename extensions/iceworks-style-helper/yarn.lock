@@ -147,6 +147,14 @@ css@^2.2.4:
     source-map-resolve "^0.5.2"
     urix "^0.1.0"
 
+datauri@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/datauri/download/datauri-2.0.0.tgz#ff0ee23729935a6bcc81f301621bed3e692bf3c7"
+  integrity sha1-/w7iNymTWmvMgfMBYhvtPmkr88c=
+  dependencies:
+    image-size "^0.7.3"
+    mimer "^1.0.0"
+
 debug@^4.1.0:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/debug/download/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
@@ -173,6 +181,11 @@ has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/has-flag/download/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
   integrity sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
+
+image-size@^0.7.3:
+  version "0.7.5"
+  resolved "https://registry.npm.taobao.org/image-size/download/image-size-0.7.5.tgz#269f357cf5797cb44683dfa99790e54c705ead04"
+  integrity sha1-Jp81fPV5fLRGg9+pl5DlTHBerQQ=
 
 inherits@^2.0.3:
   version "2.0.4"
@@ -213,6 +226,11 @@ lodash@^4.17.13:
   version "4.17.15"
   resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+
+mimer@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/mimer/download/mimer-1.1.0.tgz#2cb67f7093998e772a0e62c090f77daa1b8a2dbe"
+  integrity sha1-LLZ/cJOZjncqDmLAkPd9qhuKLb4=
 
 ms@^2.1.1:
   version "2.1.2"
@@ -256,6 +274,11 @@ supports-color@^5.3.0:
   integrity sha1-4uaaRKyHcveKHsCzW2id9lMO/I8=
   dependencies:
     has-flag "^3.0.0"
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

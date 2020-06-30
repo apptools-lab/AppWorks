@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getFullModulePath from './getFullModulePath';
+import colorPreviewDisplay from './colorPreviewDisplay';
 import findVariables, { IVariables } from './findVariables';
 
 let FUSION_VARIABLES: IVariables = {};
@@ -10,14 +11,14 @@ const SUPPORT_LANGUAGES = ['scss', 'sass'];
 
 // Show current variable on hover over
 function provideHover(document: vscode.TextDocument, position: vscode.Position) {
-  const { line, word, fileName, directory } = getFocusCodeInfo(document, position);
+  const { word, fileName } = getFocusCodeInfo(document, position);
 
   if (!/^\$/.test(word)) return;
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
-    return new vscode.Hover(`\`\`\`css \n${word}:${matchedVariable.value};\n \`\`\`\``);
+    return new vscode.Hover(`### Sass variable \n **${word}**: ${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value};`);
   }
 }
 

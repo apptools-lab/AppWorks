@@ -47,7 +47,9 @@
     "@babel/parser": "^7.10.3",
     "@babel/traverse": "^7.10.3",
     "css": "^2.2.4",
+    "datauri": "^2.0.0",
     "line-column": "^1.0.2",
+    "tinycolor2": "^1.4.1",
     "vscode-web-custom-data": "^0.1.4"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md",
