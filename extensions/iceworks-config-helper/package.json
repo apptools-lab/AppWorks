@@ -1,0 +1,38 @@
+{
+	"name": "iceworks-config-helper",
+	"displayName": "Iceworks Config Helper",
+	"description": "Easily write Config files in icejs && raxapp",
+  "publisher": "iceworks-team",
+	"version": "0.1.0",
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"categories": [
+		"Other"
+	],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "config",
+    "raxjs",
+    "icejs"
+  ],
+	"icon": "assets/logo.png",
+	"contributes": {
+		"jsonValidation": [
+			{
+				"fileMatch": "build.json",
+				"url": "./schemas/build.json"
+			}
+		]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-config-helper/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
+}
