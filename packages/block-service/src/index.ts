@@ -9,7 +9,7 @@ import { getTarballURLByMaterielSource, IMaterialBlock, IMaterialBase, IMaterial
 import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
 import { createNpmCommand, CONFIGURATION_KEY_PCKAGE_MANAGER, getDataFromSettingJson } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
-import { pagesPath, componentDirName, dependencyDir, packageJSONFilename } from './utils/constant';
+import { pagesPath, componentDirName, dependencyDir, packageJSONFilename, templateExtnames } from './utils/constant';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
 import checkTemplate from './utils/checkTemplate';
@@ -19,8 +19,6 @@ import getTagTemplate from './utils/getTagTemplate';
 import getImportInfos from './utils/getImportInfos';
 
 const { window, Position } = vscode;
-
-const templateExtnames: string[] = ['.jsx', '.tsx', '.js'];
 
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
@@ -249,7 +247,7 @@ export async function addComponent(dataSource: IMaterialComponent) {
 export async function addBase(dataSource: IMaterialBase) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
   const { activeTextEditor } = window;
-
+  console.log("window activateTextEditor =====>", vscode.window)
   if (!activeTextEditor) {
     // componentProxy.showError(templateError);
     // return;
@@ -351,4 +349,11 @@ export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName
       );
     }
   });
+}
+
+export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
+  console.log('setActiveTextEditorId: run');
+
+  const stateKey = 'iceworks.activeTextEditorId';
+  globalState.update(stateKey, id);
 }

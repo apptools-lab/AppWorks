@@ -8,3 +8,4 @@ export const pagesPath = path.join(projectPath, 'src', 'pages');
 export const componentDirName = 'components';
 export const dependencyDir = 'node_modules';
 export const packageJSONFilename = 'package.json';
+export const templateExtnames = ['.jsx', '.tsx', '.js'];

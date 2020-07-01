@@ -1,15 +1,15 @@
 import * as vscode from 'vscode';
-import { IImponrtDeclarations, getImportDeclarations } from './getImportDeclarations';
+import { IImportDeclarations, getImportDeclarations } from './getImportDeclarations';
 
 const { Position } = vscode;
 
 export interface IImportInfos {
   position: vscode.Position;
-  declarations: IImponrtDeclarations[];
+  declarations: IImportDeclarations[];
 };
 
 export default async function getImportInfos(text: string): Promise<IImportInfos> {
-  const importDeclarations: IImponrtDeclarations[] = await getImportDeclarations(text);
+  const importDeclarations: IImportDeclarations[] = await getImportDeclarations(text);
 
   const length = importDeclarations.length;
   let position;

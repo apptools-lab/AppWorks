@@ -16,7 +16,7 @@ interface IConfig {
 }
 
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
-  const { extensionPath, subscriptions } = context;
+  const { extensionPath } = context;
   const { title, services } = config;
 
   const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', title, ViewColumn.One, {
@@ -24,10 +24,11 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
     retainContextWhenHidden: false,
   });
   webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-  connectService(webviewPanel.webview, subscriptions, services);
+  connectService(webviewPanel.webview, context, services);
 }
 
-export function connectService(webview, subscriptions, { services, logger }) {
+export function connectService(webview, context: vscode.ExtensionContext, { services, logger }) {
+  const { subscriptions } = context;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -38,9 +39,9 @@ export function connectService(webview, subscriptions, { services, logger }) {
         try {
           logger.record({
             module: service,
-            action:method,
+            action: method,
           });
-          const result = args ? await api(...args) : await api();
+          const result = args ? await api(...args, context) : await api(context);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {

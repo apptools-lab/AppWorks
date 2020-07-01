@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, { services, logger });
+    connectService(webviewPanel.webview, context, { services, logger });
   }
 
   subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {

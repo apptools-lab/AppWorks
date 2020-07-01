@@ -42,7 +42,7 @@ export async function getImportDeclarations(content: string): Promise<IImportDec
 
     traverse(ast, {
       ImportDeclaration: ({ node }) => {
-        importDeclarations.push(node);
+        importDeclarations.push(node as any);
       },
     });
   } catch (error) {

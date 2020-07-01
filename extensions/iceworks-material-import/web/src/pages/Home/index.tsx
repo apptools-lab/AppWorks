@@ -35,8 +35,12 @@ const MaterialsPane: React.FC<any> = () => {
 
   }
 
-  const onBaseClick = (base: IMaterialBase) => {
-
+  const onBaseClick = async (base: IMaterialBase) => {
+    try {
+      await callService('block', 'addBase', base);
+    } catch (e) {
+      Notification.error({ content: e.message })
+    }
   }
   return (
     <Material

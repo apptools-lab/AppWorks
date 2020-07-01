@@ -29,13 +29,29 @@ export function activate(context: vscode.ExtensionContext) {
     ? ViewColumn.Beside
     : ViewColumn.One;
 
+  // if (vscode.window.activeTextEditor) {
+  //   console.log('trigger editor ===>>', vscode.window.activeTextEditor.selection.active);
+  // }
+
+  vscode.window.onDidChangeActiveTextEditor(
+    editor => {
+      // if (editor) {
+      //   console.log('trigger change editor  ===>>', editor);
+      // }
+      // save active text editor id to localstorage
+
+    },
+    null,
+    context.subscriptions
+  );
+
   function activeWebview() {
     const webviewPanel = window.createWebviewPanel('iceworks', '导入物料', columnToShowIn, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, { services, logger });
+    connectService(webviewPanel.webview, context, { services, logger });
   }
   subscriptions.push(vscode.commands.registerCommand('iceworks-material-import.start', function () {
     activeWebview();
