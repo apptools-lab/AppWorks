@@ -6,7 +6,7 @@ import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, tsScaffoldsList } from '@/constant';
+import { mainScaffoldsList, tsScaffoldsList, projectTypes } from '@/constant';
 import styles from './index.module.scss';
 
 const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materialSources }) => {
@@ -81,12 +81,13 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
       <div className={styles.content}>
         <div className={styles.scaffoldsSource}>
           <div className={styles.sourcesList}>
-            {materialSources && materialSources.map(item => (
-              <ScaffoldCard
+            {materialSources && materialSources.map(item => {
+              const projectType = item.type.toLocaleLowerCase();
+              return <ScaffoldCard
                 key={item.name}
                 title={
                   <div className={styles.cardTitle}>
-                    {<img src={require(`@/assets/${item.type ? item.type.toLocaleLowerCase() + '.svg' : 'logo.png'}`)} alt="frameworkType" width={25} height={25} />}
+                    {<img src={require(`@/assets/${projectTypes.includes(projectType) ? projectType + '.svg' : 'logo.png'}`)} alt="projectType" width={25} height={25} />}
                     <div >{item.name}</div>
                   </div>
                 }
@@ -95,7 +96,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                 style={{ width: 160, height: 110 }}
                 onClick={() => onMaterialSourceClick(item)}
               />
-            ))}
+            })}
           </div>
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}><Icon type="add" /></Button>
@@ -116,7 +117,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                     key={item.name}
                     title={
                       <div className={styles.cardTitle}>
-                        {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="projectType" width={20} height={20} />}
+                        {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
                         <div>{item.title.replace(' - TS', '')}</div>
                       </div>
                     }
@@ -144,7 +145,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                         key={item.name}
                         title={
                           <div className={styles.cardTitle}>
-                            {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="projectType" width={20} height={20} />}
+                            {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
                             <div>{item.title.replace(' - JS', '')}</div>
                           </div>
                         }

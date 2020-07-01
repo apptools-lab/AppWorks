@@ -14,3 +14,5 @@ export const jsScaffoldsList = [
   '@alifd/fusion-design-pro-js',
   '@alifd/scaffold-lite-js'
 ]
+
+export const projectTypes = ['react', 'rax', 'vue'];
