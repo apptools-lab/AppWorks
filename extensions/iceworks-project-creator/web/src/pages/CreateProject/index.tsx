@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Step, Button, Notification, Icon } from '@alifd/next';
+import { Card, Form, Button, Notification, Icon } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
+import { IMaterialSource } from '@iceworks/material-utils';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -17,17 +18,17 @@ const CreateProject: React.FC = () => {
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
-  const [createProjectBtnDisabled, setCreateProjectBtnDisabled] = useState(false);
   const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
   const [groupDataSource, setGroupDataSource] = useState([]);
+  const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const existProjectsRef = useRef([]);
   const steps = [
     {
       title: '选择模板',
       content: (
-        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel}>
+        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
           <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
         </ScaffoldMarket>
       )
@@ -38,12 +39,17 @@ const CreateProject: React.FC = () => {
         <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
           <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
           <Form.Submit
+            className={styles.btn}
+            onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
+            validate
+            disabled={createDEFProjectDisabled}
+          >创建 DEF 应用</Form.Submit>
+          <Form.Submit
             type="primary"
-            onClick={onProjectDetailSubmit}
+            onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
             validate
             loading={createProjectLoading}
-            disabled={createProjectBtnDisabled}
-          >{isAliInternal ? '下一步' : '完成'}</Form.Submit>
+          >完成</Form.Submit>
         </CreateProjectForm>
       )
     }
@@ -56,9 +62,6 @@ const CreateProject: React.FC = () => {
         <CreateDEFProjectForm
           value={curDEFProjectField}
           onChange={onDEFProjectFormChange}
-          skipCreateDEFProject={skipCreateDEFProject}
-          createProjectLoading={createProjectLoading}
-          createProjectBtnDisabled={createProjectBtnDisabled}
           errorMsg={DEFFormErrorMsg}
           onAccountBlur={onAccountBlur}
           onValidateProjectName={onValidateProjectName}
@@ -114,21 +117,21 @@ const CreateProject: React.FC = () => {
     setCurProjectField({ ...curProjectField, ...value })
   }
 
-  async function onProjectDetailSubmit(values: any, errors: any) {
+  async function onProjectDetailSubmit(values: any, errors: any, isCreateDEFProject: boolean) {
     setProjectFormErrorMsg('');
     if (errors) {
-      setCreateProjectLoading(false);
       return;
     }
     setCreateProjectLoading(true);
     setPrevBtnDisabled(true);
+    setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
         throw new Error('该本地路径已存在，请重新选择！');
       }
-      if (!isAliInternal) {
+      if (!isCreateDEFProject) {
         await createProject(values)
       } else {
         setCurProjectField(values);
@@ -141,6 +144,7 @@ const CreateProject: React.FC = () => {
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
+      setCreateDEFProjectDisabled(false);
     }
   };
 
@@ -165,23 +169,6 @@ const CreateProject: React.FC = () => {
     setCurDEFProjectField({ ...curDEFProjectField, ...value })
   }
 
-  async function skipCreateDEFProject() {
-    setDEFFormErrorMsg('');
-    setCreateProjectLoading(true);
-    setPrevBtnDisabled(true);
-    setCreateDEFProjectDisabled(true);
-    try {
-      await createProject(curProjectField);
-    } catch (e) {
-      Notification.error({ content: e.message });
-      setDEFFormErrorMsg(e.message);
-    } finally {
-      setCreateProjectLoading(false);
-      setPrevBtnDisabled(false);
-      setCreateDEFProjectDisabled(false);
-    }
-  }
-
   async function createProject(data: IProjectField) {
     const projectDir = await callService('project', 'createProject', data);
     const { projectPath } = data;
@@ -197,7 +184,6 @@ const CreateProject: React.FC = () => {
     }
     setCreateDEFProjectLoading(true);
     setPrevBtnDisabled(true);
-    setCreateProjectBtnDisabled(true);
     const { projectPath } = curProjectField as IProjectField;
     const { empId, account, gitlabToken } = values;
     let projectDir = '';
@@ -211,7 +197,6 @@ const CreateProject: React.FC = () => {
       setDEFFormErrorMsg(e.message);
     } finally {
       setPrevBtnDisabled(false);
-      setCreateProjectBtnDisabled(false);
       setCreateDEFProjectLoading(false);
     }
   }
@@ -222,6 +207,16 @@ const CreateProject: React.FC = () => {
     } catch (e) {
       Notification.error({ content: e.message });
     }
+  }
+
+  async function getMaterialSources() {
+    const materialSources: any = await callService('material', 'getSources') as IMaterialSource[];
+    setMaterialSources(materialSources);
+    return materialSources;
+  }
+  async function refreshMaterialSources() {
+    const sources = await getMaterialSources();
+    setMaterialSources(sources);
   }
 
   useEffect(() => {
@@ -251,7 +246,12 @@ const CreateProject: React.FC = () => {
         // ignore
       }
     }
+    async function initMaterialSources() {
+      const materialSources = await getMaterialSources();
+      setMaterialSources(materialSources);
+    }
     const isAliInternal = checkAliInternal();
+    initMaterialSources();
     setDefaultFields(isAliInternal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -259,14 +259,15 @@ const CreateProject: React.FC = () => {
     <Card free>
       <Card.Content className={styles.cardContent}>
         <div className={styles.header}>
-          <span className={styles.headerTitle}>创建应用</span>
-          <Button text onClick={onOpenConfigPanel}><Icon type="set" />设置</Button>
+          <div>
+            <div className={styles.title}>创建应用</div>
+            <div className={styles.subTitle}>海量可复用物料，搭配研发套件极速构建多端应用。</div>
+          </div>
+          <div className={styles.headerBtns}>
+            <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
+            {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
+          </div>
         </div>
-        <Step current={currentStep} shape="circle" className={styles.step} readOnly>
-          {steps.map((step) => (
-            <Step.Item key={step.title} title={step.title} />
-          ))}
-        </Step>
         <div className={styles.content}>{steps[currentStep].content}</div>
       </Card.Content>
     </Card>

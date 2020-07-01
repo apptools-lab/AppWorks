@@ -1,17 +1,19 @@
 .successIcon {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 3px;
+  top: 3px;
 }
 
 .card {
+  width: 190px;
+  height: 230px;
   border: 1px solid $color-fill1-4;
-  border-radius: 3px;
-  margin: 10px;
+  margin: 0 10px 20px 10px;
   cursor: pointer;
   position: relative;
+
   :global {
     .next-card-header {
       margin: 10px 0;
@@ -20,6 +22,19 @@
       padding-bottom: 10px;
       margin-top: 10px;
     }
+  }
+
+  .content {
+    user-select: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    width: 100%;
+  }
+
+  &:hover {
+    @extend .active;
   }
 }
 
