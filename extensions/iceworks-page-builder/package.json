@@ -31,11 +31,11 @@
     "commands": [
       {
         "command": "iceworks-page-builder.create",
-        "title": "iceworks: Create Page"
+        "title": "Iceworks: Create Page"
       }
     ],
     "configuration": {
-      "title": "Iceworks App",
+      "title": "Iceworks Page Builder",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

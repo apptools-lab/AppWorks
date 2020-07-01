@@ -23,16 +23,15 @@ English | [简体中文](./README.md)
 
 Use Iceworks to develop Universal Application quickly:
 
-1. Open [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) in VS Code Marketplace
-2. Click the ["install"](vscode:extension/iceworks-team.iceworks) button on page
-3. Allow browser to open VS Code
-4. click "Install" on the Iceworks pack page of VS Code
+- Click "Shop Icon" on Activity Bar of VS Code
+- Enter "iceworks" in the input box to search
+- Click the Install button on the first iceworks option
 
-![install demo](https://img.alicdn.com/tfs/TB1XSy3a8Bh1e4jSZFhXXcC9VXa-960-600.gif)
+![install demo](https://img.alicdn.com/tfs/TB1Bm.kaCR26e4jSZFEXXbwuXXa-1024-766.gif)
 
-After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code interface to start:
+After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start:
 
-![Iceworks](https://img.alicdn.com/tfs/TB14Sp0LRr0gK0jSZFnXXbRRXXa-2880-1754.png)
+![Iceworks](https://img.alicdn.com/tfs/TB1gQcRL4v1gK0jSZFFXXb0sXXa-1024-766.gif)
 
 See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
 
