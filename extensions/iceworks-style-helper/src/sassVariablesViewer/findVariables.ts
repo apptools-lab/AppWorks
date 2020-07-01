@@ -11,8 +11,9 @@ const SASS_IMPORT_REG = /@import([^;]+);/g;
 export interface IVariables {
   [key: string]: {
     value: string;
-    filePath: string;
-    position: vscode.Position;
+    // For DefinitionProvider locate sass variable
+    filePath: string; 
+    position: vscode.Position; 
   };
 }
 

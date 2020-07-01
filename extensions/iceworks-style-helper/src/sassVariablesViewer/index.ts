@@ -6,17 +6,20 @@ import getFullModulePath from './getFullModulePath';
 import colorPreviewDisplay from './colorPreviewDisplay';
 import findVariables, { IVariables } from './findVariables';
 
-let FUSION_VARIABLES: IVariables = {};
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
+// Fusion sass variables. https://ice.work/docs/guide/advance/fusion
+let FUSION_VARIABLES: IVariables = {};
 
+// Markdown for key and value
 function getMarkdownInfo(key: string, value: string): string {
-  return `### Sass variable \n **${key}**: ${value};`;
+  return `### Iceworks Style Helper \n **${key}**: ${value}; \n `;
 }
 
 // Variable definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
 
+  // Sass variable start with $
   if (!/^\$/.test(word)) return;
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
@@ -32,6 +35,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 function provideHover(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
 
+  // Sass variable start with $
   if (!/^\$/.test(word)) return;
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
@@ -40,6 +44,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
     return new vscode.Hover(
       getMarkdownInfo(
         word,
+        // Show color preview display
         `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`
       )
     );
@@ -54,10 +59,11 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
+    // Show color preview display
     const variableValueText = `${colorPreviewDisplay(variableValue)}${variableValue}`;
 
     const completionItem = new vscode.CompletionItem(variable, vscode.CompletionItemKind.Variable);
-    
+
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
 
@@ -68,10 +74,11 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
 // Process fusion component. https://ice.work/docs/guide/advance/fusion
 function processFusionVariables() {
-  const rootPath = vscode.workspace.rootPath || '';
   try {
+    const rootPath = vscode.workspace.rootPath || '';
     const buildConfig = JSON.parse(fs.readFileSync(path.join(rootPath, 'build.json'), 'utf-8'));
     const fusionConfig = buildConfig.plugins.find(plugin => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion');
+    // Get themePackage config from build.json
     if (fusionConfig[1].themePackage) {
       FUSION_VARIABLES = findVariables(getFullModulePath(`~${fusionConfig[1].themePackage} `));
     }

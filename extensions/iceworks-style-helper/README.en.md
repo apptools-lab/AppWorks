@@ -20,6 +20,10 @@ Automatic completion When editing the 'style' name of a component in a JSX file,
 
 ![demo](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
 
+Automatic completion When editing the SASS variables. Preview SASS variables when hover. Use `cmd + click`  (Windows: `ctrl + click`) jump to the identifier under the cursor.
+
+![demo](https://img.alicdn.com/tfs/TB1RA_ZMeL2gK0jSZPhXXahvXXa-900-535.gif)
+
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

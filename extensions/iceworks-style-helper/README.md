@@ -20,6 +20,10 @@
 
 ![使用示例](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
 
+在 SASS 文件中编辑变量时给予补全提醒。鼠标悬停在对应 SASS 变量上时，可预览变量值，可通过 `cmd + 点击`（ Windows: `ctrl + 点击` ）跳转：
+
+![使用示例](https://img.alicdn.com/tfs/TB1RA_ZMeL2gK0jSZPhXXahvXXa-900-535.gif)
+
 ## 更多
 
 访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
