@@ -20,6 +20,8 @@ import getImportInfos from './utils/getImportInfos';
 
 const { window, Position } = vscode;
 
+const ACTIVE_TEXT_EDITOR_ID_STATE_KEY = 'iceworks.activeTextEditorId';
+
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
 
@@ -244,10 +246,13 @@ export async function addComponent(dataSource: IMaterialComponent) {
   terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
 }
 
-export async function addBase(dataSource: IMaterialBase) {
+export async function addBase(dataSource: IMaterialBase, context: vscode.ExtensionContext) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
-  const { activeTextEditor } = window;
-  console.log("window activateTextEditor =====>", vscode.window)
+  const { visibleTextEditors } = window;
+  const { globalState } = context;
+  const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
+  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
+  console.log('window activateTextEditor:', activeTextEditor);
   if (!activeTextEditor) {
     // componentProxy.showError(templateError);
     // return;
@@ -354,6 +359,5 @@ export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName
 export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
   console.log('setActiveTextEditorId: run');
 
-  const stateKey = 'iceworks.activeTextEditorId';
-  globalState.update(stateKey, id);
+  globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
 }

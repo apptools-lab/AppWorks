@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
+import { setActiveTextEditorId } from '@iceworks/block-service';
 import services from './services/index';
 
 // eslint-disable-next-line
@@ -29,17 +30,14 @@ export function activate(context: vscode.ExtensionContext) {
     ? ViewColumn.Beside
     : ViewColumn.One;
 
-  // if (vscode.window.activeTextEditor) {
-  //   console.log('trigger editor ===>>', vscode.window.activeTextEditor.selection.active);
-  // }
-
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
-      // if (editor) {
-      //   console.log('trigger change editor  ===>>', editor);
-      // }
-      // save active text editor id to localstorage
-
+      if (editor) {
+        // save active text editor id to localstorage
+        const { id } = editor as any;
+        console.log('activeTextEditor Id', id);
+        setActiveTextEditorId(globalState, id);
+      }
     },
     null,
     context.subscriptions
