@@ -6,8 +6,10 @@ import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, tsScaffoldsList, projectTypes } from '@/constant';
+import { mainScaffoldsList, tsScaffoldsList } from '@/constant';
 import styles from './index.module.scss';
+
+const projectTypes = ['react', 'rax', 'vue'];
 
 const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materialSources }) => {
   const [selectedSource, setSelectedSource] = useState<any>({});
@@ -138,7 +140,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                     const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
                       tsScaffoldsList.includes(item.source.npm) ? 'js' :
                         '';
-                    const isRax = selectedSource.toLocaleLowerCase() === 'rax';
+                    const isRax = selectedSource.type.toLocaleLowerCase() === 'rax';
                     const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
                     return (
                       <CardComponent
