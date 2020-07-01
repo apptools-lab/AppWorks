@@ -17,14 +17,14 @@ const MaterialsPane: React.FC<any> = () => {
   }
 
   async function getData(source: string): Promise<IMaterialData> {
-    let data = {} as IMaterialData;
+    let data = {};
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
       Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
     }
     console.log('getData', data);
-    return data;
+    return data as IMaterialData;
   }
 
   const onComponentClick = (component: IMaterialComponent) => {
@@ -46,7 +46,7 @@ const MaterialsPane: React.FC<any> = () => {
       onBlockClick={onBlockClick}
       onBaseClick={onBaseClick}
       onComponentClick={onComponentClick}
-      dataWhiteList={['bases', 'blocks', 'components',]}
+      dataWhiteList={['bases', 'blocks', 'components']}
     />
   )
 }
