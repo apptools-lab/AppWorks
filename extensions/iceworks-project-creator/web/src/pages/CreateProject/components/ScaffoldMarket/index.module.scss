@@ -81,10 +81,9 @@
     vertical-align: baseline;
   }
   div {
-    width: 100%;
+    width: 160px;
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

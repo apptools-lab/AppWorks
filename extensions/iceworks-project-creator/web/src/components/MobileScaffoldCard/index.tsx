@@ -24,7 +24,7 @@ const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({ title, content
       >
         {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
         <Card.Media>
-          {media && <img height={230} src={media} alt="screenshot" className={styles.media} />}
+          {media && <img src={media} alt="screenshot" className={styles.media} />}
         </Card.Media>
         <Card.Header title={title} />
         <div className={styles.mark}><div className={styles.content}>{content}</div></div>
