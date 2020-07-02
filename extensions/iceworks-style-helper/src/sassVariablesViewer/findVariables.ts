@@ -12,8 +12,8 @@ export interface IVariables {
   [key: string]: {
     value: string;
     // For DefinitionProvider locate sass variable
-    filePath: string; 
-    position: vscode.Position; 
+    filePath: string;
+    position: vscode.Position;
   };
 }
 
@@ -29,15 +29,18 @@ export default function findVariables(targetPath: string): IVariables {
       // eslint-disable-next-line
       while ((variableMatched = VARIABLES_DECLARE_REG.exec(code)) !== null) {
         const variable = variableMatched[1];
-        const positionInfo = lineColumn(code).fromIndex(variableMatched.index);
-        variables[variable] = {
-          value: variableMatched[2] || '',
-          filePath,
-          position: new vscode.Position(
-            // Example: "path": "|/detail",
-            positionInfo.line - 1,
-            positionInfo.col
-          )
+        // Variable coverage
+        if (!variables[variable]) {
+          const positionInfo = lineColumn(code).fromIndex(variableMatched.index);
+          variables[variable] = {
+            value: variableMatched[2] || '',
+            filePath,
+            position: new vscode.Position(
+              // Example: "path": "|/detail",
+              positionInfo.line - 1,
+              positionInfo.col
+            )
+          }
         }
       }
 

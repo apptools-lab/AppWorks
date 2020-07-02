@@ -15,13 +15,14 @@ export default function getFullModulePath(modulePath: string, currentFilePath?: 
   let fullModulePath = '';
   if (SPECIAL_MODULE_IMPORT_REG.test(targetPath)) {
     // @import '~xxx';
+    // https://github.com/sass/sass/issues/2350
     fullModulePath = targetPath.replace(/^~/, path.join(rootPath, 'node_modules', '/'));
   } else if (!path.isAbsolute(targetPath) && currentFilePath) {
     // @import './xxx';
     fullModulePath = path.join(path.dirname(currentFilePath), targetPath);
   } else {
     // @import 'xxx';
-    fullModulePath = targetPath;
+    fullModulePath = path.join(rootPath, 'node_modules', targetPath);
   }
 
   return fullModulePath;

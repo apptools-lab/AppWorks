@@ -7,20 +7,20 @@ import colorPreviewDisplay from './colorPreviewDisplay';
 import findVariables, { IVariables } from './findVariables';
 
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
+const VARIABLE_REG = /^\$/; // Sass variable start with $
 // Fusion sass variables. https://ice.work/docs/guide/advance/fusion
 let FUSION_VARIABLES: IVariables = {};
 
 // Markdown for key and value
 function getMarkdownInfo(key: string, value: string): string {
-  return `### Iceworks Style Helper \n **${key}**: ${value}; \n `;
+  return `**Iceworks Style Helper** \n **${key}**: ${value}; \n `;
 }
 
 // Variable definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
 
-  // Sass variable start with $
-  if (!/^\$/.test(word)) return;
+  if (!VARIABLE_REG.test(word)) return;
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
   if (matchedVariable) {
@@ -35,8 +35,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 function provideHover(document: vscode.TextDocument, position: vscode.Position) {
   const { word, fileName } = getFocusCodeInfo(document, position);
 
-  // Sass variable start with $
-  if (!/^\$/.test(word)) return;
+  if (!VARIABLE_REG.test(word)) return;
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
