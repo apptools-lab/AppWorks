@@ -20,8 +20,9 @@
   :global {
     .next-card-media {
       height: 230px;
-      align-items: center;
-      display: flex;
+      img {
+        max-height: none;
+      }
     }
     .next-card-header {
       background-color: white;

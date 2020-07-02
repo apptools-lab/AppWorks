@@ -14,7 +14,7 @@ const OFFICAL_MATERIAL_SOURCES = [
     name: 'PC Web',
     type: 'react',
     source: ICE_MATERIAL_SOURCE,
-    description: '基于 Fusion 基础组件和 ice 脚手架的官方物料'
+    description: '基于 Fusion 基础组件和 ICE 脚手架的官方物料'
   },
   {
     name: '无线跨端',
