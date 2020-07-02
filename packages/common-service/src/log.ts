@@ -182,7 +182,7 @@ export class Logger {
     // pv
     this.record({
       module: 'main',
-      action: 'active',
+      action: 'activate',
       data: {
         version,
       },
