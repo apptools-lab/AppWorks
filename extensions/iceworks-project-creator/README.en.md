@@ -8,9 +8,9 @@ Quick create a Universal Application(React/Rax/Vue, etc).
 
 1. Select a scaffold
 2. Input your application Infomation
-3. Open application automatically
+3. Create your application and open application automatically in a few seconds
 
-![application-creator](https://img.alicdn.com/tfs/TB1hCMnJuT2gK0jSZFvXXXnFXXa-1378-874.gif)
+![application-creator](https://img.alicdn.com/tfs/TB15ZmPXypE_u4jSZKbXXbCUVXa-1090-774.gif)
 
 ## More
 
