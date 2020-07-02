@@ -3,8 +3,8 @@
  */
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import axios from 'axios';
 import { spawnSync } from 'child_process';
+import { getLatestVersion } from 'ice-npm-utils';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
 
@@ -13,15 +13,14 @@ function checkPackagePublished() {
   const publishedPackages: string[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'publishedPackages.temp.json'), 'utf-8'));
 
   const timeout = 10000;
-  const maxDetectTimes = 18; 
+  const maxDetectTimes = 18;
   return Promise.all(publishedPackages.map((publishedPackage) => {
     return new Promise((resolve, retject) => {
-      
+
       const info = publishedPackage.split(':');
-      // Example: @iceworks/project-service:0.1.8:lib/index.js
+      // Example: @iceworks/project-service:0.1.8
       const name = info[0];
       const version = info[1];
-      const mainFile = info[2];
 
       let times = 0;
       const timer = setInterval(() => {
@@ -30,12 +29,12 @@ function checkPackagePublished() {
           clearInterval(timer);
           retject(new Error(`${name}@${version} publish failed! Please try again.`));
         } else {
-          axios(
-            `https://unpkg.com/${name}@${version}/${mainFile}`
-          ).then(() => {
-            // Can be installed.
-            clearInterval(timer);
-            resolve();
+          getLatestVersion(name).then((latestVersion) => {
+            if (version === latestVersion) {
+              // Can be installed.
+              clearInterval(timer);
+              resolve();
+            }
           }).catch(() => {
             // ignore
           })
