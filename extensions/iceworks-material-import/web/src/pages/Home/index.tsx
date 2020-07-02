@@ -27,12 +27,20 @@ const MaterialsPane: React.FC<any> = () => {
     return data as IMaterialData;
   }
 
-  const onComponentClick = (component: IMaterialComponent) => {
-
+  const onComponentClick = async (component: IMaterialComponent) => {
+    try {
+      await callService('block', 'addComponent', component);
+    } catch (e) {
+      Notification.error({ content: e.message })
+    }
   }
 
-  const onBlockClick = (block: IMaterialBlock) => {
-
+  const onBlockClick = async (block: IMaterialBlock) => {
+    try {
+      await callService('block', 'addBase', block);
+    } catch (e) {
+      Notification.error({ content: e.message })
+    }
   }
 
   const onBaseClick = async (base: IMaterialBase) => {

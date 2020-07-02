@@ -143,6 +143,14 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   }
 }
 
+function getActiveTextEditor(globalState: vscode.Memento) {
+  const { visibleTextEditors } = window;
+  const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
+  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
+  console.log('window.activeTextEditor:', activeTextEditor);
+  return activeTextEditor;
+}
+
 export async function addBlock(block: IMaterialBlock, isLocal?: boolean) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
   const { activeTextEditor } = window;
@@ -197,31 +205,28 @@ export async function addBlock(block: IMaterialBlock, isLocal?: boolean) {
   }
 }
 
-export async function addComponent(dataSource: IMaterialComponent) {
+export async function addComponent(dataSource: IMaterialComponent, context: vscode.ExtensionContext) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
   const { name, source } = dataSource;
   const { npm, version } = source;
-  const { activeTextEditor, activeTerminal } = window;
+  const { activeTerminal } = window;
+  const { globalState } = context;
+  const activeTextEditor = getActiveTextEditor(globalState);
 
   if (!activeTextEditor) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 
   const fsPath = activeTextEditor.document.uri.fsPath;
-
   const isTemplate = checkTemplate(fsPath);
   if (!isTemplate) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 
-  // 插入代码
+  // insert code
   await insertComponent(activeTextEditor, name, npm);
 
-  // 安装依赖
+  // install dependencies
   const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
   try {
     const packageJSON = await fsExtra.readJSON(packageJSONPath);
@@ -248,14 +253,10 @@ export async function addComponent(dataSource: IMaterialComponent) {
 
 export async function addBase(dataSource: IMaterialBase, context: vscode.ExtensionContext) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
-  const { visibleTextEditors } = window;
   const { globalState } = context;
-  const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
-  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
-  console.log('window activateTextEditor:', activeTextEditor);
+  const activeTextEditor = getActiveTextEditor(globalState);
+
   if (!activeTextEditor) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 
@@ -263,8 +264,6 @@ export async function addBase(dataSource: IMaterialBase, context: vscode.Extensi
   const fsPath = activeTextEditor.document.uri.fsPath;
   const isTemplate = checkTemplate(fsPath);
   if (!isTemplate) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 

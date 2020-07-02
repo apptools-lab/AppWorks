@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
       if (editor) {
-        // save active text editor id to localstorage
+        // save active text editor id to localState
         const { id } = editor as any;
         console.log('activeTextEditor Id', id);
         setActiveTextEditorId(globalState, id);
