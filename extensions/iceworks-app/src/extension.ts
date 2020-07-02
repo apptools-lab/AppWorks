@@ -35,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(statusBarItem);
   // init webview
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks 设置', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置 - Iceworks', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });
