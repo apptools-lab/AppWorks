@@ -10,7 +10,7 @@
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
-![application-creator](https://img.alicdn.com/tfs/TB1hCMnJuT2gK0jSZFvXXXnFXXa-1378-874.gif)
+![application-creator](https://img.alicdn.com/tfs/TB15ZmPXypE_u4jSZKbXXbCUVXa-1090-774.gif)
 
 ## 更多
 

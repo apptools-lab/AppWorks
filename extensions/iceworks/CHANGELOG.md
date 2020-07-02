@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.6
+
+- feat: add [iceworks-config-helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+
 ## 0.1.5
 
 - docs: project rename to application

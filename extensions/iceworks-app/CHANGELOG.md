@@ -4,6 +4,7 @@
 
 - feat: add Iceworks status bar entry
 - feat: start the iceworks-project-creator automatically
+- docs: Project => Application
 
 ## 0.1.33
 

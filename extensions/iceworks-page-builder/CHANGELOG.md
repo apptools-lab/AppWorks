@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.7
+
+Fix docs typo.
+
 ## 0.1.6
 
 fix: Compatible scenarios with empty component screenshot
