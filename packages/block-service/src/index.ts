@@ -151,13 +151,12 @@ function getActiveTextEditor(globalState: vscode.Memento) {
   return activeTextEditor;
 }
 
-export async function addBlock(block: IMaterialBlock, isLocal?: boolean) {
+export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionContext) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
-  const { activeTextEditor } = window;
-  console.log('addBlock....');
+  const { globalState } = context;
+  const activeTextEditor = getActiveTextEditor(globalState);
+  console.log('addBlock....', activeTextEditor);
   if (!activeTextEditor) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 
@@ -177,8 +176,6 @@ export async function addBlock(block: IMaterialBlock, isLocal?: boolean) {
   );
   const isPageFile = await fsExtra.pathExists(pagePath);
   if (!isPageFile) {
-    // componentProxy.showError(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
-    // return;
     throw new Error(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
   }
 
