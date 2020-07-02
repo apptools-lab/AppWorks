@@ -41,27 +41,27 @@
         {
           "id": "welcome",
           "name": "",
-          "when": "workbenchState == empty || iceworks:isNotTargetProject"
+          "when": "iceworks:isNotTargetProject"
         },
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         }
       ]
     },
