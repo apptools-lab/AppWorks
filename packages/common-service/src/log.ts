@@ -156,4 +156,24 @@ export class Logger {
     }
     return recordDAU(this.storage);
   }
+
+  /**
+   * Record extension activate
+   *
+   * @param version extension's version
+   */
+  public recordActivate(version?: string) {
+    return recordOnce(
+      {
+        namespace: MAIN_KEY,
+        module: LOGGER_MODULE_KEY,
+        action: 'activate',
+        data: {
+          extension: this.namespace,
+          version,
+        },
+      },
+      this.storage
+    );
+  }
 }
