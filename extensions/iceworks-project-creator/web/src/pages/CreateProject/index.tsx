@@ -25,60 +25,47 @@ const CreateProject: React.FC = () => {
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const existProjectsRef = useRef([]);
   const steps = [
-    {
-      title: '选择模板',
-      content: (
-        <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
-          <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
-        </ScaffoldMarket>
-      )
-    },
-    {
-      title: '填写信息',
-      content: (
-        <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
-          <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
-          <Form.Submit
-            className={styles.btn}
-            onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
-            validate
-            disabled={createDEFProjectDisabled}
-          >创建 DEF 应用</Form.Submit>
-          <Form.Submit
-            type="primary"
-            onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
-            validate
-            loading={createProjectLoading}
-          >完成</Form.Submit>
-        </CreateProjectForm>
-      )
-    }
+    <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
+      <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
+    </ScaffoldMarket>,
+    <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
+      <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+      {isAliInternal && <Form.Submit
+        className={styles.btn}
+        onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
+        validate
+        disabled={createDEFProjectDisabled}
+      >创建 DEF 应用</Form.Submit>}
+      <Form.Submit
+        type="primary"
+        onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
+        validate
+        loading={createProjectLoading}
+      >完成</Form.Submit>
+    </CreateProjectForm>
   ];
 
   if (isAliInternal) {
-    steps.splice(2, 0, {
-      title: '创建 DEF 应用',
-      content: (
-        <CreateDEFProjectForm
-          value={curDEFProjectField}
-          onChange={onDEFProjectFormChange}
-          errorMsg={DEFFormErrorMsg}
-          onAccountBlur={onAccountBlur}
-          onValidateProjectName={onValidateProjectName}
-          dataSource={groupDataSource}
-        >
-          <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
-          <Form.Submit
-            type="primary"
-            onClick={onDEFProjectDetailSubmit}
-            validate
-            loading={createDEFProjectLoading}
-            disabled={createDEFProjectDisabled}
-            className={styles.btn}
-          >完成</Form.Submit>
-        </CreateDEFProjectForm>
-      )
-    })
+    steps.splice(2, 0,
+      <CreateDEFProjectForm
+        value={curDEFProjectField}
+        onChange={onDEFProjectFormChange}
+        errorMsg={DEFFormErrorMsg}
+        onAccountBlur={onAccountBlur}
+        onValidateProjectName={onValidateProjectName}
+        dataSource={groupDataSource}
+      >
+        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+        <Form.Submit
+          type="primary"
+          onClick={onDEFProjectDetailSubmit}
+          validate
+          loading={createDEFProjectLoading}
+          disabled={createDEFProjectDisabled}
+          className={styles.btn}
+        >完成</Form.Submit>
+      </CreateDEFProjectForm>
+    )
   }
 
   function goNext() {
@@ -268,7 +255,7 @@ const CreateProject: React.FC = () => {
             {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
           </div>
         </div>
-        <div className={styles.content}>{steps[currentStep].content}</div>
+        <div className={styles.content}>{steps[currentStep]}</div>
       </Card.Content>
     </Card>
   );
