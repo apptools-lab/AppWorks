@@ -89,6 +89,13 @@ function processFusionVariables() {
 export default function sassVariablesViewer(context: vscode.ExtensionContext): void {
   processFusionVariables();
 
+  // Listen build.json change
+  vscode.workspace.onDidChangeTextDocument((e) => {
+    if (/build\.json$/.test(e.document.uri.fsPath)) {
+      processFusionVariables();
+    }
+  }, null, context.subscriptions);
+
   // Set definitionProvider
   context.subscriptions.push(
     vscode.languages.registerDefinitionProvider(
