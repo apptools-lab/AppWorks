@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.34
+
+- docs: Project => Application
+
 ## 0.1.33
 
 - feat: add Settings page
