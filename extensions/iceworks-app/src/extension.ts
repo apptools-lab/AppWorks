@@ -45,13 +45,18 @@ export async function activate(context: vscode.ExtensionContext) {
   if (!rootPath) {
     vscode.window.showInformationMessage('当前工作区为空，请打开应用或新建应用。');
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+    vscode.commands.executeCommand('iceworks-project-creator.start');
     return;
   }
   try {
     const projectType = await getProjectType();
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', projectType === 'unknown');
+    const isNotTargetProject = projectType === 'unknown';
+    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', isNotTargetProject);
+    if (isNotTargetProject)
+      vscode.commands.executeCommand('iceworks-project-creator.start');
   } catch (e) {
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
+    vscode.commands.executeCommand('iceworks-project-creator.start');
   }
   const terminals: ITerminalMap = new Map<string, Terminal>();
   // init tree data providers
