@@ -120,13 +120,7 @@ function getNpmInfo(npm: string, registry?: string): Promise<any> {
     }
 
     return body;
-  }, (error) => {
-    if (error.statusCode === 404) {
-      return Promise.reject(new Error(`获取模板 npm 信息失败，当前的模板地址是：${url}。请检查配置的镜像源地址是否正确。`));
-    } else {
-      return Promise.reject(error);
-    }
-  });
+  })
 }
 
 /**
