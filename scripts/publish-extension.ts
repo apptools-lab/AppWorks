@@ -12,8 +12,8 @@ import extensionDepsInstall from './fn/extension-deps-install';
 function checkPackagePublished() {
   const publishedPackages: string[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'publishedPackages.temp.json'), 'utf-8'));
 
-  const timeout = 1000;
-  const maxDetectTimes = 3; 
+  const timeout = 10000;
+  const maxDetectTimes = 18; 
   return Promise.all(publishedPackages.map((publishedPackage) => {
     return new Promise((resolve, retject) => {
       
