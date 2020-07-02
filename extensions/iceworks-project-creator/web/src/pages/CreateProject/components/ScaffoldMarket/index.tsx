@@ -6,7 +6,7 @@ import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, tsScaffoldsList } from '@/constant';
+import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
 import styles from './index.module.scss';
 
 const projectTypes = ['react', 'rax', 'vue'];
@@ -110,7 +110,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
             <div className={styles.mainScaffolds}>
               {!!mainScaffolds.length ? mainScaffolds.map(item => {
                 const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
-                  tsScaffoldsList.includes(item.source.npm) ? 'js' :
+                  jsScaffoldsList.includes(item.source.npm) ? 'js' :
                     '';
                 const isRax = selectedSource.type === 'rax';
                 const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
@@ -138,7 +138,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                 <div className={styles.collapseScaffolds}>
                   {otherScaffolds.map(item => {
                     const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
-                      tsScaffoldsList.includes(item.source.npm) ? 'js' :
+                      jsScaffoldsList.includes(item.source.npm) ? 'js' :
                         '';
                     const isRax = selectedSource.type.toLocaleLowerCase() === 'rax';
                     const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
