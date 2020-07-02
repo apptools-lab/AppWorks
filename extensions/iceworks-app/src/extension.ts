@@ -9,6 +9,7 @@ import { createComponentsTreeProvider } from './views/componentsView';
 import { createPagesTreeProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
 import services from './services';
+import { createStatusBarItem, openCommandPaletteCommandId, registerOpenCommandPalette } from './createStatusBarItem';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -28,6 +29,10 @@ export async function activate(context: vscode.ExtensionContext) {
       version,
     }
   });
+  // init statusBarItem
+  const statusBarItem = createStatusBarItem();
+  subscriptions.push(vscode.commands.registerCommand(openCommandPaletteCommandId, registerOpenCommandPalette));
+  subscriptions.push(statusBarItem);
   // init webview
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks 设置', ViewColumn.One, {
