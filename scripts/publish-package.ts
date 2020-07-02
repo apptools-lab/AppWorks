@@ -1,6 +1,8 @@
 /**
  * Scripts to check unpublished version and run publish
  */
+import * as path from 'path';
+import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 
@@ -33,4 +35,6 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
   }
   console.log(`[PUBLISH PACKAGE PRODUCTION] Complete (count=${publishedCount}):`)
   console.log(`${publishedPackages.join('\n')}`);
+  // Write temp file
+  fs.writeFileSync(path.join(__dirname, 'publishedPackages.temp.json'), JSON.stringify(publishedPackages));
 });
