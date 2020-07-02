@@ -120,7 +120,7 @@ function getNpmInfo(npm: string, registry?: string): Promise<any> {
     }
 
     return body;
-  })
+  });
 }
 
 /**
