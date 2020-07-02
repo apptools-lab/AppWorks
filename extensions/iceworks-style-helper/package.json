@@ -3,7 +3,7 @@
   "displayName": "Iceworks Style Helper",
   "description": "Easily write styles in JSX.",
   "publisher": "iceworks-team",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -25,7 +25,8 @@
     "onLanguage:typescriptreact",
     "onLanguage:css",
     "onLanguage:less",
-    "onLanguage:sass"
+    "onLanguage:sass",
+    "onLanguage:scss"
   ],
   "repository": {
     "type": "git",
@@ -46,6 +47,9 @@
     "@babel/parser": "^7.10.3",
     "@babel/traverse": "^7.10.3",
     "css": "^2.2.4",
+    "datauri": "^2.0.0",
+    "line-column": "^1.0.2",
+    "tinycolor2": "^1.4.1",
     "vscode-web-custom-data": "^0.1.4"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md",

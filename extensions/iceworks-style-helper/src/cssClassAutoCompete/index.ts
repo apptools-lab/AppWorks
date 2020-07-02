@@ -41,7 +41,7 @@ function getClassNames(filePath: string): string[] {
   const reg = new RegExp('className="([\\w- ]+)"', 'g');
 
   let classNames: string[] = [];
-  let matched: RegExpExecArray | null;;
+  let matched: RegExpExecArray | null;
 
   // eslint-disable-next-line
   while ((matched = reg.exec(code)) !== null) {
@@ -79,7 +79,8 @@ export default function cssClassAutoCompete(context: vscode.ExtensionContext): v
       [
         { scheme: 'file', language: 'css' },
         { scheme: 'file', language: 'less' },
-        { scheme: 'file', language: 'sass' }
+        { scheme: 'file', language: 'sass' },
+        { scheme: 'file', language: 'scss' }
       ],
       { provideCompletionItems },
       '.'
