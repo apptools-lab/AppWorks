@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
   initExtensionConfiguration(globalState);
 
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建应用', ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建应用 - Iceworks', ViewColumn.One, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });
