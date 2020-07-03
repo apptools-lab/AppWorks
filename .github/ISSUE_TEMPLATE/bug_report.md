@@ -6,9 +6,10 @@ labels: 'bug'
 ---
 
 <!-- 
-  请使用最新版本的插件，以确保您的问题尚未得到解决。
+  请使用最新版本的插件，以确保您遇到问题仍未得到解决。
   查看本地插件的版本：https://img.alicdn.com/tfs/TB1f7zQMpP7gK0jSZFjXXc5aXXa-1099-221.png
   获取插件的最新版本信息：https://img.alicdn.com/tfs/TB1dCvHMuH2gK0jSZJnXXaT1FXa-2134-1028.png
+  重启 VS Code 将自动升级插件。
 -->
 
 * 插件名：
