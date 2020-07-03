@@ -40,10 +40,12 @@ export default function uploadExtesions(publishedExtensions: string[], productio
     const extensionFile = `${name}-${version}.vsix`;
     const extensionFilePath = path.join(__dirname, '../extensions', name, extensionFile);
 
-    fs.copySync(extensionFilePath, path.join(EXTENSIONS_DIR, extensionFile));
+    // Upload extension
     upload(`vscode-extensions/${production ? 'releases' : 'beta'}/${extensionFile}`, extensionFilePath);
+    fs.copySync(extensionFilePath, path.join(EXTENSIONS_DIR, extensionFile));
   })
 
+  // Upload extensions zip
   zip.addLocalFolder(EXTENSIONS_DIR);
   zip.writeZip(ZIP_FILE);
   upload(`vscode-extensions/${production ? 'releases' : 'beta'}/${ZIP_NAME}`, ZIP_FILE);
