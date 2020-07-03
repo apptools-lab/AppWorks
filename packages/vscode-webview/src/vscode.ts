@@ -28,6 +28,7 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 }
 
 export function connectService(webview, context: vscode.ExtensionContext, { services, logger }) {
+  console.log('context =====>>', context);
   const { subscriptions } = context;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {

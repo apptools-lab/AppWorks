@@ -5,22 +5,27 @@ import * as glob from 'glob';
 import * as readFiles from 'fs-readdir-recursive';
 import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource, IMaterialBlock, IMaterialBase, IMaterialComponent } from '@iceworks/material-utils';
-import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
-import { createNpmCommand, CONFIGURATION_KEY_PCKAGE_MANAGER, getDataFromSettingJson } from '@iceworks/common-service';
+import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
+import {
+  projectPath,
+  getProjectLanguageType,
+  pagesPath,
+  COMPONENT_DIR_NAME,
+  templateExtnames
+} from '@iceworks/project-service';
+import {
+  createNpmCommand,
+  getTagTemplate,
+  getImportInfos,
+  getActiveTextEditor,
+  getImportTemplate
+} from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
-import { pagesPath, componentDirName, dependencyDir, packageJSONFilename, templateExtnames } from './utils/constant';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
 import checkTemplate from './utils/checkTemplate';
-import generateComponentName from './utils/generateComponentName';
-import getImportTemplate from './utils/getImportTemplate';
-import getTagTemplate from './utils/getTagTemplate';
-import getImportInfos from './utils/getImportInfos';
 
 const { window, Position } = vscode;
-
-const ACTIVE_TEXT_EDITOR_ID_STATE_KEY = 'iceworks.activeTextEditorId';
 
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
@@ -143,20 +148,8 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   }
 }
 
-function getActiveTextEditor(globalState: vscode.Memento) {
-  const { visibleTextEditors } = window;
-  const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
-  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
-  console.log('window.activeTextEditor:', activeTextEditor);
-  return activeTextEditor;
-}
-
-export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
-  console.log('setActiveTextEditorId: run');
-  globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
-}
-
-export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionContext) {
+export async function addBlock(block: IMaterialBlock, ...args) {
+  const context = args[0];
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
   const { globalState } = context;
   const activeTextEditor = getActiveTextEditor(globalState);
@@ -187,7 +180,7 @@ export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionC
   await insertBlock(activeTextEditor, blockName);
 
   // download block 
-  const componentsPath = path.join(pagePath, componentDirName);
+  const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine('> 开始获取区块代码');
@@ -203,140 +196,6 @@ export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionC
     // activate the textEditor
     window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
   }
-}
-
-export async function addComponent(dataSource: IMaterialComponent, context: vscode.ExtensionContext) {
-  const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
-  const { name, source } = dataSource;
-  const { npm, version } = source;
-  const { activeTerminal } = window;
-  const { globalState } = context;
-  const activeTextEditor = getActiveTextEditor(globalState);
-
-  if (!activeTextEditor) {
-    throw new Error(templateError);
-  }
-
-  const fsPath = activeTextEditor.document.uri.fsPath;
-  const isTemplate = checkTemplate(fsPath);
-  if (!isTemplate) {
-    throw new Error(templateError);
-  }
-
-  // insert code
-  await insertComponent(activeTextEditor, name, npm);
-
-  // install dependencies
-  const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
-  try {
-    const packageJSON = await fsExtra.readJSON(packageJSONPath);
-    if (packageJSON.version === version) {
-      return;
-    }
-  } catch {
-    // ignore
-  }
-
-  let terminal;
-  if (activeTerminal) {
-    terminal = activeTerminal;
-  } else {
-    terminal = window.createTerminal();
-  }
-
-  const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
-
-  terminal.show();
-  terminal.sendText(`cd ${projectPath}`, true);
-  terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
-  // activate the textEditor
-  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
-}
-
-export async function addBase(dataSource: IMaterialBase, context: vscode.ExtensionContext) {
-  const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
-  const { globalState } = context;
-  const activeTextEditor = getActiveTextEditor(globalState);
-
-  if (!activeTextEditor) {
-    throw new Error(templateError);
-  }
-
-  const { active } = activeTextEditor.selection;
-  const fsPath = activeTextEditor.document.uri.fsPath;
-  const isTemplate = checkTemplate(fsPath);
-  if (!isTemplate) {
-    throw new Error(templateError);
-  }
-
-  const { importStatement, name, source } = dataSource;
-  const { npm } = source;
-  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(activeTextEditor.document.getText());
-  const baseImportDeclaration = importDeclarations.find(({ source }) => {
-    return source.value === npm;
-  });
-
-  const insertPosition = new Position(active.line, active.character);
-  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    let existImportedName = '';
-    if (!baseImportDeclaration) {
-      editBuilder.insert(
-        importDeclarationPosition,
-        `${importStatement}\n`
-      );
-    } else {
-      const baseSpecifiers = baseImportDeclaration.specifiers;
-      baseSpecifiers.forEach(({ imported, local }) => {
-        if (imported.name === name) {
-          existImportedName = local.name;
-        }
-      });
-
-      if (!existImportedName) {
-        const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
-        const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
-
-        editBuilder.insert(
-          new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
-          `, ${name}`,
-        );
-      }
-    }
-
-    editBuilder.insert(
-      insertPosition,
-      getTagTemplate(existImportedName || name)
-    );
-  });
-  // activate the textEditor
-  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
-}
-
-export async function insertComponent(activeTextEditor: vscode.TextEditor, name: string, npm: string) {
-  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(activeTextEditor.document.getText());
-  const componentImportDeclaration = importDeclarations.find(({ source }) => source.value === npm);
-  let componentName = generateComponentName(name);
-  if (componentImportDeclaration) {
-    componentName = componentImportDeclaration.specifiers[0].local.name;
-  }
-
-  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    if (!componentImportDeclaration) {
-      editBuilder.insert(
-        importDeclarationPosition,
-        getImportTemplate(componentName, npm)
-      );
-    }
-
-    const { selection } = activeTextEditor;
-    if (selection && selection.active) {
-      const insertPosition = new Position(selection.active.line, selection.active.character);
-      editBuilder.insert(
-        insertPosition,
-        getTagTemplate(componentName)
-      );
-    }
-  });
 }
 
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {

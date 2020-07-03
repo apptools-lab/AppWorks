@@ -49,6 +49,7 @@
   "dependencies": {
     "@iceworks/block-service": "^0.1.7",
     "@iceworks/common-service": "^0.1.3",
+    "@iceworks/component-service": "^0.1.0",
     "@iceworks/material-service": "^0.1.3",
     "@iceworks/page-service": "^0.1.5",
     "@iceworks/vscode-webview": "^0.1.1"
