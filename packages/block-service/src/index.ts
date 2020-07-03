@@ -151,11 +151,16 @@ function getActiveTextEditor(globalState: vscode.Memento) {
   return activeTextEditor;
 }
 
+export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
+  console.log('setActiveTextEditorId: run');
+  globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
+}
+
 export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionContext) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
   const { globalState } = context;
   const activeTextEditor = getActiveTextEditor(globalState);
-  console.log('addBlock....', activeTextEditor);
+  console.log('addBlock....');
   if (!activeTextEditor) {
     throw new Error(templateError);
   }
@@ -164,8 +169,6 @@ export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionC
 
   const isTemplate = checkTemplate(fsPath);
   if (!isTemplate) {
-    // componentProxy.showError(templateError);
-    // return;
     throw new Error(templateError);
   }
 
@@ -179,26 +182,26 @@ export async function addBlock(block: IMaterialBlock, context: vscode.ExtensionC
     throw new Error(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
   }
 
-  // 插入代码
+  // insert code 
   const blockName: string = await generateBlockName(pageName, block.name);
   await insertBlock(activeTextEditor, blockName);
 
-  // 下载区块
+  // download block 
   const componentsPath = path.join(pagePath, componentDirName);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine('> 开始获取区块代码');
   try {
-    // TODO
-    // const downloadMethod = isLocal ? downloadLocalBlock : downloadBlock;
     const downloadMethod = downloadBlock;
-    // const blockDir = await downloadMethod({ ...block, name: blockName, oriName: block.name }, componentsPath, (text) => {
     const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
     materialOutputChannel.appendLine(`> 已将区块代码下载到：${blockDir}`);
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
+  } finally {
+    // activate the textEditor
+    window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
   }
 }
 
@@ -246,6 +249,8 @@ export async function addComponent(dataSource: IMaterialComponent, context: vsco
   terminal.show();
   terminal.sendText(`cd ${projectPath}`, true);
   terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
+  // activate the textEditor
+  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
 export async function addBase(dataSource: IMaterialBase, context: vscode.ExtensionContext) {
@@ -303,6 +308,8 @@ export async function addBase(dataSource: IMaterialBase, context: vscode.Extensi
       getTagTemplate(existImportedName || name)
     );
   });
+  // activate the textEditor
+  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
 export async function insertComponent(activeTextEditor: vscode.TextEditor, name: string, npm: string) {
@@ -310,7 +317,6 @@ export async function insertComponent(activeTextEditor: vscode.TextEditor, name:
   const componentImportDeclaration = importDeclarations.find(({ source }) => source.value === npm);
   let componentName = generateComponentName(name);
   if (componentImportDeclaration) {
-    // TODO 当前所有的 component 引入都是默认导出
     componentName = componentImportDeclaration.specifiers[0].local.name;
   }
 
@@ -350,10 +356,4 @@ export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName
       );
     }
   });
-}
-
-export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
-  console.log('setActiveTextEditorId: run');
-
-  globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
 }

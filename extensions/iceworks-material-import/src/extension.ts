@@ -44,9 +44,10 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   function activeWebview() {
-    const webviewPanel = window.createWebviewPanel('iceworks', '导入物料', columnToShowIn, {
+    const webviewPanel = window.createWebviewPanel('Iceworks', 'Iceworks - 导入物料', columnToShowIn, {
       enableScripts: true,
       retainContextWhenHidden: true,
+      enableFindWidget: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
     connectService(webviewPanel.webview, context, { services, logger });

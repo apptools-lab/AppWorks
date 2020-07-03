@@ -31,7 +31,7 @@
     "commands": [
       {
         "command": "iceworks-material-import.start",
-        "title": "Iceworks: Material Import"
+        "title": "Iceworks: Import Material"
       }
     ]
   },
