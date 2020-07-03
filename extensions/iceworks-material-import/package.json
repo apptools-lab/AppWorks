@@ -1,7 +1,7 @@
 {
   "name": "iceworks-material-import",
   "displayName": "Iceworks Material Import",
-  "description": "Import material in iceworks.",
+  "description": "Quick import material by low code way.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
@@ -53,7 +53,7 @@
     "@iceworks/page-service": "^0.1.5",
     "@iceworks/vscode-webview": "^0.1.1"
   },
-  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-page-builder/README.md",
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-material-import/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
