@@ -93,7 +93,7 @@ export function recordDAU(storage: IStorage) {
   }, storage);
 }
 
-export function recordActivate(storage: IStorage, data: { extension: string; version?: string; }) {
+export function recordActivate(storage: IStorage, data: { extension: string; version?: string }) {
   return recordOnce({
     namespace: MAIN_KEY,
     module: LOGGER_MODULE_KEY,
