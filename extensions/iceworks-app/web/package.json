@@ -1,7 +1,7 @@
 {
   "name": "web-for-iceworks-app",
   "version": "0.1.40",
-  "description": "web for Iceworks App",
+  "description": "web for Iceworks",
   "private": true,
   "devDependencies": {
     "@types/react": "^16.8.0",

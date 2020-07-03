@@ -11,7 +11,7 @@ export default function getCompletionItem(
   completionItem.detail = detail;
   completionItem.insertText = insertText;
   if (documentation) {
-    completionItem.documentation = documentation;
+    completionItem.documentation = new vscode.MarkdownString(`**Iceworks Style Helper** \n ${documentation}`);
   }
   return completionItem;
 };

@@ -4,16 +4,16 @@ import classnames from 'classnames';
 import successIcon from '@/assets/success.svg';
 import styles from './index.module.scss';
 
-interface ISelectCardProps {
+interface IMobileScaffoldCardProps {
   title: string | React.ReactNode;
   content?: string | React.ReactNode;
   selected: boolean;
   style?: object;
   onClick?: any;
-  media?: string | React.ReactNode;
+  media?: string;
 }
 
-const SelectCard: React.FC<ISelectCardProps> = ({ title, content, selected, onClick, media, style }) => {
+const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({ title, content, selected, onClick, media, style }) => {
   return (
     <div>
       <Card
@@ -24,15 +24,13 @@ const SelectCard: React.FC<ISelectCardProps> = ({ title, content, selected, onCl
       >
         {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
         <Card.Media>
-          {media}
+          {media && <img src={media} alt="screenshot" className={styles.media} />}
         </Card.Media>
         <Card.Header title={title} />
-        <Card.Content>
-          {content}
-        </Card.Content>
+        <div className={styles.mark}><div className={styles.content}>{content}</div></div>
       </Card>
     </div>
   );
 };
 
-export default SelectCard;
+export default MobileScaffoldCard;

@@ -1,36 +1,29 @@
 import React from 'react';
-import { Form, Input, Button, Select } from '@alifd/next';
+import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup } from '@/types';
 import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
   children: React.ReactNode;
-  createProjectLoading: boolean;
-  createProjectBtnDisabled: boolean;
   errorMsg?: string;
   dataSource: IGitLabGroup[];
-  skipCreateDEFProject: () => void;
   onChange: (value: IDEFProjectField) => void;
   onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onValidateProjectName: (rule: object, value: string, callback: (errors: string) => void) => any;
+  onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
   children,
-  createProjectLoading,
-  createProjectBtnDisabled,
   errorMsg,
   dataSource,
   onAccountBlur,
   onChange,
   onValidateProjectName,
-  skipCreateDEFProject,
 }) => {
   return (
-    <div className={styles.form}>
-      <div className={styles.tip}>当前在内网环境，可创建 DEF 应用。<Button className={styles.btn} text disabled={createProjectBtnDisabled} loading={createProjectLoading} onClick={skipCreateDEFProject}>跳过创建</Button></div>
+    <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}

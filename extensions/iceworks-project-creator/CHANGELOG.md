@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.9
+
+- style: better styles of the webview
+
 ## 0.1.8
 
 - style: add loading status of loading the scaffolds

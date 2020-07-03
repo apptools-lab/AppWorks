@@ -3,7 +3,7 @@ import { IMaterialScaffold } from '@iceworks/material-utils';
 export interface IProjectField {
   projectName: string;
   projectPath: string;
-  scaffold: IMaterialScaffold;
+  scaffold: IMaterialScaffold | null;
   scaffoldType: string;
 }
 

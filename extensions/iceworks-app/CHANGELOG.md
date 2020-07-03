@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.34
+
+- feat: add Iceworks status bar entry
+- feat: start the iceworks-project-creator automatically
+- docs: Project => Application
+
 ## 0.1.33
 
 - feat: add Settings page
