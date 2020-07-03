@@ -1,5 +1,8 @@
 English | [简体中文](./README.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-component-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-component-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+
 # Iceworks Component Builder
 
 Create a component in a low-code way.

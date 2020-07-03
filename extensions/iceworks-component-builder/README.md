@@ -1,5 +1,8 @@
 简体中文 | [English](./README.en.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-component-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-component-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+
 # Iceworks 组件创建插件
 
 使用低代码的方式创建前端组件。
