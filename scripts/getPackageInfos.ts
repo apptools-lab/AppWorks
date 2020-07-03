@@ -1,8 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import axios from 'axios';
+import { getLatestVersion } from 'ice-npm-utils';
 
-const TIMEOUT = 8000; // ms
 const TARGET_DIRECTORY = join(__dirname, '../packages');
 
 export interface IPackageInfo {
@@ -17,13 +16,8 @@ function checkBuildSuccess(directory: string, mainFile: string): boolean {
   return existsSync(join(directory, mainFile));
 }
 
-function checkVersionExists(pkg: string, version: string, mainFile: string): Promise<boolean> {
-  return axios(
-    `https://unpkg.com/${pkg}@${version}/${mainFile}`,
-    { timeout: TIMEOUT }
-  )
-    .then((res) => res.status === 200)
-    .catch(() => false);
+function checkVersionExists(pkg: string, version: string): Promise<boolean> {
+  return getLatestVersion(pkg).then(latestVersion => version === latestVersion).catch(() => false);
 }
 
 export async function getPackageInfos(): Promise<IPackageInfo[]> {
@@ -55,7 +49,7 @@ export async function getPackageInfos(): Promise<IPackageInfo[]> {
             // If localVersion not exist, publish it
             shouldPublish:
               checkBuildSuccess(directory, packageInfo.main) &&
-              !await checkVersionExists(packageName, packageInfo.version, packageInfo.main)
+              !await checkVersionExists(packageName, packageInfo.version)
           });
         } catch (e) {
           console.log(`[ERROR] get ${packageName} information failed: `, e);

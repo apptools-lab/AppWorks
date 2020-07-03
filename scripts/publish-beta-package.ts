@@ -4,6 +4,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
+import { setPublishedPackages } from './published-info';
 import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 
 const BETA_REG = /([^-]+)-beta\.(\d+)/; // '1.0.0-beta.1'
@@ -99,6 +100,5 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
 
   console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
-  // Write temp file
-  fs.writeFileSync(path.join(__dirname, 'publishedPackages.temp.json'), JSON.stringify(publishedPackages));
+  setPublishedPackages(publishedPackages);
 });
