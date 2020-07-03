@@ -99,12 +99,14 @@ export async function createProject(data): Promise<string> {
   return projectDir;
 }
 
-export async function openLocalProjectFolder(projectDir: string): Promise<void> {
+export async function openLocalProjectFolder(projectDir: string, context: vscode.ExtensionContext, webviewPanel: vscode.WebviewPanel): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
     throw new Error(`本地不存在「${projectDir}」目录！`)
   }
   const newWindow = !!vscode.workspace.rootPath;
+  if (newWindow)
+    webviewPanel.dispose();
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), newWindow);
 }
 

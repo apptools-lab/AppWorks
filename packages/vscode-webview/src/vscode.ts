@@ -24,11 +24,12 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
     retainContextWhenHidden: false,
   });
   webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-  connectService(webviewPanel.webview, context, services);
+  connectService(webviewPanel, context, services);
 }
 
-export function connectService(webview, context: vscode.ExtensionContext, { services, logger }) {
+export function connectService(webviewPanel: vscode.WebviewPanel, context: vscode.ExtensionContext, { services, logger }) {
   const { subscriptions } = context;
+  const { webview } = webviewPanel;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -41,7 +42,7 @@ export function connectService(webview, context: vscode.ExtensionContext, { serv
             module: service,
             action: method,
           });
-          const result = args ? await api(...args, context) : await api(context);
+          const result = args ? await api(...args, context, webviewPanel) : await api(context, webviewPanel);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {
