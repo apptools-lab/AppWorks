@@ -1,16 +1,16 @@
 /**
  * Scripts to check unpublished version and run publish
  */
-import * as path from 'path';
-import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
 import { getLatestVersion } from 'ice-npm-utils';
+import uploadExtesions from './upload-extensions';
+import {getPublishedPackages} from './published-info';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
 
 // Check published packages can be installed.
 function checkPackagePublished() {
-  const publishedPackages: string[] = JSON.parse(fs.readFileSync(path.join(__dirname, 'publishedPackages.temp.json'), 'utf-8'));
+  const publishedPackages: string[] = getPublishedPackages();
 
   const timeout = 10000;
   const maxDetectTimes = 18;
@@ -76,6 +76,7 @@ checkPackagePublished().then(() => {
         publishedExtensions.push(`${name}:${localVersion}`);
       }
     }
+    uploadExtesions(publishedExtensions);
     console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
   });
