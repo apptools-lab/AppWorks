@@ -64,6 +64,20 @@ export async function getProjectFramework() {
   return 'unknown';
 }
 
+export async function getPackageJSON(packagePath: string): Promise<any> {
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error('Project\'s package.json file not found in local environment');
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
+export function getIceVersion(packageJSON): string {
+  const dependencies = packageJSON.dependencies || {};
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  return hasIceDesignBase ? '0.x' : '1.x';
+}
+
 export function getScaffoldResources(): object[] {
   const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   return materialSources;
