@@ -1,5 +1,8 @@
 English | [简体中文](./README.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+
 # Iceworks Application Creator
 
 Quick create a Universal Application(React/Rax/Vue, etc).

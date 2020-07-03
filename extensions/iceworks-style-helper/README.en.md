@@ -1,5 +1,8 @@
 English | [简体中文](./README.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+
 # Iceworks Style Helper
 
 Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), friendly for React and [Rax](https://rax.js.org/).
