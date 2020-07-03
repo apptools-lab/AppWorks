@@ -11,8 +11,8 @@ const zip = new AdmZip();
 const ossClient = oss({
   bucket: 'iceworks',
   endpoint: 'oss-cn-hangzhou.aliyuncs.com',
-  accessKeyId: 'LTAIycQKC7kFAVHg',
-  accessKeySecret: 'ah1oAQV0ED8A7Y3psGwwrtQFUSH073',
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  accessKeySecret: process.env.ACCESS_KEY_SECRET,
   timeout: '300s',
 });
 
@@ -41,12 +41,12 @@ export default function uploadExtesions(publishedExtensions: string[], productio
     const extensionFilePath = path.join(__dirname, '../extensions', name, extensionFile);
 
     // Upload extension
-    upload(`vscode-extensions/${production ? 'releases' : 'beta'}/${extensionFile}`, extensionFilePath);
+    upload(`vscode-extensions/${production ? 'release' : 'beta'}/${extensionFile}`, extensionFilePath);
     fs.copySync(extensionFilePath, path.join(EXTENSIONS_DIR, extensionFile));
   })
 
   // Upload extensions zip
   zip.addLocalFolder(EXTENSIONS_DIR);
   zip.writeZip(ZIP_FILE);
-  upload(`vscode-extensions/${production ? 'releases' : 'beta'}/${ZIP_NAME}`, ZIP_FILE);
+  upload(`vscode-extensions/${production ? 'release' : 'beta'}/${ZIP_NAME}`, ZIP_FILE);
 }
