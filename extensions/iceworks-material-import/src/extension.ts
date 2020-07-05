@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension, Logger, setLastActiveTextEditorId } from '@iceworks/common-service';
+import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
 
 // eslint-disable-next-line
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
     : ViewColumn.One;
 
   function activeWebview() {
-    const webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', columnToShowIn, {
+    const webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', { viewColumn: columnToShowIn, preserveFocus: true }, {
       enableScripts: true,
       retainContextWhenHidden: true,
       enableFindWidget: true,

@@ -12,10 +12,10 @@ import {
   templateExtnames,
   projectPath,
   dependencyDir,
-  packageJSONFilename
+  packageJSONFilename,
+  checkTemplate
 } from '@iceworks/project-service';
 import * as fsExtra from 'fs-extra';
-import checkTemplate from './utils/checkTemplate';
 import insertComponent from './utils/insertComponent';
 
 const { window, Position } = vscode;

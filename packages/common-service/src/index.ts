@@ -51,7 +51,8 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtension(globalState: vscode.Memento, context?: vscode.ExtensionContext) {
+export async function initExtension(globalState: vscode.Memento, ...args) {
+  const context = args[0];
   await autoInitMaterialSource(globalState);
 
   await autoSetNpmConfiguration(globalState);

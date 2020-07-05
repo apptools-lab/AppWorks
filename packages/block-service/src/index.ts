@@ -11,7 +11,8 @@ import {
   getProjectLanguageType,
   pagesPath,
   COMPONENT_DIR_NAME,
-  templateExtnames
+  templateExtnames,
+  checkTemplate
 } from '@iceworks/project-service';
 import {
   createNpmCommand,
@@ -23,7 +24,6 @@ import {
 import * as upperCamelCase from 'uppercamelcase';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
-import checkTemplate from './utils/checkTemplate';
 
 const { window, Position } = vscode;
 
