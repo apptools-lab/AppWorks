@@ -29,7 +29,7 @@ const MaterialsPane: React.FC<any> = () => {
 
   const onComponentClick = async (component: IMaterialComponent) => {
     try {
-      await callService('component', 'addBizComponent', component);
+      await callService('component', 'addBizCode', component);
     } catch (e) {
       Notification.error({ content: e.message })
     }
@@ -37,7 +37,7 @@ const MaterialsPane: React.FC<any> = () => {
 
   const onBlockClick = async (block: IMaterialBlock) => {
     try {
-      await callService('block', 'addBlock', block);
+      await callService('block', 'addBlockCode', block);
     } catch (e) {
       Notification.error({ content: e.message })
     }
@@ -45,7 +45,7 @@ const MaterialsPane: React.FC<any> = () => {
 
   const onBaseClick = async (base: IMaterialBase) => {
     try {
-      await callService('component', 'addBaseComponent', base);
+      await callService('component', 'addBaseCode', base);
     } catch (e) {
       Notification.error({ content: e.message })
     }

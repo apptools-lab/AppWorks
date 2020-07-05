@@ -11,8 +11,8 @@ import {
   getProjectLanguageType,
   pagesPath,
   COMPONENT_DIR_NAME,
-  templateExtnames,
-  checkTemplate
+  jsxFileExtnames,
+  checkIsTemplate
 } from '@iceworks/project-service';
 import {
   createNpmCommand,
@@ -148,17 +148,17 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   }
 }
 
-export async function addBlock(block: IMaterialBlock) {
-  const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
+export async function addBlockCode(block: IMaterialBlock) {
+  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加区块代码`;
   const activeTextEditor = getLastAcitveTextEditor();
-  console.log('addBlock....');
+  console.log('addBlockCode....');
   if (!activeTextEditor) {
     throw new Error(templateError);
   }
 
   const fsPath = activeTextEditor.document.uri.fsPath;
 
-  const isTemplate = checkTemplate(fsPath);
+  const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
   }

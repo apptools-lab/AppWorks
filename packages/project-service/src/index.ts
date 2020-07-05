@@ -7,7 +7,7 @@ import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath, templateExtnames } from './constant';
+import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath, jsxFileExtnames } from './constant';
 
 export * from './constant';
 
@@ -78,9 +78,9 @@ export function getIceVersion(packageJSON): string {
   return hasIceDesignBase ? '0.x' : '1.x';
 }
 
-export function checkTemplate(fsPath: string): boolean {
+export function checkIsTemplate(fsPath: string): boolean {
   const fsExtname = path.extname(fsPath);
-  return templateExtnames.indexOf(fsExtname) !== -1;
+  return jsxFileExtnames.indexOf(fsExtname) !== -1;
 }
 
 export function getScaffoldResources(): object[] {
