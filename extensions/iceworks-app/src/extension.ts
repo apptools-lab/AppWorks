@@ -17,18 +17,15 @@ const { name, version } = require('../package.json');
 export async function activate(context: vscode.ExtensionContext) {
   const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-  // auto set configuration
-  initExtensionConfiguration(globalState);
+
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();
-  logger.recordOnce({
-    module: 'main',
-    action: 'activate',
-    data: {
-      version,
-    }
-  });
+  logger.recordActivate(version);
+
+  // auto set configuration
+  initExtensionConfiguration(globalState);
+
   // init statusBarItem
   const statusBarItem = createStatusBarItem();
   subscriptions.push(vscode.commands.registerCommand(openCommandPaletteCommandId, registerOpenCommandPalette));

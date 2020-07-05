@@ -1,5 +1,8 @@
 English | [简体中文](./README.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-page-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-page-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)
+
 # Iceworks Page Builder
 
 Create a web page view in a low-code way.

@@ -7,6 +7,8 @@ English | [简体中文](./README.md)
 
 Universal Application Development Pack, using low-code technology.
 
+## Extensions
+
 Includes following feature:
 
 - [Application Viewer](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app): Quick to view and build your Universal Application
@@ -15,6 +17,7 @@ Includes following feature:
 - [Component Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder): Build Component UI by low-code way
 - [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style in JSX
 - [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties JSX
+- [Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features.
 
 ## Quick start
 

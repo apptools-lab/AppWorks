@@ -1,5 +1,8 @@
 简体中文 | [English](./README.en.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+
 # Iceworks 样式开发辅助插件
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写内联样式，对 React 和 [Rax](https://rax.js.org/) 应用友好。

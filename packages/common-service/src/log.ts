@@ -9,7 +9,6 @@ const logCode = isElectron ? 'pack_app' : 'pack_web';
 const outside = '_outside';
 let isAlibaba: boolean;
 
-
 interface ILogParam {
   module: string;
   action: string;
@@ -94,6 +93,15 @@ export function recordDAU(storage: IStorage) {
   }, storage);
 }
 
+export function recordActivate(storage: IStorage, data: { extension: string; version?: string }) {
+  return recordOnce({
+    namespace: MAIN_KEY,
+    module: LOGGER_MODULE_KEY,
+    action: 'activate',
+    data,
+  }, storage);
+}
+
 interface IStorage {
   get: (key: string) => any;
   update: (key: string, value: any) => void;
@@ -155,5 +163,29 @@ export class Logger {
       return;
     }
     return recordDAU(this.storage);
+  }
+
+  /**
+   * Record extension activate
+   *
+   * @param version extension's version
+   */
+  public recordActivate(version?: string) {
+    // uv
+    if (this.storage) {
+      recordActivate(this.storage, {
+        extension: this.namespace,
+        version,
+      });
+    }
+
+    // pv
+    this.record({
+      module: 'main',
+      action: 'activate',
+      data: {
+        version,
+      },
+    });
   }
 }

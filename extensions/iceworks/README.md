@@ -5,16 +5,19 @@
 
 # Iceworks 套件
 
-> 多端研发套件，提供可视化、低代码和智能代码的手段开发多端应用。
+> 多端研发套件，提供可视化和智能化技术构建多端应用。
+
+## 插件列表
 
 包含以下功能：
 
-- [应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：预览和构建你的多端应用
+- [应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：预览和构建您的多端应用
 - [创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：通过图像界面引导创建多端应用
 - [生成页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)：通过区块拼装的方式生成页面
 - [创建组件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)：通过选择区块的方式生成组件
-- [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：在 JSX 进行行内样式编写时的自动补全提醒
-- [物料使用辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：在 JSX 进行组件属性编写时的自动补全提醒
+- [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：在 JSX 进行行内样式编写时提供自动补全提醒
+- [物料使用辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：在 JSX 进行组件属性编写时提供自动补全提醒
+- [应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：为应用的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能
 
 ## 快速使用
 

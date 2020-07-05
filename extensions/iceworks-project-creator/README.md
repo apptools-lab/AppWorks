@@ -1,5 +1,8 @@
 简体中文 | [English](./README.en.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+
 # Iceworks 创建应用插件
 
 快速创建多端应用（例如：React/Rax/Vue...）
