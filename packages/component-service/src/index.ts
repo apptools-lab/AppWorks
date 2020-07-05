@@ -9,19 +9,19 @@ import {
   getDataFromSettingJson,
 } from '@iceworks/common-service';
 import {
-  templateExtnames,
+  jsxFileExtnames,
   projectPath,
   dependencyDir,
   packageJSONFilename,
-  checkTemplate,
+  checkIsTemplate,
   getPackageJSON
 } from '@iceworks/project-service';
 import insertComponent from './utils/insertComponent';
 
 const { window, Position } = vscode;
 
-export async function addBizComponent(dataSource: IMaterialComponent) {
-  const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
+export async function addBizCode(dataSource: IMaterialComponent) {
+  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
   const { name, source } = dataSource;
   const { npm, version } = source;
   const { activeTerminal } = window;
@@ -32,7 +32,7 @@ export async function addBizComponent(dataSource: IMaterialComponent) {
   }
 
   const fsPath = activeTextEditor.document.uri.fsPath;
-  const isTemplate = checkTemplate(fsPath);
+  const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
   }
@@ -67,8 +67,8 @@ export async function addBizComponent(dataSource: IMaterialComponent) {
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
-export async function addBaseComponent(dataSource: IMaterialBase) {
-  const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
+export async function addBaseCode(dataSource: IMaterialBase) {
+  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
@@ -77,7 +77,7 @@ export async function addBaseComponent(dataSource: IMaterialBase) {
 
   const { active } = activeTextEditor.selection;
   const fsPath = activeTextEditor.document.uri.fsPath;
-  const isTemplate = checkTemplate(fsPath);
+  const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
   }
