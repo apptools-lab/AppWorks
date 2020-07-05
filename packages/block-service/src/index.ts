@@ -17,7 +17,7 @@ import {
   createNpmCommand,
   getTagTemplate,
   getImportInfos,
-  getActiveTextEditor,
+  getLastAcitveTextEditor,
   getImportTemplate
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
@@ -152,7 +152,7 @@ export async function addBlock(block: IMaterialBlock, ...args) {
   const context = args[0];
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
   const { globalState } = context;
-  const activeTextEditor = getActiveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor(globalState);
   console.log('addBlock....');
   if (!activeTextEditor) {
     throw new Error(templateError);

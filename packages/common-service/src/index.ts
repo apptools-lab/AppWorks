@@ -51,9 +51,27 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtensionConfiguration(globalState: vscode.Memento) {
+export async function initExtension(globalState: vscode.Memento, context?: vscode.ExtensionContext) {
   await autoInitMaterialSource(globalState);
+
   await autoSetNpmConfiguration(globalState);
+
+  onChangeActiveTextEditor(globalState, context);
+}
+
+export function onChangeActiveTextEditor(globalState: vscode.Memento, context: vscode.ExtensionContext) {
+  vscode.window.onDidChangeActiveTextEditor(
+    editor => {
+      if (editor) {
+        // save active text editor id to localState
+        const { id } = editor as any;
+        console.log('activeTextEditor Id', id);
+        setLastActiveTextEditorId(globalState, id);
+      }
+    },
+    null,
+    context.subscriptions
+  );
 }
 
 export async function autoInitMaterialSource(globalState: vscode.Memento) {
@@ -161,7 +179,7 @@ export function openConfigPanel() {
   vscode.commands.executeCommand('iceworksApp.configHelper.start');
 }
 
-export function getActiveTextEditor(globalState: vscode.Memento) {
+export function getLastAcitveTextEditor(globalState: vscode.Memento) {
   const { visibleTextEditors } = window;
   const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
   const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
@@ -169,8 +187,8 @@ export function getActiveTextEditor(globalState: vscode.Memento) {
   return activeTextEditor;
 }
 
-export function setActiveTextEditorId(globalState: vscode.Memento, id: string) {
-  console.log('setActiveTextEditorId: run');
+export function setLastActiveTextEditorId(globalState: vscode.Memento, id: string) {
+  console.log('setLastActiveTextEditorId: run');
   globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
 }
 

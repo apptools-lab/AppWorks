@@ -2,8 +2,7 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as vscode from 'vscode';
 import { getAndExtractTarball } from 'ice-npm-utils';
-import { IMaterialBlock } from '@iceworks/material-utils';
-import { getTarballURLByMaterielSource } from '@iceworks/material-utils';
+import { IMaterialBlock, getTarballURLByMaterielSource } from '@iceworks/material-utils';
 import { getIceVersion, packageJSONFilename, getPackageJSON } from '@iceworks/project-service';
 
 const { workspace } = vscode;

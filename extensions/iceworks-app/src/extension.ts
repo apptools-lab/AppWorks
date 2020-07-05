@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
+import { initExtension, Logger } from '@iceworks/common-service';
 import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
 import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
 import { createComponentsTreeProvider } from './views/componentsView';
@@ -24,7 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
   logger.recordActivate(version);
 
   // auto set configuration
-  initExtensionConfiguration(globalState);
+  initExtension(globalState);
 
   // init statusBarItem
   const statusBarItem = createStatusBarItem();

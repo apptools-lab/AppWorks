@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtensionConfiguration, Logger, setActiveTextEditorId } from '@iceworks/common-service';
+import { initExtension, Logger, setLastActiveTextEditorId } from '@iceworks/common-service';
 import services from './services/index';
 
 // eslint-disable-next-line
@@ -23,27 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
     }
   });
   // auto set configuration
-  initExtensionConfiguration(globalState);
+  initExtension(globalState, context);
   // init webview
   const columnToShowIn = vscode.window.activeTextEditor
     ? ViewColumn.Beside
     : ViewColumn.One;
 
-  vscode.window.onDidChangeActiveTextEditor(
-    editor => {
-      if (editor) {
-        // save active text editor id to localState
-        const { id } = editor as any;
-        console.log('activeTextEditor Id', id);
-        setActiveTextEditorId(globalState, id);
-      }
-    },
-    null,
-    context.subscriptions
-  );
-
   function activeWebview() {
-    const webviewPanel = window.createWebviewPanel('Iceworks', ' 导入物料 - Iceworks', columnToShowIn, {
+    const webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', columnToShowIn, {
       enableScripts: true,
       retainContextWhenHidden: true,
       enableFindWidget: true,

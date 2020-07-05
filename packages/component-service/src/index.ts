@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
 import {
-  getActiveTextEditor,
+  getLastAcitveTextEditor,
   getTagTemplate,
   getImportInfos,
   CONFIGURATION_KEY_PCKAGE_MANAGER,
@@ -27,7 +27,7 @@ export async function addBizComponent(dataSource: IMaterialComponent, ...args) {
   const { npm, version } = source;
   const { activeTerminal } = window;
   const { globalState } = context;
-  const activeTextEditor = getActiveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor(globalState);
 
   if (!activeTextEditor) {
     throw new Error(templateError);
@@ -74,7 +74,7 @@ export async function addBaseComponent(dataSource: IMaterialBase, ...args) {
   const context = args[0];
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
   const { globalState } = context;
-  const activeTextEditor = getActiveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor(globalState);
 
   if (!activeTextEditor) {
     throw new Error(templateError);
