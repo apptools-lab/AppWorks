@@ -13,7 +13,9 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
-export const ACTIVE_TEXT_EDITOR_ID_STATE_KEY = `${CONFIGURATION_SECTION}.activeTextEditorId`;
+// export const ACTIVE_TEXT_EDITOR_ID_STATE_KEY = `${CONFIGURATION_SECTION}.activeTextEditorId`;
+
+let activeTextEditorId: string;
 
 const { window, Position } = vscode;
 
@@ -67,7 +69,7 @@ export function onChangeActiveTextEditor(globalState: vscode.Memento, context: v
         // save active text editor id to localState
         const { id } = editor as any;
         console.log('activeTextEditor Id', id);
-        setLastActiveTextEditorId(globalState, id);
+        setLastActiveTextEditorId(id);
       }
     },
     null,
@@ -180,17 +182,16 @@ export function openConfigPanel() {
   vscode.commands.executeCommand('iceworksApp.configHelper.start');
 }
 
-export function getLastAcitveTextEditor(globalState: vscode.Memento) {
+export function getLastAcitveTextEditor() {
   const { visibleTextEditors } = window;
-  const activateTextEditorId = globalState.get(ACTIVE_TEXT_EDITOR_ID_STATE_KEY);
-  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activateTextEditorId);
+  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activeTextEditorId);
   console.log('window.activeTextEditor:', activeTextEditor);
   return activeTextEditor;
 }
 
-export function setLastActiveTextEditorId(globalState: vscode.Memento, id: string) {
+export function setLastActiveTextEditorId(id: string) {
   console.log('setLastActiveTextEditorId: run');
-  globalState.update(ACTIVE_TEXT_EDITOR_ID_STATE_KEY, id);
+  activeTextEditorId = id;
 }
 
 export function getImportTemplate(name: string, source: string): string {

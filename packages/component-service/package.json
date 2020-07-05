@@ -13,7 +13,6 @@
     "@iceworks/project-service": "^0.1.4",
     "@typescript-eslint/parser": "^1.9.0",
     "eslint-plugin-react": "^7.14.2",
-    "fs-extra": "^9.0.1",
     "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0"
   },

@@ -148,11 +148,9 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   }
 }
 
-export async function addBlock(block: IMaterialBlock, ...args) {
-  const context = args[0];
+export async function addBlock(block: IMaterialBlock) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加区块代码`;
-  const { globalState } = context;
-  const activeTextEditor = getLastAcitveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor();
   console.log('addBlock....');
   if (!activeTextEditor) {
     throw new Error(templateError);

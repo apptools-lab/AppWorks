@@ -6,28 +6,26 @@ import {
   getTagTemplate,
   getImportInfos,
   CONFIGURATION_KEY_PCKAGE_MANAGER,
-  getDataFromSettingJson
+  getDataFromSettingJson,
 } from '@iceworks/common-service';
 import {
   templateExtnames,
   projectPath,
   dependencyDir,
   packageJSONFilename,
-  checkTemplate
+  checkTemplate,
+  getPackageJSON
 } from '@iceworks/project-service';
-import * as fsExtra from 'fs-extra';
 import insertComponent from './utils/insertComponent';
 
 const { window, Position } = vscode;
 
-export async function addBizComponent(dataSource: IMaterialComponent, ...args) {
-  const context = args[0];
+export async function addBizComponent(dataSource: IMaterialComponent) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
   const { name, source } = dataSource;
   const { npm, version } = source;
   const { activeTerminal } = window;
-  const { globalState } = context;
-  const activeTextEditor = getLastAcitveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
     throw new Error(templateError);
@@ -45,8 +43,7 @@ export async function addBizComponent(dataSource: IMaterialComponent, ...args) {
   // install dependencies
   const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
   try {
-    // todo
-    const packageJSON = await fsExtra.readJSON(packageJSONPath);
+    const packageJSON = await getPackageJSON(packageJSONPath);
     if (packageJSON.version === version) {
       return;
     }
@@ -70,11 +67,9 @@ export async function addBizComponent(dataSource: IMaterialComponent, ...args) {
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
-export async function addBaseComponent(dataSource: IMaterialBase, ...args) {
-  const context = args[0];
+export async function addBaseComponent(dataSource: IMaterialBase) {
   const templateError = `只能向 ${templateExtnames.join(',')} 文件添加组件代码`;
-  const { globalState } = context;
-  const activeTextEditor = getLastAcitveTextEditor(globalState);
+  const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
     throw new Error(templateError);
