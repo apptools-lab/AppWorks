@@ -44,7 +44,13 @@ export function connectService(webviewPanel: vscode.WebviewPanel, context: vscod
           });
           // set the optional param to undefined 
           const newArgs = args.concat(Array(api.length - args.length).fill(undefined));
-          const result = await api(...newArgs, context);
+          /** 
+           how to get the context and webviewPanel params? for examples
+             api(arg1, ...args) {
+              const [context, webviewPanel] = args;
+             }
+          */
+          const result = await api(...newArgs, context, webviewPanel);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {
