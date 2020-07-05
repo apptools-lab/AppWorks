@@ -42,7 +42,9 @@ export function connectService(webviewPanel: vscode.WebviewPanel, context: vscod
             module: service,
             action: method,
           });
-          const result = args ? await api(...args, context, webviewPanel) : await api(context, webviewPanel);
+          // set the optional param to undefined 
+          const newArgs = args.concat(Array(api.length - args.length).fill(undefined));
+          const result = await api(...newArgs, context);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {

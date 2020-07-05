@@ -1,5 +1,8 @@
 简体中文 | [English](./README.en.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+
 # Iceworks 应用大纲树
 
 它可以帮助你预览你的前端应用，包括 npm 脚本，页面，组件和依赖信息。它还支持快速安装或升级依赖，添加新页面和组件等等。

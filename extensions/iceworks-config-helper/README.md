@@ -1,5 +1,8 @@
 简体中文 | [English](./README.en.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+
 # Iceworks 应用配置辅助开发插件
 
 为 icejs 和 rax-app 的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能。

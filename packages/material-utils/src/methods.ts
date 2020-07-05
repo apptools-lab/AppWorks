@@ -1,5 +1,5 @@
 import packageJSON from 'package-json';
-import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum } from './types';
+import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum, IMaterialNpmSource } from './types';
 import { CUSTOM_CATEGORY } from './constant';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
@@ -72,8 +72,12 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
   return materialCategoryData;
 }
 
-export const getTarballURLByMaterielSource = async function(source: any): Promise<string> {
-  const {version, npm} = source;
+export const getTarballURLByMaterielSource = async function (source: IMaterialNpmSource, iceVersion?: string): Promise<string> {
+  let { version } = source;
+
+  if (iceVersion === '1.x') {
+    version = source['version-0.x'] || source.version;
+  }
   let registryUrl = source.registry;
 
   // Using taobao registry to increase download speed
@@ -81,7 +85,7 @@ export const getTarballURLByMaterielSource = async function(source: any): Promis
     registryUrl = 'https://registry.npm.taobao.org';
   }
 
-  const packageData: any = await packageJSON(npm, {
+  const packageData: any = await packageJSON(source.npm, {
     version,
     registryUrl,
   });

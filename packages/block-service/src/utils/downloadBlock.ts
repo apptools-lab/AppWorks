@@ -2,27 +2,17 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as vscode from 'vscode';
 import { getAndExtractTarball } from 'ice-npm-utils';
-import { IMaterialBlock } from '@iceworks/material-utils';
-import { getTarballURLByMaterielSource } from './getTarballURLByMaterialSource';
-import { getIceVersion } from './getIceVersion';
-import { packageJSONFilename } from './constant';
+import { IMaterialBlock, getTarballURLByMaterielSource } from '@iceworks/material-utils';
+import { getIceVersion, packageJSONFilename, getPackageJSON } from '@iceworks/project-service';
 
 const { workspace } = vscode;
 
 const projectPath = workspace.rootPath!;
 const packagePath = path.join(projectPath, packageJSONFilename);
 
-async function getPackageJSON(): Promise<any> {
-  const packagePathIsExist = await fsExtra.pathExists(packagePath);
-  if (!packagePathIsExist) {
-    throw new Error('Project\'s package.json file not found in local environment');
-  }
-  return await fsExtra.readJson(packagePath);
-}
-
 export async function downloadBlock(block: IMaterialBlock, targetDir: string, log: (text: string) => void): Promise<string> {
   const { name: blockName, source, repository } = block;
-  const projectPackageJSON = await getPackageJSON();
+  const projectPackageJSON = await getPackageJSON(packagePath);
   await fsExtra.mkdirp(targetDir);
 
   const iceVersion: string = getIceVersion(projectPackageJSON);

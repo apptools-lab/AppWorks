@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
+import { initExtension, Logger } from '@iceworks/common-service';
 import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
 import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
 import { createComponentsTreeProvider } from './views/componentsView';
@@ -17,18 +17,15 @@ const { name, version } = require('../package.json');
 export async function activate(context: vscode.ExtensionContext) {
   const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-  // auto set configuration
-  initExtensionConfiguration(globalState);
+
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();
-  logger.recordOnce({
-    module: 'main',
-    action: 'activate',
-    data: {
-      version,
-    }
-  });
+  logger.recordActivate(version);
+
+  // auto set configuration
+  initExtension(globalState);
+
   // init statusBarItem
   const statusBarItem = createStatusBarItem();
   subscriptions.push(vscode.commands.registerCommand(openCommandPaletteCommandId, registerOpenCommandPalette));
@@ -40,7 +37,7 @@ export async function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, { services, logger });
+    connectService(webviewPanel.webview, context, { services, logger });
   }
 
   subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {

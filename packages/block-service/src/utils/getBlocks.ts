@@ -1,6 +1,6 @@
 import * as path from 'path';
+import { pagesPath, COMPONENT_DIR_NAME } from '@iceworks/project-service';
 import { scanDirectory } from './scanDirectory';
-import { pagesPath, componentDirName } from './constant';
 
 export interface IBlock {
   name: string;
@@ -8,7 +8,7 @@ export interface IBlock {
 }
 
 export async function getBlocks(pageName: string): Promise<IBlock[]> {
-  const blocksPath = path.join(path.join(pagesPath, pageName), componentDirName);
+  const blocksPath = path.join(path.join(pagesPath, pageName), COMPONENT_DIR_NAME);
   let blockDirectroies = [];
   try {
     blockDirectroies = await scanDirectory(blocksPath);

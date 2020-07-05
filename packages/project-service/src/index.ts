@@ -7,7 +7,7 @@ import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath } from './constant';
+import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath, templateExtnames } from './constant';
 
 export * from './constant';
 
@@ -62,6 +62,25 @@ export async function getProjectFramework() {
     return 'icejs';
   }
   return 'unknown';
+}
+
+export async function getPackageJSON(packagePath: string): Promise<any> {
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error('Project\'s package.json file not found in local environment');
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
+export function getIceVersion(packageJSON): string {
+  const dependencies = packageJSON.dependencies || {};
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  return hasIceDesignBase ? '0.x' : '1.x';
+}
+
+export function checkTemplate(fsPath: string): boolean {
+  const fsExtname = path.extname(fsPath);
+  return templateExtnames.indexOf(fsExtname) !== -1;
 }
 
 export function getScaffoldResources(): object[] {
