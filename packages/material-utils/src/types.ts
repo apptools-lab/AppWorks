@@ -136,15 +136,15 @@ export interface ILocalBack {
 export interface IMaterialModule extends IMaterialServer {
   goldlog(originParam: any);
   maxComposePanel();
-  checkTemplate(fsPath: string): boolean;
+  checkIsTemplate(fsPath: string): boolean;
   getLocalBlocks(): ILocalBack[];
   editLocalBlock(oldBlock: ILocalBack, newBlock: ILocalBack): void;
   composeLocalBlock(blockName: string): void;
   deleteLocalBlock(blockName: string): void;
   createLocalBlock(): void;
-  addBlock(block: IMaterialBlock, isLocal?: boolean): Promise<void>;
-  addComponent(dataSource: IMaterialComponent): Promise<void>;
-  addBase(dataSource: IMaterialBase): Promise<void>;
+  addBlockCode(block: IMaterialBlock): Promise<void>;
+  addBizCode(dataSource: IMaterialComponent): Promise<void>;
+  addBaseCode(dataSource: IMaterialBase): Promise<void>;
 }
 
 export const IMaterialModule = Symbol('IMaterialModule');

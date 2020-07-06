@@ -1,9 +1,9 @@
 {
   "name": "iceworks-app",
   "displayName": "Iceworks Application Viewer",
-  "description": "Quick view your Universal Application project(React/Rax/Vue, etc).",
+  "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.1.33",
+  "version": "0.1.34",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -41,27 +41,27 @@
         {
           "id": "welcome",
           "name": "",
-          "when": "workbenchState == empty || iceworks:isNotTargetProject"
+          "when": "iceworks:isNotTargetProject"
         },
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "workbenchState != empty && !iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject"
         }
       ]
     },
@@ -90,7 +90,7 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "Iceworks: Set Iceworks Configuration"
+        "title": "Iceworks: Set Configuration"
       },
       {
         "command": "iceworksApp.npmScripts.refresh",
@@ -260,7 +260,7 @@
       ]
     },
     "configuration": {
-      "title": "Iceworks",
+      "title": "Iceworks Application Viewer",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",

@@ -2,12 +2,46 @@
  * Scripts to check unpublished version and run publish
  */
 import { spawnSync } from 'child_process';
+import { getLatestVersion } from 'ice-npm-utils';
+import uploadExtesions from './upload-extensions';
+import { getPublishedPackages } from './published-info';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
 
-// Wait for npm module publish and sync.
-function sleep(time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
+// Check published packages can be installed.
+function checkPackagePublished() {
+  const publishedPackages: string[] = getPublishedPackages();
+
+  const timeout = 10000;
+  const maxDetectTimes = 18;
+  return Promise.all(publishedPackages.map((publishedPackage) => {
+    return new Promise((resolve, retject) => {
+
+      const info = publishedPackage.split(':');
+      // Example: @iceworks/project-service:0.1.8
+      const name = info[0];
+      const version = info[1];
+
+      let times = 0;
+      const timer = setInterval(() => {
+        if (times++ > maxDetectTimes) {
+          // Exit if detect times over maxDetectTimes.
+          clearInterval(timer);
+          retject(new Error(`${name}@${version} publish failed! Please try again.`));
+        } else {
+          getLatestVersion(name).then((latestVersion) => {
+            if (version === latestVersion) {
+              // Can be installed.
+              clearInterval(timer);
+              resolve();
+            }
+          }).catch(() => {
+            // ignore
+          })
+        }
+      }, timeout);
+    })
+  }));
 }
 
 function publish(extension: string, directory: string, version: string): void {
@@ -23,9 +57,7 @@ function publish(extension: string, directory: string, version: string): void {
   });
 }
 
-// Wait 10s for npm
-console.log('Wait for npm publish');
-sleep(10000).then(() => {
+checkPackagePublished().then(() => {
   // Entry
   console.log('[PUBLISH] Start:');
   getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
@@ -44,7 +76,10 @@ sleep(10000).then(() => {
         publishedExtensions.push(`${name}:${localVersion}`);
       }
     }
+    uploadExtesions(publishedExtensions, true);
     console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
   });
+}).catch((e) => {
+  console.error(e);
 });

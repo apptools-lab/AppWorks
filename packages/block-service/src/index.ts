@@ -6,9 +6,26 @@ import * as readFiles from 'fs-readdir-recursive';
 import * as transfromTsToJs from 'sylvanas';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
-import { projectPath, getProjectLanguageType } from '@iceworks/project-service';
-import { createNpmCommand } from '@iceworks/common-service';
+import {
+  projectPath,
+  getProjectLanguageType,
+  pagesPath,
+  COMPONENT_DIR_NAME,
+  jsxFileExtnames,
+  checkIsTemplate
+} from '@iceworks/project-service';
+import {
+  createNpmCommand,
+  getTagTemplate,
+  getImportInfos,
+  getLastAcitveTextEditor,
+  getImportTemplate
+} from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+import { generateBlockName } from './utils/generateBlockName';
+import { downloadBlock } from './utils/downloadBlock';
+
+const { window, Position } = vscode;
 
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
@@ -23,7 +40,7 @@ function getBlockType(blockSourceSrcPath) {
 /**
  * Generate block code
  */
-export const bulkGenerate = async function(blocks: IMaterialBlock[], localPath: string) {
+export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   await bulkDownload(blocks, localPath);
   await bulkInstallDependencies(blocks);
 }
@@ -31,7 +48,7 @@ export const bulkGenerate = async function(blocks: IMaterialBlock[], localPath: 
 /**
  * Download blocks code to page
  */
-export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: string) {
+export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string) {
   return await Promise.all(
     blocks.map(async (block: any) => {
       const blockSourceNpm = block.source.npm;
@@ -92,7 +109,7 @@ export const bulkDownload = async function(blocks: IMaterialBlock[], localPath: 
 /**
  * Installation block dependencies
  */
-export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) {
+export const bulkInstallDependencies = async function (blocks: IMaterialBlock[]) {
   const projectPackageJSON = await readPackageJSON(projectPath);
   const { activeTerminal } = vscode.window;
 
@@ -129,4 +146,71 @@ export const bulkInstallDependencies = async function(blocks: IMaterialBlock[]) 
   } else {
     return [];
   }
+}
+
+export async function addBlockCode(block: IMaterialBlock) {
+  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加区块代码`;
+  const activeTextEditor = getLastAcitveTextEditor();
+  console.log('addBlockCode....');
+  if (!activeTextEditor) {
+    throw new Error(templateError);
+  }
+
+  const fsPath = activeTextEditor.document.uri.fsPath;
+
+  const isTemplate = checkIsTemplate(fsPath);
+  if (!isTemplate) {
+    throw new Error(templateError);
+  }
+
+  const pageName = path.basename(path.dirname(fsPath));
+  const pagePath = path.join(
+    pagesPath,
+    pageName
+  );
+  const isPageFile = await fsExtra.pathExists(pagePath);
+  if (!isPageFile) {
+    throw new Error(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
+  }
+
+  // insert code 
+  const blockName: string = await generateBlockName(pageName, block.name);
+  await insertBlock(activeTextEditor, blockName);
+
+  // download block 
+  const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
+  const materialOutputChannel = window.createOutputChannel('material');
+  materialOutputChannel.show();
+  materialOutputChannel.appendLine('> 开始获取区块代码');
+  try {
+    const downloadMethod = downloadBlock;
+    const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
+      materialOutputChannel.appendLine(`> ${text}`);
+    });
+    materialOutputChannel.appendLine(`> 已将区块代码下载到：${blockDir}`);
+  } catch (error) {
+    materialOutputChannel.appendLine(`> Error: ${error.message}`);
+  } finally {
+    // activate the textEditor
+    window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
+  }
+}
+
+export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {
+  const { position: importDeclarationPosition } = await getImportInfos(activeTextEditor.document.getText());
+  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+    editBuilder.insert(
+      importDeclarationPosition,
+      getImportTemplate(blockName, `./components/${blockName}`)
+    );
+
+    const { selection } = activeTextEditor;
+    if (selection && selection.active) {
+      const insertPosition = new Position(selection.active.line, selection.active.character);
+      editBuilder.insert(
+        insertPosition,
+        getTagTemplate(blockName)
+      );
+    }
+  });
 }

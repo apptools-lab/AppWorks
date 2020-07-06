@@ -7,6 +7,9 @@ export const projectPath = workspace.rootPath || '';
 export const pagesPath = path.join(projectPath, 'src', 'pages');
 export const componentsPath = path.join(projectPath, 'src', 'components');
 export const COMPONENT_DIR_NAME = 'components';
+export const dependencyDir = 'node_modules';
+export const packageJSONFilename = 'package.json';
+export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
 
 export const generatorCreatetaskUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/createtask';
 export const generatorTaskResultUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/task';

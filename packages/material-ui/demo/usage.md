@@ -46,7 +46,7 @@ class App extends Component {
                 "name": "飞冰物料",
                 "type": "react",
                 "source": "http://ice.alicdn.com/assets/materials/react-materials.json",
-                "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料"
+                "description": "基于 Fusion 基础组件和 ICE 脚手架的官方物料"
               },
               {
                 "name": "飞猪物料",
@@ -61,7 +61,7 @@ class App extends Component {
             return {
               "type": "react",
               "name": "materials",
-              "description": "基于 Fusion 基础组件和 ice 脚手架的官方物料",
+              "description": "基于 Fusion 基础组件和 ICE 脚手架的官方物料",
               "blocks": bloks,
               "components": [
                 {

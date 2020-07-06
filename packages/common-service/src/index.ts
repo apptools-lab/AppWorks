@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
 export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
@@ -12,6 +13,11 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+
+let activeTextEditorId: string;
+
+const { window, Position } = vscode;
+
 export async function checkIsAliInternal(): Promise<boolean> {
   const isAliInternal = await checkAliInternal();
   return isAliInternal;
@@ -46,9 +52,29 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtensionConfiguration(globalState: vscode.Memento) {
+export async function initExtension(context: vscode.ExtensionContext) {
+  const { globalState } = context;
+
   await autoInitMaterialSource(globalState);
+
   await autoSetNpmConfiguration(globalState);
+
+  onChangeActiveTextEditor(context);
+}
+
+export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
+  vscode.window.onDidChangeActiveTextEditor(
+    editor => {
+      if (editor) {
+        // save active text editor id
+        const { id } = editor as any;
+        console.log('activeTextEditor Id', id);
+        setLastActiveTextEditorId(id);
+      }
+    },
+    null,
+    context.subscriptions
+  );
 }
 
 export async function autoInitMaterialSource(globalState: vscode.Memento) {
@@ -154,4 +180,42 @@ export async function getExistProjects(token: string) {
 
 export function openConfigPanel() {
   vscode.commands.executeCommand('iceworksApp.configHelper.start');
+}
+
+export function getLastAcitveTextEditor() {
+  const { visibleTextEditors } = window;
+  const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activeTextEditorId);
+  console.log('window.activeTextEditor:', activeTextEditor);
+  return activeTextEditor;
+}
+
+export function setLastActiveTextEditorId(id: string) {
+  console.log('setLastActiveTextEditorId: run');
+  activeTextEditorId = id;
+}
+
+export function getImportTemplate(name: string, source: string): string {
+  return `import ${name} from '${source}';\n`;
+}
+
+export function getTagTemplate(name: string): string {
+  return `<${name} /> \n`;
+}
+
+interface IImportInfos {
+  position: vscode.Position;
+  declarations: IImportDeclarations[];
+};
+
+export async function getImportInfos(text: string): Promise<IImportInfos> {
+  const importDeclarations: IImportDeclarations[] = await getImportDeclarations(text);
+
+  const length = importDeclarations.length;
+  let position;
+  if (length) {
+    position = new Position(importDeclarations[length - 1].loc.end.line, 0);
+  } else {
+    position = new Position(0, 0);
+  }
+  return { position, declarations: importDeclarations };
 }

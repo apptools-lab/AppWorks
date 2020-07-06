@@ -1,9 +1,9 @@
 {
   "name": "iceworks",
-  "displayName": "Iceworks",
+  "displayName": "Iceworks Pack",
   "description": "Universal Application Development Pack, using low-code technology.",
   "publisher": "iceworks-team",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -15,7 +15,10 @@
     "Rax",
     "React",
     "Low-code",
-    "lowcode"
+    "lowcode",
+    "visual",
+    "IntelliCode",
+    "AI"
   ],
   "repository": {
     "type": "git",
@@ -28,7 +31,9 @@
     "iceworks-team.iceworks-page-builder",
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-style-helper",
-    "iceworks-team.iceworks-material-helper"
+    "iceworks-team.iceworks-material-helper",
+    "iceworks-team.iceworks-material-import",
+    "iceworks-team.iceworks-config-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {

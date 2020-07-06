@@ -1,4 +1,4 @@
-@import '~@alifd/next/lib/core/index.scss';
+@import "~@alifd/next/lib/core/index.scss";
 
 .container {
   transition: transform 0.3s ease;
@@ -39,9 +39,8 @@
 
 .title {
   margin: 0;
-  padding: 10px;
-  border-top: 1px solid #4D4F61;
-  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #4d4f61;
 }
 
 .actions {
@@ -67,7 +66,7 @@
     font-size: 14px;
     font-weight: bold;
     background: $color-fill1-3;
-    color: $color-brand1-6;
+    color: $color-text1-4;
     cursor: pointer;
 
     &:hover {
