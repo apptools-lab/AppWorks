@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
       enableFindWidget: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, context, { services, logger });
+    connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(vscode.commands.registerCommand('iceworks-material-import.start', function () {
     activeWebview();
