@@ -1,8 +1,11 @@
 English | [简体中文](./README.md)
 
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-material-import.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-import.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
+
 # Iceworks Material Import
 
-Import materials in a low-code way.
+Import materials by a low-code way.
 
 ## Usage
 

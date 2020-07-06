@@ -1,15 +1,18 @@
 简体中文 | [English](./README.en.md)
 
-# Iceworks 物料导入插件
+[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-material-import.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-import.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
 
-使用低代码的方式导入物料。
+# Iceworks 物料添加插件
+
+使用可视化的方式添加物料到应用中。
 
 ## 用法
 
 ![物料导入](https://img.alicdn.com/tfs/TB1GD1Wa9R26e4jSZFEXXbwuXXa-1393-892.gif)
 
 1. 选择需要插入物料的位置
-2. 点击需要使用的区块或者组件，相应的代码自动添加到代码中
+2. 点击需要使用的区块或者组件，物料代码将自动添加到相应的位置中
 
 ## 更多
 
