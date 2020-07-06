@@ -5,14 +5,14 @@ import { checkPathExists } from '@iceworks/common-service';
 import { componentsPath } from '@iceworks/project-service';
 import { openEntryFile } from '../utils';
 
-class ComponentsProvider implements vscode.TreeDataProvider<Component> {
+class ComponentsProvider implements vscode.TreeDataProvider<ComponentNode> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<Component | undefined> = new vscode.EventEmitter<Component | undefined>();
+  private onDidChange: vscode.EventEmitter<ComponentNode | undefined> = new vscode.EventEmitter<ComponentNode | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<Component | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ComponentNode | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -23,7 +23,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<Component> {
     this.onDidChange.fire(undefined);
   }
 
-  getTreeItem(element: Component): vscode.TreeItem {
+  getTreeItem(element: ComponentNode): vscode.TreeItem {
     return element;
   }
 
@@ -45,13 +45,13 @@ class ComponentsProvider implements vscode.TreeDataProvider<Component> {
       const toComponent = (componentName: string) => {
         const pageEntryPath = path.join(componentsPath, componentName);
 
-        const cmdObj: vscode.Command = {
+        const command: vscode.Command = {
           command: 'iceworksApp.components.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
         };
 
-        return new Component(this.extensionContext, componentName, cmdObj);
+        return new ComponentNode(this.extensionContext, componentName, command);
       };
       const dirNames = await fse.readdir(componentsPath);
       // except file
@@ -66,11 +66,11 @@ class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   }
 }
 
-class Component extends vscode.TreeItem {
+class ComponentNode extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
-    public readonly command?: vscode.Command
+    public readonly command: vscode.Command
   ) {
     super(label);
   }
