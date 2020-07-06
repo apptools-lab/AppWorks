@@ -1,7 +1,9 @@
 # Change Log
 
 ## 0.3.0
-Add Sass Variables Helper.
+
+Add Sass Variables Helper:
+
 - Show the value of sass variables when hover.
 - Automatic completion When editing the sass variables.
 
