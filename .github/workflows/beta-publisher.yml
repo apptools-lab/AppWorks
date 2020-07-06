@@ -24,3 +24,4 @@ jobs:
           CLIENT_TOKEN: ${{ secrets.DEF_CLIENT_TOKEN }}
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+          REGISTRY: https://registry.npmjs.org
