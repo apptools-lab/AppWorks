@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   logger.recordActivate(version);
 
   // auto set configuration
-  initExtension(globalState);
+  initExtension(globalState, context);
 
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建应用 - Iceworks', ViewColumn.One, {

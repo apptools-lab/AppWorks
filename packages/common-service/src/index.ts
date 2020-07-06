@@ -13,7 +13,6 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
-// export const ACTIVE_TEXT_EDITOR_ID_STATE_KEY = `${CONFIGURATION_SECTION}.activeTextEditorId`;
 
 let activeTextEditorId: string;
 
@@ -53,20 +52,19 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtension(globalState: vscode.Memento, ...args) {
-  const context = args[0];
+export async function initExtension(globalState: vscode.Memento, context: vscode.ExtensionContext) {
   await autoInitMaterialSource(globalState);
 
   await autoSetNpmConfiguration(globalState);
 
-  onChangeActiveTextEditor(globalState, context);
+  onChangeActiveTextEditor(context);
 }
 
-export function onChangeActiveTextEditor(globalState: vscode.Memento, context: vscode.ExtensionContext) {
+export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
       if (editor) {
-        // save active text editor id to localState
+        // save active text editor id
         const { id } = editor as any;
         console.log('activeTextEditor Id', id);
         setLastActiveTextEditorId(id);
