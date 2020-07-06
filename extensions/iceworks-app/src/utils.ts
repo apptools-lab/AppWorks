@@ -1,18 +1,8 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import { Terminal, TerminalOptions } from 'vscode';
 import { entryFileSuffix } from './constants';
 import { ITerminalMap } from './types';
-
-export function pathExists(p: string) {
-  try {
-    fse.accessSync(p);
-  } catch (err) {
-    return false;
-  }
-  return true;
-}
 
 export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Command) {
   if (!script.arguments) {

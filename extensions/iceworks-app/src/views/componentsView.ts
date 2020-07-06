@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { pathExists, openEntryFile } from '../utils';
+import { checkPathExists } from '@iceworks/common-service';
+import { openEntryFile } from '../utils';
 
 class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   private workspaceRoot: string;
@@ -25,12 +26,12 @@ class ComponentsProvider implements vscode.TreeDataProvider<Component> {
     return element;
   }
 
-  getChildren() {
+  async getChildren() {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
     const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
-    if (pathExists(componentsPath)) {
+    if (await checkPathExists(componentsPath)) {
       const components = this.getComponents(componentsPath);
       return Promise.resolve(components);
     } else {
@@ -39,7 +40,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<Component> {
   }
 
   private async getComponents(componentsPath: string) {
-    if (pathExists(componentsPath)) {
+    if (await checkPathExists(componentsPath)) {
       const toComponent = (componentName: string) => {
         const pageEntryPath = path.join(componentsPath, componentName);
 

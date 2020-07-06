@@ -8,8 +8,9 @@ import { getPackageLocalVersion } from 'ice-npm-utils';
 import {
   getDataFromSettingJson,
   createNpmCommand,
+  checkPathExists
 } from '@iceworks/common-service';
-import { pathExists, executeCommand } from '../utils';
+import { executeCommand } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
 
@@ -70,7 +71,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
   };
 
   private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
-    if (pathExists(packageJsonPath)) {
+    if (await checkPathExists(packageJsonPath)) {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
@@ -105,14 +106,14 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
     };
   };
 
-  public packageJsonExists() {
-    return pathExists(this.packageJsonPath);
+  public async packageJsonExists() {
+    return await checkPathExists(this.packageJsonPath);
   }
 
   public async getReinstallScript() {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
     const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-    if (pathExists(nodeModulesPath)) {
+    if (await checkPathExists(nodeModulesPath)) {
       await rimrafAsync(nodeModulesPath);
     }
     const npmCommand = createNpmCommand('install');
@@ -183,7 +184,7 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
-    if (nodeDependenciesProvider.packageJsonExists()) {
+    if (await nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();
       executeCommand(terminals, script!);
     }
