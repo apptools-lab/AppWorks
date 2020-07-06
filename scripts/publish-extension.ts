@@ -4,7 +4,7 @@
 import { spawnSync } from 'child_process';
 import { getLatestVersion } from 'ice-npm-utils';
 import uploadExtesions from './upload-extensions';
-import {getPublishedPackages} from './published-info';
+import { getPublishedPackages } from './published-info';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
 
@@ -76,7 +76,7 @@ checkPackagePublished().then(() => {
         publishedExtensions.push(`${name}:${localVersion}`);
       }
     }
-    uploadExtesions(publishedExtensions);
+    uploadExtesions(publishedExtensions, true);
     console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
   });
