@@ -44,7 +44,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
     if (await checkPathExists(packageJsonPath)) {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
 
-      const toScript = (scriptName: string, scriptCommand: string): Script => {
+      const toScript = (scriptName: string, scriptCommand: string, id: string): Script => {
         const command: vscode.Command = {
           command: 'iceworksApp.npmScripts.run',
           title: 'Run Script',
@@ -54,12 +54,13 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
           this.extensionContext,
           scriptName,
           scriptCommand,
-          command
+          command,
+          id,
         );
       };
 
       const scripts = packageJson.scripts
-        ? Object.keys(packageJson.scripts).map(script => toScript(script, packageJson.scripts[script]))
+        ? Object.keys(packageJson.scripts).map((script) => toScript(script, packageJson.scripts[script], `script-${script}`))
         : [];
       return scripts;
     } else {
@@ -68,14 +69,16 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
   }
 }
 
-class Script extends vscode.TreeItem {
+export class Script extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly tooltip: string,
-    public readonly command: vscode.Command
+    public readonly command: vscode.Command,
+    public readonly id: string
   ) {
     super(label);
+    this.id = id;
   }
 
   iconPath = {
@@ -93,17 +96,13 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
   vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
   vscode.commands.registerCommand('iceworksApp.npmScripts.run', async (script: Script) => {
     if (!await checkPathExists(rootPath, dependencyDir)) {
-      const command: vscode.Command = {
-        command: 'iceworksApp.npmScripts.run',
-        title: 'Run Script',
-        arguments: [rootPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`]
-      };
-      executeCommand(terminals, command);
+      script.command.arguments = [rootPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`]
+      executeCommand(terminals, script.command, script.id);
       return;
     }
-    executeCommand(terminals, script.command)
+    executeCommand(terminals, script.command, script.id);
   });
-  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: Script) => stopCommand(terminals, script.command));
+  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: Script) => stopCommand(terminals, script.id));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
   const pattern = path.join(rootPath, packageJSONFilename);

@@ -5,7 +5,7 @@ import { Terminal, TerminalOptions } from 'vscode';
 import { entryFileSuffix } from './constants';
 import { ITerminalMap } from './types';
 
-export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Command) {
+export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Command, id?: string) {
   if (!script.arguments) {
     return;
   }
@@ -15,32 +15,26 @@ export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Com
     return;
   }
 
+  const terminalId = id || command;
   let terminal: Terminal;
 
-  if (terminalMapping.has(command)) {
-    terminal = terminalMapping.get(command)!;
+  if (terminalMapping.has(terminalId)) {
+    terminal = terminalMapping.get(terminalId)!;
   } else {
     const terminalOptions: TerminalOptions = { cwd, name: command };
     terminal = vscode.window.createTerminal(terminalOptions);
-    terminalMapping.set(command, terminal);
+    terminalMapping.set(terminalId, terminal);
   }
 
   terminal.show();
   terminal.sendText(command);
 }
 
-export function stopCommand(terminalMapping: ITerminalMap, script: vscode.Command) {
-  if (!script.arguments) {
-    return;
-  }
-  const args = script.arguments;
-  const command = args[1];
-  if (!command) {
-    return;
-  }
-  const currentTerminal = terminalMapping.get(command);
+export function stopCommand(terminalMapping: ITerminalMap, scriptId: string) {
+  const currentTerminal = terminalMapping.get(scriptId);
   if (currentTerminal) {
     currentTerminal.dispose();
+    terminalMapping.delete(scriptId);
   }
 }
 

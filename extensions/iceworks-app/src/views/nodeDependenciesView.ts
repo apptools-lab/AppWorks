@@ -58,7 +58,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyNode> {
       return deps;
     } else {
       return Promise.resolve(
-        nodeDepTypes.map(nodeDepType => new DependencyNode(this.extensionContext, nodeDepType, vscode.TreeItemCollapsibleState.Collapsed)));
+        nodeDepTypes.map(nodeDepType => new DependencyNode(this.extensionContext, nodeDepType, vscode.TreeItemCollapsibleState.Collapsed, nodeDepType)));
     }
   }
 
@@ -154,11 +154,13 @@ class DependencyNode extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+    public readonly id: string,
     public readonly command?: vscode.Command,
     public readonly version?: string,
     public readonly outDated?: boolean
   ) {
     super(label, collapsibleState);
+    this.id = id;
   }
 
   get description(): string {
@@ -183,7 +185,10 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
   const nodeDependenciesProvider = new DepNodeProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => executeCommand(terminals, node.command!));
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyNode) => {
+    if (node.command)
+      executeCommand(terminals, node.command, node.id);
+  });
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();
@@ -236,5 +241,5 @@ function toDep(extensionContext: vscode.ExtensionContext, workspaceDir: string, 
       arguments: [workspaceDir, npmCommand]
     } :
     undefined;
-  return new DependencyNode(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, command, version, outdated);
+  return new DependencyNode(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, `dependency-${moduleName}`, command, version, outdated);
 };
