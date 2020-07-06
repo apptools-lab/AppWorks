@@ -5,10 +5,6 @@ import { Terminal, TerminalOptions } from 'vscode';
 import { entryFileSuffix } from './constants';
 import { ITerminalMap } from './types';
 
-export function createTerminalName(cwd: string, command: string): string {
-  return `${path.basename(cwd)} - ${command}`;
-}
-
 export function pathExists(p: string) {
   try {
     fse.accessSync(p);
@@ -24,25 +20,37 @@ export function executeCommand(terminalMapping: ITerminalMap, script: vscode.Com
   }
   const args = script.arguments;
   const [cwd, command] = args;
-  let terminalName = args[2];
   if (!command) {
     return;
   }
-  terminalName = terminalName || command;
-  const name: string = createTerminalName(cwd, terminalName);
 
   let terminal: Terminal;
 
-  if (terminalMapping.has(name)) {
-    terminal = terminalMapping.get(name)!;
+  if (terminalMapping.has(command)) {
+    terminal = terminalMapping.get(command)!;
   } else {
-    const terminalOptions: TerminalOptions = { cwd, name };
+    const terminalOptions: TerminalOptions = { cwd, name: command };
     terminal = vscode.window.createTerminal(terminalOptions);
-    terminalMapping.set(name, terminal);
+    terminalMapping.set(command, terminal);
   }
 
   terminal.show();
   terminal.sendText(command);
+}
+
+export function stopCommand(terminalMapping: ITerminalMap, script: vscode.Command) {
+  if (!script.arguments) {
+    return;
+  }
+  const args = script.arguments;
+  const command = args[1];
+  if (!command) {
+    return;
+  }
+  const currentTerminal = terminalMapping.get(command);
+  if (currentTerminal) {
+    currentTerminal.dispose();
+  }
 }
 
 export function openEntryFile(p: string) {

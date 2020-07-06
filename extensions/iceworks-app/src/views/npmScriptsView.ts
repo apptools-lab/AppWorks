@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand } from '@iceworks/common-service'
-import { pathExists, executeCommand } from '../utils';
+import { pathExists, executeCommand, stopCommand } from '../utils';
 import { ITerminalMap } from '../types';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
@@ -45,7 +45,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
       const workspaceDir: string = path.dirname(packageJsonPath);
 
       const toScript = (scriptName: string, scriptCommand: string): Script => {
-        const cmdObj: vscode.Command = {
+        const command: vscode.Command = {
           command: 'iceworksApp.npmScripts.run',
           title: 'Run Script',
           arguments: [workspaceDir, createNpmCommand('run', scriptName)]
@@ -54,7 +54,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
           this.extensionContext,
           scriptName,
           scriptCommand,
-          cmdObj
+          command
         );
       };
 
@@ -92,5 +92,6 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
   const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
   vscode.commands.registerCommand('iceworksApp.npmScripts.run', (script: Script) => executeCommand(terminals, script.command!));
+  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: Script) => stopCommand(terminals, script.command!));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 }
