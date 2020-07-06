@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   logger.recordDAU();
   logger.recordActivate(version);
   // auto set configuration
-  initExtension(globalState, context);
+  initExtension(context);
   // init webview
   const columnToShowIn = vscode.window.activeTextEditor
     ? ViewColumn.Beside
