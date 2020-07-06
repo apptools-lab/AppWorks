@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import * as fsExtra from 'fs-extra';
 import { Terminal, TerminalOptions } from 'vscode';
 import { entryFileSuffix } from './constants';
 import { ITerminalMap } from './types';
@@ -44,7 +45,7 @@ export function stopCommand(terminalMapping: ITerminalMap, script: vscode.Comman
 }
 
 export function openEntryFile(p: string) {
-  const currentSuffix = entryFileSuffix.find(suffix => pathExists(path.join(p, `index${suffix}`)));
+  const currentSuffix = entryFileSuffix.find((suffix) => fsExtra.pathExistsSync(path.join(p, `index${suffix}`)));
   if (currentSuffix) {
     const resource = vscode.Uri.file(path.join(p, `index${currentSuffix}`));
     vscode.window.showTextDocument(resource);

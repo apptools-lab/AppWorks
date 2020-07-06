@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists } from '@iceworks/common-service';
+import { pagesPath } from '@iceworks/project-service';
 import { openEntryFile } from '../utils';
 
 export class PagesProvider implements vscode.TreeDataProvider<Page> {
@@ -44,12 +45,12 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
       const toPage = (pageName: string) => {
         const pageEntryPath = path.join(pagesPath, pageName);
 
-        const cmdObj: vscode.Command = {
+        const command: vscode.Command = {
           command: 'iceworksApp.pages.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
         };
-        return new Page(this.extensionContext, pageName, cmdObj);
+        return new Page(this.extensionContext, pageName, command);
       };
       const dirNames = await fse.readdir(pagesPath);
       // except the file
@@ -90,4 +91,10 @@ export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPa
   });
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
+
+  const pattern = path.join(pagesPath);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  fileWatcher.onDidChange(() => pagesProvider.refresh());
+  fileWatcher.onDidCreate(() => pagesProvider.refresh());
+  fileWatcher.onDidDelete(() => pagesProvider.refresh());
 }

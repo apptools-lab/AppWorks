@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand, checkPathExists } from '@iceworks/common-service';
-import { dependencyDir } from '@iceworks/project-service';
+import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
 import { executeCommand, stopCommand } from '../utils';
 import { ITerminalMap } from '../types';
 
@@ -105,4 +105,10 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
   });
   vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: Script) => stopCommand(terminals, script.command));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
+
+  const pattern = path.join(rootPath, packageJSONFilename);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
+  fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());
+  fileWatcher.onDidDelete(() => npmScriptsProvider.refresh());
 }

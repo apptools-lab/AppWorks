@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists } from '@iceworks/common-service';
+import { componentsPath } from '@iceworks/project-service';
 import { openEntryFile } from '../utils';
 
 class ComponentsProvider implements vscode.TreeDataProvider<Component> {
@@ -91,4 +92,10 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
   });
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
+
+  const pattern = path.join(componentsPath);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  fileWatcher.onDidChange(() => componentsProvider.refresh());
+  fileWatcher.onDidCreate(() => componentsProvider.refresh());
+  fileWatcher.onDidDelete(() => componentsProvider.refresh());
 }

@@ -10,6 +10,7 @@ import {
   createNpmCommand,
   checkPathExists
 } from '@iceworks/common-service';
+import { dependencyDir } from '@iceworks/project-service';
 import { executeCommand } from '../utils';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import { nodeDepTypes } from '../constants';
@@ -193,6 +194,12 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
   context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
   context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
   context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
+
+  const pattern = path.join(rootPath, dependencyDir);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
+  fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
+  fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());
 }
 
 export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
