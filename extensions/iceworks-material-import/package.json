@@ -1,7 +1,7 @@
 {
   "name": "iceworks-material-import",
   "displayName": "Iceworks Material Import",
-  "description": "Quick import material by low code way.",
+  "description": "Quick import material in a visual way.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {

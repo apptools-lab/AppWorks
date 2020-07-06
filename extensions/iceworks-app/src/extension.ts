@@ -24,7 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
   logger.recordActivate(version);
 
   // auto set configuration
-  initExtension(globalState);
+  initExtension(context);
 
   // init statusBarItem
   const statusBarItem = createStatusBarItem();

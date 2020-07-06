@@ -17,6 +17,7 @@ Includes following feature:
 - [Component Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder): Build Component UI by low-code way
 - [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style in JSX
 - [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties JSX
+- [Material Import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)：Add materials to the application in a visual way
 - [Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features.
 
 ## Quick start

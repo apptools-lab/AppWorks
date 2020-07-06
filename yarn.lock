@@ -3333,6 +3333,11 @@ address@1.1.2, address@>=0.0.1, address@^1.0.0, address@^1.0.1, address@^1.1.0:
   resolved "https://registry.npm.taobao.org/address/download/address-1.1.2.tgz#bf1116c9c758c51b7a933d296b72c221ed9428b6"
   integrity sha1-vxEWycdYxRt6kz0pa3LCIe2UKLY=
 
+adm-zip@^0.4.14:
+  version "0.4.16"
+  resolved "https://registry.npm.taobao.org/adm-zip/download/adm-zip-0.4.16.tgz?cache=0&sync_timestamp=1592901722905&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fadm-zip%2Fdownload%2Fadm-zip-0.4.16.tgz#cf4c508fdffab02c269cbc7f471a875f05570365"
+  integrity sha1-z0xQj9/6sCwmnLx/RxqHXwVXA2U=
+
 agent-base@4, agent-base@^4.2.0, agent-base@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npm.taobao.org/agent-base/download/agent-base-4.3.0.tgz#8165f01c436009bccad0b1d122f05ed770efc6ee"
