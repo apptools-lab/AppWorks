@@ -46,7 +46,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<Script> {
 
       const toScript = (scriptName: string, scriptCommand: string): Script => {
         const cmdObj: vscode.Command = {
-          command: 'iceworksApp.npmScripts.executeCommand',
+          command: 'iceworksApp.npmScripts.run',
           title: 'Run Script',
           arguments: [workspaceDir, createNpmCommand('run', scriptName)]
         };
@@ -91,6 +91,6 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
 
   const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-  vscode.commands.registerCommand('iceworksApp.npmScripts.executeCommand', (script: Script) => executeCommand(terminals, script.command!));
+  vscode.commands.registerCommand('iceworksApp.npmScripts.run', (script: Script) => executeCommand(terminals, script.command!));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 }
