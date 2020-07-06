@@ -15,13 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();
-  logger.recordOnce({
-    module: 'main',
-    action: 'activate',
-    data: {
-      version,
-    }
-  });
+  logger.recordActivate(version);
   // auto set configuration
   initExtension(globalState, context);
   // init webview
