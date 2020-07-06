@@ -1,4 +1,4 @@
-@import '~@alifd/next/lib/core/index.scss';
+@import "~@alifd/next/lib/core/index.scss";
 
 .container {
   position: relative;
@@ -61,7 +61,7 @@
     font-size: 14px;
     font-weight: bold;
     background: $color-fill1-3;
-    color: $color-brand1-6;
+    color: $color-text1-4;
     cursor: pointer;
 
     &:hover {

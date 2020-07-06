@@ -7,7 +7,7 @@ import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath } from './constant';
+import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath, jsxFileExtnames } from './constant';
 
 export * from './constant';
 
@@ -64,6 +64,25 @@ export async function getProjectFramework() {
   return 'unknown';
 }
 
+export async function getPackageJSON(packagePath: string): Promise<any> {
+  const packagePathIsExist = await fsExtra.pathExists(packagePath);
+  if (!packagePathIsExist) {
+    throw new Error('Project\'s package.json file not found in local environment');
+  }
+  return await fsExtra.readJson(packagePath);
+}
+
+export function getIceVersion(packageJSON): string {
+  const dependencies = packageJSON.dependencies || {};
+  const hasIceDesignBase = dependencies['@icedesign/base'];
+  return hasIceDesignBase ? '0.x' : '1.x';
+}
+
+export function checkIsTemplate(fsPath: string): boolean {
+  const fsExtname = path.extname(fsPath);
+  return jsxFileExtnames.indexOf(fsExtname) !== -1;
+}
+
 export function getScaffoldResources(): object[] {
   const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   return materialSources;
@@ -99,12 +118,15 @@ export async function createProject(data): Promise<string> {
   return projectDir;
 }
 
-export async function openLocalProjectFolder(projectDir: string): Promise<void> {
+export async function openLocalProjectFolder(projectDir: string, ...args): Promise<void> {
+  const webviewPanel = args[1];
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
     throw new Error(`本地不存在「${projectDir}」目录！`)
   }
   const newWindow = !!vscode.workspace.rootPath;
+  if (newWindow)
+    webviewPanel.dispose();
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), newWindow);
 }
 

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtensionConfiguration, Logger } from '@iceworks/common-service';
+import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
 
 // eslint-disable-next-line
@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
   logger.recordActivate(version);
 
   // auto set configuration
-  initExtensionConfiguration(globalState);
+  initExtension(globalState);
 
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '生成组件 - Iceworks', ViewColumn.One, {
@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel.webview, subscriptions, { services, logger });
+    connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(vscode.commands.registerCommand('iceworks-component-builder.generate', function () {
     activeWebview();

@@ -1,0 +1,12 @@
+{
+	"extends": "../../tsconfig.extension.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "build"
+	},
+	"exclude": [
+		"node_modules",
+		".vscode-test",
+		"web"
+	]
+}

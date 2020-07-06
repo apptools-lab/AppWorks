@@ -16,7 +16,7 @@ interface IConfig {
 }
 
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
-  const { extensionPath, subscriptions } = context;
+  const { extensionPath } = context;
   const { title, services } = config;
 
   const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', title, ViewColumn.One, {
@@ -24,10 +24,12 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
     retainContextWhenHidden: false,
   });
   webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-  connectService(webviewPanel.webview, subscriptions, services);
+  connectService(webviewPanel, context, services);
 }
 
-export function connectService(webview, subscriptions, { services, logger }) {
+export function connectService(webviewPanel: vscode.WebviewPanel, context: vscode.ExtensionContext, { services, logger }) {
+  const { subscriptions } = context;
+  const { webview } = webviewPanel;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -38,9 +40,17 @@ export function connectService(webview, subscriptions, { services, logger }) {
         try {
           logger.record({
             module: service,
-            action:method,
+            action: method,
           });
-          const result = args ? await api(...args) : await api();
+          // set the optional param to undefined 
+          const newArgs = args.concat(Array(api.length - args.length).fill(undefined));
+          /** 
+           how to get the context and webviewPanel params? for examples
+             api(arg1, ...args) {
+              const [context, webviewPanel] = args;
+             }
+          */
+          const result = await api(...newArgs, context, webviewPanel);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {

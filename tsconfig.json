@@ -11,6 +11,7 @@
     {"path": "packages/project-service"},
     {"path": "packages/material-service"},
     {"path": "packages/block-service"},
+    {"path": "packages/component-service"},
     {"path": "packages/page-service"},
   ]
 }
