@@ -5,7 +5,7 @@ English | [简体中文](./README.md)
 
 # Iceworks Material Import
 
-Import materials by a low-code way.
+Add materials to the application in a visual way.
 
 ## Usage
 

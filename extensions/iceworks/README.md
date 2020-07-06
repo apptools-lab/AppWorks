@@ -17,7 +17,7 @@
 - [创建组件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)：通过选择区块的方式生成组件
 - [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：在 JSX 进行行内样式编写时提供自动补全提醒
 - [物料使用辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：在 JSX 进行组件属性编写时提供自动补全提醒
-- [物料添加](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)：使用可视化的方式添加物料到应用中。
+- [物料添加](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)：使用可视化的方式添加物料到应用中
 - [应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：为应用的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能
 
 ## 快速使用
