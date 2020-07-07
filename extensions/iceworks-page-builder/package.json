@@ -89,15 +89,19 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web && npm run compile",
+    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "watch": "tsc -watch -p ./tsconfig.json",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
-    "@types/vscode": "^1.41.0"
+    "@types/vscode": "^1.41.0",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.3",
