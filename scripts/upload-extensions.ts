@@ -30,10 +30,12 @@ function upload(target, filePath) {
     });
 }
 
-export default function uploadExtesions(publishedExtensions: string[], production?: boolean) {
+// Beta publish only zip published extension.
+// Production publish should zip all extensions.
+export default function uploadExtesions(extensions: string[], production?: boolean) {
 
-  publishedExtensions.forEach((publishedExtension) => {
-    const info = publishedExtension.split(':');
+  extensions.forEach((extension) => {
+    const info = extension.split(':');
     const name = info[0];
     const version = info[1];
 
