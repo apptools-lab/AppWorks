@@ -30,14 +30,11 @@
 }
 
 .desc {
-  color: $color-text1-2;
-}
-
-.desc {
   font-size: 12px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: $color-text1-2;
 }
 
 .actions {
