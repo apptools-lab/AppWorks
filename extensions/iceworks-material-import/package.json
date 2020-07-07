@@ -3,7 +3,7 @@
   "displayName": "Iceworks Material Import",
   "description": "Quick import material in a visual way.",
   "publisher": "iceworks-team",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.41.0"
   },
