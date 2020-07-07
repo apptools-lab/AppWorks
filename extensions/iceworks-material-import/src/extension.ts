@@ -20,10 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
   initExtension(context);
   // init webview
   const columnToShowIn = vscode.window.activeTextEditor
-    ? ViewColumn.Two
+    ? ViewColumn.Beside
     : ViewColumn.One;
-  const layout = { orientation: 0, groups: [{ size: 0.8 }, { size: 0.2 }] };
-  vscode.commands.executeCommand('vscode.setEditorLayout', layout);
+
   function activeWebview() {
     const webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', { viewColumn: columnToShowIn, preserveFocus: true }, {
       enableScripts: true,
@@ -31,12 +30,10 @@ export function activate(context: vscode.ExtensionContext) {
       enableFindWidget: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    webviewPanel.onDidChangeViewState((e: vscode.WebviewPanelOnDidChangeViewStateEvent) => {
 
-    })
-    webviewPanel.onDidDispose(() => {
-      vscode.window.showInformationMessage('1234567890')
-    })
+    const layout = { orientation: 0, groups: [{ size: 0.75 }, { size: 0.25 }] };
+    vscode.commands.executeCommand('vscode.setEditorLayout', layout);
+
     connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(vscode.commands.registerCommand('iceworks-material-import.start', function () {
