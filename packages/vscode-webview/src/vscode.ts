@@ -42,9 +42,10 @@ export function connectService(webviewPanel: vscode.WebviewPanel, context: vscod
             module: service,
             action: method,
           });
-          // set the optional param to undefined 
-          const newArgs = args.concat(Array(api.length - args.length).fill(undefined));
-          /** 
+          // set the optional param to undefined
+          const fillApiArgLength = api.length - args.length;
+          const newArgs = fillApiArgLength > 0 ? args.concat(Array(fillApiArgLength).fill(undefined)) : args;
+          /**
            how to get the context and webviewPanel params? for examples
              api(arg1, ...args) {
               const [context, webviewPanel] = args;

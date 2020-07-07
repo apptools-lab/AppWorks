@@ -34,12 +34,18 @@ export const MaterialBlock: React.FC<{
       <h5 className={styles.title}>{dataSource.title}</h5>
       <div className={styles.actions}>
         <a
+          onClick={handleClick}
+          className={styles.button}
+        >
+          添加
+        </a>
+        <a
           href={dataSource.homepage}
           rel="noopener noreferrer"
           target="_blank"
           className={styles.button}
         >
-          Preview
+          预览
         </a>
         <a
           href={dataSource.repository}
@@ -47,7 +53,7 @@ export const MaterialBlock: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          Code
+          源码
         </a>
       </div>
     </div>

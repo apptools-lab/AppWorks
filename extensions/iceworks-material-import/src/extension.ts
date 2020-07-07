@@ -30,6 +30,10 @@ export function activate(context: vscode.ExtensionContext) {
       enableFindWidget: true,
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+
+    const layout = { orientation: 0, groups: [{ size: 0.75 }, { size: 0.25 }] };
+    vscode.commands.executeCommand('vscode.setEditorLayout', layout);
+
     connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(vscode.commands.registerCommand('iceworks-material-import.start', function () {
