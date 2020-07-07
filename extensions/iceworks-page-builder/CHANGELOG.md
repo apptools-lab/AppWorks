@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.8
+
+Fix open Settings.
+
 ## 0.1.7
 
 Fix docs typo.
