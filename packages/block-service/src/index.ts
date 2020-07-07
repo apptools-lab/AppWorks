@@ -1,7 +1,8 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
-import * as glob from 'glob';
+// import * as glob from 'glob';
+// import * as transfromTsToJs from 'sylvanas';
 import * as readFiles from 'fs-readdir-recursive';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
@@ -82,6 +83,22 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       const projectType = await getProjectLanguageType();
 
       console.log('blockType: ', blockType, 'projectType: ', projectType);
+
+      // TODO: transfrom ts to js	
+      // why? the package sylvanas depends on the eslint, which can't use webpack to bundle the extensions  
+      // if (blockType === 'ts' && projectType === 'js') {	
+      //   const files = glob.sync('**/*.@(ts|tsx)', {	
+      //     cwd: blockSourceSrcPath,	
+      //   });	
+
+      //   console.log('transfrom ts to js', files.join(','));	
+
+      //   transfromTsToJs(files, {	
+      //     cwd: blockSourceSrcPath,	
+      //     outDir: blockSourceSrcPath,	
+      //     action: 'overwrite',	
+      //   });	
+      // }
 
       await fsExtra.move(blockSourceSrcPath, blockDir);
       await fsExtra.remove(blockTempDir);
