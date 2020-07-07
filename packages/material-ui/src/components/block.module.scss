@@ -8,7 +8,7 @@
   position: relative;
   height: 100%;
   margin-bottom: 24px;
-  border: 1px solid $color-line1-1;
+  background-color: $color-other-5;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
@@ -50,7 +50,6 @@
 .title {
   margin: 0;
   padding: 10px;
-  border-top: 1px solid $color-line1-2;
   text-align: center;
 }
 

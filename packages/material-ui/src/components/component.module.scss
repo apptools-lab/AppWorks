@@ -5,12 +5,12 @@
   transition: transform 0.3s ease;
   display: block;
   cursor: pointer;
-  padding: 16px;
   text-align: left;
   overflow: hidden;
-  height: 100px;
-  margin-bottom: 14px;
-  border: 1px solid $color-line1-1;
+  height: 120px;
+  padding: 5px 20px;
+  margin-bottom: 24px;
+  background-color: $color-other-5;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
@@ -25,10 +25,13 @@
 }
 
 .title {
-  margin: 0 0 5px;
   height: 30px;
   line-height: 1.6;
   font-weight: 500;
+}
+
+.desc {
+  color: $color-text1-2;
 }
 
 .desc {
