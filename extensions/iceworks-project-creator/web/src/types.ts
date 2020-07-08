@@ -1,9 +1,10 @@
-import { IMaterialScaffold } from '@iceworks/material-utils';
+import { IMaterialScaffold, IMaterialSource } from '@iceworks/material-utils';
 
 export interface IProjectField {
   projectName: string;
   projectPath: string;
-  scaffold: IMaterialScaffold | null;
+  scaffold: IMaterialScaffold;
+  source: IMaterialSource;
   scaffoldType: string;
 }
 
@@ -27,4 +28,9 @@ export interface IGitLabGroup {
   'name': string;
   'path': string;
   'web_url': string;
+}
+
+export interface IScaffoldMarket {
+  mainScaffolds: IMaterialScaffold[],
+  otherScaffolds: IMaterialScaffold[]
 }
