@@ -1,5 +1,6 @@
 {
   "iceworksComponentBuilder.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具.",
   "iceworksComponentBuilder.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
-  "iceworksComponentBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。"
+  "iceworksComponentBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。",
+  "iceworksComponentBuilder.commands.generate.title": "Iceworks: 生成页面"
 }

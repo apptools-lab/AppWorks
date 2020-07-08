@@ -31,7 +31,7 @@
     "commands": [
       {
         "command": "iceworks-page-builder.create",
-        "title": "Iceworks: Create Page"
+        "title": "%iceworksPageBuilder.commands.create.title%"
       }
     ],
     "configuration": {
