@@ -11,10 +11,11 @@ import {
   checkPathExists
 } from '@iceworks/common-service';
 import { dependencyDir } from '@iceworks/project-service';
-import executeCommand from '../command/executeCommand';
-import { NodeDepTypes, ITerminalMap } from '../types';
+import executeCommand from '../commands/executeCommand';
+import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
-
+import showDepsInputBox from '../inputBoxs/showDepsInputBox';
+import showDepsQuickPick from '../quickPicks/showDepsQuickPick';
 
 const rimrafAsync = util.promisify(rimraf);
 
@@ -196,38 +197,15 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     }
   });
 
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => addDepCommandHandler(terminals, nodeDependenciesProvider)));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
+  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => showDepsQuickPick(terminals, nodeDependenciesProvider)));
 
   const pattern = path.join(rootPath, dependencyDir);
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
   fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());
-}
-
-export function addDepCommandHandler(terminals: ITerminalMap, nodeDependenciesInstance: any) {
-  const quickPick = vscode.window.createQuickPick();
-  quickPick.items = nodeDepTypes.map(label => ({ label, detail: `Install ${label}` }));
-  quickPick.onDidChangeSelection(selection => {
-    if (selection[0]) {
-      showDepInputBox(terminals, nodeDependenciesInstance, selection[0].label as NodeDepTypes)
-        .catch(console.error);
-    }
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-};
-
-async function showDepInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
-  const result = await vscode.window.showInputBox({
-    placeHolder: 'Please input the module name you want to install. For example lodash / loadsh@latest',
-  });
-  if (!result) {
-    return;
-  }
-  executeCommand(terminals, nodeDependenciesInstance.getAddDependencyScript(depType, result));
 }
 
 function toDep(extensionContext: vscode.ExtensionContext, workspaceDir: string, moduleName: string, version: string, outdated: boolean) {

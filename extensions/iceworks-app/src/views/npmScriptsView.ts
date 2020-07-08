@@ -3,8 +3,8 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand, checkPathExists } from '@iceworks/common-service';
 import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
-import executeCommand from '../command/executeCommand';
-import stopCommand from '../command/stopCommand';
+import executeCommand from '../commands/executeCommand';
+import stopCommand from '../commands/stopCommand';
 import { ITerminalMap } from '../types';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {

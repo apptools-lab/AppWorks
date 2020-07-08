@@ -10,7 +10,7 @@ import { createPagesTreeProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
-import showExtensionsQuickPick from './quickPick/showExtensionsQuickPick';
+import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 
 // eslint-disable-next-line
