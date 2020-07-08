@@ -3,23 +3,23 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists } from '@iceworks/common-service';
 import { pagesPath } from '@iceworks/project-service';
-import { openEntryFile } from '../utils';
+import openEntryFile from '../openEntryFile';
 
-export class PagesProvider implements vscode.TreeDataProvider<PageNode> {
+export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<PageNode | undefined> = new vscode.EventEmitter<PageNode | undefined>();
+  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<PageTreeItem | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<PageNode | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
 
-  getTreeItem(element: PageNode): vscode.TreeItem {
+  getTreeItem(element: PageTreeItem): vscode.TreeItem {
     return element;
   }
 
@@ -50,7 +50,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageNode> {
           title: 'Open File',
           arguments: [pageEntryPath]
         };
-        return new PageNode(this.extensionContext, pageName, command);
+        return new PageTreeItem(this.extensionContext, pageName, command);
       };
       const dirNames = await fse.readdir(pagesPath);
       // except the file
@@ -65,7 +65,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageNode> {
   }
 }
 
-class PageNode extends vscode.TreeItem {
+class PageTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,

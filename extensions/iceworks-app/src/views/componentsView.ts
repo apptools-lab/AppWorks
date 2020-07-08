@@ -3,16 +3,16 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists } from '@iceworks/common-service';
 import { componentsPath } from '@iceworks/project-service';
-import { openEntryFile } from '../utils';
+import openEntryFile from '../openEntryFile';
 
-class ComponentsProvider implements vscode.TreeDataProvider<ComponentNode> {
+class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<ComponentNode | undefined> = new vscode.EventEmitter<ComponentNode | undefined>();
+  private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<ComponentTreeItem | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<ComponentNode | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -23,7 +23,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentNode> {
     this.onDidChange.fire(undefined);
   }
 
-  getTreeItem(element: ComponentNode): vscode.TreeItem {
+  getTreeItem(element: ComponentTreeItem): vscode.TreeItem {
     return element;
   }
 
@@ -32,41 +32,51 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentNode> {
       return Promise.resolve([]);
     }
     const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
-    if (await checkPathExists(componentsPath)) {
-      const components = this.getComponents(componentsPath);
-      return Promise.resolve(components);
-    } else {
+    try {
+      const isComponentPathExists = await checkPathExists(componentsPath);
+      if (isComponentPathExists) {
+        const components = this.getComponents(componentsPath);
+        return Promise.resolve(components);
+      } else {
+        return Promise.resolve([]);
+      }
+    } catch (error) {
       return Promise.resolve([]);
     }
   }
 
   private async getComponents(componentsPath: string) {
-    if (await checkPathExists(componentsPath)) {
-      const toComponent = (componentName: string) => {
-        const pageEntryPath = path.join(componentsPath, componentName);
+    try {
+      const isComponentPathExists = await checkPathExists(componentsPath);
+      if (isComponentPathExists) {
+        const toComponent = (componentName: string) => {
+          const pageEntryPath = path.join(componentsPath, componentName);
 
-        const command: vscode.Command = {
-          command: 'iceworksApp.components.openFile',
-          title: 'Open File',
-          arguments: [pageEntryPath]
+          const command: vscode.Command = {
+            command: 'iceworksApp.components.openFile',
+            title: 'Open File',
+            arguments: [pageEntryPath]
+          };
+
+          return new ComponentTreeItem(this.extensionContext, componentName, command);
         };
-
-        return new ComponentNode(this.extensionContext, componentName, command);
-      };
-      const dirNames = await fse.readdir(componentsPath);
-      // except file
-      const componentNames = dirNames.filter(dirname => {
-        const stat = fse.statSync(path.join(componentsPath, dirname));
-        return stat.isDirectory();
-      });
-      return componentNames.map(componentName => toComponent(componentName));
-    } else {
+        const dirNames = await fse.readdir(componentsPath);
+        // except file
+        const componentNames = dirNames.filter(dirname => {
+          const stat = fse.statSync(path.join(componentsPath, dirname));
+          return stat.isDirectory();
+        });
+        return componentNames.map(componentName => toComponent(componentName));
+      } else {
+        return [];
+      }
+    } catch (e) {
       return [];
     }
   }
 }
 
-class ComponentNode extends vscode.TreeItem {
+class ComponentTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,

@@ -3,24 +3,25 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand, checkPathExists } from '@iceworks/common-service';
 import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
-import { executeCommand, stopCommand } from '../utils';
+import executeCommand from '../command/executeCommand';
+import stopCommand from '../command/stopCommand';
 import { ITerminalMap } from '../types';
 
-export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptNode> {
+export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<ScriptNode | undefined> = new vscode.EventEmitter<ScriptNode | undefined>();
+  private onDidChange: vscode.EventEmitter<ScriptTreeItem | undefined> = new vscode.EventEmitter<ScriptTreeItem | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<ScriptNode | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ScriptTreeItem | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
 
-  getTreeItem(element: ScriptNode): vscode.TreeItem {
+  getTreeItem(element: ScriptTreeItem): vscode.TreeItem {
     return element;
   }
 
@@ -44,13 +45,13 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptNode> {
     if (await checkPathExists(packageJsonPath)) {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
 
-      const toScript = (scriptName: string, scriptCommand: string, id: string): ScriptNode => {
+      const toScript = (scriptName: string, scriptCommand: string, id: string): ScriptTreeItem => {
         const command: vscode.Command = {
           command: 'iceworksApp.npmScripts.run',
           title: 'Run Script',
           arguments: [this.workspaceRoot, createNpmCommand('run', scriptName)]
         };
-        return new ScriptNode(
+        return new ScriptTreeItem(
           this.extensionContext,
           scriptName,
           scriptCommand,
@@ -69,7 +70,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptNode> {
   }
 }
 
-export class ScriptNode extends vscode.TreeItem {
+export class ScriptTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
@@ -94,7 +95,7 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
 
   const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-  vscode.commands.registerCommand('iceworksApp.npmScripts.run', async (script: ScriptNode) => {
+  vscode.commands.registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
     if (!await checkPathExists(rootPath, dependencyDir)) {
       script.command.arguments = [rootPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`]
       executeCommand(terminals, script.command, script.id);
@@ -102,7 +103,7 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
     }
     executeCommand(terminals, script.command, script.id);
   });
-  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: ScriptNode) => stopCommand(terminals, script.id));
+  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(terminals, script.id));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
   const pattern = path.join(rootPath, packageJSONFilename);
