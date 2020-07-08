@@ -43,6 +43,16 @@ function checkPackagePublished() {
     })
   }));
 }
+ 
+function packExtension(extension: string, directory: string, version: string) {
+  console.log('[VSCE] PACK: ', `${extension}@${version}`);
+  spawnSync('vsce', [
+    'package',
+  ], {
+    stdio: 'inherit',
+    cwd: directory,
+  });
+}
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce publish
@@ -66,9 +76,15 @@ checkPackagePublished().then(() => {
 
     // Publish
     let publishedCount = 0;
+    const extensions = [];
     const publishedExtensions = [];
     for (let i = 0; i < extensionInfos.length; i++) {
       const { name, directory, localVersion, shouldPublish } = extensionInfos[i];
+      // Production publish should zip all extensions.
+      // Pack extension first.
+      extensions.push(`${name}:${localVersion}`);
+      packExtension(name, directory, localVersion);
+
       if (shouldPublish) {
         publishedCount++;
         console.log(`--- ${name}@${localVersion} ---`);
@@ -76,7 +92,7 @@ checkPackagePublished().then(() => {
         publishedExtensions.push(`${name}:${localVersion}`);
       }
     }
-    uploadExtesions(publishedExtensions, true);
+    uploadExtesions(extensions, true);
     console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
   });

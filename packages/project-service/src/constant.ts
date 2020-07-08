@@ -10,6 +10,7 @@ export const COMPONENT_DIR_NAME = 'components';
 export const dependencyDir = 'node_modules';
 export const packageJSONFilename = 'package.json';
 export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
+export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
 export const generatorCreatetaskUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/createtask';
 export const generatorTaskResultUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/task';

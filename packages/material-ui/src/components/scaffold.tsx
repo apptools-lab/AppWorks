@@ -59,7 +59,7 @@ export const MaterialScaffold: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          Preview
+          预览
         </a>
         <a
           href={dataSource.repository}
@@ -67,7 +67,7 @@ export const MaterialScaffold: React.FC<{
           target="_blank"
           className={styles.button}
         >
-          Code
+          源码
         </a>
         {
           hiddenDownloadButton ? null : <a className={styles.button} onClick={handleDownload}>Download</a>

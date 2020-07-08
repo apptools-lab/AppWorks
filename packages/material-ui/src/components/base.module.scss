@@ -6,9 +6,10 @@
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  height: 100%;
+  height: 120px;
+  padding: 5px 20px;
   margin-bottom: 24px;
-  border: 1px solid $color-line1-1;
+  background-color: #252422;
   &:hover {
     text-decoration: none;
     transform: translateY(-6px);
@@ -40,7 +41,10 @@
 .title {
   margin: 0;
   padding: 10px 0;
-  border-top: 1px solid #4d4f61;
+}
+
+.desc {
+  color: $color-text1-2;
 }
 
 .actions {
@@ -61,8 +65,8 @@
     align-items: center;
     justify-content: center;
     width: 50%;
-    height: 45px;
-    line-height: 45px;
+    height: 35px;
+    line-height: 35px;
     font-size: 14px;
     font-weight: bold;
     background: $color-fill1-3;

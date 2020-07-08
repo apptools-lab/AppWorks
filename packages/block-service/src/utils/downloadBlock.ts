@@ -1,18 +1,12 @@
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
-import * as vscode from 'vscode';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import { IMaterialBlock, getTarballURLByMaterielSource } from '@iceworks/material-utils';
-import { getIceVersion, packageJSONFilename, getPackageJSON } from '@iceworks/project-service';
-
-const { workspace } = vscode;
-
-const projectPath = workspace.rootPath!;
-const packagePath = path.join(projectPath, packageJSONFilename);
+import { getIceVersion, getPackageJSON, packageJSONPath } from '@iceworks/project-service';
 
 export async function downloadBlock(block: IMaterialBlock, targetDir: string, log: (text: string) => void): Promise<string> {
   const { name: blockName, source, repository } = block;
-  const projectPackageJSON = await getPackageJSON(packagePath);
+  const projectPackageJSON = await getPackageJSON(packageJSONPath);
   await fsExtra.mkdirp(targetDir);
 
   const iceVersion: string = getIceVersion(projectPackageJSON);

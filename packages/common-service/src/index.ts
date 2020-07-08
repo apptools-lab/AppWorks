@@ -39,7 +39,9 @@ export function getDataFromSettingJson(section: string, defaultValue?: any): any
 }
 
 export function executeCommand(...arg: any[]) {
-  return vscode.commands.executeCommand.apply(null, arg);
+  // TODO Parameter type judgment
+  const reset = arg.length > 2 ? arg.slice(0, arg.length - 2) : arg;
+  return vscode.commands.executeCommand.apply(null, reset);
 }
 
 export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {
