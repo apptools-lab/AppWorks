@@ -14,7 +14,6 @@ const projectTypes = ['react', 'rax', 'vue'];
 
 const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenConfigPanel, materialSources }) => {
   const [selectedSource, setSelectedSource] = useState<any>({});
-  // const [selectedScaffold, setSelectedScaffold] = useState<any>();
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +34,6 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
   }
 
   function onScaffoldClick(scaffold) {
-    // setSelectedScaffold(scaffold);
     onScaffoldSelect(selectedSource, scaffold);
   }
 
@@ -89,12 +87,18 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
         <div className={styles.scaffoldsSource}>
           <div className={styles.sourcesList}>
             {materialSources && materialSources.map(item => {
+              let iconName = 'app';
               const projectType = item.type.toLocaleLowerCase();
+              if (item.client) {
+                iconName = item.client.toLocaleLowerCase();
+              } else if (projectTypes.includes(projectType)) {
+                iconName = projectType;
+              }
               return <ScaffoldCard
                 key={item.name}
                 title={
                   <div className={styles.cardTitle}>
-                    {<img src={require(`@/assets/${projectTypes.includes(projectType) ? projectType + '.svg' : 'logo.png'}`)} alt="projectType" width={25} height={25} />}
+                    {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
                     <div >{item.name}</div>
                   </div>
                 }
