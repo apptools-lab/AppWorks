@@ -194,6 +194,27 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "iceworksApp.nodeDependencies.reinstall"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.dependencies.add"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.devDependencies.add"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "iceworks-material-import.start",
+          "group": "iceworksApp",
+          "when": "editorTextFocus"
+        }
+      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",
