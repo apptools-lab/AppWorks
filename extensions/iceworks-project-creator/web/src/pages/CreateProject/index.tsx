@@ -73,9 +73,6 @@ const CreateProject: React.FC = () => {
   };
 
   function goPrev() {
-    // if (currentStep === 1) {
-    //   setCurProjectField({ ...curProjectField, scaffold: null });
-    // }
     setStep(currentStep - 1);
   };
 
