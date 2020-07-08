@@ -31,6 +31,6 @@ export interface IGitLabGroup {
 }
 
 export interface IScaffoldMarket {
-  mainScaffolds: IMaterialScaffold[],
-  otherScaffolds: IMaterialScaffold[]
+  mainScaffolds: IMaterialScaffold[];
+  otherScaffolds: IMaterialScaffold[];
 }
