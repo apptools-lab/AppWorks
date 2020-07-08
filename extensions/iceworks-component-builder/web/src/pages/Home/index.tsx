@@ -4,6 +4,14 @@ import Material from '@iceworks/material-ui';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
+async function onSettingsClick() {
+  try {
+    await callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
+  } catch (e) {
+    Notification.error({ content: e.message });
+  }
+}
+
 async function getSources() {
   let sources = [];
   try {
@@ -108,6 +116,7 @@ const Home = () => {
             <Material
               disableLazyLoad
               getSources={getSources}
+              onSettingsClick={onSettingsClick}
               getData={getData}
               onBlockClick={onSelect}
               selectedBlocks={selectedBlock ? [selectedBlock] : []}
