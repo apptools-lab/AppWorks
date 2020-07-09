@@ -240,13 +240,6 @@
           "group": "navigation@99"
         }
       ],
-      "editor/context": [
-        {
-          "command": "iceworks-material-import.start",
-          "group": "iceworksApp",
-          "when": "editorTextFocus && iceworks:isJSXFile"
-        }
-      ],
       "view/item/context": [
         {
           "command": "iceworksApp.npmScripts.executeCommand",
