@@ -8,6 +8,7 @@
   "iceworksApp.viewsWelcome.pages.contents": "没找到页面。",
   "iceworksApp.viewsWelcome.components.contents": "没找到组件。",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "没找到依赖。",
+  "iceworksApp.commands.materialImport.start.title": "Iceworks: 添加物料",
   "iceworksApp.npmScripts.refresh.title": "刷新",
   "iceworksApp.npmScripts.executeCommand.title": "运行",
   "iceworksApp.pages.add.title": "添加页面",

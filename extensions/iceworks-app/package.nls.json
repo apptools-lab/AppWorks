@@ -8,6 +8,7 @@
   "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found.",
   "iceworksApp.viewsWelcome.components.contents": "Components could not be found.",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json.",
+  "iceworksApp.commands.materialImport.start.title": "Iceworks: Import Material",
   "iceworksApp.npmScripts.refresh.title": "Refresh",
   "iceworksApp.npmScripts.executeCommand.title": "Run",
   "iceworksApp.pages.add.title": "Add Pages",
