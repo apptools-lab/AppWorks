@@ -29,12 +29,12 @@
 .main {
   display: flex;
   flex-direction: column;
-  height: 88vh;
+  height: calc(100vh - 100px);
 
   .search {
     margin: 0 12px;
     position: sticky;
-    top: 98px;
+    top: 100px;
 
     :global(.next-search) {
       width: 100%;
@@ -51,7 +51,7 @@
     .scroll {
       overflow-y: auto;
       overflow-x: hidden;
-      height: calc(100vh - 100px);
+      height: 100%;
 
       // IDE 里面有默认样式，这里重写
       &::-webkit-scrollbar {
