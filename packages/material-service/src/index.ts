@@ -20,7 +20,7 @@ const OFFICAL_MATERIAL_SOURCES = [
   {
     name: '无线跨端',
     type: 'rax',
-    client: 'mobile',
+    client: 'wireless',
     source: 'https://ice.alicdn.com/assets/materials/rax-materials.json',
     description: '基于 Rax 组件和 Rax 脚手架的官方物料'
   }
