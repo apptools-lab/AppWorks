@@ -5,6 +5,14 @@ import Material from '@iceworks/material-ui';
 import { IMaterialData, IMaterialBlock, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
 
 const MaterialsPane: React.FC<any> = () => {
+  async function onSettingsClick() {
+    try {
+      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   async function getSources() {
     let sources = [];
     try {
@@ -53,6 +61,7 @@ const MaterialsPane: React.FC<any> = () => {
   return (
     <Material
       disableLazyLoad
+      onSettingsClick={onSettingsClick}
       getSources={getSources}
       getData={getData}
       onBlockClick={onBlockClick}

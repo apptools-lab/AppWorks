@@ -1,4 +1,4 @@
-@import '~@alifd/next/lib/core/index.scss';
+@import "~@alifd/next/lib/core/index.scss";
 
 .spin {
   width: 100%;
@@ -12,6 +12,8 @@
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
+    position: sticky;
+    top: 56px;
   }
 
   .empty {
@@ -27,10 +29,12 @@
 .main {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 88vh;
 
   .search {
     margin: 0 12px;
+    position: sticky;
+    top: 98px;
 
     :global(.next-search) {
       width: 100%;
@@ -39,7 +43,6 @@
   .content {
     margin: 0 12px;
     margin-top: 18px;
-    border: 1px solid $color-line1-3;
     border-radius: 2px;
     padding: 6px;
     flex: 1;
@@ -48,7 +51,7 @@
     .scroll {
       overflow-y: auto;
       overflow-x: hidden;
-      height: 100%;
+      height: calc(100vh - 100px);
 
       // IDE 里面有默认样式，这里重写
       &::-webkit-scrollbar {
