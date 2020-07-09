@@ -208,13 +208,6 @@
           "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
         }
       ],
-      "editor/context": [
-        {
-          "command": "iceworks-material-import.start",
-          "group": "iceworksApp",
-          "when": "editorTextFocus"
-        }
-      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",
