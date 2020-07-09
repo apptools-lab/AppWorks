@@ -8,7 +8,6 @@
   "iceworksApp.viewsWelcome.pages.contents": "未找到页面。",
   "iceworksApp.viewsWelcome.components.contents": "未找到组件。",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "未找到依赖。",
-  "iceworksApp.command.configHelper.start.title": "Iceworks: 设置",
   "iceworksApp.command.npmScripts.refresh.title": "刷新",
   "iceworksApp.command.npmScripts.executeCommand.title": "运行",
   "iceworksApp.command.pages.add.title": "添加页面",

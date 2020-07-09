@@ -93,10 +93,6 @@
         "title": "%iceworksApp.command.configHelper.start.title%"
       },
       {
-        "command": "iceworks-material-import.start",
-        "title": "%iceworksApp.commands.materialImport.start.title%"
-      },
-      {
         "command": "iceworksApp.npmScripts.refresh",
         "title": "%iceworksApp.command.npmScripts.refresh.title%",
         "icon": {
