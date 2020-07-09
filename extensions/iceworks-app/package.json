@@ -90,7 +90,7 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "Iceworks: Set Configuration"
+        "title": "%iceworksApp.command.configHelper.start.title%"
       },
       {
         "command": "iceworks-material-import.start",
@@ -98,7 +98,7 @@
       },
       {
         "command": "iceworksApp.npmScripts.refresh",
-        "title": "%iceworksApp.npmScripts.refresh.title%",
+        "title": "%iceworksApp.command.npmScripts.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -106,7 +106,7 @@
       },
       {
         "command": "iceworksApp.npmScripts.executeCommand",
-        "title": "%iceworksApp.npmScripts.executeCommand.title%",
+        "title": "%iceworksApp.command.npmScripts.executeCommand.title%",
         "icon": {
           "light": "assets/light/run.svg",
           "dark": "assets/dark/run.svg"
@@ -114,7 +114,7 @@
       },
       {
         "command": "iceworksApp.pages.add",
-        "title": "%iceworksApp.pages.add.title%",
+        "title": "%iceworksApp.command.pages.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -122,7 +122,7 @@
       },
       {
         "command": "iceworksApp.pages.refresh",
-        "title": "%iceworksApp.pages.refresh.title%",
+        "title": "%iceworksApp.command.pages.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -130,11 +130,11 @@
       },
       {
         "command": "iceworksApp.pages.openFile",
-        "title": "%iceworksApp.pages.openFile.title%"
+        "title": "%iceworksApp.command.pages.openFile.title%"
       },
       {
         "command": "iceworksApp.components.add",
-        "title": "%iceworksApp.components.add.title%",
+        "title": "%iceworksApp.command.components.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -142,7 +142,7 @@
       },
       {
         "command": "iceworksApp.components.refresh",
-        "title": "%iceworksApp.components.refresh.title%",
+        "title": "%iceworksApp.command.components.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -150,7 +150,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
-        "title": "%iceworksApp.nodeDependencies.addDepsAndDevDeps.title%",
+        "title": "%iceworksApp.command.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -158,7 +158,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.reinstall",
-        "title": "%iceworksApp.nodeDependencies.reinstall.title%",
+        "title": "%iceworksApp.command.nodeDependencies.reinstall.title%",
         "icon": {
           "light": "assets/light/install.svg",
           "dark": "assets/dark/install.svg"
@@ -166,7 +166,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.refresh",
-        "title": "%iceworksApp.nodeDependencies.refresh.title%",
+        "title": "%iceworksApp.command.nodeDependencies.refresh.title%",
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
@@ -174,7 +174,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.dependencies.add",
-        "title": "%iceworksApp.nodeDependencies.dependencies.add.title%",
+        "title": "%iceworksApp.command.nodeDependencies.dependencies.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -182,7 +182,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.devDependencies.add",
-        "title": "%iceworksApp.nodeDependencies.devDependencies.add.title%",
+        "title": "%iceworksApp.command.nodeDependencies.devDependencies.add.title%",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -190,7 +190,7 @@
       },
       {
         "command": "iceworksApp.nodeDependencies.upgrade",
-        "title": "%iceworksApp.nodeDependencies.upgrade.title%",
+        "title": "%iceworksApp.command.nodeDependencies.upgrade.title%",
         "icon": {
           "light": "assets/light/upgrade.svg",
           "dark": "assets/dark/upgrade.svg"
@@ -198,6 +198,20 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "iceworksApp.nodeDependencies.reinstall"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.dependencies.add"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.devDependencies.add"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
+        }
+      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",
