@@ -3,8 +3,17 @@ import { Notification } from '@alifd/next';
 import callService from '@/callService';
 import Material from '@iceworks/material-ui';
 import { IMaterialData, IMaterialBlock, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
+import styles from './index.module.scss';
 
 const MaterialsPane: React.FC<any> = () => {
+  async function onSettingsClick() {
+    try {
+      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   async function getSources() {
     let sources = [];
     try {
@@ -51,15 +60,18 @@ const MaterialsPane: React.FC<any> = () => {
     }
   }
   return (
-    <Material
-      disableLazyLoad
-      getSources={getSources}
-      getData={getData}
-      onBlockClick={onBlockClick}
-      onBaseClick={onBaseClick}
-      onComponentClick={onComponentClick}
-      dataWhiteList={['bases', 'blocks', 'components']}
-    />
+    <div className={styles.container}>
+      <Material
+        disableLazyLoad
+        onSettingsClick={onSettingsClick}
+        getSources={getSources}
+        getData={getData}
+        onBlockClick={onBlockClick}
+        onBaseClick={onBaseClick}
+        onComponentClick={onComponentClick}
+        dataWhiteList={['bases', 'blocks', 'components']}
+      />
+    </div>
   )
 }
 
