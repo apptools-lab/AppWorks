@@ -3,7 +3,7 @@
   "displayName": "Iceworks Material Import",
   "description": "Quick import material in a visual way.",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -33,7 +33,16 @@
         "command": "iceworks-material-import.start",
         "title": "%iceworksMaterialImport.commands.start.title%"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "iceworks-material-import.start",
+          "group": "iceworksMaterialImport",
+          "when": "editorTextFocus && iceworks:isJSXFile"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",

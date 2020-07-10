@@ -68,6 +68,10 @@ export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
       if (editor) {
+        const fsPath = editor.document.uri.fsPath;
+        const isJSXFile = fsPath.match(/^.*\.(jsx?|tsx)$/g);
+        vscode.commands.executeCommand('setContext', 'iceworks:isJSXFile', isJSXFile);
+
         // save active text editor id
         const { id } = editor as any;
         console.log('activeTextEditor Id', id);
