@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/material-service",
-  "version": "0.2.0",
+  "version": "0.1.8",
   "description": "Iceworks material service for VSCode extension.",
   "files": [
     "lib"
