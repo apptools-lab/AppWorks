@@ -6,7 +6,6 @@ import { pagesPath, COMPONENT_DIR_NAME } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
-// import { templateFileName } from './constant';
 
 /**
  * Generate page code based on blocks
@@ -57,7 +56,6 @@ export default function () {
       pageName,
     });
 
-    // const fileName = templateFileName.replace(/template/g, 'index').replace(/\.ejs$/g, '');
     const fileName = 'index.jsx';
     const dist = path.join(pagePath, fileName);
     const rendered = prettier.format(fileContent, {
