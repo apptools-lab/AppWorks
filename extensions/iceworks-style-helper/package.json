@@ -15,7 +15,10 @@
     "Rax",
     "React",
     "JSX",
-    "Inline Style"
+    "Inline Style",
+    "Style",
+    "CSS",
+    "ClassName"    
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
