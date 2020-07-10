@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME } from '@iceworks/project-service';
+import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
@@ -56,7 +56,7 @@ export default function () {
       pageName,
     });
 
-    const fileName = 'index.jsx';
+    const fileName = `index.${getProjectLanguageType()}x`;
     const dist = path.join(pagePath, fileName);
     const rendered = prettier.format(fileContent, {
       singleQuote: true,
