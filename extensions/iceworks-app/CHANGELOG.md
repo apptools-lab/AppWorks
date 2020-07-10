@@ -1,9 +1,5 @@
 # Change Log
 
-## 0.2.0
-
-- feat: quick activate iceworks-material-import extensions by editor context
-
 ## 0.1.34
 
 - feat: add Iceworks status bar entry
