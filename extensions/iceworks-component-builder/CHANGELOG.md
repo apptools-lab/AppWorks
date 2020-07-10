@@ -2,7 +2,7 @@
 
 ## 0.1.9
 
-Use webpack to bundle the extension.
+Use webpack to build this extension.
 
 ## 0.1.8
 
