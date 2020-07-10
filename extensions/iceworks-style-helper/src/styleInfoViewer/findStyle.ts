@@ -30,9 +30,9 @@ export function findStyle(directory: string, className: string, styleDependencie
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     const file = path.join(directory, styleDependencies[i].source);
     const stylesheet = css.parse(fs.readFileSync(file, 'utf-8')).stylesheet;
-
-    matched = stylesheet.rules.find(rule => rule.selectors.includes(`.${className}`));
-
+    
+    matched = stylesheet.rules.find(rule => rule.selectors && rule.selectors.includes(`.${className}`));
+    
     // Just find one matched stylesheet.
     if (matched) {
       matched.file = file;

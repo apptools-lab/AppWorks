@@ -3,7 +3,7 @@
   "displayName": "Iceworks Pack",
   "description": "Universal Application Development Pack, using low-code technology.",
   "publisher": "iceworks-team",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.41.0"
   },

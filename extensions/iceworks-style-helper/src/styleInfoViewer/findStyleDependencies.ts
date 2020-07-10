@@ -2,6 +2,8 @@ import * as fs from 'fs';
 import * as babelParser from '@babel/parser';
 import traverse from '@babel/traverse';
 
+const supportFiles = ['css', 'scss', 'sass'];
+
 // import styles from './xxx.css'; -> { source: './xxx.css', identifier: 'styles' }
 // import './xxx.css'; -> { source: './xxx.css', identifier: null }
 export interface IStyleDependency {
@@ -23,7 +25,8 @@ export function findStyleDependencies(file: string) {
     traverse(ast, {
       ImportDeclaration(path) {
         const { node } = path;
-        if (/\.css$/i.test(node.source.value)) {
+        // Example /\.css$|\.scss$|\.sass$/
+        if (new RegExp(`${supportFiles.map(supportFile => `\\.${supportFile}$`).join('|')}`, 'i').test(node.source.value)) {
           StyleDependencies.push({
             source: node.source.value,
             // Just return first identifier.

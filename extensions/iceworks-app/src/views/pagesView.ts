@@ -1,23 +1,25 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { pathExists, openEntryFile } from '../utils';
+import { checkPathExists } from '@iceworks/common-service';
+import { pagesPath } from '@iceworks/project-service';
+import openEntryFile from '../openEntryFile';
 
-export class PagesProvider implements vscode.TreeDataProvider<Page> {
+export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<Page | undefined> = new vscode.EventEmitter<Page | undefined>();
+  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<PageTreeItem | undefined>();
 
-  readonly onDidChangeTreeData: vscode.Event<Page | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
 
-  getTreeItem(element: Page): vscode.TreeItem {
+  getTreeItem(element: PageTreeItem): vscode.TreeItem {
     return element;
   }
 
@@ -25,12 +27,12 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
     this.onDidChange.fire(undefined);
   }
 
-  getChildren() {
+  async getChildren() {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
     const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');
-    if (pathExists(pagesPath)) {
+    if (await checkPathExists(pagesPath)) {
       const pages = this.getPages(pagesPath);
       return Promise.resolve(pages);
     } else {
@@ -39,16 +41,16 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
   }
 
   private async getPages(pagesPath: string) {
-    if (pathExists(pagesPath)) {
+    if (await checkPathExists(pagesPath)) {
       const toPage = (pageName: string) => {
         const pageEntryPath = path.join(pagesPath, pageName);
 
-        const cmdObj: vscode.Command = {
+        const command: vscode.Command = {
           command: 'iceworksApp.pages.openFile',
           title: 'Open File',
           arguments: [pageEntryPath]
         };
-        return new Page(this.extensionContext, pageName, cmdObj);
+        return new PageTreeItem(this.extensionContext, pageName, command);
       };
       const dirNames = await fse.readdir(pagesPath);
       // except the file
@@ -63,11 +65,11 @@ export class PagesProvider implements vscode.TreeDataProvider<Page> {
   }
 }
 
-class Page extends vscode.TreeItem {
+class PageTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
-    public readonly command?: vscode.Command
+    public readonly command: vscode.Command
   ) {
     super(label);
   }
@@ -89,4 +91,10 @@ export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPa
   });
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
+
+  const pattern = path.join(pagesPath);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  fileWatcher.onDidChange(() => pagesProvider.refresh());
+  fileWatcher.onDidCreate(() => pagesProvider.refresh());
+  fileWatcher.onDidDelete(() => pagesProvider.refresh());
 }

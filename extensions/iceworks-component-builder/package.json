@@ -31,7 +31,7 @@
     "commands": [
       {
         "command": "iceworks-component-builder.generate",
-        "title": "Iceworks: Generate Component"
+        "title": "%iceworksComponentBuilder.commands.generate.title%"
       }
     ],
     "configuration": {
