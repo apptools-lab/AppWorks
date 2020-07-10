@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.7
+
+- docs: update sample image
+
 ## 0.1.6
 
 - feat: add [iceworks-config-helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
