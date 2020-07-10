@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
     activeWebview();
   }));
 
-  const stateKey = 'iceworks.projectCreator.autoActiveWebview';
+  const stateKey = 'iceworks.projectCreator.autoActivedWebview';
   if (!globalState.get(stateKey)) {
     activeWebview();
     globalState.update(stateKey, true);
