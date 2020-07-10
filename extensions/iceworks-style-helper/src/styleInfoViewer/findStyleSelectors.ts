@@ -14,10 +14,12 @@ export default function findStyleSelectors(directory: string, styleDependencies:
 
     // eslint-disable-next-line
     stylesheet.rules.forEach((rule: IStyle) => {
-      selectors = selectors.concat(rule.selectors);
+      if (rule.selectors) {
+        selectors = selectors.concat(rule.selectors);
+      }
     });
   }
-
+  
   return selectors;
 };
 

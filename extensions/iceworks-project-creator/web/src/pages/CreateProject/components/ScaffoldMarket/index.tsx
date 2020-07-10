@@ -7,13 +7,13 @@ import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
+import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 
 const projectTypes = ['react', 'rax', 'vue'];
 
-const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materialSources }) => {
+const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenConfigPanel, materialSources }) => {
   const [selectedSource, setSelectedSource] = useState<any>({});
-  const [SelectedMaterial, setSelectedMaterial] = useState(null);
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +26,6 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
       const { mainScaffolds, otherScaffolds } = data as any;
       setMainScaffolds(mainScaffolds);
       setOtherScaffolds(otherScaffolds);
-      setSelectedMaterial(null);
     } catch (err) {
       // ignore
     } finally {
@@ -34,12 +33,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
     }
   }
 
-  function onScaffoldMaterialClick(scaffold) {
-    setSelectedMaterial(scaffold.name);
-    onScaffoldSelect(scaffold);
+  function onScaffoldClick(scaffold) {
+    onScaffoldSelect(selectedSource, scaffold);
   }
 
-  async function getScaffolds(source: string) {
+  async function getScaffolds(source: string): Promise<IScaffoldMarket> {
     try {
       const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
       let main = scaffolds.filter(scaffold => mainScaffoldsList.includes(scaffold.source.npm));
@@ -61,13 +59,18 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
       if (!materialSources.length) {
         return;
       }
-      setSelectedSource(materialSources[0]);
-      const source = materialSources[0].source;
+      const selectedSource = curProjectField.source ? curProjectField.source : materialSources[0]
+      setSelectedSource(selectedSource);
+      const source = selectedSource.source;
 
       const data = await getScaffolds(source);
-      const { mainScaffolds, otherScaffolds } = data as any;
+      const { mainScaffolds, otherScaffolds } = data as IScaffoldMarket;
       setMainScaffolds(mainScaffolds);
       setOtherScaffolds(otherScaffolds);
+      if (mainScaffolds.length > 0) {
+        const selectedScaffold = curProjectField.scaffold ? curProjectField.scaffold : mainScaffolds[0];
+        onScaffoldSelect(selectedSource, selectedScaffold);
+      }
     } catch (error) {
       Notification.error({ content: error.message });
     } finally {
@@ -84,12 +87,18 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
         <div className={styles.scaffoldsSource}>
           <div className={styles.sourcesList}>
             {materialSources && materialSources.map(item => {
+              let iconName = 'app';
               const projectType = item.type.toLocaleLowerCase();
+              if (item.client) {
+                iconName = item.client.toLocaleLowerCase();
+              } else if (projectTypes.includes(projectType)) {
+                iconName = projectType;
+              }
               return <ScaffoldCard
                 key={item.name}
                 title={
                   <div className={styles.cardTitle}>
-                    {<img src={require(`@/assets/${projectTypes.includes(projectType) ? projectType + '.svg' : 'logo.png'}`)} alt="projectType" width={25} height={25} />}
+                    {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
                     <div >{item.name}</div>
                   </div>
                 }
@@ -125,8 +134,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                     }
                     content={item.description}
                     media={item.screenshot}
-                    selected={SelectedMaterial === item.name}
-                    onClick={() => onScaffoldMaterialClick(item)}
+                    selected={curProjectField.scaffold.name === item.name}
+                    onClick={() => onScaffoldClick(item)}
                   />
                 )
               }) :
@@ -153,8 +162,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, children, onOpenConfigPanel, materia
                         }
                         content={item.description}
                         media={item.screenshot}
-                        selected={SelectedMaterial === item.name}
-                        onClick={() => onScaffoldMaterialClick(item)}
+                        selected={curProjectField.scaffold.name === item.name}
+                        onClick={() => onScaffoldClick(item)}
                       />
                     )
                   })}
