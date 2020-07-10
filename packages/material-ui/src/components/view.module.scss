@@ -5,12 +5,9 @@
 
   :global(.next-tabs-bar) {
     margin-bottom: 16px;
-    position: sticky;
-    top: 0;
   }
 
   :global(.next-tabs-content) {
-    overflow: visible;
     :global(.next-tabs-tabpane.active) {
       height: 100%;
     }
