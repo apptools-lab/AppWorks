@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1
+
+Support ICE css module style preview and completion.
+
 ## 0.3.0
 
 Add Sass Variables Helper:
