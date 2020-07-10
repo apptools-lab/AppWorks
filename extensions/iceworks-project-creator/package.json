@@ -19,7 +19,8 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-project-creator.start"
+    "onCommand:iceworks-project-creator.start",
+    "onStartupFinished"
   ],
   "main": "./build/extension.js",
   "contributes": {
