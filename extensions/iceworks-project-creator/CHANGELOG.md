@@ -3,6 +3,7 @@
 ## 0.2.0
 
 - feat: default select a scaffold
+- feat: automatically open application creator on first installation
 
 ## 0.1.9
 

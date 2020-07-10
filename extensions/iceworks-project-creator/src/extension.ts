@@ -13,22 +13,35 @@ export function activate(context: vscode.ExtensionContext) {
 
   // data collection
   const logger = new Logger(name, globalState);
-  logger.recordDAU();
-  logger.recordActivate(version);
 
   // auto set configuration
   initExtension(context);
 
+  let webviewPanel: vscode.WebviewPanel;
+
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '创建应用 - Iceworks', ViewColumn.One, {
-      enableScripts: true,
-      retainContextWhenHidden: true,
-    });
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel, context, { services, logger });
+    logger.recordDAU();
+    logger.recordActivate(version);
+
+    if (webviewPanel) {
+      webviewPanel.reveal();
+    } else {
+      webviewPanel = window.createWebviewPanel('iceworks', '创建应用 - Iceworks', ViewColumn.One, {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      });
+      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      connectService(webviewPanel, context, { services, logger });
+    }
   }
 
   subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {
     activeWebview();
   }));
+
+  const stateKey = 'iceworks.projectCreator.autoActivedWebview';
+  if (!globalState.get(stateKey)) {
+    activeWebview();
+    globalState.update(stateKey, true);
+  }
 }

@@ -54,8 +54,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const projectType = await getProjectType();
     const isNotTargetProject = projectType === 'unknown';
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', isNotTargetProject);
-    if (isNotTargetProject)
+    if (isNotTargetProject) {
       vscode.commands.executeCommand('iceworks-project-creator.start');
+    }
   } catch (e) {
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     vscode.commands.executeCommand('iceworks-project-creator.start');
