@@ -24,19 +24,19 @@
 
 **第一步**：点击活动栏上的 Iceworks 图标，打开侧边栏：
 
-![](https://img.alicdn.com/tfs/TB1uH75LVT7gK0jSZFpXXaTkpXa-1024-768.png_790x10000.jpg)
+![](https://img.alicdn.com/tfs/TB1OcojNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
 
 **第二步**：点击 Iceworks 侧边栏上的「创建应用」按钮，唤起多端应用的创建流程：
 
-![](https://img.alicdn.com/tfs/TB1hQA6LYr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
+![](https://img.alicdn.com/tfs/TB1ts7cNeL2gK0jSZPhXXahvXXa-2048-1536.png_790x10000.jpg)
 
 **第三步**：应用创建完成，在 Iceworks 侧边栏上进行 npm 脚本执行、生成页面、创建组件等操作：
 
-![](https://img.alicdn.com/tfs/TB1M4oPLYj1gK0jSZFuXXcrHpXa-2048-1536.png_790x10000.jpg)
+![](https://img.alicdn.com/tfs/TB18aIoNkT2gK0jSZFkXXcIQFXa-2048-1536.png_790x10000.jpg)
 
-**第四步**：更多能力，可以在命名面板中搜索「Iceworks」关键字获取：
+**第四步**：更多能力，可以点击状态栏右下角的「Iceworks」进行获取：
 
-![](https://img.alicdn.com/tfs/TB1kD7FLVT7gK0jSZFpXXaTkpXa-2048-1536.png_790x10000.jpg)
+![](https://img.alicdn.com/tfs/TB1jjUjNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
 
 ## License
 
