@@ -25,7 +25,7 @@ const CreateProject: React.FC = () => {
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const existProjectsRef = useRef([]);
   const steps = [
-    <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
+    <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} curProjectField={curProjectField} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
       <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
     </ScaffoldMarket>,
     <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
@@ -73,14 +73,11 @@ const CreateProject: React.FC = () => {
   };
 
   function goPrev() {
-    if (currentStep === 1) {
-      setCurProjectField({ ...curProjectField, scaffold: null });
-    }
     setStep(currentStep - 1);
   };
 
-  function onScaffoldSelect(scaffold) {
-    setCurProjectField({ ...curProjectField, scaffold })
+  function onScaffoldSelect(source, scaffold) {
+    setCurProjectField({ ...curProjectField, scaffold, source });
   };
 
   async function onScaffoldSubmit() {

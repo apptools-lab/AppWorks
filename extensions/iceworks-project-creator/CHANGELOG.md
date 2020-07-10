@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+- feat: default select a scaffold
+
 ## 0.1.9
 
 - style: better styles of the webview

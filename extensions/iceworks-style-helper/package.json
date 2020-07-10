@@ -3,7 +3,7 @@
   "displayName": "Iceworks Style Helper",
   "description": "Easily write styles in JSX.",
   "publisher": "iceworks-team",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -15,7 +15,10 @@
     "Rax",
     "React",
     "JSX",
-    "Inline Style"
+    "Inline Style",
+    "Style",
+    "CSS",
+    "ClassName"    
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

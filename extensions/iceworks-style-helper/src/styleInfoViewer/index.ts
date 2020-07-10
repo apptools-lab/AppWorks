@@ -51,7 +51,12 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   const styleDependencies = findStyleDependencies(fileName);
 
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
-    if (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word)) {
+    if (
+      // className=xxx
+      /className=/.test(line.text) ||
+      // style={styles.xxx}
+      (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word))
+    ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
         // Remove class selector `.`, When use styles.xxx.
         return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
@@ -83,9 +88,8 @@ export default function styleInfoViewer(context: vscode.ExtensionContext) {
       vscode.languages.registerCompletionItemProvider(
         language,
         { provideCompletionItems },
-        // match [styles identifier].xxx
-        // Example: `import test from './xxx.css'` match test.xxx;
-        '.'
+        // eslint-disable-next-line
+        '.', '\"', '\'', ' ',
       )
     );
   });
