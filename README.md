@@ -32,9 +32,9 @@
 
 安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
 
-![Iceworks](https://img.alicdn.com/tfs/TB1gQcRL4v1gK0jSZFFXXb0sXXa-1024-766.gif)
+![Iceworks](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
 
-查看 [Iceworks Pack](extensions/iceworks/README.md) 阅读更多详细介绍。
+查看 [Iceworks Pack](extensions/iceworks/README.md) 了解更多功能。
 
 ## 参与贡献
 
