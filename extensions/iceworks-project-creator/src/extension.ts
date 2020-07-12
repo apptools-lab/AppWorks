@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtension(context);
 
-  let webviewPanel: vscode.WebviewPanel;
+  let webviewPanel: vscode.WebviewPanel | undefined;
 
   function activeWebview() {
     logger.recordDAU();
@@ -31,6 +31,13 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       });
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      webviewPanel.onDidDispose(
+        () => {
+          webviewPanel = undefined;
+        },
+        null,
+        context.subscriptions
+      );
       connectService(webviewPanel, context, { services, logger });
     }
   }
