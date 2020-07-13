@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"

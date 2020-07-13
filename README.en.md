@@ -31,7 +31,7 @@ Use Iceworks to develop Universal Application quickly:
 
 After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start:
 
-![Iceworks](https://img.alicdn.com/tfs/TB1gQcRL4v1gK0jSZFFXXb0sXXa-1024-766.gif)
+![Iceworks](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
 
 See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
 

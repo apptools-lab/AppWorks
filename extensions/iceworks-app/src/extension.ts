@@ -9,7 +9,9 @@ import { createComponentsTreeProvider } from './views/componentsView';
 import { createPagesTreeProvider } from './views/pagesView';
 import { ITerminalMap } from './types';
 import services from './services';
-import { createStatusBarItem, openCommandPaletteCommandId, registerOpenCommandPalette } from './createStatusBarItem';
+import { showExtensionsQuickPickCommandId } from './constants';
+import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
+import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -27,9 +29,9 @@ export async function activate(context: vscode.ExtensionContext) {
   initExtension(context);
 
   // init statusBarItem
-  const statusBarItem = createStatusBarItem();
-  subscriptions.push(vscode.commands.registerCommand(openCommandPaletteCommandId, registerOpenCommandPalette));
-  subscriptions.push(statusBarItem);
+  const extensionsStatusBar = createExtensionsStatusBar();
+  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, showExtensionsQuickPick));
+  subscriptions.push(extensionsStatusBar);
   // init webview
   function activeWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置 - Iceworks', ViewColumn.One, {
@@ -54,8 +56,9 @@ export async function activate(context: vscode.ExtensionContext) {
     const projectType = await getProjectType();
     const isNotTargetProject = projectType === 'unknown';
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', isNotTargetProject);
-    if (isNotTargetProject)
+    if (isNotTargetProject) {
       vscode.commands.executeCommand('iceworks-project-creator.start');
+    }
   } catch (e) {
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     vscode.commands.executeCommand('iceworks-project-creator.start');
