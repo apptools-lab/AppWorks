@@ -245,7 +245,7 @@ const CreateProject: React.FC = () => {
         <div className={styles.header}>
           <div>
             <div className={styles.title}>创建应用</div>
-            <div className={styles.subTitle}>海量可复用物料，搭配研发套件极速构建多端应用。</div>
+            <div className={styles.subTitle}>海量可复用物料，搭配研发框架极速构建多端应用。</div>
           </div>
           <div className={styles.headerBtns}>
             <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
