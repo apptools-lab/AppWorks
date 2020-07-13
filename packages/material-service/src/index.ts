@@ -29,7 +29,6 @@ const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
   {
     name: 'Vue 物料源',
     type: 'vue',
-    client: 'pc',
     source: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
     description: '基于 Element, Vue CLI 的 Vue 官方物料'
   }
