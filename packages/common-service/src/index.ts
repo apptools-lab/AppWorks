@@ -68,6 +68,10 @@ export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
       if (editor) {
+        const fsPath = editor.document.uri.fsPath;
+        const isJSXFile = fsPath.match(/^.*\.(jsx?|tsx)$/g);
+        vscode.commands.executeCommand('setContext', 'iceworks:isJSXFile', isJSXFile);
+
         // save active text editor id
         const { id } = editor as any;
         console.log('activeTextEditor Id', id);
@@ -155,9 +159,11 @@ export function createNpmCommand(action: string, target: string = '', extra: str
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    registry = `--registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
+    registry = ` --registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
   }
-  return `${packageManager} ${action} ${target} ${registry} ${extra}`;
+  target = target && ` ${target}`;
+  extra = extra && ` ${extra}`;
+  return `${packageManager} ${action}${target}${registry}${extra}`;
 }
 
 export async function getGitLabGroups(token: string) {

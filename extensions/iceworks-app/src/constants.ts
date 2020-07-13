@@ -11,3 +11,5 @@ export const nodeDepTypes: NodeDepTypes[] = [
   'dependencies',
   'devDependencies'
 ];
+
+export const showExtensionsQuickPickCommandId = 'iceworksApp.showExtensionsQuickPick';

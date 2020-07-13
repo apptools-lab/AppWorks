@@ -21,6 +21,10 @@ Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), fri
 
   ![demo](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
 
+* When editing the 'className' attribute of a component in a JSX file, an automatic completion reminder will be given:
+
+	![demo](https://img.alicdn.com/tfs/TB1JqP0Nfb2gK0jSZK9XXaEgFXa-900-561.gif)
+
 ### Class name
 
 When editing the 'class' name of a CSS, LESS or SASS file, an automatic completion reminder will be given:

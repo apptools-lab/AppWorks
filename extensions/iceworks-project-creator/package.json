@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Creator",
   "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -19,14 +19,15 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-project-creator.start"
+    "onCommand:iceworks-project-creator.start",
+    "onStartupFinished"
   ],
   "main": "./build/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "iceworks-project-creator.start",
-        "title": "Iceworks: Create Application"
+        "title": "%iceworksProjectCreator.commands.start.title%"
       }
     ],
     "configuration": {

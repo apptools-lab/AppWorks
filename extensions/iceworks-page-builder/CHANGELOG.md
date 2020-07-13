@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.9
+
+Use webpack to build this extension.
+
 ## 0.1.8
 
 Fix open Settings.

@@ -9,10 +9,10 @@ Add materials to the application in a visual way.
 
 ## Usage
 
-![import-materials](https://img.alicdn.com/tfs/TB1GD1Wa9R26e4jSZFEXXbwuXXa-1393-892.gif)
+![import-materials](https://img.alicdn.com/tfs/TB1wvG5aAcx_u4jSZFlXXXnUFXa-1279-904.gif)
 
-1. Choose the position of your code where you want to import the material
-2. Click the block or the component which you need and the code will be added to your code
+1. Right click the location where you want to insert the material and select「iceworks: import material」, or click iceworks in the status bar of VSCode and select 「iceworks: import material」
+2. Click the block or the component and the code will be added to your code
 
 ## More
 

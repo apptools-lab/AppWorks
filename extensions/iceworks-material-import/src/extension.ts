@@ -19,11 +19,15 @@ export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtension(context);
   // init webview
-  const columnToShowIn = vscode.window.activeTextEditor
-    ? ViewColumn.Beside
-    : ViewColumn.One;
-
   function activeWebview() {
+    let columnToShowIn = ViewColumn.One;
+    let layout = { orientation: 0, groups: [{}] };
+
+    if (window.activeTextEditor) {
+      columnToShowIn = ViewColumn.Beside;
+      layout = { orientation: 0, groups: [{ size: 0.7 }, { size: 0.3 }] };
+    }
+
     const webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', { viewColumn: columnToShowIn, preserveFocus: true }, {
       enableScripts: true,
       retainContextWhenHidden: true,
@@ -31,7 +35,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
 
-    const layout = { orientation: 0, groups: [{ size: 0.75 }, { size: 0.25 }] };
     vscode.commands.executeCommand('vscode.setEditorLayout', layout);
 
     connectService(webviewPanel, context, { services, logger });

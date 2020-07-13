@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.0
+- feat: install dependencies automatically when node_modules  does not exist
+- feat: refresh dependencies list、pages list and components list automatically
+- feat: support stopping scripts
+
 ## 0.1.34
 
 - feat: add Iceworks status bar entry

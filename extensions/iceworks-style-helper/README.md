@@ -20,6 +20,10 @@
 	![使用示例](https://img.alicdn.com/tfs/TB1pb1ltYY1gK0jSZTEXXXDQVXa-1468-906.gif)
 
 	![使用示例](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
+
+* 在 JSX 文件中编辑组件的 `className` 属性时给予自动补全提醒，预览及条跳转：
+
+	![使用示例](https://img.alicdn.com/tfs/TB1JqP0Nfb2gK0jSZK9XXaEgFXa-900-561.gif)
 	
 ### 样式文件
 
