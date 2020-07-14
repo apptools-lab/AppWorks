@@ -32,8 +32,8 @@ export function findStyle(directory: string, className: string, styleDependencie
     const file = path.join(directory, styleDependencies[i].source);
     let fileContent = '';
 
-    try {
-      // Flattens nested (S)CSS string.
+    if (/s(c|a)ss$/.test(file)) {
+      // Flattens nested SASS string.
       // https://www.npmjs.com/package/css-flatten
       // Before:
       // .foo {
@@ -50,7 +50,7 @@ export function findStyle(directory: string, className: string, styleDependencie
       //   color: blue;
       // }
       fileContent = flatten(fs.readFileSync(file, 'utf-8'));
-    } catch (e) {
+    } else {
       fileContent = fs.readFileSync(file, 'utf-8');
     }
 
