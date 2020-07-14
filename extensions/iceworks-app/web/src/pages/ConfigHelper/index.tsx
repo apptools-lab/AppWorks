@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Select, Input, Notification } from '@alifd/next';
 import { debounce } from 'throttle-debounce';
 import { IMaterialSource } from '@iceworks/material-utils';
-import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager } from '@/constants';
+import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
 import CustomMaterialSource from './CustomMaterialSource';
 import styles from './index.module.scss';
@@ -57,7 +57,7 @@ const ConfigHelper = () => {
         return;
       }
       if (name === CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY &&
-        !/^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value)) {
+        !urlRegExp.test(value)) {
         return;
       }
       if (name === CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY) {
@@ -100,7 +100,7 @@ const ConfigHelper = () => {
   }, []);
   return (
     <div className={styles.container}>
-      <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
+      <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange} onError={}>
         <FormItem label="npm 包管理工具">
           <Select name="packageManager" placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
             {packageManagers.map(item => (
@@ -116,7 +116,7 @@ const ConfigHelper = () => {
           </Select>
         </FormItem>
         {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-          <FormItem label=" " format="url" >
+          <FormItem label=" " format="url" formatMessage="请输入正确的 url">
             <Input name="customNpmRegistry" placeholder="请输入自定义 npm 镜像源" />
           </FormItem>
         )}
