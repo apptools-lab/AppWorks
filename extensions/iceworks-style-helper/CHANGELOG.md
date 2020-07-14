@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.4.0
+## 0.3.2
 
 - Support nested CSS preview, definition and completion.
 
