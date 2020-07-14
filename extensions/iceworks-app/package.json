@@ -240,12 +240,12 @@
         },
         {
           "command": "iceworksApp.npmScripts.runDev",
-          "group": "navigation@11",
+          "group": "navigation@02",
           "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
           "command": "iceworksApp.DefPublish",
-          "group": "navigation@21",
+          "group": "navigation@03",
           "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
         }
       ],
