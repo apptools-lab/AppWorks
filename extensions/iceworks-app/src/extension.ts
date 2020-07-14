@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { initExtension, Logger } from '@iceworks/common-service';
+import { initExtension, Logger, checkIsAliInternal } from '@iceworks/common-service';
 import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
 import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
 import { createComponentsTreeProvider } from './views/componentsView';
@@ -11,6 +11,7 @@ import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
 import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
+import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 
 // eslint-disable-next-line
@@ -63,10 +64,19 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     vscode.commands.executeCommand('iceworks-project-creator.start');
   }
+
   const terminals: ITerminalMap = new Map<string, Terminal>();
   // init tree data providers
   createNpmScriptsTreeProvider(context, rootPath, terminals);
   createComponentsTreeProvider(context, rootPath);
   createPagesTreeProvider(context, rootPath);
   createNodeDependenciesTreeProvider(context, rootPath, terminals);
+  // show script icons in editor title menu
+  vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
+  const isAliInternal = await checkIsAliInternal();
+  if (isAliInternal) {
+    // DEF publish command in editor title
+    vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', true);
+    context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.DefPublish', () => showDefPublishEnvQuickPick(terminals, rootPath)));
+  }
 }
