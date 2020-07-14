@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import css from 'css';
+import flatten from 'css-flatten';
 import { IStyleDependency } from './findStyleDependencies';
 
 // https://www.npmjs.com/package/css
@@ -29,10 +30,37 @@ export function findStyle(directory: string, className: string, styleDependencie
 
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     const file = path.join(directory, styleDependencies[i].source);
-    const stylesheet = css.parse(fs.readFileSync(file, 'utf-8')).stylesheet;
-    
-    matched = stylesheet.rules.find(rule => rule.selectors && rule.selectors.includes(`.${className}`));
-    
+    let fileContent = '';
+
+    try {
+      // Flattens nested (S)CSS string.
+      // https://www.npmjs.com/package/css-flatten
+      // Before:
+      // .foo {
+      //   color: red;
+      //   .bar {
+      //     color: blue;
+      //   }
+      // }
+      // After:
+      // .foo {
+      //   color: red;
+      // }
+      // .foo .bar {
+      //   color: blue;
+      // }
+      fileContent = flatten(fs.readFileSync(file, 'utf-8'));
+    } catch (e) {
+      fileContent = fs.readFileSync(file, 'utf-8');
+    }
+
+    const stylesheet = css.parse(fileContent).stylesheet;
+    matched = stylesheet.rules.find(
+      rule => rule.selectors &&
+        // Selector endWith className. Example: '.bar' can match '.foo .bar'.
+        rule.selectors.find(selector => selector.endsWith(className))
+    );
+
     // Just find one matched stylesheet.
     if (matched) {
       matched.file = file;

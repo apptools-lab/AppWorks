@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.0
+
+- Support nested CSS preview, definition and completion.
+
 ## 0.3.1
 
 - Support ICE css module style preview and completion.
