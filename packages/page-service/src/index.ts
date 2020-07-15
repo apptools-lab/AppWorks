@@ -2,11 +2,12 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType } from '@iceworks/project-service';
+import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
-
+import reactPageTemplate from './templates/template.react';
+import vuePageTemplate from './templates/template.vue';
 /**
  * Generate page code based on blocks
  *
@@ -27,22 +28,10 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
 
   try {
     await addBlocks(blocks, pageName);
+    const projectFramework = await getProjectFramework();
+    const isVueProjectFramework = projectFramework === 'vue';
+    const fileStr = isVueProjectFramework ? vuePageTemplate : reactPageTemplate;
 
-    const fileStr = `import React, { Component } from 'react';
-<% for(var i = 0; i < blocks.length; i++) { -%>
-import <%= blocks[i].className %> from '<%= blocks[i].relativePath -%>';
-<% } -%>
-
-export default function () {
-  return (
-    <div className="<%= pageName %>-page">
-      <% for(var i = 0; i < blocks.length; i++){ -%>
-      <% if (blocks[i].description) { %>{/* <%= blocks[i].description -%> */}<% } %>
-      <<%= blocks[i].className -%> />
-      <% } -%>
-    </div>
-  );
-}`
     const fileContent = ejs.compile(fileStr)({
       blocks: blocks.map((block: any) => {
         const blockName = upperCamelCase(block.name);
@@ -56,12 +45,13 @@ export default function () {
       pageName,
     });
     const projectLanguageType = await getProjectLanguageType();
-    const fileName = `index.${projectLanguageType}${projectLanguageType === 'ts' ? 'x' : ''}`;
+    const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
     const dist = path.join(pagePath, fileName);
+    const prettierParserType = isVueProjectFramework ? 'vue' : 'babel';
     const rendered = prettier.format(fileContent, {
       singleQuote: true,
       trailingComma: 'es5',
-      parser: 'babel',
+      parser: prettierParserType,
     });
 
     await fsExtra.writeFile(dist, rendered, 'utf-8');
