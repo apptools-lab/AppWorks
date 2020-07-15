@@ -11,10 +11,19 @@ Quick create a Universal Application(React/Rax/Vue, etc).
 
 ### Activate Extension
 
-![demo](https://user-images.githubusercontent.com/56879942/87407446-c1108980-c5f4-11ea-9d27-584cebad1efe.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87541327-aa8d2f80-c6d3-11ea-8540-9a1ad888e723.gif)
 
 1. Through `⇧⌘P` evoke vscode command palette.
 2. Enter `Iceworks: create Application` to activate Extension;
+
+### Setting
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87541316-a52fe500-c6d3-11ea-8726-104930de7313.gif)
+
+1. Click `+` to enter setting
+2. Configure package management tools (default: NPM)
+3. Configure default image source (default: Taobao image)
+4. Set up custom repositories (default: null)
 
 ### Create a new application
 
@@ -26,7 +35,7 @@ Quick create a Universal Application(React/Rax/Vue, etc).
 
 ## More
 
-See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+See the [Iceworks Pack](https://user-images.githubusercontent.com/56879942/87541340-acef8980-c6d3-11ea-87c6-68fc4b0b094c.gif) to know more features.
 
 ## License
 
