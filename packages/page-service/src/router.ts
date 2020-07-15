@@ -3,9 +3,9 @@ import * as fse from 'fs-extra';
 import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
 import * as t from '@babel/types';
-import { IRouter, IRouterOptions } from './types';
 import generate from '@babel/generator';
 import formatCodeFromAST from './formatCodeFromAST';
+import { IRouter, IRouterOptions } from './types';
 
 const routerConfigFileName = 'routes';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
@@ -13,14 +13,17 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
-export async function getRouterConfigAST(projectPath: string) {
-  const routeConfigPath = path.join(projectPath, routerConfigFileName);
+// TODO: when use this param?
+const noPathPrefix = true;
+
+async function getRouterConfigAST(projectPath) {
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
   const routerConfigAST = getASTByCode(routerConfigString);
   return routerConfigAST;
 }
 
-function getASTByCode(code: string) {
+function getASTByCode(code) {
   return parser.parse(code, {
     allowImportExportEverywhere: true,
     sourceType: 'module',
@@ -53,7 +56,9 @@ function parseRoute(elements) {
       config.push(item);
     }
   });
+  return config;
 }
+
 export async function getAll(routerConfigAST) {
   let config = [];
 
@@ -71,11 +76,11 @@ export async function getAll(routerConfigAST) {
   return config;
 }
 
-export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}): Promise<void> {
+export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
-  const routerConfigAST = getRouterConfigAST(projectPath);
-  const routeConfigPath = path.join(projectPath, routerConfigFileName);
-  const currentData = await getAll(projectPath);
+  const routerConfigAST = await getRouterConfigAST(projectPath);
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
+  const currentData = await getAll(routerConfigAST);
 
   if (!replacement) {
     if (parent) {
@@ -109,7 +114,8 @@ function setData(data, routerConfigAST, routeConfigPath) {
   traverse(dataAST, {
     ObjectProperty({ node }) {
       if (['component'].indexOf(node.key.value) > -1) {
-        node.value = t.identifier(node.value.value);
+        const value: any = node.value;
+        node.value = t.identifier(value.value);
       }
     },
   });
@@ -119,7 +125,7 @@ function setData(data, routerConfigAST, routeConfigPath) {
         t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
         && t.isArrayExpression(node.init)
       ) {
-        node.init = arrayAST;
+        node.init = arrayAST as any;
       }
     },
   });
@@ -129,8 +135,28 @@ function setData(data, routerConfigAST, routeConfigPath) {
   );
 }
 
-export function sortData(data: any) {
+function sortData(data) {
+  data.forEach((item) => {
+    if (item.children) {
+      item.children = sortData(item.children);
+    }
+  });
 
+  return data.sort((beforeItem, item) => {
+    if (!beforeItem.path) {
+      return 1;
+    }
+    if (!item.path) {
+      return -1;
+    }
+    if (beforeItem.path.indexOf(item.path) === 0) {
+      return -1;
+    }
+    if (item.path.indexOf(beforeItem.path) === 0) {
+      return 1;
+    }
+    return 0;
+  });
 }
 
 /**
@@ -143,7 +169,7 @@ function changeImportDeclarations(routerConfigAST, data) {
   const removeIndex = [];
   // router import page or layout have @
   let existAtSign = false;
-  this.existLazy = false;
+  let existLazy = false;
 
   traverse(routerConfigAST, {
     ImportDeclaration: ({ node, key }) => {
@@ -155,14 +181,14 @@ function changeImportDeclarations(routerConfigAST, data) {
       // 3. import xxx from '@/pages/xxx';
       const noPrefixReg = /^(layouts|pages)\//;
       const hasPrefixReg = /^(\.|@)\/(layouts|pages)\//;
-      const reg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
-      const idx = this.noPathPrefix ? 1 : 2;
+      const reg = noPathPrefix ? noPrefixReg : hasPrefixReg;
+      const idx = noPathPrefix ? 1 : 2;
       const match = source.value.match(reg);
 
       if (match && match[idx]) {
         const { specifiers } = node;
         const { name } = specifiers[0].local;
-        if (!this.noPathPrefix) {
+        if (!noPathPrefix) {
           existAtSign = match[idx - 1] === '@';
         }
         importDeclarations.push({
@@ -183,12 +209,12 @@ function changeImportDeclarations(routerConfigAST, data) {
       // 3. const xxx = React.lazy(() => import('@/pages/xxx'));
       const noPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
       const hasPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
-      const matchLazyReg = this.noPathPrefix ? noPrefixReg : hasPrefixReg;
-      const idx = this.noPathPrefix ? 4 : 5;
+      const matchLazyReg = noPathPrefix ? noPrefixReg : hasPrefixReg;
+      const idx = noPathPrefix ? 4 : 5;
       const match = code.match(matchLazyReg);
 
       if (match && match.length > idx) {
-        this.existLazy = true;
+        existLazy = true;
         existAtSign = match[idx - 1] === '@';
         importDeclarations.push({
           index: key,
@@ -287,9 +313,9 @@ function changeImportDeclarations(routerConfigAST, data) {
   let importCode = '';
   const sign = '@';
   newImports.forEach(({ name, type }) => {
-    if (this.noPathPrefix) {
+    if (noPathPrefix) {
       importCode += `import ${name} from '${type}/${name}';\n`;
-    } else if (!this.existLazy || type === LAYOUT_DIRECTORY) {
+    } else if (!existLazy || type === LAYOUT_DIRECTORY) {
       // layour or not exist lazy use `import Page from '@/pages/Page'`
       importCode += `import ${name} from '${sign}/${type}/${name}';\n`;
     } else {
@@ -299,13 +325,13 @@ function changeImportDeclarations(routerConfigAST, data) {
   });
 
   // get ast from lazy or import code
-  const lazyCodeAST = this.getASTByCode(lazyCode);
-  const importCodeAST = this.getASTByCode(importCode);
+  const lazyCodeAST = getASTByCode(lazyCode);
+  const importCodeAST = getASTByCode(importCode);
 
-  const lastIndex = this.findLastImportIndex(routerConfigAST);
+  const lastIndex = findLastImportIndex(routerConfigAST, existLazy);
   routerConfigAST.program.body.splice(lastIndex, 0, ...lazyCodeAST.program.body);
   routerConfigAST.program.body.splice(
-    this.existLazy ? lastIndex - 1 : lastIndex,
+    existLazy ? lastIndex - 1 : lastIndex,
     0,
     ...importCodeAST.program.body
   );
@@ -318,4 +344,21 @@ function existImport(list, name, type) {
     }
     return false;
   });
+}
+
+/**
+ * find last import index
+ */
+function findLastImportIndex(routerConfigAST, existLazy) {
+  let lastIndex = 0;
+  routerConfigAST.program.body.forEach((item, index) => {
+    if (item.type === 'ImportDeclaration') {
+      if (existLazy) {
+        lastIndex = index + 2;
+      } else {
+        lastIndex = index + 1;
+      }
+    }
+  });
+  return lastIndex;
 }
