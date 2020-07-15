@@ -30,10 +30,17 @@ export function findStyle(directory: string, className: string, styleDependencie
 
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     const file = path.join(directory, styleDependencies[i].source);
-    let fileContent = '';
+    const fileContent = fs.readFileSync(file, 'utf-8');
+    let cssContent = fileContent;
 
-    if (/s(c|a)ss$/.test(file)) {
-      // Flattens nested SASS string.
+    if (
+      // SASS file
+      /s(c|a)ss$/.test(file) &&
+      // Not contain media and keyframes
+      fileContent.indexOf('@media') === -1 &&
+      fileContent.indexOf(' @keyframes') === -1
+    ) {
+      // Flattens nested SASS string
       // https://www.npmjs.com/package/css-flatten
       // Before:
       // .foo {
@@ -49,12 +56,10 @@ export function findStyle(directory: string, className: string, styleDependencie
       // .foo .bar {
       //   color: blue;
       // }
-      fileContent = flatten(fs.readFileSync(file, 'utf-8'));
-    } else {
-      fileContent = fs.readFileSync(file, 'utf-8');
+      cssContent = flatten(fs.readFileSync(file, 'utf-8'));
     }
 
-    const stylesheet = css.parse(fileContent).stylesheet;
+    const stylesheet = css.parse(cssContent).stylesheet;
     matched = stylesheet.rules.find(
       rule => rule.selectors &&
         // Selector endWith className. Example: '.bar' can match '.foo .bar'.
