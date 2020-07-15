@@ -11,39 +11,81 @@
 
 ### JSX 文件
 
-* 在 JSX 文件中编辑组件的 `style` 属性时将给予自动补全提醒：
+#### style 属性
 
-	![使用示例](https://img.alicdn.com/tfs/TB1oyRBF1H2gK0jSZFEXXcqMpXa-1000-586.gif)
+在 JSX 文件中编辑组件的 `style` 属性时给予自动补全提醒。
 
-* 在 JSX 文件中编辑组件的样式名时给予补全提醒并可通过 `cmd + 点击`（ Windows: `ctrl + 点击` ）跳转：
+##### 行内样式
 
-	![使用示例](https://img.alicdn.com/tfs/TB1pb1ltYY1gK0jSZTEXXXDQVXa-1468-906.gif)
+根据 w3c 标准给予样式字段和值的自动补全提醒：
 
-	![使用示例](https://img.alicdn.com/tfs/TB1UDGht.Y1gK0jSZFMXXaWcVXa-1468-906.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87412958-3895e700-c5fc-11ea-88e2-3e3e78a07f9e.gif)
 
-* 在 JSX 文件中编辑组件的 `className` 属性时给予自动补全提醒，预览及条跳转：
+##### 变量赋值
 
-	![使用示例](https://img.alicdn.com/tfs/TB1JqP0Nfb2gK0jSZK9XXaEgFXa-900-561.gif)
-	
+使用 CSS Module 时，根据样式声明进行样式字段的自动补全：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87412953-36cc2380-c5fc-11ea-9315-f153b1415dc8.gif)
+
+#### className 属性
+
+在 JSX 文件中编辑组件的 `className` 属性时给予自动补全提醒，值预览及定义跳转。
+
+##### 自动补全提醒
+
+在编辑组件的 `className` 时，根据文件 `import` 的样式文件内的类选择器进行自动补全提醒。
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87412926-2caa2500-c5fc-11ea-9acc-78974ddb1932.gif)   
+
+##### 值预览及定义跳转
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87412950-35026000-c5fc-11ea-83ee-33de13681911.gif)
+
+1. 鼠标停留在 `className` 值上，出现悬浮部件显示该值对应的样式声明。
+2. 点击对应的 `className` 值，跳转到该值的定义处
+
 ### 样式文件
 
-* 在 CSS、LESS、SASS 文件中编辑 `class` 名称时给予自动补全提醒：
+在 CSS、LESS、SASS 文件中输入类选择器时，根据引用值进行自动补全提醒：
 
-	![使用示例](https://img.alicdn.com/tfs/TB1l_zMFhD1gK0jSZFKXXcJrVXa-500-355.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87416514-63366e80-c601-11ea-8f3e-05fe51a8f26b.gif)
+
+1. 在 JSX 内声明组件 `className` 属性的值为 ` home , text0 , text1 , text2 `
+2. 在 JSX 内引用样式文件：`import './index.scss'`
+3. 新建该 `index.css` 文件
+4. 在 `index.css` 内输入 `.` ，出现上述属性值的自动补全提醒
 
 ### SASS 文件
 
-* 输入变量时给予自动补全提醒
-* 鼠标悬停在变量上时，预览变量对应值
-* 输入样式颜色值时给予变量的替换列表提醒
-* 通过 cmd + 点击（ Windows: ctrl + 点击 ）进行变量的定义代码跳转
+#### 变量自动补全提醒
 
-![使用示例](https://img.alicdn.com/tfs/TB1RA_ZMeL2gK0jSZPhXXahvXXa-900-535.gif)
+在 SASS 文件内输入变量时，根据引用文件进行代码自动补全：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87409692-e3f06d00-c5f7-11ea-970c-76b0cf829851.gif)  
+
+#### 变量预览值
+
+鼠标停留在变量上，出现悬浮部件显示该变量对应的值：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87412974-3e8bc800-c5fc-11ea-9a6c-ea62eecbfbff.gif)
+
+#### 属性值使用变量替换的建议
+
+输入属性值时，如发现可使用变量进行替换，则出现变量替换提醒列表：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87412960-3a5faa80-c5fc-11ea-87f9-cda6cdc2f530.gif)
+
+#### 变量的定义跳转
+
+通过 cmd + 点击（ Windows: ctrl + 点击 ）进行变量的定义代码跳转：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87419478-2456e780-c606-11ea-9842-47a01b7e85c8.gif)
 
 ## 更多
 
-访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
 
 ## License
 
 [MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+
