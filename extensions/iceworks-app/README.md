@@ -9,6 +9,33 @@
 
 ## 功能
 
+### 唤醒
+
+当您安装了 Iceworks-APP 插件之后，您的工具栏上会增加 ICEWORKS 图标，单击它以进入应用大纲树组件。
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87531784-cb01bd80-c6c4-11ea-816b-fff4336016fd.gif)
+
+### 命令板
+
+如果您安装了 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) ，您可以通过命令板唤起套件中的其他插件。
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87531795-d05f0800-c6c4-11ea-84d3-8e5fcfc32348.gif)
+
+### 创建项目
+
+当您打开一个空文件夹时，您可以通过 ICEWORK 面板创建项目：
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
+
+#### 设置 npm 
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
+
+1. 点击设置，进入设置页面
+2. 配置包管理工具（默认为 npm ）
+3. 配置默认镜像源（默认为淘宝网镜像）
+4. 选择自定义物料库 (无默认外部物料库)
+
 ### npm 脚本信息
 
 #### 查看和执行应用的 npm 脚本
@@ -56,7 +83,7 @@
 
 ## 更多
 
-访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 

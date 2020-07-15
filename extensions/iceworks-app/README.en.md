@@ -9,7 +9,34 @@ It helps you preview your Universal Application, including the information of np
 
 ## Usage
 
-### npm Scripts
+### Activate Extension
+
+After you install the Iceworks-APP plugin, an ICEWORK icon will be added to your toolbar. Click it to enter ICEWORK.
+
+![demo](https://user-images.githubusercontent.com/56879942/87531784-cb01bd80-c6c4-11ea-816b-fff4336016fd.gif)
+
+## VSCode command palette
+
+If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in vscode command palette.
+
+![demo](https://user-images.githubusercontent.com/56879942/87531795-d05f0800-c6c4-11ea-84d3-8e5fcfc32348.gif)
+
+### Create a new project
+
+When you open an empty folder, you can create projects by ICEWORK panel:
+
+![demo](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
+
+#### Set up npm 
+
+![demo](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
+
+1. Click Settings to enter the Settings page
+2. Configure package management tools (default: NPM)
+3. Configure default image source (default: Taobao image)
+4. Set up custom repositories (default: null)
+
+### Npm Scripts
 
 #### View and excute the executable npm scripts of your app
 
