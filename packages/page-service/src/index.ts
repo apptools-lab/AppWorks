@@ -56,7 +56,7 @@ export default function () {
       pageName,
     });
     const projectLanguageType = await getProjectLanguageType();
-    const fileName = `index.${projectLanguageType}x`;
+    const fileName = `index.${projectLanguageType}${projectLanguageType === 'ts' ? 'x' : ''}`;
     const dist = path.join(pagePath, fileName);
     const rendered = prettier.format(fileContent, {
       singleQuote: true,
