@@ -7,9 +7,18 @@
 
 使用可视化的方式添加物料到应用中。
 
-## 用法
+## 功能
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87401390-a63a1700-c5ec-11ea-91a6-f7d81ac5fd77.gif)
+### 唤醒
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87538941-a19a5f00-c6cf-11ea-92f2-b8ed100792fc.gif)
+
+1. 通过 `⇧⌘P` 快捷键唤起命令面板;
+2. 输入 `Iceworks:Import material` 唤醒物料添加插件
+
+### 使用
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87538909-95ae9d00-c6cf-11ea-8c02-881e3fcc8f0a.gif)
 
 1. 选择需要插入物料的位置
 2. 点击需要使用的区块或者组件，物料代码将自动添加到相应的位置中
