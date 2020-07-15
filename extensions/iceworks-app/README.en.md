@@ -11,26 +11,53 @@ It helps you preview your Universal Application, including the information of np
 
 ### npm Scripts
 
-- Support viewing the executable npm scripts of your app
-- Support execute the npm scripts
+#### Support viewing the executable npm scripts of your app
 
-![script.gif](https://img.alicdn.com/tfs/TB1of.nHFT7gK0jSZFpXXaTkpXa-1272-786.gif)
+#### Support execute or break off the npm scripts
+
+![demo](https://user-images.githubusercontent.com/56879942/87393980-9f59d700-c5e1-11ea-9e07-0244926f54cc.gif)
+
+1. View executable script information in the left pane.
+2. Click the `Play` button to execute the script at terminal immediately.
+3. Click the `Stop` button to end the corresponding script executed at terminal.
 
 ###  Pages and Components
 
-- Support jumping to corresponding pages and components
-- Support adding pages and components(TODO)
+#### Support jumping to corresponding pages and components
 
-![pages&components.gif](https://img.alicdn.com/tfs/TB1tfArHHY1gK0jSZTEXXXDQVXa-1265-760.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+
+1. Click items in PAGES and COMPONENTS on the left panel.
+2. Jump into files of selected projects.
+
+#### Support waking up create pages and generate components( [Create Pages](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)｜[Generate Components](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder) )
+
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+
+1. Click '+' in PAGES header to jump into GENERATE PAGES  page.
+2. Click '+' in COMPONENTS header to jump into CREATE COMPONENT page.
 
 ### Node Dependencies
 
-- Support viewing the application dependency information
-- Support installing new dependencies and upgrading dependencies
-- Support installing and reinstalling dependencies
-- Support setting npm client and npm registry
+####  Support viewing the application dependency information
+#### Support installing new dependencies and reinstalling all dependencies
 
-![nodeDependencies.gif](https://img.alicdn.com/tfs/TB1SLgPXj39YK4jSZPcXXXrUFXa-1274-805.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
+
+1. View all  installed dependencies in the project in NODE DEPENDENCIES in the bottom of ICE panel.
+2. Click ` ⬆` button next to dependency item,  you can update  the dependency to the latest version .
+3. Click `Reinstall Dependencies` button on  NODE DEPENDENCIES header to reinstall all the dependencisce of the project.
+
+#### Support installing and reinstalling dependencies
+
+![demo](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
+
+1. Click the `+` button on the NODE DEPENDENCIES header.
+2. Select Install product Dependency or Debug Devdependency on the command panel that appears, 
+3. Type the NPM package name and version information to be installed, such as'`typescript@latest `.
+4. The NPM package will be installed automatically .
+
+   NOTE: If the package was installed, it will be reinstalled.
 
 ## More
 
