@@ -5,20 +5,20 @@
 
 # Iceworks 页面生成插件
 
-通过可视化操作，以区块拼装的方式生成页面。
+通过可视化操作，以区块拼装的方式快速生成页面。
 
 ## 功能
 
 ### 唤起
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87401390-a63a1700-c5ec-11ea-91a6-f7d81ac5fd77.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
 
 1. 通过 `⇧⌘P` 快捷键唤起命令面板
 2. 在命令面板中输入 `Iceworks: 创建页面` ，点击选中的项目或按下键盘回车键，唤起页面生成插件
 
 ### 使用
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87402326-f82f6c80-c5ed-11ea-8ffe-34263e8dd0be.gif)
 
 1. 输入页面名称（将用作文件夹名）
 2. 从右侧的区块列表中选择页面需要使用的区块，点击添加到左侧页面预览区

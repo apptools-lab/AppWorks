@@ -5,7 +5,7 @@ English | [简体中文](./README.md)
 
 # Iceworks Page Builder
 
-Create a web page view in a low-code way.
+Through GUI, you can quickly assemble pages with materials.
 
 ## How to use?
 
@@ -13,9 +13,8 @@ Create a web page view in a low-code way.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
 
-1. Arouse the command panel through ` ⇧⌘P ` .
-
-2. In the command panel, type 'Iceworks: Create page' and click on the selected item or press enter on the keyboard to evoke a page-generating plugin.
+1. Arouse the command panel through `⇧⌘P` .
+2. In the command panel, type 'Iceworks: Create page' and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
 ### Usage
 
