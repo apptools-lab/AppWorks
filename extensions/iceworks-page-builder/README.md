@@ -18,16 +18,17 @@
 
 ### 使用
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87402326-f82f6c80-c5ed-11ea-8ffe-34263e8dd0be.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87531900-f5ec1180-c6c4-11ea-8753-ad269d5768d5.gif)
 
 1. 输入页面名称（将用作文件夹名）
 2. 从右侧的区块列表中选择页面需要使用的区块，点击添加到左侧页面预览区
 3. 在左侧页面预览区可通过拖拽排序区块的顺序，或点击右上角的删除图标移除区块
-3. 点击“生成页面”按钮，生成页面代码，页面代码将生成到 `src/pages/${页面名称}`
+4. 点击“生成页面”按钮，生成页面代码，页面代码将生成到 `src/pages/${页面名称}`
+5. 在左侧页面列表标题栏处点击刷新，即可看到新生成的页面
 
 ## 更多
 
-访问  [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+访问  [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 
