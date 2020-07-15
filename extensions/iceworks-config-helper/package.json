@@ -18,6 +18,10 @@
     "icejs"
   ],
   "icon": "assets/logo.png",
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./build/index.js",
   "contributes": {
     "jsonValidation": [
       {
@@ -34,5 +38,18 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@iceworks/project-service": "^0.1.6"
   }
 }

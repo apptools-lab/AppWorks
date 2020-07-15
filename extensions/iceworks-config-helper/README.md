@@ -19,7 +19,7 @@
 
 当您在输入时，显示与您的配置相关的建议：
 
-![img02](https://img.alicdn.com/tfs/TB188ZZvrj1gK0jSZFuXXcrHpXa-1132-774.gif)
+![img02](https://img.alicdn.com/tfs/TB1zgVMXsieb18jSZFvXXaI3FXa-900-526.gif)
 
 ### 代码片段
 
