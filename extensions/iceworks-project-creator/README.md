@@ -29,6 +29,7 @@
 2. 配置包管理工具（默认为 npm）
 3. 配置默认镜像源（默认为淘宝网镜像）
 4. 选择自定义物料库 (无默认外部物料库)
+
 #### 创建应用
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87407423-bb1aa880-c5f4-11ea-8927-8e1d75b73164.gif)
@@ -39,7 +40,7 @@
 
 ## 更多
 
-访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 
