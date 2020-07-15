@@ -11,7 +11,7 @@ Create a web page view in a low-code way.
 
 ### Wake up
 
-![CreatePage-WakeUp](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
 
 1. Arouse the command panel through ` ⇧⌘P ` .
 
@@ -19,7 +19,7 @@ Create a web page view in a low-code way.
 
 ### Usage
 
-![CreatePage-Usage](https://user-images.githubusercontent.com/56879942/87402326-f82f6c80-c5ed-11ea-8ffe-34263e8dd0be.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87402326-f82f6c80-c5ed-11ea-8ffe-34263e8dd0be.gif)
 
 1. Enter the page name (to be used as the folder name).
 2. Select the block to be used for the page from the block list on the right, click to add it to the page preview area on the left.
