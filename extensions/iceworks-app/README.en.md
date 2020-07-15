@@ -15,11 +15,15 @@ After you install the Iceworks-APP plugin, an ICEWORK icon will be added to you
 
 ![demo](https://user-images.githubusercontent.com/56879942/87531784-cb01bd80-c6c4-11ea-816b-fff4336016fd.gif)
 
-## VSCode command palette
+## Iceworks command palette
 
 If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in vscode command palette.
 
-![demo](https://user-images.githubusercontent.com/56879942/87531795-d05f0800-c6c4-11ea-84d3-8e5fcfc32348.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
+
+1. Find Iceworks in the bottom right of Vscode.
+> NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
+2. Click the Iceworks plugin icon to enter the command board.
 
 ### Create a new project
 

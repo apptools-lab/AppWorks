@@ -19,7 +19,11 @@
 
 如果您安装了 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) ，您可以通过命令板唤起套件中的其他插件。
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87531795-d05f0800-c6c4-11ea-84d3-8e5fcfc32348.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
+
+1. 找到 vscode 右下角的 Iceworks。
+> NOTE: 如果没有Iceworks图标，请按照 `唤醒` 中的操作唤醒Iceworks插件。
+2. 点击 Iceworks 插件，进入命令板
 
 ### 创建项目
 
