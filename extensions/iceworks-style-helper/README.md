@@ -74,7 +74,7 @@
 
 输入属性值时，如发现可使用变量进行替换，则出现变量替换提醒列表：
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87412960-3a5faa80-c5fc-11ea-87f9-cda6cdc2f530.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/87531943-04d2c400-c6c5-11ea-9f74-be6721353e46.gif)
 
 #### 变量的定义跳转
 
