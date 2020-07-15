@@ -17,7 +17,7 @@
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
 
-1. 在jsx文件中使用物料（如 View ）;
+1. 在jsx文件中使用物料（如 View ）[如何使用物料?](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
 2. 在物料标签内输入属性的部分内容，将会唤起自动补全提醒。
 
 ## 更多
