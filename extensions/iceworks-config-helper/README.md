@@ -7,27 +7,29 @@
 
 为 icejs 和 rax-app 的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能。
 
-## 用法
+## 功能
 
-### 悬停信息
+### 悬停提示
 
-当您将鼠标悬停在某个 JSON 的字段上时，会出现悬浮小部件显示字段的描述：
+当您将鼠标悬停在某个 JSON 的字段上时，会出现悬浮小部件显示字段的描述。
 
-![img01](https://img.alicdn.com/tfs/TB1e1wYvEY1gK0jSZFCXXcwqXXa-1140-592.gif)
+![使用说明](https://user-images.githubusercontent.com/56879942/87398212-290ca300-c5e8-11ea-9596-c15c380c0d7c.gif)
 
-### 输入提示
+### 自动补全
 
-当您在输入时，显示与您的配置相关的建议：
+当您在输入时，显示与您的配置相关的建议。
 
-![img02](https://img.alicdn.com/tfs/TB188ZZvrj1gK0jSZFuXXcrHpXa-1132-774.gif)
+![使用说明](https://user-images.githubusercontent.com/56879942/87398228-2e69ed80-c5e8-11ea-8b2e-611924fa76bb.gif)
 
 ### 代码片段
 
-![img03](https://img.alicdn.com/tfs/TB1a6IZvuH2gK0jSZJnXXaT1FXa-1136-1334.gif)
+预设标准的代码片段，方便您进行快速配置。
+
+![使用说明](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
 
 ### 校验
 
-检查配置文件的设置是否合法。
+即将到来
 
 ## 更多
 

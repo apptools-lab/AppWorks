@@ -13,17 +13,19 @@ For icejs and rax-app configuration files(like app.json/build.json), provides vi
 
 Whenever you hover over some JSON key, shows the description in a Hover widget.
 
-![img01](https://img.alicdn.com/tfs/TB1e1wYvEY1gK0jSZFCXXcwqXXa-1140-592.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87398212-290ca300-c5e8-11ea-9596-c15c380c0d7c.gif)
 
 ### Code Completion
 
 When you input it will show key suggestions related to your config.
 
-![img02](https://img.alicdn.com/tfs/TB188ZZvrj1gK0jSZFuXXcrHpXa-1132-774.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87398228-2e69ed80-c5e8-11ea-8b2e-611924fa76bb.gif)
 
 ### Snippets
 
-![img03](https://img.alicdn.com/tfs/TB1a6IZvuH2gK0jSZJnXXaT1FXa-1136-1334.gif)
+Use code snippets for quick configuration:
+
+![demo](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
 
 ### Validator
 
