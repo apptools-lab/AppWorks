@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 async function onSettingsClick() {
   try {
-    await callService('common', 'executeCommand', 'workbench.action.openSettings', 'iceworks.materialSources');
+    await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
   } catch (e) {
     Notification.error({ content: e.message });
   }

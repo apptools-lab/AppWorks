@@ -2,6 +2,7 @@
 
 ## 0.2.1
 - feat: add quick entry in the editor title menu
+- fix: fail to set custom registry
 
 ## 0.2.0
 - feat: install dependencies automatically when node_modules  does not exist
