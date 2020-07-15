@@ -9,7 +9,7 @@
 
 ## 用法
 
-![物料导入](https://img.alicdn.com/tfs/TB1GD1Wa9R26e4jSZFEXXbwuXXa-1393-892.gif)
+![demo](https://img.alicdn.com/tfs/TB1GD1Wa9R26e4jSZFEXXbwuXXa-1393-892.gif)
 
 1. 选择需要插入物料的位置
 2. 点击需要使用的区块或者组件，物料代码将自动添加到相应的位置中
