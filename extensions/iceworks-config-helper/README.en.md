@@ -27,10 +27,6 @@ Use code snippets for quick configuration:
 
 ![demo](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
 
-### Validator
-
-Checks the config file setting accurately.
-
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

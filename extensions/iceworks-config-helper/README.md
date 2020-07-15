@@ -27,13 +27,9 @@
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
 
-### 校验
-
-即将到来
-
 ## 更多
 
-访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 
