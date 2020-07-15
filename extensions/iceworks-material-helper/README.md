@@ -9,11 +9,13 @@
 
 > 什么是[物料](https://ice.alibaba-inc.com/docs/materials/about)？
 
-## 用法
+## 功能
+
+### 属性自动补全
 
 在 JSX 文件中编辑组件的属性时将给予自动补全提醒：
 
-![使用示例](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
+![使用说明](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
 
 ## 更多
 

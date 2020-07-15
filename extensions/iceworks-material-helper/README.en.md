@@ -13,7 +13,7 @@ Write props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), frie
 
 When editing the props of a component in a JSX file, an automatic completion reminder will be given:
 
-![demo](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
 
 ## More
 
