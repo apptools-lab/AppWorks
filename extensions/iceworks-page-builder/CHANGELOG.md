@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.10
+
+Fix create vue page.
+
 ## 0.1.9
 
 Use webpack to build this extension.
