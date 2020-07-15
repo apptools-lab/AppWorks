@@ -5,7 +5,7 @@
 
 # Iceworks 样式开发辅助插件
 
-在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写内联样式，对 React 和 [Rax](https://rax.js.org/) 应用友好。
+方便您在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写内联样式，并对 CSS 、SASS 等样式文件提供强大的辅助开发功能。对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
 ## 用法
 
@@ -62,7 +62,7 @@
 
 在 SASS 文件内输入变量时，根据引用文件进行代码自动补全：
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87409692-e3f06d00-c5f7-11ea-970c-76b0cf829851.gif)  
+![使用示例](https://user-images.githubusercontent.com/56879942/87523081-026a6d00-c6b9-11ea-8e8a-5d62688c020d.gif)  
 
 #### 变量预览值
 
@@ -84,7 +84,7 @@
 
 ## 更多
 
-访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 

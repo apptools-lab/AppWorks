@@ -5,7 +5,7 @@ English | [简体中文](./README.md)
 
 # Iceworks Style Helper
 
-Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), friendly for React and [Rax](https://rax.js.org/).
+Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), provide  a powerful auxiliary development functions in style files like CSS, SASS. Friendly for React and [Rax](https://rax.js.org/).
 
 ## Usage
 
@@ -58,7 +58,7 @@ When editing the 'class' name of a CSS, LESS or SASS file, an automatic completi
 
 When a variable is entered in an SASS file, code completion is provided based on the reference file
 
-![demo](https://user-images.githubusercontent.com/56879942/87409692-e3f06d00-c5f7-11ea-970c-76b0cf829851.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87523081-026a6d00-c6b9-11ea-8e8a-5d62688c020d.gif)  
 
 ####  Show the variable value when hover it.
 
