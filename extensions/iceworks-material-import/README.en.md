@@ -9,7 +9,7 @@ Add materials to the application in a visual way.
 
 ## Usage
 
-![使用示例](https://img.alicdn.com/tfs/TB1GD1Wa9R26e4jSZFEXXbwuXXa-1393-892.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87401390-a63a1700-c5ec-11ea-91a6-f7d81ac5fd77.gif)
 
 1. Choose the position of your code where you want to import the material
 2. Click the block or the component which you need and the code will be added to your code
