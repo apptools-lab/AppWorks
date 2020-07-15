@@ -9,11 +9,11 @@ Create a component in a low-code way.
 
 ## Usage
 
-![create-component](https://img.alicdn.com/tfs/TB1.WORe5cKOu4jSZKbXXc19XXa-960-600.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87396941-2c069400-c5e6-11ea-8df8-f0ff5879da3b.gif)
 
-1. Enter the component name (to be used as the folder name)
-2. Select the block to be download
-3. Click "generate component" button to generate component code
+1. Enter the component name (to be used as component folder name).
+2. Select a component.
+3. Click `生成组件(Generate components)` button to generate component code.
 
 ## More
 
