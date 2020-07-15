@@ -11,27 +11,19 @@ It helps you preview your Universal Application, including the information of np
 
 ### Activate Extension
 
-After you install the Iceworks-APP plugin, an ICEWORK icon will be added to your toolbar. Click it to enter ICEWORK.
+### Initialize panel 
 
-![demo](https://user-images.githubusercontent.com/56879942/87531784-cb01bd80-c6c4-11ea-816b-fff4336016fd.gif)
+After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your toolbar. Click it to enter Iceworks panel.
 
-## Iceworks command palette
-
-If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in vscode command palette.
-
-![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
-
-1. Find Iceworks in the bottom right of Vscode.
-> NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
-2. Click the Iceworks plugin icon to enter the command board.
+![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
 ### Create a new project
 
-When you open an empty folder, you can create projects by ICEWORK panel:
+When you open an empty folder, you can create projects by Iceworks panel:
 
 ![demo](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
 
-#### Set up npm 
+#### Setting
 
 ![demo](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
 
@@ -40,9 +32,9 @@ When you open an empty folder, you can create projects by ICEWORK panel:
 3. Configure default image source (default: Taobao image)
 4. Set up custom repositories (default: null)
 
-### Npm Scripts
+### Iceworks panel
 
-#### View and excute the executable npm scripts of your app
+#### View and execute npm Scripts
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393980-9f59d700-c5e1-11ea-9e07-0244926f54cc.gif)
 
@@ -50,7 +42,7 @@ When you open an empty folder, you can create projects by ICEWORK panel:
 2. Click the `Play` button to execute the script at terminal immediately.
 3. Click the `Stop` button to end the corresponding script executed at terminal.
 
-###  Pages and Components
+### Pages and Components
 
 #### Jump into corresponding pages and components
 
@@ -68,7 +60,7 @@ When you open an empty folder, you can create projects by ICEWORK panel:
 
 ### Node Dependencies
 
-####  View the application dependency information and install new dependencies
+#### View the application dependency information and install new dependencies
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
 
@@ -85,6 +77,16 @@ When you open an empty folder, you can create projects by ICEWORK panel:
 3. Type the NPM package name and version information to be installed, such as' `typescript@latest`.
 4. The NPM package will be installed automatically.
    NOTE: If the package was installed, it will be reinstalled.
+
+## Iceworks command palette
+
+If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
+
+![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
+
+1. Find Iceworks in the bottom right of VS Code.
+    > NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
+2. Click the Iceworks plugin icon to enter the Iceworks command palette.
 
 ## More
 
