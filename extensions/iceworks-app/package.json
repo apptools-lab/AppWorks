@@ -90,7 +90,19 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "%iceworksApp.command.configHelper.start.title%"
+        "title": "%iceworksApp.command.configHelper.start.title%",
+        "icon": {
+          "light": "assets/light/setting.svg",
+          "dark": "assets/dark/setting.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.DefPublish",
+        "title": "%iceworksApp.command.DefPublish.title%",
+        "icon": {
+          "light": "assets/light/publish.svg",
+          "dark": "assets/dark/publish.svg"
+        }
       },
       {
         "command": "iceworksApp.npmScripts.refresh",
@@ -114,6 +126,30 @@
         "icon": {
           "light": "assets/light/stop.svg",
           "dark": "assets/dark/stop.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.runDev",
+        "title": "%iceworksApp.command.npmScripts.runDev.title%",
+        "icon": {
+          "light": "assets/light/runDev.svg",
+          "dark": "assets/dark/runDev.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.stopDev",
+        "title": "%iceworksApp.command.npmScripts.stopDev.title%",
+        "icon": {
+          "light": "assets/light/stop.svg",
+          "dark": "assets/dark/stop.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.runBuild",
+        "title": "%iceworksApp.command.npmScripts.runBuild.title%",
+        "icon": {
+          "light": "assets/light/build.svg",
+          "dark": "assets/dark/build.svg"
         }
       },
       {
@@ -214,6 +250,33 @@
         },
         {
           "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "iceworksApp.npmScripts.runDev",
+          "group": "navigation@01",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isRunningDev"
+        },
+        {
+          "command": "iceworksApp.npmScripts.stopDev",
+          "group": "navigation@01",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isRunningDev"
+        },
+        {
+          "command": "iceworksApp.DefPublish",
+          "group": "navigation@02",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
+        },
+        {
+          "command": "iceworksApp.npmScripts.runBuild",
+          "group": "navigation@02",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isAliInternal"
+        },
+        {
+          "command": "iceworksApp.configHelper.start",
+          "group": "navigation@03",
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         }
       ],
       "view/title": [
@@ -320,7 +383,7 @@
     "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "webpack": "webpack --mode development",
+    "webpack": "rm -rf ./build/extension.js && webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./tsconfig.json"
   },

@@ -6,6 +6,7 @@ import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import stopCommand from '../commands/stopCommand';
 import { ITerminalMap } from '../types';
+import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from '../constants';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
   private workspaceRoot: string;
@@ -61,7 +62,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
       };
 
       const scripts = packageJson.scripts
-        ? Object.keys(packageJson.scripts).map((script) => toScript(script, packageJson.scripts[script], `script-${script}`))
+        ? Object.keys(packageJson.scripts).map((script) => toScript(script, packageJson.scripts[script], `npmScripts-${script}`))
         : [];
       return scripts;
     } else {
@@ -105,6 +106,45 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
   });
   vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(terminals, script.id));
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
+
+  // commands in editor title 
+  vscode.commands.registerCommand('iceworksApp.npmScripts.runDev', async () => {
+    const pathExists = await checkPathExists(rootPath, dependencyDir);
+    const command: vscode.Command = {
+      command: 'iceworksApp.npmScripts.runDev',
+      title: 'Run Dev',
+      arguments: [rootPath, createNpmCommand('run', 'start')]
+    };
+    const commandId = editorTitleRunDevCommandId;
+    if (!pathExists) {
+      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      executeCommand(terminals, command, commandId);
+      return;
+    }
+    executeCommand(terminals, command, commandId);
+    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', true);
+  });
+
+  vscode.commands.registerCommand('iceworksApp.npmScripts.stopDev', () => {
+    stopCommand(terminals, editorTitleRunDevCommandId);
+    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', false);
+  });
+
+  vscode.commands.registerCommand('iceworksApp.npmScripts.runBuild', async () => {
+    const pathExists = await checkPathExists(rootPath, dependencyDir);
+    const command: vscode.Command = {
+      command: 'iceworksApp.npmScripts.runBuild',
+      title: 'Run Build',
+      arguments: [rootPath, createNpmCommand('run', 'build')]
+    };
+    const commandId = editorTitleRunBuildCommandId;
+    if (!pathExists) {
+      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      executeCommand(terminals, command, commandId);
+      return;
+    }
+    executeCommand(terminals, command, commandId)
+  });
 
   const pattern = path.join(rootPath, packageJSONFilename);
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
