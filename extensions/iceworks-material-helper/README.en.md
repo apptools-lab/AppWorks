@@ -15,7 +15,8 @@ When editing the props of a component in a JSX file, an automatic completion rem
 
 ![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
 
-1. Use materials in JSX files (such as View). [How to use materials?](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)
+1. Use materials in JSX files (such as View). 
+    > What is [material](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)?
 2. Enter part of props in the material tag, it will arouse automatic completion.
 
 ## More
