@@ -90,7 +90,11 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "%iceworksApp.command.configHelper.start.title%"
+        "title": "%iceworksApp.command.configHelper.start.title%",
+        "icon": {
+          "light": "assets/light/setting.svg",
+          "dark": "assets/dark/setting.svg"
+        }
       },
       {
         "command": "iceworksApp.DefPublish",
@@ -130,6 +134,14 @@
         "icon": {
           "light": "assets/light/runDev.svg",
           "dark": "assets/dark/runDev.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.runBuild",
+        "title": "%iceworksApp.command.npmScripts.runBuild.title%",
+        "icon": {
+          "light": "assets/light/build.svg",
+          "dark": "assets/dark/build.svg"
         }
       },
       {
@@ -234,19 +246,24 @@
       ],
       "editor/title": [
         {
-          "command": "iceworksApp.nodeDependencies.reinstall",
+          "command": "iceworksApp.npmScripts.runDev",
           "group": "navigation@01",
           "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
-          "command": "iceworksApp.npmScripts.runDev",
+          "command": "iceworksApp.DefPublish",
           "group": "navigation@02",
-          "when": "iceworks:showScriptIconInEditorTitleMenu"
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
         },
         {
-          "command": "iceworksApp.DefPublish",
+          "command": "iceworksApp.npmScripts.runBuild",
+          "group": "navigation@02",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isAliInternal"
+        },
+        {
+          "command": "iceworksApp.configHelper.start",
           "group": "navigation@03",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         }
       ],
       "view/title": [
@@ -353,7 +370,7 @@
     "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "webpack": "webpack --mode development",
+    "webpack": "rm -rf ./build/extension.js && webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./tsconfig.json"
   },

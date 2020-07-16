@@ -110,10 +110,26 @@ export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, r
     const pathExists = await checkPathExists(rootPath, dependencyDir);
     const command: vscode.Command = {
       command: 'iceworksApp.npmScripts.runDev',
-      title: 'Run DEV',
+      title: 'Run Dev',
       arguments: [rootPath, createNpmCommand('run', 'start')]
     };
-    const commandId = 'npmScripts-runDev';
+    const commandId = 'npmScripts-editor-title-run-dev';
+    if (!pathExists) {
+      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      executeCommand(terminals, command, commandId);
+      return;
+    }
+    executeCommand(terminals, command, commandId)
+  });
+  // run build command in editor title
+  vscode.commands.registerCommand('iceworksApp.npmScripts.runBuild', async () => {
+    const pathExists = await checkPathExists(rootPath, dependencyDir);
+    const command: vscode.Command = {
+      command: 'iceworksApp.npmScripts.runBuild',
+      title: 'Run Build',
+      arguments: [rootPath, createNpmCommand('run', 'build')]
+    };
+    const commandId = 'npmScripts-editor-title-run-build';
     if (!pathExists) {
       command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
       executeCommand(terminals, command, commandId);

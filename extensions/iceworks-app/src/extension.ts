@@ -74,9 +74,9 @@ export async function activate(context: vscode.ExtensionContext) {
   // show script icons in editor title menu
   vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
   const isAliInternal = await checkIsAliInternal();
+  // DEF publish command in editor title
+  vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', isAliInternal);
   if (isAliInternal) {
-    // DEF publish command in editor title
-    vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', true);
     context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.DefPublish', () => showDefPublishEnvQuickPick(terminals, rootPath)));
   }
 }

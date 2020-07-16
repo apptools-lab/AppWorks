@@ -14,6 +14,7 @@
   "iceworksApp.command.npmScripts.run.title": "Run Script",
   "iceworksApp.command.npmScripts.stop.title": "Stop Script",
   "iceworksApp.command.npmScripts.runDev.title": "IceWorks: Run Dev",
+  "iceworksApp.command.npmScripts.runBuild.title": "IceWorks: Run Build",
   "iceworksApp.command.pages.add.title": "Add Pages",
   "iceworksApp.command.pages.refresh.title": "Refresh",
   "iceworksApp.command.pages.openFile.title": "Open File",
