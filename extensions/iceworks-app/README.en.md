@@ -28,7 +28,7 @@ When you open an empty folder, you can create projects by Iceworks panel:
 ![demo](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
 
 1. Click Settings to enter the Settings page
-2. Configure package management tools (default: NPM)
+2. Configure package management tools (default: npm)
 3. Configure default image source (default: Taobao image)
 4. Set up custom repositories (default: null)
 
@@ -74,8 +74,8 @@ When you open an empty folder, you can create projects by Iceworks panel:
 
 1. Click the `+` button on the NODE DEPENDENCIES header.
 2. Select Install product Dependency or Debug Devdependency on the command panel that appears.
-3. Type the NPM package name and version information to be installed, such as' `typescript@latest`.
-4. The NPM package will be installed automatically.
+3. Type the npm package name and version information to be installed, such as' `typescript@latest`.
+4. The npm package will be installed automatically.
    NOTE: If the package was installed, it will be reinstalled.
 
 ## Iceworks command palette
