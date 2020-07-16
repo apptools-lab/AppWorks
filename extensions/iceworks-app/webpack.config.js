@@ -13,7 +13,6 @@ const config = {
   externals: {
     vscode: 'commonjs vscode'
   },
-  devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.js']
   },

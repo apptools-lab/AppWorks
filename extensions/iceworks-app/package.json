@@ -137,6 +137,14 @@
         }
       },
       {
+        "command": "iceworksApp.npmScripts.stopDev",
+        "title": "%iceworksApp.command.npmScripts.stopDev.title%",
+        "icon": {
+          "light": "assets/light/stop.svg",
+          "dark": "assets/dark/stop.svg"
+        }
+      },
+      {
         "command": "iceworksApp.npmScripts.runBuild",
         "title": "%iceworksApp.command.npmScripts.runBuild.title%",
         "icon": {
@@ -248,7 +256,12 @@
         {
           "command": "iceworksApp.npmScripts.runDev",
           "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu"
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isRunningDev"
+        },
+        {
+          "command": "iceworksApp.npmScripts.stopDev",
+          "group": "navigation@01",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isRunningDev"
         },
         {
           "command": "iceworksApp.DefPublish",
