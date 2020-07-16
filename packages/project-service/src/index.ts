@@ -61,6 +61,9 @@ export async function getProjectFramework() {
   if (devDependencies['ice.js'] || dependencies['ice.js']) {
     return 'icejs';
   }
+  if (dependencies.vue) {
+    return 'vue';
+  }
   return 'unknown';
 }
 
