@@ -9,12 +9,12 @@
 
 ## 功能
 
-### 唤醒
+### 激活
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87541327-aa8d2f80-c6d3-11ea-8540-9a1ad888e723.gif)
 
-1. 通过 `⇧⌘P` 快捷键唤起命令面板;
-2. 输入 `Iceworks: createApplication` 唤醒插件
+1. 通过 `⇧⌘P` ( Mac OS ) 或 `Ctrl+Shift+P` ( Windows ）快捷键唤醒命令面板
+2. 输入 `Iceworks: createApplication` 激活插件
 
 ### 使用
 
@@ -24,8 +24,8 @@
 
 1. 点击 `+` 进入物料源设置
 2. 配置包管理工具（默认为 npm ）
-3. 配置默认镜像源（默认为淘宝网镜像）
-4. 选择自定义物料库 (无默认外部物料库)
+3. 配置默认镜像源（默认为淘宝源）
+4. 自定义物料库
 
 #### 创建应用
 
