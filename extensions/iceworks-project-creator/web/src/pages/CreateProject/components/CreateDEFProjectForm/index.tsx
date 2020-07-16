@@ -62,7 +62,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
             name="group"
             fillProps="name"
             key="name"
-            showSearch={true}
+            showSearch
           >
             {dataSource.map(item => (
               <Select.Option value={item.name}>{item.name}</Select.Option>

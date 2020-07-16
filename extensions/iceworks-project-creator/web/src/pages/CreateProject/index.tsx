@@ -206,9 +206,14 @@ const CreateProject: React.FC = () => {
 
   useEffect(() => {
     async function checkAliInternal() {
-      const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
-      setIsAliInternal(isAliInternal);
-      return isAliInternal;
+      try {
+        const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
+        setIsAliInternal(isAliInternal);
+        return isAliInternal;
+      } catch (e) {
+        Notification.error({ content: e.message });
+        return false;
+      }
     }
     async function setDefaultFields(isAliInternal) {
       const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
@@ -233,7 +238,7 @@ const CreateProject: React.FC = () => {
         await initMaterialSources();
         await setDefaultFields(isAliInternal);
       } catch (e) {
-        Notification.error({ content: e.message })
+        Notification.error({ content: e.message });
       } finally {
         setLoading(false);
       }
