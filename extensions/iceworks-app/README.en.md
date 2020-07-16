@@ -5,21 +5,21 @@ English | [简体中文](./README.md)
 
 # Iceworks Application Viewer
 
-It helps you preview your Universal Application, including the information of npm scripts, pages, components and node dependencies. It also supports quick installation or upgrade dependencies, adding new pages and components, and much more. 
+Preview and manage your application from a framework perspective, including npm scripts, pages, components and dependencies, friendly for React and [Rax](https://rax.js.org/).
 
 ## Usage
 
-### Activate Extension
-
 ### Initialize panel 
 
-After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your toolbar. Click it to enter Iceworks panel.
+After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your activity bar. Click it to enter Iceworks panel.
+
+The initialization panel appears if your current workspace is empty or ** isn't React/Rax application **.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
 ### Create a new project
 
-When you open an empty folder, you can create projects by Iceworks panel:
+When you open an empty folder, the initialization panel automatically invokes the create application process, which you can also invoke by clicking the Create Application button on the panel.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
 
@@ -31,7 +31,7 @@ When you open an empty folder, you can create projects by Iceworks panel:
 2. Configure package management tools (default: npm)
 3. Configure default image source (default: Taobao image)
 4. Set up custom repositories (default: null)
-
+    > When your workspace is a React or Rax application, the Iceworks panel appears.
 ### Iceworks panel
 
 #### View and execute npm Scripts
@@ -46,7 +46,7 @@ When you open an empty folder, you can create projects by Iceworks panel:
 
 #### Jump into corresponding pages and components
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
 1. Click items in PAGES and COMPONENTS on the left panel.
 2. Jump into files of selected projects.
