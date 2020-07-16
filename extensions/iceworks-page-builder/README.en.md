@@ -13,7 +13,7 @@ Through GUI, you can quickly assemble pages with materials.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
 
-1. Arouse vscode command palette  through `⇧⌘P` .
+1. Arouse vscode command palette  through `(Ctrl+Shift+P or ⇧⌘P)` .
 2. In the command panel, type 'Iceworks: Create page' and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
 ### Usage
