@@ -15,7 +15,7 @@ Iceworks provides a huge amount of high-quality materials for React and [Rax](ht
 
 ![demo](https://user-images.githubusercontent.com/56879942/87535699-77926e00-c6ca-11ea-9e21-65fad2e95e0f.gif)
 
-1. Through `⇧⌘P` evoke vscode command palette
+1. Through (Ctrl+Shift+P or ⇧⌘P) evoke vscode command palette
 2. In the vscode command palette, enter 'Iceworks: Generate component', click the selected item or press enter to arouse the plugin;
 
 ### Create components
