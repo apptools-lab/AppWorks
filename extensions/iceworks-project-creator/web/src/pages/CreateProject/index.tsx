@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Form, Button, Notification, Icon } from '@alifd/next';
+import { Card, Form, Button, Notification, Icon, Loading } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
 import { IMaterialSource } from '@iceworks/material-utils';
@@ -23,6 +23,7 @@ const CreateProject: React.FC = () => {
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
   const [groupDataSource, setGroupDataSource] = useState([]);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const existProjectsRef = useRef([]);
   const steps = [
     <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} curProjectField={curProjectField} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
@@ -210,51 +211,61 @@ const CreateProject: React.FC = () => {
         setIsAliInternal(isAliInternal);
         return isAliInternal;
       } catch (e) {
-        Notification.error({ content: e.message })
+        Notification.error({ content: e.message });
+        return false;
       }
-      return false
     }
     async function setDefaultFields(isAliInternal) {
-      try {
-        const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
-        const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
-        const { empId, account, gitlabToken } = userData;
-        setCurProjectField({ ...curProjectField, projectPath: workspace })
-        if (isAliInternal) {
-          setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });
-          const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
-          setGroupDataSource(dataSource);
-          existProjectsRef.current = await callService('common', 'getExistProjects', gitlabToken);
-        }
-      } catch (e) {
-        // ignore
+      const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
+      const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
+      const { empId, account, gitlabToken } = userData;
+      setCurProjectField({ ...curProjectField, projectPath: workspace })
+      if (isAliInternal) {
+        setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });
+        const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
+        setGroupDataSource(dataSource);
+        existProjectsRef.current = await callService('common', 'getExistProjects', gitlabToken);
       }
     }
     async function initMaterialSources() {
       const materialSources = await getMaterialSources();
       setMaterialSources(materialSources);
     }
-    const isAliInternal = checkAliInternal();
-    initMaterialSources();
-    setDefaultFields(isAliInternal);
+    async function initData() {
+      try {
+        setLoading(true);
+        const isAliInternal = await checkAliInternal();
+        await initMaterialSources();
+        await setDefaultFields(isAliInternal);
+      } catch (e) {
+        Notification.error({ content: e.message });
+      } finally {
+        setLoading(false);
+      }
+    }
+    initData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Card free>
-      <Card.Content className={styles.cardContent}>
-        <div className={styles.header}>
-          <div>
-            <div className={styles.title}>创建应用</div>
-            <div className={styles.subTitle}>海量可复用物料，搭配研发框架极速构建多端应用。</div>
+    <div className={styles.container}>
+      <Card free>
+        <Card.Content className={styles.cardContent}>
+          <div className={styles.header}>
+            <div>
+              <div className={styles.title}>创建应用</div>
+              <div className={styles.subTitle}>海量可复用物料，搭配研发框架极速构建多端应用。</div>
+            </div>
+            <div className={styles.headerBtns}>
+              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
+              {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
+            </div>
           </div>
-          <div className={styles.headerBtns}>
-            <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
-            {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
-          </div>
-        </div>
-        <div className={styles.content}>{steps[currentStep]}</div>
-      </Card.Content>
-    </Card>
+          {loading ? <Loading className={styles.loading} visible={loading} /> : (
+            <div className={styles.content}>{steps[currentStep]}</div>
+          )}
+        </Card.Content>
+      </Card>
+    </div>
   );
 };
 
