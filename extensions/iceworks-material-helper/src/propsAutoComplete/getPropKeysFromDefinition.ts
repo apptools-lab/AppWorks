@@ -9,8 +9,12 @@ export default function getPropKeysFromDefinition(componentPath): string[] {
   const propKeys: string[] = [];
 
   try {
-    // React/Rax component project has it's owner /types.d.ts
-    const componentTypesPath = `${path.dirname(componentPath)}/types.d.ts`;
+    let componentTypesPath = componentPath;
+    if (!componentTypesPath.endsWith('d.ts')) {
+      // Rax component project use types.ts
+      // If this ts component project not contain d.ts or types.ts, Don‘t show propKeys.
+      componentTypesPath = `${path.dirname(componentPath)}/types.ts`;
+    }
     if (fs.existsSync(componentTypesPath)) {
       const ast = parse(fs.readFileSync(componentTypesPath, 'utf-8'), {
         sourceType: 'module',

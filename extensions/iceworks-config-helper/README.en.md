@@ -19,7 +19,7 @@ Whenever you hover over some JSON key, shows the description in a Hover widget.
 
 When you input it will show key suggestions related to your config.
 
-![img02](https://img.alicdn.com/tfs/TB188ZZvrj1gK0jSZFuXXcrHpXa-1132-774.gif)
+![img02](https://img.alicdn.com/tfs/TB1zgVMXsieb18jSZFvXXaI3FXa-900-526.gif)
 
 ### Snippets
 
