@@ -7,8 +7,6 @@ English | [简体中文](./README.md)
 
 Write props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), friendly for React and [Rax](https://rax.js.org/).
 
-> What is [material](https://ice.alibaba-inc.com/docs/materials/about)?
-
 ## Usage
 
 When editing the props of a component in a JSX file, an automatic completion reminder will be given:

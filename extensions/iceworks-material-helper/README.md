@@ -7,8 +7,6 @@
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写组件属性，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
-> 什么是[物料](https://ice.alibaba-inc.com/docs/materials/about)？
-
 ## 功能
 
 ### 属性自动补全
