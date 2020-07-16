@@ -31,8 +31,10 @@ When you open an empty folder, the initialization panel automatically invokes th
 2. Configure package management tools (default: npm)
 3. Configure default image source (default: Taobao image)
 4. Set up custom repositories (default: null)
-    > When your workspace is a React or Rax application, the Iceworks panel appears.
+
 ### Iceworks panel
+
+When your workspace is a React or Rax application, the Iceworks panel appears.
 
 #### View and execute npm Scripts
 
