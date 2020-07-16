@@ -1,7 +1,7 @@
 {
   "name": "iceworks-style-helper",
-  "displayName": "Iceworks Style Helper",
-  "description": "Easily write styles in JSX.",
+  "displayName": "React Style Helper",
+  "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
   "version": "0.3.2",
   "engines": {
@@ -17,8 +17,11 @@
     "JSX",
     "Inline Style",
     "Style",
+    "SASS",
+    "Less",
     "CSS",
-    "ClassName"
+    "ClassName",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
