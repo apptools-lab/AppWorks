@@ -13,7 +13,7 @@ Add materials to the application in a visual way.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87401390-a63a1700-c5ec-11ea-91a6-f7d81ac5fd77.gif)
 
-1. Arouse vscode command palette  through `⇧⌘P`.
+1. Arouse vscode command palette  through `(Ctrl+Shift+P or ⇧⌘P) `.
 2. Enter `Iceworks:Import material` to activate this extension.
 
 ### Import materials
