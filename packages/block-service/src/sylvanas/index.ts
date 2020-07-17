@@ -1,24 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-
 import ts2js from './ts2js';
-// import eslintJs from './eslintJs';
-// import prettierJS from './prettierJs';
 import { IFileEntity, IBabelOption, IOption, Action } from './typing';
 
 function parse(fileList: IFileEntity[], option: IBabelOption = {}) {
   // Get js from ts
-  console.log('Get js from ts')
   const jsFiles = ts2js(fileList, option);
-  console.log('get js from ts end');
 
-  // // eslint
-  // const lintFiles = eslintJs(jsFiles);
-
-  // // prettier
-  // const prettierFiles = prettierJS(lintFiles);
-
-  // return prettierFiles;
   return jsFiles;
 }
 
