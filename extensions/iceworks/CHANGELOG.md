@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+- docs: new logo and document
+
 ## 0.1.7
 
 - docs: update sample image
