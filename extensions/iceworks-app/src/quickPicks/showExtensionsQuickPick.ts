@@ -1,32 +1,24 @@
 import * as vscode from 'vscode';
+import {i18n} from '../extension';
 
-import * as zhCNTextMap from '../locales/zh-CN.json';
-import * as enUSTextMap from '../locales/en-US.json';
 const { window, commands } = vscode;
 
-import i18n from '@iceworks/i18n';
-
-
-i18n.registry("zh-CN",zhCNTextMap);
-i18n.registry("en",enUSTextMap);
-
-i18n.setLocal(vscode.env.language);
-import { createApplicationLabel, createApplicationDetail } from '../locales/localString';
-const extensionOptions = [
-  { label: createApplicationLabel,detail: createApplicationDetail, 
-  command: 'iceworks-project-creator.start', },
-  { label: i18n.format("extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label"), 
-  detail: i18n.format("extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail"), 
-  command: 'iceworks-page-builder.create', },
-  { label: i18n.format("extension.iceworksApp.showExtensionsQuickPick.generateComponent.label"),
-   detail: i18n.format("extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail"), 
-   command: 'iceworks-component-builder.generate' },
-  { label: i18n.format("extension.iceworksApp.showExtensionsQuickPick.materialImport.label"), 
-  detail: i18n.format("extension.iceworksApp.showExtensionsQuickPick.materialImport.detail"),
-  command: 'iceworks-material-import.start' },
-]
-
 export default function showExtensionsQuickPick() {
+
+  const extensionOptions = [
+    { label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.projectCreater.label'),
+      detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.projectCreater.detail'), 
+      command: 'iceworks-project-creator.start', },
+    { label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label'), 
+      detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail'), 
+      command: 'iceworks-page-builder.create', },
+    { label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.label'),
+      detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail'), 
+      command: 'iceworks-component-builder.generate' },
+    { label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.label'), 
+      detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.detail'),
+      command: 'iceworks-material-import.start' },
+  ]
   const quickPick = window.createQuickPick();
   quickPick.items = extensionOptions.map((options) => ({ label: options.label, detail: options.detail }));
   quickPick.onDidChangeSelection(selection => {

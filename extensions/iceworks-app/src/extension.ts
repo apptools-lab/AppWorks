@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import _i18n from '@iceworks/i18n';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
@@ -14,13 +15,21 @@ import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 
+import * as zhCNTextMap from './locales/zh-CN.json';
+import * as enUSTextMap from './locales/en-US.json';
+
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
-
+export const i18n = _i18n;
 export async function activate(context: vscode.ExtensionContext) {
   const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-
+  
+  // set I18n
+  i18n.registry('zh-CN',zhCNTextMap);
+  i18n.registry('en',enUSTextMap);
+  i18n.setLocal(vscode.env.language);
+  
   // data collection
   const logger = new Logger(name, globalState);
   logger.recordDAU();

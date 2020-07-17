@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { NodeDepTypes, ITerminalMap } from '../types';
 import executeCommand from '../commands/executeCommand';
+import { NodeDepTypes, ITerminalMap } from '../types';
 
 export default async function showDepsInputBox(terminals: ITerminalMap, nodeDependenciesInstance: any, depType: NodeDepTypes) {
   const result = await vscode.window.showInputBox({

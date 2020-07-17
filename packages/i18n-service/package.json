@@ -10,5 +10,9 @@
     "i18n"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.19"
+  }
 }
