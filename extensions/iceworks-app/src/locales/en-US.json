@@ -1,0 +1,10 @@
+{
+    "extension.iceworksApp.showExtensionsQuickPick.createApplication.label":"Iceworks createApplication",
+    "extension.iceworksApp.showExtensionsQuickPick.createApplication.detail":"Create a Universal Application(React/Rax/Vue, etc) quickly.",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label":"Iceworks pageBuidler",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail":"Through GUI, you can quickly assemble pages with materials.",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label":"Iceworks componentBuilder",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail":"Create components quickly from materials.",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.label":"Iceworks materialImport",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail":"Add materials to the application in a visual way."
+}
