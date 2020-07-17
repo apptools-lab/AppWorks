@@ -1,12 +1,12 @@
 import { transformSync } from '@babel/core';
-import { FileEntity, BabelOption } from './typing';
+import { IFileEntity, IBabelOption } from './typing';
 import decoratorPlugin from './babel-decorator-plugin';
 
-function ts2js(fileList: FileEntity[], option: BabelOption = {}): FileEntity[] {
+function ts2js(fileList: IFileEntity[], option: IBabelOption = {}): IFileEntity[] {
   console.log('ts2js');
 
-  const jsFiles: FileEntity[] = fileList.map(
-    (entity): FileEntity => {
+  const jsFiles: IFileEntity[] = fileList.map(
+    (entity): IFileEntity => {
       const { code } = transformSync(entity.data, {
         plugins: [
           [
