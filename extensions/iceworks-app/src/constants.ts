@@ -4,7 +4,8 @@ export const entryFileSuffix = [
   '.jsx',
   '.js',
   '.tsx',
-  '.rml'
+  '.rml',
+  '.vue'
 ];
 
 export const nodeDepTypes: NodeDepTypes[] = [
