@@ -3,8 +3,6 @@ import { IFileEntity, IBabelOption } from './typing';
 import decoratorPlugin from './babel-decorator-plugin';
 
 function ts2js(fileList: IFileEntity[], option: IBabelOption = {}): IFileEntity[] {
-  console.log('ts2js');
-
   const jsFiles: IFileEntity[] = fileList.map(
     (entity): IFileEntity => {
       const { code } = transformSync(entity.data, {
