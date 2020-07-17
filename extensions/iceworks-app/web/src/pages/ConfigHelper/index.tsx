@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Select, Input, Notification } from '@alifd/next';
+import { Form, Select, Input, Notification, Loading } from '@alifd/next';
 import { debounce } from 'throttle-debounce';
 import { IMaterialSource } from '@iceworks/material-utils';
-import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager } from '@/constants';
+import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
 import CustomMaterialSource from './CustomMaterialSource';
 import styles from './index.module.scss';
@@ -19,6 +19,7 @@ const CUSTOM_NPM_REGISTRY_SELECT_KEY = 'npm - 自定义镜像源';
 const ConfigHelper = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [fields, setFields] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSourceAdd = async (materialSource: IMaterialSource) => {
     try {
@@ -57,7 +58,7 @@ const ConfigHelper = () => {
         return;
       }
       if (name === CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY &&
-        !/^(https?:\/\/(([a-zA-Z0-9]+-?)+[a-zA-Z0-9]+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/.test(value)) {
+        !urlRegExp.test(value)) {
         return;
       }
       if (name === CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY) {
@@ -74,6 +75,7 @@ const ConfigHelper = () => {
   useEffect(() => {
     async function initFormData() {
       try {
+        setLoading(true);
         const curPackageManager = await callService('common', 'getDataFromSettingJson', 'packageManager');
         let curNpmRegistry = await callService('common', 'getDataFromSettingJson', 'npmRegistry');
         const curMaterialSources = await callService('material', 'getUserSources');
@@ -92,6 +94,8 @@ const ConfigHelper = () => {
         setFields({ packageManager: curPackageManager, npmRegistry: curNpmRegistry, customNpmRegistry });
       } catch (e) {
         Notification.error({ content: e.message });
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -99,35 +103,39 @@ const ConfigHelper = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={styles.container}>
-      <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-        <FormItem label="npm 包管理工具">
-          <Select name="packageManager" placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
-            {packageManagers.map(item => (
-              <Select.Option key={item} value={item}>{item}</Select.Option>
-            ))}
-          </Select>
-        </FormItem>
-        <FormItem label="npm 镜像源">
-          <Select name="npmRegistry" placeholder="请选择 npm 镜像源" style={{ width: '100%' }}>
-            {npmRegistries.map(item => (
-              <Select.Option key={item} value={item}>{item}</Select.Option>
-            ))}
-          </Select>
-        </FormItem>
-        {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-          <FormItem label=" " format="url" >
-            <Input name="customNpmRegistry" placeholder="请输入自定义 npm 镜像源" />
-          </FormItem>
-        )}
-      </Form>
-      <CustomMaterialSource
-        sources={materialSources}
-        onSourceAdd={onSourceAdd}
-        onSourceDelete={onMaterialSourceDelete}
-        onSourceEdit={onMaterialSourceEdit}
-      />
-    </div >
+    <>
+      {loading ? <Loading visible={loading} className={styles.loading} /> : (
+        <div className={styles.container}>
+          <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
+            <FormItem label="npm 包管理工具">
+              <Select name="packageManager" placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
+                {packageManagers.map(item => (
+                  <Select.Option key={item} value={item}>{item}</Select.Option>
+                ))}
+              </Select>
+            </FormItem>
+            <FormItem label="npm 镜像源">
+              <Select name="npmRegistry" placeholder="请选择 npm 镜像源" style={{ width: '100%' }}>
+                {npmRegistries.map(item => (
+                  <Select.Option key={item} value={item}>{item}</Select.Option>
+                ))}
+              </Select>
+            </FormItem>
+            {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
+              <FormItem label=" " format="url" formatMessage="请输入正确的 url">
+                <Input name="customNpmRegistry" placeholder="请输入自定义 npm 镜像源" />
+              </FormItem>
+            )}
+          </Form>
+          <CustomMaterialSource
+            sources={materialSources}
+            onSourceAdd={onSourceAdd}
+            onSourceDelete={onMaterialSourceDelete}
+            onSourceEdit={onMaterialSourceEdit}
+          />
+        </div>
+      )}
+    </>
   )
 }
 

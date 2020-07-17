@@ -7,13 +7,15 @@ English | [简体中文](./README.md)
 
 Write props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), friendly for React and [Rax](https://rax.js.org/).
 
-> What is [material](https://ice.alibaba-inc.com/docs/materials/about)?
-
 ## Usage
 
 When editing the props of a component in a JSX file, an automatic completion reminder will be given:
 
-![demo](https://img.alicdn.com/tfs/TB1pNj5x7Y2gK0jSZFgXXc5OFXa-1688-780.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
+
+1. Use materials in JSX files (such as View). 
+    > What is [material](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)?
+2. Enter part of props in the material tag, it will arouse automatic completion.
 
 ## More
 

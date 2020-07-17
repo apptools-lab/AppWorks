@@ -4,7 +4,8 @@ export const entryFileSuffix = [
   '.jsx',
   '.js',
   '.tsx',
-  '.rml'
+  '.rml',
+  '.vue'
 ];
 
 export const nodeDepTypes: NodeDepTypes[] = [
@@ -13,3 +14,6 @@ export const nodeDepTypes: NodeDepTypes[] = [
 ];
 
 export const showExtensionsQuickPickCommandId = 'iceworksApp.showExtensionsQuickPick';
+
+export const editorTitleRunDevCommandId = 'npmScripts-editor-title-run-dev';
+export const editorTitleRunBuildCommandId = 'npmScripts-editor-title-run-build';
