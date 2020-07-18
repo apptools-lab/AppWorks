@@ -1,0 +1,17 @@
+{
+    "entension.block-service.downloadBlock.getDownloadUrl":"Obtain Download URl...",
+    "entension.block-service.downloadBlock.getDownloadUrlError":"Failed to obtain url, please copy and open <%= _repository %> in browse.",
+    "entension.block-service.downloadBlock.unzipCode":"Download and unzip code...",
+    "entension.block-service.downloadBlock.unzipCodeError":"Error in unzipping <%= _blockName %>，please copy and download from this url: ：<%= _tarballURL %>",
+    "entension.block-service.downloadBlock.process":"===>>> Percent：<%= _percent %>%",
+    "entension.block-service.downloadBlock.downloadError":"Block <%= _blockName %> download timeout, please copy and download from this url: ：<%= _tarballURL %>",
+    "entension.block-service.downloadError":"Failed to obtain zips from <%= _blockSourceNpm %> ，try to clone the <%= _repository %> repository manually.",
+    "entension.block-service.uzipError":"Failed to unzip <%= _blockName %>，download from：<%= _tarballURL %>",
+    "entension.block-service.uzipOutTime":"Uzip <%= _blockName %> timeout，download from：<%= _tarballURL %>",
+    "entension.block-service.templateError":"You can only add block codes to  <%= _jsxFileExtnames %> ",
+    "entension.block-service.notPageFileError":"You can only add block codes to files in <%= _pagesPath %>",
+    "entension.block-service.startObtainBlock":"> Obtain block codes...",
+    "entension.block-service.obtainDone":"> The block code has been downloaded to <%= _blockDir %>"
+
+
+}
