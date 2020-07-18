@@ -1,0 +1,12 @@
+{
+    "extension.iceworksApp.showExtensionsQuickPick.projectCreater.label":"Iceworks createApplication",
+    "extension.iceworksApp.showExtensionsQuickPick.projectCreater.detail":"Create a Universal Application(React/Rax/Vue, etc) quickly.",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label":"Iceworks pageBuidler",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail":"Through GUI, you can quickly assemble pages with materials.",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label":"Iceworks componentBuilder",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail":"Create components quickly from materials.",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.label":"Iceworks materialImport",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail":"Add materials to the application in a visual way.",
+    "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder":"for example: lodash react@latest",
+    "extension.iceworksApp.showDepsInputBox.materialImport.prompt":"Please enter the name of the dependency to be addded to <%= depType %>. Multiple dependencies should be spilted by Spaces "
+}

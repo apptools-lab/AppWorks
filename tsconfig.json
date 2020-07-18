@@ -13,5 +13,6 @@
     {"path": "packages/block-service"},
     {"path": "packages/component-service"},
     {"path": "packages/page-service"},
+    {"path": "packages/i18n"}
   ]
 }
