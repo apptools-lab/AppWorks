@@ -13,6 +13,7 @@ import { showExtensionsQuickPickCommandId } from './constants';
 import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
+import {i18n} from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -35,10 +36,11 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   // init webview
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', '设置 - Iceworks', ViewColumn.One, {
-      enableScripts: true,
-      retainContextWhenHidden: true,
-    });
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 
+      i18n.format('extension.iceworksApp.extension.title'), ViewColumn.One, {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      });
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
     connectService(webviewPanel, context, { services, logger });
   }
@@ -48,7 +50,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }));
 
   if (!rootPath) {
-    vscode.window.showInformationMessage('当前工作区为空，请打开应用或新建应用。');
+    vscode.window.showInformationMessage(i18n.format('extension.iceworksApp.extebsion.emptyWorkplace'));
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     vscode.commands.executeCommand('iceworks-project-creator.start');
     return;
