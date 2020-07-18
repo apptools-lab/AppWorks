@@ -3,7 +3,9 @@
 	"compilerOptions": {
 		"outDir": "build",
 		"rootDir": "./",
-		"noImplicitAny": false
+		"noImplicitAny": false,
+		"allowJs": true,
+		"resolveJsonModule": true
 	},
 	"include": [
 		"src"
