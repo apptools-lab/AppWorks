@@ -1,7 +1,10 @@
 import React from 'react';
 import { Dialog, Form, Input, Button } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
+import { FormattedMessage } from 'react-intl';
 import styles from './MaterialSourceForm.module.scss';
+import {i18n} from '../../i18n';
+
 
 interface IMaterialSourceForm {
   title: string;
@@ -29,14 +32,16 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
       onClose={onCancel}
     >
       <Form value={value} fullWidth className={styles.form}>
-        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称">
-          <Input name="name" placeholder="请输入物料名称" />
+        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialNameLabel'})} 
+          required requiredMessage={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})}>
+          <Input name="name" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})} />
         </Form.Item>
-        <Form.Item label="物料地址：" required requiredMessage="请输入物料地址" format="url">
-          <Input name="source" placeholder="请输入物料地址" />
+        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURLLabel'})}
+          required requiredMessage={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} format="url">
+          <Input name="source" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} />
         </Form.Item>
-        <Form.Item label="物料描述：">
-          <Input.TextArea name="description" placeholder="请输入物料描述" />
+        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel'})}>
+          <Input.TextArea name="description" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescription'})} />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
           <Form.Submit
@@ -44,9 +49,11 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
             onClick={onFormSubmit}
             validate
           >
-            确定
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.confirm"/>
           </Form.Submit>
-          <Button onClick={onCancel} className={styles.btn}>取消</Button>
+          <Button onClick={onCancel} className={styles.btn}>
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.cancel"/>
+          </Button>
         </Form.Item>
       </Form>
     </Dialog>

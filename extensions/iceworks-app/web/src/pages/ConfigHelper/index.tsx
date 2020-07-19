@@ -4,6 +4,7 @@ import { debounce } from 'throttle-debounce';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
+import {i18n, LocaleProvider} from '../../i18n';
 import CustomMaterialSource from './CustomMaterialSource';
 import styles from './index.module.scss';
 
@@ -14,7 +15,7 @@ const formItemLayout = {
   wrapperCol: { span: 10 }
 };
 const CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY = 'customNpmRegistry';
-const CUSTOM_NPM_REGISTRY_SELECT_KEY = 'npm - 自定义镜像源';
+const CUSTOM_NPM_REGISTRY_SELECT_KEY = i18n.formatMessage({id:'web.iceworksApp.index.CUSTOM_NPM_REGISTRY_SELECT_KEY'});
 
 const ConfigHelper = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
@@ -25,7 +26,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'addSource', materialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: '新增物料源成功' });
+      Notification.success({ content: i18n.formatMessage({id:'web.iceworksApp.index.addMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -35,7 +36,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'updateSource', materialSource, originMaterialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: '修改物料源成功' });
+      Notification.success({ content:  i18n.formatMessage({id:'web.iceworksApp.index.editMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -45,7 +46,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'removeSource', materialSource.source);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: '删除物料源成功' });
+      Notification.success({ content:  i18n.formatMessage({id:'web.iceworksApp.index.deleteMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -66,7 +67,7 @@ const ConfigHelper = () => {
       } else {
         await callService('common', 'saveDataToSettingJson', name, value);
       }
-      Notification.success({ content: '设置成功' });
+      Notification.success({ content: i18n.formatMessage({id:'web.iceworksApp.index.editSettingSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -104,37 +105,39 @@ const ConfigHelper = () => {
   }, []);
   return (
     <>
-      {loading ? <Loading visible={loading} className={styles.loading} /> : (
-        <div className={styles.container}>
-          <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-            <FormItem label="npm 包管理工具">
-              <Select name="packageManager" placeholder="请选择 npm 包管理工具" style={{ width: '100%' }}>
-                {packageManagers.map(item => (
-                  <Select.Option key={item} value={item}>{item}</Select.Option>
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label="npm 镜像源">
-              <Select name="npmRegistry" placeholder="请选择 npm 镜像源" style={{ width: '100%' }}>
-                {npmRegistries.map(item => (
-                  <Select.Option key={item} value={item}>{item}</Select.Option>
-                ))}
-              </Select>
-            </FormItem>
-            {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-              <FormItem label=" " format="url" formatMessage="请输入正确的 url">
-                <Input name="customNpmRegistry" placeholder="请输入自定义 npm 镜像源" />
+      <LocaleProvider>
+        {loading ? <Loading visible={loading} className={styles.loading} /> : (
+          <div className={styles.container}>
+            <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
+              <FormItem label={i18n.formatMessage({id:'web.iceworksApp.index.npmPackageManager'})}>
+                <Select name="packageManager" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.chooseNpmPackageManager'})} style={{ width: '100%' }}>
+                  {packageManagers.map(item => (
+                    <Select.Option key={item} value={item}>{item}</Select.Option>
+                  ))}
+                </Select>
               </FormItem>
-            )}
-          </Form>
-          <CustomMaterialSource
-            sources={materialSources}
-            onSourceAdd={onSourceAdd}
-            onSourceDelete={onMaterialSourceDelete}
-            onSourceEdit={onMaterialSourceEdit}
-          />
-        </div>
-      )}
+              <FormItem label={i18n.formatMessage({id:'web.iceworksApp.index.npmRegistry'})}>
+                <Select name="npmRegistry" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.chooseNpmRegistry'})} style={{ width: '100%' }}>
+                  {npmRegistries.map(item => (
+                    <Select.Option key={item} value={item}>{item}</Select.Option>
+                  ))}
+                </Select>
+              </FormItem>
+              {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
+                <FormItem label=" " format="url" formatMessage={i18n.formatMessage({id:'web.iceworksApp.index.formatUrl'})}>
+                  <Input name="customNpmRegistry" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.customNpmRegistryPlaceHolder'})} />
+                </FormItem>
+              )}
+            </Form>
+            <CustomMaterialSource
+              sources={materialSources}
+              onSourceAdd={onSourceAdd}
+              onSourceDelete={onMaterialSourceDelete}
+              onSourceEdit={onMaterialSourceEdit}
+            />
+          </div>
+        )}
+      </LocaleProvider>
     </>
   )
 }
