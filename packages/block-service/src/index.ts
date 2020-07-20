@@ -20,7 +20,6 @@ import {
   getLastAcitveTextEditor,
   getImportTemplate
 } from '@iceworks/common-service';
-import i18n from '@iceworks/i18n';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
