@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.3
+
+- docs: change logo
+
 ## 0.1.2
 
 - feat: quick activate iceworks-material-import extensions by editor context

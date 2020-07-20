@@ -7,17 +7,26 @@
 
 快速创建多端应用（例如：React/Rax/Vue...）
 
-## 快速开始
+## 功能
+
+### 激活
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87621232-e61b0e80-c752-11ea-852c-77bb164d2dab.gif)
+
+1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
+2. 输入 `Iceworks: createApplication` 激活插件
+
+### 创建应用
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87621825-41013580-c754-11ea-8da8-e49e71397d08.gif)
 
 1. 选择模板
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
-![application-creator](https://img.alicdn.com/tfs/TB15ZmPXypE_u4jSZKbXXbCUVXa-1090-774.gif)
-
 ## 更多
 
-访问 [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 了解更多 Iceworks 相关功能。
+访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 

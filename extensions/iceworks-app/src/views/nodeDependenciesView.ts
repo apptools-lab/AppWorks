@@ -219,5 +219,5 @@ function toDep(extensionContext: vscode.ExtensionContext, workspaceDir: string, 
       arguments: [workspaceDir, npmCommand]
     } :
     undefined;
-  return new DependencyTreeItem(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, `dependency-${moduleName}`, command, version, outdated);
+  return new DependencyTreeItem(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, `nodeDependencies-${moduleName}`, command, version, outdated);
 };
