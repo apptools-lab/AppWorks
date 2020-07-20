@@ -2,7 +2,7 @@
 
 ## 0.3.0
 
-- remove: add [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
+- refactor: remove [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import), merge into [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
 
 ## 0.2.0
 
