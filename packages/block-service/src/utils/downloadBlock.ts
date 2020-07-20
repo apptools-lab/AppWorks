@@ -3,7 +3,7 @@ import * as fsExtra from 'fs-extra';
 import { getAndExtractTarball } from 'ice-npm-utils';
 import { IMaterialBlock, getTarballURLByMaterielSource } from '@iceworks/material-utils';
 import { getIceVersion, getPackageJSON, packageJSONPath } from '@iceworks/project-service';
-import { i18n } from './i18n';
+import i18n from './i18n';
 
 export async function downloadBlock(block: IMaterialBlock, targetDir: string, log: (text: string) => void): Promise<string> {
   const { name: blockName, source, repository } = block;

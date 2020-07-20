@@ -6,7 +6,6 @@
     "outDir": "lib",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "allowJs": true,
     "resolveJsonModule": true
   },
   "exclude": [
