@@ -15,8 +15,9 @@ Includes following feature:
 - [Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator): Quick to create a new Universal Application
 - [Page Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder): Build Page UI by low-code way
 - [Component Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder): Build Component UI by low-code way
-- [React Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style in [JSX](https://reactjs.org/docs/introducing-jsx.html)
-- [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html)
+- [Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：Auto completion reminder for writing inline style in JSX
+- [Material Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：Auto completion reminder for writing component properties JSX
+- [Material Import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)：Add materials to the application in a visual way
 - [Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features.
 
 ## Quick start
