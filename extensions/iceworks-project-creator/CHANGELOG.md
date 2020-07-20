@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.2
+
+- chore: upgrade @iceworks/generate-project
+
 ## 0.2.1
 
 - docs: better docs
