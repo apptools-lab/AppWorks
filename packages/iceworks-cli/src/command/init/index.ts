@@ -1,12 +1,11 @@
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import * as chalk from 'chalk';
+import * as inquirer from 'inquirer';
 import log from '../../utils/log';
 import goldlog from '../../utils/goldlog';
 import checkEmpty from '../../utils/checkEmpty';
 import getNpmRegistry from '../../utils/getNpmRegistry';
 import initMaterialAndComponent from './initMaterialAndComponent';
-
-import inquirer = require('inquirer');
 
 interface IOptions {
   rootDir?: string;
