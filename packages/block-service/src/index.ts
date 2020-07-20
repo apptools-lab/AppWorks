@@ -21,9 +21,9 @@ import {
   getImportTemplate
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+import * as transfromTsToJs from 'transform-ts-to-js';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
-import transfromTsToJs from './sylvanas/index';
 
 const { window, Position } = vscode;
 

@@ -1,6 +1,8 @@
 import { transformSync } from '@babel/core';
 import { IFileEntity, IBabelOption } from './typing';
-import decoratorPlugin from './babel-decorator-plugin';
+import decoratorPlugin from './babelDecoratorPlugin';
+import babelDynamicImportPlugin from './babelDynamicImportPlugin';
+import babelTransformTSPlugin from './babelTransformTSPlugin';
 
 function ts2js(fileList: IFileEntity[], option: IBabelOption = {}): IFileEntity[] {
   const jsFiles: IFileEntity[] = fileList.map(
@@ -13,9 +15,9 @@ function ts2js(fileList: IFileEntity[], option: IBabelOption = {}): IFileEntity[
               decoratorsBeforeExport: !!option.decoratorsBeforeExport,
             },
           ],
-          [require.resolve('@babel/plugin-syntax-dynamic-import')],
+          [babelDynamicImportPlugin],
           [
-            require.resolve('@babel/plugin-transform-typescript'),
+            babelTransformTSPlugin,
             {
               isTSX: true,
             },
