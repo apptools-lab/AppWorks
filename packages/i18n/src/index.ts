@@ -29,4 +29,3 @@ export default class I18nService implements II18n{
     return i18nformatString;
   }
 }
-
