@@ -2,7 +2,7 @@ import syntaxDecorators from '@babel/plugin-syntax-decorators';
 
 export default function () {
   return {
-    name: 'sylvanas-decorators',
+    name: 'syntax-decorators',
     inherits: syntaxDecorators,
     visitor: {},
   };
