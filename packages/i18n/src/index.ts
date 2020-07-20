@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { II18n, ITextMap } from './type';
 
-class I18nService implements II18n{
+export default class I18nService implements II18n{
   localesTextMap: { [locale: string]: ITextMap }= {};
 
   currentTextMap: ITextMap = {};
@@ -29,5 +29,3 @@ class I18nService implements II18n{
     return i18nformatString;
   }
 }
-const i18n = new I18nService();
-export default i18n;
