@@ -1,15 +1,15 @@
 {
     "entension.block-service.downloadBlock.getDownloadUrl":"获取区块代码包下载地址",
-    "entension.block-service.downloadBlock.getDownloadUrlError":"获取区块代码包地址失败，请手动拷贝代码仓库：<%= _repository %>",
+    "entension.block-service.downloadBlock.getDownloadUrlError":"获取区块代码包地址失败，请手动拷贝代码仓库：<%= repository %>",
     "entension.block-service.downloadBlock.unzipCode":"下载区块代码包并解压",
-    "entension.block-service.downloadBlock.unzipCodeError":"解压区块<%= _blockName %>出错，请手动下载区块：<%= _tarballURL %>",
-    "entension.block-service.downloadBlock.process":"===>>> 进度：<%= _percent %>%",
-    "entension.block-service.downloadBlock.downloadError":"区块<%= _blockName %>下载超时，请手动下载区块：<%= _tarballURL %>",
-    "entension.block-service.downloadError":"从 <%= _blockSourceNpm %> 获取压缩包链接失败，您可以尝试手动克隆 <%= _repository %> 仓库",
-    "entension.block-service.uzipError":"解压 <%= _blockName %> 失败，压缩包链接地址是：<%= _tarballURL %>",
-    "entension.block-service.uzipOutTime":"解压 <%= _blockName %> 超时，压缩包链接地址是：<%= _tarballURL %>",
-    "entension.block-service.templateError":"只能向 <%= _jsxFileExtnames %> 文件添加区块代码",
-    "entension.block-service.notPageFileError":"只能向 <%= _pagesPath %> 下的页面文件添加区块代码",
+    "entension.block-service.downloadBlock.unzipCodeError":"解压区块<%= blockName %>出错，请手动下载区块：<%= tarballURL %>",
+    "entension.block-service.downloadBlock.process":"===>>> 进度：<%= percent %>%",
+    "entension.block-service.downloadBlock.downloadError":"区块<%= blockName %>下载超时，请手动下载区块：<%= tarballURL %>",
+    "entension.block-service.downloadError":"从 <%= blockSourceNpm %> 获取压缩包链接失败，您可以尝试手动克隆 <%= repository %> 仓库",
+    "entension.block-service.uzipError":"解压 <%= blockName %> 失败，压缩包链接地址是：<%= tarballURL %>",
+    "entension.block-service.uzipOutTime":"解压 <%= blockName %> 超时，压缩包链接地址是：<%= tarballURL %>",
+    "entension.block-service.templateError":"只能向 <%= jsxFileExtnames %> 文件添加区块代码",
+    "entension.block-service.notPageFileError":"只能向 <%= pagesPath %> 下的页面文件添加区块代码",
     "entension.block-service.startObtainBlock":"> 开始获取区块代码",
-    "entension.block-service.obtainDone":"> 已将区块代码下载到：<%= _blockDir %>"
+    "entension.block-service.obtainDone":"> 已将区块代码下载到：<%= blockDir %>"
 }

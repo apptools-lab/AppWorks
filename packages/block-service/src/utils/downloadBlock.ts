@@ -17,7 +17,7 @@ export async function downloadBlock(block: IMaterialBlock, targetDir: string, lo
     log(i18n.format('entension.block-service.downloadBlock.getDownloadUrl'));
     tarballURL = await getTarballURLByMaterielSource(source, iceVersion);
   } catch (error) {
-    error.message = i18n.format('entension.block-service.downloadBlock.getDownloadUrlError',{_repository:repository});
+    error.message = i18n.format('entension.block-service.downloadBlock.getDownloadUrlError',{repository});
     throw error;
   }
 
@@ -29,13 +29,13 @@ export async function downloadBlock(block: IMaterialBlock, targetDir: string, lo
       blockTempDir,
       tarballURL,
       ({ percent }) => {
-        log(i18n.format('entension.block-service.downloadBlock.process',{_percent:(percent * 100).toFixed(2)}));
+        log(i18n.format('entension.block-service.downloadBlock.process',{percent:(percent * 100).toFixed(2)}));
       }
     );
   } catch (error) {
-    error.message = i18n.format('entension.block-service.downloadBlock.unzipCodeError',{_blockName:blockName,_tarballURL:tarballURL});
+    error.message = i18n.format('entension.block-service.downloadBlock.unzipCodeError',{blockName,tarballURL});
     if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-      error.message = i18n.format('entension.block-service.downloadBlock.downloadError',{_blockName:blockName,_tarballURL:tarballURL}); 
+      error.message = i18n.format('entension.block-service.downloadBlock.downloadError',{blockName,tarballURL}); 
     }
     await fsExtra.remove(blockTempDir);
     throw error;
