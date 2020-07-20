@@ -61,7 +61,7 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = i18n.format('entension.block-service.downloadBlock.downloadError',{blockName,tarballURL}); 
+        error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName,tarballURL}); 
         throw error;
       }
 
@@ -71,9 +71,9 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         await getAndExtractTarball(blockTempDir, tarballURL);
       } catch (error) {
-        error.message = i18n.format('entension.block-service.uzipError',{blockName,tarballURL});
+        error.message = i18n.format('package.block-service.uzipError', {blockName,tarballURL});
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('entension.block-service.uzipOutTime',{blockName,tarballURL});;
+          error.message = i18n.format('package.block-service.uzipOutTime', {blockName,tarballURL});;
         }
         await fsExtra.remove(blockTempDir);
         throw error;
@@ -151,7 +151,7 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
 }
 
 export async function addBlockCode(block: IMaterialBlock) {
-  const templateError = i18n.format('entension.block-service.templateError',{jsxFileExtnames:jsxFileExtnames.join(',')}); ;
+  const templateError = i18n.format('package.block-service.templateError', {jsxFileExtnames:jsxFileExtnames.join(',')}); ;
   const activeTextEditor = getLastAcitveTextEditor();
   console.log('addBlockCode....');
   if (!activeTextEditor) {
@@ -172,7 +172,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   );
   const isPageFile = await fsExtra.pathExists(pagePath);
   if (!isPageFile) {
-    throw new Error( i18n.format('entension.block-service.notPageFileError',{pagesPath}));
+    throw new Error( i18n.format('package.block-service.notPageFileError', {pagesPath}));
   }
 
   // insert code 
@@ -183,13 +183,13 @@ export async function addBlockCode(block: IMaterialBlock) {
   const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
-  materialOutputChannel.appendLine(i18n.format('entension.block-service.startObtainBlock'));
+  materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
     const downloadMethod = downloadBlock;
     const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
-    materialOutputChannel.appendLine(i18n.format('entension.block-service.obtainDone',{blockDir}));
+    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', {blockDir}));
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
   } finally {
