@@ -15,6 +15,18 @@ test('downloadAndGenerateProject build-scripts', async () => {
   // await fs.remove(projectDir);
 });
 
+test('downloadAndGenerateProject raxjs with ejs options', async () => {
+  const projectDir = path.resolve(tmpPath, 'raxjs-ejs');
+  await fs.ensureDir(projectDir);
+
+  await downloadAndGenerateProject(projectDir, '@rax-materials/scaffolds-web-app-js', null, 'https://registry.npmjs.org/', null, {
+    targets: ['web', 'miniapp'],
+    mpa: true,
+  });
+  // await fs.remove(projectDir);
+});
+
+
 test('downloadAndGenerateProject ice-scripts@2.x', async () => {
   const projectDir = path.resolve(tmpPath, 'ice-scripts-2.x');
   await fs.ensureDir(projectDir);
