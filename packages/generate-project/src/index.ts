@@ -2,7 +2,6 @@ import * as ora from 'ora';
 import {
   isAliNpm, getNpmTarball, getAndExtractTarball
 } from 'ice-npm-utils';
-import * as fse from 'fs-extra';
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
