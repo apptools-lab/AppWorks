@@ -1,10 +1,10 @@
 {
   "name": "iceworks-material-helper",
-  "displayName": "Iceworks Material Helper",
-  "description": "Easily use materials in JSX.",
+  "displayName": "React Component Helper",
+  "description": "Easily use Component in React/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.1.4",
-  "main": "./build/index.js",
+  "version": "0.2.0",
+  "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -17,6 +17,7 @@
     "Rax",
     "React",
     "JSX",
+    "Component",
     "Props"
   ],
   "icon": "assets/logo.png",
@@ -24,23 +25,53 @@
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
     "onLanguage:typescript",
-    "onLanguage:typescriptreact"
+    "onLanguage:typescriptreact",
+    "onCommand:iceworks-material-helper.start"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks-material-helper.start",
+        "title": "%iceworksMaterialHelper.commands.start.title%"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "iceworks-material-helper.start",
+          "group": "iceworksMaterialHelper",
+          "when": "editorTextFocus && iceworks:isJSXFile"
+        }
+      ]
+    }
+  },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./tsconfig.json"
+    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/babel-traverse": "^6.25.5",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "@babel/parser": "^7.10.2",
     "@babel/traverse": "^7.10.1",
-    "@babel/types": "^7.10.2"
+    "@babel/types": "^7.10.2",
+    "@iceworks/block-service": "^0.1.7",
+    "@iceworks/common-service": "^0.1.3",
+    "@iceworks/component-service": "^0.1.0",
+    "@iceworks/material-service": "^0.1.3",
+    "@iceworks/page-service": "^0.1.5",
+    "@iceworks/vscode-webview": "^0.1.1"
   },
   "repository": {
     "type": "git",

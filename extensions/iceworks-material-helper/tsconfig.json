@@ -5,7 +5,11 @@
     "rootDir": "src",
     "noImplicitAny": false
   },
+	"include": [
+		"src"
+	],
   "exclude": [
+    ".vscode-test",
     "node_modules"
   ]
 }
