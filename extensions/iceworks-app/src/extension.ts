@@ -13,7 +13,7 @@ import { showExtensionsQuickPickCommandId } from './constants';
 import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import {i18n} from './i18n';
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');

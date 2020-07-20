@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { ITerminalMap } from '../types';
 import executeCommand from '../commands/executeCommand';
-import {i18n} from '../i18n';
+import i18n from '../i18n';
 
 const { window } = vscode;
 

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {i18n} from '../i18n';
+import i18n from '../i18n';
 
 const { window, commands } = vscode;
 

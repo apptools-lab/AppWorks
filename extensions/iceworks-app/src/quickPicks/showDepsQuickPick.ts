@@ -2,11 +2,11 @@ import * as vscode from 'vscode';
 import { nodeDepTypes } from '../constants';
 import { NodeDepTypes, ITerminalMap } from '../types';
 import showDepsInputBox from '../inputBoxs/showDepsInputBox';
-import {i18n} from '../i18n';
+import i18n from '../i18n';
 
 export default function showDepsQuickPick(terminals: ITerminalMap, nodeDependenciesInstance: any) {
   const quickPick = vscode.window.createQuickPick();
-  quickPick.items = nodeDepTypes.map(label => ({ label, detail: i18n.format('extension.iceworksApp.showDepsQuickPick.quickPickItem.detail',{_label:label}) }));
+  quickPick.items = nodeDepTypes.map(label => ({ label, detail: i18n.format('extension.iceworksApp.showDepsQuickPick.quickPickItem.detail',{label}) }));
   quickPick.onDidChangeSelection(selection => {
     if (selection[0]) {
       showDepsInputBox(terminals, nodeDependenciesInstance, selection[0].label as NodeDepTypes)
