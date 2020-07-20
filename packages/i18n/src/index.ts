@@ -29,5 +29,4 @@ class I18nService implements II18n{
     return i18nformatString;
   }
 }
-const i18n = new I18nService();
-export default i18n;
+export default I18nService;
