@@ -61,4 +61,4 @@ sylvanas.parseText = function parseText(text: string, option: IBabelOption = {})
   return result[0].data;
 };
 
-export default sylvanas;
+export = sylvanas;

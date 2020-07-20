@@ -7,7 +7,14 @@ import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
-import { generatorCreatetaskUrl, generatorTaskResultUrl, GeneratorTaskStatus, projectPath, jsxFileExtnames } from './constant';
+import {
+  generatorCreatetaskUrl,
+  generatorTaskResultUrl,
+  applyRepositoryUrl,
+  GeneratorTaskStatus,
+  projectPath,
+  jsxFileExtnames
+} from './constant';
 
 export * from './constant';
 
@@ -20,6 +27,7 @@ interface IDEFProjectField {
   scaffold: IMaterialScaffold;
   clientToken: string;
   projectPath: string;
+  pubtype: number;
   projectName: string;
 }
 
@@ -151,6 +159,7 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
   const { data } = response.data;
   const taskId = data.task_id;
   await getGeneratorTaskStatus(taskId, clientToken);
+  await applyRepository(DEFProjectField)
 }
 
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
@@ -223,4 +232,27 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
       }
     }, 1000);
   });
+}
+
+async function applyRepository(field: IDEFProjectField) {
+  const { empId, group, project, scaffold, clientToken } = field;
+  const { description } = scaffold;
+  const reason = '';
+  const user = [];
+  const pubtype = 1;
+  const response = await axios.post(applyRepositoryUrl, {
+    'emp_id': empId,
+    group,
+    project,
+    description,
+    reason,
+    pubtype,
+    user,
+    'client_token': clientToken
+  })
+  console.log('applyRepositoryResponse', response);
+  if (response.data.error) {
+    throw new Error(response.data.error)
+  }
+  return response;
 }
