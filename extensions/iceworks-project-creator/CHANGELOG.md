@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.2.2
+
+- chore: upgrade @iceworks/generate-project
+
+## 0.2.1
+
+- docs: better docs
+- feat: git group search and loading
+
 ## 0.2.0
 
 - feat: default select a scaffold

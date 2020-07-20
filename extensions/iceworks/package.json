@@ -1,9 +1,9 @@
 {
   "name": "iceworks",
   "displayName": "Iceworks",
-  "description": "Universal Application Development Pack, using low-code technology.",
+  "description": "Universal Application Development Pack based on icejs and rax-app framework, provide visualization and intelligent technology to build Universal Application.",
   "publisher": "iceworks-team",
-  "version": "0.1.7",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -32,7 +32,6 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-style-helper",
     "iceworks-team.iceworks-material-helper",
-    "iceworks-team.iceworks-material-import",
     "iceworks-team.iceworks-config-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
