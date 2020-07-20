@@ -15,7 +15,7 @@ export default async function formatProject(projectDir: string, projectName?: st
   pkgData.dependencies = pkgData.dependencies || {};
   pkgData.devDependencies = pkgData.devDependencies || {};
 
-  console.info('clean package.json...');
+  console.log('clean package.json...');
 
   // modify package.json
   pkgData.private = true;
@@ -36,8 +36,6 @@ export default async function formatProject(projectDir: string, projectName?: st
 
   const buildJsonPath = path.join(projectDir, 'build.json');
   if (fse.existsSync(buildJsonPath)) {
-    console.debug('formatProject', 'build-scripts project');
-
     const buildJsonPath = path.join(projectDir, 'build.json');
     const buildData = fse.readJsonSync(buildJsonPath);
     buildData.plugins = buildData.plugins || [];
@@ -87,7 +85,6 @@ export default async function formatProject(projectDir: string, projectName?: st
       spaces: 2,
     });
   } else if (pkgData.devDependencies['ice-scripts']) {
-    console.debug('formatProject', 'ice-scripts project');
     const buildVersion = pkgData.devDependencies['ice-scripts'];
     // ^1.y.z, ~1.y.z, 1.x
     const is1X = /^(\^|~|)1\./.test(buildVersion);
@@ -98,7 +95,7 @@ export default async function formatProject(projectDir: string, projectName?: st
 
     if (!is1X) {
       // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath；
-      console.info('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+      console.log('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
     } else if (pkgData.buildConfig) {
       delete pkgData.buildConfig.output;
       delete pkgData.buildConfig.localization;
