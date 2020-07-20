@@ -48,8 +48,6 @@ function getAndExtractTarball(
       return filename.replace(/^_/, '.');
     }
   },
-  // 修改文件内容
-  formatFileContent = (filepath: string) => {},
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -73,11 +71,8 @@ function getAndExtractTarball(
           entry.resume();
           return;
         }
-        const realPath = entry.path.replace(/^package\//, '');
 
-        if (formatFileContent) {
-          formatFileContent(realPath);
-        }
+        const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
         filename = formatFilename(filename);

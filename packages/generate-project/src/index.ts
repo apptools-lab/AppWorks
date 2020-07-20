@@ -3,7 +3,7 @@ import {
   isAliNpm, getNpmTarball, getAndExtractTarball
 } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
-import * as ejs from 'ejs';
+import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
 
@@ -56,16 +56,11 @@ export async function downloadAndGenerateProject(
     (state) => {
       spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
     },
-    formatFilename,
-    (filepath) => {
-      if (/.ejs$/.test(filepath)) {
-        let content = fse.readFileSync(filepath);
-        content = ejs.render(content, ejsOptions);
-        fse.writeFileSync(filepath, content);
-      }
-    }
+    formatFilename
   );
   spinner.succeed('download npm tarball successfully.');
+
+  await ejsRenderDir(projectDir, ejsOptions);
 
   try {
     await formatProject(projectDir, projectName);
