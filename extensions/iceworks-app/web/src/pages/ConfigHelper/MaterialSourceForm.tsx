@@ -14,7 +14,6 @@ interface IMaterialSourceForm {
 }
 
 const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible,intl, onCancel }) => {
-  const i18n = intl;
   const onFormSubmit = (values, errors) => {
     if (errors) {
       return;
@@ -32,16 +31,16 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
       onClose={onCancel}
     >
       <Form value={value} fullWidth className={styles.form}>
-        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialNameLabel'})} 
-          required requiredMessage={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})}>
-          <Input name="name" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})} />
+        <Form.Item label={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialNameLabel'})} 
+          required requiredMessage={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})}>
+          <Input name="name" placeholder={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialName'})} />
         </Form.Item>
-        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURLLabel'})}
-          required requiredMessage={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} format="url">
-          <Input name="source" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} />
+        <Form.Item label={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURLLabel'})}
+          required requiredMessage={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} format="url">
+          <Input name="source" placeholder={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materiaURL'})} />
         </Form.Item>
-        <Form.Item label={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel'})}>
-          <Input.TextArea name="description" placeholder={i18n.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescription'})} />
+        <Form.Item label={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel'})}>
+          <Input.TextArea name="description" placeholder={intl.formatMessage({id:'web.iceworksApp.MaterialSourceForm.materialDescription'})} />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
           <Form.Submit

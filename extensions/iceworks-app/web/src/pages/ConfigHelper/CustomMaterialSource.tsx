@@ -28,7 +28,6 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   onSourceEdit,
   onSourceDelete
 }) => {
-  const i18n = intl;
   const [visible, setVisible] = useState<boolean>(false);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
@@ -63,13 +62,13 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
 
     Dialog.confirm({
       title: 'Confirm',
-      content: i18n.formatMessage({id:'web.iceworksApp.customMaterialSource.confirmDelete'}),
+      content: intl.formatMessage({id:'web.iceworksApp.customMaterialSource.confirmDelete'}),
       onOk: () => onSourceDelete(materialSource)
     });
   }
   const dialogTitle = operation === Operation.Edit ? 
-    i18n.formatMessage({id:'web.iceworksApp.customMaterialSource.editMaterialSource'}):
-    i18n.formatMessage({id:'web.iceworksApp.customMaterialSource.addMaterialSource'});
+    intl.formatMessage({id:'web.iceworksApp.customMaterialSource.editMaterialSource'}):
+    intl.formatMessage({id:'web.iceworksApp.customMaterialSource.addMaterialSource'});
   return (
     <div className={styles.customMaterialSource}>
       <div className={styles.row}>
@@ -95,7 +94,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
           ))}
         </List>
       </div>
-      <Suspense fallback={i18n.formatMessage({id:'web.iceworksApp.customMaterialSource.loading'})}>
+      <Suspense fallback={intl.formatMessage({id:'web.iceworksApp.customMaterialSource.loading'})}>
         <MaterialSourceForm
           value={currentMaterialSource}
           title={dialogTitle}
