@@ -5,7 +5,7 @@ import { IMaterialSource } from '@iceworks/material-utils';
 import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
 import { createIntl } from 'react-intl'
-import {LocaleProvider,localeMessages} from '../../i18n';
+import {localeMessages, LocaleProvider} from '../../i18n';
 import CustomMaterialSource from './CustomMaterialSource';
 import styles from './index.module.scss';
 
@@ -146,7 +146,5 @@ const ConfigHelper = ( props ) => {
     </>
   )
 }
-
-
 
 export default ConfigHelper;

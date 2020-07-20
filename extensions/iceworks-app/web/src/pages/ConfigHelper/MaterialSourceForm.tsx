@@ -1,19 +1,19 @@
 import React from 'react';
 import { Dialog, Form, Input, Button } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
-import { FormattedMessage,injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './MaterialSourceForm.module.scss';
 
 interface IMaterialSourceForm {
   title: string;
   value: IMaterialSource | object;
   visible: boolean;
-  intl: any;
   onSubmit: (value: any) => void;
   onCancel: () => void;
 }
 
-const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible,intl, onCancel }) => {
+const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel }) => {
+  const intl = useIntl();
   const onFormSubmit = (values, errors) => {
     if (errors) {
       return;
@@ -59,4 +59,4 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
   )
 }
 
-export default injectIntl(MaterialSourceForm);
+export default MaterialSourceForm;

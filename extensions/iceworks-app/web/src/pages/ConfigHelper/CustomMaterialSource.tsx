@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from 'react';
 import { Icon, List, Button, Dialog, Avatar } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
-import { FormattedMessage,injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import editIcon from '../../../public/assets/edit.svg';
 import deleteIcon from '../../../public/assets/delete.svg';
 import MaterialSourceForm from './MaterialSourceForm';
@@ -14,7 +14,6 @@ enum Operation {
 }
 
 interface ICustomMaterialSource {
-  intl: any;
   sources: IMaterialSource[];
   onSourceAdd: (values: IMaterialSource) => void;
   onSourceEdit: (values: IMaterialSource, originMaterialSource: IMaterialSource) => void;
@@ -23,11 +22,11 @@ interface ICustomMaterialSource {
 
 const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   sources = [],
-  intl,
   onSourceAdd,
   onSourceEdit,
   onSourceDelete
 }) => {
+  const intl = useIntl();
   const [visible, setVisible] = useState<boolean>(false);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
@@ -106,4 +105,4 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
     </div>
   )
 }
-export default injectIntl(CustomMaterialSource);
+export default CustomMaterialSource;
