@@ -16,7 +16,8 @@ import tar = require('tar');
 function getNpmTarball(npm: string, version?: string, registry?: string): Promise<string> {
   return getNpmInfo(npm, registry).then((json: any) => {
     if (!semver.valid(version)) {
-      version = json['dist-tags'].latest;
+      // support beta or other tag
+      version = json['dist-tags'][version] || json['dist-tags'].latest;
     }
 
     if (
@@ -46,7 +47,9 @@ function getAndExtractTarball(
     } else {
       return filename.replace(/^_/, '.');
     }
-  }
+  },
+  // 修改文件内容
+  formatFileContent = (filepath: string) => {},
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -71,6 +74,10 @@ function getAndExtractTarball(
           return;
         }
         const realPath = entry.path.replace(/^package\//, '');
+
+        if (formatFileContent) {
+          formatFileContent(realPath);
+        }
 
         let filename = path.basename(realPath);
         filename = formatFilename(filename);
@@ -223,7 +230,6 @@ function checkAliInternal(): Promise<boolean> {
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {
-    console.debug('checkAliInternal error: ', err.message);
     return false;
   }).then((response) => {
     return response.statusCode === 200 && /success/.test(response.body);
