@@ -28,4 +28,9 @@ export default class I18nService implements II18n{
     }
     return i18nformatString;
   }
+<<<<<<< HEAD
 }
+=======
+}
+export default I18nService;
+>>>>>>> 8baf025... feat: 改变了编译顺序，将 i18n package 导出的实体变为导出类。
