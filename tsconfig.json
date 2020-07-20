@@ -1,11 +1,11 @@
 {
   "files": [],
   "references": [
+    {"path": "packages/i18n"},
     {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
     {"path": "packages/vscode-webview"},
     {"path": "packages/generate-project"},
-    {"path": "packages/iceworks-cli"},
     {"path": "packages/material-utils"},
     {"path": "packages/common-service"},
     {"path": "packages/project-service"},
@@ -13,6 +13,5 @@
     {"path": "packages/block-service"},
     {"path": "packages/component-service"},
     {"path": "packages/page-service"},
-    {"path": "packages/i18n"},
   ]
 }
