@@ -1,12 +1,11 @@
 import * as fse from 'fs-extra';
+import * as path from 'path';
+import * as rimraf from 'rimraf';
+import * as mkdirp from 'mkdirp';
 import init from '../command/init';
 import add from '../command/add';
 import generate from '../command/generate';
 import config from '../command/config';
-
-import path = require('path');
-import rimraf = require('rimraf');
-import mkdirp = require('mkdirp');
 
 jest.setTimeout(60 * 1000);
 

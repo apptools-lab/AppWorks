@@ -12,9 +12,10 @@ export {
   checkEmpty,
 };
 
-interface EjsOptions {
+interface IEjsOptions {
   targets?: string[];
   miniappType?: 'runtime' | 'compile';
+  mpa?: boolean;
 };
 
 export async function downloadAndGenerateProject(
@@ -23,7 +24,7 @@ export async function downloadAndGenerateProject(
   version?: string,
   registry?: string,
   projectName?: string,
-  ejsOptions?: any,
+  ejsOptions?: IEjsOptions,
 ): Promise<void> {
   registry = registry || await getNpmRegistry(npmName);
 
