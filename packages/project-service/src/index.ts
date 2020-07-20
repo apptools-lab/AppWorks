@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
-import { IMaterialScaffold } from '@iceworks/material-utils';
+import { IMaterialScaffold, IMaterialSource } from '@iceworks/material-utils';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
@@ -20,6 +20,7 @@ export * from './constant';
 
 interface IDEFProjectField {
   empId: string;
+  source: IMaterialSource;
   account: string;
   group: string;
   project: string;
@@ -29,6 +30,7 @@ interface IDEFProjectField {
   projectPath: string;
   pubtype: number;
   projectName: string;
+  scaffoldType: string;
 }
 
 export async function getProjectLanguageType() {
@@ -185,10 +187,10 @@ async function generatorCreatetask(field: IDEFProjectField) {
       npmName: npm
     },
     'gitlab_info': {
-      'id': empId,
-      'token': gitlabToken,
+      id: empId,
+      token: gitlabToken,
       name: account,
-      'email': `${account}@alibaba-inc.com`
+      email: `${account}@alibaba-inc.com`
     },
     'emp_id': empId,
     'client_token': clientToken
@@ -235,11 +237,14 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
 }
 
 async function applyRepository(field: IDEFProjectField) {
-  const { empId, group, project, scaffold, clientToken } = field;
+  const { empId, group, project, scaffold, clientToken, source } = field;
   const { description } = scaffold;
   const reason = '';
   const user = [];
-  const pubtype = 1;
+  let pubtype = 1;  // default publish type: assets
+  if (source.type === 'rax') {
+    pubtype = 6
+  }
   const response = await axios.post(applyRepositoryUrl, {
     'emp_id': empId,
     group,
