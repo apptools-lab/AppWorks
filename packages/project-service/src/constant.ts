@@ -14,6 +14,7 @@ export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
 export const generatorCreatetaskUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/createtask';
 export const generatorTaskResultUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/task';
+export const applyRepositoryUrl = 'https://api.def.alibaba-inc.com/api/work/repo/apply';
 
 /**
  * DEF平台返回task的状态值
