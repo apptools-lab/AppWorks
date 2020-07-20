@@ -12,6 +12,4 @@
     "entension.block-service.notPageFileError":"You can only add block codes to files in <%= pagesPath %>",
     "entension.block-service.startObtainBlock":"> Obtain block codes...",
     "entension.block-service.obtainDone":"> The block code has been downloaded to <%= blockDir %>"
-
-
 }
