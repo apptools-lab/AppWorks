@@ -23,6 +23,7 @@ import {
 import i18n from '@iceworks/i18n';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
+import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
 
