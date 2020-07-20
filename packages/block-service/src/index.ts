@@ -20,8 +20,8 @@ import {
   getLastAcitveTextEditor,
   getImportTemplate
 } from '@iceworks/common-service';
-import i18n from '@iceworks/i18n';
 import * as upperCamelCase from 'uppercamelcase';
+import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
 import transfromTsToJs from './sylvanas/index';
