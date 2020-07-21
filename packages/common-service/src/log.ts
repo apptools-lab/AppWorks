@@ -19,13 +19,16 @@ interface IGoldlogParam extends ILogParam {
   namespace: string;
 }
 
+type RecordType = 'PV' | 'UV';
+
 const MAIN_KEY = 'main';
 const LOGGER_MODULE_KEY = 'logger';
 
-export async function recordPV(originParam: IGoldlogParam) {
+export async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
+  recordType = recordType || 'PV';
   const param = {
-    record_type: 'PV',
     ...originParam,
+    record_type: recordType,
     cache: Math.random(),
   };
   try {
@@ -74,13 +77,12 @@ export async function recordPV(originParam: IGoldlogParam) {
 }
 
 export function recordUV(originParam: IGoldlogParam, storage: IStorage) {
-  const param  = {...originParam, record_type: 'UV'};
   const nowtDate = new Date().toDateString();
-  const dauKey = `iceworks.logger.${JSON.stringify(param)}`;
+  const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
   const lastDate = storage.get(dauKey);
   if(nowtDate !== lastDate) {
     storage.update(dauKey, nowtDate);
-    return recordPV(param);
+    return recordPV(originParam, 'UV');
   }
 }
 
