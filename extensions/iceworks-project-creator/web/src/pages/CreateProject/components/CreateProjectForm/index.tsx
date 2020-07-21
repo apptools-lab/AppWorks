@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Form, Input } from '@alifd/next';
 import { IProjectField } from '@/types';
 import folderIcon from '@/assets/folder.svg';
+import ScaffoldTypeForm from '../ScaffoldTypeForm';
 import styles from './index.module.scss';
 
 interface IProjectFormProps {
@@ -12,7 +13,8 @@ interface IProjectFormProps {
   errorMsg?: string;
 }
 
-const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDialog, children, onChange, errorMsg }) => {
+const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, children, errorMsg, onChange, onOpenFolderDialog }) => {
+  const { source: { type } } = value;
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
@@ -45,6 +47,9 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
           </div>
         </Form.Item>
       </Form>
+      <div className={styles.scaffoldTypeForm}>
+        <ScaffoldTypeForm type={type} />
+      </div>
     </div>
   );
 };
