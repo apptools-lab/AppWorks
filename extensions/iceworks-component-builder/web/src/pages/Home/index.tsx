@@ -1,56 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
+import { LocaleProvider } from '@/i18n';
+import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
-async function onSettingsClick() {
-  try {
-    await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
-  } catch (e) {
-    Notification.error({ content: e.message });
-  }
-}
-
-async function getSources() {
-  let sources = [];
-  try {
-    sources = await callService('material', 'getSourcesByProjectType');
-  } catch (e) {
-    Notification.error({ content: '获取物料源信息失败，请稍后再试。' });
-  }
-
-  console.log('getSources', sources);
-  return sources;
-}
-
-async function getData(source: string) {
-  let data = {};
-  try {
-    data = await callService('material', 'getData', source);
-  } catch (e) {
-    Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
-  }
-  console.log('getData', data);
-  return data;
-}
-
-function validateData({ block, componentName }) {
-  if (!componentName) {
-    return '请填写组件名。';
-  }
-
-  if (!block) {
-    return '请选择使用的区块。';
-  }
-
-  return '';
-}
 
 const Home = () => {
+  const intl = useIntl();
   const [selectedBlock, setSelectedBlock] = useState();
   const [componentName, setComponentName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+
+  async function onSettingsClick() {
+    try {
+      await callService('common', 'getLanguage');
+      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+  
+  async function getSources() {
+    let sources = [];
+    try {
+      await callService('common', 'getLanguage');
+      sources = await callService('material', 'getSourcesByProjectType');
+    } catch (e) {
+      Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getMaterialError'})});
+    }
+  
+    console.log('getSources', sources);
+    return sources;
+  }
+  
+  async function getData(source: string) {
+    let data = {};
+    try {
+      await callService('common', 'getLanguage');
+      data = await callService('material', 'getData', source);
+    } catch (e) {
+      Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getDataError'})});
+    }
+    console.log('getData', data);
+    return data;
+  }
+  
+  function validateData({ block, componentName }) {
+    if (!componentName) {
+      return intl.formatMessage({id:'web.ComponentBuiilder.Home.noComponentName'});
+    }
+  
+    if (!block) {
+      return intl.formatMessage({id:'web.ComponentBuiilder.Home.didNotSeletBlock'});
+    }
+  
+    return '';
+  }
 
   function onSelect(block) {
     setSelectedBlock(block);
@@ -87,20 +94,19 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: '组件生成成功！' });
+    Notification.success({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.generateSuccess'})});
     resetData();
   }
-
   return (
     <div className={styles.wrap}>
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. 填写组件名：
+            <FormattedMessage id='web.ComponentBuiilder.Home.inputComponentName'/>
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
+              placeholder={intl.formatMessage({id:'web.ComponentBuiilder.Home.getMaterialError'})}
               className={styles.pageNameInput}
               value={componentName}
               onChange={(value) => setComponentName(value)}
@@ -110,7 +116,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. 选择使用的区块：
+            <FormattedMessage id='web.ComponentBuiilder.Home.selectBlock'/>
           </div>
           <div className={styles.select}>
             <Material
@@ -127,11 +133,19 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          生成组件
+          <FormattedMessage id='web.ComponentBuiilder.Home.generate'/>
         </Button>
       </div>
     </div>
   );
 };
 
-export default Home;
+const IntlHome = ()=>{
+  return (
+    <LocaleProvider>
+      <Home/>
+    </LocaleProvider>
+  )
+}
+
+export default IntlHome;
