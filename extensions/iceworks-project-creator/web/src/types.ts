@@ -6,7 +6,7 @@ export interface IProjectField {
   scaffold: IMaterialScaffold;
   source: IMaterialSource;
   scaffoldType: string;
-  ejsOptions?: IEjsOptions,
+  ejsOptions?: IEjsOptions;
 }
 
 interface IEjsOptions {

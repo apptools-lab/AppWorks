@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Notification, Balloon, Button } from '@alifd/next';
+import { Notification, Balloon } from '@alifd/next';
 import MenuCard from '@/components/MenuCard';
 import { IProjectField } from '@/types';
 import { targets, webAppTypes, miniAppTypes } from './config';
@@ -18,7 +18,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
    * 选择 Rax 应用的 Target 
    */
   const onTargetClick = (target) => {
-    let ejsOptions: any = { ...value.ejsOptions };
+    const ejsOptions: any = { ...value.ejsOptions };
 
     const targetIndex = selectedTargets.findIndex(item => target.type === item);
     if (targetIndex > -1) {
@@ -30,13 +30,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
       selectedTargets.splice(targetIndex, 1);
 
       if (target.type === 'web') {
-        // setSelectedWebAppType(webAppTypes[0].type);
         delete ejsOptions.mpa;
-      } else {
-        if (selectedTargets.length === 1) {
-          // setSelectedMiniAppType(miniAppTypes[0].type);
-          delete ejsOptions.miniappType;
-        }
+      } else if (selectedTargets.length === 1) {
+        delete ejsOptions.miniappType;
       }
     } else {
       if (target.type === 'web') {
