@@ -108,39 +108,37 @@ const ConfigHelper = ( props ) => {
   }, []);
   return (
     <>
-      <LocaleProvider>
-        {loading ? <Loading visible={loading} className={styles.loading} /> : (
-          <div className={styles.container}>
-            <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-              <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmPackageManager'})}>
-                <Select name="packageManager" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmPackageManager'})} style={{ width: '100%' }}>
-                  {packageManagers.map(item => (
-                    <Select.Option key={item} value={item}>{item}</Select.Option>
-                  ))}
-                </Select>
+      {loading ? <Loading visible={loading} className={styles.loading} /> : (
+        <div className={styles.container}>
+          <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
+            <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmPackageManager'})}>
+              <Select name="packageManager" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmPackageManager'})} style={{ width: '100%' }}>
+                {packageManagers.map(item => (
+                  <Select.Option key={item} value={item}>{item}</Select.Option>
+                ))}
+              </Select>
+            </FormItem>
+            <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmRegistry'})}>
+              <Select name="npmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmRegistry'})} style={{ width: '100%' }}>
+                {npmRegistries.map(item => (
+                  <Select.Option key={item} value={item}>{item}</Select.Option>
+                ))}
+              </Select>
+            </FormItem>
+            {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
+              <FormItem label=" " format="url" formatMessage={intl.formatMessage({id:'web.iceworksApp.index.formatUrl'})}>
+                <Input name="customNpmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.customNpmRegistryPlaceHolder'})} />
               </FormItem>
-              <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmRegistry'})}>
-                <Select name="npmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmRegistry'})} style={{ width: '100%' }}>
-                  {npmRegistries.map(item => (
-                    <Select.Option key={item} value={item}>{item}</Select.Option>
-                  ))}
-                </Select>
-              </FormItem>
-              {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-                <FormItem label=" " format="url" formatMessage={intl.formatMessage({id:'web.iceworksApp.index.formatUrl'})}>
-                  <Input name="customNpmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.customNpmRegistryPlaceHolder'})} />
-                </FormItem>
-              )}
-            </Form>
-            <CustomMaterialSource
-              sources={materialSources}
-              onSourceAdd={onSourceAdd}
-              onSourceDelete={onMaterialSourceDelete}
-              onSourceEdit={onMaterialSourceEdit}
-            />
-          </div>
-        )}
-      </LocaleProvider>
+            )}
+          </Form>
+          <CustomMaterialSource
+            sources={materialSources}
+            onSourceAdd={onSourceAdd}
+            onSourceDelete={onMaterialSourceDelete}
+            onSourceEdit={onMaterialSourceEdit}
+          />
+        </div>
+      )}
     </>
   )
 }

@@ -34,7 +34,7 @@ export const LocaleProvider = ({children})=>{
       setI18n(changeLanguage(lang));
     }
     initI18n();
-  });
+  },[]);
 
   return (
     <RawIntlProvider value={i18n}>
