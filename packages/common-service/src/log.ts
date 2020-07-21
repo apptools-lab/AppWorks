@@ -22,8 +22,9 @@ interface IGoldlogParam extends ILogParam {
 const MAIN_KEY = 'main';
 const LOGGER_MODULE_KEY = 'logger';
 
-export async function record(originParam: IGoldlogParam) {
+export async function recordPV(originParam: IGoldlogParam) {
   const param = {
+    record_type: 'PV',
     ...originParam,
     cache: Math.random(),
   };
@@ -72,18 +73,26 @@ export async function record(originParam: IGoldlogParam) {
   }
 }
 
-export function recordOnce(originParam: IGoldlogParam, storage: IStorage) {
+export function recordUV(originParam: IGoldlogParam, storage: IStorage) {
+  const param  = {...originParam, record_type: 'UV'};
   const nowtDate = new Date().toDateString();
-  const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
+  const dauKey = `iceworks.logger.${JSON.stringify(param)}`;
   const lastDate = storage.get(dauKey);
   if(nowtDate !== lastDate) {
     storage.update(dauKey, nowtDate);
-    return record(originParam);
+    return recordPV(param);
   }
 }
 
-export function recordDAU(storage: IStorage) {
-  return recordOnce({
+export async function record(originParam: IGoldlogParam, storage?: IStorage) {
+  await recordPV(originParam);
+  if (storage) {
+    recordUV(originParam, storage);
+  }
+}
+
+export function recordMainDAU(storage: IStorage) {
+  return record({
     namespace: MAIN_KEY,
     module: LOGGER_MODULE_KEY,
     action: 'dau',
@@ -93,8 +102,8 @@ export function recordDAU(storage: IStorage) {
   }, storage);
 }
 
-export function recordActivate(storage: IStorage, data: { extension: string; version?: string }) {
-  return recordOnce({
+export function recordMainActivate(storage: IStorage, data: { extension: string; version?: string }) {
+  return record({
     namespace: MAIN_KEY,
     module: LOGGER_MODULE_KEY,
     action: 'activate',
@@ -127,42 +136,22 @@ export class Logger {
     this.storage = storage;
   }
 
-  /**
-   * Make a record
-   */
   public record(param: ILogParam) {
     return record({
       namespace: this.namespace,
       ...param
-    });
-  }
-
-  /**
-   * Record once, only once a day
-   */
-  public recordOnce(param: ILogParam) {
-    if (!this.storage) {
-      console.error('You need to set the storage before calling this method!');
-      return;
-    }
-    return recordOnce(
-      {
-        namespace: this.namespace,
-        ...param
-      },
-      this.storage
-    );
+    }, this.storage);
   }
 
   /**
    * Record a day's activity
    */
-  public recordDAU() {
+  public recordMainDAU() {
     if (!this.storage) {
       console.error('You need to set the storage before calling this method!');
       return;
     }
-    return recordDAU(this.storage);
+    return recordMainDAU(this.storage);
   }
 
   /**
@@ -170,16 +159,14 @@ export class Logger {
    *
    * @param version extension's version
    */
-  public recordActivate(version?: string) {
-    // uv
+  public recordExtensionActivate(version?: string) {
     if (this.storage) {
-      recordActivate(this.storage, {
+      recordMainActivate(this.storage, {
         extension: this.namespace,
         version,
       });
     }
 
-    // pv
     this.record({
       module: 'main',
       action: 'activate',

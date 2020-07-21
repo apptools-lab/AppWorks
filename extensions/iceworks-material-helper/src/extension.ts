@@ -23,8 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
   function activeWebview() {
-    logger.recordDAU();
-    logger.recordActivate(version);
+    logger.recordMainDAU();
+    logger.recordExtensionActivate(version);
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {

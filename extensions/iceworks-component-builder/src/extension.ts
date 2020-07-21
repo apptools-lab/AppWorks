@@ -15,8 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   // data collection
   const logger = new Logger(name, globalState);
-  logger.recordDAU();
-  logger.recordActivate(version);
+  logger.recordMainDAU();
+  logger.recordExtensionActivate(version);
 
   // auto set configuration
   initExtension(context);
