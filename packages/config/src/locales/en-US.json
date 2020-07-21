@@ -1,0 +1,10 @@
+{
+    "package.config.index.ICEmaterials.title": "ICE Materials (Official)",
+    "package.config.index.ICEmaterials.description": "Based On Icejs & Fusion",
+    "package.config.index.VUEmaterials.title": "Vue Materials",
+    "package.config.index.VUEmaterials.description": "Based ON Vue CLI & ElementUI ",
+    "package.config.index.notAllowedSetKey": "Not allowed use set API to update <%= key %>.",
+    "package.config.index.notAllowedRemoveKey": "Not allowed use remove API to update <%= key %>.",
+    "package.config.index.OfficalmaterialUpadateError": "Official material collection can not update",
+    "package.config.index.OfficalmaterialRemoveError": "Official material collection can not remove"
+}

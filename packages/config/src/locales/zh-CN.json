@@ -1,0 +1,10 @@
+{
+    "package.config.index.ICEmaterials.title": "官方物料源",
+    "package.config.index.ICEmaterials.description": "基于 icejs & Fusion 组件",
+    "package.config.index.VUEmaterials.title": "Vue 物料源",
+    "package.config.index.VUEmaterials.description": "基于 Vue CLI & ElementUI 组件",
+    "package.config.index.notAllowedSetKey": "你不能使用 set 函数来更新 <%= key %>.",
+    "package.config.index.notAllowedRemoveKey": "你不能使用 remove 函数来更新 <%= key %>.",
+    "package.config.index.OfficalmaterialUpadateError": "官方物料库不能被更新",
+    "package.config.index.OfficalmaterialRemoveError": "官方物料库不能被删除"
+}

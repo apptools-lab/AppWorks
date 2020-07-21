@@ -1,6 +1,7 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as userHome from 'user-home';
+import i18n from './i18n';
 
 let configPath: string = path.join(userHome || __dirname, '.iceworks/cli-config.json');
 
@@ -51,14 +52,14 @@ function getConfig(filterOfficial?: boolean): IConfig {
     materialCollections: [
       {
         url: 'https://ice.alicdn.com/assets/materials/react-materials.json',
-        title: '官方物料源',
-        description: '基于 icejs & Fusion 组件',
+        title: i18n.format('package.config.index.ICEmaterials.title'),
+        description: i18n.format('package.config.index.ICEmaterials.description'),
         official: true,
       },
       {
         url: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
-        title: 'Vue 物料源',
-        description: '基于 Vue CLI & ElementUI 组件',
+        title: i18n.format('package.config.index.VUEmaterials.title'),
+        description: i18n.format('package.config.index.VUEmaterials.description'),
         official: true,
       },
     ],
@@ -97,7 +98,7 @@ function getConfig(filterOfficial?: boolean): IConfig {
 
 export function set(key: string, value: any): IConfig {
   if (['materialCollections', 'projects'].indexOf(key) !== -1) {
-    throw new Error(`Not allowed use set API to update ${key}.`);
+    throw new Error(i18n.format('package.config.index.notAllowedSetKey', {key}));
   }
 
   const config = getConfig(true);
@@ -114,7 +115,7 @@ export function get(key?: string): any {
 
 export function remove(key): IConfig {
   if (['materialCollections', 'projects'].indexOf(key) !== -1) {
-    throw new Error(`Not allowed use remove API to update ${key}.`);
+    throw new Error(i18n.format('package.config.index.notAllowedRemoveKey', {key}));
   }
 
   const config = getConfig(true);
@@ -132,7 +133,7 @@ export function addMaterialCollection(data: IMaterialCollection): IMaterialColle
 
   if (index !== -1) {
     if (config.materialCollections[index].official) {
-      throw new Error('Official material collection can not update');
+      throw new Error(i18n.format('package.config.index.OfficalmaterialUpadateError'));
     } else {
       config.materialCollections[index] = data;
     }
@@ -153,7 +154,7 @@ export function removeMaterialCollection(data: IMaterialCollection): IMaterialCo
 
   if (index !== -1) {
     if (config.materialCollections[index].official) {
-      throw new Error('Official material collection can not remove');
+      throw new Error(i18n.format('package.config.index.OfficalmaterialRemoveError'));
     } else {
       config.materialCollections.splice(index, 1);
     }
