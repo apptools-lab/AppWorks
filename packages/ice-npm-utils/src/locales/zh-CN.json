@@ -1,0 +1,6 @@
+{
+    "package.iceNpmUtils.index.notPublish": "<%= name %>@<%= version %> 尚未发布",
+    "package.iceNpmUtils.index.noLatestVersionInfo": "没有 latest 版本号",
+    "package.iceNpmUtils.index.noLatestVersionInfoError": "Error: 没有 latest 版本号",
+    "package.iceNpmUtils.index.noPackage": "本地环境中没有找到 package.json "
+}

@@ -1,5 +1,6 @@
 import * as fsExtra from 'fs-extra';
 
+
 import request = require('request-promise');
 import semver = require('semver');
 import fs = require('fs');
@@ -9,6 +10,7 @@ import urlJoin = require('url-join');
 import progress = require('request-progress');
 import zlib = require('zlib');
 import tar = require('tar');
+import i18n = require('./i18n') ;
 
 /**
  * 获取指定 npm 包版本的 tarball
@@ -29,7 +31,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
       return json.versions[version].dist.tarball;
     }
 
-    return Promise.reject(new Error(`${name}@${version} 尚未发布`));
+    return Promise.reject(new Error(i18n.default.format('<%= name %>@<%= version %> 尚未发布',{name,version})));
   });
 }
 
@@ -170,8 +172,8 @@ function getNpmLatestSemverVersion(npm: string, baseVersion: string, registry?: 
 function getLatestVersion(npm, registry?: string): Promise<string> {
   return getNpmInfo(npm, registry).then((data) => {
     if (!data['dist-tags'] || !data['dist-tags'].latest) {
-      console.error('没有 latest 版本号', data);
-      return Promise.reject(new Error('Error: 没有 latest 版本号'));
+      console.error(i18n.default.format('package.iceNpmUtils.index.noLatestVersionInfo'), data);
+      return Promise.reject(new Error(i18n.default.format('package.iceNpmUtils.index.noLatestVersionInfoError')));
     }
 
     const latestVersion = data['dist-tags'].latest;
@@ -237,7 +239,7 @@ async function readPackageJSON(projectPath: string) {
   const packagePath = path.join(projectPath, packageJSONFilename);
   const packagePathIsExist = await fsExtra.pathExists(packagePath);
   if (!packagePathIsExist) {
-    throw new Error('Project\'s package.json file not found in local environment');
+    throw new Error(i18n.default.format('package.iceNpmUtils.index.noPackage'));
   }
   return await fsExtra.readJson(packagePath);
 }
