@@ -22,12 +22,12 @@ export const localeMessages = {
 }
 
 // 找到当前语言即使用的包
-const intl = createIntl({locale:'zh-CN', messages:localeMessages['zh-cn'].messages})
+export const defaultIntl = createIntl({locale:'zh-CN', messages:localeMessages['zh-cn'].messages})
 const changeLanguage = (newLang: string) =>{
   return createIntl({locale:localeMessages[newLang].reactLocale, messages:localeMessages[newLang].messages});
 }
 export const LocaleProvider = ({children})=>{
-  const [i18n,setI18n] = useState(intl);
+  const [i18n,setI18n] = useState(defaultIntl);
   useEffect(()=>{
     async function initI18n(){
       const lang = await callService('common', 'getLanguage');

@@ -4,8 +4,8 @@ import { debounce } from 'throttle-debounce';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
-import { createIntl } from 'react-intl'
-import {localeMessages, LocaleProvider} from '../../i18n';
+import { useIntl } from 'react-intl'
+import { LocaleProvider} from '../../i18n';
 import CustomMaterialSource from './CustomMaterialSource';
 import styles from './index.module.scss';
 
@@ -22,13 +22,13 @@ const ConfigHelper = ( props ) => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [fields, setFields] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
-  const [i18n, setI18n] = useState<any>({formatMessage:()=>'default'});
+  const intl = useIntl();
 
   const onSourceAdd = async (materialSource: IMaterialSource) => {
     try {
       const newMaterialSources = await callService('material', 'addSource', materialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: i18n.formatMessage({id:'web.iceworksApp.index.addMaterialSuccess'}) });
+      Notification.success({ content: intl.formatMessage({id:'web.iceworksApp.index.addMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -38,7 +38,7 @@ const ConfigHelper = ( props ) => {
     try {
       const newMaterialSources = await callService('material', 'updateSource', materialSource, originMaterialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content:  i18n.formatMessage({id:'web.iceworksApp.index.editMaterialSuccess'}) });
+      Notification.success({ content:  intl.formatMessage({id:'web.iceworksApp.index.editMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -48,7 +48,7 @@ const ConfigHelper = ( props ) => {
     try {
       const newMaterialSources = await callService('material', 'removeSource', materialSource.source);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content:  i18n.formatMessage({id:'web.iceworksApp.index.deleteMaterialSuccess'}) });
+      Notification.success({ content:  intl.formatMessage({id:'web.iceworksApp.index.deleteMaterialSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -69,7 +69,7 @@ const ConfigHelper = ( props ) => {
       } else {
         await callService('common', 'saveDataToSettingJson', name, value);
       }
-      Notification.success({ content: i18n.formatMessage({id:'web.iceworksApp.index.editSettingSuccess'}) });
+      Notification.success({ content: intl.formatMessage({id:'web.iceworksApp.index.editSettingSuccess'}) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -83,8 +83,6 @@ const ConfigHelper = ( props ) => {
         let curNpmRegistry = await callService('common', 'getDataFromSettingJson', 'npmRegistry');
         const curMaterialSources = await callService('material', 'getUserSources');
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
-        const lang = await callService('common','getLanguage');
-        setI18n(createIntl({locale:lang,messages:localeMessages[lang]}));
         if (isAliInternal) {
           npmRegistries.push(AliNpmRegistry);
           packageManagers.push(AliPackageManager);
@@ -114,23 +112,23 @@ const ConfigHelper = ( props ) => {
         {loading ? <Loading visible={loading} className={styles.loading} /> : (
           <div className={styles.container}>
             <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-              <FormItem label={i18n.formatMessage({id:'web.iceworksApp.index.npmPackageManager'})}>
-                <Select name="packageManager" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.chooseNpmPackageManager'})} style={{ width: '100%' }}>
+              <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmPackageManager'})}>
+                <Select name="packageManager" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmPackageManager'})} style={{ width: '100%' }}>
                   {packageManagers.map(item => (
                     <Select.Option key={item} value={item}>{item}</Select.Option>
                   ))}
                 </Select>
               </FormItem>
-              <FormItem label={i18n.formatMessage({id:'web.iceworksApp.index.npmRegistry'})}>
-                <Select name="npmRegistry" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.chooseNpmRegistry'})} style={{ width: '100%' }}>
+              <FormItem label={intl.formatMessage({id:'web.iceworksApp.index.npmRegistry'})}>
+                <Select name="npmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.chooseNpmRegistry'})} style={{ width: '100%' }}>
                   {npmRegistries.map(item => (
                     <Select.Option key={item} value={item}>{item}</Select.Option>
                   ))}
                 </Select>
               </FormItem>
               {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-                <FormItem label=" " format="url" formatMessage={i18n.formatMessage({id:'web.iceworksApp.index.formatUrl'})}>
-                  <Input name="customNpmRegistry" placeholder={i18n.formatMessage({id:'web.iceworksApp.index.customNpmRegistryPlaceHolder'})} />
+                <FormItem label=" " format="url" formatMessage={intl.formatMessage({id:'web.iceworksApp.index.formatUrl'})}>
+                  <Input name="customNpmRegistry" placeholder={intl.formatMessage({id:'web.iceworksApp.index.customNpmRegistryPlaceHolder'})} />
                 </FormItem>
               )}
             </Form>
@@ -147,4 +145,13 @@ const ConfigHelper = ( props ) => {
   )
 }
 
-export default ConfigHelper;
+const IntlConfigHelper = ()=>{
+  return (
+    <LocaleProvider>
+      <ConfigHelper/>
+    </LocaleProvider>
+  )
+
+}
+
+export default IntlConfigHelper;
