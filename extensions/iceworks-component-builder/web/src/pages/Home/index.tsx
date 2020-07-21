@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
-import { LocaleProvider } from '@/i18n';
+import { LocaleProvider, checkI18nReady } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
-
 
 const Home = () => {
   const intl = useIntl();
@@ -23,9 +22,11 @@ const Home = () => {
   }
   
   async function getSources() {
+    if(!checkI18nReady(intl)){
+      return;
+    }
     let sources = [];
     try {
-      await callService('common', 'getLanguage');
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getMaterialError'})});
@@ -36,9 +37,11 @@ const Home = () => {
   }
   
   async function getData(source: string) {
+    if(!checkI18nReady(intl)){
+      return;
+    }
     let data = {};
     try {
-      await callService('common', 'getLanguage');
       data = await callService('material', 'getData', source);
     } catch (e) {
       Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getDataError'})});
@@ -51,7 +54,6 @@ const Home = () => {
     if (!componentName) {
       return intl.formatMessage({id:'web.ComponentBuiilder.Home.noComponentName'});
     }
-  
     if (!block) {
       return intl.formatMessage({id:'web.ComponentBuiilder.Home.didNotSeletBlock'});
     }

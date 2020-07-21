@@ -1,4 +1,4 @@
-import {createIntl,RawIntlProvider} from 'react-intl'; 
+import {createIntl,RawIntlProvider, IntlShape} from 'react-intl'; 
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Loading, Notification } from '@alifd/next';
 
@@ -22,7 +22,7 @@ export const localeMessages = {
 }
 
 // 找到当前语言即使用的包
-export const defaultIntl = createIntl({locale:'zh-CN',messages:localeMessages['zh-cn'].messages})
+export const defaultIntl = createIntl({locale:'default',messages:localeMessages['zh-cn'].messages})
 const changeLanguage = (newLang: string) =>{
   return createIntl({locale:localeMessages[newLang].reactLocale,messages:localeMessages[newLang].messages});
 }
@@ -54,4 +54,8 @@ export const LocaleProvider = (props)=>{
       </ConfigProvider>
     </RawIntlProvider>
   )
+}
+
+export function checkI18nReady(intl: IntlShape){
+  return intl.locale !== 'default'
 }
