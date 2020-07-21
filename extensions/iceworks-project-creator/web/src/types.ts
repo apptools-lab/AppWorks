@@ -6,6 +6,13 @@ export interface IProjectField {
   scaffold: IMaterialScaffold;
   source: IMaterialSource;
   scaffoldType: string;
+  ejsOptions?: IEjsOptions,
+}
+
+interface IEjsOptions {
+  targets?: string[];
+  miniappType?: 'runtime' | 'compile';
+  mpa?: boolean;
 }
 
 export interface IDEFProjectField {

@@ -38,15 +38,15 @@ export const webAppTypes = [
   },
 ]
 
-export const miniAppBuildTypes = [
-  {
-    type: 'compile',
-    title: '编译时',
-    description: '基于静态编译方式将 Rax DSL 转换为小程序 DSL，存在部分语法限制。适用于对小程序性能要求较高的场景'
-  },
+export const miniAppTypes = [
   {
     type: 'runtime',
     title: '运行时',
     description: '基于运行时的 Rax，可享受完整的 Rax 语法及其生态。适用于需要小程序快速开发上线同时对性能不敏感或小程序复杂度较低的场景'
+  },
+  {
+    type: 'compile',
+    title: '编译时',
+    description: '基于静态编译方式将 Rax DSL 转换为小程序 DSL，存在部分语法限制。适用于对小程序性能要求较高的场景'
   }
 ]

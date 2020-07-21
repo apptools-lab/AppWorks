@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Form, Input } from '@alifd/next';
 import { IProjectField } from '@/types';
 import folderIcon from '@/assets/folder.svg';
-import ScaffoldTypeForm from '../ScaffoldTypeForm';
+import RaxScaffoldTypeForm from '../RaxScaffoldTypeForm';
 import styles from './index.module.scss';
 
 interface IProjectFormProps {
   value: IProjectField;
   children: React.ReactNode;
-  onChange: (value: { projectName: string; projectPath: string }) => void;
+  onChange: (value: object) => void;
   onOpenFolderDialog: () => void;
   errorMsg?: string;
 }
@@ -47,9 +47,9 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, children, error
           </div>
         </Form.Item>
       </Form>
-      <div className={styles.scaffoldTypeForm}>
-        <ScaffoldTypeForm type={type} />
-      </div>
+      {type === 'rax' && <div className={styles.scaffoldTypeForm}>
+        <RaxScaffoldTypeForm onChange={onChange} value={value} />
+      </div>}
     </div>
   );
 };
