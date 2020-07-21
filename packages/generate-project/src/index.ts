@@ -5,6 +5,7 @@ import {
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
+import i18n from './i18n';
 
 export {
   formatProject,
@@ -40,7 +41,7 @@ export async function downloadAndGenerateProject(
     tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
   } catch (error) {
     if (error.statusCode === 404) {
-      return Promise.reject(new Error(`获取模板 npm 信息失败，当前的模板地址是：${registry}/${npmName}。`));
+      return Promise.reject(new Error(i18n.format('package.generateProject.index.tarball404', {registry, npmName})));
     } else {
       return Promise.reject(error);
     }
@@ -48,23 +49,23 @@ export async function downloadAndGenerateProject(
 
   console.log('download tarballURL', tarballURL);
 
-  const spinner = ora('download npm tarball start').start();
+  const spinner = ora(i18n.format('package.generateProject.index.startDownload')).start();
   await getAndExtractTarball(
     projectDir,
     tarballURL,
     (state) => {
-      spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
+      spinner.text = i18n.format('package.generateProject.index.downloading', {percent: Math.floor(state.percent * 100)});
     },
     formatFilename
   );
-  spinner.succeed('download npm tarball successfully.');
+  spinner.succeed(i18n.format('package.generateProject.index.successDownload'));
 
   await ejsRenderDir(projectDir, ejsOptions);
 
   try {
     await formatProject(projectDir, projectName);
   } catch (err) {
-    console.warn('formatProject error', err.message);
+    console.warn(i18n.format('package.generateProject.index.formatError'), err.message);
   }
 };
 

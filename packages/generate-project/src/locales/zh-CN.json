@@ -1,0 +1,8 @@
+{
+    "package.generateProject.index.tarball404": "获取模板 npm 信息失败，当前的模板地址是：<%= registry %>/<%= npmName %>。",
+    "package.generateProject.index.download": "压缩文件 URL ",
+    "package.generateProject.index.startDownload": "开始下载",
+    "package.generateProject.index.downloading": "npm 压缩文件下载中: <%= percent %>%",
+    "package.generateProject.index.successDownload": "下载完成",
+    "package.generateProject.index.formatError": "格式化错误"
+}

@@ -1,0 +1,8 @@
+{
+    "package.generateProject.index.tarball404": "Failed to get information template NPM, the current template address is: <% = registry %> / <% = npmName %>.",
+    "package.generateProject.index.download": "Download tarballURL",
+    "package.generateProject.index.startDownload": "Download start...",
+    "package.generateProject.index.downloading": "Download npm tarball progress: <%= percent %>%",
+    "package.generateProject.index.successDownload": "Download npm tarballs successfully.",
+    "package.generateProject.index.formatError": "FormatProject error."
+}
