@@ -13,14 +13,14 @@ Iceworks provides a huge amount of high-quality materials for React and [Rax](ht
 
 ### Activate Extension
 
-![demo](https://user-images.githubusercontent.com/56879942/87535699-77926e00-c6ca-11ea-9e21-65fad2e95e0f.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88181877-0b7faf00-cc62-11ea-9b90-3808f43d0499.gif)
 
 1. Through (Ctrl+Shift+P or ⇧⌘P) evoke vscode command palette
 2. In the vscode command palette, enter 'Iceworks: Generate component', click the selected item or press enter to arouse the plugin;
 
 ### Create components
 
-![demo](https://user-images.githubusercontent.com/56879942/87396941-2c069400-c5e6-11ea-8df8-f0ff5879da3b.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88181864-06bafb00-cc62-11ea-92a2-b1d05f9cb161.gif)
 
 1. Fill in the component name (also the folder name of the componenent)
 2. Select a material below.

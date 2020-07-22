@@ -11,14 +11,14 @@ Through GUI, you can quickly assemble pages with materials.
 
 ### Activate Extension
 
-![demo](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88175431-6e6c4880-cc58-11ea-9bed-81366cf8e445.gif)
 
 1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
 2. In the command palette, type 'Iceworks: Create page' and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
-### Usage
+### Create Page
 
-![demo](https://user-images.githubusercontent.com/56879942/87402326-f82f6c80-c5ed-11ea-8ffe-34263e8dd0be.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88175424-6d3b1b80-cc58-11ea-961d-8bac1cb3f812.gif)
 
 1. Enter the page name (to be used as the folder name).
 2. Select the block to be used for the page from the block list on the right, click to add it to the page preview area on the left.

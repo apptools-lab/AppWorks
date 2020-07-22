@@ -20,7 +20,7 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 #### Use in Pages
 
-![demo](https://user-images.githubusercontent.com/56879942/87619860-ba4a5980-c74f-11ea-84c1-9ef69ef17b18.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88175399-657b7700-cc58-11ea-82d0-a0a29e23195e.gif)
 
 1. Click src/pages/*/index.tsx in the resource panel to open a page.
 2. Activate the Material Panel.
@@ -30,7 +30,7 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 #### Use in Components
 
-![demo](https://user-images.githubusercontent.com/56879942/87619875-c2a29480-c74f-11ea-945e-788a32e65881.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88175419-6c09ee80-cc58-11ea-9de0-8e397a48049b.gif)
 
 1. Click src/components/*/index.tsx in the resource panel to open a page.
 2. Activate the material-import extension.
