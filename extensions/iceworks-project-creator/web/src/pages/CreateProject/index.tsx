@@ -111,7 +111,6 @@ const CreateProject: React.FC = () => {
     setPrevBtnDisabled(true);
     setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
-    console.log("values  ====>>", JSON.stringify(values));
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {

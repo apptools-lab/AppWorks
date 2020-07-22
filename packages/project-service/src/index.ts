@@ -15,6 +15,7 @@ import {
   jsxFileExtnames
 } from './constant';
 import { IDEFProjectField, IProjectField } from './types';
+
 export * from './constant';
 
 export async function getProjectLanguageType() {
@@ -158,9 +159,8 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
 }
 
 async function generatorCreatetask(field: IDEFProjectField) {
-  const { empId, account, group, project, gitlabToken, scaffold, clientToken } = field;
+  const { empId, account, group, project, gitlabToken, scaffold, clientToken, ejsOptions } = field;
   const projectType = field.source.type;
-  console.log("generatorCreatetask projectType ===>", projectType);
   const { description, source } = scaffold;
   const { npm } = source;
   let generatorId = 6;
@@ -174,7 +174,8 @@ async function generatorCreatetask(field: IDEFProjectField) {
     trunk: 'master',
     'generator_id': generatorId,
     'schema_data': {
-      npmName: npm
+      npmName: npm,
+      ...ejsOptions
     },
     'gitlab_info': {
       'id': empId,

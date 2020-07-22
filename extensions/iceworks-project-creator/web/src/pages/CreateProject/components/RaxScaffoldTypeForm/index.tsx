@@ -11,9 +11,24 @@ interface IScaffoldTypeForm {
 }
 
 const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) => {
-  const [selectedTargets, setSelectedTargets] = useState([targets[0].type]);
-  const [selectedWebAppType, setSelectedWebAppType] = useState(webAppTypes[0].type);
-  const [selectedMiniAppType, setSelectedMiniAppType] = useState(miniAppTypes[0].type);
+  const [selectedTargets, setSelectedTargets] = useState(() => {
+    if (value.ejsOptions && value.ejsOptions.targets && value.ejsOptions.targets instanceof Array) {
+      return value.ejsOptions.targets
+    }
+    return [targets[0].type]
+  });
+  const [selectedWebAppType, setSelectedWebAppType] = useState(() => {
+    if (value.ejsOptions && typeof value.ejsOptions.mpa !== 'undefined') {
+      return value.ejsOptions.mpa
+    }
+    return webAppTypes[0].type === 'mpa'
+  });
+  const [selectedMiniAppType, setSelectedMiniAppType] = useState(() => {
+    if (value.ejsOptions && value.ejsOptions.miniappType) {
+      return value.ejsOptions.miniappType
+    }
+    return miniAppTypes[0].type
+  });
   /**
    * 选择 Rax 应用的 target 
    */
@@ -37,8 +52,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     } else {
       // 新增 target
       if (target.type === 'web') {
-        setSelectedWebAppType(webAppTypes[0].type);
-        ejsOptions.mpa = webAppTypes[0].type === 'mpa';
+        const mpa = webAppTypes[0].type === 'mpa'
+        setSelectedWebAppType(mpa);
+        ejsOptions.mpa = mpa;
       } else if (!selectedTargets.some(target => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken')) {
         setSelectedMiniAppType(miniAppTypes[0].type);
         ejsOptions.miniappType = miniAppTypes[0].type;
@@ -54,7 +70,8 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
    * 选择 web 应用类型: mpa or spa
    */
   const onWebAppTypeClick = (webAppType) => {
-    setSelectedWebAppType(webAppType.type);
+    const mpa: boolean = webAppType.type === 'mpa';
+    setSelectedWebAppType(mpa);
     onChange({ ejsOptions: { ...value.ejsOptions, mpa: webAppType.type === 'mpa' } });
   };
   /**
@@ -67,7 +84,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
 
   useEffect(() => {
     // init value
-    onChange({ ejsOptions: { targets: selectedTargets, mpa: selectedWebAppType === 'mpa', miniappType: selectedMiniAppType } });
+    onChange({ ejsOptions: { targets: selectedTargets, mpa: selectedWebAppType, miniappType: selectedMiniAppType } });
   }, []);
   return (
     <div className={styles.container}>
@@ -106,7 +123,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                   <MenuCard
                     key={item.type}
                     style={{ width: 100, height: 36 }}
-                    selected={selectedWebAppType === item.type}
+                    selected={selectedWebAppType === (item.type === 'mpa')}
                     title={item.title}
                     onClick={() => onWebAppTypeClick(item)}
                   />}
