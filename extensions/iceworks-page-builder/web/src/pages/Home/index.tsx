@@ -1,48 +1,52 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button, Input, Icon } from '@alifd/next';
+import { Grid, Notification, Button, Input } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
+import { LocaleProvider } from '@/i18n';
+import { useIntl, FormattedMessage } from 'react-intl';
 import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
+
 const { Row, Col } = Grid;
 
-async function getSources() {
-  let sources = [];
-  try {
-    sources = await callService('material', 'getSourcesByProjectType');
-  } catch (e) {
-    Notification.error({ content: '获取物料源失败，请稍后再试。' });
-  }
-
-  console.log('getSources', sources);
-  return sources;
-}
-
-async function getData(source: string) {
-  let data = {};
-  try {
-    data = await callService('material', 'getData', source);
-  } catch (e) {
-    Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
-  }
-  console.log('getData', data);
-  return data;
-}
-
-function validateData({ blocks, pageName }) {
-  if (!pageName) {
-    return '请填写页面名称。';
-  }
-  return '';
-}
-
 const Home = () => {
+  const intl = useIntl();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
   const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+
+  async function getSources() {
+    let sources = [];
+    try {
+      sources = await callService('material', 'getSourcesByProjectType');
+    } catch (e) {
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.failGetMaterial'}) });
+    }
+  
+    console.log('getSources', sources);
+    return sources;
+  }
+  
+  async function getData(source: string) {
+    let data = {};
+    try {
+      data = await callService('material', 'getData', source);
+    } catch (e) {
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.failGetData'}) });
+    }
+    console.log('getData', data);
+    return data;
+  }
+
+  function validateData({ blocks, pageName }) {
+    if (!pageName) {
+      return intl.formatMessage({id: 'web.iceworksPageBuilder.Home.enterPageName'});
+    }
+    return '';
+  }
 
   async function onSettingsClick() {
     try {
@@ -102,7 +106,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: '页面生成成功！' });
+    Notification.success({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.successCreatePage'}) });
     resetData();
   }
 
@@ -111,11 +115,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            1. 填写页面名称：
+            <FormattedMessage id='web.iceworksPageBuilder.Home.enterPageNameTitle'/>
           </div>
           <div className={styles.field}>
             <Input
-              placeholder="名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
+              placeholder={intl.formatMessage({id: 'web.iceworksPageBuilder.Home.pageNameFormat'})}
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
@@ -125,7 +129,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            2. 选择区块：
+            <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock'/>
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
@@ -160,11 +164,18 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
-          生成页面
+          <FormattedMessage id='web.iceworksPageBuilder.Home.createPage'/>
         </Button>
       </div>
     </div>
   );
 };
+const IntlHome = ()=>{
+  return (
+    <LocaleProvider>
+      <Home/>
+    </LocaleProvider>
+  )
+}
 
-export default Home;
+export default IntlHome;
