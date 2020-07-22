@@ -218,7 +218,9 @@ const CreateProject: React.FC = () => {
     async function setDefaultFields(isAliInternal) {
       const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
       const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
-      const { empId, account, gitlabToken } = userData;
+      const userInfo = await callService('common', 'getUserInfo');
+      const { empId, account } = userInfo;
+      const { gitlabToken } = userData;
       setCurProjectField({ ...curProjectField, projectPath: workspace })
       if (isAliInternal) {
         setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });

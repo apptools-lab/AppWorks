@@ -3,7 +3,9 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import co from 'co';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
+import Client from '../def';
 
 export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
@@ -13,6 +15,12 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+
+// const Client = require('def-login-client');
+
+const c = new Client({
+  'server': 'http://def.alibaba-inc.com',
+});
 
 let activeTextEditorId: string;
 
@@ -226,4 +234,14 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
     position = new Position(0, 0);
   }
   return { position, declarations: importDeclarations };
+}
+
+export function getUserInfo() {
+  co(function* () {
+    const token = yield c.login();
+    console.log('token', token);
+
+    const user = yield c.user();
+    console.log('user', user);
+  })
 }

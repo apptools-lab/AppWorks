@@ -15,7 +15,7 @@ const config = {
     vscode: 'commonjs vscode'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [
@@ -30,6 +30,10 @@ const config = {
             },
           }
         ]
+      },
+      {
+        test: /rx\.lite\.aggregates\.js/,
+        use: 'imports-loader?define=>false'
       }
     ]
   }

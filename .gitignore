@@ -24,3 +24,5 @@ extensions/*/out
 **/build
 
 *.vsix
+
+packages/common-service/def/
