@@ -4,7 +4,7 @@ import * as spawn from 'cross-spawn';
 /**
  * install package def-login-client dependencies
  */
-+ function () {
+(function () {
   const cwd = path.join(__dirname, '..', 'def-login-client');
   const installCommonds = ['install'];
   console.log('Start to install def-login-client dependencies...');
@@ -12,4 +12,4 @@ import * as spawn from 'cross-spawn';
     stdio: 'inherit',
     cwd
   });
-}()
+})()

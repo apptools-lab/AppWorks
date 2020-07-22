@@ -16,7 +16,7 @@ const target = 'packages/def-login-client/def-login-client.zip';
 /**
  * get def login client package from oss
  */
-+ function () {
+(function () {
   ossClient.get(target)
     .then((result) => {
       const zipPath = path.join(__dirname, '..', 'tmp.zip');
@@ -27,4 +27,4 @@ const target = 'packages/def-login-client/def-login-client.zip';
       fse.removeSync(zipPath);
     })
     .catch(e => console.error(e))
-}()
+})()
