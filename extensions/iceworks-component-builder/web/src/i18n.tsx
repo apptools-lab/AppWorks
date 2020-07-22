@@ -1,11 +1,9 @@
 import { createIntl, RawIntlProvider } from 'react-intl'; 
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Loading } from '@alifd/next';
-
-// 引入 locale 配置文件
+import callService from './callService';
 import enUSLocale from './locales/en-US.json';
 import zhCNLocale from './locales/zh-CN.json';
-import callService from './callService';
 
 const DEFAULT_LANG = 'zh-cn';
 
