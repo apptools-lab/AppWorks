@@ -15,7 +15,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
   const [selectedWebAppType, setSelectedWebAppType] = useState(webAppTypes[0].type);
   const [selectedMiniAppType, setSelectedMiniAppType] = useState(miniAppTypes[0].type);
   /**
-   * 选择 Rax 应用的 Target 
+   * 选择 Rax 应用的 target 
    */
   const onTargetClick = (target) => {
     const ejsOptions: any = { ...value.ejsOptions };
@@ -31,10 +31,11 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
 
       if (target.type === 'web') {
         delete ejsOptions.mpa;
-      } else if (selectedTargets.length === 1) {
+      } else if (selectedTargets.length === 1) { // 当前 selectedTargets 只剩下 web
         delete ejsOptions.miniappType;
       }
     } else {
+      // 新增 target
       if (target.type === 'web') {
         setSelectedWebAppType(webAppTypes[0].type);
         ejsOptions.mpa = webAppTypes[0].type === 'mpa';
