@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
-import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
@@ -16,21 +15,9 @@ import {
   jsxFileExtnames
 } from './constant';
 import i18n from './i18n';
+import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
-
-interface IDEFProjectField {
-  empId: string;
-  account: string;
-  group: string;
-  project: string;
-  gitlabToken: string;
-  scaffold: IMaterialScaffold;
-  clientToken: string;
-  projectPath: string;
-  pubtype: number;
-  projectName: string;
-}
 
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
@@ -117,8 +104,8 @@ export async function getProjectPath(): Promise<string> {
   return fsPath;
 }
 
-export async function createProject(data): Promise<string> {
-  const { projectPath, projectName, scaffold } = data;
+export async function createProject(projectField: IProjectField): Promise<string> {
+  const { projectPath, projectName, scaffold, ejsOptions } = projectField;
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
@@ -126,7 +113,7 @@ export async function createProject(data): Promise<string> {
   }
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
-  await downloadAndGenerateProject(projectDir, npm, version, registry);
+  await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
   return projectDir;
 }
 
@@ -142,7 +129,7 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), newWindow);
 }
 
-export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
+export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
   const { projectPath, projectName, group, project } = DEFProjectField;
   const projectDir = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
@@ -173,17 +160,23 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
 }
 
 async function generatorCreatetask(field: IDEFProjectField) {
-  const { empId, account, group, project, gitlabToken, scaffold, clientToken } = field;
+  const { empId, account, group, project, gitlabToken, scaffold, clientToken, ejsOptions } = field;
+  const projectType = field.source.type;
   const { description, source } = scaffold;
   const { npm } = source;
+  let generatorId = 6;
+  if (projectType === 'rax') {
+    generatorId = 5;
+  }
   const response = await axios.post(generatorCreatetaskUrl, {
     group,
     project,
     description,
     trunk: 'master',
-    'generator_id': 6,
+    'generator_id': generatorId,
     'schema_data': {
-      npmName: npm
+      npmName: npm,
+      ...ejsOptions
     },
     'gitlab_info': {
       'id': empId,

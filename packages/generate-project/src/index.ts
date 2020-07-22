@@ -11,7 +11,7 @@ export {
   checkEmpty,
 };
 
-interface IEjsOptions {
+export interface IEjsOptions {
   targets?: string[];
   miniappType?: 'runtime' | 'compile';
   mpa?: boolean;

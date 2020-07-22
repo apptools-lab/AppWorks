@@ -120,6 +120,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
           {loading ? <Loading visible={loading} className={styles.loading} /> : <>
             <div className={styles.mainScaffolds}>
               {!!mainScaffolds.length ? mainScaffolds.map(item => {
+                // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                // so the TypeScript and JavaScript logo only display in official scaffolds
                 const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
                   jsScaffoldsList.includes(item.source.npm) ? 'js' :
                     '';
@@ -131,7 +133,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                     title={
                       <div className={styles.cardTitle}>
                         {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
-                        <div>{item.title.replace(' - TS', '')}</div>
+                        <div>{scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}</div>
                       </div>
                     }
                     content={item.description}
@@ -148,6 +150,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
               <Collapse.Panel title={intl.formatMessage({id: 'web.iceworksProjectCreator.ScaffoldMarket.more'})}>
                 <div className={styles.collapseScaffolds}>
                   {otherScaffolds.map(item => {
+                    // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                    // so the TypeScript and JavaScript logo only display in official scaffolds
                     const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
                       jsScaffoldsList.includes(item.source.npm) ? 'js' :
                         '';
@@ -159,7 +163,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                         title={
                           <div className={styles.cardTitle}>
                             {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
-                            <div>{item.title.replace(' - JS', '')}</div>
+                            <div>{scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}</div>
                           </div>
                         }
                         content={item.description}
