@@ -44,7 +44,6 @@ export const LocaleProvider = (props)=>{
       }
     }
     initI18n();
-    
   },[]);
 
   return (
