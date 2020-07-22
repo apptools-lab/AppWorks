@@ -17,11 +17,12 @@ import {
   getPackageJSON
 } from '@iceworks/project-service';
 import insertComponent from './utils/insertComponent';
+import i18n from './i18n';
 
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
+  const templateError = i18n.format('package.component-service.index.templateError',{jsxFileExtnames:jsxFileExtnames.join(',')});
   const { name, source } = dataSource;
   const { npm, version } = source;
   const { activeTerminal } = window;
@@ -68,7 +69,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
 }
 
 export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
+  const templateError = i18n.format('package.component-service.index.templateError',{jsxFileExtnames:jsxFileExtnames.join(',')});
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {

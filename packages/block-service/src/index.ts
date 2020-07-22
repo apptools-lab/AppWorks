@@ -22,6 +22,7 @@ import {
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
+import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
 import { downloadBlock } from './utils/downloadBlock';
 
@@ -60,7 +61,7 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = `从 ${blockSourceNpm} 获取压缩包链接失败，您可以尝试手动克隆 ${block.repository} 仓库`;
+        error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName,tarballURL}); 
         throw error;
       }
 
@@ -70,9 +71,9 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         await getAndExtractTarball(blockTempDir, tarballURL);
       } catch (error) {
-        error.message = `解压 ${blockName} 失败，压缩包链接地址是：${tarballURL}`;
+        error.message = i18n.format('package.block-service.uzipError', {blockName,tarballURL});
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = `解压 ${blockName} 超时，压缩包链接地址是：${tarballURL}`;
+          error.message = i18n.format('package.block-service.uzipOutTime', {blockName,tarballURL});;
         }
         await fsExtra.remove(blockTempDir);
         throw error;
@@ -150,7 +151,7 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
 }
 
 export async function addBlockCode(block: IMaterialBlock) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加区块代码`;
+  const templateError = i18n.format('package.block-service.templateError', {jsxFileExtnames:jsxFileExtnames.join(',')}); ;
   const activeTextEditor = getLastAcitveTextEditor();
   console.log('addBlockCode....');
   if (!activeTextEditor) {
@@ -171,7 +172,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   );
   const isPageFile = await fsExtra.pathExists(pagePath);
   if (!isPageFile) {
-    throw new Error(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
+    throw new Error( i18n.format('package.block-service.notPageFileError', {pagesPath}));
   }
 
   // insert code 
@@ -182,13 +183,13 @@ export async function addBlockCode(block: IMaterialBlock) {
   const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
-  materialOutputChannel.appendLine('> 开始获取区块代码');
+  materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
     const downloadMethod = downloadBlock;
     const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
-    materialOutputChannel.appendLine(`> 已将区块代码下载到：${blockDir}`);
+    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', {blockDir}));
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
   } finally {

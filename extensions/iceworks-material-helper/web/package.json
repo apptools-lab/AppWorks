@@ -21,7 +21,8 @@
     "@iceworks/vscode-webview": "^0.1.1",
     "moment": "^2.24.0",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "react-intl": "^5.3.2"
   },
   "scripts": {
     "start": "icejs start --disable-reload",
