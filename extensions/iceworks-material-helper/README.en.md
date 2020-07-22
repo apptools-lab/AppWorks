@@ -13,14 +13,14 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 #### Activate Material Panel
 
-![demo](https://user-images.githubusercontent.com/56879942/87401390-a63a1700-c5ec-11ea-91a6-f7d81ac5fd77.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88197902-b2ba1180-cc75-11ea-8e33-0ce4e7faa368.gif)
 
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
 2. Enter `Iceworks: Import Material` to activate Material Panel.
 
 #### Use in Pages
 
-![demo](https://user-images.githubusercontent.com/56879942/88175399-657b7700-cc58-11ea-82d0-a0a29e23195e.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88197928-b8aff280-cc75-11ea-816d-1c609bc90878.gif)
 
 1. Click src/pages/*/index.tsx in the resource panel to open a page.
 2. Activate the Material Panel.
@@ -30,7 +30,7 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 #### Use in Components
 
-![demo](https://user-images.githubusercontent.com/56879942/88175419-6c09ee80-cc58-11ea-9de0-8e397a48049b.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88197942-bb124c80-cc75-11ea-8caa-68fe2dc4cbc3.gif)
 
 1. Click src/components/*/index.tsx in the resource panel to open a page.
 2. Activate the material-import extension.
@@ -41,7 +41,7 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 When editing the props of a component in a JSX file, an automatic completion reminder will be given:
 
-![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88197950-bd74a680-cc75-11ea-8650-dec13706366c.gif)
 
 1. Use materials in JSX files (such as View). 
 2. Enter part of props in the material tag, it will arouse automatic completion.
