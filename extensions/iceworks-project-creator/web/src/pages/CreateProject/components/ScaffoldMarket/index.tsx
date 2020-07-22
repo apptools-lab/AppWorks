@@ -9,10 +9,12 @@ import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
 import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
+import { useIntl } from 'react-intl';
 
 const projectTypes = ['react', 'rax', 'vue'];
 
 const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenConfigPanel, materialSources }) => {
+  const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
@@ -139,11 +141,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                   />
                 )
               }) :
-                <NotFound description="暂无模板" />
+                <NotFound description={intl.formatMessage({id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate'})}/>
               }
             </div>
             {!!otherScaffolds.length && <Collapse className={styles.collapse}>
-              <Collapse.Panel title="查看更多">
+              <Collapse.Panel title={intl.formatMessage({id: 'web.iceworksProjectCreator.ScaffoldMarket.more'})}>
                 <div className={styles.collapseScaffolds}>
                   {otherScaffolds.map(item => {
                     const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
