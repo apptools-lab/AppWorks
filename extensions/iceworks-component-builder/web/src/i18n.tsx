@@ -38,7 +38,7 @@ export const LocaleProvider = (props)=>{
         const lang = await callService('common', 'getLanguage');
         setI18n(getIntl(lang));
       } catch(e) {
-        Notification.error({ content: e.message });
+        // ignore i18n error, just using default language
       } finally {
         setLoading(false);
       }
