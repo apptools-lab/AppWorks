@@ -14,7 +14,7 @@
     "axios": "^0.19.2",
     "ice-npm-utils": "^2.0.0",
     "lodash.kebabcase": "^4.1.1",
-    "@iceworks/i18n": "^0.0.1"
+    "@iceworks/i18n": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"
