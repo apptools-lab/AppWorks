@@ -117,7 +117,7 @@ export async function getProjectPath(): Promise<string> {
 }
 
 export async function createProject(data): Promise<string> {
-  const { projectPath, projectName, scaffold } = data;
+  const { projectPath, projectName, scaffold, ejsOptions } = data;
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
@@ -125,7 +125,7 @@ export async function createProject(data): Promise<string> {
   }
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
-  await downloadAndGenerateProject(projectDir, npm, version, registry);
+  await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
   return projectDir;
 }
 

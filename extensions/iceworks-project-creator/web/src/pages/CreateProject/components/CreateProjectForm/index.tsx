@@ -2,17 +2,19 @@ import * as React from 'react';
 import { Form, Input } from '@alifd/next';
 import { IProjectField } from '@/types';
 import folderIcon from '@/assets/folder.svg';
+import RaxScaffoldTypeForm from '../RaxScaffoldTypeForm';
 import styles from './index.module.scss';
 
 interface IProjectFormProps {
   value: IProjectField;
   children: React.ReactNode;
-  onChange: (value: { projectName: string; projectPath: string }) => void;
+  onChange: (value: object) => void;
   onOpenFolderDialog: () => void;
   errorMsg?: string;
 }
 
-const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDialog, children, onChange, errorMsg }) => {
+const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, children, errorMsg, onChange, onOpenFolderDialog }) => {
+  const { source: { type } } = value;
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
@@ -45,6 +47,9 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({ value, onOpenFolderDia
           </div>
         </Form.Item>
       </Form>
+      {type === 'rax' && <div className={styles.scaffoldTypeForm}>
+        <RaxScaffoldTypeForm onChange={onChange} value={value} />
+      </div>}
     </div>
   );
 };
