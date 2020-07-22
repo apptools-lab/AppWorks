@@ -1,6 +1,6 @@
 import { createIntl, RawIntlProvider } from 'react-intl'; 
 import React, { useEffect, useState } from 'react'
-import { ConfigProvider, Loading, Notification } from '@alifd/next';
+import { ConfigProvider, Loading } from '@alifd/next';
 
 // 引入 locale 配置文件
 import enUSLocale from './locales/en-US.json';
