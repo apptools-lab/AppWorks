@@ -3,9 +3,12 @@ import { Notification } from '@alifd/next';
 import callService from '@/callService';
 import Material from '@iceworks/material-ui';
 import { IMaterialData, IMaterialBlock, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
+import {useIntl} from 'react-intl';
 import styles from './index.module.scss';
+import { LocaleProvider } from '../../i18n';
 
 const MaterialsPane: React.FC<any> = () => {
+  const intl = useIntl();
   async function onSettingsClick() {
     try {
       await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
@@ -19,7 +22,7 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: '获取物料源信息失败，请稍后再试。' });
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getMaterialError'}) });
     }
     console.log('getSources', sources);
     return sources;
@@ -30,7 +33,7 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: '获取物料集合信息失败，请稍后再试。' });
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getDataError'}) });
     }
     console.log('getData', data);
     return data as IMaterialData;
@@ -75,4 +78,12 @@ const MaterialsPane: React.FC<any> = () => {
   )
 }
 
-export default MaterialsPane;
+export const IntlMaterialPane = ()=>{
+  return (
+    <LocaleProvider>
+      <MaterialsPane/>
+    </LocaleProvider>
+  )
+}
+
+export default IntlMaterialPane;
