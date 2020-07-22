@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build": "rm -rf lib && webpack --mode production",
-    "postinstall": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts"
+    "prebuild": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts"
   },
   "publishConfig": {
     "access": "public"
