@@ -24,7 +24,7 @@ type RecordType = 'PV' | 'UV';
 const MAIN_KEY = 'main';
 const LOGGER_MODULE_KEY = 'logger';
 
-export async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
+async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   recordType = recordType || 'PV';
   const param = {
     ...originParam,
@@ -78,7 +78,7 @@ export async function recordPV(originParam: IGoldlogParam, recordType?: RecordTy
   }
 }
 
-export function recordUV(originParam: IGoldlogParam, storage: IStorage) {
+function recordUV(originParam: IGoldlogParam, storage: IStorage) {
   const nowtDate = new Date().toDateString();
   const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
   const lastDate = storage.get(dauKey);
