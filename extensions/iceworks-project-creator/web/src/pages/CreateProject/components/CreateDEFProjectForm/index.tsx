@@ -13,6 +13,8 @@ interface ICreateDEFProjectFormProps {
   onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
+const gitAccountURL = 'gitlab.alibaba-inc.com/profile/account';
+
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
   children,
@@ -44,7 +46,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         <Form.Item
           colSpan={12}
           label="GitLab Token"
-          help={<span className={styles.help}>打开 <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 复制页面的 <b>Private Token</b></span>}
+  help={<span className={styles.help}>打开 <a href={`http://${gitAccountURL}`} rel="noopener noreferrer" target="_blank">{gitAccountURL}</a> 复制页面的 <b>Private Token</b></span>}
           required
           requiredMessage="请输入GitLab Token"
           onBlur={onAccountBlur}

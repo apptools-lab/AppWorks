@@ -14,6 +14,9 @@ export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
+const gitlabGroupsAPI = 'http://gitlab.alibaba-inc.com/api/v3/groups';
+const gitlabProjectsAPI = 'http://gitlab.alibaba-inc.com/api/v3/projects';
+
 let activeTextEditorId: string;
 
 const { window, Position } = vscode;
@@ -167,7 +170,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
 }
 
 export async function getGitLabGroups(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/groups', {
+  const res = await axios.get(gitlabGroupsAPI, {
     params: {
       'private_token': token
     }
@@ -177,7 +180,7 @@ export async function getGitLabGroups(token: string) {
 }
 
 export async function getExistProjects(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/projects', {
+  const res = await axios.get(gitlabProjectsAPI, {
     params: {
       'private_token': token
     }
