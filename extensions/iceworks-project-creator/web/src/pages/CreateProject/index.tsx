@@ -2,15 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, Form, Button, Notification, Icon, Loading } from '@alifd/next';
 import callService from '@/callService';
 import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
+import { LocaleProvider } from '@/i18n';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
 
+
+
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 
 const CreateProject: React.FC = () => {
+  const intl = useIntl();
   const [currentStep, setStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
@@ -27,22 +32,30 @@ const CreateProject: React.FC = () => {
   const existProjectsRef = useRef([]);
   const steps = [
     <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} curProjectField={curProjectField} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
-      <Button type="primary" onClick={onScaffoldSubmit}>下一步</Button>
+      <Button type="primary" onClick={onScaffoldSubmit}>
+        <FormattedMessage id = 'web.iceworksProjectCreator.CreateProject.nextStep'/>
+      </Button>
     </ScaffoldMarket>,
     <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
-      <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+      <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.lasttStep'/>
+      </Button>
       {isAliInternal && <Form.Submit
         className={styles.btn}
         onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
         validate
         disabled={createDEFProjectDisabled}
-      >创建 DEF 应用</Form.Submit>}
+      >
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createDFE'/>
+      </Form.Submit>}
       <Form.Submit
         type="primary"
         onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
         validate
         loading={createProjectLoading}
-      >完成</Form.Submit>
+      >
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete'/>
+      </Form.Submit>
     </CreateProjectForm>
   ];
 
@@ -64,7 +77,9 @@ const CreateProject: React.FC = () => {
           loading={createDEFProjectLoading}
           disabled={createDEFProjectDisabled}
           className={styles.btn}
-        >完成</Form.Submit>
+        >
+          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.chooseTemplate'/>
+        </Form.Submit>
       </CreateDEFProjectForm>
     )
   }
@@ -83,7 +98,7 @@ const CreateProject: React.FC = () => {
 
   async function onScaffoldSubmit() {
     if (!curProjectField.scaffold) {
-      Notification.error({ content: '请选择一个模板！' });
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.chooseTemplate'}) });
       return;
     }
     goNext();
@@ -114,7 +129,7 @@ const CreateProject: React.FC = () => {
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
-        throw new Error('该本地路径已存在，请重新选择！');
+        throw new Error(intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.pathExist'}));
       }
       if (!isCreateDEFProject) {
         await createProject(values)
@@ -145,7 +160,7 @@ const CreateProject: React.FC = () => {
 
   function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
     if (existProjectsRef.current.filter((item: IGitLabExistProject) => item.name === value).length) {
-      return callback('已存在相同的仓库名，请重新输入')
+      return callback(intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.nameExist'}))
     }
     return callback()
   };
@@ -252,12 +267,18 @@ const CreateProject: React.FC = () => {
         <Card.Content className={styles.cardContent}>
           <div className={styles.header}>
             <div>
-              <div className={styles.title}>创建应用</div>
-              <div className={styles.subTitle}>海量可复用物料，搭配研发框架极速构建多端应用。</div>
+              <div className={styles.title}>
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createProject'/>
+              </div>
+              <div className={styles.subTitle}>
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.subTitle'/>
+              </div>
             </div>
             <div className={styles.headerBtns}>
-              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />设置</Button>
-              {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />刷新</Button>}
+              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.setting'/></Button>
+              {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.refresh'/></Button>}
             </div>
           </div>
           {loading ? <Loading className={styles.loading} visible={loading} /> : (
@@ -269,4 +290,12 @@ const CreateProject: React.FC = () => {
   );
 };
 
-export default CreateProject;
+const IntlCreateProject = ()=>{
+  return (
+    <LocaleProvider>
+      <CreateProject/>
+    </LocaleProvider>
+  )
+}
+
+export default IntlCreateProject;

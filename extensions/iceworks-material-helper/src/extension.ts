@@ -3,6 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -35,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
         layout = { orientation: 0, groups: [{ size: 0.7 }, { size: 0.3 }] };
       }
 
-      webviewPanel = window.createWebviewPanel('Iceworks', '使用物料 - Iceworks', { viewColumn: columnToShowIn, preserveFocus: true }, {
+      webviewPanel = window.createWebviewPanel('Iceworks', i18n.format('extension.iceworksMaterialHelper.extension.title'), { viewColumn: columnToShowIn, preserveFocus: true }, {
         enableScripts: true,
         retainContextWhenHidden: true,
         enableFindWidget: true,

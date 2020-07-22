@@ -5,7 +5,8 @@
     "rootDir": "src",
     "outDir": "lib",
     "module": "CommonJS",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
   "exclude": [
     "src/__tests__",
