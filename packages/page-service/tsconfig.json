@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "resolveJsonModule": true
   },
   "exclude": ["src/__tests__", "lib"]
 }
