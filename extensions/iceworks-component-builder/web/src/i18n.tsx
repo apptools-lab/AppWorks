@@ -48,7 +48,7 @@ export const LocaleProvider = (props)=>{
 
   return (
     <RawIntlProvider value={i18n}>
-        <ConfigProvider locale={localeMessages[i18n.locale].nextMessages}>
+      <ConfigProvider locale={localeMessages[i18n.locale].nextMessages}>
         {loading ? <Loading visible={loading} style={{width: '100%', height:'80vh'}} /> : React.Children.only(props.children)}
       </ConfigProvider>
     </RawIntlProvider>
