@@ -20,6 +20,7 @@
     "moment": "^2.24.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "react-intl": "^5.3.2",
     "throttle-debounce": "^2.2.1"
   },
   "scripts": {

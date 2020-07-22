@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup } from '@/types';
+import { useIntl, FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
+
 
 interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
@@ -13,6 +15,8 @@ interface ICreateDEFProjectFormProps {
   onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
+const gitAccountURL = 'gitlab.alibaba-inc.com/profile/account';
+
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
   children,
@@ -22,43 +26,47 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   onChange,
   onValidateProjectName,
 }) => {
+  const intl = useIntl();
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
-          label="工号"
+          label={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.empId'})}
           required
-          requiredMessage="请输入工号"
+          requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId'})}
         >
-          <Input placeholder="请输入工号" name="empId" />
+          <Input placeholder={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId'})} name="empId" />
         </Form.Item>
         <Form.Item
           colSpan={12}
-          label="域账号"
+          label={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.account'})}
           required
-          requiredMessage="请输入域账号"
+          requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount'})}
         >
-          <Input placeholder="请输入域账号" name="account" />
+          <Input placeholder={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount'})} name="account" />
         </Form.Item>
         <Form.Item
           colSpan={12}
           label="GitLab Token"
-          help={<span className={styles.help}>打开 <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 复制页面的 <b>Private Token</b></span>}
+          help={<span className={styles.help}>
+            <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open'/>
+            <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 
+            <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.copy'/> <b>Private Token</b></span>}
           required
-          requiredMessage="请输入GitLab Token"
+          requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken'})}
           onBlur={onAccountBlur}
         >
-          <Input placeholder="请输入GitLab Token" name="gitlabToken" />
+          <Input placeholder={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken'})} name="gitlabToken" />
         </Form.Item>
         <Form.Item
           colSpan={6}
           label="GitLab Group"
           required
-          requiredMessage="请选择 GitLab Group"
+          requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabGroup'})}
         >
           <Select
-            placeholder="请选择 GitLab Group"
+            placeholder={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabGroup'})}
             name="group"
             fillProps="name"
             key="name"
@@ -71,13 +79,13 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         </Form.Item>
         <Form.Item
           colSpan={6}
-          label="仓库名"
+          label={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.reposity'})}
           required
-          requiredMessage="请输入仓库名"
+          requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity'})}
           autoValidate
           validator={onValidateProjectName}
         >
-          <Input placeholder="请输入仓库名" name="project" />
+          <Input placeholder={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity'})} name="project" />
         </Form.Item>
         <Form.Item>
           {errorMsg && <div className={styles.errorMsg}>

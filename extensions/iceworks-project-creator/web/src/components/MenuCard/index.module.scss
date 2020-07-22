@@ -1,0 +1,39 @@
+.card {
+  height: 90px;
+  width: 90px;
+  margin: 5px 10px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-fill1-4;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    @extend .active;
+  }
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.title {
+  width: 80px;
+  text-align: center;
+}
+
+.active {
+  border: 1px solid $color-notice-3;
+}
+
+.successIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
