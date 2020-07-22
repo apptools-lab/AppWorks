@@ -6,8 +6,8 @@ import * as AdmZip from 'adm-zip';
 const ossClient = oss({
   bucket: 'iceworks',
   endpoint: 'oss-cn-hangzhou.aliyuncs.com',
-  accessKeyId: 'LTAIycQKC7kFAVHg',
-  accessKeySecret: 'ah1oAQV0ED8A7Y3psGwwrtQFUSH073',
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  accessKeySecret: process.env.ACCESS_KEY_SECRET,
   timeout: '300s',
 })
 
