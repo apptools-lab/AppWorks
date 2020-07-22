@@ -4,18 +4,17 @@ const tsConfigPath = path.join(__dirname, 'tsconfig.json');
 
 const config = {
   target: 'node',
-  entry: './src/extension.ts',
+  entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'extension.js',
-    libraryTarget: 'commonjs2',
-    devtoolModuleFilenameTemplate: '../[resource-path]'
+    path: path.resolve(__dirname, 'lib'),
+    filename: 'index.js',
+    libraryTarget: 'commonjs',
   },
   externals: {
     vscode: 'commonjs vscode'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [
@@ -25,11 +24,14 @@ const config = {
           {
             loader: 'ts-loader',
             options: {
-              transpileOnly: true,
               configFile: tsConfigPath,
             },
           }
         ]
+      },
+      {
+        test: /rx\.lite\.aggregates\.js/,
+        use: 'imports-loader?define=>false'
       }
     ]
   }

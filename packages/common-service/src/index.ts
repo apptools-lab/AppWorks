@@ -3,9 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
-import co from 'co';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
-import Client from '../def';
 
 export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
@@ -16,9 +14,10 @@ export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
-// const Client = require('def-login-client');
+const Client = require('../def');
+const co = require('co');
 
-const c = new Client({
+const defClient = new Client({
   'server': 'http://def.alibaba-inc.com',
 });
 
@@ -236,12 +235,13 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
   return { position, declarations: importDeclarations };
 }
 
-export function getUserInfo() {
-  co(function* () {
-    const token = yield c.login();
-    console.log('token', token);
+export async function getUserInfo() {
+  const fn = co.wrap(function* () {
+    yield defClient.login();
+    const user = yield defClient.user();
+    return user
+  });
 
-    const user = yield c.user();
-    console.log('user', user);
-  })
+  const userInfo = await fn();
+  return userInfo;
 }

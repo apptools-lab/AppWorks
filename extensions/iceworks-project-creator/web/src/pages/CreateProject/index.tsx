@@ -216,13 +216,13 @@ const CreateProject: React.FC = () => {
       }
     }
     async function setDefaultFields(isAliInternal) {
-      const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
       const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
-      const userInfo = await callService('common', 'getUserInfo');
-      const { empId, account } = userInfo;
-      const { gitlabToken } = userData;
-      setCurProjectField({ ...curProjectField, projectPath: workspace })
+      setCurProjectField({ ...curProjectField, projectPath: workspace });
+
       if (isAliInternal) {
+        const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
+        const { empId, account, gitlabToken } = userData;
+
         setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });
         const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
         setGroupDataSource(dataSource);

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup } from '@/types';
+import callService from '@/callService';
 import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
@@ -22,25 +23,20 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   onChange,
   onValidateProjectName,
 }) => {
+  useEffect(() => {
+    async function initUserInfo() {
+      const { empId, account } = value;
+      if (!empId || !account) { // if empId and account are not found, request DEF API to get them
+        const userInfo = await callService('common', 'getUserInfo');
+        const { empid: empId, account } = userInfo;
+        onChange({ ...value, empId, account })
+      }
+    }
+    initUserInfo();
+  }, [])
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
-        <Form.Item
-          colSpan={12}
-          label="工号"
-          required
-          requiredMessage="请输入工号"
-        >
-          <Input placeholder="请输入工号" name="empId" />
-        </Form.Item>
-        <Form.Item
-          colSpan={12}
-          label="域账号"
-          required
-          requiredMessage="请输入域账号"
-        >
-          <Input placeholder="请输入域账号" name="account" />
-        </Form.Item>
         <Form.Item
           colSpan={12}
           label="GitLab Token"
