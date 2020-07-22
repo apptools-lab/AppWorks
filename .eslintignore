@@ -3,6 +3,7 @@ build/
 tests/
 demo/
 .ice/
+packages/common-service/def/
 
 # node 覆盖率文件
 coverage/

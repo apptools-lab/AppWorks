@@ -14,8 +14,8 @@ export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
-const Client = require('../def');
 const co = require('co');
+const Client = require('../def');
 
 const defClient = new Client({
   'server': 'http://def.alibaba-inc.com',
