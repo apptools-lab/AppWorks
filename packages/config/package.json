@@ -3,6 +3,8 @@
   "version": "1.0.6",
   "main": "lib/index.js",
   "dependencies": {
+    "@iceworks/i18n": "^0.0.1",
+    "@types/vscode": "^1.47.0",
     "fs-extra": "^8.1.0",
     "user-home": "^2.0.0"
   },
