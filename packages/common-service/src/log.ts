@@ -28,7 +28,9 @@ export async function recordPV(originParam: IGoldlogParam, recordType?: RecordTy
   recordType = recordType || 'PV';
   const param = {
     ...originParam,
+    // eslint-disable-next-line 
     record_type: recordType,
+    recordType,
     cache: Math.random(),
   };
   try {
