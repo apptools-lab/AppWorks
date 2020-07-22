@@ -15,7 +15,7 @@ export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CO
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
 const co = require('co');
-const Client = require('../def');
+const Client = require('../def-login-client');
 
 const defClient = new Client({
   'server': 'http://def.alibaba-inc.com',

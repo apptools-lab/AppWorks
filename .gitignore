@@ -25,4 +25,4 @@ extensions/*/out
 
 *.vsix
 
-packages/common-service/def/**
+packages/common-service/def-login-client/**
