@@ -15,6 +15,8 @@ interface ICreateDEFProjectFormProps {
   onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
+const gitAccountURL = 'gitlab.alibaba-inc.com/profile/account';
+
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
   children,
