@@ -22,6 +22,7 @@
     "@types/vscode": "^1.45.0",
     "adm-zip": "^0.4.16",
     "ali-oss": "^6.10.0",
+    "cross-spawn": "^7.0.3",
     "imports-loader": "^0.8.0",
     "ts-loader": "^8.0.1",
     "ts-node": "^8.10.2",
@@ -30,7 +31,7 @@
   },
   "scripts": {
     "build": "rm -rf lib && webpack --mode production",
-    "get-def": "ts-node ./scripts/get-def-login-client.ts"
+    "postinstall": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts"
   },
   "publishConfig": {
     "access": "public"

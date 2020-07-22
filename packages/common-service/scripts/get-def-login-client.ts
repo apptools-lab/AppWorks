@@ -1,6 +1,3 @@
-/**
- * get def login client package from oss
- */
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as oss from 'ali-oss';
@@ -16,7 +13,10 @@ const ossClient = oss({
 
 const target = 'packages/def-login-client/def-login-client.zip';
 
-void function () {
+/**
+ * get def login client package from oss
+ */
++ function () {
   ossClient.get(target)
     .then((result) => {
       const zipPath = path.join(__dirname, '..', 'tmp.zip');
