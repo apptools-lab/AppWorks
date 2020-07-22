@@ -1,7 +1,11 @@
 import * as _ from 'lodash';
-import { II18n, ITextMap } from './type';
 
-export default class I18nService implements II18n{
+export interface ITextMap {
+  // "${namespace}.${extensionName}.${moudelName}.${fieldName}": "xxx"
+  [key: string]: string;
+}
+
+export default class I18n {
   localesTextMap: { [locale: string]: ITextMap } = {};
 
   currentTextMap: ITextMap = {};
