@@ -149,7 +149,6 @@ const IntlConfigHelper = ()=>{
       <ConfigHelper/>
     </LocaleProvider>
   )
-
 }
 
 export default IntlConfigHelper;
