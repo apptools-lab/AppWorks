@@ -17,7 +17,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     }
     return [targets[0].type]
   });
-  const [selectedWebAppType, setSelectedWebAppType] = useState(() => {
+  const [isMpa, setIsMpa] = useState(() => {
     if (value.ejsOptions && typeof value.ejsOptions.mpa !== 'undefined') {
       return value.ejsOptions.mpa
     }
@@ -52,9 +52,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     } else {
       // 新增 target
       if (target.type === 'web') {
-        const mpa = webAppTypes[0].type === 'mpa'
-        setSelectedWebAppType(mpa);
-        ejsOptions.mpa = mpa;
+        const ismpa = webAppTypes[0].type === 'mpa'
+        setIsMpa(ismpa);
+        ejsOptions.mpa = ismpa;
       } else if (!selectedTargets.some(target => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken')) {
         setSelectedMiniAppType(miniAppTypes[0].type);
         ejsOptions.miniappType = miniAppTypes[0].type;
@@ -70,8 +70,8 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
    * 选择 web 应用类型: mpa or spa
    */
   const onWebAppTypeClick = (webAppType) => {
-    const mpa: boolean = webAppType.type === 'mpa';
-    setSelectedWebAppType(mpa);
+    const ismpa: boolean = webAppType.type === 'mpa';
+    setIsMpa(ismpa);
     onChange({ ejsOptions: { ...value.ejsOptions, mpa: webAppType.type === 'mpa' } });
   };
   /**
@@ -84,7 +84,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
 
   useEffect(() => {
     // init value
-    onChange({ ejsOptions: { targets: selectedTargets, mpa: selectedWebAppType, miniappType: selectedMiniAppType } });
+    onChange({ ejsOptions: { targets: selectedTargets, mpa: isMpa, miniappType: selectedMiniAppType } });
   }, []);
   return (
     <div className={styles.container}>
@@ -123,7 +123,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                   <MenuCard
                     key={item.type}
                     style={{ width: 100, height: 36 }}
-                    selected={selectedWebAppType === (item.type === 'mpa')}
+                    selected={isMpa === (item.type === 'mpa')}
                     title={item.title}
                     onClick={() => onWebAppTypeClick(item)}
                   />}
