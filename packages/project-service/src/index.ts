@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
-import { IMaterialScaffold } from '@iceworks/material-utils';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
@@ -15,21 +14,10 @@ import {
   projectPath,
   jsxFileExtnames
 } from './constant';
+import i18n from './i18n';
+import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
-
-interface IDEFProjectField {
-  empId: string;
-  account: string;
-  group: string;
-  project: string;
-  gitlabToken: string;
-  scaffold: IMaterialScaffold;
-  clientToken: string;
-  projectPath: string;
-  pubtype: number;
-  projectName: string;
-}
 
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
@@ -78,7 +66,7 @@ export async function getProjectFramework() {
 export async function getPackageJSON(packagePath: string): Promise<any> {
   const packagePathIsExist = await fsExtra.pathExists(packagePath);
   if (!packagePathIsExist) {
-    throw new Error('Project\'s package.json file not found in local environment');
+    throw new Error(i18n.format('package.projectService.index.packageNotFound'));
   }
   return await fsExtra.readJson(packagePath);
 }
@@ -116,12 +104,12 @@ export async function getProjectPath(): Promise<string> {
   return fsPath;
 }
 
-export async function createProject(data): Promise<string> {
-  const { projectPath, projectName, scaffold, ejsOptions } = data;
+export async function createProject(projectField: IProjectField): Promise<string> {
+  const { projectPath, projectName, scaffold, ejsOptions } = projectField;
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
+    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}));
   }
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
@@ -133,7 +121,7 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
   const webviewPanel = args[1];
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
-    throw new Error(`本地不存在「${projectDir}」目录！`)
+    throw new Error(i18n.format('package.projectService.index.noLocalPath', {projectDir}))
   }
   const newWindow = !!vscode.workspace.rootPath;
   if (newWindow)
@@ -141,12 +129,12 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
   vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectDir), newWindow);
 }
 
-export async function CreateDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
+export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
   const { projectPath, projectName, group, project } = DEFProjectField;
   const projectDir = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
+    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}))
   }
   await createDEFProject(DEFProjectField);
   await cloneRepositoryToLocal(projectDir, group, project);
@@ -165,24 +153,30 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(`文件夹「${projectDir}」已存在，请重新输入应用名称。`)
+    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}))
   }
   const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
 }
 
 async function generatorCreatetask(field: IDEFProjectField) {
-  const { empId, account, group, project, gitlabToken, scaffold, clientToken } = field;
+  const { empId, account, group, project, gitlabToken, scaffold, clientToken, ejsOptions } = field;
+  const projectType = field.source.type;
   const { description, source } = scaffold;
   const { npm } = source;
+  let generatorId = 6;
+  if (projectType === 'rax') {
+    generatorId = 5;
+  }
   const response = await axios.post(generatorCreatetaskUrl, {
     group,
     project,
     description,
     trunk: 'master',
-    'generator_id': 6,
+    'generator_id': generatorId,
     'schema_data': {
-      npmName: npm
+      npmName: npm,
+      ...ejsOptions
     },
     'gitlab_info': {
       'id': empId,
@@ -218,10 +212,10 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error(`创建 DEF 应用失败，任务 ID 是： ${taskId}.`))
+            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', {taskId})))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error(`创建 DEF 应用超时，任务 ID 是：${taskId}.`))
+            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', {taskId})))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()

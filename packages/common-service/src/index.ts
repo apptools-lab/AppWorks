@@ -230,3 +230,7 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
   }
   return { position, declarations: importDeclarations };
 }
+
+export function getLanguage(){
+  return vscode.env.language;
+}
