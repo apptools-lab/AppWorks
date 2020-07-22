@@ -16,13 +16,7 @@ export const targets = [
     title: 'WeChat MiniProgram',
     icon: 'https://gw.alicdn.com/tfs/TB1HwgzepY7gK0jSZKzXXaikpXa-200-200.svg',
     description: '将 Rax 作为 DSL 极速开发微信小程序，使前端开发者更容易地使用他们熟悉的方式进行小程序开发。'
-  },
-  {
-    type: 'kraken',
-    title: 'Kraken (Flutter)',
-    icon: 'https://gw.alicdn.com/tfs/TB1T.AEeET1gK0jSZFhXXaAtVXa-200-200.svg',
-    description: 'Kraken 是一个面向 IoT 场景的渲染引擎，依托可靠高效的 Flutter 底层构建面向 W3C 标准的接口。对接 Rax 作为上层 DSL，使前端开发者更容易地使用他们熟悉的方式进行跨容器应用的开发。'
-  },
+  }
 ]
 
 export const webAppTypes = [

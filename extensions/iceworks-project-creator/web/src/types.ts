@@ -1,21 +1,20 @@
 import { IMaterialScaffold, IMaterialSource } from '@iceworks/material-utils';
 
-export interface IProjectField {
-  projectName: string;
-  projectPath: string;
-  scaffold: IMaterialScaffold;
-  source: IMaterialSource;
-  scaffoldType: string;
-  ejsOptions?: IEjsOptions;
-}
-
 interface IEjsOptions {
   targets?: string[];
   miniappType?: 'runtime' | 'compile';
   mpa?: boolean;
 }
 
-export interface IDEFProjectField {
+export interface IProjectField {
+  projectName: string;
+  projectPath: string;
+  scaffold: IMaterialScaffold;
+  source: IMaterialSource;
+  ejsOptions?: IEjsOptions;
+}
+
+export interface IDEFProjectField extends IProjectField {
   empId: string;
   account: string;
   group: string;

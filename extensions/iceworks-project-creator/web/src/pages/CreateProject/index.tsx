@@ -111,6 +111,7 @@ const CreateProject: React.FC = () => {
     setPrevBtnDisabled(true);
     setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
+    console.log("values  ====>>", JSON.stringify(values));
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
@@ -173,7 +174,7 @@ const CreateProject: React.FC = () => {
     const { empId, account, gitlabToken } = values;
     let projectDir = '';
     try {
-      projectDir = await callService('project', 'CreateDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
+      projectDir = await callService('project', 'createDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
       await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken });
       await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
       await callService('project', 'openLocalProjectFolder', projectDir);
