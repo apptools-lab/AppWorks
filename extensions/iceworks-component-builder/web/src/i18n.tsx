@@ -1,4 +1,4 @@
-import {createIntl,RawIntlProvider, IntlShape} from 'react-intl'; 
+import { createIntl, RawIntlProvider } from 'react-intl'; 
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Loading, Notification } from '@alifd/next';
 
@@ -7,7 +7,8 @@ import enUSLocale from './locales/en-US.json';
 import zhCNLocale from './locales/zh-CN.json';
 import callService from './callService';
 
-// 创建语言包
+const DEFAULT_LANG = 'zh-cn';
+
 export const localeMessages = {
   'en': {
     messages:enUSLocale,
@@ -21,24 +22,24 @@ export const localeMessages = {
   }
 }
 
-// 找到当前语言即使用的包
-export const defaultIntl = createIntl({locale:'default',messages:localeMessages['zh-cn'].messages})
-const changeLanguage = (newLang: string) =>{
-  return createIntl({locale:localeMessages[newLang].reactLocale,messages:localeMessages[newLang].messages});
+const getIntl = (lang: string) =>{
+  let localeMessage = localeMessages[lang];
+  if (!localeMessage) {
+    localeMessage = localeMessages[DEFAULT_LANG];
+  }
+  return createIntl({locale: localeMessage.reactLocale, messages: localeMessage.messages});
 }
 export const LocaleProvider = (props)=>{
-  const [i18n,setI18n] = useState(defaultIntl);
-  const [loading,setLoading] = useState(false)
+  const [i18n, setI18n] = useState(() => getIntl(DEFAULT_LANG));
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
     async function initI18n(){
-      try{
-        setLoading(true);
-        const lang = await callService('common','getLanguage');
-        setI18n(changeLanguage(lang));
-      }catch(e){
+      try {
+        const lang = await callService('common', 'getLanguage');
+        setI18n(getIntl(lang));
+      } catch(e) {
         Notification.error({ content: e.message });
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     }
@@ -46,16 +47,11 @@ export const LocaleProvider = (props)=>{
     
   },[]);
 
-  // const i18n = createIntl({locale:lang,messages:localeMessages[lang].messages}); 
   return (
     <RawIntlProvider value={i18n}>
       <ConfigProvider>
-        {loading?<Loading visible={loading} style={{width: '100%', height:'80vh'}} /> :React.Children.only(props.children)}
+        {loading ? <Loading visible={loading} style={{width: '100%', height:'80vh'}} /> : React.Children.only(props.children)}
       </ConfigProvider>
     </RawIntlProvider>
   )
-}
-
-export function checkI18nReady(intl: IntlShape){
-  return intl.locale !== 'default'
 }

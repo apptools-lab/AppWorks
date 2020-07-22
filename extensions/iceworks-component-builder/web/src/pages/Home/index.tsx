@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
-import { LocaleProvider, checkI18nReady } from '@/i18n';
+import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
@@ -22,9 +22,6 @@ const Home = () => {
   }
   
   async function getSources() {
-    if(!checkI18nReady(intl)){
-      return;
-    }
     let sources = [];
     try {
       sources = await callService('material', 'getSourcesByProjectType');
@@ -37,9 +34,6 @@ const Home = () => {
   }
   
   async function getData(source: string) {
-    if(!checkI18nReady(intl)){
-      return;
-    }
     let data = {};
     try {
       data = await callService('material', 'getData', source);
