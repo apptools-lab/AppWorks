@@ -245,3 +245,7 @@ export async function getUserInfo() {
   const userInfo = await fn();
   return userInfo;
 }
+
+export function getLanguage() {
+  return vscode.env.language;
+}

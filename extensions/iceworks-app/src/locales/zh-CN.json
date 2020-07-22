@@ -1,0 +1,20 @@
+{
+    "extension.iceworksApp.showExtensionsQuickPick.projectCreater.label":"Iceworks 创建应用",
+    "extension.iceworksApp.showExtensionsQuickPick.projectCreater.detail":"快速创建多端应用（例如：React/Rax/Vue...）",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label":"Iceworks 生成页面",
+    "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail":"使用低代码的方式生成网页视图",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label":"Iceworks 生成组件",
+    "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail":"使用低代码的方式生成前端组件",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.label":"Iceworks 使用物料",
+    "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail":"使用可视化的方式添加物料到应用中",
+    "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder":"例如: lodash react@latest",
+    "extension.iceworksApp.showDepsInputBox.materialImport.prompt":"请输入需要添加到 <%= depType %> 的依赖名称, 支持通过空格添加多个依赖",
+    "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label":"日常环境",
+    "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.detail":"发布到日常环境",
+    "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.label":"生产环境",
+    "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail":"发布到生产环境",
+    "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail":"安装 <%= label %>",
+    "extension.iceworksApp.openEntryFile.ErrorMessage":"没有找到入口",
+    "extension.iceworksApp.extension.title":"设置 - Iceworks",
+    "extension.iceworksApp.extebsion.emptyWorkplace":"当前工作区为空，请打开应用或新建应用。"
+}
