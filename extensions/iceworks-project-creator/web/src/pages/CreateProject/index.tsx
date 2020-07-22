@@ -38,7 +38,7 @@ const CreateProject: React.FC = () => {
     </ScaffoldMarket>,
     <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
       <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.lasttStep'/>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous'/>
       </Button>
       {isAliInternal && <Form.Submit
         className={styles.btn}
@@ -69,7 +69,7 @@ const CreateProject: React.FC = () => {
         onValidateProjectName={onValidateProjectName}
         dataSource={groupDataSource}
       >
-        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>上一步</Button>
+        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}><FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous'/></Button>
         <Form.Submit
           type="primary"
           onClick={onDEFProjectDetailSubmit}
@@ -78,7 +78,7 @@ const CreateProject: React.FC = () => {
           disabled={createDEFProjectDisabled}
           className={styles.btn}
         >
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.chooseTemplate'/>
+          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete'/>
         </Form.Submit>
       </CreateDEFProjectForm>
     )

@@ -5,7 +5,7 @@
     "web.iceworksPageBuilder.Home.successCreatePage": "Page created successfully.",
     "web.iceworksPageBuilder.Home.enterPageNameTitle": "1. Enter Page Name",
     "web.iceworksPageBuilder.Home.pageNameFormat": "Page name must starts with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
-    "web.iceworksPageBuilder.Home.chooseBlock": "2. Choose a Block：",
+    "web.iceworksPageBuilder.Home.chooseBlock": "2. Choose Blocks：",
     "web.iceworksPageBuilder.Home.createPage": "Create Page",
     "web.iceworksPageBuilder.Home.PageSelect.SelectFromRight": "Please choose block from the right side."
 }
