@@ -49,9 +49,12 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         <Form.Item
           colSpan={12}
           label="GitLab Token"
-          help={<span className={styles.help}>
-            <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open'/>
-            <a href={`http://${gitAccountURL}`} rel="noopener noreferrer" target="_blank">{gitAccountURL}</a> 复制页面的 <b>Private Token</b></span>}
+          help={
+            <span className={styles.help}>
+              <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open'/>
+              <a href={`http://${gitAccountURL}`} rel="noopener noreferrer" target="_blank">{gitAccountURL}</a> 复制页面的 <b>Private Token</b>
+            </span>
+          }
           required
           requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken'})}
           onBlur={onAccountBlur}
