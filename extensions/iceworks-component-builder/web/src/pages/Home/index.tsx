@@ -14,7 +14,6 @@ const Home = () => {
 
   async function onSettingsClick() {
     try {
-      await callService('common', 'getLanguage');
       await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
     } catch (e) {
       Notification.error({ content: e.message });
@@ -51,7 +50,6 @@ const Home = () => {
     if (!block) {
       return intl.formatMessage({id:'web.ComponentBuiilder.Home.didNotSeletBlock'});
     }
-  
     return '';
   }
 
