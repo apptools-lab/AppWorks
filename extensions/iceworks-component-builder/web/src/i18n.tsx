@@ -1,34 +1,36 @@
 import { createIntl, RawIntlProvider } from 'react-intl'; 
 import React, { useEffect, useState } from 'react'
 import { ConfigProvider, Loading } from '@alifd/next';
-import callService from './callService';
-import enUSLocale from './locales/en-US.json';
-import zhCNLocale from './locales/zh-CN.json';
+import enUSNextMessages from '@alifd/next/lib/locale/en-us';
+import zhCNNextMessages from '@alifd/next/lib/locale/zh-cn';
 
-const DEFAULT_LANG = 'zh-cn';
+import callService from './callService';
+import enUSMessages from './locales/en-US.json';
+import zhCNMessages from './locales/zh-CN.json';
+
+const DEFAULT_LOCALE = 'zh-cn';
 
 export const localeMessages = {
   'en': {
-    messages:enUSLocale,
-    nextLocale:'zhCN',
-    reactLocale:'zh-CN'
+    messages: enUSMessages,
+    nextMessages: enUSNextMessages,
   },
   'zh-cn':{
-    messages:zhCNLocale,
-    nextLocal:'enUS',
-    reactLocale:'en'
-  }
-}
+    messages: zhCNMessages,
+    nextMessages: zhCNNextMessages,
+  },
+};
 
-const getIntl = (lang: string) =>{
-  let localeMessage = localeMessages[lang];
+const getIntl = (locale: string) =>{
+  let localeMessage = localeMessages[locale];
   if (!localeMessage) {
-    localeMessage = localeMessages[DEFAULT_LANG];
+    locale = DEFAULT_LOCALE;
+    localeMessage = localeMessages[locale];
   }
-  return createIntl({locale: localeMessage.reactLocale, messages: localeMessage.messages});
+  return createIntl({locale, messages: localeMessage.messages});
 }
 export const LocaleProvider = (props)=>{
-  const [i18n, setI18n] = useState(() => getIntl(DEFAULT_LANG));
+  const [i18n, setI18n] = useState(() => getIntl(DEFAULT_LOCALE));
   const [loading, setLoading] = useState(true)
   useEffect(()=>{
     async function initI18n(){
@@ -46,7 +48,7 @@ export const LocaleProvider = (props)=>{
 
   return (
     <RawIntlProvider value={i18n}>
-      <ConfigProvider>
+        <ConfigProvider locale={localeMessages[i18n.locale].nextMessages}>
         {loading ? <Loading visible={loading} style={{width: '100%', height:'80vh'}} /> : React.Children.only(props.children)}
       </ConfigProvider>
     </RawIntlProvider>
