@@ -67,7 +67,7 @@ When a variable is entered in an SASS file, code completion is provided based on
 
 #### Automatic completion When editing the colors and attributes
 
-When the attribute value is entered, if it is found that variables can be replaced as standard value,variable replacement suggestions will appear:
+When the attribute value is entered, if it is found that variables can be replaced as standard value, variable replacement suggestions will appear:
 
 ![demo](https://user-images.githubusercontent.com/56879942/87531943-04d2c400-c6c5-11ea-9f74-be6721353e46.gif)
 

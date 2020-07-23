@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
+import * as vscode from 'vscode';
 
 // eslint-disable-next-line
 const isElectronProcess = require('is-electron');
@@ -102,6 +103,7 @@ export function recordMainDAU(storage: IStorage) {
     action: 'dau',
     data: {
       platform: process.platform,
+      locale: vscode.env.language,
     },
   }, storage);
 }

@@ -1,7 +1,7 @@
 {
     "web.iceworksProjectCreator.CreateProject.nextStep": "下一步",
     "web.iceworksProjectCreator.CreateProject.previous": "上一步",
-    "web.iceworksProjectCreator.CreateProject.createDFE": "创建 DEF 应用",
+    "web.iceworksProjectCreator.CreateProject.createDEF": "创建 DEF 应用",
     "web.iceworksProjectCreator.CreateProject.complete": "完成",
     "web.iceworksProjectCreator.CreateProject.chooseTemplate": "请选择一个模板！",
     "web.iceworksProjectCreator.CreateProject.pathExist": "该本地路径已存在，请重新选择！",

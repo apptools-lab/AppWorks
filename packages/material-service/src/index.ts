@@ -54,6 +54,10 @@ export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MAT
  * @param specifiedType {string} react/rax/other...
  */
 export async function getSources(specifiedType?: string): Promise<IMaterialSource[]> {
+  if (specifiedType === 'unknown') {
+    // if the project type is unknown, set the default project type 
+    specifiedType = 'react'
+  }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
   if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
