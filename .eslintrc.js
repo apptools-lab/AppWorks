@@ -31,8 +31,7 @@ const tsRules = deepmerge(tslint, {
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
-    '@typescript-eslint/no-parameter-properties': 0,
-    '@typescript-eslint/no-var-requires': 0
+    '@typescript-eslint/no-parameter-properties': 0
   },
 });
 
