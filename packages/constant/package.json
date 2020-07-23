@@ -9,7 +9,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@types/js-base64": "^3.0.0",
+    "js-base64": "^3.2.4",
     "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "@types/js-base64": "^3.0.0"
   }
 }
