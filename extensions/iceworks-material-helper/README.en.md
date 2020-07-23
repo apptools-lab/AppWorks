@@ -41,7 +41,7 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 When editing the props of a component in a JSX file, an automatic completion reminder will be given:
 
-![demo](https://user-images.githubusercontent.com/56879942/88197950-bd74a680-cc75-11ea-8650-dec13706366c.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
 
 1. Use materials in JSX files (such as View).
 2. Enter part of props in the material tag, it will arouse automatic completion.
