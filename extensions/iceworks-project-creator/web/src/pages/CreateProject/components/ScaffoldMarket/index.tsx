@@ -106,7 +106,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                 }
                 content={item.description}
                 selected={selectedSource.name && selectedSource.name === item.name}
-                style={{ width: 160, height: 110 }}
+                style={{ width: 160, height: 120 }}
                 onClick={() => onMaterialSourceClick(item)}
               />
             })}
@@ -143,11 +143,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                   />
                 )
               }) :
-                <NotFound description={intl.formatMessage({id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate'})}/>
+                <NotFound description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })} />
               }
             </div>
             {!!otherScaffolds.length && <Collapse className={styles.collapse}>
-              <Collapse.Panel title={intl.formatMessage({id: 'web.iceworksProjectCreator.ScaffoldMarket.more'})}>
+              <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
                 <div className={styles.collapseScaffolds}>
                   {otherScaffolds.map(item => {
                     // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
