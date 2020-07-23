@@ -24,7 +24,6 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
-import { downloadBlock } from './utils/downloadBlock';
 
 const { window, Position } = vscode;
 
@@ -49,7 +48,11 @@ export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath:
 /**
  * Download blocks code to page
  */
-export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string) {
+export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string, log?: (text: string) => void) {
+  if (!log) {
+    log = (text) => console.log(text)
+  }
+
   return await Promise.all(
     blocks.map(async (block: any) => {
       const blockSourceNpm = block.source.npm;
@@ -59,17 +62,24 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
 
       let tarballURL: string;
       try {
+        log(i18n.format('package.block-service.downloadBlock.getDownloadUrl'));
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
         error.message = i18n.format('package.block-service.downloadBlock.downloadError', { blockName, tarballURL });
         throw error;
       }
-
+      log(i18n.format('package.block-service.downloadBlock.unzipCode'));
       const blockDir = path.join(localPath, blockName);
       const blockTempDir = path.join(localPath, `.${blockName}.temp`);
 
       try {
-        await getAndExtractTarball(blockTempDir, tarballURL);
+        await getAndExtractTarball(
+          blockTempDir,
+          tarballURL,
+          ({ percent }) => {
+            log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
+          }
+        );
       } catch (error) {
         error.message = i18n.format('package.block-service.uzipError', { blockName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
@@ -186,8 +196,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
-    const downloadMethod = downloadBlock;
-    const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
+    const blockDir = await bulkDownload([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
     materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));
