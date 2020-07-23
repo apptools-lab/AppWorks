@@ -33,7 +33,7 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getDataError'}) });
+      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getMaterialDataError'}) });
     }
     console.log('getData', data);
     return data as IMaterialData;

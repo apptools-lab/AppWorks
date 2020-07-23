@@ -13,8 +13,8 @@ extensions.forEach(extension=>{
   if(extension.startsWith('.')){
     return;
   }
-  DOCS.push(path.join(EXTENSION_PATH,extension,ZHCN_DOC));
-  DOCS.push(path.join(EXTENSION_PATH,extension,I18N_DOC));
+  DOCS.push(path.join(EXTENSION_PATH, extension, ZHCN_DOC));
+  DOCS.push(path.join(EXTENSION_PATH, extension, I18N_DOC));
 })
 
 // MarkdownLint 设置

@@ -34,9 +34,9 @@ export async function downloadBlock(block: IMaterialBlock, targetDir: string, lo
       }
     );
   } catch (error) {
-    error.message = i18n.format('package.block-service.downloadBlock.unzipCodeError', {blockName,tarballURL});
+    error.message = i18n.format('package.block-service.downloadBlock.unzipCodeError', {blockName, tarballURL});
     if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-      error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName,tarballURL}); 
+      error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName, tarballURL}); 
     }
     await fsExtra.remove(blockTempDir);
     throw error;

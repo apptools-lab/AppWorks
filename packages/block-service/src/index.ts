@@ -61,7 +61,7 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName,tarballURL}); 
+        error.message = i18n.format('package.block-service.downloadBlock.downloadError', {blockName, tarballURL}); 
         throw error;
       }
 
@@ -71,9 +71,9 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       try {
         await getAndExtractTarball(blockTempDir, tarballURL);
       } catch (error) {
-        error.message = i18n.format('package.block-service.uzipError', {blockName,tarballURL});
+        error.message = i18n.format('package.block-service.uzipError', {blockName, tarballURL});
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.block-service.uzipOutTime', {blockName,tarballURL});;
+          error.message = i18n.format('package.block-service.uzipOutTime', {blockName, tarballURL});;
         }
         await fsExtra.remove(blockTempDir);
         throw error;
