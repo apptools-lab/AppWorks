@@ -1,4 +1,5 @@
 import * as fsExtra from 'fs-extra';
+import { decode } from 'js-base64';
 
 import request = require('request-promise');
 import semver = require('semver');
@@ -9,6 +10,10 @@ import urlJoin = require('url-join');
 import progress = require('request-progress');
 import zlib = require('zlib');
 import tar = require('tar');
+
+const ALI_NPM_REGISTRY = decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t');
+const ALI_UNPKG = decode('aHR0cHM6Ly91bnBrZy5hbGliYWJhLWluYy5jb20=');
+const ALI_CHECK_NODE = decode('aHR0cHM6Ly9pY2UuYWxpYmFiYS1pbmMuY29tL2NoZWNrLm5vZGU=');
 
 /**
  * 获取指定 npm 包版本的 tarball
@@ -189,7 +194,7 @@ function getNpmRegistry(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   }
 
   return 'https://registry.npm.taobao.org';
@@ -201,7 +206,7 @@ function getUnpkgHost(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://unpkg.alibaba-inc.com';
+    return ALI_UNPKG;
   }
 
   return 'https://unpkg.com';
@@ -221,7 +226,7 @@ function getNpmClient(npmName = ''): string {
 
 function checkAliInternal(): Promise<boolean> {
   return request({
-    url: 'https://ice.alibaba-inc.com/check.node',
+    url: ALI_CHECK_NODE,
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {

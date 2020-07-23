@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import { decode } from 'js-base64'
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
 export * from './log';
@@ -14,9 +15,10 @@ export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
-const gitlabGroupsAPI = 'http://gitlab.alibaba-inc.com/api/v3/groups';
-const gitlabProjectsAPI = 'http://gitlab.alibaba-inc.com/api/v3/projects';
-
+const gitlabGroupsAPI = decode('aHR0cDovL2dpdGxhYi5hbGliYWJhLWluYy5jb20vYXBpL3YzL2dyb3Vwcw==');
+const gitlabProjectsAPI = decode('aHR0cDovL2dpdGxhYi5hbGliYWJhLWluYy5jb20vYXBpL3YzL3Byb2plY3Rz');
+const fusionOfficalMaterialSources = decode('aHR0cHM6Ly9mdXNpb24uYWxpYmFiYS1pbmMuY29tL2FwaS92MS9zaXRlcy8xMTk0L21hdGVyaWFscw==');
+const aliNpmRegisrty = decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t')
 let activeTextEditorId: string;
 
 const { window, Position } = vscode;
@@ -96,7 +98,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
     // old materialSources and remove it from the previous users
     const officalMaterialSources = [
       'http://ice.alicdn.com/assets/materials/react-materials.json',
-      'https://fusion.alibaba-inc.com/api/v1/sites/1194/materials'
+      fusionOfficalMaterialSources
     ];
     const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource.source));
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
@@ -145,7 +147,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   const npmRegistryIsSeted = globalState.get(stateKey);
   if (!npmRegistryIsSeted && isAliInternal) {
     console.log('autoSetNpmRegistry: do');
-    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, 'https://registry.npm.alibaba-inc.com');
+    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, aliNpmRegisrty);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {

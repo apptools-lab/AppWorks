@@ -1,6 +1,9 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { checkAliInternal } from 'ice-npm-utils';
+import { decode }from 'js-base64';
+
+const YUQUE_URL = decode('aHR0cHM6Ly95dXF1ZS5hbGliYWJhLWluYy5jb20vaWNlL3JkeTk5cC9hbmd3eXg=');
 
 export default async function formatProject(projectDir: string, projectName?: string): Promise<void> {
   await fse.remove(path.join(projectDir, 'build'));
@@ -95,7 +98,7 @@ export default async function formatProject(projectDir: string, projectName?: st
 
     if (!is1X) {
       // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath；
-      console.log('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+      console.log(`If you need to deploy with DEF, please refer to the doc: ${YUQUE_URL}`);
     } else if (pkgData.buildConfig) {
       delete pkgData.buildConfig.output;
       delete pkgData.buildConfig.localization;

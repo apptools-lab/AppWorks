@@ -1,6 +1,7 @@
 import 'jest-extended';
 import * as path from 'path';
 import { tmpdir } from 'os';
+import {decode} from 'js-base64';
 import * as rimraf from 'rimraf';
 import {
   getNpmRegistry,
@@ -15,11 +16,12 @@ import {
 } from '../index';
 
 const defaultRegistry = 'https://registry.npm.taobao.org';
-
+const ALI_NPM_REGISTRY = decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t');
+const ALI_UNPKG = decode('aHR0cHM6Ly91bnBrZy5hbGliYWJhLWluYy5jb20=');
 jest.setTimeout(10 * 1000);
 
 test('getNpmRegistry', () => {
-  const aliRegistry = 'https://registry.npm.alibaba-inc.com';
+  const aliRegistry = ALI_NPM_REGISTRY;
 
   expect(getNpmRegistry('koa')).toBe(defaultRegistry);
   expect(getNpmRegistry('@alixxx/ice-test')).toBe(defaultRegistry);
@@ -42,7 +44,7 @@ test('getUnpkgHost custom host', () => {
 
 test('getUnpkgHost', () => {
   const defaultRegistry = 'https://unpkg.com';
-  const aliRegistry = 'https://unpkg.alibaba-inc.com';
+  const aliRegistry = ALI_UNPKG;
 
   expect(getUnpkgHost('koa')).toBe(defaultRegistry);
   expect(getUnpkgHost('@ali/ice-test')).toBe(aliRegistry);

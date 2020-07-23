@@ -1,3 +1,5 @@
+import { decode }from 'js-base64';
+
 export const packageManagers = ['npm', 'cnpm', 'yarn'];
 
 export const npmRegistries = [
@@ -5,7 +7,7 @@ export const npmRegistries = [
   'https://registry.npm.taobao.org'
 ]
 
-export const AliNpmRegistry = 'https://registry.npm.alibaba-inc.com';
+export const AliNpmRegistry = decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t');
 
 export const AliPackageManager = 'tnpm';
 

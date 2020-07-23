@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "fs-extra": "^8.1.0",
+    "js-base64": "^3.2.4",
     "mkdirp": "^0.5.1",
     "request": "^2.88.0",
     "request-progress": "^3.0.0",

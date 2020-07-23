@@ -2,9 +2,12 @@ import * as ora from 'ora';
 import {
   isAliNpm, getNpmTarball, getAndExtractTarball
 } from 'ice-npm-utils';
+import { decode } from 'js-base64';
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
+
+const ALI_NPM_REGISTRY = decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t');
 
 export {
   formatProject,
@@ -72,7 +75,7 @@ async function getNpmRegistry(npmName: string): Promise<string> {
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   } else if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   } else {
     return 'https://registry.npm.taobao.org';
   }

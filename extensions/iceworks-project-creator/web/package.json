@@ -19,6 +19,7 @@
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.1",
     "classnames": "^2.2.6",
+    "js-base64": "^3.2.4",
     "moment": "^2.24.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",

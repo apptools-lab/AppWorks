@@ -3,6 +3,7 @@ import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { readPackageJSON } from 'ice-npm-utils';
+import { decode } from 'js-base64';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
@@ -16,6 +17,9 @@ import {
 } from './constant';
 import i18n from './i18n';
 import { IDEFProjectField, IProjectField } from './types';
+
+const GITLAB_ALI_URL = decode('Z2l0QGdpdGxhYi5hbGliYWJhLWluYy5jb20=')
+const EMAIL_ALI = decode('YWxpYmFiYS1pbmMuY29t')
 
 export * from './constant';
 
@@ -155,7 +159,7 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }))
   }
-  const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
+  const repoPath = `${GITLAB_ALI_URL}:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
 }
 
@@ -182,7 +186,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
       id: empId,
       token: gitlabToken,
       name: account,
-      email: `${account}@alibaba-inc.com`
+      email: `${account}@${EMAIL_ALI}`
     },
     'emp_id': empId,
     'client_token': clientToken
