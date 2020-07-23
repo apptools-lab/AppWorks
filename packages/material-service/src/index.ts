@@ -41,12 +41,8 @@ const isIceMaterial = (source: string) => {
 };
 
 export const getSourcesByProjectType = async function () {
-  let type = await getProjectType();
+  const type = await getProjectType();
   console.log('project type is:', type);
-  if (type === 'unknown') {
-    console.log('The current project type is unknown, so set the default project type: react');
-    type = 'react';
-  }
   return getSources(type);
 }
 
@@ -58,6 +54,10 @@ export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MAT
  * @param specifiedType {string} react/rax/other...
  */
 export async function getSources(specifiedType?: string): Promise<IMaterialSource[]> {
+  if (specifiedType === 'unknown') {
+    // if the project type is unknown, set the default project type 
+    specifiedType = 'react'
+  }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
   if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
