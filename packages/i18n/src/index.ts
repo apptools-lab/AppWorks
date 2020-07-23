@@ -10,7 +10,7 @@ export default class I18n {
 
   currentTextMap: ITextMap = {};
 
-  registry(locale: string,text: ITextMap){
+  registry(locale: string, text: ITextMap){
     this.localesTextMap[locale] = text;
   }
 
