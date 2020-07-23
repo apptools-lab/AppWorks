@@ -1,5 +1,5 @@
 {
-    "package.block-service.downloadBlock.getDownloadUrl":"Obtain Download URl...",
+    "package.block-service.downloadBlock.getDownloadUrl":"Obtain Download URL...",
     "package.block-service.downloadBlock.getDownloadUrlError":"Failed to obtain url, please copy and open <%= repository %> in browse.",
     "package.block-service.downloadBlock.unzipCode":"Download and unzip code...",
     "package.block-service.downloadBlock.unzipCodeError":"Error in unzipping <%= blockName %>，please copy and download from this url: ：<%= tarballURL %>",
