@@ -35,7 +35,7 @@
 
 在编辑组件的 `className` 时，根据文件 `import` 的样式文件内的类选择器进行自动补全提醒。
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87412926-2caa2500-c5fc-11ea-9acc-78974ddb1932.gif)   
+![使用示例](https://user-images.githubusercontent.com/56879942/87412926-2caa2500-c5fc-11ea-9acc-78974ddb1932.gif)
 
 ##### 值预览及定义跳转
 
@@ -89,4 +89,3 @@
 ## License
 
 [MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
-

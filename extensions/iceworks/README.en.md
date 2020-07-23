@@ -23,19 +23,19 @@ Includes following feature:
 
 Setp 1: Click "Iceworks Icon" on the **Activity Bar** to open the **Iceworks Side Bar**:
 
-![](https://img.alicdn.com/tfs/TB1OcojNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1OcojNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
 
 Setp 2: Click the "Create Application" button to start create a Universal Application:
 
-![](https://img.alicdn.com/tfs/TB1ts7cNeL2gK0jSZPhXXahvXXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1ts7cNeL2gK0jSZPhXXahvXXa-2048-1536.png_790x10000.jpg)
 
 Setp 3: After the application is created, NPM script execution/page creation/component creation and other operations are performed in **Iceworks Side Bar**:
 
-![](https://img.alicdn.com/tfs/TB18aIoNkT2gK0jSZFkXXcIQFXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB18aIoNkT2gK0jSZFkXXcIQFXa-2048-1536.png_790x10000.jpg)
 
 Setp 4: More features can be obtained by search 'Iceworks' in the Command Panel or click "Iceworks button" on the Status Bar:
 
-![](https://img.alicdn.com/tfs/TB1jjUjNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1jjUjNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
 
 ## License
 

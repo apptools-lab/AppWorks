@@ -9,7 +9,7 @@ Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), pro
 
 ## Usage
 
-### JSX 
+### JSX
 
 When editing the 'style' attribute of a component in a JSX file, an automatic completion reminder will be given:
 
@@ -33,7 +33,7 @@ Automatic completion, value previews, and defined jumps are given when editing t
 
 According to the class selector in the style file 'import' , automatic completion will be provided when editing ‘className'.
 
-![demo](https://user-images.githubusercontent.com/56879942/87412926-2caa2500-c5fc-11ea-9acc-78974ddb1932.gif) 
+![demo](https://user-images.githubusercontent.com/56879942/87412926-2caa2500-c5fc-11ea-9acc-78974ddb1932.gif)
 
 #### Value preview and define jump
 
@@ -42,7 +42,8 @@ According to the class selector in the style file 'import' , automatic completio
 1. Hover over the 'className' value, and the hover board displays the style declaration corresponding to the value.
 2. Click the corresponding 'className' value to jump to the definition of the value.
 
-### Class name
+### Classname
+
 When editing the 'class' name of a CSS, LESS or SASS file, an automatic completion reminder will be given:
 
 ![demo](https://user-images.githubusercontent.com/56879942/87416514-63366e80-c601-11ea-8f3e-05fe51a8f26b.gif)
@@ -54,17 +55,17 @@ When editing the 'class' name of a CSS, LESS or SASS file, an automatic completi
 
 ### SASS
 
-#### Automatic completion When editing the variable.
+#### Automatic completion When editing the variable
 
 When a variable is entered in an SASS file, code completion is provided based on the reference file
 
 ![demo](https://user-images.githubusercontent.com/56879942/87523081-026a6d00-c6b9-11ea-8e8a-5d62688c020d.gif)  
 
-####  Show the variable value when hover it.
+#### Show the variable value when hover it
 
 ![demo](https://user-images.githubusercontent.com/56879942/87412974-3e8bc800-c5fc-11ea-9a6c-ea62eecbfbff.gif)
 
-#### Automatic completion When editing the colors and attributes.
+#### Automatic completion When editing the colors and attributes
 
 When the attribute value is entered, if it is found that variables can be replaced as standard value,variable replacement suggestions will appear:
 

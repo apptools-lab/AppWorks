@@ -28,6 +28,7 @@
     "owner": "ts-node ./scripts/owner.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
+    "docs:check": "ts-node ./scripts/extension-docs-check.ts",
     "env": "node ./scripts/env.js"
   },
   "resolutions": {
@@ -77,6 +78,7 @@
     "jest-extended": "^0.11.5",
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.8",
+    "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",
     "pify": "^5.0.0",
     "stylelint": "^13.2.0",
