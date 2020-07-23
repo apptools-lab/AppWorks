@@ -100,7 +100,7 @@ const Home = () => {
           </div>
           <div className={styles.field}>
             <Input
-              placeholder={intl.formatMessage({id:'web.ComponentBuiilder.Home.getMaterialError'})}
+              placeholder={intl.formatMessage({id:'web.ComponentBuiilder.Home.inputComponentNamePlaceHolder'})}
               className={styles.pageNameInput}
               value={componentName}
               onChange={(value) => setComponentName(value)}

@@ -20,6 +20,8 @@ const Client = require('../def-login-client');
 const defClient = new Client({
   'server': 'http://def.alibaba-inc.com',
 });
+const gitlabGroupsAPI = 'http://gitlab.alibaba-inc.com/api/v3/groups';
+const gitlabProjectsAPI = 'http://gitlab.alibaba-inc.com/api/v3/projects';
 
 let activeTextEditorId: string;
 
@@ -174,7 +176,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
 }
 
 export async function getGitLabGroups(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/groups', {
+  const res = await axios.get(gitlabGroupsAPI, {
     params: {
       'private_token': token
     }
@@ -184,7 +186,7 @@ export async function getGitLabGroups(token: string) {
 }
 
 export async function getExistProjects(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/projects', {
+  const res = await axios.get(gitlabProjectsAPI, {
     params: {
       'private_token': token
     }
