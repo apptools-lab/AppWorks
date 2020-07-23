@@ -16,6 +16,48 @@ const PAGE_DIRECTORY = 'pages';
 // TODO: when use this param?
 const noPathPrefix = true;
 
+export async function getAll(routerConfigAST) {
+  let config = [];
+
+  traverse(routerConfigAST, {
+    VariableDeclarator: ({ node }) => {
+      if (
+        t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
+        && t.isArrayExpression(node.init)
+      ) {
+        config = parseRoute(node.init.elements);
+      }
+    },
+  });
+
+  return config;
+}
+
+export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
+  const { replacement = false, parent } = options;
+  const routerConfigAST = await getRouterConfigAST(projectPath);
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
+  const currentData = await getAll(routerConfigAST);
+
+  if (!replacement) {
+    if (parent) {
+      const parentRouter = currentData.find((item) => {
+        if (item.children && item.path === parent) {
+          return true;
+        }
+        return false;
+      });
+      if (parentRouter) {
+        parentRouter.children = parentRouter.children.concat(data);
+        data = currentData;
+      }
+    } else {
+      data = currentData.concat(data);
+    }
+  }
+  setData(data, routerConfigAST, routeConfigPath);
+}
+
 async function getRouterConfigAST(projectPath) {
   const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
@@ -57,48 +99,6 @@ function parseRoute(elements) {
     }
   });
   return config;
-}
-
-export async function getAll(routerConfigAST) {
-  let config = [];
-
-  traverse(routerConfigAST, {
-    VariableDeclarator: ({ node }) => {
-      if (
-        t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
-        && t.isArrayExpression(node.init)
-      ) {
-        config = parseRoute(node.init.elements);
-      }
-    },
-  });
-
-  return config;
-}
-
-export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
-  const { replacement = false, parent } = options;
-  const routerConfigAST = await getRouterConfigAST(projectPath);
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
-  const currentData = await getAll(routerConfigAST);
-
-  if (!replacement) {
-    if (parent) {
-      const parentRouter = currentData.find((item) => {
-        if (item.children && item.path === parent) {
-          return true;
-        }
-        return false;
-      });
-      if (parentRouter) {
-        parentRouter.children = parentRouter.children.concat(data);
-        data = currentData;
-      }
-    } else {
-      data = currentData.concat(data);
-    }
-  }
-  setData(data, routerConfigAST, routeConfigPath);
 }
 
 function setData(data, routerConfigAST, routeConfigPath) {
