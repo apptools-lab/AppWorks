@@ -6681,7 +6681,7 @@ entities@^1.1.1:
   resolved "https://registry.npm.taobao.org/entities/download/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha1-vfpzUplmTfr9NFKe1PhSKidf6lY=
 
-entities@^2.0.0:
+entities@^2.0.0, entities@~2.0.0:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/entities/download/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
   integrity sha1-XEh+V0Krk8Fau12iJ1m4WQ7AO38=
@@ -10830,6 +10830,13 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.npm.taobao.org/lines-and-columns/download/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
+linkify-it@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.npm.taobao.org/linkify-it/download/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
+  integrity sha1-47VGl+eL+RXHCjis14/QngBYsc8=
+  dependencies:
+    uc.micro "^1.0.1"
+
 lint-staged@^10.0.8:
   version "10.2.11"
   resolved "https://registry.npm.taobao.org/lint-staged/download/lint-staged-10.2.11.tgz?cache=0&sync_timestamp=1592387039683&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flint-staged%2Fdownload%2Flint-staged-10.2.11.tgz#713c80877f2dc8b609b05bc59020234e766c9720"
@@ -10906,6 +10913,11 @@ load-json-file@^5.3.0:
     pify "^4.0.1"
     strip-bom "^3.0.0"
     type-fest "^0.3.0"
+
+loadash@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/loadash/download/loadash-1.0.0.tgz#b92e54d809f3c225f4f9a9cfbaeae5b56de1ca9f"
+  integrity sha1-uS5U2AnzwiX0+anPuurltW3hyp8=
 
 loader-runner@^2.4.0:
   version "2.4.0"
@@ -11277,6 +11289,17 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.npm.taobao.org/markdown-escapes/download/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha1-yVQV70UUmddgK5EJXzyOiXX3hTU=
 
+markdown-it@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.npm.taobao.org/markdown-it/download/markdown-it-10.0.0.tgz#abfc64f141b1722d663402044e43927f1f50a8dc"
+  integrity sha1-q/xk8UGxci1mNAIETkOSfx9QqNw=
+  dependencies:
+    argparse "^1.0.7"
+    entities "~2.0.0"
+    linkify-it "^2.0.0"
+    mdurl "^1.0.1"
+    uc.micro "^1.0.5"
+
 markdown-table@^1.1.0:
   version "1.1.3"
   resolved "https://registry.npm.taobao.org/markdown-table/download/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
@@ -11288,6 +11311,13 @@ markdown-table@^2.0.0:
   integrity sha1-GUqQztJtMf51PYuUNEMCFMARhls=
   dependencies:
     repeat-string "^1.0.0"
+
+markdownlint@^0.20.4:
+  version "0.20.4"
+  resolved "https://registry.npm.taobao.org/markdownlint/download/markdownlint-0.20.4.tgz#3b34681494cdad174e14a27182b5cdefaa537823"
+  integrity sha1-OzRoFJTNrRdOFKJxgrXN76pTeCM=
+  dependencies:
+    markdown-it "10.0.0"
 
 marked@^0.7.0:
   version "0.7.0"
@@ -11331,6 +11361,11 @@ mdn-data@2.0.6:
   version "2.0.6"
   resolved "https://registry.npm.taobao.org/mdn-data/download/mdn-data-2.0.6.tgz#852dc60fcaa5daa2e8cf6c9189c440ed3e042978"
   integrity sha1-hS3GD8ql2qLoz2yRicRA7T4EKXg=
+
+mdurl@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/mdurl/download/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
+  integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -16564,6 +16599,11 @@ typescript@^3.6.3, typescript@^3.7.3, typescript@^3.8.2, typescript@^3.8.3:
   version "3.9.5"
   resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.9.5.tgz?cache=0&sync_timestamp=1592203667554&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
   integrity sha1-WG8NujAM3ovlLdGsT34QCcGxPzY=
+
+uc.micro@^1.0.1, uc.micro@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/uc.micro/download/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+  integrity sha1-nEEagCpAmpH8bPdAgbq6NLJEmaw=
 
 uglify-js@3.4.x:
   version "3.4.10"

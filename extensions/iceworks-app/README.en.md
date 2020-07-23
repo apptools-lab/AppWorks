@@ -9,11 +9,11 @@ Preview and manage your application from a framework perspective, including npm 
 
 ## Usage
 
-### Initialize panel 
+### Initialize panel
 
 After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your activity bar. Click it to enter Iceworks panel.
 
-The initialization panel appears if your current workspace is empty or ** isn't React/Rax application **.
+The initialization panel appears if your current workspace is empty or **isn't React/Rax application**.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
@@ -82,7 +82,7 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 
 ## Iceworks command palette
 
-If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
+If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
 
