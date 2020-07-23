@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup } from '@/types';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { ALI_GITACCOUNT_URL, ALI_GITACCOUNT_SHORTURL } from '@iceworks/constant'
 import styles from './index.module.scss';
 
 
@@ -14,8 +15,6 @@ interface ICreateDEFProjectFormProps {
   onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
-
-const gitAccountURL = 'gitlab.alibaba-inc.com/profile/account';
 
 const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
@@ -51,7 +50,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
           label="GitLab Token"
           help={<span className={styles.help}>
             <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open'/>
-            <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a> 
+            <a href={ALI_GITACCOUNT_URL} rel="noopener noreferrer" target="_blank">{ALI_GITACCOUNT_SHORTURL}</a> 
             <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.copy'/> <b>Private Token</b></span>}
           required
           requiredMessage={intl.formatMessage({id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken'})}

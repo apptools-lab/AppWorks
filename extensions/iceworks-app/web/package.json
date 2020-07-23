@@ -17,6 +17,7 @@
     "@alifd/theme-iceworks-dark": "^1.2.1",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.1",
+    "@iceworks/constant": "^0.1.0",
     "moment": "^2.24.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",

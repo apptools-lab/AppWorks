@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     {"path": "packages/i18n"},
+    {"path": "packages/constant"},
     {"path": "packages/ice-npm-utils"},
     {"path": "packages/config"},
     {"path": "packages/vscode-webview"},

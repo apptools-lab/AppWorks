@@ -1,3 +1,5 @@
+import { ALI_NPM_REGISTRY } from '@iceworks/constant';
+
 export const packageManagers = ['npm', 'cnpm', 'yarn'];
 
 export const npmRegistries = [
@@ -5,7 +7,7 @@ export const npmRegistries = [
   'https://registry.npm.taobao.org'
 ]
 
-export const AliNpmRegistry = 'https://registry.npm.alibaba-inc.com';
+export const AliNpmRegistry = ALI_NPM_REGISTRY;
 
 export const AliPackageManager = 'tnpm';
 
