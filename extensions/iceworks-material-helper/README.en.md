@@ -43,7 +43,7 @@ When editing the props of a component in a JSX file, an automatic completion rem
 
 ![demo](https://user-images.githubusercontent.com/56879942/88197950-bd74a680-cc75-11ea-8650-dec13706366c.gif)
 
-1. Use materials in JSX files (such as View). 
+1. Use materials in JSX files (such as View).
 2. Enter part of props in the material tag, it will arouse automatic completion.
 
 ## More
