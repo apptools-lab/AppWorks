@@ -109,7 +109,7 @@ export async function createProject(projectField: IProjectField): Promise<string
   const projectDir: string = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}));
+    throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));
   }
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
@@ -121,7 +121,7 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
   const webviewPanel = args[1];
   const isProjectDirExists = await checkPathExists(projectDir);
   if (!isProjectDirExists) {
-    throw new Error(i18n.format('package.projectService.index.noLocalPath', {projectDir}))
+    throw new Error(i18n.format('package.projectService.index.noLocalPath', { projectDir }))
   }
   const newWindow = !!vscode.workspace.rootPath;
   if (newWindow)
@@ -134,7 +134,7 @@ export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFPr
   const projectDir = path.join(projectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}))
+    throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }))
   }
   await createDEFProject(DEFProjectField);
   await cloneRepositoryToLocal(projectDir, group, project);
@@ -153,7 +153,7 @@ export async function createDEFProject(DEFProjectField: IDEFProjectField): Promi
 async function cloneRepositoryToLocal(projectDir, group, project): Promise<void> {
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
-    throw new Error(i18n.format('package.projectService.index.folderExists', {projectDir}))
+    throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }))
   }
   const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
@@ -179,10 +179,10 @@ async function generatorCreatetask(field: IDEFProjectField) {
       ...ejsOptions
     },
     'gitlab_info': {
-      'id': empId,
-      'token': gitlabToken,
+      id: empId,
+      token: gitlabToken,
       name: account,
-      'email': `${account}@alibaba-inc.com`
+      email: `${account}@alibaba-inc.com`
     },
     'emp_id': empId,
     'client_token': clientToken
@@ -212,10 +212,10 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
         if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
           clearInterval(interval);
           if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', {taskId})))
+            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', { taskId })))
           }
           if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', {taskId})))
+            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', { taskId })))
           }
           if (status === GeneratorTaskStatus.Success) {
             resolve()
@@ -229,11 +229,14 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
 }
 
 async function applyRepository(field: IDEFProjectField) {
-  const { empId, group, project, scaffold, clientToken } = field;
+  const { empId, group, project, scaffold, clientToken, source } = field;
   const { description } = scaffold;
   const reason = '';
   const user = [];
-  const pubtype = 1;
+  let pubtype = 1;  // default publish type: assets
+  if (source.type === 'rax') {
+    pubtype = 6
+  }
   const response = await axios.post(applyRepositoryUrl, {
     'emp_id': empId,
     group,

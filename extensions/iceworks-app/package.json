@@ -402,7 +402,7 @@
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.2",
-    "@iceworks/i18n": "^0.0.1",
+    "@iceworks/i18n": "^0.1.0",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
