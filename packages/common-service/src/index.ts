@@ -15,10 +15,12 @@ export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CO
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 
 const co = require('co');
+
 let Client;
 let defClient;
 
 try {
+  /* eslint-disable */
   Client = require('../def-login-client');
   defClient = new Client({
     'server': 'http://def.alibaba-inc.com',
@@ -246,7 +248,6 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
 
 export async function getUserInfo() {
   const fn = co.wrap(function* () {
-    let user = {}
     if (defClient) {
       const user = yield defClient.user();
       return user;

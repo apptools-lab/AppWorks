@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Select } from '@alifd/next';
-import { IDEFProjectField, IGitLabGroup } from '@/types';
+import { IDEFProjectField, IGitLabGroup, IGitLabExistProject } from '@/types';
 import callService from '@/callService';
-import { IGitLabExistProject } from '@/types';
 import { useIntl, FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
@@ -21,7 +20,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   errorMsg,
   onChange,
 }) => {
-  const [empInfoDisabled, setEmpInfoDisabled] = useState(false);
+  const [empInfoShowed, setEmpInfoShowed] = useState(false);
   const [existProjects, setExistProjects] = useState([]);
   const [gitLabGroups, setGitLabGroups] = useState<IGitLabGroup[]>([]);
 
@@ -43,9 +42,9 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
       const userInfo = await callService('common', 'getUserInfo');
       const { empId, account, gitlabToken } = userInfo;
       onChange({ ...value, empId, account, gitlabToken });
-      setEmpInfoDisabled(true);
       return gitlabToken;
     } catch (e) {
+      setEmpInfoShowed(true);
       return '';
     }
   }
@@ -83,22 +82,26 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
-        <Form.Item
-          colSpan={12}
-          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.empId' })}
-          required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
-        >
-          <Input disabled={empInfoDisabled} placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })} name="empId" />
-        </Form.Item>
-        <Form.Item
-          colSpan={12}
-          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.account' })}
-          required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
-        >
-          <Input disabled={empInfoDisabled} placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })} name="account" />
-        </Form.Item>
+        {empInfoShowed && (
+          <>
+            <Form.Item
+              colSpan={12}
+              label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.empId' })}
+              required
+              requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
+            >
+              <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })} name="empId" />
+            </Form.Item>
+            <Form.Item
+              colSpan={12}
+              label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.account' })}
+              required
+              requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
+            >
+              <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })} name="account" />
+            </Form.Item>
+          </>
+        )}
         <Form.Item
           colSpan={12}
           label="GitLab Token"

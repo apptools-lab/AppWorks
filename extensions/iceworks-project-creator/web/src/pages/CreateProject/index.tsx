@@ -62,10 +62,6 @@ const CreateProject: React.FC = () => {
         value={curDEFProjectField}
         onChange={onDEFProjectFormChange}
         errorMsg={DEFFormErrorMsg}
-      // onAccountBlur={onAccountBlur}
-      // isAliInternal={isAliInternal}
-      // onValidateProjectName={onValidateProjectName}
-      // dataSource={groupDataSource}
       >
         <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}><FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' /></Button>
         <Form.Submit
