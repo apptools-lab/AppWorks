@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Form, Button, Notification, Icon, Loading } from '@alifd/next';
 import callService from '@/callService';
-import { IProjectField, IDEFProjectField, IGitLabExistProject } from '@/types';
+import { IProjectField, IDEFProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
@@ -9,8 +9,6 @@ import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
-
-
 
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 
@@ -26,19 +24,18 @@ const CreateProject: React.FC = () => {
   const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
-  const [groupDataSource, setGroupDataSource] = useState([]);
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const existProjectsRef = useRef([]);
+
   const steps = [
     <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} curProjectField={curProjectField} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
       <Button type="primary" onClick={onScaffoldSubmit}>
-        <FormattedMessage id = 'web.iceworksProjectCreator.CreateProject.nextStep'/>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.nextStep' />
       </Button>
     </ScaffoldMarket>,
     <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
       <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous'/>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' />
       </Button>
       {isAliInternal && <Form.Submit
         className={styles.btn}
@@ -46,7 +43,7 @@ const CreateProject: React.FC = () => {
         validate
         disabled={createDEFProjectDisabled}
       >
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createDFE'/>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createDEF' />
       </Form.Submit>}
       <Form.Submit
         type="primary"
@@ -54,7 +51,7 @@ const CreateProject: React.FC = () => {
         validate
         loading={createProjectLoading}
       >
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete'/>
+        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
       </Form.Submit>
     </CreateProjectForm>
   ];
@@ -65,11 +62,12 @@ const CreateProject: React.FC = () => {
         value={curDEFProjectField}
         onChange={onDEFProjectFormChange}
         errorMsg={DEFFormErrorMsg}
-        onAccountBlur={onAccountBlur}
-        onValidateProjectName={onValidateProjectName}
-        dataSource={groupDataSource}
+      // onAccountBlur={onAccountBlur}
+      // isAliInternal={isAliInternal}
+      // onValidateProjectName={onValidateProjectName}
+      // dataSource={groupDataSource}
       >
-        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}><FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous'/></Button>
+        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}><FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' /></Button>
         <Form.Submit
           type="primary"
           onClick={onDEFProjectDetailSubmit}
@@ -78,7 +76,7 @@ const CreateProject: React.FC = () => {
           disabled={createDEFProjectDisabled}
           className={styles.btn}
         >
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete'/>
+          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
         </Form.Submit>
       </CreateDEFProjectForm>
     )
@@ -98,7 +96,7 @@ const CreateProject: React.FC = () => {
 
   async function onScaffoldSubmit() {
     if (!curProjectField.scaffold) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.chooseTemplate'}) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.chooseTemplate' }) });
       return;
     }
     goNext();
@@ -129,7 +127,7 @@ const CreateProject: React.FC = () => {
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
-        throw new Error(intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.pathExist'}));
+        throw new Error(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.pathExist' }));
       }
       if (!isCreateDEFProject) {
         await createProject(values)
@@ -146,23 +144,6 @@ const CreateProject: React.FC = () => {
       setPrevBtnDisabled(false);
       setCreateDEFProjectDisabled(false);
     }
-  };
-
-  async function onAccountBlur() {
-    try {
-      const { gitlabToken } = curDEFProjectField;
-      const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
-      setGroupDataSource(dataSource);
-    } catch (e) {
-      setGroupDataSource([]);
-    }
-  }
-
-  function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
-    if (existProjectsRef.current.filter((item: IGitLabExistProject) => item.name === value).length) {
-      return callback(intl.formatMessage({id: 'web.iceworksProjectCreator.CreateProject.nameExist'}))
-    }
-    return callback()
   };
 
   function onDEFProjectFormChange(value) {
@@ -224,25 +205,14 @@ const CreateProject: React.FC = () => {
       try {
         const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
         setIsAliInternal(isAliInternal);
-        return isAliInternal;
       } catch (e) {
         Notification.error({ content: e.message });
         return false;
       }
     }
-    async function setDefaultFields(isAliInternal) {
+    async function setDefaultFields() {
       const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
       setCurProjectField({ ...curProjectField, projectPath: workspace });
-
-      if (isAliInternal) {
-        const userData = await callService('common', 'getDataFromSettingJson', 'user') || {};
-        const { empId, account, gitlabToken } = userData;
-
-        setCurDEFProjectField({ ...curDEFProjectField, empId, account, gitlabToken });
-        const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
-        setGroupDataSource(dataSource);
-        existProjectsRef.current = await callService('common', 'getExistProjects', gitlabToken);
-      }
     }
     async function initMaterialSources() {
       const materialSources = await getMaterialSources();
@@ -251,9 +221,9 @@ const CreateProject: React.FC = () => {
     async function initData() {
       try {
         setLoading(true);
-        const isAliInternal = await checkAliInternal();
+        await checkAliInternal();
         await initMaterialSources();
-        await setDefaultFields(isAliInternal);
+        await setDefaultFields();
       } catch (e) {
         Notification.error({ content: e.message });
       } finally {
@@ -270,17 +240,17 @@ const CreateProject: React.FC = () => {
           <div className={styles.header}>
             <div>
               <div className={styles.title}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createProject'/>
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createProject' />
               </div>
               <div className={styles.subTitle}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.subTitle'/>
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.subTitle' />
               </div>
             </div>
             <div className={styles.headerBtns}>
               <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.setting'/></Button>
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.setting' /></Button>
               {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.refresh'/></Button>}
+                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.refresh' /></Button>}
             </div>
           </div>
           {loading ? <Loading className={styles.loading} visible={loading} /> : (
@@ -292,10 +262,10 @@ const CreateProject: React.FC = () => {
   );
 };
 
-const IntlCreateProject = ()=>{
+const IntlCreateProject = () => {
   return (
     <LocaleProvider>
-      <CreateProject/>
+      <CreateProject />
     </LocaleProvider>
   )
 }

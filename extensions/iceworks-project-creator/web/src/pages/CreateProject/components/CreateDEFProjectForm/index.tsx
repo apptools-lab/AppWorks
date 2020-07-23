@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup } from '@/types';
 import callService from '@/callService';
+import { IGitLabExistProject } from '@/types';
 import { useIntl, FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
@@ -9,10 +10,7 @@ interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
   children: React.ReactNode;
   errorMsg?: string;
-  dataSource: IGitLabGroup[];
   onChange: (value: IDEFProjectField) => void;
-  onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onValidateProjectName: (rule: object, value: string, callback: (errors?: string) => void) => any;
 };
 
 const gitAccountURL = 'gitlab.alibaba-inc.com/profile/account';
@@ -21,36 +19,96 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
   value,
   children,
   errorMsg,
-  dataSource,
-  onAccountBlur,
   onChange,
-  onValidateProjectName,
 }) => {
+  const [empInfoDisabled, setEmpInfoDisabled] = useState(false);
+  const [existProjects, setExistProjects] = useState([]);
+  const [gitLabGroups, setGitLabGroups] = useState<IGitLabGroup[]>([]);
+
   useEffect(() => {
-    async function initUserInfo() {
-      const { empId, account } = value;
-      if (!empId || !account) { // if empId and account are not found, request DEF API to get them
-        const userInfo = await callService('common', 'getUserInfo');
-        const { empid: empId, account } = userInfo;
-        onChange({ ...value, empId, account })
+    async function initData() {
+      let gitlabToken = value.gitlabToken;
+      if (!(value.empId && value.account)) {
+        gitlabToken = await getUserInfo();
       }
+      await getExistProjects(gitlabToken);
+      await getGitLabGroups(gitlabToken)
     }
-    initUserInfo();
-  }, [])
+
+    initData();
+  }, []);
+
+  async function getUserInfo() {
+    try {
+      const userInfo = await callService('common', 'getUserInfo');
+      const { empId, account, gitlabToken } = userInfo;
+      onChange({ ...value, empId, account, gitlabToken });
+      setEmpInfoDisabled(true);
+      return gitlabToken;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  async function getExistProjects(gitlabToken) {
+    try {
+      const projects = await callService('common', 'getExistProjects', gitlabToken);
+      setExistProjects(projects);
+    } catch (e) {
+      setExistProjects([]);
+    }
+  }
+
+  async function getGitLabGroups(gitlabToken) {
+    try {
+      const dataSource = await callService('common', 'getGitLabGroups', gitlabToken);
+      setGitLabGroups(dataSource);
+    } catch (e) {
+      setGitLabGroups([]);
+    }
+  }
+
+  async function onBlur() {
+    await getGitLabGroups(value.gitlabToken);
+    await getExistProjects(value.gitlabToken);
+  }
+
+  function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
+    if (existProjects.filter((item: IGitLabExistProject) => item.name === value).length) {
+      return callback(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.nameExist' }))
+    }
+    return callback()
+  };
   const intl = useIntl();
   return (
     <div className={styles.container}>
       <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
+          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.empId' })}
+          required
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
+        >
+          <Input disabled={empInfoDisabled} placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })} name="empId" />
+        </Form.Item>
+        <Form.Item
+          colSpan={12}
+          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.account' })}
+          required
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
+        >
+          <Input disabled={empInfoDisabled} placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })} name="account" />
+        </Form.Item>
+        <Form.Item
+          colSpan={12}
           label="GitLab Token"
           help={<span className={styles.help}>
             <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open' />
-            <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">gitlab.alibaba-inc.com/profile/account</a>
+            <a href="http://gitlab.alibaba-inc.com/profile/account" rel="noopener noreferrer" target="_blank">{gitAccountURL}</a>
             <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.copy' /> <b>Private Token</b></span>}
           required
           requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })}
-          onBlur={onAccountBlur}
+          onBlur={onBlur}
         >
           <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })} name="gitlabToken" />
         </Form.Item>
@@ -67,7 +125,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
             key="name"
             showSearch
           >
-            {dataSource.map(item => (
+            {gitLabGroups.map(item => (
               <Select.Option value={item.name}>{item.name}</Select.Option>
             ))}
           </Select>

@@ -4,14 +4,14 @@ import * as oss from 'ali-oss';
 import * as AdmZip from 'adm-zip';
 
 const ossClient = oss({
-  bucket: 'iceworks',
+  bucket: 'iceworks-favorite',
   endpoint: 'oss-cn-hangzhou.aliyuncs.com',
   accessKeyId: process.env.ACCESS_KEY_ID,
   accessKeySecret: process.env.ACCESS_KEY_SECRET,
   timeout: '300s',
 })
 
-const target = 'packages/def-login-client/def-login-client.zip';
+const target = 'packages/def-login-client.zip';
 
 /**
  * get def login client package from oss

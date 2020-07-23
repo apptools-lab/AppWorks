@@ -3,7 +3,6 @@ build/
 tests/
 demo/
 .ice/
-packages/common-service/def-login-client/
 
 # node 覆盖率文件
 coverage/

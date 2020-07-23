@@ -1,7 +1,7 @@
 {
     "web.iceworksProjectCreator.CreateProject.nextStep": "NEXT",
     "web.iceworksProjectCreator.CreateProject.previous": "PREVIOUS",
-    "web.iceworksProjectCreator.CreateProject.createDFE": "Create DEF Application",
+    "web.iceworksProjectCreator.CreateProject.createDEF": "Create DEF Application",
     "web.iceworksProjectCreator.CreateProject.complete": "FINISH",
     "web.iceworksProjectCreator.CreateProject.chooseTemplate": "Choose a template before create an application.",
     "web.iceworksProjectCreator.CreateProject.pathExist": "The local path already exists, please select it again!",
