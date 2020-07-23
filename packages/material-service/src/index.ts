@@ -41,8 +41,12 @@ const isIceMaterial = (source: string) => {
 };
 
 export const getSourcesByProjectType = async function () {
-  const type = await getProjectType();
+  let type = await getProjectType();
   console.log('project type is:', type);
+  if (type === 'unknown') {
+    console.log('The current project type is unknown, so set the default project type: react');
+    type = 'react';
+  }
   return getSources(type);
 }
 
