@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL,ALI_APPLYREPO_URL } from '@iceworks/constant'
 
 const { workspace } = vscode;
 
@@ -12,9 +13,9 @@ export const packageJSONFilename = 'package.json';
 export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
 export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
-export const generatorCreatetaskUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/createtask';
-export const generatorTaskResultUrl = 'https://api.def.alibaba-inc.com/api/generator/generator/task';
-export const applyRepositoryUrl = 'https://api.def.alibaba-inc.com/api/work/repo/apply';
+export const generatorCreatetaskUrl = ALI_CREATETASK_URL;
+export const generatorTaskResultUrl = ALI_TASKRESULT_URL
+export const applyRepositoryUrl = ALI_APPLYREPO_URL;
 
 /**
  * DEF平台返回task的状态值

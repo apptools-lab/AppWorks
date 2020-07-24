@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/parser": "^7.10.4",
     "@babel/traverse": "^7.10.4",
+    "@iceworks/constant":"^0.1.0",
     "axios": "^0.19.2",
     "co": "4.6.0",
     "fs-extra": "^9.0.0",

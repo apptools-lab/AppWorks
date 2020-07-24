@@ -6,6 +6,7 @@ import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
+import { ALI_EMAIL, ALI_GITLAB_URL } from '@iceworks/constant';
 import {
   generatorCreatetaskUrl,
   generatorTaskResultUrl,
@@ -155,7 +156,7 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }))
   }
-  const repoPath = `git@gitlab.alibaba-inc.com:${group}/${project}.git`;
+  const repoPath = `${ALI_GITLAB_URL}${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
 }
 
@@ -182,7 +183,7 @@ async function generatorCreatetask(field: IDEFProjectField) {
       id: empId,
       token: gitlabToken,
       name: account,
-      email: `${account}@alibaba-inc.com`
+      email: `${account}@${ALI_EMAIL}`
     },
     'emp_id': empId,
     'client_token': clientToken

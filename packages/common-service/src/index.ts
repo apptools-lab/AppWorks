@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import { ALI_GITLABGROUPS_API, ALI_GITLABPROJECTS_API, ALI_FUSION_MATERIAL_URL, ALI_NPM_REGISTRY } from '@iceworks/constant'
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
 export * from './log';
@@ -13,8 +14,7 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
-
-const co = require('co');
+import co = require('co');
 
 let Client;
 let defClient;
@@ -28,9 +28,6 @@ try {
 } catch {
   console.log('def-login-client is not found')
 }
-
-const gitlabGroupsAPI = 'http://gitlab.alibaba-inc.com/api/v3/groups';
-const gitlabProjectsAPI = 'http://gitlab.alibaba-inc.com/api/v3/projects';
 
 let activeTextEditorId: string;
 
@@ -111,7 +108,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
     // old materialSources and remove it from the previous users
     const officalMaterialSources = [
       'http://ice.alicdn.com/assets/materials/react-materials.json',
-      'https://fusion.alibaba-inc.com/api/v1/sites/1194/materials'
+      ALI_FUSION_MATERIAL_URL
     ];
     const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource.source));
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
@@ -160,7 +157,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   const npmRegistryIsSeted = globalState.get(stateKey);
   if (!npmRegistryIsSeted && isAliInternal) {
     console.log('autoSetNpmRegistry: do');
-    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, 'https://registry.npm.alibaba-inc.com');
+    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, ALI_NPM_REGISTRY);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
@@ -185,7 +182,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
 }
 
 export async function getGitLabGroups(token: string) {
-  const res = await axios.get(gitlabGroupsAPI, {
+  const res = await axios.get(ALI_GITLABGROUPS_API, {
     params: {
       'private_token': token
     }
@@ -195,7 +192,7 @@ export async function getGitLabGroups(token: string) {
 }
 
 export async function getExistProjects(token: string) {
-  const res = await axios.get(gitlabProjectsAPI, {
+  const res = await axios.get(ALI_GITLABPROJECTS_API, {
     params: {
       'private_token': token
     }
