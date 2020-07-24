@@ -20,6 +20,7 @@ jobs:
           npm run setup
           npm run lint
           npm run dependency:check
+          npm run docs:check
           npm run test
           npm run coverage
         env:
