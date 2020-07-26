@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- feat: support en-US
+
 ## 0.2.3
 
 - feat: support generating rax project with options
