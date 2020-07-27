@@ -1,0 +1,53 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "description": "使用 TypeScript，未使用任何 UI 库。",
+  "dependencies": {
+    "@ant-design/icons": "^4.2.1",
+    "@fluentui/react": "^7.123.8",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@rjsf/antd": "^2.2.2",
+    "@rjsf/core": "^2.2.2",
+    "@rjsf/fluent-ui": "^2.2.2",
+    "@rjsf/material-ui": "^2.2.2",
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5",
+    "antd": "^4.4.3",
+    "bootstrap": "^3.4.1",
+    "dayjs": "^1.8.30",
+    "material-ui": "^0.20.2",
+    "office-ui-fabric-react": "^7.123.9",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@ice/spec": "^1.0.1",
+    "eslint": "^6.0.1",
+    "ice.js": "^1.0.0",
+    "stylelint": "^13.0.0"
+  },
+  "scripts": {
+    "start": "icejs start",
+    "build": "icejs build",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx ./",
+    "stylelint": "stylelint ./**/*.scss"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-simple"
+  },
+  "ideMode": {
+    "name": "ice-react"
+  },
+  "iceworks": {
+    "type": "react",
+    "adapter": "adapter-react-v3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "private": true,
+  "originTemplate": "@alifd/scaffold-simple"
+}

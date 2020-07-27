@@ -1,0 +1,248 @@
+{
+    "type": "object",
+    "title": "The ICE APP build.json Schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [],
+    "properties": {
+      "alias": {
+        "type": "object",
+        "description": "Create aliases to import or require certain modules more easily."
+      },
+      "publicPath": {
+        "type": "string",
+        "description": "The public URL of the output directory."
+      },
+      "devPublicPath": {
+        "type": "string",
+        "description": "The public URL of the dev server output directory."
+      },
+      "sourceMap": {
+        "type": "boolean",
+        "description": "Whether to generate sourceMap"
+      },
+      "externals": {
+        "type": "object",
+        "description": "This feature is typically most useful to library developers, see https://webpack.js.org/configuration/externals .",
+        "additionalProperties": {
+            "type": "string"
+        }
+    },
+      "hash": {
+        "type": "boolean",
+        "description": "If you want the hashed version of the built resource, you can set hash to true."
+      },
+      "injectBabel": {
+        "type": "boolean",
+        "description": "Whether to inject core-js/stable and regenerator-runtime/runtime."
+      },
+      "minify": {
+        "type": "boolean",
+        "description": "The resources after construction will be compressed."
+      },
+      "outputAssetsPath": {
+        "type": "object",
+        "description": "Modify the built css/js file directory."
+      },
+      "outputDir": {
+        "type": "string",
+        "description": "Modify the built file directory."
+      },
+      "devServer": {
+        "type": "object",
+        "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
+        "properties": {
+          "compress": {
+            "type": "boolean",
+            "description": "Enable gzip compression for everything served"
+          },
+          "disableHostCheck": {
+            "type": "boolean",
+            "description": "When set to true this option bypasses host checking. THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks."
+          },
+          "clientLogLevel": {
+            "type": "string",
+            "description": "The the console in your DevTools will show different level messages."
+          },
+          "hot": {
+            "type": "boolean",
+            "description": "Enable webpack's Hot Module Replacement feature"
+          },
+          "quiet": {
+            "type": "boolean",
+            "description": "With devServer.quiet enabled, nothing except the initial startup information will be written to the console."
+          },
+          "overlay": {
+            "type": "boolean",
+            "description": "Shows a full-screen overlay in the browser when there are compiler errors or warnings. If you want to show only compiler errors."
+          },
+          "port": {
+            "type": "integer",
+            "description": "Specify a port number to listen for requests on."
+          }
+        }
+      },
+      "proxy": {
+        "type": "object",
+        "description": "Configure webpack's devServer.proxy attribute."
+      },
+      "vendor": {
+        "type": "boolean",
+        "description": "Configure whether to generate vendor."
+      },
+      "libraryTarget": {
+        "type": "string",
+        "description": "Configure webpack's output.libraryTarget attribute."
+      },
+      "library": {
+        "type": "string",
+        "description": "Configure webpack's output.library attribute."
+      },
+      "libraryExport": {
+        "type": "string",
+        "description": "Configure webpack's output.libraryExport attribute."
+      },
+      "compileDependencies": {
+        "type": "array",
+        "description": "By default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
+        "default": [],
+        "items": {
+          "anyOf": [
+            {
+              "type": "string",
+              "description": "Compile module dependencies under node_modules.",
+              "default": "",
+              "examples": [
+                "@alifd/next"
+              ]
+            }
+          ]
+        }
+      },
+      "cssLoaderOptions": {
+        "type": "object",
+        "description": "css-loader params, see https://webpack.js.org/loaders/css-loader/#options .",
+        "required": []
+      },
+      "lessLoaderOptions": {
+        "type": "object",
+        "description": "less-loader params, see https://webpack.js.org/loaders/less-loader/#options .",
+        "default": {},
+        "examples": [
+          {}
+        ],
+        "required": [],
+        "additionalProperties": true,
+        "properties": {}
+      },
+      "sassLoaderOptions": {
+        "type": "object",
+        "description": "sass-loader params, see https://webpack.js.org/loaders/sass-loader/#options .",
+        "default": {},
+        "examples": [
+          {}
+        ],
+        "required": [],
+        "additionalProperties": true,
+        "properties": {}
+      },
+      "postcssrc": {
+        "type": "boolean",
+        "description": "After opening the configuration item, the project will clear the built-in postcss configuration and read the configuration in the postcss configuration file postcssrc.js or postcss.config.js",
+        "default": false,
+        "examples": [
+          false
+        ]
+      },
+      "terserOptions": {
+        "type": "object",
+        "description": "terserPlugin params, see https://webpack.js.org/plugins/terser-webpack-plugin/ .",
+        "default": {},
+        "examples": [
+          {}
+        ],
+        "required": [],
+        "additionalProperties": true,
+        "properties": {}
+      },
+      "babelPlugins": {
+        "type": "array",
+        "description": "Add an additional babel plugin to the babel-loader configuration.",
+        "default": [],
+        "examples": [
+          []
+        ],
+        "additionalItems": true,
+        "items": {
+          "anyOf": []
+        }
+      },
+      "babelPresets": {
+        "type": "array",
+        "description": "Add an additional babel preset to the configuration of babel-loader. If the preset is the same as the built-in preset, the configuration content in babelPresets will be used first.",
+        "default": [],
+        "examples": [
+          []
+        ],
+        "additionalItems": true,
+        "items": {
+          "anyOf": []
+        }
+      },
+      "ignoreHtmlTemplate": {
+        "type": "boolean",
+        "description": "After it is turned on, all built-in html-webpack-plugin settings will be removed when the build is built, and html files will no longer be generated.",
+        "default": false,
+        "examples": [
+          false
+        ]
+      },
+      "eslint": {
+        "type": "object",
+        "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true. Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
+        "default": {},
+        "examples": [
+          {}
+        ],
+        "required": [],
+        "additionalProperties": true,
+        "properties": {}
+      },
+      "targets": {
+        "type": "object",
+        "description": "Configure the targets of @babel/preset-env, configure the minimum version of the browser, the newly configured targets will override the default values.",
+        "default": {},
+        "examples": [
+          {
+            "chrome": 49,
+            "ie": 11
+          }
+        ],
+        "required": [],
+        "additionalProperties": true
+      },
+      "disableRuntime": {
+        "type": "boolean",
+        "description": "Disable the ability to run time, if you need to close the configuration to true.",
+        "default": false,
+        "examples": [
+          false
+        ]
+      },
+      "tsChecker": {
+        "type": "boolean",
+        "description": "TypeScript type detection is turned off by default. If you need to enable it, set it to true.",
+        "default": false,
+        "examples": [
+          false
+        ]
+      },
+      "plugins": {
+        "type": "array",
+        "description": "Compiler plugins.",
+        "default": [],
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
