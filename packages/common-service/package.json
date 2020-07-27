@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -11,14 +11,28 @@
   "dependencies": {
     "@babel/parser": "^7.10.4",
     "@babel/traverse": "^7.10.4",
+    "@iceworks/constant":"^0.1.0",
     "axios": "^0.19.2",
+    "co": "4.6.0",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "is-electron": "^2.2.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/vscode": "^1.45.0"
+    "@types/vscode": "^1.45.0",
+    "adm-zip": "^0.4.16",
+    "ali-oss": "^6.10.0",
+    "cross-spawn": "^7.0.3",
+    "imports-loader": "^0.8.0",
+    "ts-loader": "^8.0.1",
+    "ts-node": "^8.10.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "scripts": {
+    "build": "rm -rf lib && webpack --mode production",
+    "prebuild": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts"
   },
   "publishConfig": {
     "access": "public"

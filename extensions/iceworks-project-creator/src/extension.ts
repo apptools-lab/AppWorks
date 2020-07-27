@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
+import i18n from './i18n'
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -20,13 +21,13 @@ export function activate(context: vscode.ExtensionContext) {
   let webviewPanel: vscode.WebviewPanel | undefined;
 
   function activeWebview() {
-    logger.recordDAU();
-    logger.recordActivate(version);
+    logger.recordMainDAU();
+    logger.recordExtensionActivate(version);
 
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {
-      webviewPanel = window.createWebviewPanel('iceworks', '创建应用 - Iceworks', ViewColumn.One, {
+      webviewPanel = window.createWebviewPanel('iceworks', i18n.format('extension.iceworksProjectCreator.extension.webViewTitle'), ViewColumn.One, {
         enableScripts: true,
         retainContextWhenHidden: true,
       });

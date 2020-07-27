@@ -17,8 +17,15 @@
       width: 400px;
       font-size: 13px;
       color: red;
+      margin-top: -16px;
     }
   }
+  .scaffoldTypeForm {
+    position: absolute;
+    top: 140px;
+    left: calc(50vw - 256px);
+  }
+
   .action {
     position: absolute;
     bottom: 0;

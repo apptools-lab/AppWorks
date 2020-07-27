@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import { ALI_GITLABGROUPS_API, ALI_GITLABPROJECTS_API, ALI_FUSION_MATERIAL_URL, ALI_NPM_REGISTRY } from '@iceworks/constant'
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
 export * from './log';
@@ -13,6 +14,20 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+import co = require('co');
+
+let Client;
+let defClient;
+
+try {
+  /* eslint-disable */
+  Client = require('../def-login-client');
+  defClient = new Client({
+    'server': 'http://def.alibaba-inc.com',
+  });
+} catch {
+  console.log('def-login-client is not found')
+}
 
 let activeTextEditorId: string;
 
@@ -93,7 +108,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
     // old materialSources and remove it from the previous users
     const officalMaterialSources = [
       'http://ice.alicdn.com/assets/materials/react-materials.json',
-      'https://fusion.alibaba-inc.com/api/v1/sites/1194/materials'
+      ALI_FUSION_MATERIAL_URL
     ];
     const newSources = materialSources.filter(materialSource => !officalMaterialSources.includes(materialSource.source));
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
@@ -142,7 +157,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   const npmRegistryIsSeted = globalState.get(stateKey);
   if (!npmRegistryIsSeted && isAliInternal) {
     console.log('autoSetNpmRegistry: do');
-    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, 'https://registry.npm.alibaba-inc.com');
+    saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, ALI_NPM_REGISTRY);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
@@ -167,7 +182,7 @@ export function createNpmCommand(action: string, target: string = '', extra: str
 }
 
 export async function getGitLabGroups(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/groups', {
+  const res = await axios.get(ALI_GITLABGROUPS_API, {
     params: {
       'private_token': token
     }
@@ -177,7 +192,7 @@ export async function getGitLabGroups(token: string) {
 }
 
 export async function getExistProjects(token: string) {
-  const res = await axios.get('http://gitlab.alibaba-inc.com/api/v3/projects', {
+  const res = await axios.get(ALI_GITLABPROJECTS_API, {
     params: {
       'private_token': token
     }
@@ -226,4 +241,34 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
     position = new Position(0, 0);
   }
   return { position, declarations: importDeclarations };
+}
+
+export async function getUserInfo() {
+  const fn = co.wrap(function* () {
+    if (defClient) {
+      const user = yield defClient.user();
+      return user;
+    } else {
+      throw new Error('Error: Fail to get user info through def client.')
+    }
+  });
+
+  // get user info from setting.json
+  const userData = getDataFromSettingJson('user') || {};
+  const { empId, account, gitlabToken } = userData;
+
+  if (empId && account) {
+    return userData
+  } else {
+    try {
+      const { account, empid: empId } = await fn();
+      return { account, empId, gitlabToken }
+    } catch (e) {
+      throw new Error(e.message)
+    }
+  }
+}
+
+export function getLanguage() {
+  return vscode.env.language;
 }
