@@ -17,14 +17,15 @@ import {
   getPackageJSON
 } from '@iceworks/project-service';
 import insertComponent from './utils/insertComponent';
+import i18n from './i18n';
 
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
+  const templateError = i18n.format('package.component-service.index.templateError', { jsxFileExtnames: jsxFileExtnames.join(',') });
   const { name, source } = dataSource;
   const { npm, version } = source;
-  const { activeTerminal } = window;
+  const { terminals } = window;
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
@@ -51,24 +52,26 @@ export async function addBizCode(dataSource: IMaterialComponent) {
     // ignore
   }
 
-  let terminal;
-  if (activeTerminal) {
-    terminal = activeTerminal;
+  let terminal: vscode.Terminal;
+  const terminalName = 'Iceworks';
+  const targetTerminal = terminals.find(terminal => terminal.name === terminalName);
+  if (targetTerminal) {
+    terminal = targetTerminal;
   } else {
-    terminal = window.createTerminal();
+    terminal = window.createTerminal(terminalName);
   }
 
   const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
 
   terminal.show();
-  terminal.sendText(`cd ${projectPath}`, true);
+  terminal.sendText(`cd '${projectPath}'`, true);   // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
   terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
 export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加组件代码`;
+  const templateError = i18n.format('package.component-service.index.templateError', { jsxFileExtnames: jsxFileExtnames.join(',') });
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {

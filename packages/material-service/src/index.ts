@@ -4,6 +4,7 @@ import { checkAliInternal } from 'ice-npm-utils';
 import { saveDataToSettingJson, getDataFromSettingJson, CONFIGURATION_KEY_MATERIAL_SOURCES } from '@iceworks/common-service';
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 import { getProjectType } from '@iceworks/project-service';
+import i18n from './i18n';
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
@@ -15,22 +16,22 @@ const OFFICAL_MATERIAL_SOURCES = [
     type: 'react',
     client: 'pc',
     source: ICE_MATERIAL_SOURCE,
-    description: '基于 Fusion 基础组件和 ICE 脚手架的官方物料'
+    description: i18n.format('package.materialService.index.webDescription')
   },
   {
-    name: '无线跨端',
+    name: i18n.format('package.materialService.index.raxTitle'),
     type: 'rax',
     client: 'wireless',
     source: 'https://ice.alicdn.com/assets/materials/rax-materials.json',
-    description: '基于 Rax 组件和 Rax 脚手架的官方物料'
+    description: i18n.format('package.materialService.index.raxDescription')
   }
 ]
 const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
   {
-    name: 'Vue 物料源',
+    name: i18n.format('package.materialService.index.vueTitle'),
     type: 'vue',
     source: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
-    description: '基于 Element, Vue CLI 的 Vue 官方物料'
+    description: i18n.format('package.materialService.index.vueDescription')
   }
 ]
 const dataCache: { [source: string]: IMaterialData } = {};
@@ -53,6 +54,10 @@ export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MAT
  * @param specifiedType {string} react/rax/other...
  */
 export async function getSources(specifiedType?: string): Promise<IMaterialSource[]> {
+  if (specifiedType === 'unknown') {
+    // if the project type is unknown, set the default project type 
+    specifiedType = 'react'
+  }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
   if (!await checkAliInternal()) {
     officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
@@ -122,16 +127,16 @@ export const addSource = async function (materialSource: IMaterialSource) {
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === source);
   if (existedSource) {
-    throw Error('物料源已存在。');
+    throw Error(i18n.format('package.materialService.index.materialSourceExistError'));
   }
   const existedName = sources.some(({ name: defaultName }) => defaultName === name);
   if (existedName) {
-    throw Error('物料源名称已存在。');
+    throw Error(i18n.format('package.materialService.index.materialNameExistError'));
   }
 
   const { type } = await getData(source);
   if (!type) {
-    throw Error('物料源数据错误。');
+    throw Error(i18n.format('package.materialService.index.materialDataError'));
   }
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
   materialSources.push({ ...materialSource, type });
@@ -143,16 +148,16 @@ export const updateSource = async function (newMaterialSource: IMaterialSource, 
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source);
   if (existedSource) {
-    throw Error('物料源已存在。');
+    throw Error(i18n.format('package.materialService.index.materialSourceExistError'));
   }
   const existedName = sources.some(({ name: defaultName }) => defaultName === newMaterialSource.name && defaultName !== originSource.name);
   if (existedName) {
-    throw Error('物料源名称已存在。');
+    throw Error(i18n.format('package.materialService.index.materialNameExistError'));
   }
 
   const { type } = await getData(newMaterialSource.source);
   if (!type) {
-    throw Error('物料源数据错误。');
+    throw Error(i18n.format('package.materialService.index.materialDataError'));
   }
 
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);

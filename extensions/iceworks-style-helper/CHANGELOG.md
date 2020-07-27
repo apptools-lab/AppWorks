@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.3
+
+- Support en-US
+
 ## 0.3.2
 
 - Support nested CSS preview, definition and completion.

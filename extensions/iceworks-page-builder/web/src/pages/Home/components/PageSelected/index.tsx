@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Icon, Input } from '@alifd/next';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { PLACEHOLDER_IMG } from '@iceworks/material-utils';
+import { useIntl, FormattedMessage } from 'react-intl';
 import * as styles from './index.module.scss';
 
 export const BlockDragHandle = SortableHandle(({ title, screenshot }) => (
@@ -31,6 +32,7 @@ export const SelectedBlock = SortableElement(
 );
 
 const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
+  const intl = useIntl();
   return (
     <div className={styles.pageSelected}>
       {blocks.length ? (
@@ -57,7 +59,7 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
             src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png"
             alt="Block"
           />
-            请从右侧选择区块。
+          <FormattedMessage id='web.iceworksPageBuilder.Home.PageSelect.SelectFromRight'/>
         </div>
       )}
     </div>

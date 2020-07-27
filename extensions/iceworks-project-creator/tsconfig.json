@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.extension.json",
 	"compilerOptions": {
 		"rootDir": "./",
-		"outDir": "build"
+		"outDir": "build",
+		"resolveJsonModule": true
 	},
 	"include": [
 		"src"

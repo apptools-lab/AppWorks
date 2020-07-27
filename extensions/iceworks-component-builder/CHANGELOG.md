@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+- feat: support en-US 
+
 ## 0.1.10
 
 Change the material setting entry to Iceworks setting. 

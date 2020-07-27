@@ -1,4 +1,5 @@
 import * as fsExtra from 'fs-extra';
+import { ALI_NPM_REGISTRY, ALI_UNPKG_URL, ALI_CHECKNODE_URL } from '@iceworks/constant'
 
 import request = require('request-promise');
 import semver = require('semver');
@@ -189,7 +190,7 @@ function getNpmRegistry(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   }
 
   return 'https://registry.npm.taobao.org';
@@ -201,7 +202,7 @@ function getUnpkgHost(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://unpkg.alibaba-inc.com';
+    return ALI_UNPKG_URL;
   }
 
   return 'https://unpkg.com';
@@ -221,7 +222,7 @@ function getNpmClient(npmName = ''): string {
 
 function checkAliInternal(): Promise<boolean> {
   return request({
-    url: 'https://ice.alibaba-inc.com/check.node',
+    url: ALI_CHECKNODE_URL,
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {

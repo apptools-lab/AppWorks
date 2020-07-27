@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+Support en-US.
+
 ## 0.1.10
 
 Fix create vue page.

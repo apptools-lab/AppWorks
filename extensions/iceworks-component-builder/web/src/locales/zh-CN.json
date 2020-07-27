@@ -1,0 +1,11 @@
+{
+    "web.ComponentBuiilder.Home.getMaterialError": "获取物料源信息失败，请稍后再试。",
+    "web.ComponentBuiilder.Home.getDataError": "获取物料集合信息失败，请稍后再试。",
+    "web.ComponentBuiilder.Home.noComponentName": "请填写组件名。",
+    "web.ComponentBuiilder.Home.didNotSeletBlock": "请选择使用的区块。",
+    "web.ComponentBuiilder.Home.generateSuccess": "组件生成成功！",
+    "web.ComponentBuiilder.Home.inputComponentName": "1. 填写组件名：",
+    "web.ComponentBuiilder.Home.inputComponentNamePlaceHolder": "名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符",
+    "web.ComponentBuiilder.Home.selectBlock": "2. 选择使用的区块：",
+    "web.ComponentBuiilder.Home.generate": "生成组件"
+}

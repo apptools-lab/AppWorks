@@ -2,6 +2,7 @@ import * as ora from 'ora';
 import {
   isAliNpm, getNpmTarball, getAndExtractTarball
 } from 'ice-npm-utils';
+import { ALI_NPM_REGISTRY } from '@iceworks/constant';
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
@@ -11,7 +12,7 @@ export {
   checkEmpty,
 };
 
-interface IEjsOptions {
+export interface IEjsOptions {
   targets?: string[];
   miniappType?: 'runtime' | 'compile';
   mpa?: boolean;
@@ -72,7 +73,7 @@ async function getNpmRegistry(npmName: string): Promise<string> {
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   } else if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   } else {
     return 'https://registry.npm.taobao.org';
   }

@@ -8,6 +8,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
+import i18n from './i18n';
 /**
  * Generate page code based on blocks
  *
@@ -23,7 +24,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(`页面文件夹「${name}」已存在，无法覆盖，请输入新的页面名称。`);
+    throw new Error(i18n.format('package.pageService.index.pagePathExistError', {name}));
   }
 
   try {

@@ -14,7 +14,8 @@
       "ice/*": [
         ".ice/pages/*"
       ]
-    }
+    },
+    "resolveJsonModule": true 
   },
   "include": [
     "src/*",
