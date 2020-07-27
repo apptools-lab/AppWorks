@@ -42,9 +42,6 @@
       "pre-push": "npm run lint"
     }
   },
-  "lint-staged": {
-    "*.{ts,tsx}": "prettier --write"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ice-lab/iceworks.git"
@@ -83,6 +80,7 @@
     "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",
     "pify": "^5.0.0",
+    "prettier": "^2.0.5",
     "stylelint": "^13.2.0",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
