@@ -8,7 +8,7 @@
     "web.iceworksApp.index.CUSTOM_NPM_REGISTRY_SELECT_KEY": "npm - 自定义镜像源",
     "web.iceworksApp.index.addMaterialSuccess": "新增物料源成功",
     "web.iceworksApp.index.editMaterialSuccess": "修改物料源成功",
-    "web.iceworksApp.index.deletetMaterialSuccess": "删除物料源成功",
+    "web.iceworksApp.index.deleteMaterialSuccess": "删除物料源成功",
     "web.iceworksApp.index.editSettingSuccess": "设置成功",
     "web.iceworksApp.index.npmPackageManager": "npm 包管理工具",
     "web.iceworksApp.index.chooseNpmPackageManager": "请选择 npm 包管理工具",
