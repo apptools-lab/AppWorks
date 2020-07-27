@@ -19,7 +19,7 @@ jobs:
       - run: |
           npm run setup
           npm run lint
-          npm run prettier:check
+          npm run prettier
           npm run dependency:check
           npm run docs:check
           npm run test
