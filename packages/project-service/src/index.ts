@@ -156,7 +156,7 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }))
   }
-  const repoPath = `${ALI_GITLAB_URL}/${group}/${project}.git`;
+  const repoPath = `${ALI_GITLAB_URL}:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir)
 }
 
