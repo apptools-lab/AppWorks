@@ -29,7 +29,8 @@
     "sync": "ts-node ./scripts/sync.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
     "docs:check": "ts-node ./scripts/extension-docs-check.ts",
-    "env": "node ./scripts/env.js"
+    "env": "node ./scripts/env.js",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx,ejs,less,css,scss,json}\""
   },
   "resolutions": {
     "eslint-plugin-import": "2.20.2"

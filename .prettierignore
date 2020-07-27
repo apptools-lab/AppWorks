@@ -1,0 +1,8 @@
+node_modules
+build
+lib
+coverage
+demo
+es
+.ice
+.tmp
