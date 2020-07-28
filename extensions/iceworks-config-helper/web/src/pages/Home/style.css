@@ -1,0 +1,24 @@
+.BlackBg{
+    background: black;
+}
+.whiteText{
+    color:white
+}
+.whiteText>{
+    color: white;
+}
+.control-label{
+    color: white;
+}
+.field-description{
+    color: white;
+}
+.ms-Checkbox-text{
+    color: white;
+}
+legend{
+    color: white;
+}
+.form-group{
+    color: white;
+}

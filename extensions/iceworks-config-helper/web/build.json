@@ -1,3 +1,20 @@
 {
-  "plugins": []
+  "plugins": [
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": [
+          {
+            "name": "@alifd/theme-iceworks-dark"
+          }
+        ]
+      }
+    ],
+    [
+      "build-plugin-css-assets-local",
+      {
+        "activeInDev": true
+      }
+    ]
+  ]
 }

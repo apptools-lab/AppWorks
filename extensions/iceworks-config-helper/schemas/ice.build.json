@@ -53,25 +53,37 @@
       "additionalProperties": true
     },
     "hash": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "If you want the hashed version of the built resource, you can set hash to true.",
-      "default": false,
-      "examples": [
-        "contenthash"
+      "oneOf": [
+        {
+          "type":"string",
+          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+          "examples": [
+            "contenthash"
+          ]
+        },{
+          "type":"boolean",
+          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+          "default": false,
+          "examples": [
+            false
+          ]
+        }
       ]
+
     },
     "injectBabel": {
-      "type": [
-        "boolean",
-        "string"
-      ],
-      "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
-      "default": false,
-      "examples": [
-        false
+      "oneOf": [
+        {
+          "type":"string",
+          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime."
+        },{
+          "type":"boolean",
+          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
+          "default": false,
+          "examples": [
+            false
+          ]
+        }
       ]
     },
     "minify": {
@@ -285,10 +297,10 @@
       "examples": [
         []
       ],
-      "additionalItems": true,
-      "items": {
-        "anyOf": []
-      }
+      "items":{
+        "type":"object"
+      } ,
+      "additionalItems": true
     },
     "babelPresets": {
       "type": "array",
@@ -297,10 +309,10 @@
       "examples": [
         []
       ],
-      "additionalItems": true,
-      "items": {
-        "anyOf": []
-      }
+      "items":{
+        "type":"object"
+      },
+      "additionalItems": true
     },
     "ignoreHtmlTemplate": {
       "type": "boolean",
@@ -311,17 +323,24 @@
       ]
     },
     "eslint": {
-      "type": [
-        "object",
-        "boolean"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader ."
+        },
+        {
+          "type": "boolean",
+          "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
+        }
       ],
-      "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true. Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
+      
       "default": {},
       "examples": [
         {}
       ],
       "required": [],
-      "additionalProperties": true,
+
       "properties": {}
     },
     "targets": {
