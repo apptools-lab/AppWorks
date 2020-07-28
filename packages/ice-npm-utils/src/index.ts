@@ -1,4 +1,5 @@
 import * as fsExtra from 'fs-extra';
+import { ALI_NPM_REGISTRY, ALI_UNPKG_URL, ALI_CHECKNODE_URL } from '@iceworks/constant'
 
 import request = require('request-promise');
 import semver = require('semver');
@@ -16,7 +17,8 @@ import tar = require('tar');
 function getNpmTarball(npm: string, version?: string, registry?: string): Promise<string> {
   return getNpmInfo(npm, registry).then((json: any) => {
     if (!semver.valid(version)) {
-      version = json['dist-tags'].latest;
+      // support beta or other tag
+      version = json['dist-tags'][version] || json['dist-tags'].latest;
     }
 
     if (
@@ -46,7 +48,7 @@ function getAndExtractTarball(
     } else {
       return filename.replace(/^_/, '.');
     }
-  }
+  },
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -70,6 +72,7 @@ function getAndExtractTarball(
           entry.resume();
           return;
         }
+
         const realPath = entry.path.replace(/^package\//, '');
 
         let filename = path.basename(realPath);
@@ -187,7 +190,7 @@ function getNpmRegistry(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   }
 
   return 'https://registry.npm.taobao.org';
@@ -199,7 +202,7 @@ function getUnpkgHost(npmName = ''): string {
   }
 
   if (isAliNpm(npmName)) {
-    return 'https://unpkg.alibaba-inc.com';
+    return ALI_UNPKG_URL;
   }
 
   return 'https://unpkg.com';
@@ -219,11 +222,10 @@ function getNpmClient(npmName = ''): string {
 
 function checkAliInternal(): Promise<boolean> {
   return request({
-    url: 'https://ice.alibaba-inc.com/check.node',
+    url: ALI_CHECKNODE_URL,
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   }).catch((err) => {
-    console.debug('checkAliInternal error: ', err.message);
     return false;
   }).then((response) => {
     return response.statusCode === 200 && /success/.test(response.body);

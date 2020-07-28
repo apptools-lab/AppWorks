@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Viewer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -90,7 +90,19 @@
     "commands": [
       {
         "command": "iceworksApp.configHelper.start",
-        "title": "%iceworksApp.command.configHelper.start.title%"
+        "title": "%iceworksApp.command.configHelper.start.title%",
+        "icon": {
+          "light": "assets/light/setting.svg",
+          "dark": "assets/dark/setting.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.DefPublish",
+        "title": "%iceworksApp.command.DefPublish.title%",
+        "icon": {
+          "light": "assets/light/publish.svg",
+          "dark": "assets/dark/publish.svg"
+        }
       },
       {
         "command": "iceworksApp.npmScripts.refresh",
@@ -114,6 +126,30 @@
         "icon": {
           "light": "assets/light/stop.svg",
           "dark": "assets/dark/stop.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.runDev",
+        "title": "%iceworksApp.command.npmScripts.runDev.title%",
+        "icon": {
+          "light": "assets/light/runDev.svg",
+          "dark": "assets/dark/runDev.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.stopDev",
+        "title": "%iceworksApp.command.npmScripts.stopDev.title%",
+        "icon": {
+          "light": "assets/light/stop.svg",
+          "dark": "assets/dark/stop.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.npmScripts.runBuild",
+        "title": "%iceworksApp.command.npmScripts.runBuild.title%",
+        "icon": {
+          "light": "assets/light/build.svg",
+          "dark": "assets/dark/build.svg"
         }
       },
       {
@@ -214,6 +250,33 @@
         },
         {
           "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "iceworksApp.npmScripts.runDev",
+          "group": "navigation@01",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isRunningDev"
+        },
+        {
+          "command": "iceworksApp.npmScripts.stopDev",
+          "group": "navigation@01",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isRunningDev"
+        },
+        {
+          "command": "iceworksApp.DefPublish",
+          "group": "navigation@02",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
+        },
+        {
+          "command": "iceworksApp.npmScripts.runBuild",
+          "group": "navigation@02",
+          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isAliInternal"
+        },
+        {
+          "command": "iceworksApp.configHelper.start",
+          "group": "navigation@03",
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         }
       ],
       "view/title": [
@@ -339,6 +402,7 @@
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.2",
+    "@iceworks/i18n": "^0.1.0",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
@@ -349,7 +413,7 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-component-builder",
     "iceworks-team.iceworks-page-builder",
-    "iceworks-team.iceworks-material-import"
+    "iceworks-team.iceworks-material-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
   "bugs": {

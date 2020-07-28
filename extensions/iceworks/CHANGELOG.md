@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.3.0
+
+- refactor: remove [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import), merge into [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
+
+## 0.2.0
+
+- docs: new logo and document
+
 ## 0.1.7
 
 - docs: update sample image
@@ -7,7 +15,7 @@
 ## 0.1.6
 
 - feat: add [iceworks-config-helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
-- feat: add [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+- feat: add [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import)
 
 ## 0.1.5
 

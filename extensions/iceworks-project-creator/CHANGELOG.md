@@ -1,5 +1,23 @@
 # Change Log
 
+## 0.3.0
+
+- feat: support en-US
+
+## 0.2.3
+
+- feat: support generating rax project with options
+- fix: rax scaffolds title app type icon not appear
+
+## 0.2.2
+
+- chore: upgrade @iceworks/generate-project
+
+## 0.2.1
+
+- docs: better docs
+- feat: git group search and loading
+
 ## 0.2.0
 
 - feat: default select a scaffold

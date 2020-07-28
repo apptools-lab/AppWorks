@@ -1,6 +1,6 @@
 {
   "name": "ice-npm-utils",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "npm utils for ice",
   "main": "lib/index.js",
   "files": [
@@ -14,7 +14,8 @@
     "request-promise": "^4.2.4",
     "semver": "^6.0.0",
     "tar": "^4.4.8",
-    "url-join": "^4.0.1"
+    "url-join": "^4.0.1",
+    "@iceworks/constant": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"

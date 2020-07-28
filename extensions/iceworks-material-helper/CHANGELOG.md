@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.2.0
+
+- refactor: rename to React Comopnent Helper
+- feat: add material importer
+
+## 0.1.4
+
+Fix React component completion items, See: https://github.com/ice-lab/iceworks/issues/233
+
 ## 0.1.3
 
 Fix docs typo.

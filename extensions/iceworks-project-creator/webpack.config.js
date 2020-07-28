@@ -35,4 +35,10 @@ const config = {
   }
 };
 
-module.exports = config;
+module.exports = (env, argv) => {
+  if (argv.mode === 'development') {
+    config.devtool = 'source-map';
+  }
+
+  return config;
+};

@@ -1,6 +1,16 @@
 # Change Log
 
+## 0.3.0
+
+- feat: support en-US 
+
+## 0.2.1
+
+- feat: add quick entry in the editor title menu
+- fix: fail to set custom registry
+
 ## 0.2.0
+
 - feat: install dependencies automatically when node_modules  does not exist
 - feat: refresh dependencies list、pages list and components list automatically
 - feat: support stopping scripts
