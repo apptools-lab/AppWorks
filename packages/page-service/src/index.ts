@@ -11,7 +11,7 @@ import vuePageTemplate from './templates/template.vue';
 import { bulkCreate } from './router';
 import i18n from './i18n';
 
-export { getAll } from './router';
+export * from './router';
 
 /**
  * Generate page code based on blocks
@@ -19,7 +19,10 @@ export { getAll } from './router';
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function ({ pageName: name, blocks = [], parent, path: routePath }: { pageName: string; blocks: IMaterialBlock[]; parent: string; path: string }) {
+export const generate = async function (
+  { pageName: name, parent, path: routePath, blocks = [] }: { pageName: string; blocks: IMaterialBlock[]; parent: string; path: string },
+  shouldCreateRouter = false
+) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -60,8 +63,14 @@ export const generate = async function ({ pageName: name, blocks = [], parent, p
     });
 
     await fsExtra.writeFile(dist, rendered, 'utf-8');
-
-    await bulkCreate(projectPath, [{ path: routePath, component: name }], { parent });
+    if (shouldCreateRouter) {
+      // if the router is configurable, write the router config
+      try {
+        await bulkCreate(projectPath, [{ path: routePath, component: name }], { parent });
+      } catch (e) {
+        console.error(e);
+      }
+    }
   } catch (error) {
     remove(pageName);
     throw error;

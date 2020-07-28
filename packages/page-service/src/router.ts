@@ -34,6 +34,13 @@ export async function getAll() {
   return config;
 }
 
+export async function checkRouteConfigPathExists() {
+  const projectLanguageType = await getProjectLanguageType();
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const pathExists = await fse.pathExists(routeConfigPath);
+  return pathExists;
+}
+
 export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
   const routerConfigAST = await getRouterConfigAST(projectPath);
@@ -57,6 +64,7 @@ export async function bulkCreate(projectPath: string, data: IRouter[], options: 
       data = currentData.concat(data);
     }
   }
+
   setData(data, routerConfigAST, routeConfigPath);
 }
 

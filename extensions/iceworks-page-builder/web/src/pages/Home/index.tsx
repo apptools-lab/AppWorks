@@ -4,6 +4,7 @@ import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { IMaterialData } from '@iceworks/material-utils';
 import PageSelected from './components/PageSelected';
 import RouterDetailForm from './components/RouterDetailForm';
 import callService from '../../callService';
@@ -18,6 +19,7 @@ const Home = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [visible, setVisible] = useState(false);
   const [routerConfig, setRouterConfig] = useState([]);
+  const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
 
   async function getSources() {
     let sources = [];
@@ -32,7 +34,7 @@ const Home = () => {
   }
 
   async function getData(source: string) {
-    let data = {};
+    let data = {} as IMaterialData;
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
@@ -85,12 +87,19 @@ const Home = () => {
 
   function resetData() {
     setSelectedBlocks([]);
+    setRouterConfig([]);
   }
 
   async function handleCreate() {
     try {
-      const config = await callService('page', 'getAll');
-      setRouterConfig(config);
+      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      setIsConfigurableRouter(isRouteConfigPathExists);
+      if (isRouteConfigPathExists) {
+        // configurable router
+        const config = await callService('page', 'getAll');
+        setRouterConfig(config);
+      }
+
       setVisible(true);
     } catch (e) {
       // ignore
@@ -111,8 +120,8 @@ const Home = () => {
         setIsCreating(false);
         return;
       }
-
-      await callService('page', 'generate', data);
+      const shouldCreateRouter = isConfigurableRouter;
+      await callService('page', 'generate', data, shouldCreateRouter);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
@@ -127,8 +136,6 @@ const Home = () => {
 
   return (
     <div className={styles.wrap}>
-      {/* <div className={styles.list}>
-        <div className={styles.item}> */}
       <div className={styles.label}>
         <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock' />
       </div>
@@ -161,10 +168,8 @@ const Home = () => {
           </Col>
         </Row>
       </div>
-      {/* </div>
-      </div> */}
       <div className={styles.opts}>
-        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
+        <Button type="primary" size="medium" onClick={handleCreate}>
           <FormattedMessage id='web.iceworksPageBuilder.Home.createPage' />
         </Button>
       </div>
@@ -172,6 +177,7 @@ const Home = () => {
         visible={visible}
         isCreating={isCreating}
         routerConfig={routerConfig}
+        isConfigurableRouter={isConfigurableRouter}
         onSubmit={handleSubmit}
         onClose={onClose}
       />
