@@ -4,6 +4,7 @@ import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
+import { getProjectLanguageType, projectPath } from '@iceworks/project-service';
 import formatCodeFromAST from './formatCodeFromAST';
 import { IRouter, IRouterOptions } from './types';
 
@@ -13,10 +14,10 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 const LAYOUT_DIRECTORY = 'layouts';
 const PAGE_DIRECTORY = 'pages';
 
-// TODO: when use this param?
-const noPathPrefix = true;
+const noPathPrefix = false;
 
-export async function getAll(routerConfigAST) {
+export async function getAll() {
+  const routerConfigAST = await getRouterConfigAST(projectPath);
   let config = [];
 
   traverse(routerConfigAST, {
@@ -36,8 +37,9 @@ export async function getAll(routerConfigAST) {
 export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
   const routerConfigAST = await getRouterConfigAST(projectPath);
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
-  const currentData = await getAll(routerConfigAST);
+  const projectLanguageType = await getProjectLanguageType();
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const currentData = await getAll();
 
   if (!replacement) {
     if (parent) {
@@ -59,7 +61,8 @@ export async function bulkCreate(projectPath: string, data: IRouter[], options: 
 }
 
 async function getRouterConfigAST(projectPath) {
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.js`);
+  const projectLanguageType = await getProjectLanguageType();
+  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
   const routerConfigAST = getASTByCode(routerConfigString);
   return routerConfigAST;
@@ -113,6 +116,7 @@ function setData(data, routerConfigAST, routeConfigPath) {
    */
   traverse(dataAST, {
     ObjectProperty({ node }) {
+      // @ts-ignore
       if (['component'].indexOf(node.key.value) > -1) {
         const value: any = node.value;
         node.value = t.identifier(value.value);

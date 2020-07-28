@@ -2,20 +2,24 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework } from '@iceworks/project-service';
+import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework, projectPath } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
+import { bulkCreate } from './router';
 import i18n from './i18n';
+
+export { getAll } from './router';
+
 /**
  * Generate page code based on blocks
  *
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function ({ pageName: name, blocks = [] }: { pageName: string; blocks: IMaterialBlock[] }) {
+export const generate = async function ({ pageName: name, blocks = [], parent, path: routePath }: { pageName: string; blocks: IMaterialBlock[]; parent: string; path: string }) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -24,7 +28,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(i18n.format('package.pageService.index.pagePathExistError', {name}));
+    throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
   }
 
   try {
@@ -56,6 +60,8 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
     });
 
     await fsExtra.writeFile(dist, rendered, 'utf-8');
+
+    await bulkCreate(projectPath, [{ path: routePath, component: name }], { parent });
   } catch (error) {
     remove(pageName);
     throw error;
