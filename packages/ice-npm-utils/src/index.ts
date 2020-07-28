@@ -237,7 +237,7 @@ async function readPackageJSON(projectPath: string) {
   const packagePath = path.join(projectPath, packageJSONFilename);
   const packagePathIsExist = await fsExtra.pathExists(packagePath);
   if (!packagePathIsExist) {
-    throw new Error("Project's package.json file not found in local environment");
+    throw new Error('Project\'s package.json file not found in local environment');
   }
   return await fsExtra.readJson(packagePath);
 }

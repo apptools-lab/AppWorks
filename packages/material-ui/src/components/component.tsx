@@ -17,7 +17,7 @@ export const MaterialComponent: React.FC<{
       className={classnames({
         [styles.container]: true,
         [styles.selected]: selected,
-        selected: selected,
+        selected,
       })}
     >
       <div onClick={handleClick}>

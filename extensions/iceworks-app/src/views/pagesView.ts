@@ -11,7 +11,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
-    PageTreeItem | undefined
+  PageTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;

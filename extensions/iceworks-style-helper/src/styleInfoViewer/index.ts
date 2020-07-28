@@ -73,9 +73,10 @@ export default function styleInfoViewer(context: vscode.ExtensionContext) {
       vscode.languages.registerCompletionItemProvider(
         language,
         { provideCompletionItems },
-        // eslint-disable-next-line
         '.',
         '"',
+
+        // eslint-disable-next-line
         "'",
         ' '
       )

@@ -18,7 +18,7 @@ export const MaterialBlock: React.FC<{
       className={classnames({
         [styles.container]: true,
         [styles.selected]: selected,
-        selected: selected,
+        selected,
       })}
     >
       {selected && (

@@ -14,7 +14,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<ScriptTreeItem | undefined> = new vscode.EventEmitter<
-    ScriptTreeItem | undefined
+  ScriptTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<ScriptTreeItem | undefined> = this.onDidChange.event;
@@ -59,8 +59,8 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
 
       const scripts = packageJson.scripts
         ? Object.keys(packageJson.scripts).map((script) =>
-            toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
-          )
+          toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
+        )
         : [];
       return scripts;
     } else {
