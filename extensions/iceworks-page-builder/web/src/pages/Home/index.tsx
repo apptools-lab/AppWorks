@@ -114,7 +114,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.iceworksPageBuilder.Home.enterPageNameTitle' />
+            <FormattedMessage id="web.iceworksPageBuilder.Home.enterPageNameTitle" />
           </div>
           <div className={styles.field}>
             <Input
@@ -128,14 +128,14 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock' />
+            <FormattedMessage id="web.iceworksPageBuilder.Home.chooseBlock" />
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
               <Col span={16} className={styles.col}>
                 <PageSelected
                   useDragHandle
-                  lockAxis='y'
+                  lockAxis="y"
                   helperClass={styles.blockIsDraging}
                   blocks={selectedBlocks}
                   onDelete={onDelete}
@@ -162,8 +162,8 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type='primary' size='medium' loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id='web.iceworksPageBuilder.Home.createPage' />
+        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
+          <FormattedMessage id="web.iceworksPageBuilder.Home.createPage" />
         </Button>
       </div>
     </div>

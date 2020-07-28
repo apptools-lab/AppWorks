@@ -46,7 +46,7 @@ export const MaterialView: React.FC<{
         );
       })
     ) : (
-      <Item title='没有数据' key={EMPTY_TAB_KEY}>
+      <Item title="没有数据" key={EMPTY_TAB_KEY}>
         没有找到物料源数据，请配置后再试。
       </Item>
     );
@@ -55,10 +55,10 @@ export const MaterialView: React.FC<{
       className={styles.wrap}
       activeKey={isLoadingSources ? LOADING_TAB_KEY : sourceActiveKey}
       onChange={onChangeSource}
-      size='medium'
+      size="medium"
       extra={extra}
     >
-      {isLoadingSources ? <Item title='加载中……' key={LOADING_TAB_KEY} /> : tabItems}
+      {isLoadingSources ? <Item title="加载中……" key={LOADING_TAB_KEY} /> : tabItems}
     </Tab>
   );
 };

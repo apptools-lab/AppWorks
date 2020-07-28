@@ -28,7 +28,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
 
   return (
     <div className={styles.container}>
-      <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign='top'>
+      <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
         <Form.Item
           colSpan={12}
           label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.projectName' })}
@@ -39,22 +39,22 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
         >
           <Input
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.inputProjectName' })}
-            name='projectName'
+            name="projectName"
           />
         </Form.Item>
         <Form.Item
           colSpan={12}
           label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.storage' })}
           required
-          requiredMessage='请选择应用存储的本地路径'
+          requiredMessage="请选择应用存储的本地路径"
         >
           <Input
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath' })}
-            name='projectPath'
-            aria-label='projectPath'
+            name="projectPath"
+            aria-label="projectPath"
             readOnly
             innerAfter={
-              <img onClick={onOpenFolderDialog} className={styles.folderIcon} src={folderIcon} alt='folder' />
+              <img onClick={onOpenFolderDialog} className={styles.folderIcon} src={folderIcon} alt="folder" />
             }
           />
         </Form.Item>

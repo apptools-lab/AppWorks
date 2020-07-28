@@ -29,8 +29,8 @@ const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({
         className={classnames(styles.card, { [styles.active]: selected })}
         onClick={onClick}
       >
-        {selected && <img src={successIcon} className={styles.successIcon} alt='success' />}
-        <Card.Media>{media && <img src={media} alt='screenshot' className={styles.media} />}</Card.Media>
+        {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
+        <Card.Media>{media && <img src={media} alt="screenshot" className={styles.media} />}</Card.Media>
         <Card.Header title={title} />
         <div className={styles.mark}>
           <div className={styles.content}>{content}</div>
