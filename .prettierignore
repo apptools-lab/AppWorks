@@ -11,3 +11,4 @@ es
 **/*.min.js
 package-lock.json
 yarn.lock
+def-login-client
