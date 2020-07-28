@@ -42,7 +42,7 @@ $ npm run publish:package # or npm run publish-beta:package
 
 You can add the VS Code Extension of Iceworks to the directory `extension`.
 
-### 1. Initialization
+#### 1. Initialization
 
 Install [Yeoman](http://yeoman.io/) and [VS Code Extension Generator](https://www.npmjs.com/package/generator-code)：
 
@@ -56,7 +56,7 @@ In the `extensions/` Directory, execute `yo code` to initialize the extension
 yo code
 ```
 
-### 2. Development and Debugging
+#### 2. Development and Debugging
 
 Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api)
 
@@ -81,8 +81,8 @@ Use the VS Code to develop the extension project, and enable extension debugging
       "publisher": "iceworks-team"
     }
     ```
-  - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `release/*`, changed packages will be auto publish its beta version.
+  - When your PR has been merged into `product`, changed packages and VS Code Extensions will be auto published.
+  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
 
 ## Issue Reporting Guidelines
 
