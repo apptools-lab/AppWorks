@@ -1,0 +1,31 @@
+{
+  "name": "@iceworks/doctor",
+  "description": "Analyse react/rax projects, troubleshooting and automatically fixing errors",
+  "version": "0.1.0",
+  "keywords": [
+    "doctor",
+    "analysis",
+    "lint",
+    "troubleshooting"
+  ],
+  "bin": "bin/doctor",
+  "files": [
+    "lib/"
+  ],
+  "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "argv-parse": "^1.0.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-ali": "^10.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "jscpd": "^3.2.1",
+    "typhonjs-escomplex": "^0.1.0"
+  }
+}

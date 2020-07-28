@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const argv = require('argv-parse');
+const options = require('./options.json');
+const pkg = require('../package.json');
+const { Scanner } = require('../lib/index');
+
+const args = argv(options);
+
+// Show version
+if (args.version) {
+  console.log(pkg.version);
+  process.exit();
+}
+
+// Show help text
+if (args.help) {
+  console.log('\nUsage : doctor [options]');
+  Object.keys(options).forEach((key) => {
+    const option = options[key];
+    console.log(
+      `  -${option.alias},`,
+      `  --${key}`,
+      option.type !== 'boolean' ? ' : ' + option.type : '',
+      option.required ? ' *required*' : ''
+    );
+    console.log(`      ${option.desc}`);
+  });
+  process.exit();
+}
+
+// Check project
+if (args.scan) {
+  const scanner = new Scanner();
+  scanner.scan(args.scan);
+}

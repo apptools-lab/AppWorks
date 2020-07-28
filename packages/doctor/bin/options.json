@@ -1,0 +1,22 @@
+{
+  "version": {
+    "alias": "v",
+    "desc": "Print the version.",
+    "type": "boolean"
+  },
+  "help": {
+    "alias": "h",
+    "desc": "Display this help text.",
+    "type": "boolean"
+  },
+  "scan": {
+    "alias": "s",
+    "desc": "Scan target project directory.",
+    "type": "string"
+  },
+  "ignoreDirs":{
+    "alias": "i",
+    "desc": "Ignore directories when scan.",
+    "type": "array"
+  }
+}
