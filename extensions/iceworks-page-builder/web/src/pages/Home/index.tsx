@@ -44,8 +44,9 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ blocks, pageName }) {
-    if (!pageName) {
+  function validateData({ blocks }) {
+    if (!blocks.length) {
+      // TODO: 修改国际化内容 
       return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
     }
     return '';
@@ -91,6 +92,12 @@ const Home = () => {
   }
 
   async function handleCreate() {
+    const errorMessage = validateData({ blocks: selectedBlocks });
+    if (errorMessage) {
+      Notification.error({ content: errorMessage });
+      return;
+    }
+
     try {
       const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
       setIsConfigurableRouter(isRouteConfigPathExists);
@@ -111,17 +118,17 @@ const Home = () => {
     try {
       const data = {
         blocks: selectedBlocks,
-        ...values,
+        pageName: values.pageName
       };
+      await callService('page', 'generate', data);
 
-      const errorMessage = validateData(data);
-      if (errorMessage) {
-        Notification.error({ content: errorMessage });
-        setIsCreating(false);
-        return;
+      if (isConfigurableRouter) {
+        try {
+          await callService('page', 'createRouter', values);
+        } catch (error) {
+          Notification.error({ content: error.message })
+        }
       }
-      const shouldCreateRouter = isConfigurableRouter;
-      await callService('page', 'generate', data, shouldCreateRouter);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);

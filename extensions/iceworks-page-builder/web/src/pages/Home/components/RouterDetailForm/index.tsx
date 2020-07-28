@@ -38,18 +38,19 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
 
   const submit = async () => {
     const { errors } = await field.validatePromise();
-    if (errors && errors.length > 0) {
+    if (errors) {
       return;
     }
 
     onSubmit(field.getValues());
   };
 
+  const includedChildrenRouterConfig = routerConfig.filter(item => !!item.children);
   return (
     <Dialog
       visible={visible}
       title="新增页面"
-      style={{ width: 500 }}
+      className={styles.dialog}
       onOk={submit}
       okProps={{ loading: isCreating }}
       onCancel={onClose}
@@ -64,13 +65,14 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         {isConfigurableRouter && <Form.Item label="路由路径" required requiredMessage="请输入路由路径">
           <Input name="path" placeholder="请输入路由路径" disabled={isCreating} />
         </Form.Item>}
-        {isConfigurableRouter && <Form.Item label="父级路由" required requiredMessage="请选择父级路由">
-          <Select name="parent" placeholder="请选择父级路由" disabled={isCreating}>
-            {routerConfig.map(route => (
-              <Select.Option value={route.path}>{route.component}</Select.Option>
-            ))}
-          </Select>
-        </Form.Item>}
+        {isConfigurableRouter && !!includedChildrenRouterConfig.length && (
+          <Form.Item label="父级路由" required requiredMessage="请选择父级路由">
+            <Select name="parent" placeholder="请选择父级路由" disabled={isCreating}>
+              {includedChildrenRouterConfig.map(route => (
+                <Select.Option value={route.path}>{route.component}</Select.Option>
+              ))}
+            </Select>
+          </Form.Item>)}
       </Form>
     </Dialog>
   )

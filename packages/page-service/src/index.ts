@@ -19,10 +19,7 @@ export * from './router';
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function (
-  { pageName: name, parent, path: routePath, blocks = [] }: { pageName: string; blocks: IMaterialBlock[]; parent: string; path: string },
-  shouldCreateRouter = false
-) {
+export const generate = async function ({ pageName: name, blocks = [] }: { pageName: string; blocks: IMaterialBlock[] }) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -63,20 +60,20 @@ export const generate = async function (
     });
 
     await fsExtra.writeFile(dist, rendered, 'utf-8');
-    if (shouldCreateRouter) {
-      // if the router is configurable, write the router config
-      try {
-        await bulkCreate(projectPath, [{ path: routePath, component: name }], { parent });
-      } catch (e) {
-        console.error(e);
-      }
-    }
   } catch (error) {
     remove(pageName);
     throw error;
   }
 
   return pageName;
+}
+
+/**
+ *  write the router config
+ */
+export async function createRouter(data) {
+  const { path, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
 }
 
 /**
