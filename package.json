@@ -22,14 +22,16 @@
     "publish-beta": "npm run publish-beta:package && npm run publish-beta:extension",
     "publish-beta:package": "ts-node ./scripts/publish-beta-package.ts",
     "publish-beta:extension": "ts-node ./scripts/publish-beta-extension.ts",
-    "lint": "eslint --cache --ext .ts,.tsx,.js ./ --quiet",
-    "lint:fix": "eslint --cache --ext .ts,.tsx,.js ./ --quiet --fix",
+    "lint": "eslint --cache --ext .ts,.tsx,.js,.jsx ./ --quiet",
+    "lint:fix": "eslint --cache --ext .ts,.tsx,.js,.jsx ./ --quiet --fix",
     "coverage": "codecov",
     "owner": "ts-node ./scripts/owner.ts",
     "sync": "ts-node ./scripts/sync.ts",
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
     "docs:check": "ts-node ./scripts/extension-docs-check.ts",
-    "env": "node ./scripts/env.js"
+    "env": "node ./scripts/env.js",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx,ejs,less,css,scss,json}\"",
+    "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,ejs,less,css,scss,json}\""
   },
   "resolutions": {
     "eslint-plugin-import": "2.20.2"
@@ -39,9 +41,6 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "npm run lint"
     }
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": "prettier --write"
   },
   "repository": {
     "type": "git",
@@ -81,6 +80,7 @@
     "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",
     "pify": "^5.0.0",
+    "prettier": "^2.0.5",
     "stylelint": "^13.2.0",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
