@@ -1,4 +1,3 @@
-
 /**
  * npm run owner -- add sobear
  * npm run owner -- rm sobear
@@ -7,12 +6,11 @@
 import * as spawn from 'cross-spawn';
 import getPackages from './fn/getPackages';
 
-
 (async function () {
   const args = process.argv;
   const action = args[2];
   const name = args[3];
-  const { packageNames }  = await getPackages();
+  const { packageNames } = await getPackages();
 
   console.log(`npm owner ${action} ${name} to ${packageNames.join(',')}...`);
 
@@ -22,5 +20,4 @@ import getPackages from './fn/getPackages';
     const params = action === 'ls' ? ['owner', action, npmName] : ['owner', action, name, npmName];
     spawn.sync('npm', params, { stdio: 'inherit' });
   });
-
 })();

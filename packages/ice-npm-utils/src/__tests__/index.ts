@@ -27,7 +27,6 @@ test('getNpmRegistry', () => {
   expect(getNpmRegistry('@alipay/ice-test')).toBe(ALI_NPM_REGISTRY);
 });
 
-
 test('getUnpkgHost custom host', () => {
   const custom = 'https://unpkg.example.com';
 
@@ -104,7 +103,6 @@ test('getNpmClient', () => {
   expect(getNpmClient('@alixxx/ice-test')).toBe(defaultData);
 });
 
-
 test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
     console.log('checkAliInternal', internal);
@@ -139,7 +137,10 @@ test('getAndExtractTarball', () => {
 
 test('getAndExtractTarballWithDir', () => {
   const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
-  return getAndExtractTarball(tempDir, `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`)
+  return getAndExtractTarball(
+    tempDir,
+    `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`
+  )
     .then((files) => {
       rimraf.sync(tempDir);
       expect(files.length > 0).toBe(true);

@@ -3,8 +3,8 @@ import CreateProject from '@/pages/CreateProject';
 const routerConfig = [
   {
     path: '/',
-    component: CreateProject
-  }
+    component: CreateProject,
+  },
 ];
 
 export default routerConfig;

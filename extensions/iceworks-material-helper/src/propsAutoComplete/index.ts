@@ -33,12 +33,11 @@ async function provideCompletionItems(document, position): Promise<vscode.Comple
     });
   }
   return items;
-};
+}
 
 // Set completion
 export default function propsAutoComplete() {
-  vscode.languages.registerCompletionItemProvider(
-    ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
-    { provideCompletionItems }
-  );
+  vscode.languages.registerCompletionItemProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
+    provideCompletionItems,
+  });
 }

@@ -14,4 +14,4 @@ export default function getCompletionItem(
     completionItem.documentation = new vscode.MarkdownString(`**Iceworks Style Helper** \n ${documentation}`);
   }
   return completionItem;
-};
+}

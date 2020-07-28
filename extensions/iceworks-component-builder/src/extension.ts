@@ -23,16 +23,23 @@ export function activate(context: vscode.ExtensionContext) {
   initExtension(context);
 
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', i18n.format('extension.iceworksComponentBuilder.extension.webviewTitle'), ViewColumn.One, {
-      enableScripts: true,
-      retainContextWhenHidden: true,
-    });
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksComponentBuilder.extension.webviewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
     connectService(webviewPanel, context, { services, logger });
   }
-  subscriptions.push(vscode.commands.registerCommand('iceworks-component-builder.generate', function () {
-    activeWebview();
-  }));
+  subscriptions.push(
+    vscode.commands.registerCommand('iceworks-component-builder.generate', function () {
+      activeWebview();
+    })
+  );
 }
 
-export function deactivate() { }
+export function deactivate() {}

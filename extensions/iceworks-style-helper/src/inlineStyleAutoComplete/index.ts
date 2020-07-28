@@ -79,7 +79,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
           )
         );
       }
-    })
+    });
   }
 
   // Completion property value
@@ -92,19 +92,19 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
         if (firstCharsEqual(value.name, word)) {
           completions.push(
             getCompletionItem(
-              value.name, value.description || '',
+              value.name,
+              value.description || '',
               `${CSS_DOCS_URL}/${property.name}#Values`, // Docs
               `'${value.name}'${!isEndsWithComma(currentText) ? ',' : ''}`, // EXP 'relative',
               'Value'
             )
           );
         }
-      })
+      });
     }
   }
   return completions;
 }
-
 
 // Set completion
 export default function inlineStyleAutoComplete(context: vscode.ExtensionContext): void {
@@ -114,7 +114,7 @@ export default function inlineStyleAutoComplete(context: vscode.ExtensionContext
         { scheme: 'file', language: 'javascript' },
         { scheme: 'file', language: 'javascriptreact' },
         { scheme: 'file', language: 'typescript' },
-        { scheme: 'file', language: 'typescriptreact' }
+        { scheme: 'file', language: 'typescriptreact' },
       ],
       { provideCompletionItems }
     )

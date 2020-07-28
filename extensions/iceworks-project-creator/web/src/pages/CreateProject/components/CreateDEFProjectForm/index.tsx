@@ -3,7 +3,7 @@ import { Form, Input, Select } from '@alifd/next';
 import { IDEFProjectField, IGitLabGroup, IGitLabExistProject } from '@/types';
 import callService from '@/callService';
 import { useIntl, FormattedMessage } from 'react-intl';
-import { ALI_GITACCOUNT_URL, ALI_GITACCOUNT_SHORTURL } from '@iceworks/constant'
+import { ALI_GITACCOUNT_URL, ALI_GITACCOUNT_SHORTURL } from '@iceworks/constant';
 import styles from './index.module.scss';
 
 interface ICreateDEFProjectFormProps {
@@ -11,14 +11,9 @@ interface ICreateDEFProjectFormProps {
   children: React.ReactNode;
   errorMsg?: string;
   onChange: (value: IDEFProjectField) => void;
-};
+}
 
-const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
-  value,
-  children,
-  errorMsg,
-  onChange,
-}) => {
+const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, children, errorMsg, onChange }) => {
   const [empInfoShowed, setEmpInfoShowed] = useState(false);
   const [existProjects, setExistProjects] = useState([]);
   const [gitLabGroups, setGitLabGroups] = useState<IGitLabGroup[]>([]);
@@ -30,7 +25,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         gitlabToken = await getUserInfo();
       }
       await getExistProjects(gitlabToken);
-      await getGitLabGroups(gitlabToken)
+      await getGitLabGroups(gitlabToken);
     }
 
     initData();
@@ -73,14 +68,14 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
 
   function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
     if (existProjects.filter((item: IGitLabExistProject) => item.name === value).length) {
-      return callback(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.nameExist' }))
+      return callback(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.nameExist' }));
     }
-    return callback()
-  };
+    return callback();
+  }
   const intl = useIntl();
   return (
     <div className={styles.container}>
-      <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign="top">
+      <Form value={value} onChange={onChange} className={styles.form} responsive fullWidth labelAlign='top'>
         {empInfoShowed && (
           <>
             <Form.Item
@@ -89,45 +84,65 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
               required
               requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
             >
-              <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })} name="empId" />
+              <Input
+                placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
+                name='empId'
+              />
             </Form.Item>
             <Form.Item
               colSpan={12}
               label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.account' })}
               required
-              requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
+              requiredMessage={intl.formatMessage({
+                id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount',
+              })}
             >
-              <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })} name="account" />
+              <Input
+                placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
+                name='account'
+              />
             </Form.Item>
           </>
         )}
         <Form.Item
           colSpan={12}
-          label="GitLab Token"
-          help={<span className={styles.help}>
-            <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open'/>
-            <a href={ALI_GITACCOUNT_URL} rel="noopener noreferrer" target="_blank">{ALI_GITACCOUNT_SHORTURL}</a> 
-            <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.copy'/> <b>Private Token</b></span>}
+          label='GitLab Token'
+          help={
+            <span className={styles.help}>
+              <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.open' />
+              <a href={ALI_GITACCOUNT_URL} rel='noopener noreferrer' target='_blank'>
+                {ALI_GITACCOUNT_SHORTURL}
+              </a>
+              <FormattedMessage id='web.iceworksProjectCreator.CreateDEFProjectForm.copy' /> <b>Private Token</b>
+            </span>
+          }
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })}
+          requiredMessage={intl.formatMessage({
+            id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken',
+          })}
           onBlur={onBlur}
         >
-          <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })} name="gitlabToken" />
+          <Input
+            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })}
+            name='gitlabToken'
+          />
         </Form.Item>
         <Form.Item
           colSpan={6}
-          label="GitLab Group"
+          label='GitLab Group'
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabGroup' })}
+          requiredMessage={intl.formatMessage({
+            id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabGroup',
+          })}
         >
           <Select
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabGroup' })}
-            name="group"
-            fillProps="name"
-            key="name"
+            name='group'
+            fillProps='name'
+            key='name'
             showSearch
           >
-            {gitLabGroups.map(item => (
+            {gitLabGroups.map((item) => (
               <Select.Option value={item.name}>{item.name}</Select.Option>
             ))}
           </Select>
@@ -140,20 +155,18 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
           autoValidate
           validator={onValidateProjectName}
         >
-          <Input placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })} name="project" />
+          <Input
+            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })}
+            name='project'
+          />
         </Form.Item>
         <Form.Item>
-          {errorMsg && <div className={styles.errorMsg}>
-            {errorMsg}
-          </div>
-          }
-          <div className={styles.action}>
-            {children}
-          </div>
+          {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+          <div className={styles.action}>{children}</div>
         </Form.Item>
       </Form>
     </div>
   );
-}
+};
 
 export default CreateDEFProjectForm;

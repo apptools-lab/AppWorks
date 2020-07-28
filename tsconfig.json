@@ -1,19 +1,19 @@
 {
   "files": [],
   "references": [
-    {"path": "packages/constant"},
-    {"path": "packages/i18n"},
-    {"path": "packages/ice-npm-utils"},
-    {"path": "packages/config"},
-    {"path": "packages/vscode-webview"},
-    {"path": "packages/generate-project"},
-    {"path": "packages/material-utils"},
-    {"path": "packages/transform-ts-to-js"},
-    {"path": "packages/common-service"},
-    {"path": "packages/project-service"},
-    {"path": "packages/material-service"},
-    {"path": "packages/block-service"},
-    {"path": "packages/component-service"},
-    {"path": "packages/page-service"},
+    { "path": "packages/constant" },
+    { "path": "packages/i18n" },
+    { "path": "packages/ice-npm-utils" },
+    { "path": "packages/config" },
+    { "path": "packages/vscode-webview" },
+    { "path": "packages/generate-project" },
+    { "path": "packages/material-utils" },
+    { "path": "packages/transform-ts-to-js" },
+    { "path": "packages/common-service" },
+    { "path": "packages/project-service" },
+    { "path": "packages/material-service" },
+    { "path": "packages/block-service" },
+    { "path": "packages/component-service" },
+    { "path": "packages/page-service" }
   ]
 }

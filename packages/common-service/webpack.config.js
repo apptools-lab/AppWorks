@@ -11,10 +11,10 @@ const config = {
     libraryTarget: 'commonjs',
   },
   externals: {
-    vscode: 'commonjs vscode'
+    vscode: 'commonjs vscode',
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json']
+    extensions: ['.ts', '.js', '.json'],
   },
   module: {
     rules: [
@@ -26,15 +26,15 @@ const config = {
             options: {
               configFile: tsConfigPath,
             },
-          }
-        ]
+          },
+        ],
       },
       {
         test: /rx\.lite\.aggregates\.js/,
-        use: 'imports-loader?define=>false'
-      }
-    ]
-  }
+        use: 'imports-loader?define=>false',
+      },
+    ],
+  },
 };
 
 module.exports = config;

@@ -27,7 +27,11 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
   connectService(webviewPanel, context, services);
 }
 
-export function connectService(webviewPanel: vscode.WebviewPanel, context: vscode.ExtensionContext, { services, logger }) {
+export function connectService(
+  webviewPanel: vscode.WebviewPanel,
+  context: vscode.ExtensionContext,
+  { services, logger }
+) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
   webview.onDidReceiveMessage(

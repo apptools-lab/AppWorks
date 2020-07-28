@@ -3,9 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "title": "The Rax APP build.json Schema",
-  "required": [
-    "plugins"
-  ],
+  "required": ["plugins"],
   "properties": {
     "publicPath": {
       "type": "string",
@@ -21,9 +19,7 @@
       "type": "string",
       "description": "The build file directory",
       "default": "",
-      "examples": [
-        "build"
-      ]
+      "examples": ["build"]
     },
     "hash": {
       "type": "boolean",
@@ -94,9 +90,7 @@
               {
                 "type": "string",
                 "description": "Build Rax App",
-                "enum": [
-                  "build-plugin-rax-app"
-                ]
+                "enum": ["build-plugin-rax-app"]
               },
               {
                 "type": "object",
@@ -106,19 +100,11 @@
                     "description": "Platform targets",
                     "items": {
                       "type": "string",
-                      "enum": [
-                        "web",
-                        "weex",
-                        "miniapp",
-                        "wechat-miniprogram",
-                        "kraken"
-                      ]
+                      "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
                     }
                   }
                 },
-                "required": [
-                  "targets"
-                ]
+                "required": ["targets"]
               }
             ]
           },
@@ -128,9 +114,7 @@
               {
                 "type": "string",
                 "description": "Rax PWA Plugin",
-                "enum": [
-                  "build-plugin-rax-pwa"
-                ]
+                "enum": ["build-plugin-rax-pwa"]
               },
               {
                 "type": "object",
@@ -167,13 +151,7 @@
                         "default": "standalone"
                       }
                     },
-                    "required": [
-                      "name",
-                      "short_name",
-                      "description",
-                      "icon",
-                      "start_url"
-                    ]
+                    "required": ["name", "short_name", "description", "icon", "start_url"]
                   },
                   "serviceWorker": {
                     "type": "object",
@@ -249,11 +227,7 @@
           },
           {
             "type": "string",
-            "examples": [
-              "build-plugin-rax-compat-react",
-              "build-plugin-rax-ssr",
-              "build-plugin-rax-multi-pages"
-            ]
+            "examples": ["build-plugin-rax-compat-react", "build-plugin-rax-ssr", "build-plugin-rax-multi-pages"]
           }
         ]
       }
