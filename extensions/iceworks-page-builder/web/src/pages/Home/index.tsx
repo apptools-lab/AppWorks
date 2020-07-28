@@ -44,13 +44,6 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ blocks, pageName }) {
-    if (!pageName) {
-      return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
-    }
-    return '';
-  }
-
   async function onSettingsClick() {
     try {
       await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
@@ -114,12 +107,6 @@ const Home = () => {
         ...values,
       };
 
-      const errorMessage = validateData(data);
-      if (errorMessage) {
-        Notification.error({ content: errorMessage });
-        setIsCreating(false);
-        return;
-      }
       const shouldCreateRouter = isConfigurableRouter;
       await callService('page', 'generate', data, shouldCreateRouter);
     } catch (error) {
