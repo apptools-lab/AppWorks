@@ -4,12 +4,7 @@ import { findStyleDependencies } from './findStyleDependencies';
 import findStyleSelectors from './findStyleSelectors';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
-const SUPPORT_LANGUAGES = [
-  'javascript',
-  'javascriptreact',
-  'typescript',
-  'typescriptreact'
-];
+const SUPPORT_LANGUAGES = ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'];
 
 // Cmd+Click jump to style definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
@@ -67,21 +62,11 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
 export default function styleInfoViewer(context: vscode.ExtensionContext) {
   // Cmd+Click jump to style definition
-  context.subscriptions.push(
-    vscode.languages.registerDefinitionProvider(
-      SUPPORT_LANGUAGES,
-      { provideDefinition }
-    )
-  );
+  context.subscriptions.push(vscode.languages.registerDefinitionProvider(SUPPORT_LANGUAGES, { provideDefinition }));
 
   SUPPORT_LANGUAGES.forEach((language) => {
     // Show current style on hover over
-    context.subscriptions.push(
-      vscode.languages.registerHoverProvider(
-        language,
-        { provideHover }
-      )
-    );
+    context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
 
     // Styles auto Complete
     context.subscriptions.push(
@@ -89,9 +74,11 @@ export default function styleInfoViewer(context: vscode.ExtensionContext) {
         language,
         { provideCompletionItems },
         // eslint-disable-next-line
-        '.', '\"', '\'', ' ',
+        '.',
+        '"',
+        "'",
+        ' '
       )
     );
   });
 }
-

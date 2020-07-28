@@ -25,7 +25,11 @@ export interface IStyle {
 }
 
 // Find style property by className, in some CSS files.
-export function findStyle(directory: string, className: string, styleDependencies: IStyleDependency[] = []): IStyle | undefined {
+export function findStyle(
+  directory: string,
+  className: string,
+  styleDependencies: IStyleDependency[] = []
+): IStyle | undefined {
   let matched: IStyle | undefined;
 
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
@@ -61,9 +65,10 @@ export function findStyle(directory: string, className: string, styleDependencie
 
     const stylesheet = css.parse(cssContent).stylesheet;
     matched = stylesheet.rules.find(
-      rule => rule.selectors &&
+      (rule) =>
+        rule.selectors &&
         // Selector endWith className. Example: '.bar' can match '.foo .bar'.
-        rule.selectors.find(selector => selector.endsWith(className))
+        rule.selectors.find((selector) => selector.endsWith(className))
     );
 
     // Just find one matched stylesheet.
@@ -71,11 +76,11 @@ export function findStyle(directory: string, className: string, styleDependencie
       matched.file = file;
       matched.code = css.stringify({
         type: 'stylesheet',
-        stylesheet: { rules: [matched] }
+        stylesheet: { rules: [matched] },
       });
       break;
     }
   }
 
   return matched;
-};
+}

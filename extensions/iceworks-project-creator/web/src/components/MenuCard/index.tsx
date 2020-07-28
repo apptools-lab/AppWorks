@@ -10,7 +10,7 @@ interface IMenuCard {
   style?: object;
   onClick?: () => void;
   // only for Balloon Component
-  // Ref: https://ice.work/component/balloon#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F 
+  // Ref: https://ice.work/component/balloon#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F
   onMouseLeave?: (e: React.MouseEvent<HTMLInputElement>) => void;
   onMouseEnter?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
@@ -24,11 +24,11 @@ const MenuCard: React.FC<IMenuCard> = ({ style, title, icon, onClick, selected, 
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
     >
-      {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
-      {icon && <img src={icon} alt="icon" className={styles.icon} />}
+      {selected && <img src={successIcon} className={styles.successIcon} alt='success' />}
+      {icon && <img src={icon} alt='icon' className={styles.icon} />}
       <div className={styles.title}>{title}</div>
     </div>
-  )
-}
+  );
+};
 
-export default MenuCard
+export default MenuCard;

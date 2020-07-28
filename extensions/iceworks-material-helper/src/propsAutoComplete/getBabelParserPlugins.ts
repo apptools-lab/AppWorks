@@ -11,7 +11,7 @@ export default function getBabelParserPlugins(language: string): ParserPlugin[] 
     'asyncGenerators',
     'functionBind',
     'functionSent',
-    'dynamicImport'
+    'dynamicImport',
   ];
 
   if (language === 'ts') {
@@ -22,4 +22,4 @@ export default function getBabelParserPlugins(language: string): ParserPlugin[] 
   }
 
   return plugins;
-};
+}

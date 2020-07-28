@@ -36,11 +36,16 @@ export function activate(context: vscode.ExtensionContext) {
         layout = { orientation: 0, groups: [{ size: 0.7 }, { size: 0.3 }] };
       }
 
-      webviewPanel = window.createWebviewPanel('Iceworks', i18n.format('extension.iceworksMaterialHelper.extension.title'), { viewColumn: columnToShowIn, preserveFocus: true }, {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-        enableFindWidget: true,
-      });
+      webviewPanel = window.createWebviewPanel(
+        'Iceworks',
+        i18n.format('extension.iceworksMaterialHelper.extension.title'),
+        { viewColumn: columnToShowIn, preserveFocus: true },
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+          enableFindWidget: true,
+        }
+      );
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.onDidDispose(
         () => {
@@ -55,9 +60,11 @@ export function activate(context: vscode.ExtensionContext) {
       connectService(webviewPanel, context, { services, logger });
     }
   }
-  subscriptions.push(vscode.commands.registerCommand('iceworks-material-helper.start', function () {
-    activeWebview();
-  }));
+  subscriptions.push(
+    vscode.commands.registerCommand('iceworks-material-helper.start', function () {
+      activeWebview();
+    })
+  );
 
   // set propsAutoCompleter
   propsAutoComplete();

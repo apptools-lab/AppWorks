@@ -33,14 +33,12 @@ function updateBetaDependencies(extension: string, directory: string) {
   } catch (e) {
     console.log(`[ERROR] ${extension} update beta package dependencies failed.`, e);
   }
-};
+}
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce package
   console.log('[VSCE] PACKAGE: ', `${extension}@${version}`);
-  spawnSync('vsce', [
-    'package',
-  ], {
+  spawnSync('vsce', ['package'], {
     stdio: 'inherit',
     cwd: directory,
   });

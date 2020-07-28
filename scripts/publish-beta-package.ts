@@ -21,11 +21,8 @@ function getBetaVersionInfo(packageInfo: IPackageInfo): IBetaPackageInfo {
   if (!BETA_REG.test(localVersion)) {
     // Add beta version
     let betaVersion = 1;
-    const childProcess = spawnSync('npm', [
-      'show', name, 'dist-tags',
-      '--json',
-    ], {
-      encoding: 'utf-8'
+    const childProcess = spawnSync('npm', ['show', name, 'dist-tags', '--json'], {
+      encoding: 'utf-8',
     });
     const distTags = JSON.parse(childProcess.stdout) || {};
     const matched = (distTags.beta || '').match(BETA_REG);
@@ -61,16 +58,12 @@ function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
     }
 
     fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
-  })
-};
+  });
+}
 
 function publish(pkg: string, betaVersion: string, directory: string): void {
-
   console.log('[PUBLISH BETA]', `${pkg}@${betaVersion}`);
-  spawnSync('npm', [
-    'publish',
-    '--tag=beta',
-  ], {
+  spawnSync('npm', ['publish', '--tag=beta'], {
     stdio: 'inherit',
     cwd: directory,
   });
@@ -79,10 +72,9 @@ function publish(pkg: string, betaVersion: string, directory: string): void {
 // Entry
 console.log('[PUBLISH BETA] Start:');
 getPackageInfos().then((packageInfos: IPackageInfo[]) => {
-
   const shouldPublishPackages = packageInfos
-    .filter(packageInfo => packageInfo.shouldPublish)
-    .map(packageInfo => getBetaVersionInfo(packageInfo))
+    .filter((packageInfo) => packageInfo.shouldPublish)
+    .map((packageInfo) => getBetaVersionInfo(packageInfo));
 
   updatePackageJson(shouldPublishPackages);
 
@@ -96,7 +88,6 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
     publish(name, betaVersion, directory);
     publishedPackages.push(`${name}:${betaVersion}`);
   });
-
 
   console.log(`[PUBLISH PACKAGE BETA] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);

@@ -9,6 +9,6 @@ function activate(context: vscode.ExtensionContext) {
   inlineStyleAutoComplete(context);
   styleInfoViewer(context);
   sassVariablesViewer(context);
-};
+}
 
 exports.activate = activate;

@@ -10,7 +10,9 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<PageTreeItem | undefined>();
+  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
+    PageTreeItem | undefined
+  >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
 
@@ -48,17 +50,17 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
         const command: vscode.Command = {
           command: 'iceworksApp.pages.openFile',
           title: 'Open File',
-          arguments: [pageEntryPath]
+          arguments: [pageEntryPath],
         };
         return new PageTreeItem(this.extensionContext, pageName, command);
       };
       const dirNames = await fse.readdir(pagesPath);
       // except the file
-      const pageNames = dirNames.filter(dirname => {
-        const stat = fse.statSync(path.join(pagesPath, dirname))
+      const pageNames = dirNames.filter((dirname) => {
+        const stat = fse.statSync(path.join(pagesPath, dirname));
         return stat.isDirectory();
-      })
-      return pageNames.map(pageName => toPage(pageName));
+      });
+      return pageNames.map((pageName) => toPage(pageName));
     } else {
       return [];
     }
@@ -76,7 +78,7 @@ class PageTreeItem extends vscode.TreeItem {
 
   iconPath = {
     dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/page.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/page.svg'))
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/page.svg')),
   };
 
   contextValue = 'page';

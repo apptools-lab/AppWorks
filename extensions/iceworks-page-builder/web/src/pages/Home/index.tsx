@@ -8,7 +8,6 @@ import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
-
 const { Row, Col } = Grid;
 
 const Home = () => {
@@ -23,19 +22,19 @@ const Home = () => {
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.failGetMaterial'}) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.failGetMaterial' }) });
     }
-  
+
     console.log('getSources', sources);
     return sources;
   }
-  
+
   async function getData(source: string) {
     let data = {};
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.failGetData'}) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.failGetData' }) });
     }
     console.log('getData', data);
     return data;
@@ -43,7 +42,7 @@ const Home = () => {
 
   function validateData({ blocks, pageName }) {
     if (!pageName) {
-      return intl.formatMessage({id: 'web.iceworksPageBuilder.Home.enterPageName'});
+      return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
     }
     return '';
   }
@@ -106,7 +105,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: intl.formatMessage({id: 'web.iceworksPageBuilder.Home.successCreatePage'}) });
+    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.successCreatePage' }) });
     resetData();
   }
 
@@ -115,11 +114,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.iceworksPageBuilder.Home.enterPageNameTitle'/>
+            <FormattedMessage id='web.iceworksPageBuilder.Home.enterPageNameTitle' />
           </div>
           <div className={styles.field}>
             <Input
-              placeholder={intl.formatMessage({id: 'web.iceworksPageBuilder.Home.pageNameFormat'})}
+              placeholder={intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.pageNameFormat' })}
               className={styles.pageNameInput}
               value={pageName}
               onChange={(value) => setPageName(value)}
@@ -129,14 +128,14 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock'/>
+            <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock' />
           </div>
           <div className={styles.field}>
             <Row gutter={24} className={styles.row}>
               <Col span={16} className={styles.col}>
                 <PageSelected
                   useDragHandle
-                  lockAxis="y"
+                  lockAxis='y'
                   helperClass={styles.blockIsDraging}
                   blocks={selectedBlocks}
                   onDelete={onDelete}
@@ -163,19 +162,19 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id='web.iceworksPageBuilder.Home.createPage'/>
+        <Button type='primary' size='medium' loading={isCreating} onClick={handleCreate}>
+          <FormattedMessage id='web.iceworksPageBuilder.Home.createPage' />
         </Button>
       </div>
     </div>
   );
 };
-const IntlHome = ()=>{
+const IntlHome = () => {
   return (
     <LocaleProvider>
-      <Home/>
+      <Home />
     </LocaleProvider>
-  )
-}
+  );
+};
 
 export default IntlHome;

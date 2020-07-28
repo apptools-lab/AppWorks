@@ -21,7 +21,8 @@ const ZIP_FILE = path.join(__dirname, ZIP_NAME);
 const EXTENSIONS_DIR = path.join(__dirname, 'Iceworks');
 
 function upload(target, filePath) {
-  ossClient.put(target, filePath)
+  ossClient
+    .put(target, filePath)
     .then(() => {
       console.log(`[UPLOAD] ${filePath} upload success.`);
     })
@@ -33,7 +34,6 @@ function upload(target, filePath) {
 // Beta publish only zip published extension.
 // Production publish should zip all extensions.
 export default function uploadExtesions(extensions: string[], production?: boolean) {
-
   extensions.forEach((extension) => {
     const info = extension.split(':');
     const name = info[0];
@@ -45,7 +45,7 @@ export default function uploadExtesions(extensions: string[], production?: boole
     // Upload extension
     upload(`vscode-extensions/${production ? 'release' : 'beta'}/${extensionFile}`, extensionFilePath);
     fs.copySync(extensionFilePath, path.join(EXTENSIONS_DIR, extensionFile));
-  })
+  });
 
   // Upload extensions zip
   zip.addLocalFolder(EXTENSIONS_DIR);

@@ -6,10 +6,12 @@ import getBabelParserPlugins from './getBabelParserPlugins';
 // <Text | >...</Text>
 function isCursorInJsxOpeningElement(cursorPosition: number, jsxOpeningElement: JSXOpeningElement): boolean {
   return !!(
-    (jsxOpeningElement.start && cursorPosition > jsxOpeningElement.start) &&
-    (jsxOpeningElement.end && cursorPosition < jsxOpeningElement.end)
+    jsxOpeningElement.start &&
+    cursorPosition > jsxOpeningElement.start &&
+    jsxOpeningElement.end &&
+    cursorPosition < jsxOpeningElement.end
   );
-};
+}
 
 // <Text xxx={ | } >...</Text>
 function isCursorInJsxAttribute(cursorPosition: number, node: Node, scope: Scope): boolean {
@@ -21,17 +23,19 @@ function isCursorInJsxAttribute(cursorPosition: number, node: Node, scope: Scope
         const jsxAttribute = path.node;
 
         if (
-          (jsxAttribute.start && cursorPosition > jsxAttribute.start) &&
-          (jsxAttribute.end && cursorPosition < jsxAttribute.end)
+          jsxAttribute.start &&
+          cursorPosition > jsxAttribute.start &&
+          jsxAttribute.end &&
+          cursorPosition < jsxAttribute.end
         ) {
           result = true;
         }
-      }
+      },
     },
     scope
   );
   return result;
-};
+}
 
 type CurrentJsxElement = JSXOpeningElement | null;
 export default function getCurrentJsxElement(documentText: string, cursorPosition): CurrentJsxElement {
@@ -41,31 +45,28 @@ export default function getCurrentJsxElement(documentText: string, cursorPositio
     // https://babeljs.io/docs/en/babel-parser
     const ast = parse(documentText, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx')
+      plugins: getBabelParserPlugins('jsx'),
     });
 
     if (ast) {
       // https://babeljs.io/docs/en/babel-traverse
-      traverse(
-        ast,
-        {
-          JSXOpeningElement(path) {
-            const jsxOpeningElement = path.node;
+      traverse(ast, {
+        JSXOpeningElement(path) {
+          const jsxOpeningElement = path.node;
 
-            if (
-              // if <Text |> return Text
-              isCursorInJsxOpeningElement(cursorPosition, jsxOpeningElement) &&
-              !isCursorInJsxAttribute(cursorPosition, jsxOpeningElement, path.scope)
-            ) {
-              currentJsxElement = jsxOpeningElement;
-            }
+          if (
+            // if <Text |> return Text
+            isCursorInJsxOpeningElement(cursorPosition, jsxOpeningElement) &&
+            !isCursorInJsxAttribute(cursorPosition, jsxOpeningElement, path.scope)
+          ) {
+            currentJsxElement = jsxOpeningElement;
           }
-        }
-      );
+        },
+      });
     }
   } catch (error) {
     // ignore
   }
 
   return currentJsxElement;
-};
+}

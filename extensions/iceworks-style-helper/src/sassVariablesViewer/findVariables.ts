@@ -39,8 +39,8 @@ export default function findVariables(targetPath: string): IVariables {
               // Example: "path": "|/detail",
               positionInfo.line - 1,
               positionInfo.col
-            )
-          }
+            ),
+          };
         }
       }
 
@@ -55,7 +55,7 @@ export default function findVariables(targetPath: string): IVariables {
       // Process each imported module variables
       importModules.forEach((importModule) => {
         findVariablesByFile(getFullModulePath(importModule, filePath));
-      })
+      });
     }
   }
 
