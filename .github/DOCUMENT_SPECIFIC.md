@@ -1,6 +1,6 @@
 # DOCUMENT SPECIFIC
 
-## Extension README.md
+## Extension README.md Template
 
 ```md
 简体中文 | [English](./README.en.md)
@@ -53,7 +53,7 @@
 - When there is only one subfunction, there is no need for a four level title
 - When there is only one usage, five level headings are not required
 
-## Screenshot
+## Screenshot Formatting
 
 ### VS Code Window
 
