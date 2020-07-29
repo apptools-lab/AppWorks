@@ -17,30 +17,30 @@ const FdTextWeight: React.FC<WidgetProps> = (props)=>{
     'borderWidth': '1px'
   });
   const [inputValue,setInputValue] = useState(value);
-  const onfocus=(e)=>{
+  const onfocus=()=>{
     setInputStyle({
       'background': '#3c3c3c',
       'borderColor': '#167dd8',
       'borderWidth': '1px'
     })
   }
-  const onblur=(e)=>{
+  const onblur=()=>{
     setInputStyle({
       'background': '#3c3c3c',
       'borderColor': 'transparent',
       'borderWidth': '1px'
     })
   }
-  const inputChange = (value)=>{
-    onChange(value);
-    setInputValue(value);
+  const inputChange = (inputStringValue)=>{
+    onChange(inputStringValue);
+    setInputValue(inputStringValue);
   }
   return (
     <ChangeProvider fdkey={label} value = {inputValue}>
       <>
         <h3 style={{ color: 'white' }}>{label}</h3>
         <p className='fddescription'>{schema.description}</p>
-        <Input value={inputValue} onChange={value=>inputChange(value)} style={inputStyle} onFocus={onfocus} onBlur={onblur}/>
+        <Input value={inputValue} onChange={inputChange} style={inputStyle} onFocus={onfocus} onBlur={onblur}/>
       </>
     </ChangeProvider>
   )

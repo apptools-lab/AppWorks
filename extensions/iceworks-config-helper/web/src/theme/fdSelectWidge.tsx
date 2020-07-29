@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { WidgetProps } from '@rjsf/core';
 import { Select } from '@alifd/next';
 
 const SelectWidget = ({
-  schema,
   id,
   options,
-  label,
-  required,
   disabled,
   readonly,
   value,
-  multiple,
-  autofocus,
   onChange,
   onBlur,
   onFocus,
@@ -21,9 +16,9 @@ const SelectWidget = ({
   const fdonChange = (e)=>{
     onChange(e);
   }
-  const fdonBlur = (e: any) => onBlur(id, e.target.value);
+  const fdonBlur = (e) => onBlur(id, e.target.value);
   
-  const fdonFocus = (e: any) => onFocus(id, e.target.value);
+  const fdonFocus = (e) => onFocus(id, e.target.value);
    
   return (
     <>
