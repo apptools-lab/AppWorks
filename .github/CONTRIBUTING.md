@@ -82,7 +82,7 @@ Use the VS Code to develop the extension project, and enable extension debugging
     }
     ```
   - When your PR has been merged into `product`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto publish its beta version.
+  - When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
 
 ## Issue Reporting Guidelines
 
