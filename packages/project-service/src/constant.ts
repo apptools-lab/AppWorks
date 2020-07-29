@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL } from '@iceworks/constant'
+import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL } from '@iceworks/constant';
 
 const { workspace } = vscode;
 
@@ -16,7 +16,7 @@ export const componentsPath = path.join(projectPath, 'src', COMPONENT_DIR_NAME);
 export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
 export const generatorCreatetaskUrl = ALI_CREATETASK_URL;
-export const generatorTaskResultUrl = ALI_TASKRESULT_URL
+export const generatorTaskResultUrl = ALI_TASKRESULT_URL;
 export const applyRepositoryUrl = ALI_APPLYREPO_URL;
 
 /**

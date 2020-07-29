@@ -4,7 +4,6 @@ import * as vscode from 'vscode';
 const SPECIAL_MODULE_IMPORT_REG = /~[^/]+/g;
 
 export default function getFullModulePath(modulePath: string, currentFilePath?: string): string {
-
   const rootPath = vscode.workspace.rootPath || '';
   let targetPath = modulePath.trim().replace(/'|"/g, '');
 
@@ -26,4 +25,4 @@ export default function getFullModulePath(modulePath: string, currentFilePath?: 
   }
 
   return fullModulePath;
-};
+}

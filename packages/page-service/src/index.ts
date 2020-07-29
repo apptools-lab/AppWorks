@@ -19,7 +19,13 @@ export * from './router';
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function ({ pageName: name, blocks = [] }: { pageName: string; blocks: IMaterialBlock[] }) {
+export const generate = async function ({
+  pageName: name,
+  blocks = [],
+}: {
+  pageName: string;
+  blocks: IMaterialBlock[];
+}) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -66,7 +72,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
   }
 
   return pageName;
-}
+};
 
 /**
  *  write the router config
@@ -83,8 +89,8 @@ export async function createRouter(data) {
  */
 export const remove = async function (name: string) {
   await fsExtra.remove(path.join(pagesPath, name));
-}
+};
 
 export const addBlocks = async function (blocks: IMaterialBlock[], pageName: string) {
   return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
-}
+};

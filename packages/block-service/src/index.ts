@@ -11,14 +11,14 @@ import {
   pagesPath,
   COMPONENT_DIR_NAME,
   jsxFileExtnames,
-  checkIsTemplate
+  checkIsTemplate,
 } from '@iceworks/project-service';
 import {
   createNpmCommand,
   getTagTemplate,
   getImportInfos,
   getLastAcitveTextEditor,
-  getImportTemplate
+  getImportTemplate,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -30,7 +30,7 @@ const { window, Position } = vscode;
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
 
-  const index = files.findIndex(item => {
+  const index = files.findIndex((item) => {
     return /\.ts(x)/.test(item);
   });
 
@@ -43,14 +43,14 @@ function getBlockType(blockSourceSrcPath) {
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   await bulkDownload(blocks, localPath);
   await bulkInstallDependencies(blocks);
-}
+};
 
 /**
  * Download blocks code to page
  */
 export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string, log?: (text: string) => void) {
   if (!log) {
-    log = (text) => console.log(text)
+    log = (text) => console.log(text);
   }
 
   return await Promise.all(
@@ -73,17 +73,13 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       const blockTempDir = path.join(localPath, `.${blockName}.temp`);
 
       try {
-        await getAndExtractTarball(
-          blockTempDir,
-          tarballURL,
-          ({ percent }) => {
-            log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
-          }
-        );
+        await getAndExtractTarball(blockTempDir, tarballURL, ({ percent }) => {
+          log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
+        });
       } catch (error) {
         error.message = i18n.format('package.block-service.uzipError', { blockName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.block-service.uzipOutTime', { blockName, tarballURL });;
+          error.message = i18n.format('package.block-service.uzipOutTime', { blockName, tarballURL });
         }
         await fsExtra.remove(blockTempDir);
         throw error;
@@ -112,9 +108,9 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
       await fsExtra.move(blockSourceSrcPath, blockDir);
       await fsExtra.remove(blockTempDir);
       return blockDir;
-    }),
+    })
   );
-}
+};
 
 /**
  * Installation block dependencies
@@ -129,7 +125,7 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
 
   // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
-  Object.keys(blocksDependencies).forEach(packageName => {
+  Object.keys(blocksDependencies).forEach((packageName) => {
     if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
       filterDependencies.push({
         [packageName]: blocksDependencies[packageName],
@@ -138,14 +134,14 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   });
 
   if (filterDependencies.length > 0) {
-    const deps = filterDependencies.map(dependency => {
+    const deps = filterDependencies.map((dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
       return `${packageName}@${version}`;
     });
 
     let terminal: vscode.Terminal;
     const terminalName = 'Iceworks';
-    const targetTerminal = terminals.find(terminal => terminal.name === terminalName);
+    const targetTerminal = terminals.find((terminal) => terminal.name === terminalName);
 
     if (targetTerminal) {
       terminal = targetTerminal;
@@ -159,10 +155,12 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   } else {
     return [];
   }
-}
+};
 
 export async function addBlockCode(block: IMaterialBlock) {
-  const templateError = i18n.format('package.block-service.templateError', { jsxFileExtnames: jsxFileExtnames.join(',') });;
+  const templateError = i18n.format('package.block-service.templateError', {
+    jsxFileExtnames: jsxFileExtnames.join(','),
+  });
   const activeTextEditor = getLastAcitveTextEditor();
   console.log('addBlockCode....');
   if (!activeTextEditor) {
@@ -177,20 +175,17 @@ export async function addBlockCode(block: IMaterialBlock) {
   }
 
   const pageName = path.basename(path.dirname(fsPath));
-  const pagePath = path.join(
-    pagesPath,
-    pageName
-  );
+  const pagePath = path.join(pagesPath, pageName);
   const isPageFile = await fsExtra.pathExists(pagePath);
   if (!isPageFile) {
     throw new Error(i18n.format('package.block-service.notPageFileError', { pagesPath }));
   }
 
-  // insert code 
+  // insert code
   const blockName: string = await generateBlockName(pageName, block.name);
   await insertBlock(activeTextEditor, blockName);
 
-  // download block 
+  // download block
   const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
@@ -214,18 +209,12 @@ export async function addBlockCode(block: IMaterialBlock) {
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {
   const { position: importDeclarationPosition } = await getImportInfos(activeTextEditor.document.getText());
   activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    editBuilder.insert(
-      importDeclarationPosition,
-      getImportTemplate(blockName, `./components/${blockName}`)
-    );
+    editBuilder.insert(importDeclarationPosition, getImportTemplate(blockName, `./components/${blockName}`));
 
     const { selection } = activeTextEditor;
     if (selection && selection.active) {
       const insertPosition = new Position(selection.active.line, selection.active.character);
-      editBuilder.insert(
-        insertPosition,
-        getTagTemplate(blockName)
-      );
+      editBuilder.insert(insertPosition, getTagTemplate(blockName));
     }
   });
 }

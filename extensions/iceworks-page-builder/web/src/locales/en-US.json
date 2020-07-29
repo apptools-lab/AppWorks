@@ -1,9 +1,9 @@
 {
-    "web.iceworksPageBuilder.Home.failGetMaterial": "Fail to get materials. Please try agin later.",
-    "web.iceworksPageBuilder.Home.failGetData": "Fail to get material data. Please try agin later.",
-    "web.iceworksPageBuilder.Home.chooseBlock.prompt": "Please choose blocks.",
-    "web.iceworksPageBuilder.Home.successCreatePage": "Page created successfully.",
-    "web.iceworksPageBuilder.Home.chooseBlock": "Choose Blocks",
-    "web.iceworksPageBuilder.Home.createPage": "Create Page",
-    "web.iceworksPageBuilder.Home.PageSelect.SelectFromRight": "Please choose block from the right side."
+  "web.iceworksPageBuilder.Home.failGetMaterial": "Fail to get materials. Please try agin later.",
+  "web.iceworksPageBuilder.Home.failGetData": "Fail to get material data. Please try agin later.",
+  "web.iceworksPageBuilder.Home.chooseBlock.prompt": "Please choose blocks.",
+  "web.iceworksPageBuilder.Home.successCreatePage": "Page created successfully.",
+  "web.iceworksPageBuilder.Home.chooseBlock": "Choose Blocks",
+  "web.iceworksPageBuilder.Home.createPage": "Create Page",
+  "web.iceworksPageBuilder.Home.PageSelect.SelectFromRight": "Please choose block from the right side."
 }

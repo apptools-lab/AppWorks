@@ -1,7 +1,14 @@
 import * as React from 'react';
 import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
-import { IMaterialTypeDatum, IMaterialScaffold, IMaterialBlock, IMaterialComponent, IMaterialBase, CUSTOM_CATEGORY } from '@iceworks/material-utils';
+import {
+  IMaterialTypeDatum,
+  IMaterialScaffold,
+  IMaterialBlock,
+  IMaterialComponent,
+  IMaterialBase,
+  CUSTOM_CATEGORY,
+} from '@iceworks/material-utils';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';
@@ -47,10 +54,7 @@ const Content: React.FC<ContentProps> = ({
       return {
         ...item,
         list: list.filter(({ name, title }) => {
-          if (
-            name.indexOf(keyword) > -1 ||
-            title.indexOf(keyword) > -1
-          ) {
+          if (name.indexOf(keyword) > -1 || title.indexOf(keyword) > -1) {
             return true;
           }
 
@@ -65,88 +69,82 @@ const Content: React.FC<ContentProps> = ({
   return (
     <div className={styles.main}>
       <div className={styles.search}>
-        <Search
-          shape="simple"
-          placeholder="输入关键字查找物料"
-          onSearch={handeSearchSubmit}
-        />
+        <Search shape='simple' placeholder='输入关键字查找物料' onSearch={handeSearchSubmit} />
       </div>
       <div className={styles.content} id={scrollId}>
         <div className={styles.scroll}>
-          {
-            data.map(({ name, list }, cIndex) => {
-              return (
-                <div key={`${name}_${cIndex}`} className={styles.category}>
-                  { name !== CUSTOM_CATEGORY ? <div className={styles.name}>
-                    {name}
-                  </div> : null }
-                  <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>
-                    {
-                      list.map((item, index) => {
-                        const { source } = item;
-                        let $ele;
-                        if (typeId === 'scaffolds') {
+          {data.map(({ name, list }, cIndex) => {
+            return (
+              <div key={`${name}_${cIndex}`} className={styles.category}>
+                {name !== CUSTOM_CATEGORY ? <div className={styles.name}>{name}</div> : null}
+                <ResponsiveGrid columns={24} className={styles.list} data-type={typeId}>
+                  {list.map((item, index) => {
+                    const { source } = item;
+                    let $ele;
+                    if (typeId === 'scaffolds') {
+                      // @ts-ignore
+                      $ele = <MaterialScaffold dataSource={item} onDownload={onScaffoldClick} />;
+                    } else if (typeId === 'blocks') {
+                      const $block = (
+                        <MaterialBlock
                           // @ts-ignore
-                          $ele = (<MaterialScaffold dataSource={item} onDownload={onScaffoldClick} />);
-                        } else if (typeId === 'blocks') {
-                          const $block = <MaterialBlock
-                            // @ts-ignore
-                            dataSource={item}
-                            selected={
-                              selectedBlocks ?
-                                !!selectedBlocks.find((selectedBlock) => selectedBlock.name === item.name) :
-                                false
-                            }
-                            onClick={onBlockClick}
-                          />;
-                          if (cIndex === 0 && index > 3 && scrollId) {
-                            $ele = (<LazyLoad scrollContainer={`#${scrollId}`} height={240}>
-                              {$block}
-                            </LazyLoad>);
-                          } else {
-                            $ele = $block;
+                          dataSource={item}
+                          selected={
+                            selectedBlocks
+                              ? !!selectedBlocks.find((selectedBlock) => selectedBlock.name === item.name)
+                              : false
                           }
-                        } else if (typeId === 'components') {
-                          $ele = (<MaterialComponent
-                            // @ts-ignore
-                            dataSource={item}
-                            selected={
-                              selectedComponents ?
-                                !!selectedComponents.find((selectedComponent) => selectedComponent.name === item.name) :
-                                false
-                            }
-                            onClick={onComponentClick}
-                          />);
-                        } else if (typeId === 'bases') {
-                          $ele = (<MaterialBase
-                            // @ts-ignore
-                            dataSource={item}
-                            selected={
-                              selectedBases ?
-                                !!selectedBases.find((selectedBase) => selectedBase.name === item.name) :
-                                false
-                            }
-                            onClick={onBaseClick}
-                          />);
-                        }
-                        return (
-                          <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
-                            {$ele}
-                          </Cell>
+                          onClick={onBlockClick}
+                        />
+                      );
+                      if (cIndex === 0 && index > 3 && scrollId) {
+                        $ele = (
+                          <LazyLoad scrollContainer={`#${scrollId}`} height={240}>
+                            {$block}
+                          </LazyLoad>
                         );
-                      })
+                      } else {
+                        $ele = $block;
+                      }
+                    } else if (typeId === 'components') {
+                      $ele = (
+                        <MaterialComponent
+                          // @ts-ignore
+                          dataSource={item}
+                          selected={
+                            selectedComponents
+                              ? !!selectedComponents.find((selectedComponent) => selectedComponent.name === item.name)
+                              : false
+                          }
+                          onClick={onComponentClick}
+                        />
+                      );
+                    } else if (typeId === 'bases') {
+                      $ele = (
+                        <MaterialBase
+                          // @ts-ignore
+                          dataSource={item}
+                          selected={
+                            selectedBases
+                              ? !!selectedBases.find((selectedBase) => selectedBase.name === item.name)
+                              : false
+                          }
+                          onClick={onBaseClick}
+                        />
+                      );
                     }
-                  </ResponsiveGrid>
-                </div>
-              );
-            })
-          }
+                    return (
+                      <Cell colSpan={colSpan} className={styles.item} key={`${source.npm}_${index}`}>
+                        {$ele}
+                      </Cell>
+                    );
+                  })}
+                </ResponsiveGrid>
+              </div>
+            );
+          })}
         </div>
-        {
-          !categoryData.length ? <div className={styles.empty}>
-            Empty
-          </div> : null
-        }
+        {!categoryData.length ? <div className={styles.empty}>Empty</div> : null}
       </div>
     </div>
   );
@@ -178,42 +176,34 @@ export const MaterialType: React.FC<{
     setTypeId(value);
   }
 
-  const content = data.length > 0 ? data.map((item) => {
-    const { name, id } = item;
-    return typeId === id ? <Content
-      {...item}
-      key={`${name}_${id}`}
-      scrollId={scrollId}
-      typeId={typeId}
-      colSpan={colSpan}
-      {...others}
-    /> : null;
-  }) : <div className={styles.empty}>
-    没有数据
-  </div>;
+  const content =
+    data.length > 0 ? (
+      data.map((item) => {
+        const { name, id } = item;
+        return typeId === id ? (
+          <Content {...item} key={`${name}_${id}`} scrollId={scrollId} typeId={typeId} colSpan={colSpan} {...others} />
+        ) : null;
+      })
+    ) : (
+      <div className={styles.empty}>没有数据</div>
+    );
 
   return (
     <Loading visible={isLoadingData} className={styles.spin}>
-      { data.length > 1 && <div className={styles.head}>
-        <Radio.Group shape="button" value={typeId} onChange={handleTypeChange}>
-          {
-            data.map(({ name, id }) => {
+      {data.length > 1 && (
+        <div className={styles.head}>
+          <Radio.Group shape='button' value={typeId} onChange={handleTypeChange}>
+            {data.map(({ name, id }) => {
               return (
                 <Radio value={id} key={id}>
-                  { name }
+                  {name}
                 </Radio>
               );
-            })
-          }
-        </Radio.Group>
-      </div>}
-      {
-        isLoadingData ?
-          <div className={styles.empty}>
-            加载中……
-          </div>:
-          content
-      }
+            })}
+          </Radio.Group>
+        </div>
+      )}
+      {isLoadingData ? <div className={styles.empty}>加载中……</div> : content}
     </Loading>
   );
 };

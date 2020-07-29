@@ -22,9 +22,9 @@ const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, 
         className={classnames(styles.card, { [styles.active]: selected })}
         onClick={onClick}
       >
-        {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
+        {selected && <img src={successIcon} className={styles.successIcon} alt='success' />}
         <Card.Media>
-          {media && <img height={120} src={media} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
+          {media && <img height={120} src={media} alt='screenshot' style={{ padding: '10px 10px 0' }} />}
         </Card.Media>
         <Card.Header title={title} />
         <Card.Content>

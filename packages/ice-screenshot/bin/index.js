@@ -13,7 +13,7 @@ const createServer = require('../utils/createServer');
 const getPuppeteer = require('../utils/getPuppeteer');
 const packageJSON = require('../package.json');
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const cwd = process.cwd();
 const DEFAULT_PORT = 8100;
@@ -26,7 +26,10 @@ async function exec() {
       .version(packageJSON.version)
       .usage('-u https://www.example.com')
       .option('-u, --url <url>', 'The target url or path to local server')
-      .option('-l, --local [local]', 'Set up a local server in [local] directory and take screenshot, defaults set up in `./`')
+      .option(
+        '-l, --local [local]',
+        'Set up a local server in [local] directory and take screenshot, defaults set up in `./`'
+      )
       .option('-s, --selector <selector>', 'Select a element through CSS selector')
       .option('-t, --timeout <timeout>', 'screenshot with a delay')
       .option('-o, --output <output>', 'Output path')
@@ -36,7 +39,7 @@ async function exec() {
     const output = program.output || path.join(cwd, 'screenshot.png');
 
     // compatiable `-s mountNode` to fix: https://github.com/alibaba/ice/issues/2641
-    const formatedSelector = (selector && !/^(#|\.)/.test(selector) && selector !== 'body') ? `#${selector}` : selector;
+    const formatedSelector = selector && !/^(#|\.)/.test(selector) && selector !== 'body' ? `#${selector}` : selector;
 
     if (!url && !local) {
       console.log(chalk.red('The -u or -l is required! Using the following command:'));
@@ -67,9 +70,7 @@ async function exec() {
  * @param {string} output output path
  */
 async function screenshotWithLocalServer(serverPath, port, targetUrl, selector, output, timeout) {
-  targetUrl = targetUrl
-    ? `http://127.0.0.1:${port}${targetUrl}`
-    : `http://127.0.0.1:${port}/build/index.html`; // default screenshot target
+  targetUrl = targetUrl ? `http://127.0.0.1:${port}${targetUrl}` : `http://127.0.0.1:${port}/build/index.html`; // default screenshot target
 
   const server = createServer(serverPath, port);
   console.log(chalk.white(`Create local server with port ${port}`));
@@ -145,7 +146,11 @@ async function screenshot(url, selector, output, timeout) {
     if (err.message === 'Chromium revision is not downloaded. Run "npm install" or "yarn install"') {
       console.log(chalk.red('\n\nPuppeteer Install fail. \nPlease install puppeteer using the following commands:'));
       console.log(chalk.white('\n  npm uninstall puppeteer -g'));
-      console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
+      console.log(
+        chalk.white(
+          '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'
+        )
+      );
       console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
     } else {
       console.error(err);

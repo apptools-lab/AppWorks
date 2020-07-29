@@ -196,7 +196,7 @@ const IntlHome = () => {
     <LocaleProvider>
       <Home />
     </LocaleProvider>
-  )
-}
+  );
+};
 
 export default IntlHome;

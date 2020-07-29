@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as spawn from 'cross-spawn';
 
 export default function () {
-  const extensionsPath = path.join(__dirname, '..', '..', 'extensions')
+  const extensionsPath = path.join(__dirname, '..', '..', 'extensions');
   const extensionFiles = fse.readdirSync(extensionsPath);
   const installCommonds = ['install'];
   if (!process.env.CI) {

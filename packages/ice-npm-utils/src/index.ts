@@ -1,5 +1,5 @@
 import * as fsExtra from 'fs-extra';
-import { ALI_NPM_REGISTRY, ALI_UNPKG_URL, ALI_CHECKNODE_URL } from '@iceworks/constant'
+import { ALI_NPM_REGISTRY, ALI_UNPKG_URL, ALI_CHECKNODE_URL } from '@iceworks/constant';
 
 import request = require('request-promise');
 import semver = require('semver');
@@ -21,12 +21,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
       version = json['dist-tags'][version] || json['dist-tags'].latest;
     }
 
-    if (
-      semver.valid(version) &&
-      json.versions &&
-      json.versions[version] &&
-      json.versions[version].dist
-    ) {
+    if (semver.valid(version) && json.versions && json.versions[version] && json.versions[version].dist) {
       return json.versions[version].dist.tarball;
     }
 
@@ -40,7 +35,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 function getAndExtractTarball(
   destDir: string,
   tarball: string,
-  progressFunc = (state) => { },
+  progressFunc = (state) => {},
   formatFilename = (filename: string): string => {
     // 为了兼容
     if (filename === '_package.json') {
@@ -48,7 +43,7 @@ function getAndExtractTarball(
     } else {
       return filename.replace(/^_/, '.');
     }
-  },
+  }
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -86,12 +81,14 @@ function getAndExtractTarball(
         }
 
         allFiles.push(destPath);
-        allWriteStream.push(new Promise((streamResolve) => {
-          entry
-            .pipe(fs.createWriteStream(destPath))
-            .on('finish', () => streamResolve())
-            .on('close', () => streamResolve()); // resolve when file is empty in node v8
-        }));
+        allWriteStream.push(
+          new Promise((streamResolve) => {
+            entry
+              .pipe(fs.createWriteStream(destPath))
+              .on('finish', () => streamResolve())
+              .on('close', () => streamResolve()); // resolve when file is empty in node v8
+          })
+        );
       })
       .on('end', () => {
         if (progressFunc) {
@@ -225,11 +222,13 @@ function checkAliInternal(): Promise<boolean> {
     url: ALI_CHECKNODE_URL,
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
-  }).catch((err) => {
-    return false;
-  }).then((response) => {
-    return response.statusCode === 200 && /success/.test(response.body);
-  });
+  })
+    .catch((err) => {
+      return false;
+    })
+    .then((response) => {
+      return response.statusCode === 200 && /success/.test(response.body);
+    });
 }
 
 const packageJSONFilename = 'package.json';

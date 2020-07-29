@@ -34,14 +34,22 @@ module.exports = async function getPuppeteer() {
           // default download host has been blocking, use cnpm mirror
           // https://github.com/cnpm/cnpmjs.org/issues/1246#issuecomment-341631992
           spawn.sync('npm', ['config', 'set', 'puppeteer_download_host=https://storage.googleapis.com.cnpmjs.org']);
-          const result = spawn.sync('npm', ['install', 'puppeteer@1.x', '-g', '--registry', 'https://registry.npm.taobao.org'], { stdio: 'inherit' });
+          const result = spawn.sync(
+            'npm',
+            ['install', 'puppeteer@1.x', '-g', '--registry', 'https://registry.npm.taobao.org'],
+            { stdio: 'inherit' }
+          );
           spawn.sync('npm', ['config', 'delete', 'puppeteer_download_host']);
 
           // get spawn error, exit with code 1
           if (result.error) {
             console.log(chalk.red('\n\nInstall Error. \nPlease install puppeteer using the following commands:'));
             console.log(chalk.white('\n  npm uninstall puppeteer -g'));
-            console.log(chalk.white('\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'));
+            console.log(
+              chalk.white(
+                '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'
+              )
+            );
             console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
             process.exit(1);
           }

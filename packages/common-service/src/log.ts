@@ -29,7 +29,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   recordType = recordType || 'PV';
   const param = {
     ...originParam,
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     record_type: recordType,
     recordType,
     cache: Math.random(),
@@ -37,13 +37,8 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   try {
     const dataKeyArray = Object.keys(param);
     const gokey = dataKeyArray.reduce((finalStr, currentKey, index) => {
-      const currentData =
-          typeof param[currentKey] === 'string'
-            ? param[currentKey]
-            : JSON.stringify(param[currentKey]);
-      return `${finalStr}${currentKey}=${currentData}${
-        dataKeyArray.length - 1 === index ? '' : '&'
-      }`;
+      const currentData = typeof param[currentKey] === 'string' ? param[currentKey] : JSON.stringify(param[currentKey]);
+      return `${finalStr}${currentKey}=${currentData}${dataKeyArray.length - 1 === index ? '' : '&'}`;
     }, '');
 
     if (typeof isAlibaba === 'undefined') {
@@ -83,7 +78,7 @@ function recordUV(originParam: IGoldlogParam, storage: IStorage) {
   const nowtDate = new Date().toDateString();
   const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
   const lastDate = storage.get(dauKey);
-  if(nowtDate !== lastDate) {
+  if (nowtDate !== lastDate) {
     storage.update(dauKey, nowtDate);
     return recordPV(originParam, 'UV');
   }
@@ -97,24 +92,30 @@ export async function record(originParam: IGoldlogParam, storage?: IStorage) {
 }
 
 export function recordMainDAU(storage: IStorage) {
-  return record({
-    namespace: MAIN_KEY,
-    module: LOGGER_MODULE_KEY,
-    action: 'dau',
-    data: {
-      platform: process.platform,
-      locale: vscode.env.language,
+  return record(
+    {
+      namespace: MAIN_KEY,
+      module: LOGGER_MODULE_KEY,
+      action: 'dau',
+      data: {
+        platform: process.platform,
+        locale: vscode.env.language,
+      },
     },
-  }, storage);
+    storage
+  );
 }
 
 export function recordMainActivate(storage: IStorage, data: { extension: string; version?: string }) {
-  return record({
-    namespace: MAIN_KEY,
-    module: LOGGER_MODULE_KEY,
-    action: 'activate',
-    data,
-  }, storage);
+  return record(
+    {
+      namespace: MAIN_KEY,
+      module: LOGGER_MODULE_KEY,
+      action: 'activate',
+      data,
+    },
+    storage
+  );
 }
 
 interface IStorage {
@@ -143,10 +144,13 @@ export class Logger {
   }
 
   public record(param: ILogParam) {
-    return record({
-      namespace: this.namespace,
-      ...param
-    }, this.storage);
+    return record(
+      {
+        namespace: this.namespace,
+        ...param,
+      },
+      this.storage
+    );
   }
 
   /**

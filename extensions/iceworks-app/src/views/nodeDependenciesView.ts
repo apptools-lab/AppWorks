@@ -5,11 +5,7 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import {
-  getDataFromSettingJson,
-  createNpmCommand,
-  checkPathExists
-} from '@iceworks/common-service';
+import { getDataFromSettingJson, createNpmCommand, checkPathExists } from '@iceworks/common-service';
 import { dependencyDir } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import { NodeDepTypes } from '../types';
@@ -24,10 +20,11 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<DependencyTreeItem | undefined>();
+  private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<
+  DependencyTreeItem | undefined
+  >();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
-
 
   packageJsonPath: string;
 
@@ -55,11 +52,20 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
     if (element) {
       const { label } = element;
-      const deps = this.getDepsInPackageJson(this.packageJsonPath, (label as NodeDepTypes));
+      const deps = this.getDepsInPackageJson(this.packageJsonPath, label as NodeDepTypes);
       return deps;
     } else {
       return Promise.resolve(
-        nodeDepTypes.map(nodeDepType => new DependencyTreeItem(this.extensionContext, nodeDepType, vscode.TreeItemCollapsibleState.Collapsed, nodeDepType)));
+        nodeDepTypes.map(
+          (nodeDepType) =>
+            new DependencyTreeItem(
+              this.extensionContext,
+              nodeDepType,
+              vscode.TreeItemCollapsibleState.Collapsed,
+              nodeDepType
+            )
+        )
+      );
     }
   }
 
@@ -68,9 +74,9 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
       const version = getPackageLocalVersion(this.workspaceRoot, moduleName);
       return version;
     } catch (err) {
-      return this.defaultVersion;  // when the package version is not found, it shows defaultVersion
+      return this.defaultVersion; // when the package version is not found, it shows defaultVersion
     }
-  };
+  }
 
   private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
     if (await checkPathExists(packageJsonPath)) {
@@ -79,17 +85,19 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
       let deps: DependencyTreeItem[] = [];
       if (packageJson[label]) {
-        deps = await Promise.all(Object.keys(packageJson[label]).map(async dep => {
-          const version = this.getDepVersion(dep);
-          let outdated: boolean;
-          if (version === this.defaultVersion) {  // when the package version is defaultVersion, don't show the outdated
-            outdated = false;
-          } else {
-            outdated = await this.getNpmOutdated(dep, version);
-          }
-          return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
-        })
-        )
+        deps = await Promise.all(
+          Object.keys(packageJson[label]).map(async (dep) => {
+            const version = this.getDepVersion(dep);
+            let outdated: boolean;
+            if (version === this.defaultVersion) {
+              // when the package version is defaultVersion, don't show the outdated
+              outdated = false;
+            } else {
+              outdated = await this.getNpmOutdated(dep, version);
+            }
+            return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
+          })
+        );
       }
 
       return deps;
@@ -105,8 +113,8 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     } catch (err) {
       console.error(err);
       return false;
-    };
-  };
+    }
+  }
 
   public async packageJsonExists() {
     return await checkPathExists(this.packageJsonPath);
@@ -122,7 +130,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     const command: vscode.Command = {
       command: 'iceworksApp.nodeDependencies.reinstall',
       title: 'Reinstall Dependencies',
-      arguments: [workspaceDir, npmCommand]
+      arguments: [workspaceDir, npmCommand],
     };
     return command;
   }
@@ -136,15 +144,15 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
     let extraAction = '';
     if (isDevDep) {
-      extraAction = '-D'
+      extraAction = '-D';
     } else if (isYarn) {
-      extraAction = '-S'
+      extraAction = '-S';
     }
     const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
     const command: vscode.Command = {
       command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
       title: 'Add Dependency',
-      arguments: [workspaceDir, npmCommand]
+      arguments: [workspaceDir, npmCommand],
     };
     return command;
   }
@@ -170,15 +178,19 @@ class DependencyTreeItem extends vscode.TreeItem {
 
   get contextValue(): string {
     if (this.version) {
-      return this.outDated ? 'outdatedDependency' : 'dependency'
+      return this.outDated ? 'outdatedDependency' : 'dependency';
     } else {
-      return this.label
+      return this.label;
     }
   }
 
   iconPath = {
-    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`)),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`))
+    dark: vscode.Uri.file(
+      this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`)
+    ),
+    light: vscode.Uri.file(
+      this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`)
+    ),
   };
 }
 
@@ -187,8 +199,7 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
   vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
-    if (node.command)
-      executeCommand(terminals, node.command, node.id);
+    if (node.command) executeCommand(terminals, node.command, node.id);
   });
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
@@ -197,9 +208,21 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     }
   });
 
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')));
-  context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => showDepsQuickPick(terminals, nodeDependenciesProvider)));
+  context.subscriptions.push(
+    vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
+      showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
+      showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
+      showDepsQuickPick(terminals, nodeDependenciesProvider)
+    )
+  );
 
   const pattern = path.join(rootPath, dependencyDir);
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
@@ -208,16 +231,30 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
   fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());
 }
 
-function toDep(extensionContext: vscode.ExtensionContext, workspaceDir: string, moduleName: string, version: string, outdated: boolean) {
+function toDep(
+  extensionContext: vscode.ExtensionContext,
+  workspaceDir: string,
+  moduleName: string,
+  version: string,
+  outdated: boolean
+) {
   const packageManager = getDataFromSettingJson('packageManager');
   const isYarn = packageManager === 'yarn';
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
-  const command = outdated ?
-    {
+  const command = outdated
+    ? {
       command: 'iceworksApp.nodeDependencies.upgrade',
       title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand]
-    } :
-    undefined;
-  return new DependencyTreeItem(extensionContext, moduleName, vscode.TreeItemCollapsibleState.None, `nodeDependencies-${moduleName}`, command, version, outdated);
-};
+      arguments: [workspaceDir, npmCommand],
+    }
+    : undefined;
+  return new DependencyTreeItem(
+    extensionContext,
+    moduleName,
+    vscode.TreeItemCollapsibleState.None,
+    `nodeDependencies-${moduleName}`,
+    command,
+    version,
+    outdated
+  );
+}

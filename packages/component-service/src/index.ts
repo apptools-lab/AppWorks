@@ -14,7 +14,7 @@ import {
   dependencyDir,
   packageJSONFilename,
   checkIsTemplate,
-  getPackageJSON
+  getPackageJSON,
 } from '@iceworks/project-service';
 import insertComponent from './utils/insertComponent';
 import i18n from './i18n';
@@ -22,7 +22,9 @@ import i18n from './i18n';
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
-  const templateError = i18n.format('package.component-service.index.templateError', { jsxFileExtnames: jsxFileExtnames.join(',') });
+  const templateError = i18n.format('package.component-service.index.templateError', {
+    jsxFileExtnames: jsxFileExtnames.join(','),
+  });
   const { name, source } = dataSource;
   const { npm, version } = source;
   const { terminals } = window;
@@ -54,7 +56,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
 
   let terminal: vscode.Terminal;
   const terminalName = 'Iceworks';
-  const targetTerminal = terminals.find(terminal => terminal.name === terminalName);
+  const targetTerminal = terminals.find((terminal) => terminal.name === terminalName);
   if (targetTerminal) {
     terminal = targetTerminal;
   } else {
@@ -64,14 +66,16 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
 
   terminal.show();
-  terminal.sendText(`cd '${projectPath}'`, true);   // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
+  terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
   terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
 export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = i18n.format('package.component-service.index.templateError', { jsxFileExtnames: jsxFileExtnames.join(',') });
+  const templateError = i18n.format('package.component-service.index.templateError', {
+    jsxFileExtnames: jsxFileExtnames.join(','),
+  });
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
@@ -87,7 +91,9 @@ export async function addBaseCode(dataSource: IMaterialBase) {
 
   const { importStatement, name, source } = dataSource;
   const { npm } = source;
-  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(activeTextEditor.document.getText());
+  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
+    activeTextEditor.document.getText()
+  );
   const baseImportDeclaration = importDeclarations.find(({ source }) => {
     return source.value === npm;
   });
@@ -96,10 +102,7 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
     let existImportedName = '';
     if (!baseImportDeclaration) {
-      editBuilder.insert(
-        importDeclarationPosition,
-        `${importStatement}\n`
-      );
+      editBuilder.insert(importDeclarationPosition, `${importStatement}\n`);
     } else {
       const baseSpecifiers = baseImportDeclaration.specifiers;
       baseSpecifiers.forEach(({ imported, local }) => {
@@ -114,15 +117,12 @@ export async function addBaseCode(dataSource: IMaterialBase) {
 
         editBuilder.insert(
           new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
-          `, ${name}`,
+          `, ${name}`
         );
       }
     }
 
-    editBuilder.insert(
-      insertPosition,
-      getTagTemplate(existImportedName || name)
-    );
+    editBuilder.insert(insertPosition, getTagTemplate(existImportedName || name));
   });
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);

@@ -9,14 +9,14 @@ const config = {
     path: path.resolve(__dirname, 'build'),
     filename: 'extension.js',
     libraryTarget: 'commonjs2',
-    devtoolModuleFilenameTemplate: '../[resource-path]'
+    devtoolModuleFilenameTemplate: '../[resource-path]',
   },
   externals: {
     vscode: 'commonjs vscode',
-    prettier: 'commonjs prettier'
+    prettier: 'commonjs prettier',
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
@@ -29,11 +29,11 @@ const config = {
               transpileOnly: true,
               configFile: tsConfigPath,
             },
-          }
-        ]
-      }
-    ]
-  }
+          },
+        ],
+      },
+    ],
+  },
 };
 
 module.exports = (env, argv) => {

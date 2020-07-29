@@ -28,12 +28,12 @@ export interface IGitLabExistProject {
 }
 
 export interface IGitLabGroup {
-  'avatar_url': string;
-  'description': string;
-  'id': number;
-  'name': string;
-  'path': string;
-  'web_url': string;
+  avatar_url: string;
+  description: string;
+  id: number;
+  name: string;
+  path: string;
+  web_url: string;
 }
 
 export interface IScaffoldMarket {

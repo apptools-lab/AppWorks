@@ -1,9 +1,9 @@
 {
-    "web.iceworksPageBuilder.Home.failGetMaterial": "获取物料源失败，请稍后再试。",
-    "web.iceworksPageBuilder.Home.failGetData": "获取物料集合信息失败，请稍后再试。",
-    "web.iceworksPageBuilder.Home.enterPageName": "请填写页面名称。",
-    "web.iceworksPageBuilder.Home.successCreatePage": "生成页面成功",
-    "web.iceworksPageBuilder.Home.chooseBlock.prompt": "请选择区块。",
-    "web.iceworksPageBuilder.Home.createPage": "生成页面",
-    "web.iceworksPageBuilder.Home.PageSelect.SelectFromRight": "请从右侧选择区块。"
+  "web.iceworksPageBuilder.Home.failGetMaterial": "获取物料源失败，请稍后再试。",
+  "web.iceworksPageBuilder.Home.failGetData": "获取物料集合信息失败，请稍后再试。",
+  "web.iceworksPageBuilder.Home.enterPageName": "请填写页面名称。",
+  "web.iceworksPageBuilder.Home.successCreatePage": "生成页面成功",
+  "web.iceworksPageBuilder.Home.chooseBlock.prompt": "请选择区块。",
+  "web.iceworksPageBuilder.Home.createPage": "生成页面",
+  "web.iceworksPageBuilder.Home.PageSelect.SelectFromRight": "请从右侧选择区块。"
 }

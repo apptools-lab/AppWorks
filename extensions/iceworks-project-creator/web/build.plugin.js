@@ -3,12 +3,9 @@ module.exports = ({ onGetWebpackConfig, context }) => {
     'process.env.CLIENT_TOKEN': JSON.stringify(process.env.CLIENT_TOKEN),
   };
   onGetWebpackConfig((config) => {
-    config
-      .plugin('DefinePlugin')
-      .tap(([args]) => {
-        return [{ ...args, ...defineVariables }];
-      });
-    config.node
-      .set('fs', 'empty');
+    config.plugin('DefinePlugin').tap(([args]) => {
+      return [{ ...args, ...defineVariables }];
+    });
+    config.node.set('fs', 'empty');
   });
 };

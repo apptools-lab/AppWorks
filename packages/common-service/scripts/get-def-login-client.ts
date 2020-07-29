@@ -10,7 +10,7 @@ if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
     accessKeyId: process.env.ACCESS_KEY_ID,
     accessKeySecret: process.env.ACCESS_KEY_SECRET,
     timeout: '300s',
-  })
+  });
 
   const target = 'packages/def-login-client.zip';
 
@@ -18,7 +18,8 @@ if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
    * get def login client package from oss
    */
   (function () {
-    ossClient.get(target)
+    ossClient
+      .get(target)
       .then((result) => {
         const zipPath = path.join(__dirname, '..', 'tmp.zip');
         fse.writeFileSync(zipPath, result.content);
@@ -27,6 +28,6 @@ if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
         zip.extractAllTo(extractPath, true);
         fse.removeSync(zipPath);
       })
-      .catch(e => console.error(e))
-  })()
+      .catch((e) => console.error(e));
+  })();
 }

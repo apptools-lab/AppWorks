@@ -20,6 +20,6 @@ components: {
   }
 } 
 </script>
-`
+`;
 
 export default template;
