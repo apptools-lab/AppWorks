@@ -59,8 +59,8 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
 
       const scripts = packageJson.scripts
         ? Object.keys(packageJson.scripts).map((script) =>
-            toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
-          )
+          toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
+        )
         : [];
       return scripts;
     } else {
@@ -151,7 +151,7 @@ export function createNpmScriptsTreeProvider(
   });
 
   const pattern = new vscode.RelativePattern(rootPath, packageJSONFilename);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
   fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());
   fileWatcher.onDidDelete(() => npmScriptsProvider.refresh());
