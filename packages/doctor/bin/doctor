@@ -5,7 +5,7 @@
 const argv = require('argv-parse');
 const options = require('./options.json');
 const pkg = require('../package.json');
-const { Scanner } = require('../lib/index');
+const { Doctor } = require('../lib/index');
 
 const args = argv(options);
 
@@ -21,7 +21,7 @@ if (args.help) {
   Object.keys(options).forEach((key) => {
     const option = options[key];
     console.log(
-      `  -${option.alias},`,
+      option.alias ? `  -${option.alias},` : '',
       `  --${key}`,
       option.type !== 'boolean' ? ' : ' + option.type : '',
       option.required ? ' *required*' : ''
@@ -33,6 +33,21 @@ if (args.help) {
 
 // Check project
 if (args.scan) {
-  const scanner = new Scanner();
-  scanner.scan(args.scan);
+
+  const options = {};
+  if (Array.isArray(args.ignoreDir)) {
+    options.ignoreDir = args.ignoreDir;
+  }
+
+  if (Array.isArray(args.supportExts)) {
+    options.supportExts = args.supportExts;
+  }
+
+  const doctor = new Doctor(options);
+  doctor.scan(args.scan).then((result) => {
+    console.log(result);
+  }).catch((err) => {
+    console.log('Error!');
+    console.error(err);
+  });
 }

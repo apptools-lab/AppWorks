@@ -15,8 +15,11 @@
     "type": "string"
   },
   "ignoreDirs":{
-    "alias": "i",
     "desc": "Ignore directories when scan.",
+    "type": "array"
+  },
+  "supportExts":{
+    "desc": "Support file ext list. (example: jsx css html ...)",
     "type": "array"
   }
 }
