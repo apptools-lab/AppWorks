@@ -34,8 +34,8 @@ const CreateProject: React.FC = () => {
       onOpenConfigPanel={onOpenConfigPanel}
       materialSources={materialSources}
     >
-      <Button type='primary' onClick={onScaffoldSubmit}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.nextStep' />
+      <Button type="primary" onClick={onScaffoldSubmit}>
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
     </ScaffoldMarket>,
     <CreateProjectForm
@@ -45,7 +45,7 @@ const CreateProject: React.FC = () => {
       errorMsg={projectFormErrorMsg}
     >
       <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' />
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
       </Button>
       {isAliInternal && (
         <Form.Submit
@@ -54,16 +54,16 @@ const CreateProject: React.FC = () => {
           validate
           disabled={createDEFProjectDisabled}
         >
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createDEF' />
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createDEF" />
         </Form.Submit>
       )}
       <Form.Submit
-        type='primary'
+        type="primary"
         onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
         validate
         loading={createProjectLoading}
       >
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
       </Form.Submit>
     </CreateProjectForm>,
   ];
@@ -74,17 +74,17 @@ const CreateProject: React.FC = () => {
       0,
       <CreateDEFProjectForm value={curDEFProjectField} onChange={onDEFProjectFormChange} errorMsg={DEFFormErrorMsg}>
         <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' />
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
         </Button>
         <Form.Submit
-          type='primary'
+          type="primary"
           onClick={onDEFProjectDetailSubmit}
           validate
           loading={createDEFProjectLoading}
           disabled={createDEFProjectDisabled}
           className={styles.btn}
         >
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
       </CreateDEFProjectForm>
     );
@@ -254,21 +254,21 @@ const CreateProject: React.FC = () => {
           <div className={styles.header}>
             <div>
               <div className={styles.title}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createProject' />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createProject" />
               </div>
               <div className={styles.subTitle}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.subTitle' />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.subTitle" />
               </div>
             </div>
             <div className={styles.headerBtns}>
-              <Button size='medium' text onClick={onOpenConfigPanel} className={styles.btn}>
-                <Icon type='set' />
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.setting' />
+              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}>
+                <Icon type="set" />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.setting" />
               </Button>
               {currentStep === 0 && (
-                <Button size='medium' text onClick={refreshMaterialSources}>
-                  <Icon type='refresh' />
-                  <FormattedMessage id='web.iceworksProjectCreator.CreateProject.refresh' />
+                <Button size="medium" text onClick={refreshMaterialSources}>
+                  <Icon type="refresh" />
+                  <FormattedMessage id="web.iceworksProjectCreator.CreateProject.refresh" />
                 </Button>
               )}
             </div>

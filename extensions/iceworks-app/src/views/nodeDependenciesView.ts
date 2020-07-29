@@ -21,7 +21,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<
-  DependencyTreeItem | undefined
+    DependencyTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
@@ -243,10 +243,10 @@ function toDep(
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
   const command = outdated
     ? {
-      command: 'iceworksApp.nodeDependencies.upgrade',
-      title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand],
-    }
+        command: 'iceworksApp.nodeDependencies.upgrade',
+        title: 'Upgrade Dependency',
+        arguments: [workspaceDir, npmCommand],
+      }
     : undefined;
   return new DependencyTreeItem(
     extensionContext,
