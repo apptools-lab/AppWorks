@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1
+
+Add router config after the page was created.
+
 ## 0.2.0
 
 Support en-US.
