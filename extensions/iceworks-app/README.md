@@ -53,7 +53,7 @@
 1. 点击左侧面板中页面列表和组件列表中的选项。
 2. 跳转到所选项目所在的源码文件
 
-##### 支持激活添加页面和组件功能 （使用方法参照 [生成页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)｜[创建组件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder) ）
+##### 支持激活添加页面和组件功能 （使用方法参照 [可视化搭建插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)）
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87393953-949f4200-c5e1-11ea-896a-fd2d592050e0.gif)
 

@@ -13,8 +13,7 @@
 
 - [应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：从框架视角全面预览您应用的组织
 - [创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：通过图像界面引导创建多端应用
-- [生成页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)：通过可视化操作，以区块拼装的方式生成页面
-- [创建组件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder)：通过可视化操作的方式创建 UI 组件
+- [可视化搭建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)：通过可视化操作生成用户界面
 - [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：提供在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 内编写行内样式或使用 SASS/Less 等 CSS 预处理语言的代码编辑提醒
 - [组件开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 内更快更好地添加组件、编写组件属性，
 - [应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：为应用的配置类文件提供可视化表单设置或代码编辑提醒、校验等功能

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.0
+
+- refactor: remove [iceworks-page-builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder) and [iceworks-component-builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder), merge into [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+
 ## 0.3.0
 
 - refactor: remove [iceworks-material-import](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-import), merge into [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)

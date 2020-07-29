@@ -411,8 +411,7 @@
   },
   "extensionDependencies": [
     "iceworks-team.iceworks-project-creator",
-    "iceworks-team.iceworks-component-builder",
-    "iceworks-team.iceworks-page-builder",
+    "iceworks-team.iceworks-ui-builder",
     "iceworks-team.iceworks-material-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
