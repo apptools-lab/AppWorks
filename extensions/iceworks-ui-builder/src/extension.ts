@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator');
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
     connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(
@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerater');
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerater', true);
     connectService(webviewPanel, context, { services, logger });
   }
   subscriptions.push(

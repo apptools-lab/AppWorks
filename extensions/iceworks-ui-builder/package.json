@@ -40,7 +40,7 @@
       }
     ],
     "configuration": {
-      "title": "Iceworks Component Builder",
+      "title": "Iceworks UI Builder",
       "properties": {
         "iceworks.packageManager": {
           "type": "string",
