@@ -57,9 +57,9 @@ const Index: React.FC<{
   async function refreshMaterialData(source: string) {
     setIsLoadingData(true);
     const materialData: IMaterialData = await getData(source);
-    const data = convertMaterialData(materialData).filter(
-      ({ id }) => !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true),
-    );
+    const data = convertMaterialData(materialData).filter(({ id }) => {
+      return !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true);
+    });
     setIsLoadingData(false);
     setData(data);
   }
@@ -69,7 +69,7 @@ const Index: React.FC<{
   }, []);
 
   return (
-    <Loading visible={isLoadingSources} className='iceworks-material'>
+    <Loading visible={isLoadingSources} className="iceworks-material">
       <MaterialView
         sources={sources}
         currentSource={currentSource}
@@ -79,12 +79,12 @@ const Index: React.FC<{
         colSpan={24}
         onChangeSource={handleChangeSource}
         extra={
-          <div className='extra-wrap'>
-            {onSettingsClick && <Icon type='set' size='small' title='设置物料源' onClick={onSettingsClick} />}
+          <div className="extra-wrap">
+            {onSettingsClick && <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />}
             <Icon
-              type='refresh'
-              size='small'
-              title='获取最新物料源信息'
+              type="refresh"
+              size="small"
+              title="获取最新物料源信息"
               onClick={refreshSources}
               style={{ marginLeft: 6 }}
             />

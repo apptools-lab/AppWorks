@@ -243,10 +243,10 @@ function toDep(
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
   const command = outdated
     ? {
-      command: 'iceworksApp.nodeDependencies.upgrade',
-      title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand],
-    }
+        command: 'iceworksApp.nodeDependencies.upgrade',
+        title: 'Upgrade Dependency',
+        arguments: [workspaceDir, npmCommand],
+      }
     : undefined;
   return new DependencyTreeItem(
     extensionContext,

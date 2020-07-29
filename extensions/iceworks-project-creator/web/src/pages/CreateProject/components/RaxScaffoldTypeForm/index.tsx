@@ -99,7 +99,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
           const selected = selectedTargets.some((selectedTarget) => selectedTarget === item.type);
           return (
             <Balloon
-              align='t'
+              align="t"
               trigger={
                 <MenuCard
                   key={item.type}
@@ -110,7 +110,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                 />
               }
               closable={false}
-              triggerType='hover'
+              triggerType="hover"
             >
               {item.description}
             </Balloon>
@@ -123,7 +123,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
           <div className={styles.row}>
             {webAppTypes.map((item) => (
               <Balloon
-                align='t'
+                align="t"
                 trigger={
                   <MenuCard
                     key={item.type}
@@ -133,7 +133,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                     onClick={() => onWebAppTypeClick(item)}
                   />
                 }
-                triggerType='hover'
+                triggerType="hover"
                 closable={false}
               >
                 {item.description}
@@ -148,7 +148,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
           <div className={styles.row}>
             {miniAppTypes.map((item) => (
               <Balloon
-                align='t'
+                align="t"
                 trigger={
                   <MenuCard
                     key={item.type}
@@ -158,7 +158,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                     onClick={() => onMiniAppTypeClick(item)}
                   />
                 }
-                triggerType='hover'
+                triggerType="hover"
                 closable={false}
               >
                 {item.description}

@@ -72,24 +72,24 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
     <div className={styles.customMaterialSource}>
       <div className={styles.row}>
         <span className={styles.label}>
-          <FormattedMessage id='web.iceworksApp.customMaterialSource.customMaterialSource' />
+          <FormattedMessage id="web.iceworksApp.customMaterialSource.customMaterialSource" />
         </span>
         <div className={styles.btn}>
           <Button onClick={onAdd}>
-            <Icon type='add' />
-            <FormattedMessage id='web.iceworksApp.customMaterialSource.add' />
+            <Icon type="add" />
+            <FormattedMessage id="web.iceworksApp.customMaterialSource.add" />
           </Button>
         </div>
       </div>
       <div className={styles.sourcesList}>
-        <List size='small'>
+        <List size="small">
           {sources.map((source: IMaterialSource) => (
             <List.Item
               media={<Avatar className={styles.listItemMedia}>{source.name.slice(0, 1).toLocaleUpperCase()}</Avatar>}
               extra={
                 <div>
-                  <img className={styles.icon} src={editIcon} alt='edit' onClick={() => onEdit(source)} />
-                  <img className={styles.icon} src={deleteIcon} alt='delete' onClick={() => onDelete(source)} />
+                  <img className={styles.icon} src={editIcon} alt="edit" onClick={() => onEdit(source)} />
+                  <img className={styles.icon} src={deleteIcon} alt="delete" onClick={() => onDelete(source)} />
                 </div>
               }
               title={source.name}

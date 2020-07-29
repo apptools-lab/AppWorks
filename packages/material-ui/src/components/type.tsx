@@ -69,7 +69,7 @@ const Content: React.FC<ContentProps> = ({
   return (
     <div className={styles.main}>
       <div className={styles.search}>
-        <Search shape='simple' placeholder='输入关键字查找物料' onSearch={handeSearchSubmit} />
+        <Search shape="simple" placeholder="输入关键字查找物料" onSearch={handeSearchSubmit} />
       </div>
       <div className={styles.content} id={scrollId}>
         <div className={styles.scroll}>
@@ -192,7 +192,7 @@ export const MaterialType: React.FC<{
     <Loading visible={isLoadingData} className={styles.spin}>
       {data.length > 1 && (
         <div className={styles.head}>
-          <Radio.Group shape='button' value={typeId} onChange={handleTypeChange}>
+          <Radio.Group shape="button" value={typeId} onChange={handleTypeChange}>
             {data.map(({ name, id }) => {
               return (
                 <Radio value={id} key={id}>

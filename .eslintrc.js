@@ -3,6 +3,7 @@ const { eslint, tslint, deepmerge } = require('@ice/spec');
 const commonRules = {
   'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
   'react/jsx-no-target-blank': [0],
+  '@typescript-eslint/indent': 0,
   'prefer-object-spread': 0,
   'max-classes-per-file': 0,
   'class-methods-use-this': 0,

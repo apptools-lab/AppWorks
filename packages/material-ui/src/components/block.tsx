@@ -23,8 +23,8 @@ export const MaterialBlock: React.FC<{
     >
       {selected && (
         <Icon
-          type='select'
-          size='small'
+          type="select"
+          size="small"
           className={classnames({
             [styles.selectedIcon]: true,
             'selected-icon': true,
@@ -40,10 +40,10 @@ export const MaterialBlock: React.FC<{
         <a onClick={handleClick} className={styles.button}>
           添加
         </a>
-        <a href={dataSource.homepage} rel='noopener noreferrer' target='_blank' className={styles.button}>
+        <a href={dataSource.homepage} rel="noopener noreferrer" target="_blank" className={styles.button}>
           预览
         </a>
-        <a href={dataSource.repository} rel='noopener noreferrer' target='_blank' className={styles.button}>
+        <a href={dataSource.repository} rel="noopener noreferrer" target="_blank" className={styles.button}>
           源码
         </a>
       </div>

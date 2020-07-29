@@ -37,7 +37,7 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
           requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
         >
           <Input
-            name='name'
+            name="name"
             placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
           />
         </Form.Item>
@@ -45,25 +45,25 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
           label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURLLabel' })}
           required
           requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
-          format='url'
+          format="url"
         >
           <Input
-            name='source'
+            name="source"
             placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
           />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel' })}>
           <Input.TextArea
-            name='description'
+            name="description"
             placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescription' })}
           />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
-          <Form.Submit type='primary' onClick={onFormSubmit} validate>
-            <FormattedMessage id='web.iceworksApp.MaterialSourceForm.confirm' />
+          <Form.Submit type="primary" onClick={onFormSubmit} validate>
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.confirm" />
           </Form.Submit>
           <Button onClick={onCancel} className={styles.btn}>
-            <FormattedMessage id='web.iceworksApp.MaterialSourceForm.cancel' />
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.cancel" />
           </Button>
         </Form.Item>
       </Form>

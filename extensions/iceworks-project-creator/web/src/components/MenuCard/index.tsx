@@ -24,8 +24,8 @@ const MenuCard: React.FC<IMenuCard> = ({ style, title, icon, onClick, selected, 
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}
     >
-      {selected && <img src={successIcon} className={styles.successIcon} alt='success' />}
-      {icon && <img src={icon} alt='icon' className={styles.icon} />}
+      {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
+      {icon && <img src={icon} alt="icon" className={styles.icon} />}
       <div className={styles.title}>{title}</div>
     </div>
   );
