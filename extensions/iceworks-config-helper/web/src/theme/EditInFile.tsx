@@ -1,18 +1,21 @@
 import React from 'react';
 import { Balloon, Button } from '@alifd/next';
+import ChangeProvider from './ChangeProvider';
 
 const EditInFile= (props)=>{
-  const {label,schema} = props;
+  const {label, schema, idSchema, formData} = props;
   const EditButton = <Button>Edit in build.json</Button>
-
+  console.log(idSchema);
   return(
-    <div style={{ color: 'white' }}>
-      <h3 >{label}</h3>
-      <p >{schema.description}</p>
-      <Balloon trigger={EditButton} closable={false}>
-      This type is temporarily unsupported，please edit in build.json
-      </Balloon>
-    </div>
+    <ChangeProvider fdkey="editInFile" value=''>
+      <div style={{ color: 'white' }}>
+        <h3>{idSchema.$id.substring(5)}</h3>
+        <p>{schema.description}</p>
+        <Balloon trigger={EditButton} closable={false}>
+        This type is temporarily unsupported，please edit in build.json
+        </Balloon>
+      </div>
+    </ChangeProvider>
   )
 }
 export default EditInFile;

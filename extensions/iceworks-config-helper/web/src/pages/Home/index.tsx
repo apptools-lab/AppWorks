@@ -1,12 +1,14 @@
 import React from 'react';
 import Form from '@rjsf/core';
 import { Checkbox, Card, Input, Select } from '@alifd/next'
-import ICESchema from '../../../../schemas/ice.build.json'
-import test from './test.json'
+import * as _ from 'lodash';
+import ICESchema from '../../../../schemas/ice.build.json';
+import test from './test.json';
 import fdCheckBox from '../../theme/checkBox';
 import fdEditInFile from '../../theme/EditInFile';
 import fdTextInput from '../../theme/fdTextInput';
-
+import titleFiled from '../../theme/TitleFiled';
+import descriptionField from '../../theme/DescriptionField';
 
 
 import './style.css'
@@ -51,22 +53,35 @@ const uiSchema = {
 };
 
 const fields = {
+  TitleFiled: titleFiled,
+  DescriptionField: descriptionField,
   ArrayField: fdEditInFile,
-  EditInFile: fdEditInFile
+  EditInFile: fdEditInFile,
+
 }
 
 const widgets = {
   CheckboxWidget: fdCheckBox,
-  TextWidget: fdTextInput
+  TextWidget: fdTextInput,
 };
 
 const setFormData=(e)=>{
   console.log(e)
 };
+
+// function mergeDefaultData(){
+//   const mergedData = {};
+//   _.forIn(ICESchema,(value,key)=>{
+//     mergedData[key] = test[key]||ICESchema[key]['default'];  
+//   })
+//   return mergedData;
+// }
+
+// console.log(mergeDefaultData())
 const Home = () => {
 
   return (
-    <Card free>
+    <Card free style={{background:'#1e1e1e'}}>
       <Form schema={ICESchema} fields={fields} widgets={widgets} uiSchema={uiSchema} formData={test} onChange={e => setFormData(e.formData)}/>
     </Card>
   )

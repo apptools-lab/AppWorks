@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox } from '@alifd/next'
+import { WidgetProps } from '@rjsf/core';
+import ChangeProvider from './ChangeProvider';
 
-const fdcheckbox= (props)=>{
+
+const Fdcheckbox: React.FC<WidgetProps>= (props)=>{
   const {
-    id,
-    value,
-    // required,
-    disabled,
-    readonly,
     label,
+    value,
     schema,
-    autofocus,
     onChange,
-    onBlur,
-    onFocus,
-    options,
   } = props;
+  const [checkedValue,setCheckedValue]= useState(value);
+
+  const check = (checked)=>{
+    onChange(checked);
+    setCheckedValue(checked);
+  }
+
   return (
-    <>
-      <h3 style={{color:'white'}}>{label}</h3>
-      <Checkbox onChange={checked=>onChange(checked)}>{schema.description}</Checkbox>
-    </>
+    <ChangeProvider fdkey={label} value = {checkedValue}>
+      <>
+        <h3 style={{color:'white'}}>{label}</h3>
+        <Checkbox onChange={checked=>check(checked)}>{schema.description}</Checkbox>
+      </>
+    </ChangeProvider>
   )
 }
-export default fdcheckbox;
+export default Fdcheckbox;
