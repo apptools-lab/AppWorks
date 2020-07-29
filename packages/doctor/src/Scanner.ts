@@ -18,7 +18,7 @@ export default class Scanner {
     const reports = [];
     const aliEslintCliEngine = new CLIEngine({
       baseConfig: {
-        extends: "eslint-config-ali"
+        extends: 'eslint-config-ali'
       },
       useEslintrc: false
     });
