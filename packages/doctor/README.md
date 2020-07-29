@@ -1,5 +1,7 @@
 # Iceworks Doctor
 
+Analyse react/rax projects, troubleshooting and automatically fixing errors.
+
 ## Installation
 
 ```shell
@@ -29,6 +31,11 @@ or
 ```shell
 $ iceworks-doctor -s ./
 ```
+
+## Options
+
+* ignoreDirs, string[] Ignore directories, example ['mock'] .
+* supportExts, string[] Support file exts, example ['css'] .
 
 ## CLI
 
