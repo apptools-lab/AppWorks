@@ -23,7 +23,7 @@ export default function showExtensionsQuickPick() {
     {
       label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.label'),
       detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.detail'),
-      command: 'iceworks-material-import.start',
+      command: 'iceworks-material-helper.start',
     },
   ];
   const quickPick = window.createQuickPick();
