@@ -41,5 +41,5 @@ export interface IScannerReports {
   repeatability?: {
     score: number;
     clones: IClone[];
-  }
+  };
 }
