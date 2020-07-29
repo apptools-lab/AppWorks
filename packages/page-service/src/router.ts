@@ -4,15 +4,13 @@ import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
-import { getProjectLanguageType, projectPath } from '@iceworks/project-service';
+import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
 import formatCodeFromAST from './formatCodeFromAST';
 import { IRouter, IRouterOptions } from './types';
 
 const routerConfigFileName = 'routes';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children', 'redirect'];
-const LAYOUT_DIRECTORY = 'layouts';
-const PAGE_DIRECTORY = 'pages';
 
 const noPathPrefix = false;
 
@@ -37,7 +35,7 @@ export async function getAll() {
 export async function checkRouteConfigPathExists() {
   const projectLanguageType = await getProjectLanguageType();
   const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
-  const pathExists = await fse.pathExists(routeConfigPath);
+  const pathExists: boolean = await fse.pathExists(routeConfigPath);
   return pathExists;
 }
 
