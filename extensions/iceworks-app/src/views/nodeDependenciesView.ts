@@ -21,7 +21,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<
-  DependencyTreeItem | undefined
+    DependencyTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
@@ -224,8 +224,8 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     )
   );
 
-  const pattern = path.join(rootPath, dependencyDir);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**')
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());

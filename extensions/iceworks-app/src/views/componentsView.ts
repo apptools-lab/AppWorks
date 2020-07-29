@@ -11,7 +11,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<
-  ComponentTreeItem | undefined
+    ComponentTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;
@@ -105,8 +105,8 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
-  const pattern = path.join(componentsPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(componentsPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => componentsProvider.refresh());
   fileWatcher.onDidCreate(() => componentsProvider.refresh());
   fileWatcher.onDidDelete(() => componentsProvider.refresh());

@@ -14,7 +14,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<ScriptTreeItem | undefined> = new vscode.EventEmitter<
-  ScriptTreeItem | undefined
+    ScriptTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<ScriptTreeItem | undefined> = this.onDidChange.event;
@@ -150,7 +150,7 @@ export function createNpmScriptsTreeProvider(
     executeCommand(terminals, command, commandId);
   });
 
-  const pattern = path.join(rootPath, packageJSONFilename);
+  const pattern = new vscode.RelativePattern(rootPath, packageJSONFilename);
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
   fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
   fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());

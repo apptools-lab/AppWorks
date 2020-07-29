@@ -11,7 +11,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
-  PageTreeItem | undefined
+    PageTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
@@ -94,8 +94,8 @@ export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPa
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 
-  const pattern = path.join(pagesPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(pagesPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => pagesProvider.refresh());
   fileWatcher.onDidCreate(() => pagesProvider.refresh());
   fileWatcher.onDidDelete(() => pagesProvider.refresh());
