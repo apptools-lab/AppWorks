@@ -21,7 +21,7 @@ const Fdcheckbox: React.FC<WidgetProps>= (props)=>{
   return (
     <ChangeProvider fdkey={label} value = {checkedValue}>
       <>
-        <h3 style={{color:'white'}}>{label}</h3>
+        <h3>{label}</h3>
         <Checkbox onChange={checked=>check(checked)}>{schema.description}</Checkbox>
       </>
     </ChangeProvider>

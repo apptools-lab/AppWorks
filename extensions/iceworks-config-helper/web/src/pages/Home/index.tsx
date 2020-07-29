@@ -9,15 +9,16 @@ import fdEditInFile from '../../theme/EditInFile';
 import fdTextInput from '../../theme/fdTextInput';
 import titleFiled from '../../theme/TitleFiled';
 import descriptionField from '../../theme/DescriptionField';
-
-
-import './style.css'
+import FiledTemplate from '../../theme/FieldTemplate';
 
 const uiSchema = {
   'alias':{
     'ui:field':'EditInFile'
   },
   'externals': {
+    'ui:field':'EditInFile'
+  },
+  'devServer': {
     'ui:field':'EditInFile'
   },
   'proxy': {
@@ -32,6 +33,12 @@ const uiSchema = {
   'sassLoaderOptions': {
     'ui:field':'EditInFile'
   },
+  'eslint': {
+    'Option1':{
+      'ui:field':'EditInFile'
+    }
+  },
+
   'terserOptions': {
     'ui:field':'EditInFile'
   },
@@ -82,7 +89,7 @@ const Home = () => {
 
   return (
     <Card free style={{background:'#1e1e1e'}}>
-      <Form schema={ICESchema} fields={fields} widgets={widgets} uiSchema={uiSchema} formData={test} onChange={e => setFormData(e.formData)}/>
+      <Form schema={ICESchema} FieldTemplate={FiledTemplate} fields={fields} widgets={widgets} uiSchema={uiSchema} formData={test} onChange={e => setFormData(e.formData)}/>
     </Card>
   )
 };

@@ -9,11 +9,11 @@ const FdTextWeight: React.FC<WidgetProps> = (props)=>{
     label,
     schema,
     onChange, 
-    value
+    value,
   } = props;
   const [inputStyle,setInputStyle] = useState({
     'background': '#3c3c3c',
-    'borderColor': 'gray',
+    'borderColor': 'transparent',
     'borderWidth': '1px'
   });
   const [inputValue,setInputValue] = useState(value);
@@ -27,7 +27,7 @@ const FdTextWeight: React.FC<WidgetProps> = (props)=>{
   const onblur=(e)=>{
     setInputStyle({
       'background': '#3c3c3c',
-      'borderColor': 'gray',
+      'borderColor': 'transparent',
       'borderWidth': '1px'
     })
   }
