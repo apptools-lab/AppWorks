@@ -2,7 +2,13 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework, projectPath } from '@iceworks/project-service';
+import {
+  pagesPath,
+  COMPONENT_DIR_NAME,
+  getProjectLanguageType,
+  getProjectFramework,
+  projectPath,
+} from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';

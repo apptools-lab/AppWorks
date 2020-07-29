@@ -33,7 +33,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
   onClose,
 }) => {
   const field = Field.useField({
-    values: {}
+    values: {},
   });
 
   const submit = async () => {
@@ -45,7 +45,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
     onSubmit(field.getValues());
   };
 
-  const includedChildrenRouterConfig = routerConfig.filter(item => !!item.children);
+  const includedChildrenRouterConfig = routerConfig.filter((item) => !!item.children);
   return (
     <Dialog
       visible={visible}
@@ -62,20 +62,23 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         <Form.Item label="页面目录名" required requiredMessage="请输入页面目录名">
           <Input name="pageName" placeholder="请输入页面目录名" disabled={isCreating} />
         </Form.Item>
-        {isConfigurableRouter && <Form.Item label="路由路径" required requiredMessage="请输入路由路径">
-          <Input name="path" placeholder="请输入路由路径" disabled={isCreating} />
-        </Form.Item>}
+        {isConfigurableRouter && (
+          <Form.Item label="路由路径" required requiredMessage="请输入路由路径">
+            <Input name="path" placeholder="请输入路由路径" disabled={isCreating} />
+          </Form.Item>
+        )}
         {isConfigurableRouter && !!includedChildrenRouterConfig.length && (
           <Form.Item label="父级路由" required requiredMessage="请选择父级路由">
             <Select name="parent" placeholder="请选择父级路由" disabled={isCreating}>
-              {includedChildrenRouterConfig.map(route => (
+              {includedChildrenRouterConfig.map((route) => (
                 <Select.Option value={route.path}>{route.component}</Select.Option>
               ))}
             </Select>
-          </Form.Item>)}
+          </Form.Item>
+        )}
       </Form>
     </Dialog>
-  )
-}
+  );
+};
 
 export default PageDetailForm;

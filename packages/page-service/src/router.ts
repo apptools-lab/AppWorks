@@ -20,10 +20,7 @@ export async function getAll() {
 
   traverse(routerConfigAST, {
     VariableDeclarator: ({ node }) => {
-      if (
-        t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
-        && t.isArrayExpression(node.init)
-      ) {
+      if (t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE }) && t.isArrayExpression(node.init)) {
         config = parseRoute(node.init.elements);
       }
     },
@@ -78,15 +75,13 @@ function getASTByCode(code) {
   return parser.parse(code, {
     allowImportExportEverywhere: true,
     sourceType: 'module',
-    plugins: [
-      'dynamicImport'
-    ]
-  })
+    plugins: ['dynamicImport'],
+  });
 }
 
 function parseRoute(elements) {
   const config = [];
-  elements.forEach(element => {
+  elements.forEach((element) => {
     const { properties } = element;
     const item: any = {};
     properties.forEach((property) => {
@@ -131,18 +126,12 @@ function setData(data, routerConfigAST, routeConfigPath) {
   });
   traverse(routerConfigAST, {
     VariableDeclarator({ node }) {
-      if (
-        t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE })
-        && t.isArrayExpression(node.init)
-      ) {
+      if (t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE }) && t.isArrayExpression(node.init)) {
         node.init = arrayAST as any;
       }
     },
   });
-  fse.writeFileSync(
-    routeConfigPath,
-    formatCodeFromAST(routerConfigAST)
-  );
+  fse.writeFileSync(routeConfigPath, formatCodeFromAST(routerConfigAST));
 }
 
 function sortData(data) {
@@ -248,9 +237,9 @@ function changeImportDeclarations(routerConfigAST, data) {
 
       if (type === LAYOUT_DIRECTORY) {
         // layout only first layer
-        findRouter = data.find(item => item.children && item.component === name);
+        findRouter = data.find((item) => item.children && item.component === name);
       } else if (type === PAGE_DIRECTORY) {
-        findRouter = data.find(item => {
+        findRouter = data.find((item) => {
           let pageItem = null;
 
           if (!item.children && item.component === name) {
@@ -291,7 +280,7 @@ function changeImportDeclarations(routerConfigAST, data) {
       return false;
     }
 
-    if (!componentExist && !newImports.find(item => item.name === component)) {
+    if (!componentExist && !newImports.find((item) => item.name === component)) {
       newImports.push({
         type,
         name: component,
@@ -340,11 +329,7 @@ function changeImportDeclarations(routerConfigAST, data) {
 
   const lastIndex = findLastImportIndex(routerConfigAST, existLazy);
   routerConfigAST.program.body.splice(lastIndex, 0, ...lazyCodeAST.program.body);
-  routerConfigAST.program.body.splice(
-    existLazy ? lastIndex - 1 : lastIndex,
-    0,
-    ...importCodeAST.program.body
-  );
+  routerConfigAST.program.body.splice(existLazy ? lastIndex - 1 : lastIndex, 0, ...importCodeAST.program.body);
 }
 
 function existImport(list, name, type) {

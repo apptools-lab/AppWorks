@@ -117,7 +117,7 @@ const Home = () => {
     try {
       const data = {
         blocks: selectedBlocks,
-        pageName: values.pageName
+        pageName: values.pageName,
       };
       await callService('page', 'generate', data);
 
@@ -125,7 +125,7 @@ const Home = () => {
         try {
           await callService('page', 'createRouter', values);
         } catch (error) {
-          Notification.error({ content: error.message })
+          Notification.error({ content: error.message });
         }
       }
     } catch (error) {
@@ -143,7 +143,7 @@ const Home = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
-        <FormattedMessage id='web.iceworksPageBuilder.Home.chooseBlock' />
+        <FormattedMessage id="web.iceworksPageBuilder.Home.chooseBlock" />
       </div>
       <div className={styles.field}>
         <Row gutter={24} className={styles.row}>
@@ -176,7 +176,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" onClick={handleCreate}>
-          <FormattedMessage id='web.iceworksPageBuilder.Home.createPage' />
+          <FormattedMessage id="web.iceworksPageBuilder.Home.createPage" />
         </Button>
       </div>
       <RouterDetailForm

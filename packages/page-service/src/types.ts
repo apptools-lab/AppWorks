@@ -1,7 +1,7 @@
 export interface IRouter {
   /**
- * URL path
- */
+   * URL path
+   */
   path: string;
 
   /**
