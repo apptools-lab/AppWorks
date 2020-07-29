@@ -23,6 +23,7 @@ const OPTIONS = {
   config: {
     'line-length': false,
     'first-line-heading': false,
+    'no-duplicate-header': false,
   },
 };
 
