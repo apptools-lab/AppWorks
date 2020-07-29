@@ -21,7 +21,7 @@ export default class Scanner {
 
       // if begins with shebang
       if (source[0] === '#' && source[1] === '!') {
-        source = '//' + source;
+        source = `//${  source}`;
       }
 
       try {

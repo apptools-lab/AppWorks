@@ -1,6 +1,6 @@
 export interface IScannerOptions {
-  ignoreDirs: string[]
-  supportExts: string[]
+  ignoreDirs: string[];
+  supportExts: string[];
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex
@@ -23,6 +23,6 @@ export interface IMaintainabilityReport {
 export interface IScannerReports {
   maintainability?: {
     score: number;
-    reports: IMaintainabilityReport[]
-  }
+    reports: IMaintainabilityReport[];
+  };
 }
