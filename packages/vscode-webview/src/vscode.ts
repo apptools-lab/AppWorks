@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import * as vscode from 'vscode';
 import * as path from 'path';
 
