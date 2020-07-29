@@ -81,7 +81,7 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
   const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
 
   // vendor for MPA
-  const vendorStylePathOnDisk = vscode.Uri.file(path.join(basePath, `css/${entryName}.css`));
+  const vendorStylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/vendor.css'));
   const vendorStyleUri = vendorStylePathOnDisk.with({ scheme: 'vscode-resource' });
   const vendorScriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/vendor.js'));
   const vendorScriptUri = vendorScriptPathOnDisk.with({ scheme: 'vscode-resource' });
