@@ -1,4 +1,5 @@
 export interface IScorerOptions {
-  highestScore: number;
-  lowestScore: number;
+  highestScore?: number;
+  lowestScore?: number;
+  digits?: number;
 }

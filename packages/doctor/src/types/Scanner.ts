@@ -1,6 +1,15 @@
+import { IClone } from '@jscpd/core';
+
 export interface IScannerOptions {
   ignoreDirs: string[];
   supportExts: string[];
+}
+
+export interface IFileInfo {
+  path: string;
+  source: string;
+  // lines of code
+  LOC: number;
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex
@@ -21,8 +30,16 @@ export interface IMaintainabilityReport {
 }
 
 export interface IScannerReports {
+  filesInfo: {
+    count: number;
+    lines: number;
+  };
   maintainability?: {
     score: number;
     reports: IMaintainabilityReport[];
   };
+  repeatability?: {
+    score: number;
+    clones: IClone[];
+  }
 }

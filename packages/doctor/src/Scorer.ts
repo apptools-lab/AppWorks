@@ -5,11 +5,14 @@ export default class Scanner {
 
   protected lowestScore: number;
 
+  protected digits: number;
+
   protected currentScore: number;
 
   constructor(options = {} as IScorerOptions) {
     this.highestScore = options.highestScore || 100;
     this.lowestScore = options.lowestScore || 0;
+    this.digits = options.digits || 2;
 
     this.currentScore = this.highestScore;
   }
@@ -27,8 +30,8 @@ export default class Scanner {
   public getAverage(list: number[]): number {
     let sum = 0;
 
+    // Calculate average without max and min 
     list.sort((a, b) => a - b);
-
     list.pop();
     list.shift();
 
@@ -45,6 +48,6 @@ export default class Scanner {
       return this.lowestScore;
     }
     // Avoid NaN
-    return this.currentScore || 0;
+    return Number((this.currentScore || 0).toFixed(this.digits));
   }
 }

@@ -4,7 +4,7 @@ import { IDoctorOptions } from './types/Doctor';
 import { IScannerReports } from './types/Scanner';
 
 // Ignore directories
-const defaultIgnoreDirs = ['build', 'dist', 'lib', 'node_modules', 'public', 'test', '__tests__'];
+const defaultIgnoreDirs = ['build', 'es', 'dist', 'lib', 'node_modules', 'public', 'test', '__tests__'];
 // Support file exts
 const defaultSupportExts = ['js', 'jsx', 'ts', 'tsx'];
 

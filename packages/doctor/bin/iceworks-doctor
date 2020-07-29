@@ -46,6 +46,15 @@ if (args.scan) {
   const doctor = new Doctor(options);
   doctor.scan(args.scan).then((result) => {
     console.log(result);
+
+    console.log({
+      files: {
+        count: result.filesInfo.count,
+        lines: result.filesInfo.lines
+      },
+      maintainability: result.maintainability.score,
+      repeatability: result.repeatability.score
+    });
   }).catch((err) => {
     console.log('Error!');
     console.error(err);
