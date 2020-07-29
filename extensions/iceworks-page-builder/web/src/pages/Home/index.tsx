@@ -46,7 +46,6 @@ const Home = () => {
 
   function validateData({ blocks }) {
     if (!blocks.length) {
-      // TODO: 修改国际化内容 
       return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
     }
     return '';
