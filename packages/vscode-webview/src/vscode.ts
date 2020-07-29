@@ -90,21 +90,26 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
-  const fileContent = `<!DOCTYPE html>
+  const fileContent =
+    `<!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
       <meta name="theme-color" content="#000000">
       <title>Iceworks</title>
-      ` + (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') + `
+      ` +
+    (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') +
+    `
       <link rel="stylesheet" type="text/css" href="${styleUri}">
     </head>
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
       <div id="ice-container"></div>
       <script nonce="${nonce}" src="${vendorScriptUri}"></script>
-      ` + (needVendor ? `<script nonce="${nonce}" src="${scriptUri}"></script>` : '') + `
+      ` +
+    (needVendor ? `<script nonce="${nonce}" src="${scriptUri}"></script>` : '') +
+    `
     </body>
   </html>`;
   return fileContent;

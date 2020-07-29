@@ -25,7 +25,9 @@ const Home = () => {
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getMaterialError' }) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getMaterialError' }),
+      });
     }
 
     console.log('getSources', sources);
@@ -37,7 +39,9 @@ const Home = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getDataError' }) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getDataError' }),
+      });
     }
     console.log('getData', data);
     return data;
@@ -90,7 +94,9 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.generateSuccess' }) });
+    Notification.success({
+      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.generateSuccess' }),
+    });
     resetData();
   }
   return (
@@ -102,7 +108,9 @@ const Home = () => {
           </div>
           <div className={styles.field}>
             <Input
-              placeholder={intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.inputComponentNamePlaceHolder' })}
+              placeholder={intl.formatMessage({
+                id: 'web.iceworksUIBuilder.componentCreator.inputComponentNamePlaceHolder',
+              })}
               className={styles.pageNameInput}
               value={componentName}
               onChange={(value) => setComponentName(value)}

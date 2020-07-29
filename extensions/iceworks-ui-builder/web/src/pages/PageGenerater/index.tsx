@@ -22,7 +22,9 @@ const Home = () => {
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetMaterial' }) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetMaterial' }),
+      });
     }
 
     console.log('getSources', sources);
@@ -105,7 +107,9 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }) });
+    Notification.success({
+      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
+    });
     resetData();
   }
 
