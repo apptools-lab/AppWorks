@@ -98,7 +98,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.ComponentBuiilder.Home.inputComponentName' />
+            <FormattedMessage id="web.ComponentBuiilder.Home.inputComponentName" />
           </div>
           <div className={styles.field}>
             <Input
@@ -112,7 +112,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.ComponentBuiilder.Home.selectBlock' />
+            <FormattedMessage id="web.ComponentBuiilder.Home.selectBlock" />
           </div>
           <div className={styles.select}>
             <Material
@@ -128,8 +128,8 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type='primary' loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id='web.ComponentBuiilder.Home.generate' />
+        <Button type="primary" loading={isCreating} onClick={handleCreate}>
+          <FormattedMessage id="web.ComponentBuiilder.Home.generate" />
         </Button>
       </div>
     </div>

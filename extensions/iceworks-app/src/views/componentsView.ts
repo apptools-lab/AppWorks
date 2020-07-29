@@ -11,7 +11,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<
-  ComponentTreeItem | undefined
+    ComponentTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;

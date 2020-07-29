@@ -21,7 +21,7 @@ export const MaterialScaffold: React.FC<{
           {dataSource.isNewlyCreated ? <div className={styles.newly}>NEW</div> : null}
           {selected ? (
             <div className={styles.selected}>
-              <Icon style={{ fontSize: '20px', color: '#2f54eb' }} type='check-circle' />
+              <Icon style={{ fontSize: '20px', color: '#2f54eb' }} type="check-circle" />
             </div>
           ) : null}
           {dataSource.screenshots && dataSource.screenshots.length ? (
@@ -48,10 +48,10 @@ export const MaterialScaffold: React.FC<{
       </div>
 
       <div className={styles.actions}>
-        <a href={dataSource.homepage} rel='noopener noreferrer' target='_blank' className={styles.button}>
+        <a href={dataSource.homepage} rel="noopener noreferrer" target="_blank" className={styles.button}>
           预览
         </a>
-        <a href={dataSource.repository} rel='noopener noreferrer' target='_blank' className={styles.button}>
+        <a href={dataSource.repository} rel="noopener noreferrer" target="_blank" className={styles.button}>
           源码
         </a>
         {hiddenDownloadButton ? null : (

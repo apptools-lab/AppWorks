@@ -102,7 +102,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                     key={item.name}
                     title={
                       <div className={styles.cardTitle}>
-                        {<img src={require(`@/assets/${iconName}.svg`)} alt='projectType' width={26} height={26} />}
+                        {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
                         <div>{item.name}</div>
                       </div>
                     }
@@ -116,11 +116,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
           </div>
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}>
-              <Icon type='add' />
+              <Icon type="add" />
             </Button>
           </div>
         </div>
-        <Divider direction='ver' style={{ height: '100%' }} />
+        <Divider direction="ver" style={{ height: '100%' }} />
         <div className={styles.scaffolds}>
           {loading ? (
             <Loading visible={loading} className={styles.loading} />
@@ -146,7 +146,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                             {scaffoldType && (
                               <img
                                 src={require(`@/assets/${scaffoldType}.svg`)}
-                                alt='languageType'
+                                alt="languageType"
                                 width={20}
                                 height={20}
                               />
@@ -191,7 +191,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                                 {scaffoldType && (
                                   <img
                                     src={require(`@/assets/${scaffoldType}.svg`)}
-                                    alt='languageType'
+                                    alt="languageType"
                                     width={20}
                                     height={20}
                                   />

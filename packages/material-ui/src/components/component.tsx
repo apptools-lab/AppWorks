@@ -28,10 +28,10 @@ export const MaterialComponent: React.FC<{
         <a onClick={handleClick} className={styles.button}>
           添加
         </a>
-        <a href={dataSource.homepage} rel='noopener noreferrer' target='_blank' className={styles.button}>
+        <a href={dataSource.homepage} rel="noopener noreferrer" target="_blank" className={styles.button}>
           文档
         </a>
-        <a className={styles.button} rel='noopener noreferrer' target='_blank' href={dataSource.repository}>
+        <a className={styles.button} rel="noopener noreferrer" target="_blank" href={dataSource.repository}>
           源码
         </a>
       </div>
