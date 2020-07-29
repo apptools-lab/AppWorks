@@ -13,12 +13,12 @@ export default function showExtensionsQuickPick() {
     {
       label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label'),
       detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail'),
-      command: 'iceworks-page-builder.create',
+      command: 'iceworks-ui-builder.generate-page',
     },
     {
       label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.label'),
       detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail'),
-      command: 'iceworks-component-builder.generate',
+      command: 'iceworks-ui-builder.create-component',
     },
     {
       label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.label'),

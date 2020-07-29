@@ -71,12 +71,12 @@ export function connectService(
   );
 }
 
-export function getHtmlForWebview(extensionPath: string): string {
+export function getHtmlForWebview(extensionPath: string, entryName?: string): string {
+  entryName = entryName || 'index';
   const basePath = path.join(extensionPath, 'build/');
-
-  const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/index.js'));
+  const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, `js/${entryName}.js`));
   const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
-  const stylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/index.css'));
+  const stylePathOnDisk = vscode.Uri.file(path.join(basePath, `css/${entryName}.css`));
   const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
 
   // Use a nonce to whitelist which scripts can be run
