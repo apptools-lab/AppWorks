@@ -150,8 +150,8 @@ export function createNpmScriptsTreeProvider(
     executeCommand(terminals, command, commandId);
   });
 
-  const pattern = path.join(rootPath, packageJSONFilename);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(rootPath, packageJSONFilename);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
   fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());
   fileWatcher.onDidDelete(() => npmScriptsProvider.refresh());
