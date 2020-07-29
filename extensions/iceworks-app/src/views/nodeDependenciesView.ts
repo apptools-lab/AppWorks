@@ -224,7 +224,7 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     )
   );
 
-  const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**')
+  const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
