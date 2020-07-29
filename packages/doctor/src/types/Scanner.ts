@@ -29,17 +29,21 @@ export interface IMaintainabilityReport {
   maintainability: number;
 }
 
+export interface IMaintainabilityReports {
+  score: number;
+  reports: IMaintainabilityReport[];
+}
+
+export interface IRepeatabilityReports {
+  score: number;
+  clones: IClone[];
+}
+
 export interface IScannerReports {
   filesInfo: {
     count: number;
     lines: number;
   };
-  maintainability?: {
-    score: number;
-    reports: IMaintainabilityReport[];
-  };
-  repeatability?: {
-    score: number;
-    clones: IClone[];
-  };
+  maintainability?: IMaintainabilityReports;
+  repeatability?: IRepeatabilityReports;
 }

@@ -1,14 +1,9 @@
 import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as escomplex from 'typhonjs-escomplex';
-import { IClone } from '@jscpd/core';
-import { jscpd } from 'jscpd';
-import { IScannerOptions, IFileInfo, IMaintainabilityReport, IScannerReports } from './types/Scanner';
-import Scorer from './Scorer';
+import { CLIEngine } from 'eslint';
+import { IScannerOptions, IFileInfo, IScannerReports } from './types/Scanner';
+import getMaintainabilityReports from './getMaintainabilityReports';
+import getRepeatabilityReports from './getRepeatabilityReports';
 import getFiles from './getFiles';
-
-// Write temp file directory 
-const tempDir = path.join(__dirname, 'tmp/');
 
 export default class Scanner {
 
@@ -18,60 +13,26 @@ export default class Scanner {
     this.options = options;
   }
 
-  private getFiles(directory: string): IFileInfo[] {
-    return getFiles(directory, this.options.supportExts, this.options.ignoreDirs).map((filePath) => {
-      let source = fs.readFileSync(filePath).toString().trim();
-
-      // if begins with shebang
-      if (source[0] === '#' && source[1] === '!') {
-        source = `//${source}`;
-      }
-
-      return {
-        path: filePath,
-        source,
-        LOC: (source.match(/\n/g) || '').length + 1
-      }
-    })
-  }
-
-  // https://www.npmjs.com/package/typhonjs-escomplex
-  private getMaintainabilityReports(files: IFileInfo[]): IMaintainabilityReport[] {
+  // https://www.npmjs.com/package/eslint-config-ali
+  private getAliEslintReports(files: IFileInfo[]) {
     const reports = [];
+    const aliEslintCliEngine = new CLIEngine({
+      baseConfig: {
+        extends: "eslint-config-ali"
+      },
+      useEslintrc: false
+    });
 
     files.forEach(file => {
-      try {
+      aliEslintCliEngine.executeOnText(file.source).results.forEach((result) => {
         reports.push({
-          ...escomplex.analyzeModule(file.source, {
-            commonjs: true,
-            logicalor: true,
-            newmi: true
-          }),
+          ...result,
           filePath: file.path
         });
-      } catch (e) {
-        // ignore
-      }
-    })
-    return reports;
-  }
-
-  // https://www.npmjs.com/package/jscpd
-  private async getRepeatabilityReports(directory: string): Promise<IClone[]> {
-    let reports = []
-    try {
-      reports = await jscpd([
-        '--formats-exts', this.options.supportExts.join(','),
-        directory,
-        '--ignore', `"${this.options.ignoreDirs.map(ignoreDir => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
-        '--reporters', 'json',
-        '--output', tempDir,
-        '--silent'
-      ]);
-    } catch (e) {
-      // ignore
-    }
-    return reports;
+      })
+    });
+    console.log(reports[0]);
+    console.log(reports.length);
   }
 
   // Entry
@@ -80,33 +41,22 @@ export default class Scanner {
     const reports = {} as IScannerReports;
 
     try {
-      const files = this.getFiles(directory);
+      const files = getFiles(directory, this.options.supportExts, this.options.ignoreDirs);
 
       reports.filesInfo = {
         count: files.length,
         lines: files.reduce((total, file) => { return total + file.LOC }, 0)
       }
 
+      // Calculate Ali eslint 
+      this.getAliEslintReports(files);
+
       // Calculate maintainability
-      const maintainabilityReports = this.getMaintainabilityReports(files);
-      reports.maintainability = {
-        score: new Scorer().getAverage(maintainabilityReports.map(item => item.maintainability)),
-        reports: maintainabilityReports
-      }
+      reports.maintainability = getMaintainabilityReports(files);
 
       // Calculate repeatability
-      let repetitionPercentage = 0;
-      const repeatabilityReports = await this.getRepeatabilityReports(directory);
-      const repeatabilityResultFile = path.join(tempDir, 'jscpd-report.json');
-      if (fs.existsSync(repeatabilityResultFile)) {
-        const repeatabilityResult = fs.readJSONSync(repeatabilityResultFile);
-        repetitionPercentage = repeatabilityResult.statistics.total.percentage;
-      }
+      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignoreDirs);
 
-      reports.repeatability = {
-        score: new Scorer().minus(repetitionPercentage),
-        clones: repeatabilityReports
-      }
     } catch (error) {
       // ignore
     }
