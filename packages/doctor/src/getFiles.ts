@@ -28,7 +28,7 @@ export default function getFiles(
     return {
       path: filePath,
       source,
-      LOC: (source.match(/\n/g) || '').length + 1
+      LoC: (source.match(/\n/g) || '').length + 1
     }
   });
 }

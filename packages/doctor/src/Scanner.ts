@@ -1,6 +1,5 @@
-import * as fs from 'fs-extra';
-import { CLIEngine } from 'eslint';
 import { IScannerOptions, IFileInfo, IScannerReports } from './types/Scanner';
+import getAliEslintReports from './getAliEslintReports';
 import getMaintainabilityReports from './getMaintainabilityReports';
 import getRepeatabilityReports from './getRepeatabilityReports';
 import getFiles from './getFiles';
@@ -13,28 +12,6 @@ export default class Scanner {
     this.options = options;
   }
 
-  // https://www.npmjs.com/package/eslint-config-ali
-  private getAliEslintReports(files: IFileInfo[]) {
-    const reports = [];
-    const aliEslintCliEngine = new CLIEngine({
-      baseConfig: {
-        extends: 'eslint-config-ali'
-      },
-      useEslintrc: false
-    });
-
-    files.forEach(file => {
-      aliEslintCliEngine.executeOnText(file.source).results.forEach((result) => {
-        reports.push({
-          ...result,
-          filePath: file.path
-        });
-      })
-    });
-    console.log(reports[0]);
-    console.log(reports.length);
-  }
-
   // Entry
   public async scan(directory: string): Promise<IScannerReports> {
 
@@ -42,18 +19,17 @@ export default class Scanner {
 
     try {
       const files = getFiles(directory, this.options.supportExts, this.options.ignoreDirs);
+      const totalLoc = files.reduce((total, file) => { return total + file.LoC }, 0);
 
       reports.filesInfo = {
         count: files.length,
-        lines: files.reduce((total, file) => { return total + file.LOC }, 0)
+        lines: totalLoc
       }
 
       // Calculate Ali eslint 
-      this.getAliEslintReports(files);
-
+      reports.aliEslint = getAliEslintReports(files, totalLoc);
       // Calculate maintainability
       reports.maintainability = getMaintainabilityReports(files);
-
       // Calculate repeatability
       reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignoreDirs);
 

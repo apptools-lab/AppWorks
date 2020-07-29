@@ -9,7 +9,7 @@ export interface IFileInfo {
   path: string;
   source: string;
   // lines of code
-  LOC: number;
+  LoC: number;
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex
@@ -39,11 +39,17 @@ export interface IRepeatabilityReports {
   clones: IClone[];
 }
 
+export interface IALiEslintReports {
+  score: number;
+  reports: any[];
+}
+
 export interface IScannerReports {
   filesInfo: {
     count: number;
     lines: number;
   };
+  aliEslint?: IALiEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
 }
