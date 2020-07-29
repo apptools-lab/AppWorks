@@ -9,8 +9,8 @@ const EditInFile= (props)=>{
   return(
     <ChangeProvider fdkey="editInFile" value=''>
       <div style={{ color: 'white' }}>
-        <h3>{idSchema.$id.substring(5)}</h3>
-        <p className='fddescription'>{schema.description}</p>
+        {idSchema?<h3>{idSchema.$id.substring(5)}</h3>:<></>}
+        {schema?<p className='fddescription'>{schema.description}</p>:<></>}
         <Balloon trigger={EditButton} closable={false}>
         This type is temporarily unsupported，please edit in build.json
         </Balloon>

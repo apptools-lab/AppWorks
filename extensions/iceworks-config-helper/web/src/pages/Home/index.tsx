@@ -10,6 +10,8 @@ import fdTextInput from '../../theme/fdTextInput';
 import titleFiled from '../../theme/TitleFiled';
 import descriptionField from '../../theme/DescriptionField';
 import FiledTemplate from '../../theme/FieldTemplate';
+import ObjectFieldTemplate from '../../theme/ObjectFieldTemplate';
+import selectWidget from '../../theme/fdSelectWidge';
 
 const uiSchema = {
   'alias':{
@@ -64,12 +66,12 @@ const fields = {
   DescriptionField: descriptionField,
   ArrayField: fdEditInFile,
   EditInFile: fdEditInFile,
-
 }
 
 const widgets = {
   CheckboxWidget: fdCheckBox,
   TextWidget: fdTextInput,
+  SelectWidget: selectWidget
 };
 
 const setFormData=(e)=>{
@@ -89,7 +91,9 @@ const Home = () => {
 
   return (
     <Card free style={{background:'#1e1e1e'}}>
-      <Form schema={ICESchema} FieldTemplate={FiledTemplate} fields={fields} widgets={widgets} uiSchema={uiSchema} formData={test} onChange={e => setFormData(e.formData)}/>
+      <Form schema={ICESchema} ObjectFieldTemplate={ObjectFieldTemplate} FieldTemplate={FiledTemplate} TitleField= {titleFiled} fields={fields} widgets={widgets} uiSchema={uiSchema} formData={test} onChange={e => setFormData(e.formData)}>
+        <></>
+      </Form>
     </Card>
   )
 };

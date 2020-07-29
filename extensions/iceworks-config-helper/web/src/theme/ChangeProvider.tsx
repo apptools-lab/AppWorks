@@ -11,9 +11,8 @@ const createDefaultSchema = (schema)=>{
   _.forIn(schema,(value,key)=>{
     if(typeof value.type === 'object'){
       createDefaultSchema(value);
-    }else{
-      DefaultSchema[key] = value.default;
     }
+    DefaultSchema[key] = value.default;
   })
 }
 createDefaultSchema(ICESchema.properties);

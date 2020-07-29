@@ -68,8 +68,9 @@
             false
           ]
         }
-      ]
-
+      ],
+      "default":false,
+      "properties": {}
     },
     "injectBabel": {
       "oneOf": [
@@ -84,7 +85,9 @@
             false
           ]
         }
-      ]
+      ],
+      "default": false,
+      "properties": {}
     },
     "minify": {
       "type": "boolean",
@@ -217,7 +220,7 @@
     },
     "compileDependencies": {
       "type": "array",
-      "description": "y default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
+      "description": "By default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
       "default": [],
       "examples": [
         [
@@ -325,22 +328,20 @@
     "eslint": {
       "oneOf": [
         {
+          "type": "boolean",
+          "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
+        },
+        {
           "type": "object",
           "additionalProperties": true,
           "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader ."
-        },
-        {
-          "type": "boolean",
-          "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
         }
-      ],
-      
-      "default": {},
+      ], 
+      "default": false,
       "examples": [
         {}
       ],
       "required": [],
-
       "properties": {}
     },
     "targets": {

@@ -20,7 +20,7 @@ const FdTextWeight: React.FC<WidgetProps> = (props)=>{
   const onfocus=(e)=>{
     setInputStyle({
       'background': '#3c3c3c',
-      'borderColor': 'royalblue',
+      'borderColor': '#167dd8',
       'borderWidth': '1px'
     })
   }
