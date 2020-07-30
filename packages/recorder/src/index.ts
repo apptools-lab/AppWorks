@@ -4,7 +4,7 @@ import storage, { recordKey } from '@iceworks/storage';
 
 // eslint-disable-next-line
 const isElectronProcess = require('is-electron');
-const vscodeEnv;
+let vscodeEnv;
 try {
   // eslint-disable-next-line
   const vscode = require('is-electron');
@@ -65,7 +65,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       gokey: encodeURIComponent(gokey),
       logtype: '2',
     };
-    
+
     console.log('recorder[url]:', url);
     console.log('recorder[data]:', data);
 
