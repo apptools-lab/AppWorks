@@ -7,9 +7,6 @@ import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick'
 import executeCommand from './commands/executeCommand';
 import stopCommand from './commands/stopCommand';
 
-// eslint-disable-next-line
-const { version } = require('../package.json');
-
 export default function createEditorMenuAction(
   rootPath: string,
   terminals: ITerminalMap,

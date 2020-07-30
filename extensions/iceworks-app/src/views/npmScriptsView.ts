@@ -6,7 +6,6 @@ import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import stopCommand from '../commands/stopCommand';
 import { ITerminalMap } from '../types';
-import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from '../constants';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
   private workspaceRoot: string;
