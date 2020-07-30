@@ -5,13 +5,8 @@ import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from './cons
 import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
-import stopCommand from './commands/stopCommand';
 
-export default function createEditorMenuAction(
-  rootPath: string,
-  terminals: ITerminalMap,
-  isAliInternal: boolean,
-) {
+export default function createEditorMenuAction(rootPath: string, terminals: ITerminalMap, isAliInternal: boolean) {
   vscode.commands.registerCommand('iceworksApp.npmScripts.runDev', async () => {
     const pathExists = await checkPathExists(rootPath, dependencyDir);
     const command: vscode.Command = {
@@ -26,18 +21,12 @@ export default function createEditorMenuAction(
       return;
     }
     executeCommand(terminals, command, commandId);
-    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', true);
-  });
-
-  vscode.commands.registerCommand('iceworksApp.npmScripts.stopDev', () => {
-    stopCommand(terminals, editorTitleRunDevCommandId);
-    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', false);
   });
 
   if (isAliInternal) {
     vscode.commands.registerCommand('iceworksApp.DefPublish', () => {
       showDefPublishEnvQuickPick(terminals, rootPath);
-    })
+    });
   } else {
     vscode.commands.registerCommand('iceworksApp.npmScripts.runBuild', async () => {
       const pathExists = await checkPathExists(rootPath, dependencyDir);

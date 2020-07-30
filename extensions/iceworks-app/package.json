@@ -256,12 +256,7 @@
         {
           "command": "iceworksApp.npmScripts.runDev",
           "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isRunningDev"
-        },
-        {
-          "command": "iceworksApp.npmScripts.stopDev",
-          "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isRunningDev"
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
           "command": "iceworksApp.DefPublish",

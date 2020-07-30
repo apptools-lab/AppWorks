@@ -56,7 +56,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   if (!rootPath) {
-    vscode.window.showInformationMessage(i18n.format('extension.iceworksApp.extebsion.emptyWorkplace'));
+    window.showInformationMessage(i18n.format('extension.iceworksApp.extebsion.emptyWorkplace'));
     vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
     vscode.commands.executeCommand('iceworks-project-creator.start');
     return;
@@ -75,6 +75,10 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   const terminals: ITerminalMap = new Map<string, Terminal>();
+  // remove terminal from terminals map
+  window.onDidCloseTerminal((terminal) => {
+    terminals.delete(terminal.name);
+  });
 
   // init tree data providers
   createNpmScriptsTreeProvider(context, rootPath, terminals);
