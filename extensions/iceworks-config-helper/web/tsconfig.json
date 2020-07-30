@@ -29,6 +29,6 @@
     },
     "resolveJsonModule": true
   },
-  "include": ["src", ".ice"],
+  "include": ["src", ".ice", "utils.ts"],
   "exclude": ["node_modules", "build", "public"]
 }

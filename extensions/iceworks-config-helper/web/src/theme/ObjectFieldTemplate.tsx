@@ -9,18 +9,10 @@ const ObjectFieldTemplate = ({
   uiSchema,
 }: ObjectFieldTemplateProps) => {
   return (
-    <div style = {{marginLeft:'6px'}}>
-      {(uiSchema['ui:title'] || title) && (
-        <h3>{title}</h3>
-      )}
-      {description && (
-        <p className='fddescription'>
-          {description}
-        </p>
-      )}
+    
+    <div style = {{marginLeft:'6px'}}>  
       {properties.map((element) => element.content)}
     </div>
-
   );
 };
 

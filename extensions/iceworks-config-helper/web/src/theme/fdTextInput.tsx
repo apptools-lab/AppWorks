@@ -36,13 +36,7 @@ const FdTextWeight: React.FC<WidgetProps> = (props)=>{
     setInputValue(inputStringValue);
   }
   return (
-    <ChangeProvider fdkey={label} value = {inputValue}>
-      <>
-        <h3 style={{ color: 'white' }}>{label}</h3>
-        <p className='fddescription'>{schema.description}</p>
-        <Input value={inputValue} onChange={inputChange} style={inputStyle} onFocus={onfocus} onBlur={onblur}/>
-      </>
-    </ChangeProvider>
+    <Input value={inputValue} onChange={inputChange} style={inputStyle} onFocus={onfocus} onBlur={onblur}/>
   )
 }
 export default FdTextWeight;

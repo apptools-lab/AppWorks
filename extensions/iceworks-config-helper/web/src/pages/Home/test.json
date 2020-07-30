@@ -1,4 +1,4 @@
 {
-    "devPublicPath":"./456"
+    "devPublicPath": "./456",
+    "eslint":{ "key":"value"}
 }
-  

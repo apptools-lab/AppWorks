@@ -1,33 +1,30 @@
 import React, { useState,useEffect } from 'react';
 import * as _ from 'lodash'
 import { Box } from '@alifd/next';
-import ICESchema from '../../../schemas/ice.build.json'
+import {DefaultSchema,formdidNotEditAttrs, isEqual} from '../utils';
 
 
+const ChangeProvider=({fdkey, children})=>{
 
-export const DefaultSchema = {};
+  const [value,setValue] = useState(DefaultSchema[fdkey]);
 
-const createDefaultSchema = (schema)=>{
-  _.forIn(schema,(value,key)=>{
-    if(typeof value.type === 'object'){
-      createDefaultSchema(value);
-    }
-    DefaultSchema[key] = value.default;
-  })
-}
-createDefaultSchema(ICESchema.properties);
-
-console.log(DefaultSchema);
-
-const ChangeProvider=({fdkey, children, value})=>{
-  
+  // console.log(`key: ${fdkey}, value: ${value}`)
+  // 侧边栏样式控制
   const [siderStyle,setSiderStyle] = useState({backgroundColor: '#1e1e1e',width: '2px',margin:'0 2px'});
+  
   useEffect(() => {
-    setSiderStyle( fdkey ==='editInFile'||value === DefaultSchema[fdkey]||value===''&&DefaultSchema[fdkey]===undefined?
+    window.addEventListener('updateJSON',(e)=>{
+      if(e.data.currentConfig)
+        setValue(e.data.currentConfig[fdkey]);
+    })
+    // console.log(fdkey,value);
+    setSiderStyle( isEqual(value,DefaultSchema[fdkey])||
+      value===''&&DefaultSchema[fdkey]===undefined||
+      formdidNotEditAttrs.includes(fdkey)?
       {backgroundColor: '#1e1e1e',width: '2px',margin:'0 2px'}:
       {backgroundColor: '#0d7c9f',width: '2px',margin:'10px 2px 0px 2px'}
     );
-  }, [value])
+  }, [fdkey,value])
 
   return(
     <Box direction='row'>

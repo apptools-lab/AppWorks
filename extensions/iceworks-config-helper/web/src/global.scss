@@ -12,3 +12,15 @@ h3{
   font-size: 16px;
   color: #e7e7e7;
 }
+a{
+  font-size: 10px;
+  text-decoration: underline;
+}
+a:hover{
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+.panel-body{
+  display: none;
+}
