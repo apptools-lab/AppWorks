@@ -63,8 +63,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   const { fileName, line } = getFocusCodeInfo(document, position);
   const variables = Object.assign({}, FUSION_VARIABLES, findVariables(fileName));
 
-  // Variables shows in value part, like color: 
-  if (line.text.indexOf(':') === -1) return
+  // Variables shows in value part, like color: xxx.
+  if (line.text.indexOf(':') === -1) return;
 
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
@@ -121,8 +121,6 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
     // Set provideHover
     context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
     // Styles auto Complete
-    context.subscriptions.push(
-      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems })
-    );
+    context.subscriptions.push(vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems }));
   });
 }
