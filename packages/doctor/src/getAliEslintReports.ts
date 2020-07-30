@@ -14,18 +14,18 @@ export default function getAliEslintReports(files: IFileInfo[], LoC: number): IA
 
   const aliEslintCliEngine = new CLIEngine({
     baseConfig: {
-      extends: 'eslint-config-ali'
+      extends: 'eslint-config-ali',
     },
-    useEslintrc: false
+    useEslintrc: false,
   });
 
-  files.forEach(file => {
+  files.forEach((file) => {
     aliEslintCliEngine.executeOnText(file.source).results.forEach((result) => {
       reports.push({
         ...result,
-        filePath: file.path
+        filePath: file.path,
       });
-    })
+    });
   });
 
   reports.forEach((report) => {
@@ -39,6 +39,6 @@ export default function getAliEslintReports(files: IFileInfo[], LoC: number): IA
 
   return {
     score: scorer.getScore(),
-    reports
-  }
+    reports,
+  };
 }

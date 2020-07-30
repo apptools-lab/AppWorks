@@ -3,18 +3,13 @@ import { glob } from 'glob';
 import { IFileInfo } from './types/Scanner';
 
 // https://www.npmjs.com/package/glob
-export default function getFiles(
-  directory: string,
-  supportExts: string[],
-  ignoreDirs?: string[]
-): IFileInfo[] {
-
+export default function getFiles(directory: string, supportExts: string[], ignoreDirs?: string[]): IFileInfo[] {
   const options: any = {
-    nodir: true
-  }
+    nodir: true,
+  };
 
   if (ignoreDirs) {
-    options.ignore = ignoreDirs.map(ignoreDir => `${directory}/**/${ignoreDir}/**`);
+    options.ignore = ignoreDirs.map((ignoreDir) => `${directory}/**/${ignoreDir}/**`);
   }
 
   return glob.sync(`${directory}/**/*.+(${supportExts.join('|')})`, options).map((filePath) => {
@@ -28,7 +23,7 @@ export default function getFiles(
     return {
       path: filePath,
       source,
-      LoC: (source.match(/\n/g) || '').length + 1
-    }
+      LoC: (source.match(/\n/g) || '').length + 1,
+    };
   });
 }

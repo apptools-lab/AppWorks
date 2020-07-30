@@ -14,11 +14,11 @@
     "desc": "Scan target project directory.",
     "type": "string"
   },
-  "ignoreDirs":{
+  "ignoreDirs": {
     "desc": "Ignore directories when scan.",
     "type": "array"
   },
-  "supportExts":{
+  "supportExts": {
     "desc": "Support file ext list. (example: jsx css html ...)",
     "type": "array"
   }

@@ -1,4 +1,3 @@
-
 import Scanner from './Scanner';
 import { IDoctorOptions } from './types/Doctor';
 import { IScannerReports } from './types/Scanner';
@@ -24,6 +23,6 @@ class Doctor {
   scan(directory: string): Promise<IScannerReports> {
     return this.scanner.scan(directory);
   }
-};
+}
 
 export { Doctor };

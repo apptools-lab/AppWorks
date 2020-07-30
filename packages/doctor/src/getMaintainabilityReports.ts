@@ -6,15 +6,15 @@ import { IFileInfo, IMaintainabilityReport, IMaintainabilityReports } from './ty
 export default function getMaintainabilityReports(files: IFileInfo[]): IMaintainabilityReports {
   const reports = [];
 
-  files.forEach(file => {
+  files.forEach((file) => {
     try {
       reports.push({
         ...escomplex.analyzeModule(file.source, {
           commonjs: true,
           logicalor: true,
-          newmi: true
+          newmi: true,
         }),
-        filePath: file.path
+        filePath: file.path,
       });
     } catch (e) {
       // ignore
@@ -23,6 +23,6 @@ export default function getMaintainabilityReports(files: IFileInfo[]): IMaintain
 
   return {
     score: new Scorer().getAverage(reports.map((item: IMaintainabilityReport) => item.maintainability)),
-    reports
+    reports,
   };
 }

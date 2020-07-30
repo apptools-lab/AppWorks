@@ -30,12 +30,12 @@ export default class Scanner {
   public getAverage(list: number[]): number {
     let sum = 0;
 
-    // Calculate average without max and min 
+    // Calculate average without max and min
     list.sort((a, b) => a - b);
     list.pop();
     list.shift();
 
-    list.forEach(num => sum += num);
+    list.forEach((num) => (sum += num));
     this.currentScore = sum / list.length;
 
     return this.getScore();

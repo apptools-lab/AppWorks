@@ -5,7 +5,7 @@ import { jscpd } from 'jscpd';
 import Scorer from './Scorer';
 import { IRepeatabilityReports } from './types/Scanner';
 
-// Write temp file directory 
+// Write temp file directory
 const tempDir = path.join(__dirname, 'tmp/');
 
 // https://www.npmjs.com/package/jscpd
@@ -19,12 +19,16 @@ export default async function getRepeatabilityReports(
 
   try {
     clones = await jscpd([
-      '--formats-exts', supportExts.join(','),
+      '--formats-exts',
+      supportExts.join(','),
       directory,
-      '--ignore', `"${ignoreDirs.map(ignoreDir => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
-      '--reporters', 'json',
-      '--output', tempDir,
-      '--silent'
+      '--ignore',
+      `"${ignoreDirs.map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
+      '--reporters',
+      'json',
+      '--output',
+      tempDir,
+      '--silent',
     ]);
 
     const repeatabilityResultFile = path.join(tempDir, 'jscpd-report.json');
@@ -39,6 +43,6 @@ export default async function getRepeatabilityReports(
 
   return {
     score: new Scorer().minus(repetitionPercentage),
-    clones
+    clones,
   };
 }
