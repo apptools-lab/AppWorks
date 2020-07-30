@@ -19,6 +19,7 @@ import {
   getImportInfos,
   getLastAcitveTextEditor,
   getImportTemplate,
+  getIceworksTerminal,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -139,16 +140,7 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
       return `${packageName}@${version}`;
     });
 
-    let terminal: vscode.Terminal;
-    const terminalName = 'Iceworks';
-    const targetTerminal = terminals.find((terminal) => terminal.name === terminalName);
-
-    if (targetTerminal) {
-      terminal = targetTerminal;
-    } else {
-      terminal = vscode.window.createTerminal(terminalName);
-    }
-
+    const terminal = getIceworksTerminal();
     terminal.show();
     terminal.sendText(`cd '${projectPath}'`, true);
     terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
