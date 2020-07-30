@@ -173,6 +173,10 @@
         "title": "%iceworksApp.command.pages.openFile.title%"
       },
       {
+        "command": "iceworksApp.pages.delete",
+        "title": "%iceworksApp.command.pages.delete.title%"
+      },
+      {
         "command": "iceworksApp.components.add",
         "title": "%iceworksApp.command.components.add.title%",
         "icon": {
@@ -187,6 +191,10 @@
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
         }
+      },
+      {
+        "command": "iceworksApp.components.delete",
+        "title": "%iceworksApp.command.components.delete.title%"
       },
       {
         "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
@@ -333,6 +341,14 @@
           "group": "inline"
         },
         {
+          "command": "iceworksApp.pages.delete",
+          "when": "view == pages && viewItem == page"
+        },
+        {
+          "command": "iceworksApp.components.delete",
+          "when": "view == components && viewItem == component"
+        },
+        {
           "command": "iceworksApp.nodeDependencies.upgrade",
           "when": "view == nodeDependencies && viewItem == outdatedDependency",
           "group": "inline"
@@ -412,7 +428,6 @@
   },
   "extensionDependencies": [
     "iceworks-team.iceworks-project-creator",
-    "iceworks-team.iceworks-ui-builder",
     "iceworks-team.iceworks-material-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
