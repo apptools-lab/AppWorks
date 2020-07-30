@@ -19,7 +19,7 @@ import {
   getImportInfos,
   getLastAcitveTextEditor,
   getImportTemplate,
-  getIceworksTerminal
+  getIceworksTerminal,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';

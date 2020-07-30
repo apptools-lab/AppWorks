@@ -7,7 +7,7 @@ import {
   getImportInfos,
   CONFIGURATION_KEY_PCKAGE_MANAGER,
   getDataFromSettingJson,
-  getIceworksTerminal
+  getIceworksTerminal,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
