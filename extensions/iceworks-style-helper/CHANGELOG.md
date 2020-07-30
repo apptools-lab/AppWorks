@@ -1,8 +1,12 @@
 # Change Log
 
+## 0.3.4
+
+- Add data recorder.
+
 ## 0.3.3
 
-- Support en-US
+- Support en-US.
 
 ## 0.3.2
 

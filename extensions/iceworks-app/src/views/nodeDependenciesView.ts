@@ -208,24 +208,20 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     }
   });
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
-    )
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
-    )
-  );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
-      showDepsQuickPick(terminals, nodeDependenciesProvider)
-    )
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
   );
 
-  const pattern = path.join(rootPath, dependencyDir);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
+  );
+
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
+    showDepsQuickPick(terminals, nodeDependenciesProvider)
+  );
+
+  const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());

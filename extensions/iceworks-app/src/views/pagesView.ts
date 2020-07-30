@@ -88,14 +88,14 @@ export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPa
   const pagesProvider = new PagesProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('pages', pagesProvider);
   vscode.commands.registerCommand('iceworksApp.pages.add', () => {
-    console.log('iceworksApp: activate iceworks-page-builder.create');
-    vscode.commands.executeCommand('iceworks-page-builder.create');
+    console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
+    vscode.commands.executeCommand('iceworks-ui-builder.generate-page');
   });
   vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
 
-  const pattern = path.join(pagesPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(pagesPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => pagesProvider.refresh());
   fileWatcher.onDidCreate(() => pagesProvider.refresh());
   fileWatcher.onDidDelete(() => pagesProvider.refresh());

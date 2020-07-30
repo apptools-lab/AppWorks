@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import * as vscode from 'vscode';
 import * as path from 'path';
 
@@ -30,7 +31,7 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 export function connectService(
   webviewPanel: vscode.WebviewPanel,
   context: vscode.ExtensionContext,
-  { services, logger }
+  { services, recorder }
 ) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
@@ -42,7 +43,7 @@ export function connectService(
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
-          logger.record({
+          recorder.record({
             module: service,
             action: method,
           });
@@ -71,30 +72,44 @@ export function connectService(
   );
 }
 
-export function getHtmlForWebview(extensionPath: string): string {
+const DEFAULT_ENTRY = 'index';
+export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean): string {
+  entryName = entryName || DEFAULT_ENTRY;
   const basePath = path.join(extensionPath, 'build/');
-
-  const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/index.js'));
+  const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, `js/${entryName}.js`));
   const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
-  const stylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/index.css'));
+  const stylePathOnDisk = vscode.Uri.file(path.join(basePath, `css/${entryName}.css`));
   const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
+
+  // vendor for MPA
+  const vendorStylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/vendor.css'));
+  const vendorStyleUri = vendorStylePathOnDisk.with({ scheme: 'vscode-resource' });
+  const vendorScriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/vendor.js'));
+  const vendorScriptUri = vendorScriptPathOnDisk.with({ scheme: 'vscode-resource' });
 
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
-  const fileContent = `<!DOCTYPE html>
+  const fileContent =
+    `<!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
       <meta name="theme-color" content="#000000">
       <title>Iceworks</title>
+      ` +
+    (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') +
+    `
       <link rel="stylesheet" type="text/css" href="${styleUri}">
     </head>
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
       <div id="ice-container"></div>
-      <script nonce="${nonce}" src="${scriptUri}"></script>
+      <script nonce="${nonce}" src="${vendorScriptUri}"></script>
+      ` +
+    (needVendor ? `<script nonce="${nonce}" src="${scriptUri}"></script>` : '') +
+    `
     </body>
   </html>`;
   return fileContent;

@@ -1,6 +1,0 @@
-{
-  "iceworksPageBuilder.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
-  "iceworksPageBuilder.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
-  "iceworksPageBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use.",
-  "iceworksPageBuilder.commands.create.title": "Iceworks: Create Page"
-}

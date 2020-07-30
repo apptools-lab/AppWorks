@@ -256,12 +256,7 @@
         {
           "command": "iceworksApp.npmScripts.runDev",
           "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isRunningDev"
-        },
-        {
-          "command": "iceworksApp.npmScripts.stopDev",
-          "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isRunningDev"
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
           "command": "iceworksApp.DefPublish",
@@ -398,6 +393,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/recorder": "^0.1.0",
     "@iceworks/common-service": "^0.1.4",
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
@@ -411,8 +407,7 @@
   },
   "extensionDependencies": [
     "iceworks-team.iceworks-project-creator",
-    "iceworks-team.iceworks-component-builder",
-    "iceworks-team.iceworks-page-builder",
+    "iceworks-team.iceworks-ui-builder",
     "iceworks-team.iceworks-material-helper"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",

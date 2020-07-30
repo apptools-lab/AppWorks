@@ -11,7 +11,6 @@ import {
 } from '@iceworks/constant';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
-export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
@@ -278,4 +277,18 @@ export async function getUserInfo() {
 
 export function getLanguage() {
   return vscode.env.language;
+}
+
+export function getIceworksTerminal(terminalName = 'Iceworks') {
+  const { terminals } = vscode.window;
+  let terminal: vscode.Terminal;
+  const targetTerminal = terminals.find((terminal) => terminal.name === terminalName);
+
+  if (targetTerminal) {
+    terminal = targetTerminal;
+  } else {
+    terminal = vscode.window.createTerminal(terminalName);
+  }
+
+  return terminal;
 }

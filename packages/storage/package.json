@@ -1,0 +1,18 @@
+{
+  "name": "@iceworks/storage",
+  "version": "0.1.0",
+  "description": "Global Storage for Iceworks",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "conf": "^7.1.1",
+    "mkdirp": "^1.0.4",
+    "user-home": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

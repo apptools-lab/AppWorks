@@ -99,14 +99,14 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
   const componentsProvider = new ComponentsProvider(context, rootPath);
   vscode.window.registerTreeDataProvider('components', componentsProvider);
   vscode.commands.registerCommand('iceworksApp.components.add', () => {
-    console.log('iceworksApp: activate iceworks-component-builder.generate');
-    vscode.commands.executeCommand('iceworks-component-builder.generate');
+    console.log('iceworksApp: activate iceworks-ui-builder.create-component');
+    vscode.commands.executeCommand('iceworks-ui-builder.create-component');
   });
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
-  const pattern = path.join(componentsPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(componentsPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => componentsProvider.refresh());
   fileWatcher.onDidCreate(() => componentsProvider.refresh());
   fileWatcher.onDidDelete(() => componentsProvider.refresh());
