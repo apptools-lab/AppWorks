@@ -10,7 +10,7 @@ try {
   const vscode = require('is-electron');
   vscodeEnv = vscode.env;
 } catch (error) {
-  // ignore 
+  // ignore
 }
 
 const isElectron = isElectronProcess();
@@ -128,7 +128,7 @@ export function recordActivate(data: { extension: string; version?: string }) {
 
 export class Recorder {
   private namespace: string = MAIN_KEY;
-  
+
   private version: string;
 
   constructor(namespace?: string, version?: string) {
