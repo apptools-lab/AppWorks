@@ -44,6 +44,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   const { line, fileName, directory } = getFocusCodeInfo(document, position);
   if (!/style|className/g.test(line.text)) return;
 
+  recordDAU();
   // In case of cursor shaking
   const word = line.text.substring(0, position.character);
   const styleDependencies = findStyleDependencies(fileName);
@@ -56,7 +57,6 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word))
     ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
-        recordDAU();
         // Remove class selector `.`, When use styles.xxx.
         return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
       });
