@@ -208,20 +208,16 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     }
   });
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
-    )
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
   );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
-    )
+
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
   );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
-      showDepsQuickPick(terminals, nodeDependenciesProvider)
-    )
+
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
+    showDepsQuickPick(terminals, nodeDependenciesProvider)
   );
 
   const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**');

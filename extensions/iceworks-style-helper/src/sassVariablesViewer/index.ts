@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getFullModulePath from './getFullModulePath';
 import colorPreviewDisplay from './colorPreviewDisplay';
@@ -24,6 +25,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
   if (matchedVariable) {
+    recordDAU();
     return new vscode.Location(vscode.Uri.file(matchedVariable.filePath), matchedVariable.position);
   }
 }
@@ -37,6 +39,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
+    recordDAU();
     return new vscode.Hover(
       getMarkdownInfo(
         word,
@@ -62,6 +65,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
 
+    recordDAU();
     return completionItem;
   });
 }

@@ -7,6 +7,7 @@ import {
   getImportInfos,
   CONFIGURATION_KEY_PCKAGE_MANAGER,
   getDataFromSettingJson,
+  getIceworksTerminal,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -27,7 +28,6 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   });
   const { name, source } = dataSource;
   const { npm, version } = source;
-  const { terminals } = window;
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
@@ -54,20 +54,12 @@ export async function addBizCode(dataSource: IMaterialComponent) {
     // ignore
   }
 
-  let terminal: vscode.Terminal;
-  const terminalName = 'Iceworks';
-  const targetTerminal = terminals.find((terminal) => terminal.name === terminalName);
-  if (targetTerminal) {
-    terminal = targetTerminal;
-  } else {
-    terminal = window.createTerminal(terminalName);
-  }
-
   const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
 
+  const terminal = getIceworksTerminal();
   terminal.show();
   terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
+  terminal.sendText(`${packageManager} install ${npm}@${version} --save`, true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
