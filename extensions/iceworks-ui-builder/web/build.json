@@ -11,7 +11,11 @@
       {
         "themePackage": [
           {
-            "name": "@alifd/theme-iceworks-dark"
+            "name": "@alifd/theme-iceworks-dark",
+            "default": true
+          },
+          {
+            "name": "@alife/dpl-iceluna"
           }
         ]
       }
@@ -19,7 +23,9 @@
     [
       "build-plugin-moment-locales",
       {
-        "locales": ["zh-cn"]
+        "locales": [
+          "zh-cn"
+        ]
       }
     ],
     [
