@@ -1,9 +1,17 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
-import * as vscode from 'vscode';
+import storage, { recordKey } from '@iceworks/storage';
 
 // eslint-disable-next-line
 const isElectronProcess = require('is-electron');
+let vscodeEnv;
+try {
+  // eslint-disable-next-line
+  const vscode = require('is-electron');
+  vscodeEnv = vscode.env;
+} catch (error) {
+  // ignore
+}
 
 const isElectron = isElectronProcess();
 const logCode = isElectron ? 'pack_app' : 'pack_web';
@@ -23,7 +31,9 @@ interface IGoldlogParam extends ILogParam {
 type RecordType = 'PV' | 'UV';
 
 const MAIN_KEY = 'main';
-const LOGGER_MODULE_KEY = 'logger';
+
+// Compatible with old logic
+const RECORD_MODULE_KEY = 'logger';
 
 async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   recordType = recordType || 'PV';
@@ -34,6 +44,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
     recordType,
     cache: Math.random(),
   };
+
   try {
     const dataKeyArray = Object.keys(param);
     const gokey = dataKeyArray.reduce((finalStr, currentKey, index) => {
@@ -55,8 +66,10 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       gokey: encodeURIComponent(gokey),
       logtype: '2',
     };
-    console.log('log-url:', url);
-    console.log('log-data:', data);
+
+    console.log('recorder[type]', recordType);
+    console.log('recorder[url]:', url);
+    console.log('recorder[param]:', JSON.stringify(param));
 
     await axios({
       method: 'post',
@@ -74,114 +87,75 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   }
 }
 
-function recordUV(originParam: IGoldlogParam, storage: IStorage) {
+function recordUV(originParam: IGoldlogParam) {
   const nowtDate = new Date().toDateString();
-  const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
-  const lastDate = storage.get(dauKey);
+  const dauKey = `${JSON.stringify(originParam)}`;
+  const records = storage.get(recordKey);
+  const lastDate = records[dauKey];
   if (nowtDate !== lastDate) {
-    storage.update(dauKey, nowtDate);
+    records[dauKey] = nowtDate;
+    storage.set(recordKey, records);
     return recordPV(originParam, 'UV');
   }
 }
 
-export async function record(originParam: IGoldlogParam, storage?: IStorage) {
+export async function record(originParam: IGoldlogParam) {
   await recordPV(originParam);
-  if (storage) {
-    recordUV(originParam, storage);
-  }
+  recordUV(originParam);
 }
 
-export function recordMainDAU(storage: IStorage) {
-  return record(
-    {
-      namespace: MAIN_KEY,
-      module: LOGGER_MODULE_KEY,
-      action: 'dau',
-      data: {
-        platform: process.platform,
-        locale: vscode.env.language,
-      },
+export function recordDAU() {
+  console.log('recorder[dau]');
+  return record({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'dau',
+    data: {
+      platform: process.platform,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
     },
-    storage
-  );
+  });
 }
 
-export function recordMainActivate(storage: IStorage, data: { extension: string; version?: string }) {
-  return record(
-    {
-      namespace: MAIN_KEY,
-      module: LOGGER_MODULE_KEY,
-      action: 'activate',
-      data,
-    },
-    storage
-  );
+export function recordActivate(data: { extension: string; version?: string }) {
+  return record({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'activate',
+    data,
+  });
 }
 
-interface IStorage {
-  get: (key: string) => any;
-  update: (key: string, value: any) => void;
-}
-
-export class Logger {
-  /**
-   * The storage is used to save the record of marking
-   * like https://code.visualstudio.com/api/references/vscode-api#Memento
-   */
-  private storage: IStorage;
-
-  /**
-   * Namespace for logger
-   */
+export class Recorder {
   private namespace: string = MAIN_KEY;
 
-  constructor(namespace?: string, storage?: IStorage) {
+  private version: string;
+
+  constructor(namespace?: string, version?: string) {
     if (namespace) {
       this.namespace = namespace;
     }
-
-    this.storage = storage;
+    this.version = version;
   }
 
   public record(param: ILogParam) {
-    return record(
-      {
-        namespace: this.namespace,
-        ...param,
-      },
-      this.storage
-    );
+    return record({
+      namespace: this.namespace,
+      ...param,
+    });
   }
 
-  /**
-   * Record a day's activity
-   */
-  public recordMainDAU() {
-    if (!this.storage) {
-      console.error('You need to set the storage before calling this method!');
-      return;
-    }
-    return recordMainDAU(this.storage);
-  }
-
-  /**
-   * Record extension activate
-   *
-   * @param version extension's version
-   */
-  public recordExtensionActivate(version?: string) {
-    if (this.storage) {
-      recordMainActivate(this.storage, {
-        extension: this.namespace,
-        version,
-      });
-    }
+  public recordActivate() {
+    recordActivate({
+      extension: this.namespace,
+      version: this.version,
+    });
 
     this.record({
       module: 'main',
       action: 'activate',
       data: {
-        version,
+        version: this.version,
       },
     });
   }

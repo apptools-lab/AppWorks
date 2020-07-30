@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -15,8 +15,7 @@
     "axios": "^0.19.2",
     "co": "4.6.0",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^2.0.0",
-    "is-electron": "^2.2.0"
+    "ice-npm-utils": "^2.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

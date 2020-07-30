@@ -11,7 +11,6 @@ import {
 } from '@iceworks/constant';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 
-export * from './log';
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';

@@ -31,7 +31,7 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 export function connectService(
   webviewPanel: vscode.WebviewPanel,
   context: vscode.ExtensionContext,
-  { services, logger }
+  { services, recorder }
 ) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
@@ -43,7 +43,7 @@ export function connectService(
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
-          logger.record({
+          recorder.record({
             module: service,
             action: method,
           });
