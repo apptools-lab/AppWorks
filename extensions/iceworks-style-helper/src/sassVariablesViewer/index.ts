@@ -58,6 +58,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   // Variables shows in value part, like color: xxx.
   if (line.text.indexOf(':') === -1) return;
 
+  recordDAU();
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
     // Show color preview display
@@ -68,7 +69,6 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
 
-    recordDAU();
     return completionItem;
   });
 }
