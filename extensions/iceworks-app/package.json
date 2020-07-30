@@ -398,6 +398,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/recorder": "^0.1.0",
     "@iceworks/common-service": "^0.1.4",
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
