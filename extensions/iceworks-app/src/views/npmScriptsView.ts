@@ -111,8 +111,8 @@ export function createNpmScriptsTreeProvider(
   );
   vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
-  const pattern = path.join(rootPath, packageJSONFilename);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(rootPath, packageJSONFilename);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
   fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());
   fileWatcher.onDidDelete(() => npmScriptsProvider.refresh());
