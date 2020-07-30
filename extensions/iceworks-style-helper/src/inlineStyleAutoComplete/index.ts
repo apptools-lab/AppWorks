@@ -5,6 +5,8 @@ import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getCompletionItem from './getCompletionItem';
 import isEditStyleKey from './isEditStyleKey';
 
+let isRecordedDAU = false;
+
 const CSS_PROPERTIES = {};
 // {
 //   position: {
@@ -104,7 +106,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       });
     }
   }
-  if (completions.length > 0) {
+  if (!isRecordedDAU && completions.length > 0) {
+    isRecordedDAU = true;
     recordDAU();
   }
   return completions;

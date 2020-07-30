@@ -5,6 +5,8 @@ import { findStyleDependencies } from './findStyleDependencies';
 import findStyleSelectors from './findStyleSelectors';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
+let isRecordedDAU = false;
+
 const SUPPORT_LANGUAGES = ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'];
 
 // Cmd+Click jump to style definition
@@ -16,7 +18,10 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
     const matchedPosition: IStylePosition = matched.position;
-    recordDAU();
+    if (!isRecordedDAU) {
+      isRecordedDAU = true;
+      recordDAU();
+    }
     return new vscode.Location(
       vscode.Uri.file(matched.file),
       // The zero-based line and character value.
@@ -33,7 +38,10 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
-    recordDAU();
+    if (!isRecordedDAU) {
+      isRecordedDAU = true;
+      recordDAU();
+    }
     // Markdown css code
     return new vscode.Hover(`\`\`\`css \n ${matched.code} \n \`\`\`\``);
   }
@@ -55,8 +63,11 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       // style={styles.xxx}
       (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word))
     ) {
-      return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
+      if (!isRecordedDAU) {
+        isRecordedDAU = true;
         recordDAU();
+      }
+      return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
         // Remove class selector `.`, When use styles.xxx.
         return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
       });

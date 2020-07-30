@@ -7,6 +7,8 @@ import getFullModulePath from './getFullModulePath';
 import colorPreviewDisplay from './colorPreviewDisplay';
 import findVariables, { IVariables } from './findVariables';
 
+let isRecordedDAU = false;
+
 const SUPPORT_LANGUAGES = ['scss', 'sass'];
 const VARIABLE_REG = /^\$/; // Sass variable start with $
 // Fusion sass variables. https://ice.work/docs/guide/advance/fusion
@@ -25,7 +27,10 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
   if (matchedVariable) {
-    recordDAU();
+    if (!isRecordedDAU) {
+      isRecordedDAU = true;
+      recordDAU();
+    }
     return new vscode.Location(vscode.Uri.file(matchedVariable.filePath), matchedVariable.position);
   }
 }
@@ -39,7 +44,10 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
-    recordDAU();
+    if (!isRecordedDAU) {
+      isRecordedDAU = true;
+      recordDAU();
+    }
     return new vscode.Hover(
       getMarkdownInfo(
         word,
@@ -52,8 +60,11 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
 // Variables auto Complete
 function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-  const { fileName } = getFocusCodeInfo(document, position);
+  const { fileName, line } = getFocusCodeInfo(document, position);
   const variables = Object.assign({}, FUSION_VARIABLES, findVariables(fileName));
+
+  // Variables shows in value part, like color: 
+  if (line.text.indexOf(':') === -1) return
 
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
@@ -64,8 +75,10 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
-
-    recordDAU();
+    if (!isRecordedDAU) {
+      isRecordedDAU = true;
+      recordDAU();
+    }
     return completionItem;
   });
 }
@@ -109,7 +122,7 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
     context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
     // Styles auto Complete
     context.subscriptions.push(
-      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems }, '.')
+      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems })
     );
   });
 }

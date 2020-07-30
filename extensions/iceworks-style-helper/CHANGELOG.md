@@ -2,6 +2,7 @@
 
 ## 0.3.4
 
+- Fix Variables completions when edit css classes and style keys.
 - Add data recorder.
 
 ## 0.3.3

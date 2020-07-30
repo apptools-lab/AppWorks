@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
+let isRecordedDAU = false;
+
 function unique(arr: string[]) {
   return Array.from(new Set(arr));
 }
@@ -26,7 +28,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       classNames = classNames.concat(getClassNames(filePath), getCSSModuleKeys(filePath));
     }
   });
-  if (classNames.length) {
+  if (!isRecordedDAU && classNames.length) {
+    isRecordedDAU = true;
     recordDAU();
   }
   return unique(classNames).map((className) => {
