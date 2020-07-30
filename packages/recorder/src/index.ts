@@ -65,8 +65,9 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       gokey: encodeURIComponent(gokey),
       logtype: '2',
     };
-    console.log('log-url:', url);
-    console.log('log-data:', data);
+    
+    console.log('recorder[url]:', url);
+    console.log('recorder[data]:', data);
 
     await axios({
       method: 'post',
