@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1
+
+- Add data recorder.
+
 ## 0.2.0
 
 - refactor: rename to React Comopnent Helper

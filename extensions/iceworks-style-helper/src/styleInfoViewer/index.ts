@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import { findStyle, IStylePosition } from './findStyle';
 import { findStyleDependencies } from './findStyleDependencies';
 import findStyleSelectors from './findStyleSelectors';
@@ -15,6 +16,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
     const matchedPosition: IStylePosition = matched.position;
+    recordDAU();
     return new vscode.Location(
       vscode.Uri.file(matched.file),
       // The zero-based line and character value.
@@ -31,6 +33,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
+    recordDAU();
     // Markdown css code
     return new vscode.Hover(`\`\`\`css \n ${matched.code} \n \`\`\`\``);
   }
@@ -53,6 +56,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word))
     ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
+        recordDAU();
         // Remove class selector `.`, When use styles.xxx.
         return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
       });

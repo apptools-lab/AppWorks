@@ -3,7 +3,7 @@
   "displayName": "React Component Helper",
   "description": "Easily use Component in React/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -63,17 +63,17 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/recorder": "^0.1.0",
     "@babel/parser": "^7.10.2",
     "@babel/traverse": "^7.10.1",
     "@babel/types": "^7.10.2",
     "@iceworks/block-service": "^0.1.7",
     "@iceworks/common-service": "^0.1.3",
     "@iceworks/component-service": "^0.1.0",
+    "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-service": "^0.1.3",
     "@iceworks/page-service": "^0.1.5",
-    "@iceworks/vscode-webview": "^0.1.1",
-    "@iceworks/i18n": "^0.1.0"
+    "@iceworks/recorder": "^0.1.1",
+    "@iceworks/vscode-webview": "^0.1.1"
   },
   "repository": {
     "type": "git",

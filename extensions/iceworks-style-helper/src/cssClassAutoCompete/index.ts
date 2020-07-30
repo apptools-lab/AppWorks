@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import {  recordDAU } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
 function unique(arr: string[]) {
@@ -27,7 +28,10 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   });
 
   return unique(classNames).map(
-    (className) => new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text)
+    (className) => {
+      recordDAU();
+      return new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text)
+    }
   );
 }
 
