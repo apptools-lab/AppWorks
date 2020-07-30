@@ -107,10 +107,9 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
       <div id="ice-container"></div>
-      <script nonce="${nonce}" src="${vendorScriptUri}"></script>
       ` +
-    (needVendor ? `<script nonce="${nonce}" src="${scriptUri}"></script>` : '') +
-    `
+    (needVendor ? `<script nonce="${nonce}" src="${vendorScriptUri}"></script>` : '') +
+    `<script nonce="${nonce}" src="${scriptUri}"></script>
     </body>
   </html>`;
   return fileContent;
