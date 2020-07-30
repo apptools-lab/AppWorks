@@ -52,15 +52,15 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
       const isComponentPathExists = await checkPathExists(componentsPath);
       if (isComponentPathExists) {
         const toComponent = (componentName: string) => {
-          const pageEntryPath = path.join(componentsPath, componentName);
+          const componentPath = path.join(componentsPath, componentName);
 
           const command: vscode.Command = {
             command: 'iceworksApp.components.openFile',
             title: 'Open File',
-            arguments: [pageEntryPath],
+            arguments: [componentPath],
           };
 
-          return new ComponentTreeItem(this.extensionContext, componentName, command);
+          return new ComponentTreeItem(this.extensionContext, componentName, command, componentPath);
         };
         const dirNames = await fse.readdir(componentsPath);
         // except file
@@ -82,7 +82,8 @@ class ComponentTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
-    public readonly command: vscode.Command
+    public readonly command: vscode.Command,
+    public readonly path: string,
   ) {
     super(label);
   }
@@ -103,7 +104,10 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
     vscode.commands.executeCommand('iceworks-ui-builder.create-component');
   });
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
+  vscode.commands.registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
+  vscode.commands.registerCommand('iceworksApp.components.delete', async (component) => {
+    await fse.remove(component.path);
+  })
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

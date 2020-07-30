@@ -173,6 +173,14 @@
         "title": "%iceworksApp.command.pages.openFile.title%"
       },
       {
+        "command": "iceworksApp.pages.delete",
+        "title": "%iceworksApp.command.pages.delete.title%",
+        "icon": {
+          "light": "assets/light/delete.svg",
+          "dark": "assets/dark/delete.svg"
+        }
+      },
+      {
         "command": "iceworksApp.components.add",
         "title": "%iceworksApp.command.components.add.title%",
         "icon": {
@@ -186,6 +194,14 @@
         "icon": {
           "light": "assets/light/refresh.svg",
           "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.components.delete",
+        "title": "%iceworksApp.command.components.delete.title%",
+        "icon": {
+          "light": "assets/light/delete.svg",
+          "dark": "assets/dark/delete.svg"
         }
       },
       {
@@ -325,6 +341,16 @@
         {
           "command": "iceworksApp.npmScripts.stop",
           "when": "view == npmScripts && viewItem == script",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.pages.delete",
+          "when": "view == pages && viewItem == page",
+          "group": "inline"
+        },
+        {
+          "command": "iceworksApp.components.delete",
+          "when": "view == components && viewItem == component",
           "group": "inline"
         },
         {
