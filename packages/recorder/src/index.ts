@@ -95,32 +95,29 @@ export async function record(originParam: IGoldlogParam) {
 }
 
 export function recordDAU() {
-  return record(
-    {
-      namespace: MAIN_KEY,
-      module: RECORD_MODULE_KEY,
-      action: 'dau',
-      data: {
-        platform: process.platform,
-        locale: vscode.env.language,
-      },
+  return record({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'dau',
+    data: {
+      platform: process.platform,
+      locale: vscode.env.language,
     },
-  );
+  });
 }
 
 export function recordActivate(data: { extension: string; version?: string }) {
-  return record(
-    {
-      namespace: MAIN_KEY,
-      module: RECORD_MODULE_KEY,
-      action: 'activate',
-      data,
-    },
-  );
+  return record({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'activate',
+    data,
+  });
 }
 
 export class Recorder {
   private namespace: string = MAIN_KEY;
+  
   private version: string;
 
   constructor(namespace?: string, version?: string) {
@@ -131,12 +128,10 @@ export class Recorder {
   }
 
   public record(param: ILogParam) {
-    return record(
-      {
-        namespace: this.namespace,
-        ...param,
-      },
-    );
+    return record({
+      namespace: this.namespace,
+      ...param,
+    });
   }
 
   public recordActivate() {

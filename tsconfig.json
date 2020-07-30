@@ -1,11 +1,11 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/storage" },
-    { "path": "packages/recorder" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
     { "path": "packages/ice-npm-utils" },
+    { "path": "packages/storage" },
+    { "path": "packages/recorder" },
     { "path": "packages/config" },
     { "path": "packages/vscode-webview" },
     { "path": "packages/generate-project" },

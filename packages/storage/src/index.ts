@@ -5,6 +5,7 @@ import * as userHome from 'user-home';
 
 // Note: why not use `import`
 // ref: https://github.com/sindresorhus/conf
+// eslint-disable-next-line  @typescript-eslint/no-var-requires
 const Conf = require('conf');
 
 const confPath = path.join(userHome, '.iceworks');
@@ -18,8 +19,7 @@ export const recordKey = 'records';
 const schema = {
   [recordKey]: {
     type: 'object',
-    default: {
-    },
+    default: {},
   },
 };
 
