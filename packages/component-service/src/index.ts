@@ -67,7 +67,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
 
   terminal.show();
   terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(`${packageManager} install ${npm}@${version}`, true);
+  terminal.sendText(`${packageManager} install ${npm}@${version} --save`, true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
