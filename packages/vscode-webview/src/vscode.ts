@@ -43,10 +43,11 @@ export function connectService(
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
+          const extra = args.length > 0 ? { data: args.length === 1 ? args[0] : args } : undefined;
           recorder.record({
             module: service,
             action: method,
-            data: args.length === 1 ? args[0] : args,
+            ...extra,
           });
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
