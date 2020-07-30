@@ -26,9 +26,10 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       classNames = classNames.concat(getClassNames(filePath), getCSSModuleKeys(filePath));
     }
   });
-
-  return unique(classNames).map((className) => {
+  if (classNames.length) {
     recordDAU();
+  }
+  return unique(classNames).map((className) => {
     return new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
   });
 }
