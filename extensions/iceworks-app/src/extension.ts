@@ -21,19 +21,22 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
-  const { globalState, subscriptions, extensionPath } = context;
+  const { subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
-
-  // data collection
-  recordDAU();
-  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context);
 
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
-  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, showExtensionsQuickPick));
+  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
+    // data collection
+    recordDAU();
+    recorder.recordActivate();
+
+    showExtensionsQuickPick();
+  }));
+
   subscriptions.push(extensionsStatusBar);
   // init webview
   function activeWebview() {
@@ -91,5 +94,5 @@ export async function activate(context: vscode.ExtensionContext) {
   vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
   const isAliInternal = await checkIsAliInternal();
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', isAliInternal);
-  createEditorMenuAction(rootPath, terminals, isAliInternal);
+  createEditorMenuAction(rootPath, terminals, isAliInternal, recorder);
 }

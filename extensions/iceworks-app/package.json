@@ -19,11 +19,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onView:nodeDependencies",
-    "onView:scripts",
-    "onView:pages",
-    "onView:components",
-    "onCommand:iceworksApp.configHelper.start"
+    "*"
   ],
   "main": "./build/extension.js",
   "contributes": {
