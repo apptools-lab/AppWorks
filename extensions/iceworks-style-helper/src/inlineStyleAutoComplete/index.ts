@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {  recordDAU } from '@iceworks/recorder';
+import { recordDAU } from '@iceworks/recorder';
 import CSSData, { IProperty, IPropertyValue } from 'vscode-web-custom-data/data/browsers.css-data.json';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getCompletionItem from './getCompletionItem';
