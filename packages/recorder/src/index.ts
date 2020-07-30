@@ -1,10 +1,17 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
 import storage, { recordKey } from '@iceworks/storage';
-import * as vscode from 'vscode';
 
 // eslint-disable-next-line
 const isElectronProcess = require('is-electron');
+const vscodeEnv;
+try {
+  // eslint-disable-next-line
+  const vscode = require('is-electron');
+  vscodeEnv = vscode.env;
+} catch (error) {
+  // ignore 
+}
 
 const isElectron = isElectronProcess();
 const logCode = isElectron ? 'pack_app' : 'pack_web';
@@ -101,7 +108,7 @@ export function recordDAU() {
     action: 'dau',
     data: {
       platform: process.platform,
-      locale: vscode.env.language,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
     },
   });
 }
