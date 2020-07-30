@@ -52,8 +52,11 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
 // Variables auto Complete
 function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-  const { fileName } = getFocusCodeInfo(document, position);
+  const { fileName, line } = getFocusCodeInfo(document, position);
   const variables = Object.assign({}, FUSION_VARIABLES, findVariables(fileName));
+
+  // Variables shows in value part, like color: xxx.
+  if (line.text.indexOf(':') === -1) return;
 
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
