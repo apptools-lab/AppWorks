@@ -53,7 +53,7 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 1. Click items in PAGES and COMPONENTS on the left panel.
 2. Jump into files of selected projects.
 
-#### Wake up Generate Page and Create Component(See [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
+#### Activate Generate Page and Create Component(See [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
