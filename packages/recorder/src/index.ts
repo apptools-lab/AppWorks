@@ -44,6 +44,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
     recordType,
     cache: Math.random(),
   };
+
   try {
     const dataKeyArray = Object.keys(param);
     const gokey = dataKeyArray.reduce((finalStr, currentKey, index) => {
@@ -66,8 +67,9 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       logtype: '2',
     };
 
+    console.log('recorder[type]', recordType);
     console.log('recorder[url]:', url);
-    console.log('recorder[data]:', data);
+    console.log('recorder[param]:', JSON.stringify(param));
 
     await axios({
       method: 'post',
@@ -87,7 +89,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
 
 function recordUV(originParam: IGoldlogParam) {
   const nowtDate = new Date().toDateString();
-  const dauKey = `iceworks.record.${JSON.stringify(originParam)}`;
+  const dauKey = `${JSON.stringify(originParam)}`;
   const records = storage.get(recordKey);
   const lastDate = records[dauKey];
   if (nowtDate !== lastDate) {
@@ -103,6 +105,7 @@ export async function record(originParam: IGoldlogParam) {
 }
 
 export function recordDAU() {
+  console.log('recorder[dau]');
   return record({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
