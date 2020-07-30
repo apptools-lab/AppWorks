@@ -21,14 +21,14 @@ export const SelectedBlock = SortableElement(
             autoFocus
             value={name}
             className={styles.input}
-            onChange={value => onNameChange(value, targetIndex)}
+            onChange={(value) => onNameChange(value, targetIndex)}
           />
           <Icon className={styles.icon} type="edit" />
         </div>
         <Icon className={styles.delete} type="ashbin" onClick={() => onDelete(targetIndex)} />
       </div>
     );
-  },
+  }
 );
 
 const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
@@ -37,29 +37,24 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
     <div className={styles.pageSelected}>
       {blocks.length ? (
         <div className={styles.list}>
-          {
-            blocks.map((block, index) => {
-              return (
-                <SelectedBlock
-                  {...block}
-                  key={block.name}
-                  index={index}
-                  targetIndex={index}
-                  onNameChange={onNameChange}
-                  onDelete={onDelete}
-                  isSorting={isSorting}
-                />
-              );
-            })
-          }
+          {blocks.map((block, index) => {
+            return (
+              <SelectedBlock
+                {...block}
+                key={block.name}
+                index={index}
+                targetIndex={index}
+                onNameChange={onNameChange}
+                onDelete={onDelete}
+                isSorting={isSorting}
+              />
+            );
+          })}
         </div>
       ) : (
         <div className={styles.empty}>
-          <img
-            src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png"
-            alt="Block"
-          />
-          <FormattedMessage id='web.iceworksPageBuilder.Home.PageSelect.SelectFromRight'/>
+          <img src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png" alt="Block" />
+          <FormattedMessage id="web.iceworksPageBuilder.Home.PageSelect.SelectFromRight" />
         </div>
       )}
     </div>

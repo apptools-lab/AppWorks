@@ -4,4 +4,4 @@ export default function getCompletionItem(itemText: string): vscode.CompletionIt
   const completionItem = new vscode.CompletionItem(itemText, vscode.CompletionItemKind.Variable);
   completionItem.insertText = `${itemText}={}`;
   return completionItem;
-};
+}

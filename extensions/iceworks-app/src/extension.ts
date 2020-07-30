@@ -36,18 +36,24 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   // init webview
   function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel('iceworks', 
-      i18n.format('extension.iceworksApp.extension.title'), ViewColumn.One, {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksApp.extension.title'),
+      ViewColumn.One,
+      {
         enableScripts: true,
         retainContextWhenHidden: true,
-      });
+      }
+    );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
     connectService(webviewPanel, context, { services, logger });
   }
 
-  subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
-    activeWebview();
-  }));
+  subscriptions.push(
+    vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
+      activeWebview();
+    })
+  );
 
   if (!rootPath) {
     vscode.window.showInformationMessage(i18n.format('extension.iceworksApp.extebsion.emptyWorkplace'));
@@ -79,6 +85,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // DEF publish command in editor title
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', isAliInternal);
   if (isAliInternal) {
-    context.subscriptions.push(vscode.commands.registerCommand('iceworksApp.DefPublish', () => showDefPublishEnvQuickPick(terminals, rootPath)));
+    context.subscriptions.push(
+      vscode.commands.registerCommand('iceworksApp.DefPublish', () => showDefPublishEnvQuickPick(terminals, rootPath))
+    );
   }
 }

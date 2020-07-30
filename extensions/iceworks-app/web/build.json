@@ -18,9 +18,7 @@
     [
       "build-plugin-moment-locales",
       {
-        "locales": [
-          "zh-cn"
-        ]
+        "locales": ["zh-cn"]
       }
     ],
     [

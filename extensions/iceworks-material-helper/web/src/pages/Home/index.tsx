@@ -3,7 +3,7 @@ import { Notification } from '@alifd/next';
 import callService from '@/callService';
 import Material from '@iceworks/material-ui';
 import { IMaterialData, IMaterialBlock, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
-import {useIntl} from 'react-intl';
+import { useIntl } from 'react-intl';
 import styles from './index.module.scss';
 import { LocaleProvider } from '../../i18n';
 
@@ -22,7 +22,9 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getMaterialError'}) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.extension.getMaterialError' }),
+      });
     }
     console.log('getSources', sources);
     return sources;
@@ -33,7 +35,9 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id: 'web.iceworksMaterialHelper.extension.getMaterialDataError'}) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.extension.getMaterialDataError' }),
+      });
     }
     console.log('getData', data);
     return data as IMaterialData;
@@ -43,25 +47,25 @@ const MaterialsPane: React.FC<any> = () => {
     try {
       await callService('component', 'addBizCode', component);
     } catch (e) {
-      Notification.error({ content: e.message })
+      Notification.error({ content: e.message });
     }
-  }
+  };
 
   const onBlockClick = async (block: IMaterialBlock) => {
     try {
       await callService('block', 'addBlockCode', block);
     } catch (e) {
-      Notification.error({ content: e.message })
+      Notification.error({ content: e.message });
     }
-  }
+  };
 
   const onBaseClick = async (base: IMaterialBase) => {
     try {
       await callService('component', 'addBaseCode', base);
     } catch (e) {
-      Notification.error({ content: e.message })
+      Notification.error({ content: e.message });
     }
-  }
+  };
   return (
     <div className={styles.container}>
       <Material
@@ -75,15 +79,15 @@ const MaterialsPane: React.FC<any> = () => {
         dataWhiteList={['bases', 'blocks', 'components']}
       />
     </div>
-  )
-}
+  );
+};
 
-export const IntlMaterialPane = ()=>{
+export const IntlMaterialPane = () => {
   return (
     <LocaleProvider>
-      <MaterialsPane/>
+      <MaterialsPane />
     </LocaleProvider>
-  )
-}
+  );
+};
 
 export default IntlMaterialPane;

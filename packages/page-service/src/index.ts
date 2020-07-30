@@ -15,7 +15,13 @@ import i18n from './i18n';
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function ({ pageName: name, blocks = [] }: { pageName: string; blocks: IMaterialBlock[] }) {
+export const generate = async function ({
+  pageName: name,
+  blocks = [],
+}: {
+  pageName: string;
+  blocks: IMaterialBlock[];
+}) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -24,7 +30,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(i18n.format('package.pageService.index.pagePathExistError', {name}));
+    throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
   }
 
   try {
@@ -62,7 +68,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
   }
 
   return pageName;
-}
+};
 
 /**
  * Remove page files
@@ -71,8 +77,8 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
  */
 export const remove = async function (name: string) {
   await fsExtra.remove(path.join(pagesPath, name));
-}
+};
 
 export const addBlocks = async function (blocks: IMaterialBlock[], pageName: string) {
   return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
-}
+};

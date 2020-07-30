@@ -10,7 +10,9 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<ComponentTreeItem | undefined>();
+  private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<
+    ComponentTreeItem | undefined
+  >();
 
   readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;
 
@@ -55,18 +57,18 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
           const command: vscode.Command = {
             command: 'iceworksApp.components.openFile',
             title: 'Open File',
-            arguments: [pageEntryPath]
+            arguments: [pageEntryPath],
           };
 
           return new ComponentTreeItem(this.extensionContext, componentName, command);
         };
         const dirNames = await fse.readdir(componentsPath);
         // except file
-        const componentNames = dirNames.filter(dirname => {
+        const componentNames = dirNames.filter((dirname) => {
           const stat = fse.statSync(path.join(componentsPath, dirname));
           return stat.isDirectory();
         });
-        return componentNames.map(componentName => toComponent(componentName));
+        return componentNames.map((componentName) => toComponent(componentName));
       } else {
         return [];
       }
@@ -87,7 +89,7 @@ class ComponentTreeItem extends vscode.TreeItem {
 
   iconPath = {
     dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/component.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/component.svg'))
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/component.svg')),
   };
 
   contextValue = 'component';
@@ -103,8 +105,8 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
   vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.components.openFile', (p) => openEntryFile(p));
 
-  const pattern = path.join(componentsPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(componentsPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => componentsProvider.refresh());
   fileWatcher.onDidCreate(() => componentsProvider.refresh());
   fileWatcher.onDidDelete(() => componentsProvider.refresh());

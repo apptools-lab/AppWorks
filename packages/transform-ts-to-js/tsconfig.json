@@ -4,9 +4,7 @@
     "outDir": "lib",
     "module": "CommonJS",
     "target": "esnext",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "sourceMap": false,
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
@@ -18,12 +16,8 @@
     "experimentalDecorators": true,
     "rootDir": "src",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

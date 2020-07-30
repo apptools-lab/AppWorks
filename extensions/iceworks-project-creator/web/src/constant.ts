@@ -3,8 +3,8 @@ export const mainScaffoldsList = [
   '@alifd/scaffold-lite',
   '@alifd/scaffold-simple',
   '@rax-materials/scaffolds-app-js',
-  '@rax-materials/scaffolds-app-ts'
-]
+  '@rax-materials/scaffolds-app-ts',
+];
 
 export const tsScaffoldsList = [
   '@alifd/fusion-design-pro',
@@ -12,11 +12,11 @@ export const tsScaffoldsList = [
   '@alifd/scaffold-simple',
   '@icedesign/stark-layout-scaffold',
   '@icedesign/stark-child-scaffold',
-  '@rax-materials/scaffolds-app-ts'
-]
+  '@rax-materials/scaffolds-app-ts',
+];
 
 export const jsScaffoldsList = [
   '@alifd/fusion-design-pro-js',
   '@alifd/scaffold-lite-js',
   '@rax-materials/scaffolds-app-js',
-]
+];

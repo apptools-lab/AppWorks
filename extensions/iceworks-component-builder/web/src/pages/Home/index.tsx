@@ -19,36 +19,36 @@ const Home = () => {
       Notification.error({ content: e.message });
     }
   }
-  
+
   async function getSources() {
     let sources = [];
     try {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getMaterialError'})});
+      Notification.error({ content: intl.formatMessage({ id: 'web.ComponentBuiilder.Home.getMaterialError' }) });
     }
-  
+
     console.log('getSources', sources);
     return sources;
   }
-  
+
   async function getData(source: string) {
     let data = {};
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.getDataError'})});
+      Notification.error({ content: intl.formatMessage({ id: 'web.ComponentBuiilder.Home.getDataError' }) });
     }
     console.log('getData', data);
     return data;
   }
-  
+
   function validateData({ block, componentName }) {
     if (!componentName) {
-      return intl.formatMessage({id:'web.ComponentBuiilder.Home.noComponentName'});
+      return intl.formatMessage({ id: 'web.ComponentBuiilder.Home.noComponentName' });
     }
     if (!block) {
-      return intl.formatMessage({id:'web.ComponentBuiilder.Home.didNotSeletBlock'});
+      return intl.formatMessage({ id: 'web.ComponentBuiilder.Home.didNotSeletBlock' });
     }
     return '';
   }
@@ -77,10 +77,12 @@ const Home = () => {
         return;
       }
 
-      await callService('block', 'bulkGenerate', [{
-        ...selectedBlock,
-        name: componentName
-      }]);
+      await callService('block', 'bulkGenerate', [
+        {
+          ...selectedBlock,
+          name: componentName,
+        },
+      ]);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
@@ -88,7 +90,7 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({ content: intl.formatMessage({id:'web.ComponentBuiilder.Home.generateSuccess'})});
+    Notification.success({ content: intl.formatMessage({ id: 'web.ComponentBuiilder.Home.generateSuccess' }) });
     resetData();
   }
   return (
@@ -96,11 +98,11 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.ComponentBuiilder.Home.inputComponentName'/>
+            <FormattedMessage id="web.ComponentBuiilder.Home.inputComponentName" />
           </div>
           <div className={styles.field}>
             <Input
-              placeholder={intl.formatMessage({id:'web.ComponentBuiilder.Home.inputComponentNamePlaceHolder'})}
+              placeholder={intl.formatMessage({ id: 'web.ComponentBuiilder.Home.inputComponentNamePlaceHolder' })}
               className={styles.pageNameInput}
               value={componentName}
               onChange={(value) => setComponentName(value)}
@@ -110,7 +112,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id='web.ComponentBuiilder.Home.selectBlock'/>
+            <FormattedMessage id="web.ComponentBuiilder.Home.selectBlock" />
           </div>
           <div className={styles.select}>
             <Material
@@ -127,19 +129,19 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id='web.ComponentBuiilder.Home.generate'/>
+          <FormattedMessage id="web.ComponentBuiilder.Home.generate" />
         </Button>
       </div>
     </div>
   );
 };
 
-const IntlHome = ()=>{
+const IntlHome = () => {
   return (
     <LocaleProvider>
-      <Home/>
+      <Home />
     </LocaleProvider>
-  )
-}
+  );
+};
 
 export default IntlHome;

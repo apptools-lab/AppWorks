@@ -18,17 +18,14 @@ function sylvanas(files: string[], option: IOption) {
   const fileList: IFileEntity[] = files.map(
     (file): IFileEntity => {
       const filePath = path.resolve(cwd, file);
-      const targetFilePath = path.resolve(
-        outDir,
-        file.replace(/\.ts$/, '.js').replace(/\.tsx$/, '.jsx'),
-      );
+      const targetFilePath = path.resolve(outDir, file.replace(/\.ts$/, '.js').replace(/\.tsx$/, '.jsx'));
 
       return {
         sourceFilePath: filePath,
         targetFilePath,
         data: fs.readFileSync(filePath, 'utf8'),
       };
-    },
+    }
   );
 
   const parsedFileList = parse(fileList, option);
@@ -55,7 +52,7 @@ sylvanas.parseText = function parseText(text: string, option: IBabelOption = {})
         data: text,
       },
     ],
-    option,
+    option
   );
 
   return result[0].data;

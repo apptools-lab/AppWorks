@@ -1,4 +1,4 @@
 {
-    "web.iceworksMaterialHelper.extension.getMaterialError": "Failed to get material. Please try again later",
-    "web.iceworksMaterialHelper.extension.getMaterialDataError": "Failed to get material data. Please try again later"
+  "web.iceworksMaterialHelper.extension.getMaterialError": "Failed to get material. Please try again later",
+  "web.iceworksMaterialHelper.extension.getMaterialDataError": "Failed to get material data. Please try again later"
 }

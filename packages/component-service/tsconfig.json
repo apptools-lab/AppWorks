@@ -6,8 +6,5 @@
     "outDir": "lib",
     "resolveJsonModule": true
   },
-  "exclude": [
-    "src/__tests__",
-    "lib"
-  ]
+  "exclude": ["src/__tests__", "lib"]
 }

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
-import i18n from './i18n'
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -27,10 +27,15 @@ export function activate(context: vscode.ExtensionContext) {
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {
-      webviewPanel = window.createWebviewPanel('iceworks', i18n.format('extension.iceworksProjectCreator.extension.webViewTitle'), ViewColumn.One, {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      });
+      webviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksProjectCreator.extension.webViewTitle'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        }
+      );
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.onDidDispose(
         () => {
@@ -43,9 +48,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   }
 
-  subscriptions.push(vscode.commands.registerCommand('iceworks-project-creator.start', function () {
-    activeWebview();
-  }));
+  subscriptions.push(
+    vscode.commands.registerCommand('iceworks-project-creator.start', function () {
+      activeWebview();
+    })
+  );
 
   const stateKey = 'iceworks.projectCreator.autoActivedWebview';
   if (!globalState.get(stateKey)) {

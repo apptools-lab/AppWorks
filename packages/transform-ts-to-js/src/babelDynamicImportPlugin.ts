@@ -5,5 +5,5 @@ export default function () {
     name: 'syntax-dynamic-import',
     inherits: DynamicImport,
     visitor: {},
-  }
+  };
 }

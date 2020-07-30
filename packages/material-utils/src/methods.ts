@@ -1,5 +1,12 @@
 import packageJSON from 'package-json';
-import { IMaterialData, IMaterialTypeDatum, IMaterialBase, IMaterialItem, IMaterialCategoryDatum, IMaterialNpmSource } from './types';
+import {
+  IMaterialData,
+  IMaterialTypeDatum,
+  IMaterialBase,
+  IMaterialItem,
+  IMaterialCategoryDatum,
+  IMaterialNpmSource,
+} from './types';
 import { CUSTOM_CATEGORY } from './constant';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
@@ -72,7 +79,10 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
   return materialCategoryData;
 }
 
-export const getTarballURLByMaterielSource = async function (source: IMaterialNpmSource, iceVersion?: string): Promise<string> {
+export const getTarballURLByMaterielSource = async function (
+  source: IMaterialNpmSource,
+  iceVersion?: string
+): Promise<string> {
   let { version } = source;
 
   if (iceVersion === '1.x') {
@@ -91,4 +101,4 @@ export const getTarballURLByMaterielSource = async function (source: IMaterialNp
   });
 
   return packageData.dist.tarball;
-}
+};

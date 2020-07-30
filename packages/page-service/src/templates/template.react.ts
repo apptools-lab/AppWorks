@@ -13,5 +13,5 @@ export default function () {
     </div>
   );
 }
-`
+`;
 export default templateStr;
