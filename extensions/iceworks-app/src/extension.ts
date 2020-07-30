@@ -11,7 +11,7 @@ import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
 import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
-import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
+import createEditorMenuAction from './createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import i18n from './i18n';
 
@@ -61,6 +61,7 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.executeCommand('iceworks-project-creator.start');
     return;
   }
+
   try {
     const projectType = await getProjectType();
     const isNotTargetProject = projectType === 'unknown';
@@ -74,19 +75,16 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   const terminals: ITerminalMap = new Map<string, Terminal>();
+
   // init tree data providers
   createNpmScriptsTreeProvider(context, rootPath, terminals);
   createComponentsTreeProvider(context, rootPath);
   createPagesTreeProvider(context, rootPath);
   createNodeDependenciesTreeProvider(context, rootPath, terminals);
+
   // show script icons in editor title menu
   vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
   const isAliInternal = await checkIsAliInternal();
-  // DEF publish command in editor title
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', isAliInternal);
-  if (isAliInternal) {
-    context.subscriptions.push(
-      vscode.commands.registerCommand('iceworksApp.DefPublish', () => showDefPublishEnvQuickPick(terminals, rootPath))
-    );
-  }
+  createEditorMenuAction(rootPath, terminals, isAliInternal);
 }

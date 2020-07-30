@@ -208,20 +208,16 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
     }
   });
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
-    )
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
   );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
-      showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
-    )
+
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
+    showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
   );
-  context.subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
-      showDepsQuickPick(terminals, nodeDependenciesProvider)
-    )
+
+  vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
+    showDepsQuickPick(terminals, nodeDependenciesProvider)
   );
 
   const pattern = path.join(rootPath, dependencyDir);
@@ -243,10 +239,10 @@ function toDep(
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
   const command = outdated
     ? {
-        command: 'iceworksApp.nodeDependencies.upgrade',
-        title: 'Upgrade Dependency',
-        arguments: [workspaceDir, npmCommand],
-      }
+      command: 'iceworksApp.nodeDependencies.upgrade',
+      title: 'Upgrade Dependency',
+      arguments: [workspaceDir, npmCommand],
+    }
     : undefined;
   return new DependencyTreeItem(
     extensionContext,
