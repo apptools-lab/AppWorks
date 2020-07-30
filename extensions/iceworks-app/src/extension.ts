@@ -2,7 +2,8 @@ import * as vscode from 'vscode';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { initExtension, Logger, checkIsAliInternal } from '@iceworks/common-service';
+import { Recorder } from '@iceworks/recorder';
+import { initExtension, checkIsAliInternal } from '@iceworks/common-service';
 import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
 import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
 import { createComponentsTreeProvider } from './views/componentsView';
@@ -17,15 +18,15 @@ import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
   const { globalState, subscriptions, extensionPath } = context;
   const rootPath = vscode.workspace.rootPath;
 
   // data collection
-  const logger = new Logger(name, globalState);
-  logger.recordMainDAU();
-  logger.recordExtensionActivate(version);
+  recorder.recordMainDAU();
+  recorder.recordExtensionActivate();
 
   // auto set configuration
   initExtension(context);
@@ -46,7 +47,7 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel, context, { services, logger });
+    connectService(webviewPanel, context, { services, recorder });
   }
 
   subscriptions.push(

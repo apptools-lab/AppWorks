@@ -3734,6 +3734,11 @@ atob@^2.1.2:
   resolved "https://registry.npm.taobao.org/atob/download/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k=
 
+atomically@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/atomically/-/atomically-1.3.2.tgz#721156e5c4f03e768ab54f3e6c9dc550d4690761"
+  integrity sha512-MAiqx5ir1nOoMeG2vLXJnj4oFROJYB1hMqa2aAo6GQVIkPdkIcrq9W9SR0OaRtvEowO7Y2bsXqKFuDMTO4iOAQ==
+
 autoprefixer@^9.0.0, autoprefixer@^9.6.1, autoprefixer@^9.8.0:
   version "9.8.5"
   resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.8.5.tgz?cache=0&sync_timestamp=1594444669685&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fautoprefixer%2Fdownload%2Fautoprefixer-9.8.5.tgz#2c225de229ddafe1d1424c02791d0c3e10ccccaa"
@@ -5184,6 +5189,22 @@ concurrently@^5.1.0:
     tree-kill "^1.2.2"
     yargs "^13.3.0"
 
+conf@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.npmjs.org/conf/-/conf-7.1.1.tgz#327698d294a5c76fac17f970e47f87bcf1f0dc5b"
+  integrity sha512-njOu3so+7zcR1oQzXKP0mpPMKRf+riaaWmxBUhgP/c9k32PuDX/SQ+N6cO6ZylY6NOZGPwgzicGxdlRGXUOkSQ==
+  dependencies:
+    ajv "^6.12.2"
+    atomically "^1.3.1"
+    debounce-fn "^4.0.0"
+    dot-prop "^5.2.0"
+    env-paths "^2.2.0"
+    json-schema-typed "^7.0.3"
+    make-dir "^3.1.0"
+    onetime "^5.1.0"
+    pkg-up "^3.1.0"
+    semver "^7.3.2"
+
 config-chain@^1.1.11:
   version "1.1.12"
   resolved "https://registry.npm.taobao.org/config-chain/download/config-chain-1.1.12.tgz#0fde8d091200eb5e808caf25fe618c02f48e4efa"
@@ -5786,6 +5807,13 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/dateformat/download/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha1-puN0maTZqc+F71hyBE1ikByYia4=
+
+debounce-fn@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/debounce-fn/-/debounce-fn-4.0.0.tgz#ed76d206d8a50e60de0dd66d494d82835ffe61c7"
+  integrity sha512-8pYCQiL9Xdcg0UPSD3d+0KMlOjp+KGU5EPwYddgzQ7DATsg4fuUDjQtsYLmWjnk2obnNHgV3vE2Y4jejSOJVBQ==
+  dependencies:
+    mimic-fn "^3.0.0"
 
 debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
@@ -6640,7 +6668,7 @@ eslint-module-utils@^2.4.1:
 
 eslint-plugin-import@2.20.2, eslint-plugin-import@^2.18.0:
   version "2.20.2"
-  resolved "https://registry.npm.taobao.org/eslint-plugin-import/download/eslint-plugin-import-2.20.2.tgz?cache=0&sync_timestamp=1593237313662&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-import%2Fdownload%2Feslint-plugin-import-2.20.2.tgz#91fc3807ce08be4837141272c8b99073906e588d"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-import/download/eslint-plugin-import-2.20.2.tgz?cache=0&sync_timestamp=1593237350014&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-import%2Fdownload%2Feslint-plugin-import-2.20.2.tgz#91fc3807ce08be4837141272c8b99073906e588d"
   integrity sha1-kfw4B84Ivkg3FBJyyLmQc5BuWI0=
   dependencies:
     array-includes "^3.0.3"
@@ -10435,6 +10463,11 @@ json-schema-traverse@^0.4.1:
   resolved "https://registry.npm.taobao.org/json-schema-traverse/download/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
   integrity sha1-afaofZUTq4u4/mO9sJecRI5oRmA=
 
+json-schema-typed@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.npmjs.org/json-schema-typed/-/json-schema-typed-7.0.3.tgz#23ff481b8b4eebcd2ca123b4fa0409e66469a2d9"
+  integrity sha512-7DE8mpG+/fVw+dTpjbxnx47TaMnDfOI1jwft9g1VybltZCduyRQPJPvc+zzKY9WPHxhPWczyFuYa6I8Mw4iU5A==
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.npm.taobao.org/json-schema/download/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
@@ -11073,7 +11106,7 @@ make-dir@^2.0.0, make-dir@^2.1.0:
     pify "^4.0.1"
     semver "^5.6.0"
 
-make-dir@^3.0.0, make-dir@^3.0.2:
+make-dir@^3.0.0, make-dir@^3.0.2, make-dir@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/make-dir/download/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
   integrity sha1-QV6WcEazp/HRhSd9hKpYIDcmoT8=
@@ -11418,6 +11451,11 @@ mimic-fn@^2.1.0:
   resolved "https://registry.npm.taobao.org/mimic-fn/download/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha1-ftLCzMyvhNP/y3pptXcR/CCDQBs=
 
+mimic-fn@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-3.1.0.tgz#65755145bbf3e36954b949c16450427451d5ca74"
+  integrity sha512-Ysbi9uYW9hFyfrThdDEQuykN4Ey6BuwPD2kpI5ES/nFTDn/98yxYNLZJcgUAKPT/mcrLLKaGzJR9YVxJrIdASQ==
+
 mimic-response@^1.0.0, mimic-response@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/mimic-response/download/mimic-response-1.0.1.tgz?cache=0&sync_timestamp=1589481629775&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmimic-response%2Fdownload%2Fmimic-response-1.0.1.tgz#4923538878eef42063cb8a3e3b0798781487ab1b"
@@ -11559,10 +11597,10 @@ mkdirp-promise@^5.0.1:
   dependencies:
     mkdirp "*"
 
-mkdirp@*:
+mkdirp@*, mkdirp@^1.0.4:
   version "1.0.4"
-  resolved "https://registry.npm.taobao.org/mkdirp/download/mkdirp-1.0.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
-  integrity sha1-PrXtYmInVteaXw4qIh3+utdcL34=
+  resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
+  integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1:
   version "0.5.5"
@@ -16857,7 +16895,7 @@ use@^3.1.0:
 
 user-home@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npm.taobao.org/user-home/download/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
+  resolved "https://registry.npmjs.org/user-home/-/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
   integrity sha1-nHC/2Babwdy/SGBODwS4tJzenp8=
   dependencies:
     os-homedir "^1.0.0"

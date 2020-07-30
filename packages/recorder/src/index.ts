@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
+import storage, { recordKey } from '@iceworks/storage';
 import * as vscode from 'vscode';
 
 // eslint-disable-next-line
@@ -23,7 +24,9 @@ interface IGoldlogParam extends ILogParam {
 type RecordType = 'PV' | 'UV';
 
 const MAIN_KEY = 'main';
-const LOGGER_MODULE_KEY = 'logger';
+
+// Compatible with old logic
+const RECORD_MODULE_KEY = 'logger';
 
 async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   recordType = recordType || 'PV';
@@ -74,73 +77,57 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   }
 }
 
-function recordUV(originParam: IGoldlogParam, storage: IStorage) {
+function recordUV(originParam: IGoldlogParam) {
   const nowtDate = new Date().toDateString();
-  const dauKey = `iceworks.logger.${JSON.stringify(originParam)}`;
-  const lastDate = storage.get(dauKey);
+  const dauKey = `iceworks.record.${JSON.stringify(originParam)}`;
+  const records = storage.get(recordKey);
+  const lastDate = records[dauKey];
   if (nowtDate !== lastDate) {
-    storage.update(dauKey, nowtDate);
+    records[dauKey] = nowtDate;
+    storage.set(recordKey, records);
     return recordPV(originParam, 'UV');
   }
 }
 
-export async function record(originParam: IGoldlogParam, storage?: IStorage) {
+export async function record(originParam: IGoldlogParam) {
   await recordPV(originParam);
-  if (storage) {
-    recordUV(originParam, storage);
-  }
+  recordUV(originParam);
 }
 
-export function recordMainDAU(storage: IStorage) {
+export function recordMainDAU() {
   return record(
     {
       namespace: MAIN_KEY,
-      module: LOGGER_MODULE_KEY,
+      module: RECORD_MODULE_KEY,
       action: 'dau',
       data: {
         platform: process.platform,
         locale: vscode.env.language,
       },
     },
-    storage
   );
 }
 
-export function recordMainActivate(storage: IStorage, data: { extension: string; version?: string }) {
+export function recordMainActivate(data: { extension: string; version?: string }) {
   return record(
     {
       namespace: MAIN_KEY,
-      module: LOGGER_MODULE_KEY,
+      module: RECORD_MODULE_KEY,
       action: 'activate',
       data,
     },
-    storage
   );
 }
 
-interface IStorage {
-  get: (key: string) => any;
-  update: (key: string, value: any) => void;
-}
-
-export class Logger {
-  /**
-   * The storage is used to save the record of marking
-   * like https://code.visualstudio.com/api/references/vscode-api#Memento
-   */
-  private storage: IStorage;
-
-  /**
-   * Namespace for logger
-   */
+export class Recorder {
   private namespace: string = MAIN_KEY;
+  private version: string;
 
-  constructor(namespace?: string, storage?: IStorage) {
+  constructor(namespace?: string, version?: string) {
     if (namespace) {
       this.namespace = namespace;
     }
-
-    this.storage = storage;
+    this.version = version;
   }
 
   public record(param: ILogParam) {
@@ -149,39 +136,20 @@ export class Logger {
         namespace: this.namespace,
         ...param,
       },
-      this.storage
     );
   }
 
-  /**
-   * Record a day's activity
-   */
-  public recordMainDAU() {
-    if (!this.storage) {
-      console.error('You need to set the storage before calling this method!');
-      return;
-    }
-    return recordMainDAU(this.storage);
-  }
-
-  /**
-   * Record extension activate
-   *
-   * @param version extension's version
-   */
-  public recordExtensionActivate(version?: string) {
-    if (this.storage) {
-      recordMainActivate(this.storage, {
-        extension: this.namespace,
-        version,
-      });
-    }
+  public recordExtensionActivate() {
+    recordMainActivate({
+      extension: this.namespace,
+      version: this.version,
+    });
 
     this.record({
       module: 'main',
       action: 'activate',
       data: {
-        version,
+        version: this.version,
       },
     });
   }

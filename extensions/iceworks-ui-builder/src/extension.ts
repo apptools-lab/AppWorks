@@ -1,11 +1,13 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension, Logger } from '@iceworks/common-service';
+import { initExtension } from '@iceworks/common-service';
+import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
 
 const { window, ViewColumn } = vscode;
 
@@ -15,9 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
 
   // data collection
-  const logger = new Logger(name, globalState);
-  logger.recordMainDAU();
-  logger.recordExtensionActivate(version);
+  recorder.recordMainDAU();
+  recorder.recordExtensionActivate();
 
   // auto set configuration
   initExtension(context);
@@ -33,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
-    connectService(webviewPanel, context, { services, logger });
+    connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
     vscode.commands.registerCommand('iceworks-ui-builder.create-component', function () {
@@ -52,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerater', true);
-    connectService(webviewPanel, context, { services, logger });
+    connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
     vscode.commands.registerCommand('iceworks-ui-builder.generate-page', function () {

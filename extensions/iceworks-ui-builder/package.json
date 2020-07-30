@@ -109,6 +109,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/recorder": "^0.1.0",
     "@iceworks/block-service": "^0.1.5",
     "@iceworks/page-service": "^0.1.5",
     "@iceworks/common-service": "^0.1.3",

@@ -1,12 +1,14 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension, Logger } from '@iceworks/common-service';
+import { initExtension } from '@iceworks/common-service';
+import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
 
 const { window, ViewColumn } = vscode;
 
@@ -15,17 +17,14 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
 
-  // data collection
-  const logger = new Logger(name, globalState);
-
   // auto set configuration
   initExtension(context);
 
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
   function activeWebview() {
-    logger.recordMainDAU();
-    logger.recordExtensionActivate(version);
+    recorder.recordMainDAU();
+    recorder.recordExtensionActivate();
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {
@@ -57,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       vscode.commands.executeCommand('vscode.setEditorLayout', layout);
 
-      connectService(webviewPanel, context, { services, logger });
+      connectService(webviewPanel, context, { services, recorder });
     }
   }
   subscriptions.push(

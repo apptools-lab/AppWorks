@@ -63,6 +63,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/recorder": "^0.1.0",
     "@babel/parser": "^7.10.2",
     "@babel/traverse": "^7.10.1",
     "@babel/types": "^7.10.2",
