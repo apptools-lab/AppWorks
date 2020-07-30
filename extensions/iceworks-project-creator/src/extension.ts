@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
-import { Recorder } from '@iceworks/recorder';
+import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 
@@ -20,8 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
   let webviewPanel: vscode.WebviewPanel | undefined;
 
   function activeWebview() {
-    recorder.recordMainDAU();
-    recorder.recordExtensionActivate();
+    recordDAU();
+    recorder.recordActivate();
 
     if (webviewPanel) {
       webviewPanel.reveal();

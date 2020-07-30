@@ -94,7 +94,7 @@ export async function record(originParam: IGoldlogParam) {
   recordUV(originParam);
 }
 
-export function recordMainDAU() {
+export function recordDAU() {
   return record(
     {
       namespace: MAIN_KEY,
@@ -108,7 +108,7 @@ export function recordMainDAU() {
   );
 }
 
-export function recordMainActivate(data: { extension: string; version?: string }) {
+export function recordActivate(data: { extension: string; version?: string }) {
   return record(
     {
       namespace: MAIN_KEY,
@@ -139,8 +139,8 @@ export class Recorder {
     );
   }
 
-  public recordExtensionActivate() {
-    recordMainActivate({
+  public recordActivate() {
+    recordActivate({
       extension: this.namespace,
       version: this.version,
     });

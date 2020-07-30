@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
-import { Recorder } from '@iceworks/recorder';
+import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal } from '@iceworks/common-service';
 import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
 import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
@@ -25,8 +25,8 @@ export async function activate(context: vscode.ExtensionContext) {
   const rootPath = vscode.workspace.rootPath;
 
   // data collection
-  recorder.recordMainDAU();
-  recorder.recordExtensionActivate();
+  recordDAU();
+  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context);

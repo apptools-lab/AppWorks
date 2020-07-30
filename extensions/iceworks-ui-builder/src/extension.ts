@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
-import { Recorder } from '@iceworks/recorder';
+import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 
@@ -17,8 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
 
   // data collection
-  recorder.recordMainDAU();
-  recorder.recordExtensionActivate();
+  recordDAU();
+  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context);
