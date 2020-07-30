@@ -3,7 +3,7 @@ import { getProjectFramework } from '@iceworks/project-service';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, Logger } from '@iceworks/common-service';
 import services from './services/index';
-import { loadJson, isBuildJson, updateJson, updateJsonFile } from './loadJson';
+import { loadJson, isBuildJson, updateJsonForWeb, updateJsonFile } from './loadJson';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -65,10 +65,9 @@ export async function activate(context: vscode.ExtensionContext) {
         context.subscriptions
       );
       webviewPanel.webview.onDidReceiveMessage(message=>{
-        console.log(message)
         updateJsonFile(message);
       },undefined,context.subscriptions)
-      connectService(webviewPanel, context, { services, logger})
+      // connectService(webviewPanel, context, { services, logger})
     }
   }
 
@@ -79,7 +78,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event)=>{
       if(isBuildJson(event.document)){
-        updateJson(event.document.getText(),webviewPanel)
+        updateJsonForWeb(event.document.getText(),webviewPanel)
       }
     })
   )

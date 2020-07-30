@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Form from '@rjsf/core';
 import {  Card, } from '@alifd/next';
 import * as _ from 'lodash';
@@ -11,12 +11,11 @@ import descriptionField from '../../theme/DescriptionField';
 import FiledTemplate from '../../theme/FieldTemplate';
 import ObjectFieldTemplate from '../../theme/ObjectFieldTemplate';
 import selectWidget from '../../theme/fdSelectWidge';
-import {postSettingToExtension, getSettingFromExtension} from '../../utils'
-import Test from './test.json';
+import {postSettingToExtension} from '../../utils'
 
-// ICESchema
-
-export const IceSchema = ICESchema;
+// vscode API
+// eslint-disable-next-line no-undef
+export const vscode = acquireVsCodeApi();
 
 // ui Schema
 // covert array and object to editInJson to Edit in json field
@@ -42,25 +41,9 @@ const widgets = {
   TextWidget: fdTextInput,
   SelectWidget: selectWidget
 };
-
-// current Form data 
-let currentSetting = {};
-
-export async function getCurrentSetting(){
-  await setFormData();
-  return currentSetting;
-}
-// const vscode = acquireVsCodeApi();
-// console.log('vscodeApi');
-// console.log(vscode);
-
-
-
-const setFormData= async (e)=>{
+const setJson= async (e)=>{
   // console.log(JSON.stringify(e));
   try{
-    currentSetting = e;
-
     // 发布数据变化给 Change Provider
     const event = document.createEvent('HTMLEvents');
     event.initEvent('updateJSON',false,true);
@@ -68,38 +51,30 @@ const setFormData= async (e)=>{
     window.dispatchEvent(event);
 
     // 发布数据变化给 VSCode 插件本体
-
-    console.log(postSettingToExtension(e));
+    vscode.postMessage({buildJson:postSettingToExtension(e)});
+    
+    // // 更新插件的数据
+    // setFormData(e)
+    // console.log('formdata',JSON.stringify(formdata));
   }catch(e){
     // ignore
   }
-  return currentSetting;
 };
 
-// function mergeDefaultData(){
-//   const mergedData = {};
-//   _.forIn(ICESchema,(value,key)=>{
-//     mergedData[key] = test[key]||ICESchema[key]['default'];  
-//   })
-//   return mergedData;
-// }
-
-// console.log(mergeDefaultData())
-console.log(Test);
-const Home = () => {
-  const [buildJson,setBuildJson] = useState(getSettingFromExtension(Test));
+class BuildJSONForm extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      formdata : props.formdata
+    }
+  }
   
-  // 监听上传的 JSON
-  // useEffect(()=>{
-  //   window.addEventListener('message',event => {
-  //     const message = event.data;
-  //     setBuildJson(getSettingFromExtension(message.buildJson));
-  //     console.log('getMessage');
-  //   })
-  // },[]);
+  shouldComponentUpdate(nextProps, nextState){
+    return JSON.stringify(this.state.formdata)!==JSON.stringify(nextProps.formdata);
+  }
 
-  return (
-    <Card free style={{background:'#1e1e1e'}}>
+  render(){
+    return (
       <Form schema={ICESchema} 
         ObjectFieldTemplate={ObjectFieldTemplate} 
         FieldTemplate={FiledTemplate} 
@@ -107,12 +82,45 @@ const Home = () => {
         fields={fields} 
         widgets={widgets} 
         uiSchema={createUISchema()} 
-        formData={buildJson} 
-        onChange={e => setFormData(e.formData)}>
+        formData={this.state.formdata} 
+        onChange={e => setJson(e.formData)}
+      >
         <></>
       </Form>
-    </Card>
-  )
+    )
+  }
+
+}
+
+class JSONForm extends React.Component{
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      buildJson:{}
+    }
+  }
+
+  // // 监听上传的 JSON
+  // componentDidMount(){
+  //   window.addEventListener('message',event => {
+  //     const message = event.data;
+  //     console.log('message.buildJson')
+  //     console.log(message.buildJson)
+  //     this.setState(getSettingFromExtension(message.buildJson))
+  //     console.log('getMessage');
+  //   });
+  // }
+  
+
+  render(){
+    return (
+      <Card free style={{background:'#1e1e1e'}}>
+        <BuildJSONForm formdata = {this.state.buildJson}/>
+      </Card>
+    )
+  }
+
 };
 
-export default Home;
+export default JSONForm;

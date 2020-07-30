@@ -11,12 +11,11 @@ export const DefaultSchema = {};
  * @param schema Json Schema
  */
 export const formdidNotEditAttrs: string[] = [];
-const formDidNotEditValue = {};
+let formDidNotEditValue = {};
 
 // 这个函数生成了一个默认的属性集合
 ((schema)=>{
   _.forIn(schema,(value,key)=>{
-    console.log(value.type)
     if(value.type === 'object'|| 
     value.type === 'array' || 
     value.oneOf ||
@@ -28,9 +27,7 @@ const formDidNotEditValue = {};
       // createDefaultSchema(value);
       formdidNotEditAttrs.push(key);
     }
-    DefaultSchema[key] =value.examples?
-      value.default:
-      _.merge(value.default,value.examples);
+    DefaultSchema[key] = value.default;
   })
 }
 )(ICESchema.properties);
@@ -42,8 +39,6 @@ export function isEqual(obj1, obj2){
 
 // 将默认值从配置文件中分离出来
 export function postSettingToExtension(currentConfig) {
-  console.log('formdidNotEditValue',formDidNotEditValue);
-  console.log(DefaultSchema);
   const userConfig = {};
   _.forIn(currentConfig, (value, key) => {
     if(formdidNotEditAttrs.includes(key)){
@@ -55,19 +50,20 @@ export function postSettingToExtension(currentConfig) {
       userConfig[key] = value;
     }
   })
+  console.log('message for extension', userConfig);
   return userConfig;
 }
 
 // 对上传的内容进行处理，储存不能编辑的值。
 export function getSettingFromExtension(userSetting){
-  console.log('userSetting',userSetting);
-  console.log('formdidNotEditAttrs',formdidNotEditAttrs);
-  
+  // console.log('userSetting',userSetting);
+  // console.log('formdidNotEditAttrs',formdidNotEditAttrs);
+  formDidNotEditValue ={};
   formdidNotEditAttrs.forEach(e=>{
     if(userSetting[e]){
       formDidNotEditValue[e] = userSetting[e];
     }
-    console.log(e,formDidNotEditValue[e],userSetting[e]);
+    console.log('formDidNotEditValue',formDidNotEditValue)
   })
   return userSetting;
 }

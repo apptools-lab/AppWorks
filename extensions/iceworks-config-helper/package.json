@@ -44,7 +44,7 @@
         {
           "command": "iceworks-config-helper.start",
           "when": "editorLangId == json",
-          "group": "markdown-preview-enhanced"
+          "group": "configHelper"
         }
       ],
       "editor/title": [
@@ -53,7 +53,14 @@
           "when": "editorLangId == json",
           "group": "navigation"
         }
-      ]
+      ],
+      "explorer/context": [
+        {
+          "command": "iceworks-config-helper.start",
+          "when": "resourceFilename == build.json",
+          "group": "2_workspace"
+        }
+      ]   
     }
   },
   "repository": {

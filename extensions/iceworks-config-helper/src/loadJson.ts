@@ -1,7 +1,10 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs'
 import * as fse from 'fs-extra';
+import { features } from 'process';
 
 const buildJsonPath = `${vscode.workspace.rootPath}/build.json`;
+const buildJsonUri = vscode.Uri.file(`${vscode.workspace.rootPath}/build.json`);
 
 
 export function loadJson(){
@@ -22,27 +25,36 @@ export function isBuildJson(document: vscode.TextDocument){
 }
 
 // 向网页端更新 JSON
-export function updateJson(content: string,panel: vscode.WebviewPanel){
+export function updateJsonForWeb(content: string,panel?: vscode.WebviewPanel){
   let jsonContent;
-
+  if(!panel){
+    return;
+  }
   try{
     jsonContent = JSON.parse(content); 
   }catch{
     return;
   }
-  console.log(jsonContent);
-  panel.webview.postMessage({buildJson:content})
+  console.log('jsonForWebview',jsonContent);
+  panel.webview.postMessage({buildJson:jsonContent})
 }
 
 // 向文件中更新 Json
 export function updateJsonFile(message){
-  let buildJsonConfig;
-  try{
-    buildJsonConfig = (JSON.parse(message.buildJson));
-  }catch(e){
-    // ignore
+  let {buildJson} = message;
+  // 添加默认属性
+  if(buildJson.value){
+    const currentBuidJson = fse.readJSONSync(buildJsonPath);
+    currentBuidJson[buildJson.name] = currentBuidJson[buildJson.name]||buildJson.value;
+    buildJson = currentBuidJson;
   }
-  console.log(`message${message}`)
-  console.log( `buildJsonConfig${buildJsonConfig}`);
-  // fse.outputJSONSync(buildJsonPath,buildJsonConfig)
+  fse.writeFile(buildJsonPath,JSON.stringify(buildJson,null,2),(err)=>{
+    console.log(err);
+  })
+
+
+  // fse.writeJSON(buildJsonPath,message.buildJson,err=>{
+  //   console.log(err);
+  // })
+  // fs.writeFile(buildJsonPath,JSON.stringify(message.buildJson),err=>{console.log(err)});
 }

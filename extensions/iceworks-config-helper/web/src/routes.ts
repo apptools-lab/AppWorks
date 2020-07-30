@@ -1,9 +1,9 @@
-import Home from '@/pages/Home'
+import JSONForm from '@/pages/JSONForm'
 
 const routerConfig = [
   {
     path: '/',
-    component: Home
+    component: JSONForm
   }
 ]
 

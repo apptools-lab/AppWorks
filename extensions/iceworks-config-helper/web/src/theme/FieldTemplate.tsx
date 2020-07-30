@@ -19,11 +19,6 @@ const FieldTemplate = ({
         <h3>{label}</h3>
         <p className = 'fddescription'>{rawDescription}</p>
         {children}
-        {/* {displayLabel && <Label>
-            {label}
-            {required && <span style={{color: "rgb(164, 38, 44)", fontSize: "12px", fontWeight: "normal"}}>*</span>}
-        </Label>} */}
-
         {rawErrors.length > 0 && <List>
           {rawErrors.map(e=><List.Item>{e}</List.Item>)}
         </List>}
