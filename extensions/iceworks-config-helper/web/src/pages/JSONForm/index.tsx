@@ -2,15 +2,9 @@ import React, { useState, useEffect, memo } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
 import * as _ from 'lodash';
+import { fields, widgets, templates } from '@/theme/theme';
 import ICESchema from '../../../../schemas/ice.build.json';
-import fdCheckBox from '../../theme/checkBox';
-import fdEditInFile from '../../theme/EditInFile';
-import fdTextInput from '../../theme/fdTextInput';
-import titleFiled from '../../theme/TitleFiled';
-import descriptionField from '../../theme/DescriptionField';
-import FiledTemplate from '../../theme/FieldTemplate';
-import ObjectFieldTemplate from '../../theme/ObjectFieldTemplate';
-import selectWidget from '../../theme/fdSelectWidge';
+
 import { postSettingToExtension, getSettingFromExtension, isEqual } from '../../utils';
 
 // vscode API
@@ -29,19 +23,6 @@ const createUISchema = () => {
   return uiSchema;
 };
 
-const fields = {
-  TitleFiled: titleFiled,
-  DescriptionField: descriptionField,
-  ArrayField: fdEditInFile,
-  EditInFile: fdEditInFile,
-};
-
-const widgets = {
-  CheckboxWidget: fdCheckBox,
-  TextWidget: fdTextInput,
-  SelectWidget: selectWidget,
-};
-
 const updateChangeProviderValue = (e) => {
   console.log('updateDataforChangeProvider', JSON.stringify(e));
   // 发布数据变化给 Change Provider
@@ -55,30 +36,27 @@ const JSONSchemaForm = ({ buildJson, loading }) => {
   const [formdata, setFormData] = useState(buildJson);
 
   const setJson = async (e) => {
-    // console.log(JSON.stringify(e));
-    try {
-      updateChangeProviderValue(e);
-      // 发布数据变化给 VSCode 插件本体
-      if (!loading) {
-        vscode.postMessage({ buildJson: postSettingToExtension(e) });
-      }
-
-      // 更新插件的数据
-      setFormData(e);
-
-      // 测试
-      // console.log('formdata', JSON.stringify(formdata));
-    } catch (e) {
-      // ignore
+    if (e.alias === undefined) {
+      return;
     }
+
+    // 发送变化给 ChangeProvider
+    updateChangeProviderValue(e);
+
+    // 发布数据变化给 VSCode 插件本体
+    if (!loading) {
+      vscode.postMessage({ buildJson: postSettingToExtension(e) });
+    }
+
+    // 更新插件的数据
+    setFormData(e);
   };
 
   return (
     <Form
       schema={ICESchema}
-      ObjectFieldTemplate={ObjectFieldTemplate}
-      FieldTemplate={FiledTemplate}
-      TitleField={titleFiled}
+      ObjectFieldTemplate={templates.ObjectFieldTemplate}
+      FieldTemplate={templates.FiledTemplate}
       fields={fields}
       widgets={widgets}
       uiSchema={createUISchema()}
