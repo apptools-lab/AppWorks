@@ -43,9 +43,11 @@ export function connectService(
       console.log('onDidReceiveMessage', message);
       if (api) {
         try {
+          const extra = args.length > 0 ? { data: args.length === 1 ? args[0] : args } : undefined;
           recorder.record({
             module: service,
             action: method,
+            ...extra,
           });
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
@@ -106,10 +108,9 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
       <div id="ice-container"></div>
-      <script nonce="${nonce}" src="${vendorScriptUri}"></script>
       ` +
-    (needVendor ? `<script nonce="${nonce}" src="${scriptUri}"></script>` : '') +
-    `
+    (needVendor ? `<script nonce="${nonce}" src="${vendorScriptUri}"></script>` : '') +
+    `<script nonce="${nonce}" src="${scriptUri}"></script>
     </body>
   </html>`;
   return fileContent;

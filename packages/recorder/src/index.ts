@@ -87,7 +87,7 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   }
 }
 
-function recordUV(originParam: IGoldlogParam) {
+async function recordUV(originParam: IGoldlogParam) {
   const nowtDate = new Date().toDateString();
   const dauKey = `${JSON.stringify(originParam)}`;
   const records = storage.get(recordKey);
@@ -95,18 +95,18 @@ function recordUV(originParam: IGoldlogParam) {
   if (nowtDate !== lastDate) {
     records[dauKey] = nowtDate;
     storage.set(recordKey, records);
-    return recordPV(originParam, 'UV');
+    return await recordPV(originParam, 'UV');
   }
 }
 
 export async function record(originParam: IGoldlogParam) {
   await recordPV(originParam);
-  recordUV(originParam);
+  await recordUV(originParam);
 }
 
 export function recordDAU() {
   console.log('recorder[dau]');
-  return record({
+  return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
     action: 'dau',
