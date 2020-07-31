@@ -83,7 +83,17 @@ export async function activate(context: vscode.ExtensionContext) {
   treeViews.push(createNodeDependenciesTreeView(context, terminals));
   let didSetViewContext;
   treeViews.forEach((treeView) => {
+    const { title } = treeView;
     treeView.onDidChangeVisibility(({ visible }) => {
+      if (visible) {
+        recorder.record({
+          module: 'treeView',
+          action: 'visible',
+          data: {
+            title,
+          },
+        });
+      }
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         recordDAU();
