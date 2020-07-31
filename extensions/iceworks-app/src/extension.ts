@@ -4,16 +4,17 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { getProjectType } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal } from '@iceworks/common-service';
-import { createNpmScriptsTreeProvider } from './views/npmScriptsView';
-import { createNodeDependenciesTreeProvider } from './views/nodeDependenciesView';
-import { createComponentsTreeProvider } from './views/componentsView';
-import { createPagesTreeProvider } from './views/pagesView';
+import { createNpmScriptsTreeView } from './views/npmScriptsView';
+import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
+import { createComponentsTreeView } from './views/componentsView';
+import { createPagesTreeView } from './views/pagesView';
 import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
 import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
 import createEditorMenuAction from './createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
+import autoSetViewContext from './autoSetViewContext';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -22,79 +23,78 @@ const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
-  const rootPath = vscode.workspace.rootPath;
 
   // auto set configuration
   initExtension(context);
 
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
-  subscriptions.push(
-    vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
-      // data collection
-      recordDAU();
-      recorder.recordActivate();
-
-      showExtensionsQuickPick();
-    })
-  );
-
   subscriptions.push(extensionsStatusBar);
-  // init webview
-  function activeWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
-      'iceworks',
-      i18n.format('extension.iceworksApp.extension.title'),
-      ViewColumn.One,
-      {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      }
-    );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    connectService(webviewPanel, context, { services, recorder });
-  }
+  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
+    recordDAU();
+    recorder.recordActivate();
 
-  subscriptions.push(
-    vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
-      activeWebview();
-    })
-  );
+    showExtensionsQuickPick();
+  }));
 
-  if (!rootPath) {
-    window.showInformationMessage(i18n.format('extension.iceworksApp.extebsion.emptyWorkplace'));
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-    vscode.commands.executeCommand('iceworks-project-creator.start');
-    return;
-  }
+  // init config webview
+  let webviewPanel: vscode.WebviewPanel | undefined;
+  function activeConfigWebview() {
+    recordDAU();
+    recorder.recordActivate();
 
-  try {
-    const projectType = await getProjectType();
-    const isNotTargetProject = projectType === 'unknown';
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', isNotTargetProject);
-    if (isNotTargetProject) {
-      vscode.commands.executeCommand('iceworks-project-creator.start');
+    if (webviewPanel) {
+      webviewPanel.reveal();
+    } else {
+      webviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksApp.extension.title'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        }
+      );
+      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      webviewPanel.onDidDispose(
+        () => {
+          webviewPanel = undefined;
+        },
+        null,
+        context.subscriptions
+      );
+      connectService(webviewPanel, context, { services, recorder });
     }
-  } catch (e) {
-    vscode.commands.executeCommand('setContext', 'iceworks:isNotTargetProject', true);
-    vscode.commands.executeCommand('iceworks-project-creator.start');
   }
+  subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
+    activeConfigWebview();
+  }));
 
+  // init tree view
+  const treeViews: any[] = [];
   const terminals: ITerminalMap = new Map<string, Terminal>();
-  // remove terminal from terminals map
   window.onDidCloseTerminal((terminal) => {
     terminals.delete(terminal.name);
   });
+  treeViews.push(createNpmScriptsTreeView(context, terminals));
+  treeViews.push(createComponentsTreeView(context));
+  treeViews.push(createPagesTreeView(context));
+  treeViews.push(createNodeDependenciesTreeView(context, terminals));
+  let didSetViewContext;
+  treeViews.forEach((treeView) => {
+    treeView.onDidChangeVisibility(({ visible }) => {
+      if (visible && !didSetViewContext) {
+        didSetViewContext = true;
+        autoSetViewContext();
+      } 
+    });
+  });
 
-  // init tree data providers
-  createNpmScriptsTreeProvider(context, rootPath, terminals);
-  createComponentsTreeProvider(context, rootPath);
-  createPagesTreeProvider(context, rootPath);
-  createNodeDependenciesTreeProvider(context, rootPath, terminals);
-
-  // show script icons in editor title menu
-  vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
-  const isAliInternal = await checkIsAliInternal();
-  vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', isAliInternal);
-  createEditorMenuAction(rootPath, terminals, isAliInternal, recorder);
+  // init editor title menu
+  const projectType = await getProjectType();
+  if (projectType !== 'unknown') {
+    vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+    vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
+    await createEditorMenuAction(terminals);
+  }
 }

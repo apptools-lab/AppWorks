@@ -16,5 +16,5 @@
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
   "extension.iceworksApp.extension.title": "Iceworks Settings",
-  "extension.iceworksApp.extebsion.emptyWorkplace": "Current workspace is empty, please open or create an application."
+  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
 }

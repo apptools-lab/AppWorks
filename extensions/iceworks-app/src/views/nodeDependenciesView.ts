@@ -6,7 +6,7 @@ import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import { getDataFromSettingJson, createNpmCommand, checkPathExists } from '@iceworks/common-service';
-import { dependencyDir } from '@iceworks/project-service';
+import { dependencyDir, projectPath } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
@@ -194,12 +194,15 @@ class DependencyTreeItem extends vscode.TreeItem {
   };
 }
 
-export function createNodeDependenciesTreeProvider(context, rootPath, terminals) {
-  const nodeDependenciesProvider = new DepNodeProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
+export function createNodeDependenciesTreeView(context, terminals) {
+  const nodeDependenciesProvider = new DepNodeProvider(context, projectPath);
+  const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
+
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
-    if (node.command) executeCommand(terminals, node.command, node.id);
+    if (node.command) {
+      executeCommand(terminals, node.command, node.id);
+    }
   });
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
@@ -207,24 +210,23 @@ export function createNodeDependenciesTreeProvider(context, rootPath, terminals)
       executeCommand(terminals, script!);
     }
   });
-
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
     showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
   );
-
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
     showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
   );
-
   vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
     showDepsQuickPick(terminals, nodeDependenciesProvider)
   );
 
-  const pattern = new vscode.RelativePattern(path.join(rootPath, dependencyDir), '**');
+  const pattern = new vscode.RelativePattern(path.join(projectPath, dependencyDir), '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidCreate(() => nodeDependenciesProvider.refresh());
   fileWatcher.onDidDelete(() => nodeDependenciesProvider.refresh());
+
+  return treeView;
 }
 
 function toDep(
