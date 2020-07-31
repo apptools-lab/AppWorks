@@ -93,7 +93,7 @@
         }
       },
       {
-        "command": "iceworksApp.DefPublish",
+        "command": "iceworksApp.editorMenu.DefPublish",
         "title": "%iceworksApp.command.DefPublish.title%",
         "icon": {
           "light": "assets/light/publish.svg",
@@ -125,7 +125,7 @@
         }
       },
       {
-        "command": "iceworksApp.npmScripts.runDev",
+        "command": "iceworksApp.editorMenu.runDev",
         "title": "%iceworksApp.command.npmScripts.runDev.title%",
         "icon": {
           "light": "assets/light/runDev.svg",
@@ -141,7 +141,7 @@
         }
       },
       {
-        "command": "iceworksApp.npmScripts.runBuild",
+        "command": "iceworksApp.editorMenu.runBuild",
         "title": "%iceworksApp.command.npmScripts.runBuild.title%",
         "icon": {
           "light": "assets/light/build.svg",
@@ -266,17 +266,17 @@
       ],
       "editor/title": [
         {
-          "command": "iceworksApp.npmScripts.runDev",
+          "command": "iceworksApp.editorMenu.runDev",
           "group": "navigation@01",
           "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
-          "command": "iceworksApp.DefPublish",
+          "command": "iceworksApp.editorMenu.DefPublish",
           "group": "navigation@02",
           "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
         },
         {
-          "command": "iceworksApp.npmScripts.runBuild",
+          "command": "iceworksApp.editorMenu.runBuild",
           "group": "navigation@02",
           "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isAliInternal"
         },
