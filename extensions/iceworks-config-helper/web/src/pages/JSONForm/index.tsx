@@ -16,14 +16,14 @@ import { postSettingToExtension, getSettingFromExtension, isEqual } from '../../
 // vscode API
 // eslint-disable-next-line no-undef
 export const vscode = acquireVsCodeApi();
-console.log('vscodeApi', vscode);
+// console.log('vscodeApi', vscode);
 
 // ui Schema
 // covert array and object to editInJson to Edit in json field
 const createUISchema = () => {
   const uiSchema = {};
   _.forIn(ICESchema.properties, (value, key) => {
-    console.log('key', key, 'value:', value);
+    // console.log('key', key, 'value:', value);
     if (value.type === undefined || value.type === 'object' || value.type === 'array') {
       uiSchema[key] = { 'ui:field': 'EditInFile' };
     }
@@ -65,13 +65,12 @@ const JSONSchemaForm = ({ buildJson, loading }) => {
       setFormData(e);
 
       // 测试
-      console.log('formdata', JSON.stringify(formdata));
+      // console.log('formdata', JSON.stringify(formdata));
     } catch (e) {
       // ignore
     }
   };
 
-  console.log('buildJson', JSON.stringify(buildJson));
   return (
     <Form
       schema={ICESchema}
@@ -92,26 +91,34 @@ const JSONSchemaForm = ({ buildJson, loading }) => {
 const MemoJSONSchemaForm = memo(JSONSchemaForm, isEqual);
 
 const JSONForm = () => {
-  let key = 0;
+  const [key, setKey] = useState(0);
   const [buildJson, setBuildJson] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   // 监听上传的 JSON
   useEffect(() => {
     window.addEventListener('message', (event) => {
-      setLoading(false);
       const message = event.data;
-      console.log('message.buildJson');
-      console.log(message.buildJson);
-      setBuildJson(getSettingFromExtension(message.buildJson));
-      console.log('getMessage');
-      key++;
+      const newBuildJSON = getSettingFromExtension(message.buildJson);
+
+      // 更新数据
+      if (!isEqual(newBuildJSON, buildJson)) {
+        setBuildJson(newBuildJSON);
+        setKey(Date.now());
+        // sendMessageForChangeProvider(buildJson);
+      }
+
+      console.log('key', key);
+      setLoading(false);
     });
   }, []);
 
   return (
     <>
       {loading ? (
-        <Loading />
+        <Loading
+          tip="build.json is not valiable now... \n  Please check Build.json and retry  "
+          style={{ width: '100%', height: '80vh', whiteSpace: 'pre-wrap' }}
+        />
       ) : (
         <Card free style={{ background: '#1e1e1e' }}>
           <MemoJSONSchemaForm buildJson={buildJson} key={key} loading={loading} />

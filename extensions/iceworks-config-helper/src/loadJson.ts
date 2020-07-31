@@ -22,7 +22,11 @@ export function isBuildJson(document: vscode.TextDocument) {
 }
 
 // 向网页端更新 JSON
-export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
+export function updateJsonForWeb(content: string | undefined, panel?: vscode.WebviewPanel) {
+  // if(!content){
+  //   con
+  // }
+  content = content || fse.readFileSync(buildJsonPath, 'utf-8');
   let jsonContent;
   if (!panel) {
     return;
@@ -37,7 +41,7 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
 }
 
 // 向文件中更新 Json
-export function updateJsonFile(message) {
+export function updateJsonFile(message): void {
   let { buildJson } = message;
   console.log('buildJson', buildJson);
 
@@ -47,9 +51,18 @@ export function updateJsonFile(message) {
     currentBuidJson[buildJson.name] = currentBuidJson[buildJson.name] || buildJson.value;
     buildJson = currentBuidJson;
   }
-
-  // format Json
+  // write in window
+  console.log('activeWindowpath', vscode.window.activeTextEditor?.document.uri.fsPath);
+  console.log('textEditors', vscode.window.visibleTextEditors);
+  // if(vscode.window.activeTextEditor?.document.uri.fsPath.endsWith('build.json')){
+  //   vscode.window.activeTextEditor?.edit(editBuilder=>{
+  //     const end = new vscode.Position(vscode.window.activeTextEditor?.document.lineCount+1,0);
+  //     editBuilder.replace(new vscode.Range( new vscode.Position(0,0),end),JSON.stringify(buildJson, null, '\t'));
+  //   });
+  // }else{
+  // format Json write in file
   fse.writeFile(buildJsonPath, JSON.stringify(buildJson, null, '\t'), (err) => {
     console.log(err);
   });
+  // }
 }

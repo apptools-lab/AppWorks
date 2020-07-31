@@ -66,7 +66,6 @@ export function getSettingFromExtension(userSetting) {
     if (userSetting[e] !== undefined) {
       formDidNotEditValue[e] = userSetting[e];
     }
-    console.log('setformDidNotEditValue', JSON.stringify(formDidNotEditValue));
   });
   return userSetting;
 }

@@ -43,16 +43,37 @@
       "additionalProperties": true
     },
     "hash": {
-      "type": ["boolean", "string"],
-      "description": "If you want the hashed version of the built resource, you can set hash to true.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+          "examples": ["contenthash"]
+        },
+        {
+          "type": "boolean",
+          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+          "default": false,
+          "examples": [false]
+        }
+      ],
       "default": false,
-      "examples": ["contenthash"]
+      "properties": {}
     },
     "injectBabel": {
-      "type": ["boolean", "string"],
-      "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime."
+        },
+        {
+          "type": "boolean",
+          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
+          "default": false,
+          "examples": [false]
+        }
+      ],
       "default": false,
-      "examples": [false]
+      "properties": {}
     },
     "minify": {
       "type": "boolean",
@@ -133,6 +154,20 @@
         }
       }
     },
+    "proxy": {
+      "type": "object",
+      "description": "Configure webpack's devServer.proxy attribute.",
+      "default": {},
+      "examples": [
+        {
+          "/**": {
+            "enable": true,
+            "target": "http://127.0.0.1:6001"
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
     "vendor": {
       "type": "boolean",
       "description": "Configure whether to generate vendor.",
@@ -181,38 +216,7 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {
-        "url": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables/Disables url / image-set function shandling"
-        },
-        "import": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables / Disables @import at-rules handling"
-        },
-        "modules": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables / Disables CSS Modules and their configuration"
-        },
-        "sourceMap": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables / Disables generation of source maps"
-        },
-        "importLoaders": {
-          "type": "number",
-          "default": 0,
-          "description": "Enables / Disables or setups number of loaders applied before CSS loader"
-        },
-        "esModule": {
-          "type": "boolean",
-          "default": false,
-          "description": "Use ESmodules syntax"
-        }
-      }
+      "properties": {}
     },
     "lessLoaderOptions": {
       "type": "object",
@@ -221,33 +225,7 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {
-        "lessOptions": {
-          "type": "object",
-          "default": { "relativeUrls": true },
-          "description": "Options for Less."
-        },
-        "prependData": {
-          "type": "string",
-          "default": "",
-          "description": "Prepends Less code before the actual entry file"
-        },
-        "appendData": {
-          "type": "string",
-          "default": "",
-          "description": "Prepends Less code after the actual entry file."
-        },
-        "sourceMap": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables / Disables generation of source maps."
-        },
-        "implementation": {
-          "type": "object",
-          "default": {},
-          "description": "Setup Less implementation to use."
-        }
-      }
+      "properties": {}
     },
     "sassLoaderOptions": {
       "type": "object",
@@ -256,33 +234,7 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {
-        "implementation": {
-          "type": "object",
-          "default": {},
-          "description": "Setup Sass implementation to use."
-        },
-        "sassOptions": {
-          "type": "object",
-          "default": {},
-          "description": "Options for Sass."
-        },
-        "sourceMap": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enables / Disables generation of source maps."
-        },
-        "additionalData": {
-          "type": "string",
-          "default": "",
-          "description": "Prepends/Appends Sass / SCSS code before the actual entry file."
-        },
-        "webpackImporter": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enables / Disables the default Webpack importer."
-        }
-      }
+      "properties": {}
     },
     "postcssrc": {
       "type": "boolean",
@@ -304,20 +256,20 @@
       "description": "Add an additional babel plugin to the babel-loader configuration.",
       "default": [],
       "examples": [[]],
-      "additionalItems": true,
       "items": {
-        "anyOf": []
-      }
+        "type": "object"
+      },
+      "additionalItems": true
     },
     "babelPresets": {
       "type": "array",
       "description": "Add an additional babel preset to the configuration of babel-loader. If the preset is the same as the built-in preset, the configuration content in babelPresets will be used first.",
       "default": [],
       "examples": [[]],
-      "additionalItems": true,
       "items": {
-        "anyOf": []
-      }
+        "type": "object"
+      },
+      "additionalItems": true
     },
     "ignoreHtmlTemplate": {
       "type": "boolean",
@@ -326,12 +278,19 @@
       "examples": [false]
     },
     "eslint": {
-      "type": ["object", "boolean"],
-      "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true. Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
-      "default": {},
-      "examples": [{}],
-      "required": [],
-      "additionalProperties": true,
+      "oneOf": [
+        {
+          "type": "boolean",
+          "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader ."
+        }
+      ],
+      "default": false,
+      "examples": [false],
       "properties": {}
     },
     "targets": {

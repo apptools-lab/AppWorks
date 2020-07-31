@@ -6,7 +6,7 @@ import { DefaultSchema, formdidNotEditAttrs, isEqual } from '../utils';
 const ChangeProvider = ({ fdkey, children }) => {
   const [value, setValue] = useState(DefaultSchema[fdkey]);
 
-  // console.log(`key: ${fdkey}, value: ${value}`)
+  console.log(`key: ${fdkey}, value: ${value}`);
   // 侧边栏样式控制
   const [siderStyle, setSiderStyle] = useState({ backgroundColor: '#1e1e1e', width: '2px', margin: '0 2px' });
 

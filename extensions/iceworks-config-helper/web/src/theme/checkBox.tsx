@@ -12,6 +12,10 @@ const Fdcheckbox: React.FC<WidgetProps> = (props) => {
     setCheckedValue(checked);
   };
 
-  return <Checkbox onChange={(checked) => check(checked)}>{schema.description}</Checkbox>;
+  return (
+    <Checkbox checked={checkedValue} onChange={(checked) => check(checked)}>
+      {schema.description}
+    </Checkbox>
+  );
 };
 export default Fdcheckbox;
