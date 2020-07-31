@@ -30,11 +30,13 @@ export async function activate(context: vscode.ExtensionContext) {
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
   subscriptions.push(extensionsStatusBar);
-  subscriptions.push(registerCommand(showExtensionsQuickPickCommandId, () => {
-    recorder.recordActivate();
+  subscriptions.push(
+    registerCommand(showExtensionsQuickPickCommandId, () => {
+      recorder.recordActivate();
 
-    showExtensionsQuickPick();
-  }));
+      showExtensionsQuickPick();
+    })
+  );
 
   // init config webview
   let webviewPanel: vscode.WebviewPanel | undefined;
@@ -62,10 +64,12 @@ export async function activate(context: vscode.ExtensionContext) {
       connectService(webviewPanel, context, { services, recorder });
     }
   }
-  subscriptions.push(registerCommand('iceworksApp.configHelper.start', function () {
-    recorder.recordActivate();
-    activeConfigWebview();
-  }));
+  subscriptions.push(
+    registerCommand('iceworksApp.configHelper.start', function () {
+      recorder.recordActivate();
+      activeConfigWebview();
+    })
+  );
 
   // init tree view
   const treeViews: any[] = [];
@@ -83,7 +87,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         autoSetViewContext();
-      } 
+      }
     });
   });
 

@@ -67,10 +67,14 @@ export function executeCommand(...arg: any[]) {
 }
 
 export function registerCommand(command: string, callback: (...args: any[]) => any, thisArg?: any) {
-  return vscode.commands.registerCommand(command, () => {
-    recordDAU();
-    callback();
-  }, thisArg);
+  return vscode.commands.registerCommand(
+    command,
+    () => {
+      recordDAU();
+      callback();
+    },
+    thisArg
+  );
 }
 
 export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {

@@ -6,9 +6,7 @@ import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
 
-export default async function createEditorMenuAction(
-  terminals: ITerminalMap
-) {
+export default async function createEditorMenuAction(terminals: ITerminalMap) {
   const EDITOR_MENU_RUN_DEV = 'iceworksApp.editorMenu.runDev';
   registerCommand(EDITOR_MENU_RUN_DEV, async () => {
     const pathExists = await checkPathExists(projectPath, dependencyDir);

@@ -8,7 +8,7 @@ import stopCommand from '../commands/stopCommand';
 import { ITerminalMap } from '../types';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
-  private workspaceRoot: string|undefined;
+  private workspaceRoot: string | undefined;
 
   private extensionContext: vscode.ExtensionContext;
 
@@ -18,7 +18,7 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
 
   readonly onDidChangeTreeData: vscode.Event<ScriptTreeItem | undefined> = this.onDidChange.event;
 
-  constructor(context: vscode.ExtensionContext, workspaceRoot: string|undefined) {
+  constructor(context: vscode.ExtensionContext, workspaceRoot: string | undefined) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
@@ -88,10 +88,7 @@ export class ScriptTreeItem extends vscode.TreeItem {
   contextValue = 'script';
 }
 
-export function createNpmScriptsTreeView(
-  context: vscode.ExtensionContext,
-  terminals: ITerminalMap
-) {
+export function createNpmScriptsTreeView(context: vscode.ExtensionContext, terminals: ITerminalMap) {
   const npmScriptsProvider = new NpmScriptsProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('npmScripts', { treeDataProvider: npmScriptsProvider });
 
