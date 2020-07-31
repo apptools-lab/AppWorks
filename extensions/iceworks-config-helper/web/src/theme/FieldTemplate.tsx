@@ -3,12 +3,22 @@ import { FieldTemplateProps } from '@rjsf/core';
 import { List } from '@alifd/next';
 import ChangeProvider from './ChangeProvider';
 
-const FieldTemplate = ({ id, children, rawErrors = [], rawHelp, label, rawDescription }: FieldTemplateProps) => {
+const FieldTemplate = ({
+  id,
+  children,
+  rawErrors = [],
+  rawHelp,
+  label,
+  rawDescription,
+  schema,
+}: FieldTemplateProps) => {
+  console.log(schema);
   return (
-    <ChangeProvider fdkey={label}>
+    <ChangeProvider fieldKey={label}>
       <div style={{ marginBottom: 15, color: 'white' }}>
         <h3>{label}</h3>
-        <p className="fddescription">{rawDescription}</p>
+
+        {schema.type === 'boolean' ? <></> : <p className="fddescription">{rawDescription}</p>}
         {children}
         {rawErrors.length > 0 && (
           <List>

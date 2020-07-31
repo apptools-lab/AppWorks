@@ -41,8 +41,8 @@ export function isEqual(obj1, obj2) {
 export function postSettingToExtension(currentConfig) {
   const userConfig = {};
 
-  // 测试发送的时候的 EditValue
-  console.log('useformDidNotEditValue', JSON.stringify(formDidNotEditValue));
+  // // 测试保留的 EditValue
+  // console.log('useformDidNotEditValue', JSON.stringify(formDidNotEditValue));
 
   _.forIn(currentConfig, (value, key) => {
     if (formdidNotEditAttrs.includes(key)) {
@@ -53,7 +53,6 @@ export function postSettingToExtension(currentConfig) {
       userConfig[key] = value;
     }
   });
-  console.log('message for extension', userConfig);
   return userConfig;
 }
 

@@ -43,7 +43,7 @@ export function updateJsonForWeb(content: string | undefined, panel?: vscode.Web
 // 向文件中更新 Json
 export function updateJsonFile(message): void {
   let { buildJson } = message;
-  console.log('buildJson', buildJson);
+  console.log('receivedBuildJson', buildJson);
 
   // <EditInJson>添加默认属性
   if (buildJson.value !== undefined) {
@@ -52,8 +52,8 @@ export function updateJsonFile(message): void {
     buildJson = currentBuidJson;
   }
   // write in window
-  console.log('activeWindowpath', vscode.window.activeTextEditor?.document.uri.fsPath);
-  console.log('textEditors', vscode.window.visibleTextEditors);
+  // console.log('activeWindowpath', vscode.window.activeTextEditor?.document.uri.fsPath);
+  // console.log('textEditors', vscode.window.visibleTextEditors);
   // if(vscode.window.activeTextEditor?.document.uri.fsPath.endsWith('build.json')){
   //   vscode.window.activeTextEditor?.edit(editBuilder=>{
   //     const end = new vscode.Position(vscode.window.activeTextEditor?.document.lineCount+1,0);
