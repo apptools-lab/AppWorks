@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
 import { getProjectFramework } from '@iceworks/project-service';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { initExtension, Logger } from '@iceworks/common-service';
+import services from './services/index';
+import { loadJson, isBuildJson, updateJsonForWeb, updateJsonFile } from './loadJson';
 
 async function activate() {
   try {
@@ -20,5 +24,3 @@ async function activate() {
     // ignore
   }
 }
-
-exports.activate = activate;

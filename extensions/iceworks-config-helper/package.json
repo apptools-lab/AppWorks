@@ -28,7 +28,40 @@
         "fileMatch": "build.json",
         "url": "./schemas/ice.build.json"
       }
-    ]
+    ],
+    "commands": [
+      {
+        "command": "iceworks-config-helper.start",
+        "title": "%iceworksConfigHelper.commands.start.title%",
+        "icon": {
+          "light": "./icons/preview-right-light.svg",
+          "dark": "./icons/preview-right-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "iceworks-config-helper.start",
+          "when": "editorLangId == json",
+          "group": "configHelper"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "iceworks-config-helper.start",
+          "when": "editorLangId == json",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "iceworks-config-helper.start",
+          "when": "resourceFilename == build.json",
+          "group": "2_workspace"
+        }
+      ]
+    }
   },
   "repository": {
     "type": "git",

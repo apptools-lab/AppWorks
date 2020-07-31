@@ -133,20 +133,6 @@
         }
       }
     },
-    "proxy": {
-      "type": "object",
-      "description": "Configure webpack's devServer.proxy attribute.",
-      "default": {},
-      "examples": [
-        {
-          "/**": {
-            "enable": true,
-            "target": "http://127.0.0.1:6001"
-          }
-        }
-      ],
-      "additionalProperties": true
-    },
     "vendor": {
       "type": "boolean",
       "description": "Configure whether to generate vendor.",
@@ -173,7 +159,7 @@
     },
     "compileDependencies": {
       "type": "array",
-      "description": "y default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
+      "description": "By default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
       "default": [],
       "examples": [["@alifd/next"]],
       "additionalItems": true,
@@ -195,7 +181,38 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {}
+      "properties": {
+        "url": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables/Disables url / image-set function shandling"
+        },
+        "import": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables / Disables @import at-rules handling"
+        },
+        "modules": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables / Disables CSS Modules and their configuration"
+        },
+        "sourceMap": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables / Disables generation of source maps"
+        },
+        "importLoaders": {
+          "type": "number",
+          "default": 0,
+          "description": "Enables / Disables or setups number of loaders applied before CSS loader"
+        },
+        "esModule": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use ESmodules syntax"
+        }
+      }
     },
     "lessLoaderOptions": {
       "type": "object",
@@ -204,7 +221,33 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {}
+      "properties": {
+        "lessOptions": {
+          "type": "object",
+          "default": { "relativeUrls": true },
+          "description": "Options for Less."
+        },
+        "prependData": {
+          "type": "string",
+          "default": "",
+          "description": "Prepends Less code before the actual entry file"
+        },
+        "appendData": {
+          "type": "string",
+          "default": "",
+          "description": "Prepends Less code after the actual entry file."
+        },
+        "sourceMap": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables / Disables generation of source maps."
+        },
+        "implementation": {
+          "type": "object",
+          "default": {},
+          "description": "Setup Less implementation to use."
+        }
+      }
     },
     "sassLoaderOptions": {
       "type": "object",
@@ -213,7 +256,33 @@
       "examples": [{}],
       "required": [],
       "additionalProperties": true,
-      "properties": {}
+      "properties": {
+        "implementation": {
+          "type": "object",
+          "default": {},
+          "description": "Setup Sass implementation to use."
+        },
+        "sassOptions": {
+          "type": "object",
+          "default": {},
+          "description": "Options for Sass."
+        },
+        "sourceMap": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enables / Disables generation of source maps."
+        },
+        "additionalData": {
+          "type": "string",
+          "default": "",
+          "description": "Prepends/Appends Sass / SCSS code before the actual entry file."
+        },
+        "webpackImporter": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enables / Disables the default Webpack importer."
+        }
+      }
     },
     "postcssrc": {
       "type": "boolean",
