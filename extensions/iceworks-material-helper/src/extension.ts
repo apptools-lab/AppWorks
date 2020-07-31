@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension } from '@iceworks/common-service';
+import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
@@ -23,7 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
   function activeWebview() {
-    recordDAU();
     recorder.recordActivate();
     if (webviewPanel) {
       webviewPanel.reveal();
@@ -60,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   }
   subscriptions.push(
-    vscode.commands.registerCommand('iceworks-material-helper.start', function () {
+    registerCommand('iceworks-material-helper.start', function () {
       activeWebview();
     })
   );

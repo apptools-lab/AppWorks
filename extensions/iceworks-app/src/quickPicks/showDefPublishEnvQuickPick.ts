@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
+import { projectPath } from '@iceworks/project-service';
 import { ITerminalMap } from '../types';
 import executeCommand from '../commands/executeCommand';
 import i18n from '../i18n';
 
 const { window } = vscode;
 
-export default function showDefPublishEnvQuickPick(terminalMapping: ITerminalMap, rootPath: string) {
+export default function showDefPublishEnvQuickPick(terminalMapping: ITerminalMap) {
   const DEFEnvOptions = [
     {
       label: i18n.format('extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label'),
@@ -26,8 +27,8 @@ export default function showDefPublishEnvQuickPick(terminalMapping: ITerminalMap
       const env = DEFEnvOptions.find((option) => option.label === selection[0].label)!;
       const command: vscode.Command = {
         title: 'Publish',
-        command: 'iceworksApp.DefPublish',
-        arguments: [rootPath, env.command],
+        command: 'iceworksApp.editorMenu.DefPublish',
+        arguments: [projectPath, env.command],
       };
       executeCommand(terminalMapping, command, `DefPublish-${env.label}`);
       quickPick.dispose();

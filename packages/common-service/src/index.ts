@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
+import { recordDAU } from '@iceworks/recorder';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -63,6 +64,17 @@ export function executeCommand(...arg: any[]) {
   // TODO Parameter type judgment
   const reset = arg.length > 2 ? arg.slice(0, arg.length - 2) : arg;
   return vscode.commands.executeCommand.apply(null, reset);
+}
+
+export function registerCommand(command: string, callback: (...args: any[]) => any, thisArg?: any) {
+  return vscode.commands.registerCommand(
+    command,
+    () => {
+      recordDAU();
+      callback();
+    },
+    thisArg
+  );
 }
 
 export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {

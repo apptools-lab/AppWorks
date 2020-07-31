@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension } from '@iceworks/common-service';
+import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
@@ -20,7 +20,6 @@ export function activate(context: vscode.ExtensionContext) {
   let webviewPanel: vscode.WebviewPanel | undefined;
 
   function activeWebview() {
-    recordDAU();
     recorder.recordActivate();
 
     if (webviewPanel) {
@@ -48,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   subscriptions.push(
-    vscode.commands.registerCommand('iceworks-project-creator.start', function () {
+    registerCommand('iceworks-project-creator.start', function () {
       activeWebview();
     })
   );
