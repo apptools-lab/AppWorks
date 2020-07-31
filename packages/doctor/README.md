@@ -11,7 +11,7 @@ $ npm i @iceworks/doctor --save-dev
 or
 
 ```shell
-$ npm install -g jscpd
+$ npm install -g @iceworks/doctor
 ```
 
 ## Usage
