@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
-import { createNpmCommand, checkPathExists, checkIsAliInternal } from '@iceworks/common-service';
-import { recordDAU } from '@iceworks/recorder';
+import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
 import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from './constants';
 import { ITerminalMap } from './types';
@@ -11,7 +10,7 @@ export default async function createEditorMenuAction(
   terminals: ITerminalMap
 ) {
   const EDITOR_MENU_RUN_DEV = 'iceworksApp.editorMenu.runDev';
-  vscode.commands.registerCommand(EDITOR_MENU_RUN_DEV, async () => {
+  registerCommand(EDITOR_MENU_RUN_DEV, async () => {
     const pathExists = await checkPathExists(projectPath, dependencyDir);
     const command: vscode.Command = {
       command: EDITOR_MENU_RUN_DEV,
@@ -29,12 +28,12 @@ export default async function createEditorMenuAction(
 
   const isAliInternal = await checkIsAliInternal();
   if (isAliInternal) {
-    vscode.commands.registerCommand('iceworksApp.editorMenu.DefPublish', () => {
+    registerCommand('iceworksApp.editorMenu.DefPublish', () => {
       showDefPublishEnvQuickPick(terminals);
     });
   } else {
     const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
-    vscode.commands.registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
+    registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
       const pathExists = await checkPathExists(projectPath, dependencyDir);
       const command: vscode.Command = {
         command: EDITOR_MENU_RUN_BUILD,

@@ -3,7 +3,7 @@ import { Terminal, window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { initExtension, checkIsAliInternal } from '@iceworks/common-service';
+import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
@@ -30,8 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
   subscriptions.push(extensionsStatusBar);
-  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
-    recordDAU();
+  subscriptions.push(registerCommand(showExtensionsQuickPickCommandId, () => {
     recorder.recordActivate();
 
     showExtensionsQuickPick();
@@ -40,9 +39,6 @@ export async function activate(context: vscode.ExtensionContext) {
   // init config webview
   let webviewPanel: vscode.WebviewPanel | undefined;
   function activeConfigWebview() {
-    recordDAU();
-    recorder.recordActivate();
-
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {
@@ -66,7 +62,8 @@ export async function activate(context: vscode.ExtensionContext) {
       connectService(webviewPanel, context, { services, recorder });
     }
   }
-  subscriptions.push(vscode.commands.registerCommand('iceworksApp.configHelper.start', function () {
+  subscriptions.push(registerCommand('iceworksApp.configHelper.start', function () {
+    recorder.recordActivate();
     activeConfigWebview();
   }));
 

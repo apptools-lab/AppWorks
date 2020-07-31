@@ -5,7 +5,7 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { getDataFromSettingJson, createNpmCommand, checkPathExists } from '@iceworks/common-service';
+import { getDataFromSettingJson, createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import { NodeDepTypes } from '../types';
@@ -198,25 +198,25 @@ export function createNodeDependenciesTreeView(context, terminals) {
   const nodeDependenciesProvider = new DepNodeProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
 
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
+  registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
+  registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
     if (node.command) {
       executeCommand(terminals, node.command, node.id);
     }
   });
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
+  registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();
       executeCommand(terminals, script!);
     }
   });
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
+  registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
     showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
   );
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
+  registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
     showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
   );
-  vscode.commands.registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
+  registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
     showDepsQuickPick(terminals, nodeDependenciesProvider)
   );
 

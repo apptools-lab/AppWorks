@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { checkPathExists } from '@iceworks/common-service';
+import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { pagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
 
@@ -89,13 +89,13 @@ export function createPagesTreeView(context: vscode.ExtensionContext) {
   const pagesProvider = new PagesProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
-  vscode.commands.registerCommand('iceworksApp.pages.add', () => {
+  registerCommand('iceworksApp.pages.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
     vscode.commands.executeCommand('iceworks-ui-builder.generate-page');
   });
-  vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
-  vscode.commands.registerCommand('iceworksApp.pages.delete', async (page) => await fse.remove(page.path));
+  registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
+  registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
+  registerCommand('iceworksApp.pages.delete', async (page) => await fse.remove(page.path));
 
   const pattern = new vscode.RelativePattern(pagesPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
