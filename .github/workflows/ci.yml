@@ -17,10 +17,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: |
-          npm i
+          npm run setup:packages
           npm run lint
           npm run prettier
           npm run docs:check
+          npm run dependency:check
           npm run test
           npm run coverage
         env:

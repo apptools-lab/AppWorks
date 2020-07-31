@@ -18,7 +18,6 @@ jobs:
           npm i
           npm i -g vsce
           npm run setup
-          npm run dependency:check
           npm run publish
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}
