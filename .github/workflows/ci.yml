@@ -17,10 +17,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: |
-          npm run setup:packages
+          npm i
           npm run lint
           npm run prettier
-          npm run dependency:check
           npm run docs:check
           npm run test
           npm run coverage
