@@ -3,6 +3,13 @@
     "writeToDisk": true
   },
   "mpa": true,
+  "vendor": false,
+  "externals": {
+    "fetch-jsonp": "FetchJsonp",
+    "jsonuri": "Jsonuri",
+    "js-beautify": "JsBeautify",
+    "react-monaco-editor": "ReactMonacoEditor"
+  },
   "publicPath": "./",
   "outputDir": "../build",
   "plugins": [
@@ -11,11 +18,11 @@
       {
         "themePackage": [
           {
-            "name": "@alifd/theme-iceworks-dark",
+            "name": "@alife/dpl-iceluna",
             "default": true
           },
           {
-            "name": "@alife/dpl-iceluna"
+            "name": "@alifd/theme-iceworks-dark"
           }
         ]
       }
@@ -24,7 +31,8 @@
       "build-plugin-moment-locales",
       {
         "locales": [
-          "zh-cn"
+          "zh-cn",
+          "en-au"
         ]
       }
     ],

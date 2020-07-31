@@ -9,6 +9,7 @@ import pkg from '../../../package.json';
 import './index.module.scss';
 
 window.__pkg = pkg;
+// window.__changeTheme__('@alife/dpl-iceluna');
 
 const appHelper = window.parent && window.parent.__ctx && window.parent.__ctx.appHelper;
 

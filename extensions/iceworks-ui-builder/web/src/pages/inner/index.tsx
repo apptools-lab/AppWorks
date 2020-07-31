@@ -6,7 +6,10 @@ import Inner from '@ali/iceluna-components-inner';
 import components from './components';
 import './index.scss';
 
+// window.__changeTheme__('@alife/dpl-iceluna');
+
 const appHelper = window.parent && window.parent.__ctx && window.parent.__ctx.appHelper;
-export default function(){
+
+export default function () {
   return <Inner appHelper={appHelper} components={components} />;
 }
