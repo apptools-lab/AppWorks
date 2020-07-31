@@ -83,6 +83,8 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@iceworks/project-service": "^0.1.6"
+    "@iceworks/project-service": "^0.1.6",
+    "@types/lodash": "^4.14.158",
+    "lodash": "^4.17.19"
   }
 }

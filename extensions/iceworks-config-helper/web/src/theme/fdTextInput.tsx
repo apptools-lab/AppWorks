@@ -6,6 +6,7 @@ import ChangeProvider from './ChangeProvider';
 
 const FdTextWeight: React.FC<WidgetProps> = (props) => {
   const { label, schema, onChange, value } = props;
+  const [errFlag, setErrFlag] = useState(false);
   const [inputStyle, setInputStyle] = useState({
     background: '#3c3c3c',
     borderColor: 'transparent',
@@ -27,9 +28,21 @@ const FdTextWeight: React.FC<WidgetProps> = (props) => {
     });
   };
   const inputChange = (inputStringValue) => {
+    if (inputStringValue.match(/^[0-9]*$/)) {
+      setErrFlag(true);
+    }
     onChange(inputStringValue);
     setInputValue(inputStringValue);
   };
-  return <Input value={inputValue} onChange={inputChange} style={inputStyle} onFocus={onfocus} onBlur={onblur} />;
+  return (
+    <Input
+      value={inputValue}
+      state={errFlag ? undefined : 'error'}
+      onChange={inputChange}
+      style={inputStyle}
+      onFocus={onfocus}
+      onBlur={onblur}
+    />
+  );
 };
 export default FdTextWeight;

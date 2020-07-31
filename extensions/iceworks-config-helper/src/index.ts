@@ -1,9 +1,8 @@
 import * as vscode from 'vscode';
 import { getProjectFramework } from '@iceworks/project-service';
-import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
-import services from './services/index';
-import { loadJson, isBuildJson, updateJsonForWeb, updateJsonFile } from './loadJson';
+import { isBuildJson, updateJsonForWeb, updateJsonFile } from './loadJson';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');

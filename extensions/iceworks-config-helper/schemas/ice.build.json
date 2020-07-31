@@ -51,11 +51,12 @@
         },
         {
           "type": "boolean",
-          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+
           "default": false,
           "examples": [false]
         }
       ],
+      "description": "If you want the hashed version of the built resource, you can set hash to true. you can also switch hash type by string ",
       "default": false,
       "properties": {}
     },
@@ -67,11 +68,12 @@
         },
         {
           "type": "boolean",
-          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
+
           "default": false,
           "examples": [false]
         }
       ],
+      "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
       "default": false,
       "properties": {}
     },
@@ -285,10 +287,10 @@
         },
         {
           "type": "object",
-          "additionalProperties": true,
-          "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader ."
+          "additionalProperties": true
         }
       ],
+      "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
       "default": false,
       "examples": [false],
       "properties": {}
