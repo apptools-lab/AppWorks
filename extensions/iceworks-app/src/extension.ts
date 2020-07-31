@@ -29,13 +29,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
-  subscriptions.push(vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
-    // data collection
-    recordDAU();
-    recorder.recordActivate();
+  subscriptions.push(
+    vscode.commands.registerCommand(showExtensionsQuickPickCommandId, () => {
+      // data collection
+      recordDAU();
+      recorder.recordActivate();
 
-    showExtensionsQuickPick();
-  }));
+      showExtensionsQuickPick();
+    })
+  );
 
   subscriptions.push(extensionsStatusBar);
   // init webview

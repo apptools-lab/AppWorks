@@ -7,7 +7,12 @@ import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
 
-export default function createEditorMenuAction(rootPath: string, terminals: ITerminalMap, isAliInternal: boolean, recorder: Recorder) {
+export default function createEditorMenuAction(
+  rootPath: string,
+  terminals: ITerminalMap,
+  isAliInternal: boolean,
+  recorder: Recorder
+) {
   vscode.commands.registerCommand('iceworksApp.npmScripts.runDev', async () => {
     // data collection
     recordDAU();
