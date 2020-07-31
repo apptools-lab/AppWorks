@@ -2,13 +2,23 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework } from '@iceworks/project-service';
+import {
+  pagesPath,
+  COMPONENT_DIR_NAME,
+  getProjectLanguageType,
+  getProjectFramework,
+  projectPath,
+} from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
+import { bulkCreate } from './router';
 import i18n from './i18n';
+
+export * from './router';
+
 /**
  * Generate page code based on blocks
  *
@@ -69,6 +79,14 @@ export const generate = async function ({
 
   return pageName;
 };
+
+/**
+ *  write the router config
+ */
+export async function createRouter(data) {
+  const { path, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
+}
 
 /**
  * Remove page files
