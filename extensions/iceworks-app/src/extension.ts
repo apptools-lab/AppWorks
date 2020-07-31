@@ -86,6 +86,7 @@ export async function activate(context: vscode.ExtensionContext) {
     treeView.onDidChangeVisibility(({ visible }) => {
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
+        recordDAU();
         autoSetViewContext();
       }
     });
