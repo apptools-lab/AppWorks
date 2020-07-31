@@ -13,6 +13,13 @@ export const DefaultSchema = {};
 export const formdidNotEditAttrs: string[] = [];
 let formDidNotEditValue = {};
 
+export function setFormDidNotEditValue(obj){
+  // TODO
+}
+export function getFormDidNotEditValue(){
+  return formdidNotEditAttrs;
+}
+
 // 这个函数生成了一个默认的属性集合
 ((schema)=>{
   _.forIn(schema,(value,key)=>{
@@ -37,12 +44,16 @@ export function isEqual(obj1, obj2){
   return _.isEqual(obj1,obj2);
 }
 
-// 将默认值从配置文件中分离出来
+// 将默认值从配置文件中分离出来, 并加入表格不能编辑的值。
 export function postSettingToExtension(currentConfig) {
   const userConfig = {};
+
+  // 测试发送的时候的 EditValue
+  console.log('useformDidNotEditValue',JSON.stringify(formDidNotEditValue));
+
   _.forIn(currentConfig, (value, key) => {
     if(formdidNotEditAttrs.includes(key)){
-      if(formDidNotEditValue[key]){
+      if(formDidNotEditValue[key] !== undefined){
         userConfig[key] = formDidNotEditValue[key];
       }
     }
@@ -60,10 +71,10 @@ export function getSettingFromExtension(userSetting){
   // console.log('formdidNotEditAttrs',formdidNotEditAttrs);
   formDidNotEditValue ={};
   formdidNotEditAttrs.forEach(e=>{
-    if(userSetting[e]){
+    if(userSetting[e] !== undefined){
       formDidNotEditValue[e] = userSetting[e];
     }
-    console.log('formDidNotEditValue',formDidNotEditValue)
+    console.log('setformDidNotEditValue',JSON.stringify(formDidNotEditValue));
   })
   return userSetting;
 }

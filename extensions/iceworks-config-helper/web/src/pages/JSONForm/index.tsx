@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import Form from '@rjsf/core';
-import {  Card, } from '@alifd/next';
+import {  Card, Loading, } from '@alifd/next';
 import * as _ from 'lodash';
 import ICESchema from '../../../../schemas/ice.build.json';
 import fdCheckBox from '../../theme/checkBox';
@@ -11,18 +11,20 @@ import descriptionField from '../../theme/DescriptionField';
 import FiledTemplate from '../../theme/FieldTemplate';
 import ObjectFieldTemplate from '../../theme/ObjectFieldTemplate';
 import selectWidget from '../../theme/fdSelectWidge';
-import {postSettingToExtension} from '../../utils'
+import {postSettingToExtension, getSettingFromExtension, isEqual} from '../../utils'
 
 // vscode API
 // eslint-disable-next-line no-undef
 export const vscode = acquireVsCodeApi();
+console.log('vscodeApi',vscode);
 
 // ui Schema
 // covert array and object to editInJson to Edit in json field
 const createUISchema= ()=>{
   const uiSchema = {};
   _.forIn(ICESchema.properties,(value,key)=>{
-    if(value.type==='object'|| value.type==='array'){
+    console.log('key',key,'value:',value)
+    if(value.type===undefined||value.type==='object'|| value.type==='array'){
       uiSchema[key]={'ui:field': 'EditInFile'};
     }
   });
@@ -41,86 +43,82 @@ const widgets = {
   TextWidget: fdTextInput,
   SelectWidget: selectWidget
 };
-const setJson= async (e)=>{
-  // console.log(JSON.stringify(e));
-  try{
-    // 发布数据变化给 Change Provider
-    const event = document.createEvent('HTMLEvents');
-    event.initEvent('updateJSON',false,true);
-    event.data= {currentConfig:e};
-    window.dispatchEvent(event);
 
-    // 发布数据变化给 VSCode 插件本体
-    vscode.postMessage({buildJson:postSettingToExtension(e)});
-    
-    // // 更新插件的数据
-    // setFormData(e)
-    // console.log('formdata',JSON.stringify(formdata));
-  }catch(e){
-    // ignore
-  }
-};
+const JSONSchemaForm = ({buildJson,loading})=>{
+  const [formdata,setFormData] = useState(buildJson);
 
-class BuildJSONForm extends React.Component{
-  constructor(props) {
-    super(props)
-    this.state = {
-      formdata : props.formdata
-    }
-  }
+  const setJson= async (e)=>{
+    // console.log(JSON.stringify(e));
+    try{
+      // 发布数据变化给 Change Provider
+      const event = document.createEvent('HTMLEvents');
+      event.initEvent('updateJSON',false,true);
+      event.data= {currentConfig:e};
+      window.dispatchEvent(event);
   
-  shouldComponentUpdate(nextProps, nextState){
-    return JSON.stringify(this.state.formdata)!==JSON.stringify(nextProps.formdata);
-  }
+      // 发布数据变化给 VSCode 插件本体
+      if(!loading){
+        vscode.postMessage({buildJson:postSettingToExtension(e)});
+      }
 
-  render(){
-    return (
-      <Form schema={ICESchema} 
-        ObjectFieldTemplate={ObjectFieldTemplate} 
-        FieldTemplate={FiledTemplate} 
-        TitleField= {titleFiled} 
-        fields={fields} 
-        widgets={widgets} 
-        uiSchema={createUISchema()} 
-        formData={this.state.formdata} 
-        onChange={e => setJson(e.formData)}
-      >
-        <></>
-      </Form>
-    )
-  }
+      // 更新插件的数据
+      setFormData(e)
 
+      // 测试
+      console.log('formdata',JSON.stringify(formdata));
+    }catch(e){
+      // ignore
+    }
+  };
+
+
+  console.log('buildJson',JSON.stringify(buildJson));
+  return (
+    <Form schema={ICESchema} 
+      ObjectFieldTemplate={ObjectFieldTemplate} 
+      FieldTemplate={FiledTemplate} 
+      TitleField= {titleFiled} 
+      fields={fields} 
+      widgets={widgets} 
+      uiSchema={createUISchema()} 
+      formData={formdata} 
+      onChange={e => setJson(e.formData)}
+    >
+      <></>
+    </Form>
+  )
 }
 
-class JSONForm extends React.Component{
-  constructor(props) {
-    super(props)
+const MemoJSONSchemaForm = memo(JSONSchemaForm,isEqual)
+
+const JSONForm = () => {
+  let key = 0;
+  const [buildJson,setBuildJson] = useState({});
+  const [loading,setLoading] = useState(false);
+  // 监听上传的 JSON
+  useEffect(()=>{
+    window.addEventListener('message',event => {
+      setLoading(false);
+      const message = event.data;
+      console.log('message.buildJson')
+      console.log(message.buildJson)
+      setBuildJson(getSettingFromExtension(message.buildJson));
+      console.log('getMessage');
+      key++;
+    })
+  },[]);
   
-    this.state = {
-      buildJson:{}
-    }
-  }
+  return (
+    <>
+      {loading?
+        <Loading/>:
+        <Card free style={{background:'#1e1e1e'}}>
+          <MemoJSONSchemaForm buildJson={buildJson} key={key} loading={loading} />
+        </Card>
+      }
 
-  // // 监听上传的 JSON
-  // componentDidMount(){
-  //   window.addEventListener('message',event => {
-  //     const message = event.data;
-  //     console.log('message.buildJson')
-  //     console.log(message.buildJson)
-  //     this.setState(getSettingFromExtension(message.buildJson))
-  //     console.log('getMessage');
-  //   });
-  // }
-  
-
-  render(){
-    return (
-      <Card free style={{background:'#1e1e1e'}}>
-        <BuildJSONForm formdata = {this.state.buildJson}/>
-      </Card>
-    )
-  }
-
+    </>
+  )
 };
 
 export default JSONForm;

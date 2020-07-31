@@ -1,4 +1,4 @@
-import JSONForm from '@/pages/JSONForm'
+import JSONForm from '@/pages/JSONForm/index'
 
 const routerConfig = [
   {

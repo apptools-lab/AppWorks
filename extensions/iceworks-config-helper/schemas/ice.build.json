@@ -70,7 +70,6 @@
         }
       ],
       "default":false,
-      "type":"object",
       "properties": {}
     },
     "injectBabel": {
@@ -88,7 +87,6 @@
         }
       ],
       "default": false,
-      "type":"object",
       "properties": {}
     },
     "minify": {
@@ -343,7 +341,6 @@
       "examples": [
         false
       ],
-      "required": [],
       "properties": {}
     },
     "targets": {

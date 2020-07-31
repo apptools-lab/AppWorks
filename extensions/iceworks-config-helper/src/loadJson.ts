@@ -42,19 +42,17 @@ export function updateJsonForWeb(content: string,panel?: vscode.WebviewPanel){
 // 向文件中更新 Json
 export function updateJsonFile(message){
   let {buildJson} = message;
-  // 添加默认属性
-  if(buildJson.value){
+  console.log('buildJson',buildJson);
+  
+  // <EditInJson>添加默认属性
+  if(buildJson.value !== undefined){
     const currentBuidJson = fse.readJSONSync(buildJsonPath);
     currentBuidJson[buildJson.name] = currentBuidJson[buildJson.name]||buildJson.value;
     buildJson = currentBuidJson;
   }
-  fse.writeFile(buildJsonPath,JSON.stringify(buildJson,null,2),(err)=>{
+
+  // format Json
+  fse.writeFile(buildJsonPath,JSON.stringify(buildJson,null,'\t'),(err)=>{
     console.log(err);
   })
-
-
-  // fse.writeJSON(buildJsonPath,message.buildJson,err=>{
-  //   console.log(err);
-  // })
-  // fs.writeFile(buildJsonPath,JSON.stringify(message.buildJson),err=>{console.log(err)});
 }
