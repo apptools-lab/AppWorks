@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';

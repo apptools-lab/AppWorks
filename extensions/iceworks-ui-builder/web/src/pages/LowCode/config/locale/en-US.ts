@@ -36,5 +36,5 @@ export default {
   LunaComponentAttr: componentAttrLocale,
   LunaComponentEvent: componentEventLocale,
   LunaComponentData: componentDataLocale,
-  LunaCanvas: canvasLocale
-}
+  LunaCanvas: canvasLocale,
+};

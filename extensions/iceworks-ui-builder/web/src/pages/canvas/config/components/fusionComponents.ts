@@ -45,7 +45,7 @@ import {
   Transfer,
   TreeSelect,
   Timeline,
-  VirtualList
+  VirtualList,
 } from '@alife/next';
 
 const { Row, Col } = Grid;
@@ -56,7 +56,7 @@ const {
   PopupItem: MenuPopupItem,
   CheckboxItem: MenuCheckboxItem,
   RadioItem: MenuRadioItem,
-  Divider: MenuDivider
+  Divider: MenuDivider,
 } = Menu;
 const { Item: TabItem } = Tab;
 const { Column: TableColumn, ColumnGroup: TableColumnGroup } = Table;
@@ -161,5 +161,5 @@ export default {
   TreeSelectNode,
   Timeline,
   TimelineItem,
-  VirtualList
+  VirtualList,
 };

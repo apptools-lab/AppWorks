@@ -83,7 +83,7 @@ class ComponentTreeItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command: vscode.Command,
-    public readonly path: string,
+    public readonly path: string
   ) {
     super(label);
   }
@@ -107,7 +107,7 @@ export function createComponentsTreeProvider(context: vscode.ExtensionContext, r
   vscode.commands.registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
   vscode.commands.registerCommand('iceworksApp.components.delete', async (component) => {
     await fse.remove(component.path);
-  })
+  });
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

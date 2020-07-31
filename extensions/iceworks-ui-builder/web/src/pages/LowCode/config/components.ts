@@ -33,5 +33,5 @@ export default {
   LunaComponentStyle,
   LunaComponentAttr,
   LunaComponentEvent,
-  LunaComponentData
+  LunaComponentData,
 };

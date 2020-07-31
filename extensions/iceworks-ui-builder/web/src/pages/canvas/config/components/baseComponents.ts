@@ -18,5 +18,5 @@ export default {
   Text,
   A,
   Image,
-  Html
+  Html,
 };

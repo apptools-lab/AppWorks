@@ -30,10 +30,7 @@
     [
       "build-plugin-moment-locales",
       {
-        "locales": [
-          "zh-cn",
-          "en-au"
-        ]
+        "locales": ["zh-cn", "en-au"]
       }
     ],
     [

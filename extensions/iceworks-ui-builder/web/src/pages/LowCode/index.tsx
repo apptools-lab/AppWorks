@@ -1,3 +1,7 @@
+/* eslint-disable */
+/**
+ * 用于渲染编辑器
+ */
 import React from 'react';
 import ideConfig from './config/skeleton';
 import components from './config/components';
@@ -10,14 +14,7 @@ import './config/theme.scss';
 const Skeleton = components.LunaSkeleton;
 
 window.__pkg = pkg;
-// window.__changeTheme__('@alife/dpl-iceluna');
 
 export default function (props) {
-  return <Skeleton
-    {...props}
-    ideConfig={ideConfig}
-    components={components}
-    utils={utils}
-    messages={messages}
-  />
+  return <Skeleton {...props} ideConfig={ideConfig} components={components} utils={utils} messages={messages} />;
 }
