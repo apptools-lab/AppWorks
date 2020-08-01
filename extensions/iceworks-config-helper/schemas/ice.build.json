@@ -80,7 +80,7 @@
     "minify": {
       "type": "boolean",
       "description": "The resources after construction will be compressed.",
-      "default": false,
+      "default": true,
       "examples": [false]
     },
     "outputAssetsPath": {
@@ -173,7 +173,7 @@
     "vendor": {
       "type": "boolean",
       "description": "Configure whether to generate vendor.",
-      "default": false,
+      "default": true,
       "examples": [true]
     },
     "libraryTarget": {

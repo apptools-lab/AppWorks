@@ -11,6 +11,12 @@
       }
     ],
     [
+      "build-plugin-moment-locales",
+      {
+        "locales": ["zh-cn"]
+      }
+    ],
+    [
       "build-plugin-css-assets-local",
       {
         "activeInDev": true

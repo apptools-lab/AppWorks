@@ -80,9 +80,4 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   console.log('confighelper active');
-  const stateKey = 'iceworks.configHelper.autoActivedWebview';
-  if (!globalState.get(stateKey)) {
-    activeWebview();
-    globalState.update(stateKey, true);
-  }
 }
