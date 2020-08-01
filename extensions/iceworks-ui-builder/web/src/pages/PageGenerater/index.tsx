@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Notification, Button, Input } from '@alifd/next';
+import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { IMaterialData } from '@iceworks/material-utils';
 import PageSelected from './components/PageSelected';
+import RouterDetailForm from './components/RouterDetailForm';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
@@ -14,8 +16,10 @@ const Home = () => {
   const intl = useIntl();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
   const [isSorting, setIsSorting] = useState(false);
-  const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [routerConfig, setRouterConfig] = useState([]);
+  const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
 
   async function getSources() {
     let sources = [];
@@ -32,7 +36,7 @@ const Home = () => {
   }
 
   async function getData(source: string) {
-    let data = {};
+    let data = {} as IMaterialData;
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
@@ -42,9 +46,9 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ blocks, pageName }) {
-    if (!pageName) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.enterPageName' });
+  function validateData({ blocks }) {
+    if (!blocks.length) {
+      return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
     }
     return '';
   }
@@ -79,27 +83,53 @@ const Home = () => {
     setSelectedBlocks([...arrayMove(selectedBlocks, oldIndex, newIndex)]);
   }
 
-  function resetData() {
-    setSelectedBlocks([]);
-    setPageName('');
+  function onClose() {
+    setVisible(false);
   }
 
-  async function handleCreate(data) {
+  function resetData() {
+    setSelectedBlocks([]);
+    setRouterConfig([]);
+  }
+
+  async function handleCreate() {
+    const errorMessage = validateData({ blocks: selectedBlocks });
+    if (errorMessage) {
+      Notification.error({ content: errorMessage });
+      return;
+    }
+
+    try {
+      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      setIsConfigurableRouter(isRouteConfigPathExists);
+      if (isRouteConfigPathExists) {
+        // configurable router
+        const config = await callService('page', 'getAll');
+        setRouterConfig(config);
+      }
+
+      setVisible(true);
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  async function handleSubmit(values) {
     setIsCreating(true);
     try {
       const data = {
         blocks: selectedBlocks,
-        pageName,
+        pageName: values.pageName,
       };
-
-      const errorMessage = validateData(data);
-      if (errorMessage) {
-        Notification.error({ content: errorMessage });
-        setIsCreating(false);
-        return;
-      }
-
       await callService('page', 'generate', data);
+
+      if (isConfigurableRouter) {
+        try {
+          await callService('page', 'createRouter', values);
+        } catch (error) {
+          Notification.error({ content: error.message });
+        }
+      }
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
@@ -107,72 +137,62 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
-    });
+    setVisible(false);
+    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.successCreatePage' }) });
     resetData();
   }
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.list}>
-        <div className={styles.item}>
-          <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.enterPageNameTitle" />
-          </div>
-          <div className={styles.field}>
-            <Input
-              placeholder={intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.pageNameFormat' })}
-              className={styles.pageNameInput}
-              value={pageName}
-              onChange={(value) => setPageName(value)}
-              disabled={isCreating}
+      <div className={styles.label}>
+        <FormattedMessage id="web.iceworksPageBuilder.Home.chooseBlock" />
+      </div>
+      <div className={styles.field}>
+        <Row gutter={24} className={styles.row}>
+          <Col span={16} className={styles.col}>
+            <PageSelected
+              useDragHandle
+              lockAxis="y"
+              helperClass={styles.blockIsDraging}
+              blocks={selectedBlocks}
+              onDelete={onDelete}
+              onNameChange={onNameChange}
+              onSortStart={onSortStart}
+              onSortEnd={onSortEnd}
+              isSorting={isSorting}
             />
-          </div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.chooseBlock" />
-          </div>
-          <div className={styles.field}>
-            <Row gutter={24} className={styles.row}>
-              <Col span={16} className={styles.col}>
-                <PageSelected
-                  useDragHandle
-                  lockAxis="y"
-                  helperClass={styles.blockIsDraging}
-                  blocks={selectedBlocks}
-                  onDelete={onDelete}
-                  onNameChange={onNameChange}
-                  onSortStart={onSortStart}
-                  onSortEnd={onSortEnd}
-                  isSorting={isSorting}
-                />
-              </Col>
-              <Col span={8} className={styles.col}>
-                <div className={styles.material}>
-                  <Material
-                    disableLazyLoad
-                    getSources={getSources}
-                    onSettingsClick={onSettingsClick}
-                    getData={getData}
-                    onBlockClick={onAdd}
-                    dataWhiteList={['blocks']}
-                  />
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
+          </Col>
+          <Col span={8} className={styles.col}>
+            <div className={styles.material}>
+              <Material
+                disableLazyLoad
+                getSources={getSources}
+                onSettingsClick={onSettingsClick}
+                getData={getData}
+                onBlockClick={onAdd}
+                dataWhiteList={['blocks']}
+              />
+            </div>
+          </Col>
+        </Row>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" size="medium" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.createPage" />
+        <Button type="primary" size="medium" onClick={handleCreate}>
+          <FormattedMessage id="web.iceworksPageBuilder.Home.createPage" />
         </Button>
       </div>
+      <RouterDetailForm
+        visible={visible}
+        isCreating={isCreating}
+        routerConfig={routerConfig}
+        isConfigurableRouter={isConfigurableRouter}
+        onSubmit={handleSubmit}
+        onClose={onClose}
+      />
     </div>
   );
 };
+
 const IntlHome = () => {
   return (
     <LocaleProvider>

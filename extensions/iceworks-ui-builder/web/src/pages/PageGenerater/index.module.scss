@@ -5,40 +5,28 @@
   margin-left: auto;
   margin-right: auto;
 
-  .list {
-    overflow: hidden;
+  .label {
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
 
-    .item {
-      margin-bottom: 24px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-      .label {
-        margin-bottom: 14px;
-        font-size: 14px;
-      }
-      .pageNameInput {
-        width: 100%;
-      }
-      .row {
-        height: 560px;
-        .col {
-          height: 100%;
-          .material {
-            height: 100%;
-            :global {
-              .next-tabs-nav-extra {
-                .next-icon {
-                  color: $color-text1-4 !important;
-                }
-              }
-            }
-
-            a[rel='noopener noreferrer'] {
-              color: $color-text1-4;
-              text-decoration: none;
+  .row {
+    height: 600px;
+    .col {
+      height: 100%;
+      .material {
+        height: 100%;
+        :global {
+          .next-tabs-nav-extra {
+            .next-icon {
+              color: $color-text1-4 !important;
             }
           }
+        }
+
+        a[rel='noopener noreferrer'] {
+          color: $color-text1-4;
+          text-decoration: none;
         }
       }
     }
