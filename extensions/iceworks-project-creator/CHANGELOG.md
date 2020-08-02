@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1
+
+- chore: change data record
+
 ## 0.3.0
 
 - feat: support en-US
