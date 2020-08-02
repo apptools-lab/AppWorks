@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { getProjectFramework } from '@iceworks/project-service';
 import { getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
-import { isBuildJson, updateJsonForWeb, updateJsonFile } from './loadJson';
+import { isBuildJson, updateJsonForWeb, updateJsonFile, clearCache } from './loadJson';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -29,7 +29,7 @@ async function setSourceJSON() {
 
 export async function activate(context: vscode.ExtensionContext) {
   await setSourceJSON();
-  const { extensionPath, subscriptions, globalState } = context;
+  const { extensionPath, subscriptions } = context;
   const webextensionPath = `${extensionPath}/web`;
 
   // auto set configuration
@@ -49,14 +49,14 @@ export async function activate(context: vscode.ExtensionContext) {
       webviewPanel.onDidDispose(
         () => {
           webviewPanel = undefined;
+          clearCache();
         },
         null,
         context.subscriptions
       );
-      updateJsonForWeb(undefined, webviewPanel);
       webviewPanel.webview.onDidReceiveMessage(
         (message) => {
-          updateJsonFile(message);
+          updateJsonFile(message, webviewPanel);
         },
         undefined,
         context.subscriptions

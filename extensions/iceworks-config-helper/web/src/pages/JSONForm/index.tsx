@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import React, { useState, useEffect, memo } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
@@ -10,13 +11,16 @@ import { postSettingToExtension, getSettingFromExtension, isEqual } from '../../
 // vscode API
 // eslint-disable-next-line no-undef
 export const vscode = acquireVsCodeApi();
+vscode.postMessage('iceworks-config-helper:webviewLoadingDone');
+// 保存插件本体发送的数据
+let lastBuildJsonfromExtension;
 
 // ui Schema
 // covert array and object to editInJson to Edit in json field
 const createUISchema = () => {
   const uiSchema = {};
   _.forIn(ICESchema.properties, (value, key) => {
-    if (value.type === undefined || value.type === 'object' || value.type === 'array') {
+    if (value['type'] === undefined || value['type'] === 'object' || value['type'] === 'array') {
       uiSchema[key] = { 'ui:field': 'EditInFile' };
     }
   });
@@ -28,7 +32,7 @@ const updateChangeProviderValue = (e) => {
   // 发布数据变化给 Change Provider
   const event = document.createEvent('HTMLEvents');
   event.initEvent('updateJSON', false, true);
-  event.data = { currentConfig: e };
+  event['data'] = { currentConfig: e };
   window.dispatchEvent(event);
 };
 
@@ -44,7 +48,7 @@ const JSONSchemaForm = ({ buildJson, loading }) => {
     updateChangeProviderValue(e);
 
     // 发布数据变化给 VSCode 插件本体
-    if (!loading) {
+    if (lastBuildJsonfromExtension && !loading && !isEqual(lastBuildJsonfromExtension, e)) {
       vscode.postMessage({ buildJson: postSettingToExtension(e) });
     }
 
@@ -78,13 +82,13 @@ const JSONForm = () => {
   useEffect(() => {
     window.addEventListener('message', (event) => {
       const message = event.data;
-      const newBuildJSON = getSettingFromExtension(message.buildJson);
+      lastBuildJsonfromExtension = getSettingFromExtension(message.buildJson);
 
       // 更新数据
-      if (!isEqual(newBuildJSON, buildJson)) {
-        setBuildJson(newBuildJSON);
+      if (!isEqual(lastBuildJsonfromExtension, buildJson)) {
+        setBuildJson(lastBuildJsonfromExtension);
         setKey(Date.now());
-        updateChangeProviderValue(newBuildJSON);
+        updateChangeProviderValue(lastBuildJsonfromExtension);
       }
 
       console.log('FormKey', formKey);

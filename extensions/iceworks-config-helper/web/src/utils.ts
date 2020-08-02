@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import { IceSchema } from './pages/Home';
 import ICESchema from '../../schemas/ice.build.json';
 
 export const DefaultSchema = {};
@@ -23,7 +22,8 @@ export function getFormDidNotEditValue() {
 // 这个函数生成了一个默认的属性集合
 ((schema) => {
   _.forIn(schema, (value, key) => {
-    if (value.type === 'object' || value.type === 'array' || value.oneOf || value.anyOf || value.allOf) {
+    // eslint-disable-next-line dot-notation
+    if (value['type'] === 'object' || value['type'] === 'array' || value['oneOf'] || value['anyOf'] || value['allOf']) {
       // TODO: 由于我们不对对象进行处理，因此我们并不需要进行递归生成属性
       // 这个函数保留到将来需要对对象进行可视化处理的时候使用
       // createDefaultSchema(value);
