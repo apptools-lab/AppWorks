@@ -1,6 +1,7 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/doctor" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
     { "path": "packages/ice-npm-utils" },
