@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.2
+
+- fix: lost record DAU
+
 ## 0.2.1
 
 - Add data recorder.
