@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.3
+
+- fix: build error
+
 ## 0.2.2
 
 - fix: lost record DAU
