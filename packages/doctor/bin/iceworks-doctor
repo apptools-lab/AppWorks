@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const argv = require('argv-parse');
+const options = require('./options.json');
+const pkg = require('../package.json');
+const { Doctor } = require('../lib/index');
+
+const args = argv(options);
+
+// Show version
+if (args.version) {
+  console.log(pkg.version);
+  process.exit();
+}
+
+// Show help text
+if (args.help) {
+  console.log('\nUsage : doctor [options]');
+  Object.keys(options).forEach((key) => {
+    const option = options[key];
+    console.log(
+      option.alias ? `  -${option.alias},` : '',
+      `  --${key}`,
+      option.type !== 'boolean' ? ' : ' + option.type : '',
+      option.required ? ' *required*' : ''
+    );
+    console.log(`      ${option.desc}`);
+  });
+  process.exit();
+}
+
+// Check project
+if (args.scan) {
+
+  const options = {};
+  if (Array.isArray(args.ignoreDir)) {
+    options.ignoreDir = args.ignoreDir;
+  }
+
+  if (Array.isArray(args.supportExts)) {
+    options.supportExts = args.supportExts;
+  }
+
+  const doctor = new Doctor(options);
+  doctor.scan(args.scan).then((result) => {
+
+    console.log({
+      files: {
+        count: result.filesInfo.count,
+        lines: result.filesInfo.lines
+      },
+      aliEslint: result.aliEslint.score,
+      maintainability: result.maintainability.score,
+      repeatability: result.repeatability.score
+    });
+    
+  }).catch((err) => {
+    console.log('Error!');
+    console.error(err);
+  });
+}

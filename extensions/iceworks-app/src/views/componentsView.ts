@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { checkPathExists } from '@iceworks/common-service';
-import { componentsPath } from '@iceworks/project-service';
+import { checkPathExists, registerCommand } from '@iceworks/common-service';
+import { componentsPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
 
 class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
@@ -33,7 +33,6 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
-    const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
     try {
       const isComponentPathExists = await checkPathExists(componentsPath);
       if (isComponentPathExists) {
@@ -96,22 +95,23 @@ class ComponentTreeItem extends vscode.TreeItem {
   contextValue = 'component';
 }
 
-export function createComponentsTreeProvider(context: vscode.ExtensionContext, rootPath: string) {
-  const componentsProvider = new ComponentsProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('components', componentsProvider);
-  vscode.commands.registerCommand('iceworksApp.components.add', () => {
+export function createComponentsTreeView(context: vscode.ExtensionContext) {
+  const componentsProvider = new ComponentsProvider(context, projectPath);
+  const treeView = vscode.window.createTreeView('components', { treeDataProvider: componentsProvider });
+
+  registerCommand('iceworksApp.components.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.create-component');
     vscode.commands.executeCommand('iceworks-ui-builder.create-component');
   });
-  vscode.commands.registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
-  vscode.commands.registerCommand('iceworksApp.components.delete', async (component) => {
-    await fse.remove(component.path);
-  });
+  registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
+  registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
+  registerCommand('iceworksApp.components.delete', async (component) => await fse.remove(component.path));
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => componentsProvider.refresh());
   fileWatcher.onDidCreate(() => componentsProvider.refresh());
   fileWatcher.onDidDelete(() => componentsProvider.refresh());
+
+  return treeView;
 }

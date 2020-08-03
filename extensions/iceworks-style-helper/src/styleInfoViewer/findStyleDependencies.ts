@@ -22,6 +22,7 @@ export function findStyleDependencies(file: string) {
       sourceType: 'module',
     });
 
+    // @ts-ignore
     traverse(ast, {
       ImportDeclaration(path) {
         const { node } = path;

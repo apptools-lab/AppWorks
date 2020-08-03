@@ -37,7 +37,7 @@ export async function getImportDeclarations(content: string): Promise<IImportDec
       sourceType: 'module',
       plugins: ['jsx'],
     });
-
+    // @ts-ignore
     traverse(ast, {
       ImportDeclaration: ({ node }) => {
         importDeclarations.push(node as any);

@@ -1,43 +1,46 @@
 import * as vscode from 'vscode';
-import { createNpmCommand, checkPathExists } from '@iceworks/common-service';
-import { dependencyDir } from '@iceworks/project-service';
+import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
+import { dependencyDir, projectPath } from '@iceworks/project-service';
 import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from './constants';
 import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
 
-export default function createEditorMenuAction(rootPath: string, terminals: ITerminalMap, isAliInternal: boolean) {
-  vscode.commands.registerCommand('iceworksApp.npmScripts.runDev', async () => {
-    const pathExists = await checkPathExists(rootPath, dependencyDir);
+export default async function createEditorMenuAction(terminals: ITerminalMap) {
+  const EDITOR_MENU_RUN_DEV = 'iceworksApp.editorMenu.runDev';
+  registerCommand(EDITOR_MENU_RUN_DEV, async () => {
+    const pathExists = await checkPathExists(projectPath, dependencyDir);
     const command: vscode.Command = {
-      command: 'iceworksApp.npmScripts.runDev',
+      command: EDITOR_MENU_RUN_DEV,
       title: 'Run Dev',
-      arguments: [rootPath, createNpmCommand('run', 'start')],
+      arguments: [projectPath, createNpmCommand('run', 'start')],
     };
     const commandId = editorTitleRunDevCommandId;
     if (!pathExists) {
-      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      command.arguments = [projectPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
       executeCommand(terminals, command, commandId);
       return;
     }
     executeCommand(terminals, command, commandId);
   });
 
+  const isAliInternal = await checkIsAliInternal();
   if (isAliInternal) {
-    vscode.commands.registerCommand('iceworksApp.DefPublish', () => {
-      showDefPublishEnvQuickPick(terminals, rootPath);
+    registerCommand('iceworksApp.editorMenu.DefPublish', () => {
+      showDefPublishEnvQuickPick(terminals);
     });
   } else {
-    vscode.commands.registerCommand('iceworksApp.npmScripts.runBuild', async () => {
-      const pathExists = await checkPathExists(rootPath, dependencyDir);
+    const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
+    registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
+      const pathExists = await checkPathExists(projectPath, dependencyDir);
       const command: vscode.Command = {
-        command: 'iceworksApp.npmScripts.runBuild',
+        command: EDITOR_MENU_RUN_BUILD,
         title: 'Run Build',
-        arguments: [rootPath, createNpmCommand('run', 'build')],
+        arguments: [projectPath, createNpmCommand('run', 'build')],
       };
       const commandId = editorTitleRunBuildCommandId;
       if (!pathExists) {
-        command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+        command.arguments = [projectPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
         executeCommand(terminals, command, commandId);
         return;
       }
