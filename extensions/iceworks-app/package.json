@@ -201,6 +201,10 @@
         }
       },
       {
+        "command": "iceworksApp.components.openFile",
+        "title": "%iceworksApp.command.components.openFile.title%"
+      },
+      {
         "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
         "title": "%iceworksApp.command.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
@@ -415,12 +419,12 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/recorder": "^0.1.0",
-    "@iceworks/common-service": "^0.1.4",
+    "@iceworks/common-service": "^0.1.13",
+    "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
+    "@iceworks/recorder": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.2",
-    "@iceworks/i18n": "^0.1.0",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
