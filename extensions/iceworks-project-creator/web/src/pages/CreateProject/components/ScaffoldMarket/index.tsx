@@ -41,17 +41,17 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
 
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
     try {
-      const scaffolds = await callService('project', 'getScaffolds', source) as IMaterialScaffold[];
-      let main = scaffolds.filter(scaffold => mainScaffoldsList.includes(scaffold.source.npm));
-      let other = scaffolds.filter(scaffold => !mainScaffoldsList.includes(scaffold.source.npm));
+      const scaffolds = (await callService('project', 'getScaffolds', source)) as IMaterialScaffold[];
+      let main = scaffolds.filter((scaffold) => mainScaffoldsList.includes(scaffold.source.npm));
+      let other = scaffolds.filter((scaffold) => !mainScaffoldsList.includes(scaffold.source.npm));
       if (!main.length && other.length) {
         main = other;
         other = [];
       }
-      return { mainScaffolds: main, otherScaffolds: other }
+      return { mainScaffolds: main, otherScaffolds: other };
     } catch (e) {
       Notification.error({ content: e.message });
-      return { mainScaffolds: [], otherScaffolds: [] }
+      return { mainScaffolds: [], otherScaffolds: [] };
     }
   }
 
@@ -61,7 +61,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
       if (!materialSources.length) {
         return;
       }
-      const selectedSource = curProjectField.source ? curProjectField.source : materialSources[0]
+      const selectedSource = curProjectField.source ? curProjectField.source : materialSources[0];
       setSelectedSource(selectedSource);
       const source = selectedSource.source;
 
@@ -88,82 +88,72 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
       <div className={styles.content}>
         <div className={styles.scaffoldsSource}>
           <div className={styles.sourcesList}>
-            {materialSources && materialSources.map(item => {
-              let iconName = 'app';
-              const projectType = item.type.toLocaleLowerCase();
-              if (item.client) {
-                iconName = item.client.toLocaleLowerCase();
-              } else if (projectTypes.includes(projectType)) {
-                iconName = projectType;
-              }
-              return <ScaffoldCard
-                key={item.name}
-                title={
-                  <div className={styles.cardTitle}>
-                    {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
-                    <div >{item.name}</div>
-                  </div>
+            {materialSources &&
+              materialSources.map((item) => {
+                let iconName = 'app';
+                const projectType = item.type.toLocaleLowerCase();
+                if (item.client) {
+                  iconName = item.client.toLocaleLowerCase();
+                } else if (projectTypes.includes(projectType)) {
+                  iconName = projectType;
                 }
-                content={item.description}
-                selected={selectedSource.name && selectedSource.name === item.name}
-                style={{ width: 160, height: 120 }}
-                onClick={() => onMaterialSourceClick(item)}
-              />
-            })}
+                return (
+                  <ScaffoldCard
+                    key={item.name}
+                    title={
+                      <div className={styles.cardTitle}>
+                        {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
+                        <div>{item.name}</div>
+                      </div>
+                    }
+                    content={item.description}
+                    selected={selectedSource.name && selectedSource.name === item.name}
+                    style={{ width: 160, height: 120 }}
+                    onClick={() => onMaterialSourceClick(item)}
+                  />
+                );
+              })}
           </div>
           <div className={styles.addSource}>
-            <Button className={styles.btn} onClick={onOpenConfigPanel}><Icon type="add" /></Button>
+            <Button className={styles.btn} onClick={onOpenConfigPanel}>
+              <Icon type="add" />
+            </Button>
           </div>
         </div>
         <Divider direction="ver" style={{ height: '100%' }} />
         <div className={styles.scaffolds}>
-          {loading ? <Loading visible={loading} className={styles.loading} /> : <>
-            <div className={styles.mainScaffolds}>
-              {!!mainScaffolds.length ? mainScaffolds.map(item => {
-                // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
-                // so the TypeScript and JavaScript logo only display in official scaffolds
-                const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
-                  jsScaffoldsList.includes(item.source.npm) ? 'js' :
-                    '';
-                const isRax = selectedSource.type === 'rax';
-                const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
-                return (
-                  <CardComponent
-                    key={item.name}
-                    title={
-                      <div className={styles.cardTitle}>
-                        {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
-                        <div>{scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}</div>
-                      </div>
-                    }
-                    content={item.description}
-                    media={item.screenshot}
-                    selected={curProjectField.scaffold.name === item.name}
-                    onClick={() => onScaffoldClick(item)}
-                  />
-                )
-              }) :
-                <NotFound description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })} />
-              }
-            </div>
-            {!!otherScaffolds.length && <Collapse className={styles.collapse}>
-              <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
-                <div className={styles.collapseScaffolds}>
-                  {otherScaffolds.map(item => {
+          {loading ? (
+            <Loading visible={loading} className={styles.loading} />
+          ) : (
+            <>
+              <div className={styles.mainScaffolds}>
+                {!!mainScaffolds.length ? (
+                  mainScaffolds.map((item) => {
                     // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
                     // so the TypeScript and JavaScript logo only display in official scaffolds
-                    const scaffoldType = tsScaffoldsList.includes(item.source.npm) ? 'ts' :
-                      jsScaffoldsList.includes(item.source.npm) ? 'js' :
-                        '';
-                    const isRax = selectedSource.type.toLocaleLowerCase() === 'rax';
+                    const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                      ? 'ts'
+                      : jsScaffoldsList.includes(item.source.npm)
+                      ? 'js'
+                      : '';
+                    const isRax = selectedSource.type === 'rax';
                     const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
                     return (
                       <CardComponent
                         key={item.name}
                         title={
                           <div className={styles.cardTitle}>
-                            {scaffoldType && <img src={require(`@/assets/${scaffoldType}.svg`)} alt="languageType" width={20} height={20} />}
-                            <div>{scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}</div>
+                            {scaffoldType && (
+                              <img
+                                src={require(`@/assets/${scaffoldType}.svg`)}
+                                alt="languageType"
+                                width={20}
+                                height={20}
+                              />
+                            )}
+                            <div>
+                              {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
+                            </div>
                           </div>
                         }
                         content={item.description}
@@ -171,17 +161,62 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                         selected={curProjectField.scaffold.name === item.name}
                         onClick={() => onScaffoldClick(item)}
                       />
-                    )
-                  })}
-                </div>
-              </Collapse.Panel>
-            </Collapse>}
-          </>}
+                    );
+                  })
+                ) : (
+                  <NotFound
+                    description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
+                  />
+                )}
+              </div>
+              {!!otherScaffolds.length && (
+                <Collapse className={styles.collapse}>
+                  <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
+                    <div className={styles.collapseScaffolds}>
+                      {otherScaffolds.map((item) => {
+                        // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                        // so the TypeScript and JavaScript logo only display in official scaffolds
+                        const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                          ? 'ts'
+                          : jsScaffoldsList.includes(item.source.npm)
+                          ? 'js'
+                          : '';
+                        const isRax = selectedSource.type.toLocaleLowerCase() === 'rax';
+                        const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
+                        return (
+                          <CardComponent
+                            key={item.name}
+                            title={
+                              <div className={styles.cardTitle}>
+                                {scaffoldType && (
+                                  <img
+                                    src={require(`@/assets/${scaffoldType}.svg`)}
+                                    alt="languageType"
+                                    width={20}
+                                    height={20}
+                                  />
+                                )}
+                                <div>
+                                  {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                </div>
+                              </div>
+                            }
+                            content={item.description}
+                            media={item.screenshot}
+                            selected={curProjectField.scaffold.name === item.name}
+                            onClick={() => onScaffoldClick(item)}
+                          />
+                        );
+                      })}
+                    </div>
+                  </Collapse.Panel>
+                </Collapse>
+              )}
+            </>
+          )}
         </div>
       </div>
-      <div className={styles.action}>
-        {children}
-      </div>
+      <div className={styles.action}>{children}</div>
     </div>
   );
 };

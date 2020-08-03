@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { checkPathExists } from '@iceworks/common-service';
-import { pagesPath } from '@iceworks/project-service';
+import { checkPathExists, registerCommand } from '@iceworks/common-service';
+import { pagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
 
 export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
@@ -10,7 +10,9 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<PageTreeItem | undefined>();
+  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
+    PageTreeItem | undefined
+  >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
 
@@ -43,22 +45,22 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private async getPages(pagesPath: string) {
     if (await checkPathExists(pagesPath)) {
       const toPage = (pageName: string) => {
-        const pageEntryPath = path.join(pagesPath, pageName);
+        const pagePath = path.join(pagesPath, pageName);
 
         const command: vscode.Command = {
           command: 'iceworksApp.pages.openFile',
           title: 'Open File',
-          arguments: [pageEntryPath]
+          arguments: [pagePath],
         };
-        return new PageTreeItem(this.extensionContext, pageName, command);
+        return new PageTreeItem(this.extensionContext, pageName, command, pagePath);
       };
       const dirNames = await fse.readdir(pagesPath);
       // except the file
-      const pageNames = dirNames.filter(dirname => {
-        const stat = fse.statSync(path.join(pagesPath, dirname))
+      const pageNames = dirNames.filter((dirname) => {
+        const stat = fse.statSync(path.join(pagesPath, dirname));
         return stat.isDirectory();
-      })
-      return pageNames.map(pageName => toPage(pageName));
+      });
+      return pageNames.map((pageName) => toPage(pageName));
     } else {
       return [];
     }
@@ -69,32 +71,37 @@ class PageTreeItem extends vscode.TreeItem {
   constructor(
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
-    public readonly command: vscode.Command
+    public readonly command: vscode.Command,
+    public readonly path: string
   ) {
     super(label);
   }
 
   iconPath = {
     dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/page.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/page.svg'))
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/page.svg')),
   };
 
   contextValue = 'page';
 }
 
-export function createPagesTreeProvider(context: vscode.ExtensionContext, rootPath: string) {
-  const pagesProvider = new PagesProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('pages', pagesProvider);
-  vscode.commands.registerCommand('iceworksApp.pages.add', () => {
-    console.log('iceworksApp: activate iceworks-page-builder.create');
-    vscode.commands.executeCommand('iceworks-page-builder.create');
-  });
-  vscode.commands.registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
-  vscode.commands.registerCommand('iceworksApp.pages.openFile', (p) => openEntryFile(p));
+export function createPagesTreeView(context: vscode.ExtensionContext) {
+  const pagesProvider = new PagesProvider(context, projectPath);
+  const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
-  const pattern = path.join(pagesPath);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  registerCommand('iceworksApp.pages.add', () => {
+    console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
+    vscode.commands.executeCommand('iceworks-ui-builder.generate-page');
+  });
+  registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
+  registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
+  registerCommand('iceworksApp.pages.delete', async (page) => await fse.remove(page.path));
+
+  const pattern = new vscode.RelativePattern(pagesPath, '**');
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => pagesProvider.refresh());
   fileWatcher.onDidCreate(() => pagesProvider.refresh());
   fileWatcher.onDidDelete(() => pagesProvider.refresh());
+
+  return treeView;
 }

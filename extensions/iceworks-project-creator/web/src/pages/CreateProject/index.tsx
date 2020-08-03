@@ -17,7 +17,7 @@ const CreateProject: React.FC = () => {
   const [currentStep, setStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
-  const [isAliInternal, setIsAliInternal] = useState(false)
+  const [isAliInternal, setIsAliInternal] = useState(false);
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
@@ -28,42 +28,54 @@ const CreateProject: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const steps = [
-    <ScaffoldMarket onScaffoldSelect={onScaffoldSelect} curProjectField={curProjectField} onOpenConfigPanel={onOpenConfigPanel} materialSources={materialSources}>
+    <ScaffoldMarket
+      onScaffoldSelect={onScaffoldSelect}
+      curProjectField={curProjectField}
+      onOpenConfigPanel={onOpenConfigPanel}
+      materialSources={materialSources}
+    >
       <Button type="primary" onClick={onScaffoldSubmit}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.nextStep' />
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
     </ScaffoldMarket>,
-    <CreateProjectForm value={curProjectField} onOpenFolderDialog={onOpenFolderDialog} onChange={onProjectFormChange} errorMsg={projectFormErrorMsg}>
+    <CreateProjectForm
+      value={curProjectField}
+      onOpenFolderDialog={onOpenFolderDialog}
+      onChange={onProjectFormChange}
+      errorMsg={projectFormErrorMsg}
+    >
       <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' />
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
       </Button>
-      {isAliInternal && <Form.Submit
-        className={styles.btn}
-        onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
-        validate
-        disabled={createDEFProjectDisabled}
-      >
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createDEF' />
-      </Form.Submit>}
+      {isAliInternal && (
+        <Form.Submit
+          className={styles.btn}
+          onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
+          validate
+          disabled={createDEFProjectDisabled}
+        >
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createDEF" />
+        </Form.Submit>
+      )}
       <Form.Submit
         type="primary"
         onClick={(values, error) => onProjectDetailSubmit(values, error, false)}
         validate
         loading={createProjectLoading}
       >
-        <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
       </Form.Submit>
-    </CreateProjectForm>
+    </CreateProjectForm>,
   ];
 
   if (isAliInternal) {
-    steps.splice(2, 0,
-      <CreateDEFProjectForm
-        value={curDEFProjectField}
-        onChange={onDEFProjectFormChange}
-        errorMsg={DEFFormErrorMsg}
-      >
-        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}><FormattedMessage id='web.iceworksProjectCreator.CreateProject.previous' /></Button>
+    steps.splice(
+      2,
+      0,
+      <CreateDEFProjectForm value={curDEFProjectField} onChange={onDEFProjectFormChange} errorMsg={DEFFormErrorMsg}>
+        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
+        </Button>
         <Form.Submit
           type="primary"
           onClick={onDEFProjectDetailSubmit}
@@ -72,27 +84,29 @@ const CreateProject: React.FC = () => {
           disabled={createDEFProjectDisabled}
           className={styles.btn}
         >
-          <FormattedMessage id='web.iceworksProjectCreator.CreateProject.complete' />
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
       </CreateDEFProjectForm>
-    )
+    );
   }
 
   function goNext() {
     setStep(currentStep + 1);
-  };
+  }
 
   function goPrev() {
     setStep(currentStep - 1);
-  };
+  }
 
   function onScaffoldSelect(source, scaffold) {
     setCurProjectField({ ...curProjectField, scaffold, source });
-  };
+  }
 
   async function onScaffoldSubmit() {
     if (!curProjectField.scaffold) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.chooseTemplate' }) });
+      Notification.error({
+        content: intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.chooseTemplate' }),
+      });
       return;
     }
     goNext();
@@ -101,14 +115,14 @@ const CreateProject: React.FC = () => {
   async function onOpenFolderDialog() {
     try {
       const projectPath = await callService('project', 'getProjectPath');
-      setCurProjectField({ ...curProjectField, projectPath })
+      setCurProjectField({ ...curProjectField, projectPath });
     } catch (e) {
       // ignore
-    };
+    }
   }
 
   function onProjectFormChange(value) {
-    setCurProjectField({ ...curProjectField, ...value })
+    setCurProjectField({ ...curProjectField, ...value });
   }
 
   async function onProjectDetailSubmit(values: any, errors: any, isCreateDEFProject: boolean) {
@@ -126,7 +140,7 @@ const CreateProject: React.FC = () => {
         throw new Error(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.pathExist' }));
       }
       if (!isCreateDEFProject) {
-        await createProject(values)
+        await createProject(values);
       } else {
         setCurProjectField(values);
         setCurDEFProjectField({ ...curDEFProjectField, project: values.projectName });
@@ -140,10 +154,10 @@ const CreateProject: React.FC = () => {
       setPrevBtnDisabled(false);
       setCreateDEFProjectDisabled(false);
     }
-  };
+  }
 
   function onDEFProjectFormChange(value) {
-    setCurDEFProjectField({ ...curDEFProjectField, ...value })
+    setCurDEFProjectField({ ...curDEFProjectField, ...value });
   }
 
   async function createProject(data: IProjectField) {
@@ -165,7 +179,11 @@ const CreateProject: React.FC = () => {
     const { empId, account, gitlabToken } = values;
     let projectDir = '';
     try {
-      projectDir = await callService('project', 'createDEFProjectAndCloneRepository', { ...values, ...curProjectField, clientToken: CLIENT_TOKEN });
+      projectDir = await callService('project', 'createDEFProjectAndCloneRepository', {
+        ...values,
+        ...curProjectField,
+        clientToken: CLIENT_TOKEN,
+      });
       await callService('common', 'saveDataToSettingJson', 'user', { empId, account, gitlabToken });
       await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
       await callService('project', 'openLocalProjectFolder', projectDir);
@@ -187,7 +205,7 @@ const CreateProject: React.FC = () => {
   }
 
   async function getMaterialSources() {
-    const materialSources: any = await callService('material', 'getSources') as IMaterialSource[];
+    const materialSources: any = (await callService('material', 'getSources')) as IMaterialSource[];
     setMaterialSources(materialSources);
     return materialSources;
   }
@@ -199,7 +217,7 @@ const CreateProject: React.FC = () => {
   useEffect(() => {
     async function checkAliInternal() {
       try {
-        const isAliInternal = await callService('common', 'checkIsAliInternal') as boolean;
+        const isAliInternal = (await callService('common', 'checkIsAliInternal')) as boolean;
         setIsAliInternal(isAliInternal);
       } catch (e) {
         Notification.error({ content: e.message });
@@ -207,7 +225,7 @@ const CreateProject: React.FC = () => {
       }
     }
     async function setDefaultFields() {
-      const workspace = await callService('common', 'getDataFromSettingJson', 'workspace') || '';
+      const workspace = (await callService('common', 'getDataFromSettingJson', 'workspace')) || '';
       setCurProjectField({ ...curProjectField, projectPath: workspace });
     }
     async function initMaterialSources() {
@@ -236,20 +254,28 @@ const CreateProject: React.FC = () => {
           <div className={styles.header}>
             <div>
               <div className={styles.title}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.createProject' />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createProject" />
               </div>
               <div className={styles.subTitle}>
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.subTitle' />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.subTitle" />
               </div>
             </div>
             <div className={styles.headerBtns}>
-              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}><Icon type="set" />
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.setting' /></Button>
-              {currentStep === 0 && <Button size="medium" text onClick={refreshMaterialSources}><Icon type="refresh" />
-                <FormattedMessage id='web.iceworksProjectCreator.CreateProject.refresh' /></Button>}
+              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}>
+                <Icon type="set" />
+                <FormattedMessage id="web.iceworksProjectCreator.CreateProject.setting" />
+              </Button>
+              {currentStep === 0 && (
+                <Button size="medium" text onClick={refreshMaterialSources}>
+                  <Icon type="refresh" />
+                  <FormattedMessage id="web.iceworksProjectCreator.CreateProject.refresh" />
+                </Button>
+              )}
             </div>
           </div>
-          {loading ? <Loading className={styles.loading} visible={loading} /> : (
+          {loading ? (
+            <Loading className={styles.loading} visible={loading} />
+          ) : (
             <div className={styles.content}>{steps[currentStep]}</div>
           )}
         </Card.Content>
@@ -263,7 +289,7 @@ const IntlCreateProject = () => {
     <LocaleProvider>
       <CreateProject />
     </LocaleProvider>
-  )
-}
+  );
+};
 
 export default IntlCreateProject;

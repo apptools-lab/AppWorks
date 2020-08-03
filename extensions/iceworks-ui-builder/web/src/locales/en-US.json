@@ -1,0 +1,20 @@
+{
+  "web.iceworksUIBuilder.componentCreator.getMaterialError": "Fail to obtain materials. Please try again later.",
+  "web.iceworksUIBuilder.componentCreator.getDataError": "Fail to obtain material data. Please try again later.",
+  "web.iceworksUIBuilder.componentCreator.noComponentName": "Please Enter Component Name.",
+  "web.iceworksUIBuilder.componentCreator.didNotSeletBlock": "Please choose a block before generate.",
+  "web.iceworksUIBuilder.componentCreator.generateSuccess": "Create component successfully.",
+  "web.iceworksUIBuilder.componentCreator.inputComponentName": "1. Enter Component Name.",
+  "web.iceworksUIBuilder.componentCreator.inputComponentNamePlaceHolder": "Component name must start with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
+  "web.iceworksUIBuilder.componentCreator.selectBlock": "2. Choose A Block",
+  "web.iceworksUIBuilder.componentCreator.generate": "Create Component",
+  "web.iceworksUIBuilder.pageGenerater.failGetMaterial": "Fail to get materials. Please try agin later.",
+  "web.iceworksUIBuilder.pageGenerater.failGetData": "Fail to get material data. Please try agin later.",
+  "web.iceworksUIBuilder.pageGenerater.enterPageName": "Please enter page name.",
+  "web.iceworksUIBuilder.pageGenerater.successCreatePage": "Page generated successfully.",
+  "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "1. Enter Page Name",
+  "web.iceworksUIBuilder.pageGenerater.pageNameFormat": "Page name must starts with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
+  "web.iceworksUIBuilder.pageGenerater.chooseBlock": "2. Choose Blocks：",
+  "web.iceworksUIBuilder.pageGenerater.createPage": "Generate Page",
+  "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "Please choose block from the right side."
+}

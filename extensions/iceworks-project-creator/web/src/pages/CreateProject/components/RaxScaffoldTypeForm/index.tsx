@@ -13,32 +13,32 @@ interface IScaffoldTypeForm {
 const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) => {
   const [selectedTargets, setSelectedTargets] = useState(() => {
     if (value.ejsOptions && value.ejsOptions.targets && value.ejsOptions.targets instanceof Array) {
-      return value.ejsOptions.targets
+      return value.ejsOptions.targets;
     }
-    return [targets[0].type]
+    return [targets[0].type];
   });
   const [isMpa, setIsMpa] = useState(() => {
     if (value.ejsOptions && typeof value.ejsOptions.mpa !== 'undefined') {
-      return value.ejsOptions.mpa
+      return value.ejsOptions.mpa;
     }
-    return webAppTypes[0].type === 'mpa'
+    return webAppTypes[0].type === 'mpa';
   });
   const [selectedMiniAppType, setSelectedMiniAppType] = useState(() => {
     if (value.ejsOptions && value.ejsOptions.miniappType) {
-      return value.ejsOptions.miniappType
+      return value.ejsOptions.miniappType;
     }
-    return miniAppTypes[0].type
+    return miniAppTypes[0].type;
   });
   /**
-   * 选择 Rax 应用的 target 
+   * 选择 Rax 应用的 target
    */
   const onTargetClick = (target) => {
     const ejsOptions: any = { ...value.ejsOptions };
 
-    const targetIndex = selectedTargets.findIndex(item => target.type === item);
+    const targetIndex = selectedTargets.findIndex((item) => target.type === item);
     if (targetIndex > -1) {
       if (selectedTargets.length === 1) {
-        Notification.error({ content: '请至少选择一个 Target' })
+        Notification.error({ content: '请至少选择一个 Target' });
         return;
       }
       // 删除已有的 target
@@ -46,16 +46,21 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
 
       if (target.type === 'web') {
         delete ejsOptions.mpa;
-      } else if (selectedTargets.length === 1) { // 当前 selectedTargets 只剩下 web
+      } else if (selectedTargets.length === 1) {
+        // 当前 selectedTargets 只剩下 web
         delete ejsOptions.miniappType;
       }
     } else {
       // 新增 target
       if (target.type === 'web') {
-        const ismpa = webAppTypes[0].type === 'mpa'
+        const ismpa = webAppTypes[0].type === 'mpa';
         setIsMpa(ismpa);
         ejsOptions.mpa = ismpa;
-      } else if (!selectedTargets.some(target => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken')) {
+      } else if (
+        !selectedTargets.some(
+          (target) => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken'
+        )
+      ) {
         setSelectedMiniAppType(miniAppTypes[0].type);
         ejsOptions.miniappType = miniAppTypes[0].type;
       }
@@ -65,7 +70,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     setSelectedTargets(newSelectedTargets);
 
     onChange({ ejsOptions: { ...ejsOptions, targets: newSelectedTargets } });
-  }
+  };
   /**
    * 选择 web 应用类型: mpa or spa
    */
@@ -80,7 +85,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
   const onMiniAppTypeClick = (miniAppType) => {
     setSelectedMiniAppType(miniAppType.type);
     onChange({ ejsOptions: { ...value.ejsOptions, miniappType: miniAppType.type } });
-  }
+  };
 
   useEffect(() => {
     // init value
@@ -90,11 +95,11 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     <div className={styles.container}>
       <div className={styles.title}>Target (至少选择一个)</div>
       <div className={styles.row}>
-        {targets.map(item => {
-          const selected = selectedTargets.some(selectedTarget => selectedTarget === item.type);
+        {targets.map((item) => {
+          const selected = selectedTargets.some((selectedTarget) => selectedTarget === item.type);
           return (
             <Balloon
-              align='t'
+              align="t"
               trigger={
                 <MenuCard
                   key={item.type}
@@ -109,16 +114,16 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
             >
               {item.description}
             </Balloon>
-          )
+          );
         })}
       </div>
-      {selectedTargets.some(item => item === 'web') && (
+      {selectedTargets.some((item) => item === 'web') && (
         <>
           <div className={styles.title}>为 Web 应用选择应用类型</div>
           <div className={styles.row}>
-            {webAppTypes.map(item => (
+            {webAppTypes.map((item) => (
               <Balloon
-                align='t'
+                align="t"
                 trigger={
                   <MenuCard
                     key={item.type}
@@ -126,24 +131,24 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                     selected={isMpa === (item.type === 'mpa')}
                     title={item.title}
                     onClick={() => onWebAppTypeClick(item)}
-                  />}
+                  />
+                }
                 triggerType="hover"
                 closable={false}
               >
                 {item.description}
               </Balloon>
-
             ))}
           </div>
         </>
       )}
-      {selectedTargets.some(item => item === 'miniapp' || item === 'wechat-miniprogram' || item === 'kraken') && (
+      {selectedTargets.some((item) => item === 'miniapp' || item === 'wechat-miniprogram' || item === 'kraken') && (
         <>
           <div className={styles.title}>为小程序选择构建类型</div>
           <div className={styles.row}>
-            {miniAppTypes.map(item => (
+            {miniAppTypes.map((item) => (
               <Balloon
-                align='t'
+                align="t"
                 trigger={
                   <MenuCard
                     key={item.type}
@@ -151,19 +156,19 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                     selected={selectedMiniAppType === item.type}
                     title={item.title}
                     onClick={() => onMiniAppTypeClick(item)}
-                  />}
+                  />
+                }
                 triggerType="hover"
                 closable={false}
               >
                 {item.description}
               </Balloon>
-
             ))}
           </div>
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default RaxScaffoldTypeForm;

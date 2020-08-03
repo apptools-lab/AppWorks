@@ -6,11 +6,6 @@
     "noImplicitAny": false,
     "resolveJsonModule": true
   },
-	"include": [
-		"src"
-	],
-  "exclude": [
-    ".vscode-test",
-    "node_modules"
-  ]
+  "include": ["src"],
+  "exclude": [".vscode-test", "node_modules"]
 }

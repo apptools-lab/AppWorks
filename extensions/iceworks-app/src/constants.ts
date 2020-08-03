@@ -1,17 +1,8 @@
 import { NodeDepTypes } from './types';
 
-export const entryFileSuffix = [
-  '.jsx',
-  '.js',
-  '.tsx',
-  '.rml',
-  '.vue'
-];
+export const entryFileSuffix = ['.jsx', '.js', '.tsx', '.rml', '.vue'];
 
-export const nodeDepTypes: NodeDepTypes[] = [
-  'dependencies',
-  'devDependencies'
-];
+export const nodeDepTypes: NodeDepTypes[] = ['dependencies', 'devDependencies'];
 
 export const showExtensionsQuickPickCommandId = 'iceworksApp.showExtensionsQuickPick';
 

@@ -16,9 +16,9 @@ import * as spawn from 'cross-spawn';
     console.log('Start to install def-login-client dependencies...');
     spawn.sync('npm', installCommonds, {
       stdio: 'inherit',
-      cwd
+      cwd,
     });
   } catch {
     // ignore
   }
-})()
+})();

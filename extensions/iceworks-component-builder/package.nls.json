@@ -1,6 +1,0 @@
-{
-  "iceworksComponentBuilder.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
-  "iceworksComponentBuilder.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
-  "iceworksComponentBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use.",
-  "iceworksComponentBuilder.commands.generate.title": "Iceworks: Generate Component"
-}

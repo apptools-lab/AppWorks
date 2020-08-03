@@ -5,24 +5,12 @@
     "outDir": "build",
     "rootDir": "./",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "ice": [
-        ".ice/index.ts"
-      ],
-      "ice/*": [
-        ".ice/pages/*"
-      ]
+      "@/*": ["./src/*"],
+      "ice": [".ice/index.ts"],
+      "ice/*": [".ice/pages/*"]
     },
     "resolveJsonModule": true
   },
-  "include": [
-    "src/*",
-    ".ice"
-  ],
-  "exclude": [
-    "node_modules",
-    "public"
-  ]
+  "include": ["src/*", ".ice"],
+  "exclude": ["node_modules", "public"]
 }

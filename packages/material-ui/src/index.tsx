@@ -1,9 +1,16 @@
 import * as React from 'react';
 import { Icon, Loading } from '@alifd/next';
-import { IMaterialData, IMaterialSource, IMaterialBlock, IMaterialComponent, IMaterialBase, convertMaterialData } from '@iceworks/material-utils';
+import {
+  IMaterialData,
+  IMaterialSource,
+  IMaterialBlock,
+  IMaterialComponent,
+  IMaterialBase,
+  convertMaterialData,
+} from '@iceworks/material-utils';
 import { MaterialView } from './components/view';
 
-const Index : React.FC<{
+const Index: React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
   disableLazyLoad?: boolean;
@@ -25,7 +32,7 @@ const Index : React.FC<{
 
   async function refreshSources() {
     setIsLoadingSources(true);
-    const sources = await getSources() || [];
+    const sources = (await getSources()) || [];
     setIsLoadingSources(false);
     resetSources(sources);
   }
@@ -40,7 +47,7 @@ const Index : React.FC<{
 
   function handleChangeSource(source: string) {
     resetCurrentSource(source);
-  };
+  }
 
   async function resetCurrentSource(currentSource: string) {
     setCurrentSource(currentSource);
@@ -50,7 +57,9 @@ const Index : React.FC<{
   async function refreshMaterialData(source: string) {
     setIsLoadingData(true);
     const materialData: IMaterialData = await getData(source);
-    const data = convertMaterialData(materialData).filter(({ id }) => !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true) );
+    const data = convertMaterialData(materialData).filter(({ id }) => {
+      return !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true);
+    });
     setIsLoadingData(false);
     setData(data);
   }
@@ -71,10 +80,14 @@ const Index : React.FC<{
         onChangeSource={handleChangeSource}
         extra={
           <div className="extra-wrap">
-            {onSettingsClick &&
-              <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />
-            }
-            <Icon type="refresh" size="small" title="获取最新物料源信息" onClick={refreshSources} style={{marginLeft: 6}} />
+            {onSettingsClick && <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />}
+            <Icon
+              type="refresh"
+              size="small"
+              title="获取最新物料源信息"
+              onClick={refreshSources}
+              style={{ marginLeft: 6 }}
+            />
           </div>
         }
         {...others}

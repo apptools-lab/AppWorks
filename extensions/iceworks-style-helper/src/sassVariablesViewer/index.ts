@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getFullModulePath from './getFullModulePath';
 import colorPreviewDisplay from './colorPreviewDisplay';
@@ -24,10 +25,8 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
   if (matchedVariable) {
-    return new vscode.Location(
-      vscode.Uri.file(matchedVariable.filePath),
-      matchedVariable.position
-    );
+    recordDAU();
+    return new vscode.Location(vscode.Uri.file(matchedVariable.filePath), matchedVariable.position);
   }
 }
 
@@ -40,6 +39,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
+    recordDAU();
     return new vscode.Hover(
       getMarkdownInfo(
         word,
@@ -52,10 +52,13 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
 // Variables auto Complete
 function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-
-  const { fileName } = getFocusCodeInfo(document, position);
+  const { fileName, line } = getFocusCodeInfo(document, position);
   const variables = Object.assign({}, FUSION_VARIABLES, findVariables(fileName));
 
+  // Variables shows in value part, like color: xxx.
+  if (line.text.indexOf(':') === -1) return;
+
+  recordDAU();
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
     // Show color preview display
@@ -70,13 +73,14 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   });
 }
 
-
 // Process fusion component. https://ice.work/docs/guide/advance/fusion
 function processFusionVariables() {
   try {
     const rootPath = vscode.workspace.rootPath || '';
     const buildConfig = JSON.parse(fs.readFileSync(path.join(rootPath, 'build.json'), 'utf-8'));
-    const fusionConfig = buildConfig.plugins.find(plugin => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion');
+    const fusionConfig = buildConfig.plugins.find(
+      (plugin) => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion'
+    );
     // Get themePackage config from build.json
     if (fusionConfig[1].themePackage) {
       FUSION_VARIABLES = findVariables(getFullModulePath(`~${fusionConfig[1].themePackage} `));
@@ -90,30 +94,25 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
   processFusionVariables();
 
   // Listen build.json change
-  vscode.workspace.onDidChangeTextDocument((e) => {
-    if (/build\.json$/.test(e.document.uri.fsPath)) {
-      processFusionVariables();
-    }
-  }, null, context.subscriptions);
+  vscode.workspace.onDidChangeTextDocument(
+    (e) => {
+      if (/build\.json$/.test(e.document.uri.fsPath)) {
+        processFusionVariables();
+      }
+    },
+    null,
+    context.subscriptions
+  );
 
   // Set definitionProvider
-  context.subscriptions.push(
-    vscode.languages.registerDefinitionProvider(
-      SUPPORT_LANGUAGES,
-      { provideDefinition }
-    )
-  );
+  context.subscriptions.push(vscode.languages.registerDefinitionProvider(SUPPORT_LANGUAGES, { provideDefinition }));
 
   SUPPORT_LANGUAGES.forEach((language) => {
     // Set provideHover
-    context.subscriptions.push(
-      vscode.languages.registerHoverProvider(language, { provideHover })
-    );
+    context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
     // Styles auto Complete
     context.subscriptions.push(
-      vscode.languages.registerCompletionItemProvider(
-        language, { provideCompletionItems }, '.'
-      )
+      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems }, '.')
     );
-  })
+  });
 }

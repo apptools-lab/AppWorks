@@ -18,24 +18,21 @@ export default function getPropKeysFromDefinition(componentPath): string[] {
     if (fs.existsSync(componentTypesPath)) {
       const ast = parse(fs.readFileSync(componentTypesPath, 'utf-8'), {
         sourceType: 'module',
-        plugins: getBabelParserPlugins('ts')
+        plugins: getBabelParserPlugins('ts'),
       });
       if (ast) {
         // https://babeljs.io/docs/en/babel-travers
-        traverse(
-          ast,
-          {
-            TSPropertySignature(filePath: any) {
-              propKeys.push(filePath.node.key.name);
-            }
-          }
-        );
+        traverse(ast, {
+          TSPropertySignature(filePath: any) {
+            propKeys.push(filePath.node.key.name);
+          },
+        });
       }
-    };
+    }
   } catch (error) {
     // ignores
     console.log(error);
   }
 
   return propKeys;
-};
+}

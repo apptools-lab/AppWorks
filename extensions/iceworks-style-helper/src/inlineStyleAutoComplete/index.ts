@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import CSSData, { IProperty, IPropertyValue } from 'vscode-web-custom-data/data/browsers.css-data.json';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getCompletionItem from './getCompletionItem';
@@ -79,7 +80,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
           )
         );
       }
-    })
+    });
   }
 
   // Completion property value
@@ -92,19 +93,22 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
         if (firstCharsEqual(value.name, word)) {
           completions.push(
             getCompletionItem(
-              value.name, value.description || '',
+              value.name,
+              value.description || '',
               `${CSS_DOCS_URL}/${property.name}#Values`, // Docs
               `'${value.name}'${!isEndsWithComma(currentText) ? ',' : ''}`, // EXP 'relative',
               'Value'
             )
           );
         }
-      })
+      });
     }
+  }
+  if (completions.length > 0) {
+    recordDAU();
   }
   return completions;
 }
-
 
 // Set completion
 export default function inlineStyleAutoComplete(context: vscode.ExtensionContext): void {
@@ -114,7 +118,7 @@ export default function inlineStyleAutoComplete(context: vscode.ExtensionContext
         { scheme: 'file', language: 'javascript' },
         { scheme: 'file', language: 'javascriptreact' },
         { scheme: 'file', language: 'typescript' },
-        { scheme: 'file', language: 'typescriptreact' }
+        { scheme: 'file', language: 'typescriptreact' },
       ],
       { provideCompletionItems }
     )

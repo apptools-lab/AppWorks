@@ -4,9 +4,7 @@
   "title": "The ICE APP build.json Schema",
   "description": "The root schema comprises the entire JSON document.",
   "default": {},
-  "examples": [
-    {}
-  ],
+  "examples": [{}],
   "required": [],
   "properties": {
     "alias": {
@@ -23,64 +21,44 @@
       "type": "string",
       "description": "The public URL of the output directory.",
       "default": "",
-      "examples": [
-        "/"
-      ]
+      "examples": ["/"]
     },
     "devPublicPath": {
       "type": "string",
       "description": "The public URL of the dev server output directory.",
       "default": "",
-      "examples": [
-        "/"
-      ]
+      "examples": ["/"]
     },
     "sourceMap": {
       "type": "boolean",
       "description": "Whether to generate sourceMap",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "externals": {
       "type": "object",
       "description": "This feature is typically most useful to library developers, see https://webpack.js.org/configuration/externals .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "additionalProperties": true
     },
     "hash": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": ["boolean", "string"],
       "description": "If you want the hashed version of the built resource, you can set hash to true.",
       "default": false,
-      "examples": [
-        "contenthash"
-      ]
+      "examples": ["contenthash"]
     },
     "injectBabel": {
-      "type": [
-        "boolean",
-        "string"
-      ],
+      "type": ["boolean", "string"],
       "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "minify": {
       "type": "boolean",
       "description": "The resources after construction will be compressed.",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "outputAssetsPath": {
       "type": "object",
@@ -98,9 +76,7 @@
       "type": "string",
       "description": "Modify the built file directory.",
       "default": "",
-      "examples": [
-        "build"
-      ]
+      "examples": ["build"]
     },
     "devServer": {
       "type": "object",
@@ -175,43 +151,31 @@
       "type": "boolean",
       "description": "Configure whether to generate vendor.",
       "default": false,
-      "examples": [
-        true
-      ]
+      "examples": [true]
     },
     "libraryTarget": {
       "type": "string",
       "description": "Configure webpack's output.libraryTarget attribute.",
       "default": "",
-      "examples": [
-        ""
-      ]
+      "examples": [""]
     },
     "library": {
       "type": "string",
       "description": "Configure webpack's output.library attribute.",
       "default": "",
-      "examples": [
-        ""
-      ]
+      "examples": [""]
     },
     "libraryExport": {
       "type": "string",
       "description": "Configure webpack's output.libraryExport attribute.",
       "default": "",
-      "examples": [
-        ""
-      ]
+      "examples": [""]
     },
     "compileDependencies": {
       "type": "array",
       "description": "y default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
       "default": [],
-      "examples": [
-        [
-          "@alifd/next"
-        ]
-      ],
+      "examples": [["@alifd/next"]],
       "additionalItems": true,
       "items": {
         "anyOf": [
@@ -219,9 +183,7 @@
             "type": "string",
             "description": "Compile module dependencies under node_modules.",
             "default": "",
-            "examples": [
-              "@alifd/next"
-            ]
+            "examples": ["@alifd/next"]
           }
         ]
       }
@@ -230,9 +192,7 @@
       "type": "object",
       "description": "css-loader params, see https://webpack.js.org/loaders/css-loader/#options .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "required": [],
       "additionalProperties": true,
       "properties": {}
@@ -241,9 +201,7 @@
       "type": "object",
       "description": "less-loader params, see https://webpack.js.org/loaders/less-loader/#options .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "required": [],
       "additionalProperties": true,
       "properties": {}
@@ -252,9 +210,7 @@
       "type": "object",
       "description": "sass-loader params, see https://webpack.js.org/loaders/sass-loader/#options .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "required": [],
       "additionalProperties": true,
       "properties": {}
@@ -263,17 +219,13 @@
       "type": "boolean",
       "description": "After opening the configuration item, the project will clear the built-in postcss configuration and read the configuration in the postcss configuration file postcssrc.js or postcss.config.js",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "terserOptions": {
       "type": "object",
       "description": "terserPlugin params, see https://webpack.js.org/plugins/terser-webpack-plugin/ .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "required": [],
       "additionalProperties": true,
       "properties": {}
@@ -282,9 +234,7 @@
       "type": "array",
       "description": "Add an additional babel plugin to the babel-loader configuration.",
       "default": [],
-      "examples": [
-        []
-      ],
+      "examples": [[]],
       "additionalItems": true,
       "items": {
         "anyOf": []
@@ -294,9 +244,7 @@
       "type": "array",
       "description": "Add an additional babel preset to the configuration of babel-loader. If the preset is the same as the built-in preset, the configuration content in babelPresets will be used first.",
       "default": [],
-      "examples": [
-        []
-      ],
+      "examples": [[]],
       "additionalItems": true,
       "items": {
         "anyOf": []
@@ -306,20 +254,13 @@
       "type": "boolean",
       "description": "After it is turned on, all built-in html-webpack-plugin settings will be removed when the build is built, and html files will no longer be generated.",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "eslint": {
-      "type": [
-        "object",
-        "boolean"
-      ],
+      "type": ["object", "boolean"],
       "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true. Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
       "default": {},
-      "examples": [
-        {}
-      ],
+      "examples": [{}],
       "required": [],
       "additionalProperties": true,
       "properties": {}
@@ -341,17 +282,13 @@
       "type": "boolean",
       "description": "Disable the ability to run time, if you need to close the configuration to true.",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "tsChecker": {
       "type": "boolean",
       "description": "TypeScript type detection is turned off by default. If you need to enable it, set it to true.",
       "default": false,
-      "examples": [
-        false
-      ]
+      "examples": [false]
     },
     "plugins": {
       "type": "array",
@@ -368,9 +305,7 @@
           [
             "build-plugin-moment-locales",
             {
-              "locales": [
-                "zh-cn"
-              ]
+              "locales": ["zh-cn"]
             }
           ]
         ]
@@ -397,9 +332,7 @@
                   "type": "string",
                   "description": "See https://ice.work/docs/guide/advance/fusion .",
                   "default": "",
-                  "examples": [
-                    "build-plugin-fusion"
-                  ]
+                  "examples": ["build-plugin-fusion"]
                 },
                 {
                   "type": "object",
@@ -416,9 +349,7 @@
                       "type": "string",
                       "description": "themePackage example: @alifd/theme-design-pro .",
                       "default": "",
-                      "examples": [
-                        "@alifd/theme-design-pro"
-                      ]
+                      "examples": ["@alifd/theme-design-pro"]
                     }
                   }
                 }
@@ -433,9 +364,7 @@
               [
                 "build-plugin-moment-locales",
                 {
-                  "locales": [
-                    "zh-cn"
-                  ]
+                  "locales": ["zh-cn"]
                 }
               ]
             ],
@@ -446,9 +375,7 @@
                   "type": "string",
                   "description": "See https://ice.work/docs/guide/develop/plugin-list .",
                   "default": "",
-                  "examples": [
-                    "build-plugin-moment-locales"
-                  ]
+                  "examples": ["build-plugin-moment-locales"]
                 },
                 {
                   "type": "object",
@@ -456,9 +383,7 @@
                   "default": {},
                   "examples": [
                     {
-                      "locales": [
-                        "zh-cn"
-                      ]
+                      "locales": ["zh-cn"]
                     }
                   ],
                   "additionalProperties": true,
@@ -467,11 +392,7 @@
                       "type": "array",
                       "description": "build-plugin-moment-locales config locales.",
                       "default": [],
-                      "examples": [
-                        [
-                          "zh-cn"
-                        ]
-                      ],
+                      "examples": [["zh-cn"]],
                       "additionalItems": true,
                       "items": {
                         "anyOf": [
@@ -479,9 +400,7 @@
                             "type": "string",
                             "description": "build-plugin-moment-locales config locales.",
                             "default": "",
-                            "examples": [
-                              "zh-cn"
-                            ]
+                            "examples": ["zh-cn"]
                           }
                         ]
                       }
@@ -495,9 +414,7 @@
             "type": "string",
             "description": "See https://ice.work/docs/guide/develop/plugin-list .",
             "default": "",
-            "examples": [
-              "@ali/build-plugin-ice-def"
-            ]
+            "examples": ["@ali/build-plugin-ice-def"]
           }
         ]
       }

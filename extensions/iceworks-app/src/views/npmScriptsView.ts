@@ -1,23 +1,24 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { createNpmCommand, checkPathExists } from '@iceworks/common-service';
-import { dependencyDir, packageJSONFilename } from '@iceworks/project-service';
+import { createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
+import { dependencyDir, packageJSONFilename, projectPath } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import stopCommand from '../commands/stopCommand';
 import { ITerminalMap } from '../types';
-import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from '../constants';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
-  private workspaceRoot: string;
+  private workspaceRoot: string | undefined;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<ScriptTreeItem | undefined> = new vscode.EventEmitter<ScriptTreeItem | undefined>();
+  private onDidChange: vscode.EventEmitter<ScriptTreeItem | undefined> = new vscode.EventEmitter<
+    ScriptTreeItem | undefined
+  >();
 
   readonly onDidChangeTreeData: vscode.Event<ScriptTreeItem | undefined> = this.onDidChange.event;
 
-  constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
+  constructor(context: vscode.ExtensionContext, workspaceRoot: string | undefined) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
@@ -50,19 +51,15 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
         const command: vscode.Command = {
           command: 'iceworksApp.npmScripts.run',
           title: 'Run Script',
-          arguments: [this.workspaceRoot, createNpmCommand('run', scriptName)]
+          arguments: [this.workspaceRoot, createNpmCommand('run', scriptName)],
         };
-        return new ScriptTreeItem(
-          this.extensionContext,
-          scriptName,
-          scriptCommand,
-          command,
-          id,
-        );
+        return new ScriptTreeItem(this.extensionContext, scriptName, scriptCommand, command, id);
       };
 
       const scripts = packageJson.scripts
-        ? Object.keys(packageJson.scripts).map((script) => toScript(script, packageJson.scripts[script], `npmScripts-${script}`))
+        ? Object.keys(packageJson.scripts).map((script) =>
+            toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
+          )
         : [];
       return scripts;
     } else {
@@ -85,70 +82,32 @@ export class ScriptTreeItem extends vscode.TreeItem {
 
   iconPath = {
     dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/tool.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/tool.svg'))
+    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/tool.svg')),
   };
 
   contextValue = 'script';
 }
 
-export function createNpmScriptsTreeProvider(context: vscode.ExtensionContext, rootPath: string, terminals: ITerminalMap) {
-  vscode.window.onDidCloseTerminal(term => terminals.delete(term.name));
+export function createNpmScriptsTreeView(context: vscode.ExtensionContext, terminals: ITerminalMap) {
+  const npmScriptsProvider = new NpmScriptsProvider(context, projectPath);
+  const treeView = vscode.window.createTreeView('npmScripts', { treeDataProvider: npmScriptsProvider });
 
-  const npmScriptsProvider = new NpmScriptsProvider(context, rootPath);
-  vscode.window.registerTreeDataProvider('npmScripts', npmScriptsProvider);
-  vscode.commands.registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
-    if (!await checkPathExists(rootPath, dependencyDir)) {
-      script.command.arguments = [rootPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`]
+  registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
+    if (!(await checkPathExists(projectPath, dependencyDir))) {
+      script.command.arguments = [projectPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`];
       executeCommand(terminals, script.command, script.id);
       return;
     }
     executeCommand(terminals, script.command, script.id);
   });
-  vscode.commands.registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(terminals, script.id));
-  vscode.commands.registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
+  registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(terminals, script.id));
+  registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
-  // commands in editor title 
-  vscode.commands.registerCommand('iceworksApp.npmScripts.runDev', async () => {
-    const pathExists = await checkPathExists(rootPath, dependencyDir);
-    const command: vscode.Command = {
-      command: 'iceworksApp.npmScripts.runDev',
-      title: 'Run Dev',
-      arguments: [rootPath, createNpmCommand('run', 'start')]
-    };
-    const commandId = editorTitleRunDevCommandId;
-    if (!pathExists) {
-      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
-      executeCommand(terminals, command, commandId);
-      return;
-    }
-    executeCommand(terminals, command, commandId);
-    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', true);
-  });
-
-  vscode.commands.registerCommand('iceworksApp.npmScripts.stopDev', () => {
-    stopCommand(terminals, editorTitleRunDevCommandId);
-    vscode.commands.executeCommand('setContext', 'iceworks:isRunningDev', false);
-  });
-
-  vscode.commands.registerCommand('iceworksApp.npmScripts.runBuild', async () => {
-    const pathExists = await checkPathExists(rootPath, dependencyDir);
-    const command: vscode.Command = {
-      command: 'iceworksApp.npmScripts.runBuild',
-      title: 'Run Build',
-      arguments: [rootPath, createNpmCommand('run', 'build')]
-    };
-    const commandId = editorTitleRunBuildCommandId;
-    if (!pathExists) {
-      command.arguments = [rootPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
-      executeCommand(terminals, command, commandId);
-      return;
-    }
-    executeCommand(terminals, command, commandId)
-  });
-
-  const pattern = path.join(rootPath, packageJSONFilename);
-  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+  const pattern = new vscode.RelativePattern(projectPath, packageJSONFilename);
+  const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => npmScriptsProvider.refresh());
   fileWatcher.onDidCreate(() => npmScriptsProvider.refresh());
   fileWatcher.onDidDelete(() => npmScriptsProvider.refresh());
+
+  return treeView;
 }

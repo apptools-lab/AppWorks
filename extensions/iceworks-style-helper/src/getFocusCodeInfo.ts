@@ -18,4 +18,4 @@ export function getFocusCodeInfo(document: vscode.TextDocument, position: vscode
     fileName: document.fileName,
     directory: path.dirname(document.fileName),
   };
-};
+}
