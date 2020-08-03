@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.4
+
+- fix: can't get registerCommand method callback args
+
 ## 0.2.3
 
 - fix: build error
