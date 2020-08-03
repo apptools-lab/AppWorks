@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1
+
+- fix: build error
+
 ## 0.4.0
 
 - refactor: auto start status bar and editor title 
