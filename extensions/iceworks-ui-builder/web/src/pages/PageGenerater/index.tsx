@@ -138,7 +138,9 @@ const Home = () => {
 
     setIsCreating(false);
     setVisible(false);
-    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }) });
+    Notification.success({
+      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
+    });
     resetData();
   }
 
