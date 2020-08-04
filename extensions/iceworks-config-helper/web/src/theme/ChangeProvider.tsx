@@ -11,7 +11,7 @@ const ChangeProvider = ({ fieldKey, children }) => {
   const [siderStyle, setSiderStyle] = useState({ backgroundColor: '#1e1e1e', width: '2px', margin: '0 2px' });
 
   useEffect(() => {
-    window.addEventListener('updateJSON', (e) => {
+    window.addEventListener('iceworks-config-helper: updateJSON', (e) => {
       if (e.data.currentConfig) setValue(e.data.currentConfig[fieldKey] || DefaultSchema[fieldKey]);
     });
     // console.log(fieldKey,value);

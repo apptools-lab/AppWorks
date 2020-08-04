@@ -19,7 +19,8 @@
     "@rjsf/core": "^2.2.2",
     "lodash": "^4.17.19",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-intl": "^5.4.5"
   },
   "scripts": {
     "start": "icejs start",
