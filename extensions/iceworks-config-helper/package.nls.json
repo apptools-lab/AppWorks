@@ -1,3 +1,4 @@
 {
-  "iceworksConfigHelper.commands.start.title": "Iceworks: Settings for application"
+  "iceworksConfigHelper.commands.start.buildJson.title": "Iceworks: Setup build.json by visually.",
+  "iceworksConfigHelper.commands.start.appJson.title": "Iceworks: Setup app.json by visually."
 }

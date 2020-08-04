@@ -21,18 +21,26 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./build/index.js",
+  "main": "./build/extension.js",
   "contributes": {
     "jsonValidation": [
       {
         "fileMatch": "build.json",
-        "url": "./schemas/ice.build.json"
+        "url": "./schemas/ice.build.en.json"
       }
     ],
     "commands": [
       {
-        "command": "iceworks-config-helper.start",
-        "title": "%iceworksConfigHelper.commands.start.title%",
+        "command": "iceworks-config-helper.buildJson.start",
+        "title": "%iceworksConfigHelper.commands.start.buildJson.title%",
+        "icon": {
+          "light": "./icons/preview-right-light.svg",
+          "dark": "./icons/preview-right-dark.svg"
+        }
+      },
+      {
+        "command": "iceworks-config-helper.appJson.start",
+        "title": "%iceworksConfigHelper.commands.start.appJson.title%",
         "icon": {
           "light": "./icons/preview-right-light.svg",
           "dark": "./icons/preview-right-dark.svg"
@@ -42,22 +50,37 @@
     "menus": {
       "editor/context": [
         {
-          "command": "iceworks-config-helper.start",
-          "when": "editorLangId == json",
+          "command": "iceworks-config-helper.buildJson.start",
+          "when": "iceworks:showWebViewPanelForBuildJson",
+          "group": "configHelper"
+        },
+        {
+          "command": "iceworks-config-helper.appJson.start",
+          "when": "iceworks:showWebViewPanelForAppJson",
           "group": "configHelper"
         }
       ],
       "editor/title": [
         {
-          "command": "iceworks-config-helper.start",
-          "when": "editorLangId == json",
+          "command": "iceworks-config-helper.buildJson.start",
+          "when": "iceworks:showWebViewPanelForBuildJson",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-config-helper.appJson.start",
+          "when": "iceworks:showWebViewPanelForAppJson",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
-          "command": "iceworks-config-helper.start",
+          "command": "iceworks-config-helper.buildJson.start",
           "when": "resourceFilename == build.json",
+          "group": "2_workspace"
+        },
+        {
+          "command": "iceworks-config-helper.appJson.start",
+          "when": "resourceFilename == app.json",
           "group": "2_workspace"
         }
       ]
@@ -73,18 +96,24 @@
     "email": "iceworksteam@163.com"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run compile",
+    "vscode:prepublish": "rm -rf build && npm run build:web ",
     "compile": "tsc -p ./",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
     "watch": "tsc -watch -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "@types/lodash": "^4.14.158",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "@iceworks/common-service": "^0.1.4",
+    "@iceworks/i18n": "^0.1.0"
   },
   "dependencies": {
     "@iceworks/project-service": "^0.1.6",
-    "@types/lodash": "^4.14.158",
     "lodash": "^4.17.19"
   }
 }

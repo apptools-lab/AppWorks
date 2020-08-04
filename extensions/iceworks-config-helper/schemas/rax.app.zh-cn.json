@@ -1,13 +1,15 @@
 {
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
-  "title": "The Rax APP app.json Schema",
-  "required": ["plugins"],
+  "title": "Rax app.json",
+  "description": "通过这个面板可视化编辑 app.json",
+  "default": {},
+  "examples": [{}],
+  "required": [],
   "properties": {
     "routes": {
       "type": "array",
-      "description": "Route Config",
+      "description": "路由配置",
       "default": [],
       "examples": [
         [
@@ -16,22 +18,29 @@
             "source": "pages/Home/index"
           }
         ]
-      ]
+      ],
+      "items": {
+        "anyOf": [
+          {
+            "type": "object"
+          }
+        ]
+      }
     },
     "hydrate": {
       "type": "boolean",
-      "description": "Determines the original DOM structure is retained and event bindings are added when rendering content.(Only in web application). more: https://rax.js.org/docs/api/hydrate",
+      "description": "渲染内容时是否保留原有 DOM 结构并补充事件绑定，详见 https://rax.js.org/docs/api/hydrate",
       "default": false
     },
     "shell": {
       "type": "object",
-      "description": "Config PWA shell, recommend setting hydrate:true. (Only in web)",
+      "description": "设置 PWA AppShell，详见 https://rax.js.org/docs/guide/web-app-shell",
       "default": {},
       "examples": [{ "source": "shell/index" }]
     },
     "window": {
       "type": "object",
-      "description": "Set the application window",
+      "description": "设置应用窗口表现",
       "properties": {
         "titleBarColor": {
           "type": "string",
@@ -40,7 +49,7 @@
         },
         "pullRefresh": {
           "type": "boolean",
-          "description": "determines whether dropdown refresh is allowed. (Only for mini programs)",
+          "description": "是否允许下拉刷新，默认 true。(只在小程序里使用)",
           "default": false
         },
         "title": {
@@ -51,72 +60,78 @@
         },
         "defaultTitle": {
           "type": "string",
-          "description": "default title for mini programs",
+          "description": "页面默认标题。",
           "default": "",
           "examples": ["title"]
         },
         "allowsBounceVertical": {
           "type": "boolean",
-          "description": "determines whether pull down is allowed. ",
+          "description": "是否允许向下拉拽。默认 YES, 支持 YES / NO ",
           "default": false
         },
         "transparentTitle": {
           "type": "string",
-          "description": "determines whether The navigation bar is transparent. ",
+          "description": "导航栏透明设置。默认 none，支持 always 一直透明 / auto 滑动自适应 / none 不透明 ",
           "default": "none",
           "enum": ["none", "always", "auto"]
         },
         "titlePenetrate": {
           "type": "string",
-          "description": "Allow navigation bar to click through ",
+          "description": "是否允许导航栏点击穿透。默认 NO，支持 YES / NO。",
           "default": "NO",
           "enum": ["YES", "NO"]
         },
         "showTitleLoading": {
           "type": "string",
-          "description": "use the loading page before displays the navigation bar ",
+          "description": "是否进入时显示导航栏的 loading。默认 NO，支持 YES / NO。",
           "default": "NO",
           "enum": ["YES", "NO"]
         },
         "titleImage": {
           "type": "string",
-          "description": "Navigation bar pic url ",
+          "description": "导航栏图片地址。",
           "default": "",
           "examples": ["https://img.alicdn.com/tfs/TB1iCt_bVP7gK0jSZFjXXc5aXXa-82-30.png"]
         },
+        "backgroundColor": {
+          "type": "string",
+          "description": "页面的背景色。例：白色 \"#FFFFFF\"。",
+          "default": "",
+          "examples": ["#FFFFFF"]
+        },
         "backgroundImageColor": {
           "type": "string",
-          "description": "the background color when user pull down",
+          "description": "下拉露出显示背景图的底色。例：白色 \"#FFFFFF\"。",
           "default": "",
           "examples": ["#FFFFFF"]
         },
         "backgroundImageUrl": {
           "type": "string",
-          "description": "the background image url when user pull down",
+          "description": "下拉露出显示背景图的链接。",
           "default": "",
           "examples": ["#FFFFFF"]
         },
         "gestureBack": {
           "type": "string",
-          "description": " Whether gesture returns are supported. (Only for IOS)",
+          "description": "仅支持 iOS，是否支持手势返回。默认 YES，支持 YES / NO。",
           "default": "NO",
           "enum": ["YES", "NO"]
         },
         "onReachBottomDistance": {
           "type": "string",
-          "description": " Whether to display the webview scroll bar.. (Only for Andriod)",
+          "description": "页面上拉触底时触发时距离页面底部的距离，单位为px。相关文档页面事件处理函数。",
           "default": "NO",
           "enum": ["YES", "NO"]
         },
         "enableScrollBar": {
           "type": "string",
-          "description": " The distance from the bottom of the page when the touchdown is triggered (px)",
+          "description": " 仅支持 Android，是否显示 WebView 滚动条。默认 YES，支持 YES / NO。",
           "default": "",
           "examples": ["50px"]
         },
         "responsive": {
           "type": "boolean",
-          "description": " The default is true. When set to false, the 2RPX will be identical to 1px and no longer adaptive to the width of the screen. Note that the 750rpx will no longer be equal to 100% width.",
+          "description": " rpx 单位是否宽度自适应 ，默认true，当设置为 false 时，2rpx 将恒等于 1px，不再根据屏幕宽度进行自适应，注意，此时 750rpx 将不再等于100% 宽度。",
           "default": true,
           "examples": ["50px"]
         }
@@ -124,30 +139,30 @@
     },
     "tarBar": {
       "type": "object",
-      "description": "The tabBar configuration item specifies the appearance of the TAB bar and the corresponding page to be displayed when the TAB switches.",
+      "description": "设置应用底部 TabBar 的表现。",
       "default": {},
       "properties": {
         "textColor": {
           "type": "string",
-          "description": "Text color (Hex Color) ",
+          "description": "文字颜色",
           "default": "",
           "examples": ["#dddddd"]
         },
         "selectedColor": {
           "type": "string",
-          "description": "Selected text color (Hex Color) ",
+          "description": "选中文字颜色",
           "default": "",
           "examples": ["#dddddd"]
         },
         "backgroundColor": {
           "type": "string",
-          "description": "Background color (Hex Color)",
+          "description": "背景色",
           "default": "",
           "examples": ["#dddddd"]
         },
         "items": {
           "type": "array",
-          "description": "Settings for each tab ",
+          "description": "每个 tab 的设置",
           "": ["name"],
           "default": [
             {
@@ -155,36 +170,33 @@
               "name": ""
             }
           ],
-          "properties": {
-            "pagePath": {
-              "type": "string",
-              "description": " tab path (shoud be the same in route) (Only for mini programs)",
-              "default": "",
-              "examples": ["pages/index/index"]
-            },
-            "page": {
-              "type": "string",
-              "description": " tab path (shoud be the same in route) (Only for web)",
-              "default": "",
-              "examples": ["pages/index/index"]
-            },
-            "name": {
-              "type": "string",
-              "description": " tab name",
-              "default": "",
-              "examples": ["首页"]
-            },
-            "icon": {
-              "type": "string",
-              "description": "icon (non-selected)",
-              "default": "",
-              "examples": ["logo.png"]
-            },
-            "activeIcon": {
-              "type": "string",
-              "description": "icon (selected)",
-              "default": "",
-              "examples": ["activeLogo.png"]
+          "items": {
+            "type": "object",
+            "properties": {
+              "pagePath": {
+                "type": "string",
+                "description": " 设置页面路径",
+                "default": "",
+                "examples": ["pages/index/index"]
+              },
+              "name": {
+                "type": "string",
+                "description": " 名称",
+                "default": "",
+                "examples": ["首页"]
+              },
+              "icon": {
+                "type": "string",
+                "description": "平常图标路径（非选中状态）",
+                "default": "",
+                "examples": ["logo.png"]
+              },
+              "activeIcon": {
+                "type": "string",
+                "description": "高亮图标路径（选中状态）",
+                "default": "",
+                "examples": ["activeLogo.png"]
+              }
             }
           }
         }

@@ -80,7 +80,7 @@
     "minify": {
       "type": "boolean",
       "description": "The resources after construction will be compressed.",
-      "default": false,
+      "default": true,
       "examples": [false]
     },
     "outputAssetsPath": {
@@ -173,7 +173,7 @@
     "vendor": {
       "type": "boolean",
       "description": "Configure whether to generate vendor.",
-      "default": false,
+      "default": true,
       "examples": [true]
     },
     "libraryTarget": {
@@ -388,6 +388,123 @@
           },
           {
             "type": "array",
+            "description": "See https://ice.work/docs/guide/advance/antd .",
+            "default": [],
+            "examples": [
+              [
+                "build-plugin-antd",
+                {
+                  "themeConfig": {
+                    "primary-color": "#1DA57A"
+                  }
+                }
+              ]
+            ],
+            "additionalItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "description": "See https://ice.work/docs/guide/advance/fusion .",
+                  "default": "",
+                  "examples": ["build-plugin-antd"]
+                },
+                {
+                  "type": "object",
+                  "description": "build-plugin-antd config.",
+                  "default": {},
+                  "examples": [
+                    {
+                      "themeConfig": {
+                        "primary-color": "#1DA57A"
+                      }
+                    }
+                  ],
+                  "additionalProperties": true,
+                  "properties": {
+                    "themeConfig": {
+                      "type": "string",
+                      "description": "customize themeConfig",
+                      "default": "",
+                      "examples": [
+                        {
+                          "primary-color": "#1DA57A"
+                        }
+                      ]
+                    },
+                    "importOptions": {
+                      "type": "object",
+                      "description": "The same as babel-plugin-import config",
+                      "properties": {
+                        "libraryName": {
+                          "type": "string"
+                        },
+                        "libraryDirectory": {
+                          "type": "string"
+                        },
+                        "style": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "array",
+            "description": "Provides the ability to localize network resources in CSS.",
+            "default": [],
+            "examples": [
+              [
+                [
+                  "build-plugin-css-assets-local",
+                  {
+                    "outputPath": "assets",
+                    "relativeCssPath": "../"
+                  }
+                ]
+              ]
+            ],
+            "additionalItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "description": "Provides the ability to localize network resources in CSS..",
+                  "default": "",
+                  "examples": ["build-plugin-css-assets-local"]
+                },
+                {
+                  "type": "object",
+                  "description": "build-plugin-css-assets-local config.",
+                  "default": {},
+                  "examples": [
+                    {
+                      "outputPath": "assets",
+                      "relativeCssPath": "../"
+                    }
+                  ],
+                  "additionalProperties": true,
+                  "properties": {
+                    "outputPath": {
+                      "type": "string",
+                      "description": "Prefix of extracted file directory",
+                      "default": ""
+                    },
+                    "relativeCssPath": {
+                      "type": "string",
+                      "description": "The path of the extracted file relative to the CSS",
+                      "default": ""
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "array",
             "description": "See https://ice.work/docs/guide/develop/plugin-list .",
             "default": [],
             "examples": [
@@ -441,10 +558,75 @@
             }
           },
           {
+            "type": "array",
+            "description": "Provide the ability to automatically load assets.",
+            "default": [],
+            "examples": [
+              [
+                [
+                  "build-plugin-load-assets",
+                  {
+                    "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
+                  }
+                ]
+              ]
+            ],
+            "additionalItems": true,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "description": "Provide the ability to automatically load assets.",
+                  "default": "",
+                  "examples": ["plugin-load-assets"]
+                },
+                {
+                  "type": "object",
+                  "description": "plugin-load-assets config.",
+                  "default": {},
+                  "examples": [
+                    {
+                      "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
+                    }
+                  ],
+                  "additionalProperties": true,
+                  "properties": {
+                    "assets": {
+                      "type": "array",
+                      "description": "Load assets from url",
+                      "default": "",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
             "type": "string",
-            "description": "See https://ice.work/docs/guide/develop/plugin-list .",
+            "description": "Used for debug, commonly seen in the online environment loading local assets for debugging scenarios:",
             "default": "",
-            "examples": ["@ali/build-plugin-ice-def"]
+            "examples": ["build-plugin-smart-debug"]
+          },
+          {
+            "type": "string",
+            "description": "The plug-in supports a JSX extension syntax called JSX+, which helps business developers write JSX more easily and faster.",
+            "default": "",
+            "examples": ["build-plugin-jsx-plus"]
+          },
+          {
+            "type": "string",
+            "description": "This plugin is an integration of React - Refresh, a function similar to hot reloading, but with a more powerful fast hot update mechanism that allows you to get near-instant (1-2 seconds) feedback on changes made to react components without losing state when changes are made to react components during hot updates.",
+            "default": "",
+            "examples": ["build-plugin-fast-refresh"]
+          },
+          {
+            "type": "string",
+            "description": "For icEJS compatibility handling with the capabilities of using WebPack5, which has not yet been officially released, use this plug-in with caution",
+            "default": "",
+            "examples": ["build-plugin-webpack5"]
           }
         ]
       }

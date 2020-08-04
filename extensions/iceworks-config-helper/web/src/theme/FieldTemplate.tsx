@@ -12,7 +12,6 @@ const FieldTemplate = ({
   rawDescription,
   schema,
 }: FieldTemplateProps) => {
-  console.log(schema);
   return (
     <ChangeProvider fieldKey={label}>
       <div style={{ marginBottom: 15, color: 'white' }}>
