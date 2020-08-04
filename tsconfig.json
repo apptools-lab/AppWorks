@@ -5,6 +5,7 @@
     {"path": "packages/config"},
     {"path": "packages/vscode-webview"},
     {"path": "packages/generate-project"},
+    {"path": "packages/generate-material"},
     {"path": "packages/iceworks-cli"},
     {"path": "packages/material-utils"},
     {"path": "packages/common-service"},
