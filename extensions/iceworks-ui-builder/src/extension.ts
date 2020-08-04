@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 
@@ -32,7 +33,19 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true);
+    const basePath = path.join(extensionPath, 'build');
+    const basePathOnDisk = vscode.Uri.file(basePath);
+    const basePathUri = basePathOnDisk.with({ scheme: 'vscode-resource' });
+    const extraHtml = `<script>
+      window.__assets = {
+        ideUrl: '${basePathUri}',
+        canvasUrl: '${basePathUri}',
+        vendorUrl: '${basePathUri}',
+        vendorEntry: 'vendor',
+      }
+    </script>
+    `;
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true, extraHtml);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
