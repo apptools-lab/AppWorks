@@ -96,7 +96,7 @@
     "email": "iceworksteam@163.com"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web ",
+    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --production ",
     "compile": "tsc -p ./",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
