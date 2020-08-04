@@ -8,13 +8,17 @@ import { IPackageInfo, getPackageInfos } from './getPackageInfos';
 function publish(pkg: string, version: string, directory: string): void {
   console.log('[PUBLISH]', `${pkg}@${version}`);
 
-  spawnSync('npm', [
-    'publish',
-    // use default registry
-  ], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
+  spawnSync(
+    'npm',
+    [
+      'publish',
+      // use default registry
+    ],
+    {
+      stdio: 'inherit',
+      cwd: directory,
+    }
+  );
 }
 
 // Entry
@@ -32,7 +36,7 @@ getPackageInfos().then((packageInfos: IPackageInfo[]) => {
       publishedPackages.push(`${name}:${localVersion}`);
     }
   }
-  console.log(`[PUBLISH PACKAGE PRODUCTION] Complete (count=${publishedCount}):`)
+  console.log(`[PUBLISH PACKAGE PRODUCTION] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
   setPublishedPackages(publishedPackages);
 });

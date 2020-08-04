@@ -9,11 +9,11 @@ Preview and manage your application from a framework perspective, including npm 
 
 ## Usage
 
-### Initialize panel 
+### Initialize panel
 
 After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your activity bar. Click it to enter Iceworks panel.
 
-The initialization panel appears if your current workspace is empty or ** isn't React/Rax application **.
+The initialization panel appears if your current workspace is empty or **isn't React/Rax application**.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
@@ -53,11 +53,11 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 1. Click items in PAGES and COMPONENTS on the left panel.
 2. Jump into files of selected projects.
 
-#### Wake up create pages and generate components( [Create Pages](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)｜[Generate Components](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder) )
+#### Activate Generate Page and Create Component(See [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
-1. Click `+` in PAGES header to jump into GENERATE PAGES  page.
+1. Click `+` in PAGES header to jump into GENERATE PAGE page.
 2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
 
 ### Node Dependencies
@@ -82,7 +82,7 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 
 ## Iceworks command palette
 
-If you install [Iceworks suite] (https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
+If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
 

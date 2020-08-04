@@ -1,0 +1,6 @@
+{
+  "package.projectService.index.packageNotFound": "本地目录中没有找到 package.json 文件",
+  "package.projectService.index.folderExists": "文件夹「<%= projectDir %>」已存在，请重新输入应用名称。",
+  "package.projectService.index.noLocalPath": "本地不存在「<%= projectDir %>」目录！",
+  "package.projectService.index.DEFOutTime": "创建 DEF 应用失败，任务 ID 是： <%= taskId %>."
+}

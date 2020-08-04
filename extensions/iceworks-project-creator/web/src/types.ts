@@ -1,14 +1,20 @@
 import { IMaterialScaffold, IMaterialSource } from '@iceworks/material-utils';
 
+interface IEjsOptions {
+  targets?: string[];
+  miniappType?: 'runtime' | 'compile';
+  mpa?: boolean;
+}
+
 export interface IProjectField {
   projectName: string;
   projectPath: string;
   scaffold: IMaterialScaffold;
   source: IMaterialSource;
-  scaffoldType: string;
+  ejsOptions?: IEjsOptions;
 }
 
-export interface IDEFProjectField {
+export interface IDEFProjectField extends IProjectField {
   empId: string;
   account: string;
   group: string;
@@ -22,12 +28,12 @@ export interface IGitLabExistProject {
 }
 
 export interface IGitLabGroup {
-  'avatar_url': string;
-  'description': string;
-  'id': number;
-  'name': string;
-  'path': string;
-  'web_url': string;
+  avatar_url: string;
+  description: string;
+  id: number;
+  name: string;
+  path: string;
+  web_url: string;
 }
 
 export interface IScaffoldMarket {

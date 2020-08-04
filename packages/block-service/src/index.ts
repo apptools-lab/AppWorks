@@ -1,8 +1,7 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
-// import * as glob from 'glob';
-// import * as transfromTsToJs from 'sylvanas';
+import * as glob from 'glob';
 import * as readFiles from 'fs-readdir-recursive';
 import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
@@ -12,25 +11,27 @@ import {
   pagesPath,
   COMPONENT_DIR_NAME,
   jsxFileExtnames,
-  checkIsTemplate
+  checkIsTemplate,
 } from '@iceworks/project-service';
 import {
   createNpmCommand,
   getTagTemplate,
   getImportInfos,
   getLastAcitveTextEditor,
-  getImportTemplate
+  getImportTemplate,
+  getIceworksTerminal,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
+import * as transfromTsToJs from 'transform-ts-to-js';
+import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
-import { downloadBlock } from './utils/downloadBlock';
 
 const { window, Position } = vscode;
 
 function getBlockType(blockSourceSrcPath) {
   const files = readFiles(blockSourceSrcPath);
 
-  const index = files.findIndex(item => {
+  const index = files.findIndex((item) => {
     return /\.ts(x)/.test(item);
   });
 
@@ -43,12 +44,16 @@ function getBlockType(blockSourceSrcPath) {
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   await bulkDownload(blocks, localPath);
   await bulkInstallDependencies(blocks);
-}
+};
 
 /**
  * Download blocks code to page
  */
-export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string) {
+export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string, log?: (text: string) => void) {
+  if (!log) {
+    log = (text) => console.log(text);
+  }
+
   return await Promise.all(
     blocks.map(async (block: any) => {
       const blockSourceNpm = block.source.npm;
@@ -58,21 +63,24 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
 
       let tarballURL: string;
       try {
+        log(i18n.format('package.block-service.downloadBlock.getDownloadUrl'));
         tarballURL = await getTarballURLByMaterielSource(block.source);
       } catch (error) {
-        error.message = `从 ${blockSourceNpm} 获取压缩包链接失败，您可以尝试手动克隆 ${block.repository} 仓库`;
+        error.message = i18n.format('package.block-service.downloadBlock.downloadError', { blockName, tarballURL });
         throw error;
       }
-
+      log(i18n.format('package.block-service.downloadBlock.unzipCode'));
       const blockDir = path.join(localPath, blockName);
       const blockTempDir = path.join(localPath, `.${blockName}.temp`);
 
       try {
-        await getAndExtractTarball(blockTempDir, tarballURL);
+        await getAndExtractTarball(blockTempDir, tarballURL, ({ percent }) => {
+          log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
+        });
       } catch (error) {
-        error.message = `解压 ${blockName} 失败，压缩包链接地址是：${tarballURL}`;
+        error.message = i18n.format('package.block-service.uzipError', { blockName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = `解压 ${blockName} 超时，压缩包链接地址是：${tarballURL}`;
+          error.message = i18n.format('package.block-service.uzipOutTime', { blockName, tarballURL });
         }
         await fsExtra.remove(blockTempDir);
         throw error;
@@ -84,35 +92,33 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
 
       console.log('blockType: ', blockType, 'projectType: ', projectType);
 
-      // TODO: transfrom ts to js	
-      // why? the package sylvanas depends on the eslint, which can't use webpack to bundle the extensions  
-      // if (blockType === 'ts' && projectType === 'js') {	
-      //   const files = glob.sync('**/*.@(ts|tsx)', {	
-      //     cwd: blockSourceSrcPath,	
-      //   });	
+      if (blockType === 'ts' && projectType === 'js') {
+        const files = glob.sync('**/*.@(ts|tsx)', {
+          cwd: blockSourceSrcPath,
+        });
 
-      //   console.log('transfrom ts to js', files.join(','));	
+        console.log('transfrom ts to js', files.join(','));
 
-      //   transfromTsToJs(files, {	
-      //     cwd: blockSourceSrcPath,	
-      //     outDir: blockSourceSrcPath,	
-      //     action: 'overwrite',	
-      //   });	
-      // }
+        transfromTsToJs(files, {
+          cwd: blockSourceSrcPath,
+          outDir: blockSourceSrcPath,
+          action: 'overwrite',
+        });
+      }
 
       await fsExtra.move(blockSourceSrcPath, blockDir);
       await fsExtra.remove(blockTempDir);
       return blockDir;
-    }),
+    })
   );
-}
+};
 
 /**
  * Installation block dependencies
  */
 export const bulkInstallDependencies = async function (blocks: IMaterialBlock[]) {
   const projectPackageJSON = await readPackageJSON(projectPath);
-  const { activeTerminal } = vscode.window;
+  const { terminals } = vscode.window;
 
   // get all dependencies from blocks
   const blocksDependencies: { [packageName: string]: string } = {};
@@ -120,7 +126,7 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
 
   // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
-  Object.keys(blocksDependencies).forEach(packageName => {
+  Object.keys(blocksDependencies).forEach((packageName) => {
     if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
       filterDependencies.push({
         [packageName]: blocksDependencies[packageName],
@@ -129,28 +135,24 @@ export const bulkInstallDependencies = async function (blocks: IMaterialBlock[])
   });
 
   if (filterDependencies.length > 0) {
-    const deps = filterDependencies.map(dependency => {
+    const deps = filterDependencies.map((dependency) => {
       const [packageName, version]: [string, string] = Object.entries(dependency)[0];
       return `${packageName}@${version}`;
     });
 
-    let terminal: vscode.Terminal;
-    if (activeTerminal) {
-      terminal = activeTerminal;
-    } else {
-      terminal = vscode.window.createTerminal();
-    }
-
+    const terminal = getIceworksTerminal();
     terminal.show();
-    terminal.sendText(`cd ${projectPath}`, true);
+    terminal.sendText(`cd '${projectPath}'`, true);
     terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
   } else {
     return [];
   }
-}
+};
 
 export async function addBlockCode(block: IMaterialBlock) {
-  const templateError = `只能向 ${jsxFileExtnames.join(',')} 文件添加区块代码`;
+  const templateError = i18n.format('package.block-service.templateError', {
+    jsxFileExtnames: jsxFileExtnames.join(','),
+  });
   const activeTextEditor = getLastAcitveTextEditor();
   console.log('addBlockCode....');
   if (!activeTextEditor) {
@@ -165,53 +167,46 @@ export async function addBlockCode(block: IMaterialBlock) {
   }
 
   const pageName = path.basename(path.dirname(fsPath));
-  const pagePath = path.join(
-    pagesPath,
-    pageName
-  );
+  const pagePath = path.join(pagesPath, pageName);
   const isPageFile = await fsExtra.pathExists(pagePath);
   if (!isPageFile) {
-    throw new Error(`只能向 ${pagesPath} 下的页面文件添加区块代码`);
+    throw new Error(i18n.format('package.block-service.notPageFileError', { pagesPath }));
   }
 
-  // insert code 
+  // insert code
   const blockName: string = await generateBlockName(pageName, block.name);
   await insertBlock(activeTextEditor, blockName);
 
-  // download block 
+  // download block
   const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
-  materialOutputChannel.appendLine('> 开始获取区块代码');
+  materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
-    const downloadMethod = downloadBlock;
-    const blockDir = await downloadMethod({ ...block, name: blockName }, componentsPath, (text) => {
+    const blockDir = await bulkDownload([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
-    materialOutputChannel.appendLine(`> 已将区块代码下载到：${blockDir}`);
+    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
   } finally {
     // activate the textEditor
     window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
   }
+
+  // install block dependencies
+  await bulkInstallDependencies([block]);
 }
 
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {
   const { position: importDeclarationPosition } = await getImportInfos(activeTextEditor.document.getText());
   activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    editBuilder.insert(
-      importDeclarationPosition,
-      getImportTemplate(blockName, `./components/${blockName}`)
-    );
+    editBuilder.insert(importDeclarationPosition, getImportTemplate(blockName, `./components/${blockName}`));
 
     const { selection } = activeTextEditor;
     if (selection && selection.active) {
       const insertPosition = new Position(selection.active.line, selection.active.character);
-      editBuilder.insert(
-        insertPosition,
-        getTagTemplate(blockName)
-      );
+      editBuilder.insert(insertPosition, getTagTemplate(blockName));
     }
   });
 }

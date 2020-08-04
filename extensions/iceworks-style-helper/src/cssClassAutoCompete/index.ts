@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
 function unique(arr: string[]) {
@@ -25,14 +26,12 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       classNames = classNames.concat(getClassNames(filePath), getCSSModuleKeys(filePath));
     }
   });
-  
-  return unique(classNames).map(
-    className =>
-      new vscode.CompletionItem(
-        `.${className}`,
-        vscode.CompletionItemKind.Text
-      )
-  );
+  if (classNames.length) {
+    recordDAU();
+  }
+  return unique(classNames).map((className) => {
+    return new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
+  });
 }
 
 // Process className="xxx"
@@ -80,10 +79,10 @@ export default function cssClassAutoCompete(context: vscode.ExtensionContext): v
         { scheme: 'file', language: 'css' },
         { scheme: 'file', language: 'less' },
         { scheme: 'file', language: 'sass' },
-        { scheme: 'file', language: 'scss' }
+        { scheme: 'file', language: 'scss' },
       ],
       { provideCompletionItems },
       '.'
     )
   );
-};
+}

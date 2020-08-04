@@ -1,0 +1,4 @@
+{
+  "web.iceworksMaterialHelper.extension.getMaterialError": "获取物料源信息失败，请稍后再试。",
+  "web.iceworksMaterialHelper.extension.getMaterialDataError": "获取物料集合信息失败，请稍后再试。"
+}

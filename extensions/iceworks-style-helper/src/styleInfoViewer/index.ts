@@ -1,15 +1,11 @@
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import { findStyle, IStylePosition } from './findStyle';
 import { findStyleDependencies } from './findStyleDependencies';
 import findStyleSelectors from './findStyleSelectors';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
-const SUPPORT_LANGUAGES = [
-  'javascript',
-  'javascriptreact',
-  'typescript',
-  'typescriptreact'
-];
+const SUPPORT_LANGUAGES = ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'];
 
 // Cmd+Click jump to style definition
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
@@ -20,6 +16,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
     const matchedPosition: IStylePosition = matched.position;
+    recordDAU();
     return new vscode.Location(
       vscode.Uri.file(matched.file),
       // The zero-based line and character value.
@@ -36,6 +33,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
+    recordDAU();
     // Markdown css code
     return new vscode.Hover(`\`\`\`css \n ${matched.code} \n \`\`\`\``);
   }
@@ -46,6 +44,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   const { line, fileName, directory } = getFocusCodeInfo(document, position);
   if (!/style|className/g.test(line.text)) return;
 
+  recordDAU();
   // In case of cursor shaking
   const word = line.text.substring(0, position.character);
   const styleDependencies = findStyleDependencies(fileName);
@@ -67,31 +66,24 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
 export default function styleInfoViewer(context: vscode.ExtensionContext) {
   // Cmd+Click jump to style definition
-  context.subscriptions.push(
-    vscode.languages.registerDefinitionProvider(
-      SUPPORT_LANGUAGES,
-      { provideDefinition }
-    )
-  );
+  context.subscriptions.push(vscode.languages.registerDefinitionProvider(SUPPORT_LANGUAGES, { provideDefinition }));
 
   SUPPORT_LANGUAGES.forEach((language) => {
     // Show current style on hover over
-    context.subscriptions.push(
-      vscode.languages.registerHoverProvider(
-        language,
-        { provideHover }
-      )
-    );
+    context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
 
     // Styles auto Complete
     context.subscriptions.push(
       vscode.languages.registerCompletionItemProvider(
         language,
         { provideCompletionItems },
+        '.',
+        '"',
+
         // eslint-disable-next-line
-        '.', '\"', '\'', ' ',
+        "'",
+        ' '
       )
     );
   });
 }
-

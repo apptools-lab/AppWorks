@@ -1,0 +1,20 @@
+{
+  "extension.iceworksApp.showExtensionsQuickPick.projectCreater.label": "Iceworks Create Application",
+  "extension.iceworksApp.showExtensionsQuickPick.projectCreater.detail": "Create a Universal Application(React/Rax/Vue, etc) quickly.",
+  "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.label": "Iceworks Generate Page",
+  "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail": "Build Page UI by low-code way.",
+  "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label": "Iceworks Create Component",
+  "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail": "Build Component UI by low-code way.",
+  "extension.iceworksApp.showExtensionsQuickPick.materialImport.label": "Iceworks Import Component",
+  "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail": "Add Component to the Application in a visual way.",
+  "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "for example: lodash react@latest.",
+  "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "Please enter the name of the dependency to be addded to <%= depType %>. Multiple dependencies should be spilted by Spaces.",
+  "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "Daily",
+  "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.detail": "Release to daily environment.",
+  "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.label": "Production",
+  "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "Release to production environment.",
+  "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
+  "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
+  "extension.iceworksApp.extension.title": "Iceworks Settings",
+  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
+}

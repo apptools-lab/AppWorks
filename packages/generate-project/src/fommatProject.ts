@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import { ALI_YUEQU_URL } from '@iceworks/constant';
 import { checkAliInternal } from 'ice-npm-utils';
 
 export default async function formatProject(projectDir: string, projectName?: string): Promise<void> {
@@ -43,23 +44,20 @@ export default async function formatProject(projectDir: string, projectName?: st
     delete buildData.publicPath;
 
     if (isAliInternal) {
-
       if (pkgData.dependencies.rax) {
         // For Rax project
         abcData = {
           type: 'rax',
           builder: '@ali/builder-rax-v1',
           info: {
-            raxVersion: '1.x'
-          }
+            raxVersion: '1.x',
+          },
         };
 
         // add @ali/build-plugin-rax-app-def
         pkgData.devDependencies['@ali/build-plugin-rax-app-def'] = '^1.0.2';
         buildData.plugins.push('@ali/build-plugin-rax-app-def');
-
       } else {
-
         abcData = {
           type: 'ice-app',
           builder: '@ali/builder-ice-app',
@@ -95,7 +93,7 @@ export default async function formatProject(projectDir: string, projectName?: st
 
     if (!is1X) {
       // TODO: 操作 ice.config.js 加入 ice-plugin-def；删除 publicPath；
-      console.log('If you need to deploy with DEF, please refer to the doc: https://yuque.alibaba-inc.com/ice/rdy99p/angwyx');
+      console.log(`If you need to deploy with DEF, please refer to the doc: ${ALI_YUEQU_URL}`);
     } else if (pkgData.buildConfig) {
       delete pkgData.buildConfig.output;
       delete pkgData.buildConfig.localization;

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 import getCurrentJsxElement from './getCurrentJsxElement';
 import getDefinitions from './getDefinitions';
 import getPropKeyCompletionItems from './getPropKeyCompletionItems';
@@ -32,13 +33,16 @@ async function provideCompletionItems(document, position): Promise<vscode.Comple
       items = items.concat(getPropKeyCompletionItems(componentPath, currentJsxElementTagName));
     });
   }
+  if (items.length) {
+    recordDAU();
+  }
+
   return items;
-};
+}
 
 // Set completion
 export default function propsAutoComplete() {
-  vscode.languages.registerCompletionItemProvider(
-    ['javascript', 'javascriptreact', 'typescript', 'typescriptreact'],
-    { provideCompletionItems }
-  );
+  vscode.languages.registerCompletionItemProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
+    provideCompletionItems,
+  });
 }

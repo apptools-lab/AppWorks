@@ -1,0 +1,6 @@
+{
+  "package.projectService.index.packageNotFound": "Project's package.json file not found in local environment",
+  "package.projectService.index.folderExists": "Floder「<%= projectDir %>」exists，please enter a new application name。",
+  "package.projectService.index.noLocalPath": "Path:「<%= projectDir %>」does not exist",
+  "package.projectService.index.DEFOutTime": "Fail to create DEF application, task ID： <%= taskId %>."
+}

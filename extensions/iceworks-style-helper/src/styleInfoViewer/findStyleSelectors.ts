@@ -19,7 +19,6 @@ export default function findStyleSelectors(directory: string, styleDependencies:
       }
     });
   }
-  
-  return selectors;
-};
 
+  return selectors;
+}

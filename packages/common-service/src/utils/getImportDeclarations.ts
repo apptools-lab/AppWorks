@@ -35,11 +35,9 @@ export async function getImportDeclarations(content: string): Promise<IImportDec
     const ast = babylon.parse(content, {
       allowImportExportEverywhere: true,
       sourceType: 'module',
-      plugins: [
-        'jsx',
-      ],
+      plugins: ['jsx'],
     });
-
+    // @ts-ignore
     traverse(ast, {
       ImportDeclaration: ({ node }) => {
         importDeclarations.push(node as any);

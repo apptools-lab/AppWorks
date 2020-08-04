@@ -2,19 +2,36 @@ import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as prettier from 'prettier';
 import { IMaterialBlock } from '@iceworks/material-utils';
-import { pagesPath, COMPONENT_DIR_NAME, getProjectLanguageType, getProjectFramework } from '@iceworks/project-service';
+import {
+  pagesPath,
+  COMPONENT_DIR_NAME,
+  getProjectLanguageType,
+  getProjectFramework,
+  projectPath,
+} from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
+import { bulkCreate } from './router';
+import i18n from './i18n';
+
+export * from './router';
+
 /**
  * Generate page code based on blocks
  *
  * @param pageName {string} page name
  * @param blocks {array} blocks information
  */
-export const generate = async function ({ pageName: name, blocks = [] }: { pageName: string; blocks: IMaterialBlock[] }) {
+export const generate = async function ({
+  pageName: name,
+  blocks = [],
+}: {
+  pageName: string;
+  blocks: IMaterialBlock[];
+}) {
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
@@ -23,7 +40,7 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
 
   const isPagePathExists = await fsExtra.pathExists(pagePath);
   if (!isPagePathExists) {
-    throw new Error(`页面文件夹「${name}」已存在，无法覆盖，请输入新的页面名称。`);
+    throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
   }
 
   try {
@@ -61,6 +78,14 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
   }
 
   return pageName;
+};
+
+/**
+ *  write the router config
+ */
+export async function createRouter(data) {
+  const { path, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
 }
 
 /**
@@ -70,8 +95,8 @@ export const generate = async function ({ pageName: name, blocks = [] }: { pageN
  */
 export const remove = async function (name: string) {
   await fsExtra.remove(path.join(pagesPath, name));
-}
+};
 
 export const addBlocks = async function (blocks: IMaterialBlock[], pageName: string) {
   return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
-}
+};

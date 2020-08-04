@@ -1,21 +1,17 @@
 import * as ora from 'ora';
-import {
-  isAliNpm, getNpmTarball, getAndExtractTarball
-} from 'ice-npm-utils';
+import { isAliNpm, getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
+import { ALI_NPM_REGISTRY } from '@iceworks/constant';
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './fommatProject';
 import checkEmpty from './checkEmpty';
 
-export {
-  formatProject,
-  checkEmpty,
-};
+export { formatProject, checkEmpty };
 
-interface IEjsOptions {
+export interface IEjsOptions {
   targets?: string[];
   miniappType?: 'runtime' | 'compile';
   mpa?: boolean;
-};
+}
 
 export async function downloadAndGenerateProject(
   projectDir: string,
@@ -23,16 +19,16 @@ export async function downloadAndGenerateProject(
   version?: string,
   registry?: string,
   projectName?: string,
-  ejsOptions?: IEjsOptions,
+  ejsOptions?: IEjsOptions
 ): Promise<void> {
-  registry = registry || await getNpmRegistry(npmName);
+  registry = registry || (await getNpmRegistry(npmName));
 
   // 根据模板创建项目支持的参数
   ejsOptions = {
     targets: ['web'],
     miniappType: 'runtime',
     mpa: false,
-    ...ejsOptions
+    ...ejsOptions,
   };
 
   let tarballURL: string;
@@ -66,13 +62,13 @@ export async function downloadAndGenerateProject(
   } catch (err) {
     console.warn('formatProject error', err.message);
   }
-};
+}
 
 async function getNpmRegistry(npmName: string): Promise<string> {
   if (process.env.REGISTRY) {
     return process.env.REGISTRY;
   } else if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
+    return ALI_NPM_REGISTRY;
   } else {
     return 'https://registry.npm.taobao.org';
   }

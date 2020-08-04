@@ -11,7 +11,9 @@ module.exports = function (cwd, port) {
 
       fs.exists(pathname, (exists) => {
         if (exists) {
-          switch (path.extname(pathname)) { // set HTTP HEAD
+          switch (
+            path.extname(pathname) // set HTTP HEAD
+          ) {
             case '.html':
               res.writeHead(200, { 'Content-Type': 'text/html' });
               break;

@@ -1,0 +1,3 @@
+{
+  "package.component-service.index.templateError": "You can only add component code to <%= jsxFileExtnames %> files"
+}

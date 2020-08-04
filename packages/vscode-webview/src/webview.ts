@@ -2,7 +2,7 @@
 // eslint-disable-next-line
 const vscode = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi() : null;
 
-export const callService = function(service: string, method: string, ...args) {
+export const callService = function (service: string, method: string, ...args) {
   return new Promise((resolve, reject) => {
     const eventId = setTimeout(() => {});
     console.log('webview call vscode service:', service, method, eventId, args);
@@ -24,4 +24,4 @@ export const callService = function(service: string, method: string, ...args) {
       args,
     });
   });
-}
+};

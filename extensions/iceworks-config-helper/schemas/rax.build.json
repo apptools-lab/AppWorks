@@ -3,9 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "title": "The Rax APP build.json Schema",
-  "required": [
-    "plugins"
-  ],
+  "required": ["plugins"],
   "properties": {
     "publicPath": {
       "type": "string",
@@ -21,9 +19,7 @@
       "type": "string",
       "description": "The build file directory",
       "default": "",
-      "examples": [
-        "build"
-      ]
+      "examples": ["build"]
     },
     "hash": {
       "type": "boolean",
@@ -94,9 +90,7 @@
               {
                 "type": "string",
                 "description": "Build Rax App",
-                "enum": [
-                  "build-plugin-rax-app"
-                ]
+                "enum": ["build-plugin-rax-app"]
               },
               {
                 "type": "object",
@@ -106,19 +100,11 @@
                     "description": "Platform targets",
                     "items": {
                       "type": "string",
-                      "enum": [
-                        "web",
-                        "weex",
-                        "miniapp",
-                        "wechat-miniprogram",
-                        "kraken"
-                      ]
+                      "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
                     }
                   }
                 },
-                "required": [
-                  "targets"
-                ]
+                "required": ["targets"]
               }
             ]
           },
@@ -127,10 +113,8 @@
             "items": [
               {
                 "type": "string",
-                "description": "Rax PWA Plugin",
-                "enum": [
-                  "build-plugin-rax-pwa"
-                ]
+                "description": "Rax PHA Plugin",
+                "enum": ["build-plugin-rax-pha"]
               },
               {
                 "type": "object",
@@ -139,107 +123,15 @@
                     "type": "boolean",
                     "description": "Render element snapshot, see https://rax.js.org/docs/en-guide/pwa-snapshot",
                     "default": false
-                  },
-                  "manifest": {
-                    "type": "object",
-                    "description": "Save to desktop, see https://rax.js.org/docs/en-guide/save-to-desktop",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "short_name": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "background_color": {
-                        "type": "string"
-                      },
-                      "icon": {
-                        "type": "string"
-                      },
-                      "start_url": {
-                        "type": "string"
-                      },
-                      "display": {
-                        "type": "string",
-                        "default": "standalone"
-                      }
-                    },
-                    "required": [
-                      "name",
-                      "short_name",
-                      "description",
-                      "icon",
-                      "start_url"
-                    ]
-                  },
-                  "serviceWorker": {
-                    "type": "object",
-                    "description": "Control the cache through Service Worker for faster loading. see: https://rax.js.org/docs/en-guide/pwa-cache",
-                    "properties": {
-                      "cacheId": {
-                        "type": "string"
-                      },
-                      "skipWaiting": {
-                        "type": "boolean"
-                      },
-                      "clientsClaim": {
-                        "type": "boolean"
-                      },
-                      "preCacheUrlList": {
-                        "type": "array",
-                        "items": {}
-                      },
-                      "ignorePatternList": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
-                      "savedCachePatternList": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
-                      "unregister": {
-                        "type": "boolean"
-                      },
-                      "comboPattern": {
-                        "type": "string"
-                      },
-                      "comboSplitSeparator": {
-                        "type": "string"
-                      },
-                      "htmlLoadingTimeout": {
-                        "type": "integer"
-                      }
-                    }
                   }
                 }
               }
             ],
             "examples": [
               [
-                "build-plugin-rax-pwa",
+                "build-plugin-rax-pha",
                 {
-                  "snapshot": false,
-                  "manifest": {
-                    "name": "",
-                    "short_name": "",
-                    "description": "",
-                    "icon": "",
-                    "start_url": ""
-                  },
-                  "serviceWorker": {
-                    "preCacheUrlList": []
-                  }
+                  "snapshot": true
                 }
               ]
             ]
@@ -249,11 +141,7 @@
           },
           {
             "type": "string",
-            "examples": [
-              "build-plugin-rax-compat-react",
-              "build-plugin-rax-ssr",
-              "build-plugin-rax-multi-pages"
-            ]
+            "examples": ["build-plugin-rax-compat-react", "build-plugin-rax-ssr", "build-plugin-rax-multi-pages"]
           }
         ]
       }

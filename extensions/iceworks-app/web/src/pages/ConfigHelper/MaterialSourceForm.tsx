@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dialog, Form, Input, Button } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './MaterialSourceForm.module.scss';
 
 interface IMaterialSourceForm {
@@ -12,6 +13,7 @@ interface IMaterialSourceForm {
 }
 
 const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel }) => {
+  const intl = useIntl();
   const onFormSubmit = (values, errors) => {
     if (errors) {
       return;
@@ -29,28 +31,44 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
       onClose={onCancel}
     >
       <Form value={value} fullWidth className={styles.form}>
-        <Form.Item label="物料名称：" required requiredMessage="请输入物料名称">
-          <Input name="name" placeholder="请输入物料名称" />
+        <Form.Item
+          label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialNameLabel' })}
+          required
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
+        >
+          <Input
+            name="name"
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
+          />
         </Form.Item>
-        <Form.Item label="物料地址：" required requiredMessage="请输入物料地址" format="url">
-          <Input name="source" placeholder="请输入物料地址" />
+        <Form.Item
+          label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURLLabel' })}
+          required
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
+          format="url"
+        >
+          <Input
+            name="source"
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
+          />
         </Form.Item>
-        <Form.Item label="物料描述：">
-          <Input.TextArea name="description" placeholder="请输入物料描述" />
+        <Form.Item label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel' })}>
+          <Input.TextArea
+            name="description"
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescription' })}
+          />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
-          <Form.Submit
-            type="primary"
-            onClick={onFormSubmit}
-            validate
-          >
-            确定
+          <Form.Submit type="primary" onClick={onFormSubmit} validate>
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.confirm" />
           </Form.Submit>
-          <Button onClick={onCancel} className={styles.btn}>取消</Button>
+          <Button onClick={onCancel} className={styles.btn}>
+            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.cancel" />
+          </Button>
         </Form.Item>
       </Form>
     </Dialog>
-  )
-}
+  );
+};
 
 export default MaterialSourceForm;

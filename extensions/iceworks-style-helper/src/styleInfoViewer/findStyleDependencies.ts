@@ -22,22 +22,27 @@ export function findStyleDependencies(file: string) {
       sourceType: 'module',
     });
 
+    // @ts-ignore
     traverse(ast, {
       ImportDeclaration(path) {
         const { node } = path;
         // Example /\.css$|\.scss$|\.sass$/
-        if (new RegExp(`${supportFiles.map(supportFile => `\\.${supportFile}$`).join('|')}`, 'i').test(node.source.value)) {
+        if (
+          new RegExp(`${supportFiles.map((supportFile) => `\\.${supportFile}$`).join('|')}`, 'i').test(
+            node.source.value
+          )
+        ) {
           StyleDependencies.push({
             source: node.source.value,
             // Just return first identifier.
-            identifier: node.specifiers[0] ? node.specifiers[0].local.name : null
+            identifier: node.specifiers[0] ? node.specifiers[0].local.name : null,
           });
         }
-      }
+      },
     });
   } catch (e) {
     // ignore
   }
 
   return StyleDependencies;
-};
+}

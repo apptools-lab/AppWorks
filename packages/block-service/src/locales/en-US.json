@@ -1,0 +1,15 @@
+{
+  "package.block-service.downloadBlock.getDownloadUrl": "Obtain Download URL...",
+  "package.block-service.downloadBlock.getDownloadUrlError": "Failed to obtain url, please copy and open <%= repository %> in browse.",
+  "package.block-service.downloadBlock.unzipCode": "Download and unzip code...",
+  "package.block-service.downloadBlock.unzipCodeError": "Error in unzipping <%= blockName %>，please copy and download from this url: ：<%= tarballURL %>",
+  "package.block-service.downloadBlock.process": "===>>> Downloading：<%= percent %>%",
+  "package.block-service.downloadBlock.downloadError": "Block <%= blockName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
+  "package.block-service.downloadError": "Failed to obtain zips from <%= blockSourceNpm %> ，try to clone the <%= repository %> repository manually.",
+  "package.block-service.uzipError": "Failed to unzip <%= blockName %>，download from：<%= tarballURL %>",
+  "package.block-service.uzipOutTime": "Uzip <%= blockName %> timeout，download from：<%= tarballURL %>",
+  "package.block-service.templateError": "You can only add block codes to  <%= jsxFileExtnames %> ",
+  "package.block-service.notPageFileError": "You can only add block codes to files in <%= pagesPath %>",
+  "package.block-service.startObtainBlock": "> Obtain block codes...",
+  "package.block-service.obtainDone": "> The block code has been downloaded to <%= blockDir %>"
+}

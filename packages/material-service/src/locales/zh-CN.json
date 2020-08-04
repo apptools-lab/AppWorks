@@ -1,0 +1,10 @@
+{
+  "package.materialService.index.webDescription": "基于 Fusion 基础组件和 ICE 脚手架的官方物料",
+  "package.materialService.index.raxTitle": "无线跨端",
+  "package.materialService.index.raxDescription": "基于 Rax 组件和 Rax 脚手架的官方物料",
+  "package.materialService.index.vueTitle": "Vue 物料源",
+  "package.materialService.index.vueDescription": "基于 Element, Vue CLI 的 Vue 官方物料",
+  "package.materialService.index.materialSourceExistError": "物料源已存在。",
+  "package.materialService.index.materialNameExistError": "物料源名称已存在。",
+  "package.materialService.index.materialDataError": "物料源数据错误。"
+}

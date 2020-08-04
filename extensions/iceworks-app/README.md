@@ -23,7 +23,7 @@
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
 
-#### 设置 
+#### 设置
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
 
@@ -53,7 +53,7 @@
 1. 点击左侧面板中页面列表和组件列表中的选项。
 2. 跳转到所选项目所在的源码文件
 
-##### 支持激活添加页面和组件功能 （使用方法参照 [生成页面](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-page-builder)｜[创建组件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-component-builder) ）
+##### 支持激活添加页面和组件功能 （使用方法参照 [可视化搭建插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)）
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87393953-949f4200-c5e1-11ea-896a-fd2d592050e0.gif)
 
@@ -78,7 +78,6 @@
 2. 在出现的命令面板上选择安装为 Dependencies (生产环境的依赖)或 devDependencies (开发环境的依赖)；
 3. 输入需要安装的 npm 包及版本信息，例如 `typescript@latest` ；
 4. npm 包将会自动安装，如果这个包已经添加到了依赖中，那么将会重新安装。
-
 
 ### 命令面板
 

@@ -1,0 +1,16 @@
+{
+  "extends": "../../../tsconfig.webview.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build",
+    "rootDir": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+      "ice": [".ice/index.ts"],
+      "ice/*": [".ice/pages/*"]
+    },
+    "resolveJsonModule": true
+  },
+  "include": ["src/*", ".ice", "src/pages/pageGenerater/app.ts"],
+  "exclude": ["node_modules", "public"]
+}

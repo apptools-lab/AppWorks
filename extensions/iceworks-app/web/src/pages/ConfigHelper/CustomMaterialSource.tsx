@@ -1,6 +1,7 @@
 import React, { useState, Suspense } from 'react';
 import { Icon, List, Button, Dialog, Avatar } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
+import { FormattedMessage, useIntl } from 'react-intl';
 import editIcon from '../../../public/assets/edit.svg';
 import deleteIcon from '../../../public/assets/delete.svg';
 import MaterialSourceForm from './MaterialSourceForm';
@@ -9,7 +10,7 @@ import styles from './CustomMaterialSource.module.scss';
 enum Operation {
   Edit,
   Delete,
-  Create
+  Create,
 }
 
 interface ICustomMaterialSource {
@@ -23,8 +24,9 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   sources = [],
   onSourceAdd,
   onSourceEdit,
-  onSourceDelete
+  onSourceDelete,
 }) => {
+  const intl = useIntl();
   const [visible, setVisible] = useState<boolean>(false);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
@@ -38,36 +40,46 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
       onSourceAdd(values);
     }
     if (Operation.Edit === operation) {
-      onSourceEdit(values, currentMaterialSource as IMaterialSource)
+      onSourceEdit(values, currentMaterialSource as IMaterialSource);
     }
     onDialogCancel();
-  }
+  };
 
   const onAdd = () => {
     setOperation(Operation.Create);
     setCurrentMaterialSource({});
-    onDialogShow()
-  }
+    onDialogShow();
+  };
 
   const onEdit = (materialSource: IMaterialSource) => {
     setOperation(Operation.Edit);
     setCurrentMaterialSource(materialSource);
     onDialogShow();
-  }
+  };
 
   const onDelete = (materialSource: IMaterialSource) => {
     Dialog.confirm({
       title: 'Confirm',
-      content: '是否确定删除该物料源？',
-      onOk: () => onSourceDelete(materialSource)
+      content: intl.formatMessage({ id: 'web.iceworksApp.customMaterialSource.confirmDelete' }),
+      onOk: () => onSourceDelete(materialSource),
     });
-  }
-  const dialogTitle = `${operation === Operation.Edit ? '编辑' : '新增'}物料源`
+  };
+  const dialogTitle =
+    operation === Operation.Edit
+      ? intl.formatMessage({ id: 'web.iceworksApp.customMaterialSource.editMaterialSource' })
+      : intl.formatMessage({ id: 'web.iceworksApp.customMaterialSource.addMaterialSource' });
   return (
     <div className={styles.customMaterialSource}>
       <div className={styles.row}>
-        <span className={styles.label}>自定义物料源</span>
-        <div className={styles.btn}><Button onClick={onAdd}><Icon type="add" />添加</Button></div>
+        <span className={styles.label}>
+          <FormattedMessage id="web.iceworksApp.customMaterialSource.customMaterialSource" />
+        </span>
+        <div className={styles.btn}>
+          <Button onClick={onAdd}>
+            <Icon type="add" />
+            <FormattedMessage id="web.iceworksApp.customMaterialSource.add" />
+          </Button>
+        </div>
       </div>
       <div className={styles.sourcesList}>
         <List size="small">
@@ -88,7 +100,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
           ))}
         </List>
       </div>
-      <Suspense fallback="loading...">
+      <Suspense fallback={intl.formatMessage({ id: 'web.iceworksApp.customMaterialSource.loading' })}>
         <MaterialSourceForm
           value={currentMaterialSource}
           title={dialogTitle}
@@ -98,6 +110,6 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
         />
       </Suspense>
     </div>
-  )
-}
+  );
+};
 export default CustomMaterialSource;

@@ -2,6 +2,7 @@ import 'jest-extended';
 import * as path from 'path';
 import { tmpdir } from 'os';
 import * as rimraf from 'rimraf';
+import { ALI_NPM_REGISTRY, ALI_UNPKG_URL } from '@iceworks/constant';
 import {
   getNpmRegistry,
   getUnpkgHost,
@@ -19,15 +20,12 @@ const defaultRegistry = 'https://registry.npm.taobao.org';
 jest.setTimeout(10 * 1000);
 
 test('getNpmRegistry', () => {
-  const aliRegistry = 'https://registry.npm.alibaba-inc.com';
-
   expect(getNpmRegistry('koa')).toBe(defaultRegistry);
   expect(getNpmRegistry('@alixxx/ice-test')).toBe(defaultRegistry);
-  expect(getNpmRegistry('@ali/ice-test')).toBe(aliRegistry);
-  expect(getNpmRegistry('@alife/ice-test')).toBe(aliRegistry);
-  expect(getNpmRegistry('@alipay/ice-test')).toBe(aliRegistry);
+  expect(getNpmRegistry('@ali/ice-test')).toBe(ALI_NPM_REGISTRY);
+  expect(getNpmRegistry('@alife/ice-test')).toBe(ALI_NPM_REGISTRY);
+  expect(getNpmRegistry('@alipay/ice-test')).toBe(ALI_NPM_REGISTRY);
 });
-
 
 test('getUnpkgHost custom host', () => {
   const custom = 'https://unpkg.example.com';
@@ -42,13 +40,12 @@ test('getUnpkgHost custom host', () => {
 
 test('getUnpkgHost', () => {
   const defaultRegistry = 'https://unpkg.com';
-  const aliRegistry = 'https://unpkg.alibaba-inc.com';
 
   expect(getUnpkgHost('koa')).toBe(defaultRegistry);
-  expect(getUnpkgHost('@ali/ice-test')).toBe(aliRegistry);
-  expect(getUnpkgHost('@alife/ice-test')).toBe(aliRegistry);
-  expect(getUnpkgHost('@alipay/ice-test')).toBe(aliRegistry);
-  expect(getUnpkgHost('@kaola/ice-test')).toBe(aliRegistry);
+  expect(getUnpkgHost('@ali/ice-test')).toBe(ALI_UNPKG_URL);
+  expect(getUnpkgHost('@alife/ice-test')).toBe(ALI_UNPKG_URL);
+  expect(getUnpkgHost('@alipay/ice-test')).toBe(ALI_UNPKG_URL);
+  expect(getUnpkgHost('@kaola/ice-test')).toBe(ALI_UNPKG_URL);
   expect(getUnpkgHost('@alixxx/ice-test')).toBe(defaultRegistry);
 });
 
@@ -106,7 +103,6 @@ test('getNpmClient', () => {
   expect(getNpmClient('@alixxx/ice-test')).toBe(defaultData);
 });
 
-
 test('checkAliInternal', () => {
   return checkAliInternal().then((internal) => {
     console.log('checkAliInternal', internal);
@@ -141,7 +137,10 @@ test('getAndExtractTarball', () => {
 
 test('getAndExtractTarballWithDir', () => {
   const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
-  return getAndExtractTarball(tempDir, `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`)
+  return getAndExtractTarball(
+    tempDir,
+    `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`
+  )
     .then((files) => {
       rimraf.sync(tempDir);
       expect(files.length > 0).toBe(true);

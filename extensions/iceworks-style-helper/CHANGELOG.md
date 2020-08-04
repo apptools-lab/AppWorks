@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.3.4
+- Fix variables completions shown when edit css classes and style keys.
+- Add data recorder.
+
+## 0.3.3
+
+- Support en-US.
+
 ## 0.3.2
 
 - Support nested CSS preview, definition and completion.
