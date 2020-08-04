@@ -75,9 +75,11 @@ export function connectService(
 }
 
 const DEFAULT_ENTRY = 'index';
-export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean): string {
+export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean,): string {
   entryName = entryName || DEFAULT_ENTRY;
-  const basePath = path.join(extensionPath, 'build/');
+  const basePath = path.join(extensionPath, 'build');
+  const basePathOnDisk = vscode.Uri.file(basePath);
+  const basePathUri = basePathOnDisk.with({ scheme: 'vscode-resource' });
   const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, `js/${entryName}.js`));
   const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
   const stylePathOnDisk = vscode.Uri.file(path.join(basePath, `css/${entryName}.css`));
@@ -102,8 +104,17 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
       <title>Iceworks</title>
       ` +
     (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') +
-    `
+    ` 
       <link rel="stylesheet" type="text/css" href="${styleUri}">
+      <script>
+      window.__assets = {
+        ideUrl: '${basePathUri}',
+        canvasUrl: '${basePathUri}',
+        vendorUrl: '${basePathUri}',
+        vendorEntry: 'vendor',
+        // vendorUrl: 'https://g.alicdn.com/iceluna/iceluna-vendor/0.0.2'
+      }
+    </script>
     </head>
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>

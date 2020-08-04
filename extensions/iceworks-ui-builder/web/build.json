@@ -3,13 +3,6 @@
     "writeToDisk": true
   },
   "mpa": true,
-  "vendor": false,
-  "externals": {
-    "fetch-jsonp": "FetchJsonp",
-    "jsonuri": "Jsonuri",
-    "js-beautify": "JsBeautify",
-    "react-monaco-editor": "ReactMonacoEditor"
-  },
   "publicPath": "./",
   "outputDir": "../build",
   "plugins": [
@@ -30,7 +23,10 @@
     [
       "build-plugin-moment-locales",
       {
-        "locales": ["zh-cn", "en-au"]
+        "locales": [
+          "zh-cn",
+          "en-au"
+        ]
       }
     ],
     [

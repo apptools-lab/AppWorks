@@ -21,7 +21,8 @@
   "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-ui-builder.generate-page",
-    "onCommand:iceworks-ui-builder.create-component"
+    "onCommand:iceworks-ui-builder.create-component",
+    "onCommand:iceworks-ui-builder.generate-component"
   ],
   "repository": {
     "type": "git",
@@ -30,6 +31,10 @@
   "main": "./build/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "iceworks-ui-builder.generate-component",
+        "title": "%iceworksUIBuilder.commands.generateComponent.title%"
+      },
       {
         "command": "iceworks-ui-builder.create-component",
         "title": "%iceworksUIBuilder.commands.createComponent.title%"

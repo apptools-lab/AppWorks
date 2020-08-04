@@ -309,6 +309,6 @@ export default {
         ],
       });
     },
-    destroy(appHelper) {},
+    destroy(appHelper) { },
   },
 };

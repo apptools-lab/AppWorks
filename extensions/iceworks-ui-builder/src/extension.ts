@@ -12,7 +12,7 @@ const recorder = new Recorder(name, version);
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const { extensionPath, subscriptions, globalState } = context;
+  const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
 
@@ -21,6 +21,25 @@ export function activate(context: vscode.ExtensionContext) {
 
   // auto set configuration
   initExtension(context);
+
+  function activeComponentGeneratorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksComponentGenerator.extension.webviewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    vscode.commands.registerCommand('iceworks-ui-builder.generate-component', function () {
+      activeComponentGeneratorWebview();
+    })
+  );
 
   function activeComponentCreatorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
@@ -61,4 +80,4 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() {}
+export function deactivate() { }

@@ -6,7 +6,7 @@ const appConfig = {
     routes: [{ path: '/', component: Home }],
   },
   app: {
-    rootId: 'root',
+    rootId: 'ice-container',
   },
 };
 

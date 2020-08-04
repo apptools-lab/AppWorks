@@ -12,9 +12,9 @@
   "web.iceworksUIBuilder.pageGenerater.failGetData": "Fail to get material data. Please try agin later.",
   "web.iceworksUIBuilder.pageGenerater.enterPageName": "Please enter page name.",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "Page generated successfully.",
-  "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "1. Enter Page Name",
+  "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "Enter Page Name",
   "web.iceworksUIBuilder.pageGenerater.pageNameFormat": "Page name must starts with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
-  "web.iceworksUIBuilder.pageGenerater.chooseBlock": "2. Choose Blocks：",
+  "web.iceworksUIBuilder.pageGenerater.chooseBlock": "Choose Blocks",
   "web.iceworksUIBuilder.pageGenerater.createPage": "Generate Page",
   "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "Please choose block from the right side."
 }
