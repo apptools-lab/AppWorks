@@ -51,7 +51,7 @@ PS: 可将 .vscode 目录添加至 .gitignore 配置中。
           "regexp": "ERROR in .*"  // build-scirpt 日志
         },
         "background": {
-          "beginsPattern": ".*@alib/build-scripts.*", // build-scirpt 日志
+          "beginsPattern": ".*(@alib/build-scripts|ice\\.js|rax\\.js).*", // build-scirpt 日志
           "endsPattern": ".*http://localhost:3333.*"  // build-scirpt 日志
         }
       }

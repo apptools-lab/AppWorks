@@ -55,7 +55,7 @@ It is automatically injected by Iceworks and is a standard VS Code debugging con
           "regexp": "ERROR in .*"  // build-scirpt log
         },
         "background": {
-          "beginsPattern": ".*@alib/build-scripts.*", // build-scirpt log
+          "beginsPattern": ".*(@alib/build-scripts|ice\\.js|rax\\.js).*", // build-scirpt log
           "endsPattern": ".*http://localhost:3333.*"  // build-scirpt log
         }
       }

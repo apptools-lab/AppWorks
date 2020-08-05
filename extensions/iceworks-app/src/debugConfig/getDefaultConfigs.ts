@@ -29,7 +29,7 @@ const tasksConfigTemplate = `
         "regexp": "ERROR in .*"
       },
       "background": {
-        "beginsPattern": ".*@alib/build-scripts.*",
+        "beginsPattern": ".*(@alib/build-scripts|ice\\\\.js|rax\\\\.js).*",
         "endsPattern": ".*<%= startUrl %>.*"
       }
     }
