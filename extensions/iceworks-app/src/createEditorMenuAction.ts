@@ -1,26 +1,27 @@
 import * as vscode from 'vscode';
 import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
-import {setDebugConfig} from './debugConfig/index';
+import { setDebugConfig } from './debugConfig/index';
 import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from './constants';
 import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
 
 export default async function createEditorMenuAction(terminals: ITerminalMap) {
-
   const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';
   registerCommand(EDITOR_MENU_RUN_DEBUG, async () => {
-
     // Check dependences
-    if (!await checkPathExists(projectPath, dependencyDir)) {
+    if (!(await checkPathExists(projectPath, dependencyDir))) {
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
-      executeCommand(terminals,
+      executeCommand(
+        terminals,
         {
           command: EDITOR_MENU_RUN_DEBUG,
           title: 'Run Install',
           arguments: [projectPath, createNpmCommand('install')],
-        }, editorTitleRunDevCommandId);
+        },
+        editorTitleRunDevCommandId
+      );
       return;
     }
 

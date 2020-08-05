@@ -20,14 +20,13 @@ function writeConfigFile(filePath: string, config: IDebugConfig) {
   fs.writeFileSync(
     filePath,
     '// See https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md \n' +
-    '// for the documentation about the Iceworks debug \n' +
-    `${JSON.stringify(config, null, '  ')}`
+      '// for the documentation about the Iceworks debug \n' +
+      `${JSON.stringify(config, null, '  ')}`
   );
 }
 
 // Prepare VS Code debug config
 export function setDebugConfig() {
-
   const { rootPath = __dirname } = vscode.workspace;
 
   // Make .vscode directory
@@ -43,7 +42,7 @@ export function setDebugConfig() {
   if (fs.existsSync(launchConfigPath)) {
     const configurations: any[] = [];
     launchConfig = parse(fs.readFileSync(launchConfigPath).toString());
-    (launchConfig.configurations || []).forEach(configuration => {
+    (launchConfig.configurations || []).forEach((configuration) => {
       if (configuration.name !== CONFIG_NAME) {
         configurations.push(configuration);
       }
@@ -62,11 +61,8 @@ export function setDebugConfig() {
     const tasks: any[] = [];
 
     tasksConfig = parse(fs.readFileSync(tasksConfigPath).toString());
-    (tasksConfig.tasks || []).forEach(task => {
-      if (
-        task.label !== CONFIG_START_LABEL &&
-        task.label !== CONFIG_STOP_LABEL
-      ) {
+    (tasksConfig.tasks || []).forEach((task) => {
+      if (task.label !== CONFIG_START_LABEL && task.label !== CONFIG_STOP_LABEL) {
         tasks.push(task);
       }
     });

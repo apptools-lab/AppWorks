@@ -51,15 +51,14 @@ export function getLaunchConfig(): IDebugConfig {
   return {
     version: DEBUG_LAUNCH_VERSION,
     configurations: JSON.parse(
-      ejs.render(
-        launchConfigTemplate, {
+      ejs.render(launchConfigTemplate, {
         configName: CONFIG_NAME,
         startUrl: START_URL,
         startLabel: CONFIG_START_LABEL,
-        stopLabel: CONFIG_STOP_LABEL
+        stopLabel: CONFIG_STOP_LABEL,
       })
-    )
-  }
+    ),
+  };
 }
 
 // https://code.visualstudio.com/docs/editor/tasks#vscode
@@ -68,12 +67,11 @@ export function getTasksConfig(): IDebugConfig {
   return {
     version: DEBUG_TASKS_VERSION,
     tasks: JSON.parse(
-      ejs.render(
-        tasksConfigTemplate, {
+      ejs.render(tasksConfigTemplate, {
         startUrl: START_URL,
         startLabel: CONFIG_START_LABEL,
-        stopLabel: CONFIG_STOP_LABEL
+        stopLabel: CONFIG_STOP_LABEL,
       })
-    )
-  }
+    ),
+  };
 }
