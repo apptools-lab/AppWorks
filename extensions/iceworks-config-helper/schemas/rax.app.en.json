@@ -41,6 +41,7 @@
     "window": {
       "type": "object",
       "description": "Set the application window",
+      "default": {},
       "properties": {
         "titleBarColor": {
           "type": "string",
@@ -183,7 +184,7 @@
                 "type": "string",
                 "description": " tab name",
                 "default": "",
-                "examples": ["首页"]
+                "examples": ["Home Page"]
               },
               "icon": {
                 "type": "string",
@@ -210,11 +211,11 @@
             "items": [
               {
                 "pagePath": "pages/index/index",
-                "name": "首页"
+                "name": "Home Page"
               },
               {
                 "pagePath": "pages/logs/logs",
-                "name": "日志"
+                "name": "Logs"
               }
             ]
           }
