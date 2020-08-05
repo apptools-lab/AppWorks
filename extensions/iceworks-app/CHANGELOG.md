@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.4.1
+- feat: add Iceworks debug.
+
 ## 0.4.0
 
 - refactor: auto start status bar and editor title 

@@ -90,6 +90,12 @@ If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemN
     > NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
 2. Click the Iceworks plugin icon to enter the Iceworks command palette.
 
+### Debug
+
+![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
+
+For more information, please see [Reference Document](./docs/debug.en.md)
+
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Viewer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -125,7 +125,7 @@
         }
       },
       {
-        "command": "iceworksApp.editorMenu.runDev",
+        "command": "iceworksApp.editorMenu.runDebug",
         "title": "%iceworksApp.command.npmScripts.runDev.title%",
         "icon": {
           "light": "assets/light/runDev.svg",
@@ -266,7 +266,7 @@
       ],
       "editor/title": [
         {
-          "command": "iceworksApp.editorMenu.runDev",
+          "command": "iceworksApp.editorMenu.runDebug",
           "group": "navigation@01",
           "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
@@ -415,12 +415,14 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/recorder": "^0.1.0",
     "@iceworks/common-service": "^0.1.4",
+    "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.6",
+    "@iceworks/recorder": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.2",
-    "@iceworks/i18n": "^0.1.0",
+    "comment-json": "^3.0.2",
+    "ejs": "^3.1.3",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
     "latest-version": "^5.1.0",
@@ -428,6 +430,7 @@
     "util": "^0.12.3"
   },
   "extensionDependencies": [
+    "msjsdiag.debugger-for-chrome",
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-ui-builder",
     "iceworks-team.iceworks-material-helper"
