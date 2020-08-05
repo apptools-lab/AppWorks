@@ -5,6 +5,6 @@ module.exports = deepmerge(eslint, {
   plugins: ['@iceworks/security-practices'],
   rules: {
     'react/react-in-jsx-scope': 'off', // For rax
-    '@iceworks/security-practices/no-http-url': 'warn'
-  }
+    '@iceworks/security-practices/no-http-url': 'warn',
+  },
 });

@@ -1,4 +1,4 @@
-import docsUrl from '../docsUrl'
+import docsUrl from '../docsUrl';
 
 const RULE_NAME = 'no-http-url';
 
@@ -7,17 +7,17 @@ module.exports = {
   meta: {
     type: 'suggestion',
     docs: {
-      url: docsUrl(RULE_NAME)
+      url: docsUrl(RULE_NAME),
     },
     fixable: 'code',
     messages: {
-      noHttpUrl: 'Recommended \'{{url}}\' switch to HTTPS'
+      // eslint-disable-next-line
+      noHttpUrl: "Recommended '{{url}}' switch to HTTPS",
     },
   },
   create(context: any) {
     return {
       Literal: function handleRequires(node: any) {
-
         if (node.value.indexOf('http:') === 0) {
           context.report({
             node,
@@ -27,10 +27,10 @@ module.exports = {
             },
             fix: (fixer: any) => {
               return fixer.replaceText(node, `'${node.value.replace('http:', 'https:')}'`);
-            }
+            },
           });
         }
       },
     };
-  }
+  },
 };
