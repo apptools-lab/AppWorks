@@ -48,6 +48,7 @@ Or you can only use extends to set default rules config.
 ## Supported Rules
 
 * [`no-http-url`](./docs/rules/no-http-url.md) Recommended the http url switch to HTTPS.
+* [`no-internal-url`](./docs/rules/no-internal-url.md) The group internal url is not recommended.
 * [`no-secret-info`](./docs/rules/no-secret-info.md) Don't show `password` `token` and `secret` in plain text.
 
 
