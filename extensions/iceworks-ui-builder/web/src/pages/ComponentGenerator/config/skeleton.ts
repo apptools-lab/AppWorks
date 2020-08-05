@@ -1,5 +1,10 @@
 /* eslint-disable */
 import { componentsMap, componentList } from '@ali/iceluna-config-example';
+import { vscodeApi } from '@iceworks/vscode-webview';
+import callService from '../../../callService';
+
+//@ts-ignore
+window.vscode = vscodeApi;
 
 export default {
   constants: {
@@ -56,6 +61,25 @@ export default {
         type: 'Divider',
         props: {
           align: 'right',
+        },
+      },
+      {
+        addonKey: 'generateCode',
+        type: 'Custom',
+        props: {
+          align: 'right',
+          width: 86,
+        },
+        addonProps: {
+          onClick: async (schema) => {
+            try {
+              if (schema) {
+                await callService('component', 'generateComponentCode', schema);
+              }
+            } catch (err) {
+
+            }
+          }
         },
       },
       {

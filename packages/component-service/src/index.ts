@@ -17,6 +17,7 @@ import {
   checkIsTemplate,
   getPackageJSON,
 } from '@iceworks/project-service';
+import CodeGenerator from '@ali/lowcode-code-generator';
 import insertComponent from './utils/insertComponent';
 import i18n from './i18n';
 
@@ -118,4 +119,21 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   });
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
+}
+
+export default async function generateComponentCode(schema: any) {
+  const componentName = await vscode.window.showInputBox({
+    placeHolder: '名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符',
+  });
+  if (!componentName) {
+    return;
+  }
+
+  await generateCode(schema);
+}
+
+async function generateCode(schema: any) {
+  const createIceJsProjectBuilder = CodeGenerator.solutions.icejs;
+  const builder = createIceJsProjectBuilder();
+  return await builder.generateProject(schema);
 }
