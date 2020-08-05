@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import * as _ from 'lodash';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useContext } from 'react';
 import { Box } from '@alifd/next';
-import { DefaultSchema, formdidNotEditAttrs, isEqual } from '../utils';
+import { isEqual } from '../utils';
+import { changeProviderContent } from '../pages/JSONForm/index';
 
 const ChangeProvider = ({ fieldKey, children }) => {
-  const [value, setValue] = useState(DefaultSchema[fieldKey]);
-
-  // console.log('key: ${fieldKey}, value: ${value}`);
-  // 侧边栏样式控制
+  // const {defaultSchema, formCannotEditProps} = useContext(changeProviderContent);
   const [siderStyle, setSiderStyle] = useState({ backgroundColor: '#1e1e1e', width: '2px', margin: '0 2px' });
-
+  const { syncJsonContentObjInWebView, defaultSchema } = useContext(changeProviderContent);
   useEffect(() => {
-    window.addEventListener('iceworks-config-helper: updateJSON', (e) => {
-      if (e.data.currentConfig) setValue(e.data.currentConfig[fieldKey] || DefaultSchema[fieldKey]);
-    });
-    // console.log(fieldKey,value);
+    const currentValue = syncJsonContentObjInWebView[fieldKey];
+    const defaultValue = defaultSchema[fieldKey];
     setSiderStyle(
-      isEqual(value, DefaultSchema[fieldKey]) ||
-        (value === '' && DefaultSchema[fieldKey] === undefined) ||
-        formdidNotEditAttrs.includes(fieldKey)
+      isEqual(currentValue, defaultValue) ||
+        isEqual(currentValue, {}) ||
+        ((currentValue === '' || currentValue === false) && defaultValue === undefined) ||
+        currentValue === undefined
         ? { backgroundColor: '#1e1e1e', width: '2px', margin: '0 2px' }
         : { backgroundColor: '#0d7c9f', width: '2px', margin: '10px 2px 0px 2px' }
     );
-  }, [fieldKey, value]);
+  }, [syncJsonContentObjInWebView]);
 
   return (
     <Box direction="row">
-      <div style={siderStyle} onClick={() => console.log(value)} />
+      <div style={siderStyle} />
       <div>{React.Children.only(children)}</div>
     </Box>
   );

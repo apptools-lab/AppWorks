@@ -1,55 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable dot-notation */
 import React, { useState, useEffect, memo } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
-import * as _ from 'lodash';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
+import callService from '../../callService';
 import {
-  getMessageForExtension,
+  createIncremetalUpdateForExtension,
   setIncreamentalUpdateFromExtension,
   isEqual,
-  getVScode,
-  getSyncJsonContentObj,
-  formdidNotEditAttrs,
   initDefaultValue,
+  createUISchema,
+  getMockData,
 } from '../../utils';
 
-// eslint-disable-next-line no-undef
-export const vscode = getVScode();
-
-// covert array and object to editInJson to Edit in json field
-const uiSchema = {};
-const createUISchema = (schema) => {
-  _.forIn(schema.properties, (value, key) => {
-    if (value['type'] === undefined || value['type'] === 'object' || value['type'] === 'array') {
-      uiSchema[key] = { 'ui:field': 'EditInFile' };
-    }
-  });
-};
-
-const updateChangeProviderValue = (e) => {
-  // send message for change provider
-  const event = document.createEvent('HTMLEvents');
-  event.initEvent('iceworks-config-helper: updateJSON', false, true);
-  event['data'] = { currentConfig: e };
-  window.dispatchEvent(event);
-};
-
-const JSONSchemaForm = ({ buildJson, loading, schema }) => {
-  const [formdata, setFormData] = useState(buildJson);
+const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) => {
+  const [formdata, setFormData] = useState(jsonContent);
   const setJson = async (e) => {
-    // 发送变化给 ChangeProvider
-    updateChangeProviderValue(e);
-
-    // 发布数据变化给 VSCode 插件本体
-    const message = getMessageForExtension(e);
-    if (!loading && message) {
-      vscode.postMessage({ JsonIncrementalUpdate: message, command: null });
-    }
-
-    // 更新插件的数据
+    setNewWebviewData(e);
     setFormData(e);
   };
 
@@ -70,59 +40,95 @@ const JSONSchemaForm = ({ buildJson, loading, schema }) => {
 };
 
 const MemoJSONSchemaForm = memo(JSONSchemaForm, isEqual);
+export const changeProviderContent = React.createContext({
+  defaultSchema: {},
+  formCannotEditProps: [],
+  syncJsonContentObjInWebView: {},
+});
 
 const JSONForm = () => {
+  const intl = useIntl();
   const [formKey, setKey] = useState(0);
-  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentSchema, setCurrentSchema] = useState({});
-  const [locale, setLocale] = useState('zh-cn');
-  // const intl = useIntl();
-  // 监听上传的 JSON
+  const [syncJsonContentObjInWebView, setSyncJsonContentObjInWebView] = useState({});
+  const [formCannotEditProps, setFormCannotEditProps] = useState([]);
+  const [uischema, setUISchema] = useState({});
+  const [defaultSchema, setDefaultSchema] = useState({});
+  const [newWebViewData, setNewWebviewData] = useState(null);
+
   useEffect(() => {
     window.addEventListener('message', (event) => {
-      const message = event.data;
-      const { JsonContent, command, locale, schema } = message;
+      const { command, JsonContent } = event.data;
 
-      // 初始化
-      if (command === 'initWebview') {
-        initDefaultValue(schema);
-        createUISchema(schema);
-        setCurrentSchema(schema);
-        setLoading(false);
-        vscode.postMessage({ webviewCannotEditProps: formdidNotEditAttrs });
-        setLocale(locale);
+      if (command === 'incrementalUpdateJsonForWebview') {
+        // 进行增量更新
+        setSyncJsonContentObjInWebView(setIncreamentalUpdateFromExtension(JsonContent, syncJsonContentObjInWebView));
+        setKey(Date.now());
       }
-      // 进行增量更新
-      setIncreamentalUpdateFromExtension(JsonContent);
-      const syncJsonData = getSyncJsonContentObj();
-      console.log('syncBuildJson', syncJsonData);
-
-      // 更新变量
-      setFormData(syncJsonData);
-      setKey(Date.now());
-      updateChangeProviderValue(syncJsonData);
-      console.log('formKey', formKey);
     });
   }, []);
 
+  useEffect(() => {
+    const updateJsonToExtension = async () => {
+      const { updateMessage, newSyncJsonContentObj } = createIncremetalUpdateForExtension(
+        newWebViewData,
+        formCannotEditProps,
+        defaultSchema,
+        syncJsonContentObjInWebView
+      );
+      if (Object.keys(updateMessage).length !== 0) {
+        setSyncJsonContentObjInWebView(newSyncJsonContentObj);
+        await callService('configService', 'updateJsonFile', updateMessage);
+      }
+    };
+    updateJsonToExtension();
+  }, [newWebViewData]);
+
+  useEffect(() => {
+    const initWebView = async () => {
+      const { webviewCannotEditProps, schema, JsonContent } =
+        (await callService('configService', 'initJsonForWeb')) || getMockData();
+      setFormCannotEditProps(webviewCannotEditProps);
+      setDefaultSchema(initDefaultValue(schema));
+      setCurrentSchema(schema);
+      setUISchema(createUISchema(webviewCannotEditProps));
+      setSyncJsonContentObjInWebView(setIncreamentalUpdateFromExtension(JsonContent, syncJsonContentObjInWebView));
+      setKey(Date.now());
+      setLoading(false);
+    };
+    initWebView();
+  }, []);
   return (
     <>
       {loading ? (
         <Loading
-          tip="Setting file is not valiable now...   Please fix it and retry."
+          tip={intl.formatMessage({ id: 'web.iceworksConfigHelper.index.settingFileNotReady' })}
           style={{ width: '100%', height: '80vh', whiteSpace: 'pre-wrap' }}
         />
       ) : (
         <Card free style={{ background: '#1e1e1e' }}>
-          <MemoJSONSchemaForm buildJson={formData} key={formKey} loading={loading} schema={currentSchema} />
+          <changeProviderContent.Provider value={{ defaultSchema, formCannotEditProps, syncJsonContentObjInWebView }}>
+            <MemoJSONSchemaForm
+              jsonContent={syncJsonContentObjInWebView}
+              uiSchema={uischema}
+              key={formKey}
+              setNewWebviewData={setNewWebviewData}
+              schema={currentSchema}
+            />
+          </changeProviderContent.Provider>
         </Card>
       )}
     </>
   );
 };
 
-vscode.postMessage({
-  command: 'iceworks-config-helper:webviewLoadingDone',
-});
-export default JSONForm;
+const IntlJsonForm = () => {
+  return (
+    <LocaleProvider>
+      <JSONForm />
+    </LocaleProvider>
+  );
+};
+
+export default IntlJsonForm;

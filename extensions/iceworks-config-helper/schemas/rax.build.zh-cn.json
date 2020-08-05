@@ -7,28 +7,28 @@
   "properties": {
     "publicPath": {
       "type": "string",
-      "description": "The public URL of the output directory.",
+      "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 build 命令时生效。",
       "default": "/"
     },
     "devPublicPath": {
       "type": "string",
-      "description": "The public URL of the dev server output directory.",
+      "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 start 命令时生效。",
       "default": "/"
     },
     "outputDir": {
       "type": "string",
-      "description": "The build file directory",
+      "description": "修改构建后的文件目录",
       "default": "",
       "examples": ["build"]
     },
     "hash": {
       "type": "boolean",
-      "description": "Whether each webpack build generates a unique hash",
+      "description": "如果希望构建后的资源带 hash 版本，可以将 hash 设置为 true",
       "default": false
     },
     "alias": {
       "type": "object",
-      "description": "Create aliases to import or require certain modules more easily.",
+      "description": "使用别名简化引入语句",
       "default": {},
       "examples": [
         {
@@ -38,50 +38,52 @@
     },
     "devServer": {
       "type": "object",
-      "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
+      "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制",
+      "default": {},
       "properties": {
         "compress": {
           "type": "boolean",
-          "description": "Enable gzip compression for everything served",
+          "description": "为所有服务启用 gzip 压缩",
           "default": false
         },
         "disableHostCheck": {
           "type": "boolean",
-          "description": "When set to true this option bypasses host checking. THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks.",
+          "description": "当设置为真时，此选项绕过主机检查。我们不建议这样做，因为不检查主机的应用程序容易受到DNS重新绑定攻击。",
           "default": false
         },
         "clientLogLevel": {
           "type": "string",
-          "description": "The the console in your DevTools will show different level messages.",
+          "description": "DevTools中的控制台将显示不同级别的消息。",
           "default": "error",
           "pattern": "^(info|silent|trace|debug|info|warn|error|none|warning)$"
         },
         "hot": {
           "type": "boolean",
-          "description": "Enable webpack's Hot Module Replacement feature",
+          "description": "启用 webpack 的热模块替换功能",
           "default": false
         },
         "quiet": {
           "type": "boolean",
-          "description": "With devServer.quiet enabled, nothing except the initial startup information will be written to the console.",
+          "description": "是否设置静音。启用静音后，除了初始启动信息外，不会向控制台写入任何内容。",
           "default": false
         },
         "overlay": {
           "type": "boolean",
-          "description": "Shows a full-screen overlay in the browser when there are compiler errors or warnings. If you want to show only compiler errors.",
+          "description": "当出现编译器错误或警告时，在浏览器中显示全屏覆盖。这将只显示编译器错误。",
           "default": false
         },
         "port": {
           "type": "integer",
-          "description": "Specify a port number to listen for requests on.",
+          "description": "监听的端口号",
           "default": 9999
         }
       }
     },
     "plugins": {
       "type": "array",
-      "description": "Compiler plugins",
+      "description": "编译插件",
       "additionalItems": true,
+      "default": [],
       "items": {
         "anyOf": [
           {
@@ -89,7 +91,7 @@
             "items": [
               {
                 "type": "string",
-                "description": "Build Rax App",
+                "description": "编译 Rax App",
                 "enum": ["build-plugin-rax-app"]
               },
               {
@@ -97,7 +99,7 @@
                 "properties": {
                   "targets": {
                     "type": "array",
-                    "description": "Platform targets",
+                    "description": "项目运行的平台",
                     "items": {
                       "type": "string",
                       "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
@@ -113,23 +115,37 @@
             "items": [
               {
                 "type": "string",
-                "description": "Rax PHA Plugin",
-                "enum": ["build-plugin-rax-pha"]
+                "description": "Rax PWA 插件",
+                "enum": ["build-plugin-rax-pwa"]
               },
               {
                 "type": "object",
                 "properties": {
+                  "manifest": {
+                    "type": "object",
+                    "description": "浏览器可以将支持 PWA 的网站保存至桌面，获得比原生应用更轻巧的体积和比 Web 应用更强大的功能。它能拥有原生 APP 应用一般的启动闪屏，也能像原生 APP 应用一样全屏展示。",
+                    "default": {},
+                    "additionalProperties": true
+                  },
                   "snapshot": {
                     "type": "boolean",
-                    "description": "Render element snapshot, see https://rax.js.org/docs/en-guide/pwa-snapshot",
+                    "description": "节点快照可将 HTML 容器填充为用户上一次访问时对应的内容，极速展示页面内容，提升首屏加载速度。",
                     "default": false
+                  },
+                  "serviceWorker": {
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "使用 Service Worker 控制缓存，以获得更快的加载速度。"
                   }
                 }
               }
             ],
             "examples": [
               [
-                "build-plugin-rax-pha",
+                "build-plugin-rax-pwa",
                 {
                   "snapshot": true
                 }
@@ -141,7 +157,12 @@
           },
           {
             "type": "string",
-            "examples": ["build-plugin-rax-compat-react", "build-plugin-rax-ssr", "build-plugin-rax-multi-pages"]
+            "examples": [
+              "build-plugin-rax-compat-react",
+              "build-plugin-rax-ssr",
+              "build-plugin-rax-multi-pages",
+              "build-plugin-rax-component"
+            ]
           }
         ]
       }

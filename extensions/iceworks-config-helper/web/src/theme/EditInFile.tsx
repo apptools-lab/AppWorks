@@ -1,15 +1,15 @@
 import React from 'react';
-import { vscode } from '@/pages/JSONForm/index';
-import { DefaultSchema } from '@/utils';
+import callService from '../callService';
+import { changeProviderContent } from '../pages/JSONForm/index';
 
 const EditInFile = ({ name }) => {
   // 设定默认值并发送给插件和合并器 utils.tsx
+  const { defaultSchema } = React.useContext(changeProviderContent);
   const sendDefaultValue = () => {
     const message = {};
-    message[name] = DefaultSchema[name];
-    vscode.postMessage({ JsonIncrementalUpdate: message, command: 'iceworks-config-helper:editInBuild.json' });
+    message[name] = defaultSchema[name];
+    callService('configService', 'editInJson', message);
   };
-  // console.log(idSchema);
   return <a onClick={sendDefaultValue}>Edit in build.json</a>;
 };
 export default EditInFile;

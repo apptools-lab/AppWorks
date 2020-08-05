@@ -39,6 +39,7 @@
     "devServer": {
       "type": "object",
       "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
+      "default": {},
       "properties": {
         "compress": {
           "type": "boolean",
@@ -82,6 +83,7 @@
       "type": "array",
       "description": "Compiler plugins",
       "additionalItems": true,
+      "default": [],
       "items": {
         "anyOf": [
           {
@@ -113,23 +115,37 @@
             "items": [
               {
                 "type": "string",
-                "description": "Rax PHA Plugin",
-                "enum": ["build-plugin-rax-pha"]
+                "description": "Rax PWA plugin",
+                "enum": ["build-plugin-rax-pwa"]
               },
               {
                 "type": "object",
                 "properties": {
+                  "manifest": {
+                    "type": "object",
+                    "description": "Browsers can save PWA-enabled websites to the desktop for a smaller size and more powerful functionality than native apps. It can have a splash screen like a native APP, or a full screen display like a native APP.",
+                    "default": {},
+                    "additionalProperties": true
+                  },
                   "snapshot": {
                     "type": "boolean",
-                    "description": "Render element snapshot, see https://rax.js.org/docs/en-guide/pwa-snapshot",
+                    "description": "The snapshot can fill the HTML container with the content corresponding to the last time the user visited it. It makes displaying page content in a high speed, and improves the loading speed of the first screen.",
                     "default": false
+                  },
+                  "serviceWorker": {
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Use the Service Worker to control the cache for faster loading times."
                   }
                 }
               }
             ],
             "examples": [
               [
-                "build-plugin-rax-pha",
+                "build-plugin-rax-pwa",
                 {
                   "snapshot": true
                 }
@@ -141,7 +157,12 @@
           },
           {
             "type": "string",
-            "examples": ["build-plugin-rax-compat-react", "build-plugin-rax-ssr", "build-plugin-rax-multi-pages"]
+            "examples": [
+              "build-plugin-rax-compat-react",
+              "build-plugin-rax-ssr",
+              "build-plugin-rax-multi-pages",
+              "build-plugin-rax-component"
+            ]
           }
         ]
       }

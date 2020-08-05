@@ -114,7 +114,7 @@
     },
     "devServer": {
       "type": "object",
-      "description": "注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。",
+      "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。",
       "default": {},
       "examples": [
         {
@@ -123,8 +123,7 @@
           "clientLogLevel": "error",
           "hot": true,
           "quiet": true,
-          "overlay": false,
-          "port": 9999
+          "overlay": false
         }
       ],
       "additionalProperties": true,
@@ -157,13 +156,8 @@
         },
         "overlay": {
           "type": "boolean",
-          "description": "当出现编译器错误或警告时，在浏览器中显示全屏覆盖。这将只想显示编译器错误。",
+          "description": "当出现编译器错误或警告时，在浏览器中显示全屏覆盖。这将只显示编译器错误。",
           "default": false
-        },
-        "port": {
-          "type": "integer",
-          "description": "指定监听的端口号。",
-          "default": 9999
         }
       }
     },

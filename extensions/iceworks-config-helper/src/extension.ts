@@ -1,28 +1,34 @@
 import * as vscode from 'vscode';
-import { getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
+import { recordDAU, Recorder } from '@iceworks/recorder';
 import {
-  isBuildJson,
+  isConfigJson,
   updateJsonForWeb,
-  updateJsonFile,
   clearCache,
   activePanelEntry,
   setSourceJSON,
   setJSONFileName,
-} from './loadJson';
+  services,
+} from './services';
 import i18n from './i18n';
+
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
   await setSourceJSON();
   const { extensionPath, subscriptions } = context;
 
-  // auto set configuration
   initExtension(context);
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 
   function activeWebview(execJsonFileName: string) {
     setJSONFileName(execJsonFileName);
+    recordDAU();
+
     if (webviewPanel) {
       webviewPanel.dispose();
     }
@@ -36,7 +42,6 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-    console.log(webviewPanel.webview.html);
     webviewPanel.onDidDispose(
       () => {
         webviewPanel = undefined;
@@ -45,17 +50,10 @@ export async function activate(context: vscode.ExtensionContext) {
       null,
       context.subscriptions
     );
-    webviewPanel.webview.onDidReceiveMessage(
-      (message) => {
-        updateJsonFile(message, webviewPanel);
-      },
-      undefined,
-      context.subscriptions
-    );
-    // connectService(webviewPanel, context, { services, logger})
+    connectService(webviewPanel, context, { services, recorder });
   }
-  activePanelEntry(vscode.window.activeTextEditor);
-  console.log('activeTextEditor', vscode.window.activeTextEditor);
+
+  activePanelEntry();
 
   subscriptions.push(
     vscode.commands.registerCommand('iceworks-config-helper.buildJson.start', () => {
@@ -67,13 +65,13 @@ export async function activate(context: vscode.ExtensionContext) {
   );
   subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
-      if (isBuildJson(event.document)) {
+      if (isConfigJson(event.document, ['build.json', 'app.json'])) {
         updateJsonForWeb(event.document.getText(), webviewPanel);
       }
     })
   );
-  vscode.window.onDidChangeActiveTextEditor((e) => {
-    activePanelEntry(e);
+  vscode.window.onDidChangeActiveTextEditor(() => {
+    activePanelEntry();
   });
   console.log('confighelper active');
 }

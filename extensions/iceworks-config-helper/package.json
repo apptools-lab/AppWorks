@@ -27,6 +27,10 @@
       {
         "fileMatch": "build.json",
         "url": "./schemas/ice.build.en.json"
+      },
+      {
+        "fileMatch": "app.json",
+        "url": "./schemas/rax.app.en.json"
       }
     ],
     "commands": [

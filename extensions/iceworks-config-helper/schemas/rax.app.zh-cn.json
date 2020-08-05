@@ -41,10 +41,11 @@
     "window": {
       "type": "object",
       "description": "设置应用窗口表现",
+      "default": {},
       "properties": {
         "titleBarColor": {
           "type": "string",
-          "description": "title bar color, using decimal color value，range: (0-255) (Only for mini programs) ",
+          "description": "标题栏颜色，使用十进制颜色值，范围:(0-255) (只在小程序里使用) ",
           "examples": [255]
         },
         "pullRefresh": {
@@ -54,7 +55,7 @@
         },
         "title": {
           "type": "string",
-          "description": "title for web and mini programs",
+          "description": "标题 （可在小程序和网页里使用）",
           "default": "",
           "examples": ["title"]
         },
