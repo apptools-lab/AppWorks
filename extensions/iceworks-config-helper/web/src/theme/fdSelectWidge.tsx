@@ -11,16 +11,14 @@ const SelectWidget = ({ id, options, disabled, readonly, value, onChange, onBlur
   const fdonFocus = (e) => onFocus(id, e.target.value);
 
   return (
-    <>
-      <Select
-        defaultValue={value}
-        dataSource={options.enumOptions}
-        disabled={disabled || readonly}
-        onChange={fdonChange}
-        onBlur={fdonBlur}
-        onFocus={fdonFocus}
-      />
-    </>
+    <Select
+      defaultValue={value}
+      dataSource={options.enumOptions}
+      disabled={disabled || readonly}
+      onChange={fdonChange}
+      onBlur={fdonBlur}
+      onFocus={fdonFocus}
+    />
   );
 };
 

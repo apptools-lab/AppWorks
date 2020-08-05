@@ -3,6 +3,7 @@ import { FieldTemplateProps } from '@rjsf/core';
 import { List } from '@alifd/next';
 import ChangeProvider from './ChangeProvider';
 
+const INPUT_STYLE = { marginBottom: 15, color: 'white' };
 const FieldTemplate = ({
   id,
   children,
@@ -14,10 +15,10 @@ const FieldTemplate = ({
 }: FieldTemplateProps) => {
   return (
     <ChangeProvider fieldKey={label}>
-      <div style={{ marginBottom: 15, color: 'white' }}>
+      <div style={INPUT_STYLE}>
         <h3>{label}</h3>
 
-        {schema.type === 'boolean' ? <></> : <p className="fddescription">{rawDescription}</p>}
+        {schema.type === 'boolean' ? null : <p className="fddescription">{rawDescription}</p>}
         {children}
         {rawErrors.length > 0 && (
           <List>

@@ -10,14 +10,13 @@ const appJsonPath = `${vscode.workspace.rootPath}/src/app.json`;
 const buildJsonUri = vscode.Uri.file(buildJsonPath);
 const appJsonUri = vscode.Uri.file(appJsonPath);
 
-let projectFramework;
 let jsonFileName;
-let syncJsonContentObj;
+let syncJson;
 
-const initJsonForWeb = (panel) => {
+const initJsonForWeb = async (panel) => {
   const formContent = fse.readFileSync(jsonFileName === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
   // eslint-disable-next-line
-  const schema = require(`../schemas/${projectFramework === 'icejs' ? 'ice' : 'rax'}.${jsonFileName}.${
+  const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${jsonFileName}.${
     vscode.env.language
   }.json`);
 
@@ -25,10 +24,10 @@ const initJsonForWeb = (panel) => {
 
   try {
     formContentObj = JSON.parse(formContent);
-    syncJsonContentObj = formContentObj;
+    syncJson = formContentObj;
   } catch {
     if (formContent.length < 10) {
-      syncJsonContentObj = {};
+      syncJson = {};
     } else {
       vscode.window.showWarningMessage(
         i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', { JsonFileName: jsonFileName })
@@ -37,11 +36,10 @@ const initJsonForWeb = (panel) => {
   }
 
   const initmessage = {
-    JsonContent: formContentObj,
-    command: 'initWebview',
-    loacale: vscode.env.language,
+    jsonContent: formContentObj,
     schema,
-    webviewCannotEditProps: createWebviewCannotEditProps(schema),
+    currentFormCannotEditProps: getFormCannotEditProps(schema),
+    currentJsonFileName: `${jsonFileName}.json`,
   };
 
   return initmessage;
@@ -49,17 +47,17 @@ const initJsonForWeb = (panel) => {
 
 const updateJsonFile = (JsonIncrementalUpdate) => {
   const currentJsonEditer = findBuildJsonEditor(`${jsonFileName}.json`);
-  increamentalUpdateFromWebView(JsonIncrementalUpdate, false);
+  setSyncJson(JsonIncrementalUpdate, false);
 
   if (currentJsonEditer) {
     const end = new vscode.Position(currentJsonEditer.document.lineCount + 1, 0);
     currentJsonEditer.edit((editor) => {
-      editor.replace(new vscode.Range(new vscode.Position(0, 0), end), JSON.stringify(syncJsonContentObj, null, '\t'));
+      editor.replace(new vscode.Range(new vscode.Position(0, 0), end), JSON.stringify(syncJson, null, '\t'));
     });
   } else {
     fse.writeFile(
       jsonFileName === 'build' ? buildJsonPath : appJsonPath,
-      JSON.stringify(syncJsonContentObj, null, '\t'),
+      JSON.stringify(syncJson, null, '\t'),
       (err) => {
         console.log(err);
       }
@@ -70,7 +68,7 @@ const updateJsonFile = (JsonIncrementalUpdate) => {
 
 const editInJson = (JsonIncrementalUpdate) => {
   let currentJsonEditer = findBuildJsonEditor(`${jsonFileName}.json`);
-  increamentalUpdateFromWebView(JsonIncrementalUpdate, true);
+  setSyncJson(JsonIncrementalUpdate, true);
 
   const currentKey = Object.keys(JsonIncrementalUpdate)[0];
   if (!currentJsonEditer) {
@@ -84,7 +82,7 @@ const editInJson = (JsonIncrementalUpdate) => {
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
   currentJsonEditer!.insertSnippet(
     new vscode.SnippetString(
-      JSON.stringify(syncJsonContentObj, undefined, '\t').replace(`"${currentKey}": `, `"${currentKey}": $1`)
+      JSON.stringify(syncJson, undefined, '\t').replace(`"${currentKey}": `, `"${currentKey}": $1`)
     ),
     new vscode.Range(new vscode.Position(0, 0), new vscode.Position(currentJsonEditer!.document.lineCount + 1, 0))
   );
@@ -111,35 +109,35 @@ export function activePanelEntry() {
   }
 }
 
-function increamentalUpdateForVebview(changedJsonFile) {
-  const message = {};
+function getIncreamentalUpdate(changedJsonFile) {
+  const incrementalChange = {};
 
-  Object.keys(syncJsonContentObj).forEach((e) => {
+  Object.keys(syncJson).forEach((e) => {
     if (changedJsonFile[e] === undefined) {
-      message[e] = null;
+      incrementalChange[e] = null;
     }
   });
 
   _.forIn(changedJsonFile, (value, key) => {
-    if (!_.isEqual(value, syncJsonContentObj[key])) {
-      message[key] = value;
+    if (!_.isEqual(value, syncJson[key])) {
+      incrementalChange[key] = value;
     }
   });
 
-  return Object.keys(message).length === 0 ? undefined : message;
+  return Object.keys(incrementalChange).length === 0 ? undefined : incrementalChange;
 }
 
-function increamentalUpdateFromWebView(messageFromWebview, useSnippet: boolean) {
+function setSyncJson(messageFromWebview, useSnippet: boolean) {
   _.forIn(messageFromWebview, (value, key) => {
     if (value === null) {
-      delete syncJsonContentObj[key];
-    } else if (!useSnippet || (useSnippet && syncJsonContentObj[key] === undefined)) {
-      syncJsonContentObj[key] = value;
+      delete syncJson[key];
+    } else if (!useSnippet || (useSnippet && syncJson[key] === undefined)) {
+      syncJson[key] = value;
     }
   });
 }
 
-function createWebviewCannotEditProps(schema) {
+function getFormCannotEditProps(schema) {
   const webViewCannotEditProps: string[] = [];
   _.forIn(schema.properties, (value, key) => {
     if (value.type === 'object' || value.type === 'array' || value.oneOf || value.anyOf || value.allOf) {
@@ -151,7 +149,7 @@ function createWebviewCannotEditProps(schema) {
 
 export async function setSourceJSON() {
   try {
-    projectFramework = await getProjectFramework();
+    const projectFramework = await getProjectFramework();
 
     vscode.extensions.all.forEach((extension) => {
       if (extension.id !== 'iceworks-team.iceworks-config-helper') {
@@ -186,11 +184,11 @@ export const services = {
 export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
   try {
     const changedJsonContent = JSON.parse(content);
-    const message = increamentalUpdateForVebview(changedJsonContent);
+    const incrementalChange = getIncreamentalUpdate(changedJsonContent);
 
-    if (message) {
-      syncJsonContentObj = changedJsonContent;
-      panel!.webview.postMessage({ command: 'incrementalUpdateJsonForWebview', JsonContent: message });
+    if (incrementalChange) {
+      syncJson = changedJsonContent;
+      panel!.webview.postMessage({ command: 'incrementalUpdateJsonForWebview', jsonContent: incrementalChange });
     }
   } catch {
     // ignore
@@ -198,7 +196,7 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
 }
 
 export function clearCache() {
-  syncJsonContentObj = undefined;
+  syncJson = undefined;
 }
 export function setJSONFileName(name: string) {
   jsonFileName = name;

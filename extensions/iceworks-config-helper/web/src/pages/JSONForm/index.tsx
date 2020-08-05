@@ -1,20 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable dot-notation */
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useRef } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
+import * as _ from 'lodash';
 import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
 import callService from '../../callService';
-import {
-  createIncremetalUpdateForExtension,
-  setIncreamentalUpdateFromExtension,
-  isEqual,
-  initDefaultValue,
-  createUISchema,
-  getMockData,
-} from '../../utils';
+import { createIncremetalUpdate, getSyncContentAfterUpdate, getSchemaDefaultValue, getUISchema } from '../../utils';
 
 const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) => {
   const [formdata, setFormData] = useState(jsonContent);
@@ -39,11 +32,11 @@ const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) =>
   );
 };
 
-const MemoJSONSchemaForm = memo(JSONSchemaForm, isEqual);
-export const changeProviderContent = React.createContext({
+const MemoJSONSchemaForm = memo(JSONSchemaForm, _.isEqual);
+export const configHelperProvider = React.createContext({
   defaultSchema: {},
-  formCannotEditProps: [],
   syncJsonContentObjInWebView: {},
+  jsonFileName: 'build.json',
 });
 
 const JSONForm = () => {
@@ -51,19 +44,20 @@ const JSONForm = () => {
   const [formKey, setKey] = useState(0);
   const [loading, setLoading] = useState(true);
   const [currentSchema, setCurrentSchema] = useState({});
-  const [syncJsonContentObjInWebView, setSyncJsonContentObjInWebView] = useState({});
-  const [formCannotEditProps, setFormCannotEditProps] = useState([]);
-  const [uischema, setUISchema] = useState({});
-  const [defaultSchema, setDefaultSchema] = useState({});
-  const [newWebViewData, setNewWebviewData] = useState(null);
+  const [syncJson, setSyncJson] = useState({});
+  const [formData, setFormData] = useState(null);
+  const jsonFileName = useRef('build.json');
+  const uischema = useRef({});
+  const formCannotEditProps = useRef();
+  const schemaDefaultValue = useRef({});
 
   useEffect(() => {
     window.addEventListener('message', (event) => {
-      const { command, JsonContent } = event.data;
+      const { command, jsonContent } = event.data;
 
       if (command === 'incrementalUpdateJsonForWebview') {
         // 进行增量更新
-        setSyncJsonContentObjInWebView(setIncreamentalUpdateFromExtension(JsonContent, syncJsonContentObjInWebView));
+        setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
         setKey(Date.now());
       }
     });
@@ -71,29 +65,32 @@ const JSONForm = () => {
 
   useEffect(() => {
     const updateJsonToExtension = async () => {
-      const { updateMessage, newSyncJsonContentObj } = createIncremetalUpdateForExtension(
-        newWebViewData,
-        formCannotEditProps,
-        defaultSchema,
-        syncJsonContentObjInWebView
+      const { incrementalChange, newSyncJsonContentObj } = createIncremetalUpdate(
+        formData,
+        syncJson,
+        schemaDefaultValue,
+        formCannotEditProps
       );
-      if (Object.keys(updateMessage).length !== 0) {
-        setSyncJsonContentObjInWebView(newSyncJsonContentObj);
-        await callService('configService', 'updateJsonFile', updateMessage);
+      if (Object.keys(incrementalChange).length !== 0) {
+        setSyncJson(newSyncJsonContentObj);
+        await callService('configService', 'updateJsonFile', incrementalChange);
       }
     };
     updateJsonToExtension();
-  }, [newWebViewData]);
+  }, [formData]);
 
   useEffect(() => {
     const initWebView = async () => {
-      const { webviewCannotEditProps, schema, JsonContent } =
-        (await callService('configService', 'initJsonForWeb')) || getMockData();
-      setFormCannotEditProps(webviewCannotEditProps);
-      setDefaultSchema(initDefaultValue(schema));
+      const { currentFormCannotEditProps, schema, jsonContent, currentJsonFileName } = await callService(
+        'configService',
+        'initJsonForWeb'
+      );
+      formCannotEditProps.current = currentFormCannotEditProps;
+      schemaDefaultValue.current = getSchemaDefaultValue(schema);
+      uischema.current = getUISchema(formCannotEditProps);
       setCurrentSchema(schema);
-      setUISchema(createUISchema(webviewCannotEditProps));
-      setSyncJsonContentObjInWebView(setIncreamentalUpdateFromExtension(JsonContent, syncJsonContentObjInWebView));
+      setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
+      jsonFileName.current = currentJsonFileName;
       setKey(Date.now());
       setLoading(false);
     };
@@ -108,15 +105,17 @@ const JSONForm = () => {
         />
       ) : (
         <Card free style={{ background: '#1e1e1e' }}>
-          <changeProviderContent.Provider value={{ defaultSchema, formCannotEditProps, syncJsonContentObjInWebView }}>
+          <configHelperProvider.Provider
+            value={{ defaultSchema: schemaDefaultValue, syncJsonContentObjInWebView: syncJson, jsonFileName }}
+          >
             <MemoJSONSchemaForm
-              jsonContent={syncJsonContentObjInWebView}
+              jsonContent={syncJson}
               uiSchema={uischema}
               key={formKey}
-              setNewWebviewData={setNewWebviewData}
+              setNewWebviewData={setFormData}
               schema={currentSchema}
             />
-          </changeProviderContent.Provider>
+          </configHelperProvider.Provider>
         </Card>
       )}
     </>
