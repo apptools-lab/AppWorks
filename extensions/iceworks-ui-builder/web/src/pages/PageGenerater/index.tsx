@@ -48,7 +48,7 @@ const Home = () => {
 
   function validateData({ blocks }) {
     if (!blocks.length) {
-      return intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.enterPageName' });
+      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.enterPageName' });
     }
     return '';
   }
@@ -138,14 +138,16 @@ const Home = () => {
 
     setIsCreating(false);
     setVisible(false);
-    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksPageBuilder.Home.successCreatePage' }) });
+    Notification.success({
+      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
+    });
     resetData();
   }
 
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
-        <FormattedMessage id="web.iceworksPageBuilder.Home.chooseBlock" />
+        <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.chooseBlock" />
       </div>
       <div className={styles.field}>
         <Row gutter={24} className={styles.row}>
@@ -178,7 +180,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksPageBuilder.Home.createPage" />
+          <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.createPage" />
         </Button>
       </div>
       <RouterDetailForm
