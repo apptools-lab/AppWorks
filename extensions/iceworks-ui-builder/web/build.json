@@ -13,6 +13,9 @@
           {
             "name": "@alife/dpl-iceluna",
             "default": true
+          },
+          {
+            "name": "@alifd/theme-iceworks-dark"
           }
         ]
       }

@@ -1,10 +1,10 @@
 /* eslint-disable */
 import { componentsMap, componentList } from '@ali/iceluna-config-example';
-import { vscodeApi } from '@iceworks/vscode-webview';
+import { vscode } from '@iceworks/vscode-webview/lib/webview';
 import callService from '../../../callService';
 
 //@ts-ignore
-window.vscode = vscodeApi;
+window.vscode = vscode;
 
 export default {
   constants: {
@@ -74,6 +74,7 @@ export default {
           onClick: async (schema) => {
             try {
               if (schema) {
+                console.log(schema, "schema ======>");
                 await callService('component', 'generateComponentCode', schema);
               }
             } catch (err) {
