@@ -135,7 +135,7 @@ function getFormCannotEditProps(schema) {
 }
 
 export const services = {
-  configService: {
+  config: {
     initJsonForWeb,
     updateJsonFile,
     editInJson,

@@ -79,16 +79,16 @@ const JSONForm = () => {
       );
       if (Object.keys(incrementalChange).length !== 0) {
         setSyncJson(newSyncJson);
-        await callService('configService', 'updateJsonFile', incrementalChange);
+        await callService('config', 'updateJsonFile', incrementalChange);
       }
     };
     updateJsonToExtension();
   }, [formData]);
 
   useEffect(() => {
-    const initWebView = async () => {
+    const init = async () => {
       const { currentFormCannotEditProps, schema, jsonContent, currentJsonFileName } = await callService(
-        'configService',
+        'config',
         'initJsonForWeb'
       );
       formCannotEditProps.current = currentFormCannotEditProps;
@@ -100,7 +100,7 @@ const JSONForm = () => {
       setKey(Date.now());
       setLoading(false);
     };
-    initWebView();
+    init();
   }, []);
   
   return (

@@ -10,7 +10,7 @@ const EditInFile = ({ name }) => {
   const sendDefaultValue = () => {
     const editInJsonArgs = {};
     editInJsonArgs[name] = defaultSchema[name];
-    callService('configService', 'editInJson', editInJsonArgs);
+    callService('config', 'editInJson', editInJsonArgs);
   };
   return (
     <a onClick={sendDefaultValue}>
