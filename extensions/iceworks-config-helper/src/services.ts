@@ -80,7 +80,6 @@ const editInJson = (JsonIncrementalUpdate) => {
       viewColumn: vscode.window.activeTextEditor?.viewColumn === 1 ? 2 : 1,
     });
     currentJsonEditer = findBuildJsonEditor(`${editingJSONFile}.json `);
-    // webviewPanel.reveal(currentJsonEditer?.viewColumn === 1 ? vscode.ViewColumn.Two : vscode.ViewColumn.One);
   }
 
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
