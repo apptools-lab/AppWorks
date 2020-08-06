@@ -9,7 +9,7 @@ export default function () {
   if (!process.env.CI) {
     installCommonds.push('--no-package-lock');
     installCommonds.push('--registry');
-    installCommonds.push('http://registry.npm.taobao.org');
+    installCommonds.push(process.env.REGISTRY ? process.env.REGISTRY : 'http://registry.npm.taobao.org');
   }
 
   for (let i = 0; i < extensionFiles.length; i++) {

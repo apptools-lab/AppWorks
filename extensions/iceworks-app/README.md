@@ -89,6 +89,12 @@
     > 注意 : 如果没有 Iceworks 图标，请按照 `激活` 章节的内容来激活此按钮。
 2. 点击 Iceworks 按钮，打开命令面板。
 
+### 工程调试
+
+![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
+
+更多请看[参考文档](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)
+
 ## 更多
 
 访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
