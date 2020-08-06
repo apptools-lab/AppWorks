@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.2.5
+
+- fix: build error
+
+## 0.2.4
+
+- fix: can't get registerCommand method callback args
+
+## 0.2.3
+
+- fix: build error
+
 ## 0.2.2
 
 - fix: lost record DAU
