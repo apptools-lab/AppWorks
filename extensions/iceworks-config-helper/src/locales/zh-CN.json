@@ -1,4 +1,4 @@
 {
   "extension.iceworksConfigHelper.index.webviewTitle": "可视化配置 - Iceworks",
-  "extension.iceworksConfigHelper.loadJson.JsonErr": "Cannot parse <%= jsonFileName %>.json, please fix it"
+  "extension.iceworksConfigHelper.loadJson.JsonErr": "Cannot parse <%= editingJSONFile %>.json, please fix it"
 }

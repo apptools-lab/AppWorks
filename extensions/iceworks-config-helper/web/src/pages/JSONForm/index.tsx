@@ -54,16 +54,20 @@ const JSONForm = () => {
   const uischema = useRef({});
   const formCannotEditProps = useRef([]);
   const schemaDefaultValue = useRef({});
-  const { receivedMessage } = useContext(MessageContext);
 
   useEffect(() => {
-    // @ts-ignore
-    const { command, userSetting } = receivedMessage;
-    if (command === 'iceworks-config-helper: incrementalUpdate') {
-      setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
-      setKey(Date.now());
-    }
-  }, [receivedMessage]);
+    window.addEventListener(
+      'message',
+      (e) => {
+        const { command, userSetting } = e.data;
+        if (command === 'iceworks-config-helper: incrementalUpdate') {
+          setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
+          setKey(Date.now());
+        }
+      },
+      false
+    );
+  }, []);
 
   useEffect(() => {
     const updateJsonToExtension = async () => {
@@ -98,6 +102,7 @@ const JSONForm = () => {
     };
     initWebView();
   }, []);
+  
   return (
     <>
       {loading ? (
@@ -127,9 +132,7 @@ const JSONForm = () => {
 const IntlJsonForm = () => {
   return (
     <LocaleProvider>
-      <MessageProvider>
-        <JSONForm />
-      </MessageProvider>
+      <JSONForm />
     </LocaleProvider>
   );
 };

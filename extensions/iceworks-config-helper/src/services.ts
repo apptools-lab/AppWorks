@@ -10,13 +10,15 @@ const appJsonPath = `${vscode.workspace.rootPath}/src/app.json`;
 const buildJsonUri = vscode.Uri.file(buildJsonPath);
 const appJsonUri = vscode.Uri.file(appJsonPath);
 
-let jsonFileName;
+// witch JSON file is eediting
+// now just support build.json & app.json, so just using the file name
+let editingJSONFile;
 let syncJson;
 
-const initJsonForWeb = async (panel) => {
-  const formContent = fse.readFileSync(jsonFileName === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
+const initJsonForWeb = async () => {
+  const formContent = fse.readFileSync(editingJSONFile === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
   // eslint-disable-next-line
-  const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${jsonFileName}.${
+  const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${editingJSONFile}.${
     vscode.env.language
   }.json`);
 
@@ -30,7 +32,7 @@ const initJsonForWeb = async (panel) => {
       syncJson = {};
     } else {
       vscode.window.showWarningMessage(
-        i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', { JsonFileName: jsonFileName })
+        i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', { JsonFileName: editingJSONFile })
       );
     }
   }
@@ -39,14 +41,14 @@ const initJsonForWeb = async (panel) => {
     jsonContent: formContentObj,
     schema,
     currentFormCannotEditProps: getFormCannotEditProps(schema),
-    currentJsonFileName: `${jsonFileName}.json`,
+    currentJsonFileName: `${editingJSONFile}.json`,
   };
 
   return initmessage;
 };
 
 const updateJsonFile = (JsonIncrementalUpdate) => {
-  const currentJsonEditer = findBuildJsonEditor(`${jsonFileName}.json`);
+  const currentJsonEditer = findBuildJsonEditor(`${editingJSONFile}.json`);
   setSyncJson(JsonIncrementalUpdate, false);
 
   if (currentJsonEditer) {
@@ -56,7 +58,7 @@ const updateJsonFile = (JsonIncrementalUpdate) => {
     });
   } else {
     fse.writeFile(
-      jsonFileName === 'build' ? buildJsonPath : appJsonPath,
+      editingJSONFile === 'build' ? buildJsonPath : appJsonPath,
       JSON.stringify(syncJson, null, '\t'),
       (err) => {
         console.log(err);
@@ -67,15 +69,15 @@ const updateJsonFile = (JsonIncrementalUpdate) => {
 };
 
 const editInJson = (JsonIncrementalUpdate) => {
-  let currentJsonEditer = findBuildJsonEditor(`${jsonFileName}.json`);
+  let currentJsonEditer = findBuildJsonEditor(`${editingJSONFile}.json`);
   setSyncJson(JsonIncrementalUpdate, true);
 
   const currentKey = Object.keys(JsonIncrementalUpdate)[0];
   if (!currentJsonEditer) {
-    vscode.window.showTextDocument(jsonFileName === 'build' ? buildJsonUri : appJsonUri, {
+    vscode.window.showTextDocument(editingJSONFile === 'build' ? buildJsonUri : appJsonUri, {
       viewColumn: vscode.window.activeTextEditor?.viewColumn === 1 ? 2 : 1,
     });
-    currentJsonEditer = findBuildJsonEditor(`${jsonFileName}.json `);
+    currentJsonEditer = findBuildJsonEditor(`${editingJSONFile}.json `);
     // webviewPanel.reveal(currentJsonEditer?.viewColumn === 1 ? vscode.ViewColumn.Two : vscode.ViewColumn.One);
   }
 
@@ -92,21 +94,6 @@ function findBuildJsonEditor(fileName: string) {
   return vscode.window.visibleTextEditors.find((editor) => {
     return editor.document.uri.fsPath.endsWith(fileName);
   });
-}
-
-export function activePanelEntry() {
-  const currentActiveEditor = vscode.window.activeTextEditor;
-  if (!currentActiveEditor) return;
-  if (currentActiveEditor?.document.uri.fsPath.endsWith('build.json')) {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', true);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
-  } else if (currentActiveEditor?.document.uri.fsPath.endsWith('app.json')) {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', true);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
-  } else {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
-  }
 }
 
 function getIncreamentalUpdate(changedJsonFile) {
@@ -147,31 +134,6 @@ function getFormCannotEditProps(schema) {
   return webViewCannotEditProps;
 }
 
-export async function setSourceJSON() {
-  try {
-    const projectFramework = await getProjectFramework();
-
-    vscode.extensions.all.forEach((extension) => {
-      if (extension.id !== 'iceworks-team.iceworks-config-helper') {
-        return;
-      }
-
-      const packageJSON = extension.packageJSON;
-      if (packageJSON && packageJSON.contributes && (projectFramework === 'rax-app' || projectFramework === 'icejs')) {
-        const jsonValidation = packageJSON.contributes.jsonValidation;
-        jsonValidation[0].url = `./schemas/${projectFramework === 'icejs' ? 'ice' : 'rax'}.build.${
-          vscode.env.language
-        }.json`;
-        if (projectFramework === 'rax-app') {
-          jsonValidation[1].url = `./schemas/rax.app.${vscode.env.language}.json`;
-        }
-      }
-    });
-  } catch (e) {
-    // ignore
-  }
-}
-
 export const services = {
   configService: {
     initJsonForWeb,
@@ -201,12 +163,7 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
 export function clearCache() {
   syncJson = undefined;
 }
-export function setJSONFileName(name: string) {
-  jsonFileName = name;
-}
 
-export function isConfigJson(document: vscode.TextDocument, filenames: string[]) {
-  return filenames.find((e) => {
-    return document.uri.fsPath.endsWith(e);
-  });
+export function setEditingJSONFile(name: string) {
+  editingJSONFile = name;
 }
