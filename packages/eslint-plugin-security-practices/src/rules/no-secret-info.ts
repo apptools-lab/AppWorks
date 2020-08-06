@@ -27,9 +27,13 @@ module.exports = {
             // var secret = 'test';
             node.parent.type === 'VariableDeclarator' &&
             node.parent.id &&
+            node.parent.id.name &&
             reg.test(node.parent.id.name.toLocaleLowerCase())) ||
           // { secret: 'test' };
-          (node.parent.type === 'Property' && node.parent.key && reg.test(node.parent.key.name.toLocaleLowerCase()))
+          (node.parent.type === 'Property' &&
+            node.parent.key &&
+            node.parent.key.name &&
+            reg.test(node.parent.key.name.toLocaleLowerCase()))
         ) {
           context.report({
             node,

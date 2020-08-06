@@ -47,6 +47,7 @@ Or you can only use extends to set default rules config.
 
 * [`no-http-url`](./docs/rules/no-http-url.md) Recommended the http url switch to HTTPS.
 * [`no-internal-url`](./docs/rules/no-internal-url.md) The group internal url is not recommended.
+* [`no-patent-licenses`](./docs/rules/no-patent-licenses.md) Recommend to use the dependency with Open-Source license.
 * [`no-secret-info`](./docs/rules/no-secret-info.md) Don't show `password` `token` and `secret` in plain text.
 * [`no-sensitive-word`](./docs/rules/no-sensitive-word.md) Don't use some sensitive word.
 
