@@ -1,13 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo, useRef } from 'react';
+import React, { useState, useEffect, memo, useRef, useContext } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
 import * as _ from 'lodash';
 import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
+import { MessageContext, MessageProvider } from '@/MessageProvider';
 import callService from '../../callService';
 import { createIncremetalUpdate, getSyncContentAfterUpdate, getSchemaDefaultValue, getUISchema } from '../../utils';
+
+const CARD_STYLE = { background: '#1e1e1e' };
+const LOADING_STYLE = { width: '100%', height: '80vh' };
 
 const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) => {
   const [formdata, setFormData] = useState(jsonContent);
@@ -50,22 +54,16 @@ const JSONForm = () => {
   const uischema = useRef({});
   const formCannotEditProps = useRef([]);
   const schemaDefaultValue = useRef({});
+  const { receivedMessage } = useContext(MessageContext);
 
-  const updateSyncJson = (event) => {
-    const { command, userSetting } = event.data;
+  useEffect(() => {
+    // @ts-ignore
+    const { command, userSetting } = receivedMessage;
     if (command === 'iceworks-config-helper: incrementalUpdate') {
-      // 进行增量更新
       setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
       setKey(Date.now());
     }
-    console.log('getMessage');
-  };
-  useEffect(() => {
-    // TODO: 这个地方会出现循环添加监听者的错误。
-    console.log('syncJsonChanged', JSON.stringify(syncJson));
-    window.removeEventListener('message', updateSyncJson, false);
-    window.addEventListener('message', updateSyncJson, false);
-  }, [syncJson]);
+  }, [receivedMessage]);
 
   useEffect(() => {
     const updateJsonToExtension = async () => {
@@ -105,10 +103,10 @@ const JSONForm = () => {
       {loading ? (
         <Loading
           tip={intl.formatMessage({ id: 'web.iceworksConfigHelper.index.settingFileNotReady' })}
-          style={{ width: '100%', height: '80vh', whiteSpace: 'pre-wrap' }}
+          style={LOADING_STYLE}
         />
       ) : (
-        <Card free style={{ background: '#1e1e1e' }}>
+        <Card free style={CARD_STYLE}>
           <configHelperProvider.Provider
             value={{ defaultSchema: schemaDefaultValue.current, syncJson, jsonFileName: jsonFileName.current }}
           >
@@ -129,7 +127,9 @@ const JSONForm = () => {
 const IntlJsonForm = () => {
   return (
     <LocaleProvider>
-      <JSONForm />
+      <MessageProvider>
+        <JSONForm />
+      </MessageProvider>
     </LocaleProvider>
   );
 };
