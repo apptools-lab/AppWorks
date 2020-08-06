@@ -3,12 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { initExtension } from '@iceworks/common-service';
 import { recordDAU, Recorder, record } from '@iceworks/recorder';
 import { getProjectFramework } from '@iceworks/project-service';
-import {
-  updateJsonForWeb,
-  clearCache,
-  setEditingJSONFile,
-  services,
-} from './services';
+import { updateJsonForWeb, clearCache, setEditingJSONFile, services } from './services';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -29,7 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
     recordDAU();
     recorder.record({
       module: 'main',
-      action: 'activeConfigWebview'
+      action: 'activeConfigWebview',
     });
 
     setEditingJSONFile(JSONFileName);

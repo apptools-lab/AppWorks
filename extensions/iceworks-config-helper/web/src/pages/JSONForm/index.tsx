@@ -86,10 +86,7 @@ const JSONForm = () => {
 
   useEffect(() => {
     const init = async () => {
-      const { formCannotEditProps, schema, jsonContent, editingJSONFile } = await callService(
-        'config',
-        'getInitData'
-      );
+      const { formCannotEditProps, schema, jsonContent, editingJSONFile } = await callService('config', 'getInitData');
       formCannotEditProps.current = formCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);
       jsonFileName.current = editingJSONFile;
@@ -101,7 +98,7 @@ const JSONForm = () => {
     };
     init();
   }, []);
-  
+
   return (
     <>
       {loading ? (

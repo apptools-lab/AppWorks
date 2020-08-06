@@ -28,7 +28,7 @@ const getInitData = async () => {
   try {
     jsonContent = JSON.parse(jsonString);
     syncJson = jsonContent;
-  } catch(e) {
+  } catch (e) {
     console.error(e);
     if (jsonString.length < 10) {
       syncJson = {};
