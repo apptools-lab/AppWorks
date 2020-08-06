@@ -7,7 +7,28 @@
 
 为 icejs 和 rax-app 的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能。
 
+## 激活
+
+### 在侧边栏激活面板
+
+![使用说明](https://user-images.githubusercontent.com/56879942/89489442-18ada980-d7dd-11ea-8db3-1751e5db2eca.gif)
+
+1. 在侧边栏右键配置文件，选择 `Iceworks: 可视化设置 xxx.json` 启动可视化编辑面板
+
+### 在文档编辑器中激活面板
+
+![使用说明](https://user-images.githubusercontent.com/56879942/89489443-19464000-d7dd-11ea-9eeb-2958027525c4.gif)
+
+1. 打开配置文件，右键选择 `Iceworks: 可视化设置 xxx.json` 启动可视化编辑面板
+2. 点击标题栏中的 `Iceworks: 可视化设置 xxx.json` 图标，点击它以启动可视化编辑面板
+
 ## 功能
+
+### 可视化编辑
+
+通过面板对配置文件进行可视化编辑。
+
+![使用说明](https://user-images.githubusercontent.com/56879942/89489431-12b7c880-d7dd-11ea-9802-8f3fa51304f0.gif)
 
 ### 悬停提示
 
