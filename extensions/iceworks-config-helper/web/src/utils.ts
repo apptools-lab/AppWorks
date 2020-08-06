@@ -23,7 +23,7 @@ export function createIncremetalUpdate(formData, lastSyncJson, schemaDefaultValu
     } else if (schemaDefaultValue[key] !== undefined && !_.isEqual(formData[key], schemaDefaultValue[key])) {
       newSyncJson[key] = value;
       incrementalChange[key] = value;
-    }
+    } 
   });
   return { incrementalChange, newSyncJson };
 }

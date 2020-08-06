@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
-import * as forIn from 'lodash.forin';
-import * as isEqual from 'lodash.isequal';
+import forIn from 'lodash.forin';
+import isEqual from 'lodash.isequal';
 import { getProjectFramework } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
 import i18n from './i18n';
@@ -28,7 +28,8 @@ const getInitData = async () => {
   try {
     jsonContent = JSON.parse(jsonString);
     syncJson = jsonContent;
-  } catch {
+  } catch(e) {
+    console.error(e);
     if (jsonString.length < 10) {
       syncJson = {};
     } else {

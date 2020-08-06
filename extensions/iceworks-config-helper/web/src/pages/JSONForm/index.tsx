@@ -12,10 +12,10 @@ import { createIncremetalUpdate, getSyncJson, getSchemaDefaultValue, getUISchema
 const CARD_STYLE = { background: '#1e1e1e' };
 const LOADING_STYLE = { width: '100%', height: '80vh' };
 
-const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) => {
+const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setData }) => {
   const [formdata, setFormData] = useState(jsonContent);
   const setJson = async (e) => {
-    setNewWebviewData(e);
+    setData(e);
     setFormData(e);
   };
 
@@ -118,7 +118,7 @@ const JSONForm = () => {
               jsonContent={syncJson}
               uiSchema={uischema.current}
               key={formKey}
-              setNewWebviewData={setFormData}
+              setData={setFormData}
               schema={currentSchema}
             />
           </configHelperProvider.Provider>
