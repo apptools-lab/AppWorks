@@ -121,7 +121,7 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
-export default async function generateComponentCode(schema: any) {
+export async function generateComponentCode(schema: any) {
   const componentName = await vscode.window.showInputBox({
     placeHolder: '名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符',
   });

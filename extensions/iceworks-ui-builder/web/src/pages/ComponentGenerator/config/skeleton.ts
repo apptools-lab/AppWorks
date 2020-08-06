@@ -71,14 +71,11 @@ export default {
           width: 86,
         },
         addonProps: {
-          onClick: async (schema) => {
+          onClick: async (version, componentsMap, utils, componentsTree) => {
             try {
-              if (schema) {
-                console.log(schema, "schema ======>");
-                await callService('component', 'generateComponentCode', schema);
-              }
+              await callService('component', 'generateComponentCode', version, componentsMap, utils, componentsTree);
             } catch (err) {
-
+              console.error(err);
             }
           }
         },

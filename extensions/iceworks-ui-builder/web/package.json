@@ -25,6 +25,7 @@
     "@ali/iceluna-addons-component-tree": "^0.1.0",
     "@ali/iceluna-addons-constants": "^0.1.0",
     "@ali/iceluna-addons-design-mode": "^0.1.0",
+    "@ali/iceluna-addons-generate-code": "^0.1.0",
     "@ali/iceluna-addons-logo": "^0.1.0",
     "@ali/iceluna-addons-preview": "^0.1.0",
     "@ali/iceluna-addons-schema": "^0.1.0",
