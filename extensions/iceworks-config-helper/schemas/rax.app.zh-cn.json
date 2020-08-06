@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "title": "Rax app.json",
-  "description": "通过这个面板可视化编辑 app.json",
+  "description": "Application configuration for rax-app",
   "default": {},
   "examples": [{}],
   "required": [],

@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
-  "title": "Icejs build.json",
-  "description": "通过这个面板可视化编辑 build.json",
+  "title": "icejs build.json",
+  "description": "icejs 的工程配置",
   "default": {},
   "examples": [{}],
   "required": [],

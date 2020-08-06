@@ -15,7 +15,7 @@ const appJsonUri = vscode.Uri.file(appJsonPath);
 let editingJSONFile;
 let syncJson;
 
-const initJsonForWeb = async () => {
+const getInitData = async () => {
   const formContent = fse.readFileSync(editingJSONFile === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
   // eslint-disable-next-line
   const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${editingJSONFile}.${
@@ -136,7 +136,7 @@ function getFormCannotEditProps(schema) {
 
 export const services = {
   config: {
-    initJsonForWeb,
+    getInitData,
     updateJsonFile,
     editInJson,
   },

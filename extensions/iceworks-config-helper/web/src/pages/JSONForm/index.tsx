@@ -89,7 +89,7 @@ const JSONForm = () => {
     const init = async () => {
       const { currentFormCannotEditProps, schema, jsonContent, currentJsonFileName } = await callService(
         'config',
-        'initJsonForWeb'
+        'getInitData'
       );
       formCannotEditProps.current = currentFormCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);

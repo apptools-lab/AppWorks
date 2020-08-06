@@ -2,7 +2,7 @@
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "title": "The Rax APP build.json Schema",
+  "title": "rax-app 的工程配置",
   "required": ["plugins"],
   "properties": {
     "publicPath": {
