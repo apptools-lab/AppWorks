@@ -13,6 +13,10 @@ import { useIntl } from 'react-intl';
 
 const projectTypes = ['react', 'rax', 'vue'];
 
+function checkIsWireless(source) {
+  return (source.client && source.client === 'wireless') || source.type === 'rax' || source.type === 'miniProgram';
+}
+
 const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenConfigPanel, materialSources }) => {
   const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
@@ -136,7 +140,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                       : jsScaffoldsList.includes(item.source.npm)
                       ? 'js'
                       : '';
-                    const isWireless = selectedSource.client && selectedSource.client === 'wireless';
+                    const isWireless = checkIsWireless(selectedSource);
                     const CardComponent = isWireless ? MobileScaffoldCard : Card;
                     return (
                       <CardComponent
@@ -181,8 +185,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                           : jsScaffoldsList.includes(item.source.npm)
                           ? 'js'
                           : '';
-                        const isRax = selectedSource.client && selectedSource.client === 'wireless';
-                        const CardComponent = isRax ? MobileScaffoldCard : Card;
+                        const isWireless = checkIsWireless(selectedSource);
+                        const CardComponent = isWireless ? MobileScaffoldCard : Card;
                         return (
                           <CardComponent
                             key={item.name}
