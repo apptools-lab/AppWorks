@@ -28,9 +28,11 @@ module.exports = {
     return {
       Property: function handleRequires(node: any) {
         if (
-          node.key && node.key.value &&
+          node.key &&
+          node.key.value &&
           (node.key.value === 'dependencies' || node.key.value === 'devDependencies') &&
-          node.value && node.value.properties
+          node.value &&
+          node.value.properties
         ) {
           node.value.properties.forEach((property) => {
             if (property.key && property.key.value) {
