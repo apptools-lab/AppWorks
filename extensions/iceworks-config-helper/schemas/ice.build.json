@@ -265,8 +265,11 @@
       "additionalProperties": true,
       "properties": {}
     },
-    "targets": {
-      "type": "object",
+    "targets":{
+      "type": ["object", "array"]
+    },
+    "browserslist": {
+      "type": ["object", "array", "string"],
       "description": "Configure the targets of @babel/preset-env, configure the minimum version of the browser, the newly configured targets will override the default values.",
       "default": {},
       "examples": [
