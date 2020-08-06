@@ -193,7 +193,6 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
         userSetting: incrementalChange,
       });
     }
-    console.log('incrementalChange', incrementalChange);
   } catch {
     // ignore
   }
