@@ -6,5 +6,5 @@ export const nodeDepTypes: NodeDepTypes[] = ['dependencies', 'devDependencies'];
 
 export const showExtensionsQuickPickCommandId = 'iceworksApp.showExtensionsQuickPick';
 
-export const editorTitleRunDevCommandId = 'npmScripts-editor-title-run-dev';
+export const editorTitleRunDebugCommandId = 'npmScripts-editor-title-run-dev';
 export const editorTitleRunBuildCommandId = 'npmScripts-editor-title-run-build';
