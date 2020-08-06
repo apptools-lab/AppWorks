@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.2
+
+- feat: support create Mini Program App
+
 ## 0.3.1
 
 - chore: change data record
