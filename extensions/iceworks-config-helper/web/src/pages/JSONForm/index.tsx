@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, memo, useRef, useContext } from 'react';
+import React, { useState, useEffect, memo, useRef } from 'react';
 import Form from '@rjsf/core';
 import { Card, Loading } from '@alifd/next';
 import * as _ from 'lodash';
 import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
-import { MessageContext, MessageProvider } from '@/MessageProvider';
 import callService from '../../callService';
 import { createIncremetalUpdate, getSyncContentAfterUpdate, getSchemaDefaultValue, getUISchema } from '../../utils';
 

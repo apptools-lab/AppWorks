@@ -1,4 +1,4 @@
-import schema from '../../../schemas/ice.build.zh-cn.json';
+import schema from './ice.build.json';
 import jsonContent from '../mockBuild.json';
 
 const mockInitData = {
