@@ -39,7 +39,7 @@ Or you can only use extends to set default rules config.
 
 ```json
 {
-    "extends": ["plugin:@iceworks/security-practices/suggestion"]
+    "extends": ["plugin:@iceworks/security-practices/recommended"]
 };
 ```
 
