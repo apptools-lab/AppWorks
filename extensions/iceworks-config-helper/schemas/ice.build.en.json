@@ -295,7 +295,7 @@
       "examples": [false],
       "properties": {}
     },
-    "targets":{
+    "targets": {
       "type": ["object", "array"]
     },
     "browserslist": {
