@@ -24,12 +24,10 @@ const tsRules = deepmerge(tslint, {
   },
   rules: {
     ...commonRules,
-    '@typescript-eslint/array-type': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/no-inferrable-types': 1,
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/array-type': 0,
-    '@typescript-eslint/no-non-null-assertion': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/no-parameter-properties': 0,

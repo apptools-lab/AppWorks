@@ -1,4 +1,4 @@
-# Does not contain http link (no-http-url)
+# no-http-url
 
 Recommended the http url switch to HTTPS.
 

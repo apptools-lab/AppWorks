@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "@ice/spec": "^1.0.1",
+    "fastscan": "^1.0.6",
+    "line-column": "^1.0.2",
     "requireindex": "~1.1.0"
   },
   "devDependencies": {

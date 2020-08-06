@@ -1,4 +1,4 @@
-# Don’t write token info in your project (no-secret-info)
+# no-secret-info
 
 Don't show `password` `token` and `secret` in plain text.
 

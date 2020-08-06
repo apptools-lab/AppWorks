@@ -2,7 +2,6 @@
 
 The group internal url is not recommended.
 
-
 ## Rule Details
 
 Examples of **incorrect** code for this rule:

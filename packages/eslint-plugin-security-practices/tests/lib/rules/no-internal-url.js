@@ -13,17 +13,15 @@ ruleTester.run("no-internal-url", rule, {
 
   invalid: [{
     code: "var test = 'https://test.com';",
-    options: [  
-    ['test.com']
-    ],
+    options: [['test.com']],
     errors: [{
-    message: "The url 'https://test.com' is not recommended"
+      message: "The url 'https://test.com' is not recommended"
     }]
   },
   {
     code: "var test = 'https://test.alibaba-inc.com';",
     errors: [{
-    message: "The url 'https://test.alibaba-inc.com' is not recommended"
+      message: "The url 'https://test.alibaba-inc.com' is not recommended"
     }]
   }]
 });

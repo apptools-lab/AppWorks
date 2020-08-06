@@ -10,7 +10,6 @@ Install [esLint](http://eslint.org), `@ice/spec` and `@iceworks/eslint-plugin-se
 $ npm install --save-dev eslint @ice/spec @iceworks/eslint-plugin-security-practices
 ```
 
-
 ## Usage
 
 Add `security-practices` to the plugins section of your `.eslintrc` configuration file. 
@@ -40,16 +39,16 @@ Or you can only use extends to set default rules config.
 
 ```json
 {
-    extends: ['plugin:@iceworks/security-practices/suggestion']
+    "extends": ["plugin:@iceworks/security-practices/suggestion"]
 };
 ```
-
 
 ## Supported Rules
 
 * [`no-http-url`](./docs/rules/no-http-url.md) Recommended the http url switch to HTTPS.
 * [`no-internal-url`](./docs/rules/no-internal-url.md) The group internal url is not recommended.
 * [`no-secret-info`](./docs/rules/no-secret-info.md) Don't show `password` `token` and `secret` in plain text.
+* [`no-sensitive-word`](./docs/rules/no-sensitive-word.md) Don't use some sensitive word.
 
 
 

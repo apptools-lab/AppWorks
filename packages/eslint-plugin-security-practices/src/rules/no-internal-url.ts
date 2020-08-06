@@ -7,6 +7,7 @@ const defaultUrlList = ['alibaba-inc.com'];
 module.exports = {
   name: RULE_NAME,
   meta: {
+    type: 'suggestion',
     docs: {
       url: docsUrl(RULE_NAME),
     },
