@@ -3,6 +3,7 @@
 ## 0.3.5
 
 - feat: support create Mini Program App
+
 ## 0.3.4
 
 - fix: build error
