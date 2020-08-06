@@ -7,7 +7,7 @@ import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
 import callService from '../../callService';
-import { createIncremetalUpdate, getSyncContentAfterUpdate, getSchemaDefaultValue, getUISchema } from '../../utils';
+import { createIncremetalUpdate, getSyncJson, getSchemaDefaultValue, getUISchema } from '../../utils';
 
 const CARD_STYLE = { background: '#1e1e1e' };
 const LOADING_STYLE = { width: '100%', height: '80vh' };
@@ -60,7 +60,7 @@ const JSONForm = () => {
       (e) => {
         const { command, userSetting } = e.data;
         if (command === 'iceworks-config-helper: incrementalUpdate') {
-          setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
+          setSyncJson(getSyncJson(userSetting, syncJson));
           setKey(Date.now());
         }
       },
@@ -86,16 +86,16 @@ const JSONForm = () => {
 
   useEffect(() => {
     const init = async () => {
-      const { currentFormCannotEditProps, schema, jsonContent, currentJsonFileName } = await callService(
+      const { formCannotEditProps, schema, jsonContent, editingJSONFile } = await callService(
         'config',
         'getInitData'
       );
-      formCannotEditProps.current = currentFormCannotEditProps;
+      formCannotEditProps.current = formCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);
-      jsonFileName.current = currentJsonFileName;
-      uischema.current = getUISchema(currentFormCannotEditProps);
+      jsonFileName.current = editingJSONFile;
+      uischema.current = getUISchema(formCannotEditProps);
       setCurrentSchema(schema);
-      setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
+      setSyncJson(getSyncJson(jsonContent, syncJson));
       setKey(Date.now());
       setLoading(false);
     };

@@ -3,9 +3,9 @@ import jsonContent from '../mockBuild.json';
 
 const mockInitData = {
   schema,
-  currentFormCannotEditProps: ['alias', 'devServer'],
+  formCannotEditProps: ['alias', 'devServer'],
   jsonContent,
-  currentJsonFileName: 'build.json',
+  editingJSONFile: 'build.json',
 };
 
 export default mockInitData;

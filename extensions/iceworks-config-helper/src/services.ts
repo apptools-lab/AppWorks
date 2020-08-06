@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
-import * as _ from 'lodash';
+import * as forIn from 'lodash.forin';
+import * as isEqual from 'lodash.isequal';
 import { getProjectFramework } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
 import i18n from './i18n';
@@ -16,19 +17,19 @@ let editingJSONFile;
 let syncJson;
 
 const getInitData = async () => {
-  const formContent = fse.readFileSync(editingJSONFile === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
+  const jsonString = fse.readFileSync(editingJSONFile === 'build' ? buildJsonPath : appJsonPath, 'utf-8');
   // eslint-disable-next-line
   const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${editingJSONFile}.${
     vscode.env.language
   }.json`);
 
-  let formContentObj;
+  let jsonContent;
 
   try {
-    formContentObj = JSON.parse(formContent);
-    syncJson = formContentObj;
+    jsonContent = JSON.parse(jsonString);
+    syncJson = jsonContent;
   } catch {
-    if (formContent.length < 10) {
+    if (jsonString.length < 10) {
       syncJson = {};
     } else {
       vscode.window.showWarningMessage(
@@ -38,10 +39,10 @@ const getInitData = async () => {
   }
 
   const initmessage = {
-    jsonContent: formContentObj,
+    jsonContent,
     schema,
-    currentFormCannotEditProps: getFormCannotEditProps(schema),
-    currentJsonFileName: `${editingJSONFile}.json`,
+    formCannotEditProps: getFormCannotEditProps(schema),
+    editingJSONFile: `${editingJSONFile}.json`,
   };
 
   return initmessage;
@@ -105,8 +106,8 @@ function getIncreamentalUpdate(changedJsonFile) {
     }
   });
 
-  _.forIn(changedJsonFile, (value, key) => {
-    if (!_.isEqual(value, syncJson[key])) {
+  forIn(changedJsonFile, (value, key) => {
+    if (!isEqual(value, syncJson[key])) {
       incrementalChange[key] = value;
     }
   });
@@ -115,7 +116,7 @@ function getIncreamentalUpdate(changedJsonFile) {
 }
 
 function setSyncJson(messageFromWebview, useSnippet: boolean) {
-  _.forIn(messageFromWebview, (value, key) => {
+  forIn(messageFromWebview, (value, key) => {
     if (value === null) {
       delete syncJson[key];
     } else if (!useSnippet || (useSnippet && syncJson[key] === undefined)) {
@@ -126,7 +127,7 @@ function setSyncJson(messageFromWebview, useSnippet: boolean) {
 
 function getFormCannotEditProps(schema) {
   const webViewCannotEditProps: string[] = [];
-  _.forIn(schema.properties, (value, key) => {
+  forIn(schema.properties, (value, key) => {
     if (value.type === 'object' || value.type === 'array' || value.oneOf || value.anyOf || value.allOf) {
       webViewCannotEditProps.push(key);
     }

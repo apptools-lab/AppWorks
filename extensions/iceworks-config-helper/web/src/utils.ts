@@ -28,7 +28,7 @@ export function createIncremetalUpdate(formData, lastSyncJson, schemaDefaultValu
   return { incrementalChange, newSyncJson };
 }
 
-export function getSyncContentAfterUpdate(userSetting, latestSyncJson) {
+export function getSyncJson(userSetting, latestSyncJson) {
   if (!userSetting || !latestSyncJson) {
     return;
   }

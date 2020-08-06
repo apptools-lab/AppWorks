@@ -122,6 +122,7 @@
   },
   "dependencies": {
     "@iceworks/project-service": "^0.1.6",
-    "lodash": "^4.17.19"
+    "lodash.forin": "^4.4.0",
+    "lodash.isequal": "^4.5.0"
   }
 }
