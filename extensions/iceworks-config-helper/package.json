@@ -1,25 +1,29 @@
 {
   "name": "iceworks-config-helper",
   "displayName": "Iceworks Config Helper",
-  "description": "Easily write Config files in icejs && raxapp",
+  "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
   "version": "0.3.0",
   "engines": {
     "vscode": "^1.41.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Programming Languages"
   ],
   "keywords": [
     "ICE",
     "Rax",
     "config",
-    "raxjs",
-    "icejs"
+    "json",
+    "icejs",
+    "rax-app"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "*"
+    "iceworks-config-helper.buildJson.start",
+    "iceworks-config-helper.appJson.start",
+    "onLanguage:json"
   ],
   "main": "./build/extension.js",
   "contributes": {
