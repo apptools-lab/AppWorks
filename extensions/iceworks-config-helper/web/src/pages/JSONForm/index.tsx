@@ -35,8 +35,8 @@ const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) =>
 const MemoJSONSchemaForm = memo(JSONSchemaForm, _.isEqual);
 export const configHelperProvider = React.createContext({
   defaultSchema: {},
-  syncJsonContentObjInWebView: {},
-  jsonFileName: 'build.json',
+  syncJson: {},
+  jsonFileName: '',
 });
 
 const JSONForm = () => {
@@ -48,31 +48,35 @@ const JSONForm = () => {
   const [formData, setFormData] = useState(null);
   const jsonFileName = useRef('build.json');
   const uischema = useRef({});
-  const formCannotEditProps = useRef();
+  const formCannotEditProps = useRef([]);
   const schemaDefaultValue = useRef({});
 
+  const updateSyncJson = (event) => {
+    const { command, userSetting } = event.data;
+    if (command === 'iceworks-config-helper: incrementalUpdate') {
+      // 进行增量更新
+      setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
+      setKey(Date.now());
+    }
+    console.log('getMessage');
+  };
   useEffect(() => {
-    window.addEventListener('message', (event) => {
-      const { command, jsonContent } = event.data;
-
-      if (command === 'incrementalUpdateJsonForWebview') {
-        // 进行增量更新
-        setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
-        setKey(Date.now());
-      }
-    });
-  }, []);
+    // TODO: 这个地方会出现循环添加监听者的错误。
+    console.log('syncJsonChanged', JSON.stringify(syncJson));
+    window.removeEventListener('message', updateSyncJson, false);
+    window.addEventListener('message', updateSyncJson, false);
+  }, [syncJson]);
 
   useEffect(() => {
     const updateJsonToExtension = async () => {
-      const { incrementalChange, newSyncJsonContentObj } = createIncremetalUpdate(
+      const { incrementalChange, newSyncJson } = createIncremetalUpdate(
         formData,
         syncJson,
-        schemaDefaultValue,
-        formCannotEditProps
+        schemaDefaultValue.current,
+        formCannotEditProps.current
       );
       if (Object.keys(incrementalChange).length !== 0) {
-        setSyncJson(newSyncJsonContentObj);
+        setSyncJson(newSyncJson);
         await callService('configService', 'updateJsonFile', incrementalChange);
       }
     };
@@ -87,10 +91,10 @@ const JSONForm = () => {
       );
       formCannotEditProps.current = currentFormCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);
-      uischema.current = getUISchema(formCannotEditProps);
+      jsonFileName.current = currentJsonFileName;
+      uischema.current = getUISchema(currentFormCannotEditProps);
       setCurrentSchema(schema);
       setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
-      jsonFileName.current = currentJsonFileName;
       setKey(Date.now());
       setLoading(false);
     };
@@ -106,11 +110,11 @@ const JSONForm = () => {
       ) : (
         <Card free style={{ background: '#1e1e1e' }}>
           <configHelperProvider.Provider
-            value={{ defaultSchema: schemaDefaultValue, syncJsonContentObjInWebView: syncJson, jsonFileName }}
+            value={{ defaultSchema: schemaDefaultValue.current, syncJson, jsonFileName: jsonFileName.current }}
           >
             <MemoJSONSchemaForm
               jsonContent={syncJson}
-              uiSchema={uischema}
+              uiSchema={uischema.current}
               key={formKey}
               setNewWebviewData={setFormData}
               schema={currentSchema}

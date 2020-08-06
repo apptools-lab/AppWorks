@@ -8,41 +8,39 @@ export const getSchemaDefaultValue = (schema) => {
   return DefaultSchema;
 };
 
-export function createIncremetalUpdate(currentConfig, lastSyncJson, defaultSchema, formCannotEditProps) {
+export function createIncremetalUpdate(formData, lastSyncJson, schemaDefaultValue, formCannotEditProps) {
   const incrementalChange = {};
-  const syncJson = { ...lastSyncJson };
-
+  const newSyncJson = { ...lastSyncJson };
   _.forIn(lastSyncJson, (value, key) => {
-    if (!formCannotEditProps.includes(key) && !_.isEqual(value, currentConfig[key])) {
-      incrementalChange[key] = currentConfig[key];
-      syncJson[key] = currentConfig[key];
+    if (!formCannotEditProps.includes(key) && !_.isEqual(value, formData[key])) {
+      incrementalChange[key] = formData[key];
+      newSyncJson[key] = formData[key];
     }
   });
-
-  _.forIn(currentConfig, (value, key) => {
+  _.forIn(formData, (value, key) => {
     if ([...formCannotEditProps, ...Object.keys(lastSyncJson)].includes(key)) {
       // change nothing
-    } else if (defaultSchema[key] !== undefined && !_.isEqual(currentConfig[key], defaultSchema[key])) {
-      syncJson[key] = value;
+    } else if (schemaDefaultValue[key] !== undefined && !_.isEqual(formData[key], schemaDefaultValue[key])) {
+      newSyncJson[key] = value;
       incrementalChange[key] = value;
     }
   });
-  return { incrementalChange, newSyncJsonContentObj: syncJson };
+  return { incrementalChange, newSyncJson };
 }
 
-export function getSyncContentAfterUpdate(userSetting, oldSyncJsonContent) {
-  if (!userSetting || !oldSyncJsonContent) {
+export function getSyncContentAfterUpdate(userSetting, latestSyncJson) {
+  if (!userSetting || !latestSyncJson) {
     return;
   }
-  const newSyncJsonContent = oldSyncJsonContent;
+  const syncJson = { ...latestSyncJson };
   _.forIn(userSetting, (value, key) => {
     if (value === null) {
-      delete newSyncJsonContent[key];
+      delete syncJson[key];
     } else {
-      newSyncJsonContent[key] = value;
+      syncJson[key] = value;
     }
   });
-  return newSyncJsonContent;
+  return syncJson;
 }
 
 export const getUISchema = (formCannotEditProps) => {

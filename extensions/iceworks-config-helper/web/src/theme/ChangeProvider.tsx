@@ -7,7 +7,7 @@ import { configHelperProvider } from '../pages/JSONForm/index';
 const DEFUALT_ITEM_COLOR = '#1e1e1e';
 const CHANGED_ITEM_COLOR = '#0d7c9f';
 const DEFAULT_ITEM_MARGIN = '0 2px';
-const CHANGED_ITEM_MARGIN = '10px';
+const CHANGED_ITEM_MARGIN = '10px 2px 0px 2px';
 const WIDTH = '2px';
 
 const ChangeProvider = ({ fieldKey, children }) => {
@@ -17,9 +17,9 @@ const ChangeProvider = ({ fieldKey, children }) => {
     width: WIDTH,
     margin: DEFAULT_ITEM_MARGIN,
   });
-  const { syncJsonContentObjInWebView, defaultSchema } = useContext(configHelperProvider);
+  const { syncJson, defaultSchema } = useContext(configHelperProvider);
   useEffect(() => {
-    const currentValue = syncJsonContentObjInWebView[fieldKey];
+    const currentValue = syncJson[fieldKey];
     const defaultValue = defaultSchema[fieldKey];
     setSiderStyle(
       // 侧边栏的颜色表示了这个属性是否被改动，这个改动是以默认值为基准的
@@ -31,7 +31,7 @@ const ChangeProvider = ({ fieldKey, children }) => {
         ? { backgroundColor: DEFUALT_ITEM_COLOR, width: WIDTH, margin: DEFAULT_ITEM_MARGIN }
         : { backgroundColor: CHANGED_ITEM_COLOR, width: WIDTH, margin: CHANGED_ITEM_MARGIN }
     );
-  }, [syncJsonContentObjInWebView]);
+  }, [syncJson]);
 
   return (
     <Box direction="row">

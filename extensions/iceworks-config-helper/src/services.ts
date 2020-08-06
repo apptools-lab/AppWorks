@@ -188,8 +188,12 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
 
     if (incrementalChange) {
       syncJson = changedJsonContent;
-      panel!.webview.postMessage({ command: 'incrementalUpdateJsonForWebview', jsonContent: incrementalChange });
+      panel!.webview.postMessage({
+        command: 'iceworks-config-helper: incrementalUpdate',
+        userSetting: incrementalChange,
+      });
     }
+    // console.log('incrementalChang',incrementalChange)
   } catch {
     // ignore
   }
