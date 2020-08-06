@@ -52,7 +52,8 @@ export async function getProjectType() {
       return 'vue';
     }
     return 'unknown';
-  } catch  {
+  } catch (e) {
+    console.error(e);
     return 'unknown';
   }
 }
