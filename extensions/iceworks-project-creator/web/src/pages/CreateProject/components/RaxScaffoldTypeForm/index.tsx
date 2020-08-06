@@ -40,7 +40,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
     const targetIndex = selectedTargets.findIndex((item) => target.type === item);
     if (targetIndex > -1) {
       if (selectedTargets.length === 1) {
-        Notification.error({ content: intl.formatMessage({id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt' }) });
+        Notification.error({
+          content: intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt' }),
+        });
         return;
       }
       // 删除已有的 target
@@ -95,7 +97,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
   }, []);
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{intl.formatMessage({id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle'})}</div>
+      <div className={styles.title}>
+        {intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle' })}
+      </div>
       <div className={styles.row}>
         {targets.map((item) => {
           const selected = selectedTargets.some((selectedTarget) => selectedTarget === item.type);
@@ -121,7 +125,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
       </div>
       {selectedTargets.some((item) => item === 'web') && (
         <>
-          <div className={styles.title}>{intl.formatMessage({id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle'})}</div>
+          <div className={styles.title}>
+            {intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle' })}
+          </div>
           <div className={styles.row}>
             {webAppTypes.map((item) => (
               <Balloon
@@ -146,7 +152,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
       )}
       {selectedTargets.some((item) => item === 'miniapp' || item === 'wechat-miniprogram' || item === 'kraken') && (
         <>
-          <div className={styles.title}>{intl.formatMessage({id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.miniAppTitle'})}</div>
+          <div className={styles.title}>
+            {intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.miniAppTitle' })}
+          </div>
           <div className={styles.row}>
             {miniAppTypes.map((item) => (
               <Balloon
