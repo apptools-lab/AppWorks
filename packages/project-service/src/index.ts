@@ -40,17 +40,21 @@ export async function getProjectLanguageType() {
 }
 
 export async function getProjectType() {
-  const { dependencies = {} } = await readPackageJSON(projectPath);
-  if (dependencies.rax) {
-    return 'rax';
+  try {
+    const { dependencies = {} } = await readPackageJSON(projectPath);
+    if (dependencies.rax) {
+      return 'rax';
+    }
+    if (dependencies.react) {
+      return 'react';
+    }
+    if (dependencies.vue) {
+      return 'vue';
+    }
+    return 'unknown';
+  } catch  {
+    return 'unknown';
   }
-  if (dependencies.react) {
-    return 'react';
-  }
-  if (dependencies.vue) {
-    return 'vue';
-  }
-  return 'unknown';
 }
 
 export async function getProjectFramework() {
