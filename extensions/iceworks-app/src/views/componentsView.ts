@@ -33,7 +33,6 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
     if (!this.workspaceRoot) {
       return Promise.resolve([]);
     }
-    const componentsPath = path.join(this.workspaceRoot, 'src', 'components');
     try {
       const isComponentPathExists = await checkPathExists(componentsPath);
       if (isComponentPathExists) {
