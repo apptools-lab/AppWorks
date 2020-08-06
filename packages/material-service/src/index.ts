@@ -11,9 +11,14 @@ import { getProjectType } from '@iceworks/project-service';
 import i18n from './i18n';
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
+const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
+const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
+const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
+
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
+
 const OFFICAL_MATERIAL_SOURCES = [
   {
     name: 'PC Web',
@@ -21,20 +26,31 @@ const OFFICAL_MATERIAL_SOURCES = [
     client: 'pc',
     source: ICE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.webDescription'),
-  },
+  }
+];
+
+const OFFICAL_MATERIAL_SOURCES_FOR_INTERNAL = [
   {
     name: i18n.format('package.materialService.index.raxTitle'),
     type: 'rax',
     client: 'wireless',
-    source: 'https://ice.alicdn.com/assets/materials/rax-materials.json',
+    source: RAX_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.raxDescription'),
   },
-];
+]
+
 const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
+  {
+    name: i18n.format('package.materialService.index.miniProgramTitle'),
+    type: 'miniProgram',
+    client: 'wireless',
+    source: MINI_PROGRAM_MATERIAL_SOURCE,
+    description: i18n.format('package.materialService.index.miniProgramDescription'),
+  },
   {
     name: i18n.format('package.materialService.index.vueTitle'),
     type: 'vue',
-    source: 'https://ice.alicdn.com/assets/materials/vue-materials.json',
+    source: VUE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.vueDescription'),
   },
 ];
@@ -63,9 +79,8 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     specifiedType = 'react';
   }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
-  if (!(await checkAliInternal())) {
-    officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
-  }
+  const isAliInternal = await checkAliInternal();
+  officalsources = officalsources.concat(isAliInternal ? OFFICAL_MATERIAL_SOURCES_FOR_INTERNAL : OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   const userSources: IMaterialSource[] = getUserSources();
   const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;

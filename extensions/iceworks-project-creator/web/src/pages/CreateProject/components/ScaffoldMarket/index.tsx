@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/next';
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
-import ScaffoldCard from '@/components/ScaffoldCard';
+import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
@@ -98,7 +98,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                   iconName = projectType;
                 }
                 return (
-                  <ScaffoldCard
+                  <Card
                     key={item.name}
                     title={
                       <div className={styles.cardTitle}>
@@ -136,8 +136,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                       : jsScaffoldsList.includes(item.source.npm)
                       ? 'js'
                       : '';
-                    const isRax = selectedSource.type === 'rax';
-                    const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
+                    const isWireless = selectedSource.client && selectedSource.client === 'wireless';
+                    const CardComponent = isWireless ? MobileScaffoldCard : Card;
                     return (
                       <CardComponent
                         key={item.name}
@@ -181,8 +181,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                           : jsScaffoldsList.includes(item.source.npm)
                           ? 'js'
                           : '';
-                        const isRax = selectedSource.type.toLocaleLowerCase() === 'rax';
-                        const CardComponent = isRax ? MobileScaffoldCard : ScaffoldCard;
+                        const isRax = selectedSource.client && selectedSource.client === 'wireless';
+                        const CardComponent = isRax ? MobileScaffoldCard : Card;
                         return (
                           <CardComponent
                             key={item.name}
