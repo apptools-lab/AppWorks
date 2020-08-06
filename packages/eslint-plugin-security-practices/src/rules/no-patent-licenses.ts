@@ -14,7 +14,7 @@ module.exports = {
     fixable: null,
     messages: {
       // eslint-disable-next-line
-      noBSDLicenses: "The package '{{dependencyName}}' with license '{{license}}' may cause some problem.",
+      noPatentLicenses: "The package '{{dependencyName}}' with license '{{license}}' may cause some problem.",
     },
   },
 
@@ -43,7 +43,7 @@ module.exports = {
                 if (license.indexOf('Patent') > -1) {
                   context.report({
                     loc: property.loc,
-                    messageId: 'noBSDLicenses',
+                    messageId: 'noPatentLicenses',
                     data: {
                       dependencyName,
                       license,
