@@ -26,5 +26,9 @@
   "web.iceworksProjectCreator.CreateProjectForm.storage": "Local Path",
   "web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath": "Choose Local Path for Application",
   "web.iceworksProjectCreator.ScaffoldMarket.noTemplate": "There is no template, comming soon...",
-  "web.iceworksProjectCreator.ScaffoldMarket.more": "More"
+  "web.iceworksProjectCreator.ScaffoldMarket.more": "More",
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt": "Please choose at least one target",
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "Target(please choose at least one)",
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle": "Choose Web App type",
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.miniAppTitle": "Choose Mini App type"
 }
