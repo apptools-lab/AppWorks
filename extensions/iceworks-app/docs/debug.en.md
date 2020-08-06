@@ -72,4 +72,10 @@ It is automatically injected by Iceworks and is a standard VS Code debugging con
 }
 
 ```
+## Chrome 
 
+A new instance of Chrome is opened for debugging. The first time you start Chrome without data (no user mode, no extensions), the data operated during the debugging process will be saved (history, installed extensions ...).
+
+Rax project，Recommended to install [Guan Extension](https://chrome.google.com/webstore/detail/guan-extension/jfalnandddhgfnmejfgjgfbfnnkhljog)。
+
+If you want to use your own Chrome, you can switch the request configuration in launch.json to `attach`. You must close the current Chrome.

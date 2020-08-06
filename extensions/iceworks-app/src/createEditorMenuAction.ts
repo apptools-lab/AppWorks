@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
 import { setDebugConfig } from './debugConfig/index';
-import { editorTitleRunDevCommandId, editorTitleRunBuildCommandId } from './constants';
+import { editorTitleRunDebugCommandId, editorTitleRunBuildCommandId } from './constants';
 import { ITerminalMap } from './types';
 import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from './commands/executeCommand';
@@ -20,7 +20,7 @@ export default async function createEditorMenuAction(terminals: ITerminalMap) {
           title: 'Run Install',
           arguments: [projectPath, createNpmCommand('install')],
         },
-        editorTitleRunDevCommandId
+        editorTitleRunDebugCommandId
       );
       return;
     }

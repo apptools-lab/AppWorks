@@ -93,7 +93,7 @@
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
-更多请看[参考文档](./docs/debug.md)
+更多请看[参考文档](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)
 
 ## 更多
 

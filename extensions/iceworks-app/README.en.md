@@ -94,7 +94,7 @@ If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemN
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
-For more information, please see [Reference Document](./docs/debug.en.md)
+For more information, please see [Reference Document](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.en.md)
 
 ## More
 

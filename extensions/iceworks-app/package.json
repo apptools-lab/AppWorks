@@ -126,7 +126,7 @@
       },
       {
         "command": "iceworksApp.editorMenu.runDebug",
-        "title": "%iceworksApp.command.npmScripts.runDev.title%",
+        "title": "%iceworksApp.command.npmScripts.runDebug.title%",
         "icon": {
           "light": "assets/light/runDev.svg",
           "dark": "assets/dark/runDev.svg"

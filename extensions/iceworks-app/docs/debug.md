@@ -69,3 +69,13 @@ PS: 可将 .vscode 目录添加至 .gitignore 配置中。
 
 ```
 
+## Chrome 实例
+
+默认开启新的 Chrome 实例进行调试。首次启动为无数据 Chrome (无用户态，无插件），在调试过程操作的数据将得以保存（历史，安装插件等）。
+
+Rax 项目，推荐安装 [Guan Extension](https://chrome.google.com/webstore/detail/guan-extension/jfalnandddhgfnmejfgjgfbfnnkhljog)。
+
+### 其他
+
+如果想使用常用登录态的 Chrome 进行提示，可切换 launch.json 中的 request 配置为 `attach`，且必须关闭当前 Chrome。
+
