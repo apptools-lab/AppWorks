@@ -6,6 +6,7 @@ export const mainScaffoldsList = [
   '@rax-materials/scaffolds-app-ts',
   '@miniprogram-materials/scaffolds-app-js',
   '@miniprogram-materials/scaffolds-app-ts',
+  '@miniprogram-materials/scaffolds-todos'
 ];
 
 export const tsScaffoldsList = [
@@ -23,4 +24,5 @@ export const jsScaffoldsList = [
   '@alifd/scaffold-lite-js',
   '@rax-materials/scaffolds-app-js',
   '@miniprogram-materials/scaffolds-app-js',
+  '@miniprogram-materials/scaffolds-todos'
 ];
