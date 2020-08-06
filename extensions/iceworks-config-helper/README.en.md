@@ -7,7 +7,28 @@ English | [简体中文](./README.md)
 
 For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features.
 
+## Activite
+
+### Active In Side Bar
+
+![demo](https://user-images.githubusercontent.com/56879942/89491695-68db3a80-d7e2-11ea-8bfe-af1b545eb2ad.gif)
+
+1. Right click on the configuration file in the sidebar and select `Iceworks: Setup xxx.json by visually.` to launch the visual editing panel
+
+### Active In TextEditer
+
+![demo](https://user-images.githubusercontent.com/56879942/89491449-e94d6b80-d7e1-11ea-8780-051ff9845023.gif)
+
+1. Open the configuration file, right click `Iceworks: Setup xxx.json by visually.` to launch the visual editing panel
+2. Click the `Iceworks: Setup xxx.json by visually.` icon in the title bar and click it to launch the visual editing panel
+
 ## Usage
+
+### Editing Config File Visually
+
+Visually edit the configuration file through the palette.
+
+![demo](https://user-images.githubusercontent.com/56879942/89491159-30872c80-d7e1-11ea-9463-501248e1b08c.gif)
 
 ### Hover Widget
 
