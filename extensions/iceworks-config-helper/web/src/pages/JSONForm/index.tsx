@@ -32,6 +32,8 @@ const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setNewWebviewData }) =>
   );
 };
 
+let externalSyncJson = {};
+
 const MemoJSONSchemaForm = memo(JSONSchemaForm, _.isEqual);
 export const configHelperProvider = React.createContext({
   defaultSchema: {},
@@ -55,17 +57,12 @@ const JSONForm = () => {
     const { command, userSetting } = event.data;
     if (command === 'iceworks-config-helper: incrementalUpdate') {
       // 进行增量更新
-      setSyncJson(getSyncContentAfterUpdate(userSetting, syncJson));
+      externalSyncJson = getSyncContentAfterUpdate(userSetting, externalSyncJson);
+      setSyncJson(externalSyncJson);
       setKey(Date.now());
     }
     console.log('getMessage');
   };
-  useEffect(() => {
-    // TODO: 这个地方会出现循环添加监听者的错误。
-    console.log('syncJsonChanged', JSON.stringify(syncJson));
-    window.removeEventListener('message', updateSyncJson, false);
-    window.addEventListener('message', updateSyncJson, false);
-  }, [syncJson]);
 
   useEffect(() => {
     const updateJsonToExtension = async () => {
@@ -76,6 +73,7 @@ const JSONForm = () => {
         formCannotEditProps.current
       );
       if (Object.keys(incrementalChange).length !== 0) {
+        externalSyncJson = newSyncJson;
         setSyncJson(newSyncJson);
         await callService('configService', 'updateJsonFile', incrementalChange);
       }
@@ -94,9 +92,12 @@ const JSONForm = () => {
       jsonFileName.current = currentJsonFileName;
       uischema.current = getUISchema(currentFormCannotEditProps);
       setCurrentSchema(schema);
-      setSyncJson(getSyncContentAfterUpdate(jsonContent, syncJson));
+      externalSyncJson = getSyncContentAfterUpdate(jsonContent, syncJson);
+      setSyncJson(externalSyncJson);
+
       setKey(Date.now());
       setLoading(false);
+      window.addEventListener('message', updateSyncJson, false);
     };
     initWebView();
   }, []);
