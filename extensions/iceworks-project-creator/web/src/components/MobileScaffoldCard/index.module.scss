@@ -15,17 +15,19 @@
   margin: 0 10px 20px 10px;
   cursor: pointer;
   position: relative;
-  background-color: white;
 
   :global {
     .next-card-media {
       height: 230px;
+      overflow: hidden;
+
       img {
         max-height: none;
       }
     }
     .next-card-header {
       background-color: white;
+      z-index: 2;
       box-shadow: 0px -2px 10px #ecf0f1;
       margin: 0;
       padding: 10px 16px;

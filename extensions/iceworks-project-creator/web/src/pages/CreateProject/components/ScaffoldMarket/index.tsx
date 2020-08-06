@@ -14,6 +14,7 @@ import { useIntl } from 'react-intl';
 const projectTypes = ['react', 'rax', 'vue'];
 
 function checkIsWireless(source) {
+  console.log(source);
   return (source.client && source.client === 'wireless') || source.type === 'rax' || source.type === 'miniProgram';
 }
 
