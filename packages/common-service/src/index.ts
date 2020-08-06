@@ -69,9 +69,9 @@ export function executeCommand(...arg: any[]) {
 export function registerCommand(command: string, callback: (...args: any[]) => any, thisArg?: any) {
   return vscode.commands.registerCommand(
     command,
-    () => {
+    (...args) => {
       recordDAU();
-      callback();
+      callback(...args);
     },
     thisArg
   );
