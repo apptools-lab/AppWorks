@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "icejs build.json",
+  "description": "icejs 的工程配置",
+  "default": {},
+  "examples": [{}],
+  "required": [],
+  "properties": {
+    "alias": {
+      "type": "object",
+      "description": "这是一个对象。",
+      "default": {},
+      "examples": [
+        {
+          "@components": "src/components/"
+        }
+      ]
+    },
+    "publicPath": {
+      "type": "string",
+      "description": "这是一个字符串。",
+      "default": "",
+      "examples": ["/"]
+    },
+    "sourceMap": {
+      "type": "boolean",
+      "description": "这是一个布尔值。",
+      "examples": [false]
+    },
+    "hash": {
+      "oneOf": [
+        {
+          "type": "string",
+          "examples": ["contenthash"]
+        },
+        {
+          "type": "boolean",
+          "default": false,
+          "examples": [false]
+        }
+      ],
+      "description": "这是一个 oneOf。",
+      "default": false,
+      "properties": {}
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "这是一个字符串。",
+      "default": "",
+      "examples": ["build"]
+    },
+    "vendor": {
+      "type": "boolean",
+      "description": "这是一个布尔值。",
+      "default": true,
+      "examples": [true]
+    },
+    "libraryTarget": {
+      "type": "string",
+      "description": "这是一个字符串。",
+      "default": "",
+      "examples": [""]
+    },
+    "compileDependencies": {
+      "type": "array",
+      "description": "这是一个数组。",
+      "default": [],
+      "examples": [["@alifd/next"]],
+      "additionalItems": true,
+      "items": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Compile module dependencies under node_modules.",
+            "default": "",
+            "examples": ["@alifd/next"]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox } from '@alifd/next';
 import { WidgetProps } from '@rjsf/core';
-import ChangeProvider from './ChangeProvider';
 
 const Fdcheckbox: React.FC<WidgetProps> = (props) => {
-  const { label, value, schema, onChange } = props;
+  const { value, schema, onChange } = props;
   const [checkedValue, setCheckedValue] = useState(value);
 
   const check = (checked) => {
     onChange(checked);
     setCheckedValue(checked);
   };
+
+  useEffect(() => {
+    check(value);
+  }, [value]);
 
   return (
     <Checkbox checked={checkedValue} onChange={(checked) => check(checked)}>
