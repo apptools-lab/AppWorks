@@ -12,6 +12,8 @@ import { createIncremetalUpdate, getSchemaDefaultValue, getUISchema } from '../.
 const CARD_STYLE = { background: '#1e1e1e' };
 const LOADING_STYLE = { width: '100%', height: '80vh' };
 
+// TODO 程序锁，标识是是否正在更新 Json
+// 当编辑器发生 Json 变更时，触发 Form 的 rerender，但不触发表单的 onChange，避免死循环
 let isUpdatingJson = false;
 
 const JsonSchemaForm = ({ jsonContent, schema, uiSchema, setData }) => {

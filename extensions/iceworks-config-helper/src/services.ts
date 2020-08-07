@@ -30,8 +30,8 @@ const getInitData = async () => {
   return initmessage;
 };
 
-// 程序锁，标识是否是正在主动更新 Json 文件
-// TODO 该标识用于当 webview 通知更新 Json 文件时，则在编辑器文本更新事件中不发送更新 webview Json 的指令，避免死循环
+// TODO 程序锁，标识是是否正在更新 Json 文件
+// 当 webview 通知更新 Json 文件时，则在编辑器文本更新事件中不发送更新 webview Json 的指令，避免死循环
 let isUpdatingJsonFile = false;
 export function getIsUpdatingJsonFile() {
   return isUpdatingJsonFile;
