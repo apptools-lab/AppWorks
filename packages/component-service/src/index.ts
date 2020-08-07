@@ -16,8 +16,10 @@ import {
   packageJSONFilename,
   checkIsTemplate,
   getPackageJSON,
+  componentsPath,
+  getProjectLanguageType
 } from '@iceworks/project-service';
-import CodeGenerator from '@ali/lowcode-code-generator';
+import CodeGenerator, { IBasicSchema } from '@ali/lowcode-code-generator';
 import insertComponent from './utils/insertComponent';
 import i18n from './i18n';
 
@@ -121,19 +123,47 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
-export async function generateComponentCode(schema: any) {
+export async function generateComponentCode(version, componentsMap, utils, componentsTree, i18n) {
   const componentName = await vscode.window.showInputBox({
     placeHolder: '名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符',
   });
   if (!componentName) {
     return;
   }
-
-  await generateCode(schema);
+  const schema: IBasicSchema = { version, componentsMap, utils, componentsTree, i18n }
+  await generateCode(componentName, schema); 
 }
 
-async function generateCode(schema: any) {
-  const createIceJsProjectBuilder = CodeGenerator.solutions.icejs;
-  const builder = createIceJsProjectBuilder();
-  return await builder.generateProject(schema);
+async function generateCode(componentName: string, schema: IBasicSchema) {
+  const projectLanguageType = await getProjectLanguageType();
+  const moduleBuilder = CodeGenerator.createModuleBuilder({
+    plugins: [
+      CodeGenerator.plugins.react.reactCommonDeps(),
+      CodeGenerator.plugins.common.esmodule({
+        fileType: 'jsx',
+      }),
+      CodeGenerator.plugins.react.containerClass(),
+      CodeGenerator.plugins.react.containerInitState(),
+      CodeGenerator.plugins.react.containerLifeCycle(),
+      CodeGenerator.plugins.react.containerMethod(),
+      CodeGenerator.plugins.react.jsx(),
+      CodeGenerator.plugins.style.css(),
+    ],
+    postProcessors: [CodeGenerator.postprocessor.prettier()],
+    mainFileName: 'index',
+  });
+
+  moduleBuilder.generateModuleCode(schema).then((result) => {
+    writeResultToDisk(result, componentsPath, componentName);
+  });
+}
+
+function writeResultToDisk(code, path, componentName) {
+  const publisher = CodeGenerator.publishers.disk();
+
+  return publisher.publish({
+    project: code,
+    outputPath: path,
+    projectSlug: componentName
+  });
 }

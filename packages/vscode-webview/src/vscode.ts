@@ -75,7 +75,7 @@ export function connectService(
 }
 
 const DEFAULT_ENTRY = 'index';
-export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean, extraHtml?: string): string {
+export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean, extraHtml = ''): string {
   entryName = entryName || DEFAULT_ENTRY;
   const basePath = path.join(extensionPath, 'build');
   const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, `js/${entryName}.js`));

@@ -71,9 +71,9 @@ export default {
           width: 86,
         },
         addonProps: {
-          onClick: async (version, componentsMap, utils, componentsTree) => {
+          onClick: async (version, componentsMap, utils, componentsTree, i18n) => {
             try {
-              await callService('component', 'generateComponentCode', version, componentsMap, utils, componentsTree);
+              await callService('component', 'generateComponentCode', version, componentsMap, utils, componentsTree, i18n);
             } catch (err) {
               console.error(err);
             }
