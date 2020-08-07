@@ -11,7 +11,6 @@ const CHANGED_ITEM_MARGIN = '10px 2px 0px 2px';
 const WIDTH = '2px';
 
 const ChangeProvider = ({ fieldKey, children }) => {
-  // const {defaultSchema, formCannotEditProps} = useContext(changeProviderContent);
   const [siderStyle, setSiderStyle] = useState({
     backgroundColor: DEFUALT_ITEM_COLOR,
     width: WIDTH,

@@ -51,7 +51,6 @@ export const configHelperProvider = React.createContext({
 
 const JsonForm = () => {
   const intl = useIntl();
-  // const [formKey, setKey] = useState(0);
   const [loading, setLoading] = useState(true);
   const [currentSchema, setCurrentSchema] = useState({});
   const [jsonContent, orginSetJsonContent] = useState({});
@@ -77,7 +76,6 @@ const JsonForm = () => {
         if (command === 'iceworks-config-helper:updateJson') {
           console.log('got updateJson message, jsonContent:', jsonContent);
           setJsonContent(jsonContent);
-          // setKey(Date.now());
         }
       },
       false
@@ -115,7 +113,6 @@ const JsonForm = () => {
       uischema.current = getUISchema(setFormCannotEditProps);
       setCurrentSchema(schema);
       setJsonContent(jsonContent);
-      // setKey(Date.now());
       setLoading(false);
     };
     init();
@@ -140,7 +137,6 @@ const JsonForm = () => {
             <MemoJsonSchemaForm
               jsonContent={jsonContent}
               uiSchema={uischema.current}
-              // key={formKey}
               setData={setSyncAndUpdateJsonFile}
               schema={currentSchema}
             />
