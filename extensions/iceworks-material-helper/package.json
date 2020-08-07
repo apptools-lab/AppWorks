@@ -33,6 +33,10 @@
       {
         "command": "iceworks-material-helper.start",
         "title": "%iceworksMaterialHelper.commands.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper:showComoponentQuickPick",
+        "title": "%iceworksMaterialHelper.commands.showComoponentQuickPick.title%"
       }
     ],
     "menus": {

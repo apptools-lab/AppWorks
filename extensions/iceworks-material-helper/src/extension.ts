@@ -5,6 +5,7 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
+import showMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -62,6 +63,9 @@ export function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworks-material-helper.start', function () {
       activeWebview();
+    }),
+    registerCommand('iceworks-material-helper:showComoponentQuickPick', () => {
+      showMaterialQuickPicks();
     })
   );
 
