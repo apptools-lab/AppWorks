@@ -10,11 +10,11 @@ const EditInFile = ({ name }) => {
   const sendDefaultValue = () => {
     const editInJsonArgs = {};
     editInJsonArgs[name] = defaultSchema[name];
-    callService('config', 'editInJson', editInJsonArgs);
+    callService('config', 'editInJsonFile', editInJsonArgs);
   };
   return (
     <a onClick={sendDefaultValue}>
-      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJson.editInJsonLink' }, { editingJSONFile })}
+      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJsonFile.editInJsonLink' }, { editingJSONFile })}
     </a>
   );
 };

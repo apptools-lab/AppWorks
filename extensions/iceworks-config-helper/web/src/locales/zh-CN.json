@@ -1,4 +1,4 @@
 {
   "web.iceworksConfigHelper.index.settingFileNotReady": "不能加载 JSON 配置文件...   请修复后重试.",
-  "web.iceworksConfigHelper.editInJson.editInJsonLink": "在 {editingJSONFile} 中编辑"
+  "web.iceworksConfigHelper.editInJsonFile.editInJsonLink": "在 {editingJSONFile} 中编辑"
 }

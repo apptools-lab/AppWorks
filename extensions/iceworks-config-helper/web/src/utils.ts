@@ -39,21 +39,6 @@ export function createIncremetalUpdate(newData, lastSyncJson, schemaDefaultValue
   return { incrementalChange, newSyncJson };
 }
 
-export function getSyncJson(incrementalChange, latestSyncJson) {
-  if (!incrementalChange || !latestSyncJson) {
-    return;
-  }
-  const syncJson = { ...latestSyncJson };
-  _.forIn(incrementalChange, (value, key) => {
-    if (value === null) {
-      delete syncJson[key];
-    } else {
-      syncJson[key] = value;
-    }
-  });
-  return syncJson;
-}
-
 export const getUISchema = (formCannotEditProps) => {
   const uiSchema = {};
   formCannotEditProps.forEach((prop) => {

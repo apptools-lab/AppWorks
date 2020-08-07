@@ -7,13 +7,15 @@ import { useIntl } from 'react-intl';
 import { fields, widgets, templates } from '@/theme/theme';
 import { LocaleProvider } from '@/i18n';
 import callService from '../../callService';
-import { createIncremetalUpdate, getSyncJson, getSchemaDefaultValue, getUISchema } from '../../utils';
+import { createIncremetalUpdate, getSchemaDefaultValue, getUISchema } from '../../utils';
 
 const CARD_STYLE = { background: '#1e1e1e' };
 const LOADING_STYLE = { width: '100%', height: '80vh' };
 
 const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setData }) => {
+  console.log('render JSONSchemaForm', jsonContent);
   const setJson = async (e) => {
+    console.log('onChange...');
     setData(e);
   };
 
@@ -42,7 +44,7 @@ export const configHelperProvider = React.createContext({
 
 const JSONForm = () => {
   const intl = useIntl();
-  const [formKey, setKey] = useState(0);
+  // const [formKey, setKey] = useState(0);
   const [loading, setLoading] = useState(true);
   const [currentSchema, setCurrentSchema] = useState({});
   const [syncJson, setSyncJson] = useState({});
@@ -55,10 +57,11 @@ const JSONForm = () => {
     window.addEventListener(
       'message',
       (e) => {
-        const { command, incrementalChange } = e.data;
-        if (command === 'iceworks-config-helper: incrementalUpdate') {
-          setSyncJson(getSyncJson(incrementalChange, syncJson));
-          setKey(Date.now());
+        const { command, jsonContent } = e.data;
+        if (command === 'iceworks-config-helper:incrementalUpdate') {
+          console.log('got message, jsonContent:', jsonContent);
+          setSyncJson(jsonContent);
+          // setKey(Date.now());
         }
       },
       false
@@ -90,8 +93,8 @@ const JSONForm = () => {
       editingJSONFile.current = setEditingJSONFile;
       uischema.current = getUISchema(setFormCannotEditProps);
       setCurrentSchema(schema);
-      setSyncJson(getSyncJson(jsonContent, syncJson));
-      setKey(Date.now());
+      setSyncJson(jsonContent);
+      // setKey(Date.now());
       setLoading(false);
     };
     init();
@@ -116,7 +119,7 @@ const JSONForm = () => {
             <MemoJSONSchemaForm
               jsonContent={syncJson}
               uiSchema={uischema.current}
-              key={formKey}
+              // key={formKey}
               setData={setSyncAndUpdateJsonFile}
               schema={currentSchema}
             />
