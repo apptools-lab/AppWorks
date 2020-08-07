@@ -1,4 +1,4 @@
 {
   "extension.iceworksConfigHelper.index.webviewTitle": "Config Helper - Iceworks",
-  "extension.iceworksConfigHelper.loadJson.JsonErr": " <%= editingJSONFile %>.json 文件不能解析，请改正后再试"
+  "extension.iceworksConfigHelper.loadJson.JsonErr": " <%= editingJsonFile %>.json 文件不能解析，请改正后再试"
 }

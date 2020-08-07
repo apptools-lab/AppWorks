@@ -5,7 +5,7 @@ const mockInitData = {
   schema,
   formCannotEditProps: ['alias', 'hash', 'compileDependencies'],
   jsonContent,
-  editingJSONFile: 'build.json',
+  editingJsonFile: 'build.json',
 };
 
 export default mockInitData;

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@alifd/next';
 import './styles.css';
 import { WidgetProps } from '@rjsf/core';
-import ChangeProvider from './ChangeProvider';
 
 const FdTextWeight: React.FC<WidgetProps> = (props) => {
-  const { label, schema, onChange, value } = props;
+  const { onChange, value } = props;
   const [errFlag, setErrFlag] = useState(false);
   const [inputStyle, setInputStyle] = useState({
     background: '#3c3c3c',
@@ -34,6 +33,11 @@ const FdTextWeight: React.FC<WidgetProps> = (props) => {
     onChange(inputStringValue);
     setInputValue(inputStringValue);
   };
+
+  useEffect(() => {
+    inputChange(value);
+  }, [value]);
+  
   return (
     <Input
       value={inputValue}

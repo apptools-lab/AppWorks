@@ -1,10 +1,10 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import callService from '../callService';
-import { configHelperProvider } from '../pages/JSONForm/index';
+import { configHelperProvider } from '../pages/JsonForm/index';
 
 const EditInFile = ({ name }) => {
-  const { editingJSONFile } = React.useContext(configHelperProvider);
+  const { editingJsonFile } = React.useContext(configHelperProvider);
   const intl = useIntl();
   const { defaultSchema } = React.useContext(configHelperProvider);
   const sendDefaultValue = () => {
@@ -14,7 +14,7 @@ const EditInFile = ({ name }) => {
   };
   return (
     <a onClick={sendDefaultValue}>
-      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJsonFile.editInJsonLink' }, { editingJSONFile })}
+      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJsonFile.editInJsonLink' }, { editingJsonFile })}
     </a>
   );
 };

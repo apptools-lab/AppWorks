@@ -3,7 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { initExtension } from '@iceworks/common-service';
 import { recordDAU, Recorder } from '@iceworks/recorder';
 import { getProjectFramework } from '@iceworks/project-service';
-import { setEditingJSONFile, services } from './services';
+import { setEditingJsonFile, services, getIsUpdatingJsonFile } from './services';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -11,7 +11,7 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
-  await setJSONValidationUrl();
+  await setJsonValidationUrl();
   recorder.recordActivate();
 
   const { extensionPath, subscriptions } = context;
@@ -20,14 +20,14 @@ export async function activate(context: vscode.ExtensionContext) {
 
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 
-  function activeConfigWebview(JSONFileName: string) {
+  function activeConfigWebview(JsonFileName: string) {
     recordDAU();
     recorder.record({
       module: 'main',
       action: 'activeConfigWebview',
     });
 
-    setEditingJSONFile(JSONFileName);
+    setEditingJsonFile(JsonFileName);
 
     if (configWebviewPanel) {
       configWebviewPanel.dispose();
@@ -65,13 +65,15 @@ export async function activate(context: vscode.ExtensionContext) {
       activeConfigWebview('app');
     })
   );
+
   subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
-      if (configWebviewPanel && isConfigJson(event.document, ['build.json', 'app.json']) && event.contentChanges.length > 0) {
+      if (configWebviewPanel && isConfigJson(event.document, ['build.json', 'app.json']) && event.contentChanges.length > 0 && !getIsUpdatingJsonFile()) {
+        console.log('do update webview Json', event.contentChanges);
         try {
           const jsonContent = JSON.parse(event.document.getText());
           configWebviewPanel.webview.postMessage({
-            command: 'iceworks-config-helper:incrementalUpdate',
+            command: 'iceworks-config-helper:updateJson',
             jsonContent,
           });
         } catch (error) {
@@ -97,7 +99,7 @@ function activePanelEntry() {
   }
 }
 
-async function setJSONValidationUrl() {
+async function setJsonValidationUrl() {
   try {
     const projectFramework = await getProjectFramework();
 
@@ -106,9 +108,9 @@ async function setJSONValidationUrl() {
         return;
       }
 
-      const packageJSON = extension.packageJSON;
-      if (packageJSON && packageJSON.contributes && (projectFramework === 'rax-app' || projectFramework === 'icejs')) {
-        const jsonValidation = packageJSON.contributes.jsonValidation;
+      const packageJson = extension.packageJson;
+      if (packageJson && packageJson.contributes && (projectFramework === 'rax-app' || projectFramework === 'icejs')) {
+        const jsonValidation = packageJson.contributes.jsonValidation;
         jsonValidation[0].url = `./schemas/${projectFramework === 'icejs' ? 'ice' : 'rax'}.build.${
           vscode.env.language
         }.json`;

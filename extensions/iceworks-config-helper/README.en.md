@@ -36,7 +36,7 @@ Visually edit the configuration file through the palette.
 
 #### Hover Widget
 
-Whenever you hover over some JSON key, shows the description in a Hover widget.
+Whenever you hover over some Json key, shows the description in a Hover widget.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87398212-290ca300-c5e8-11ea-9596-c15c380c0d7c.gif)
 

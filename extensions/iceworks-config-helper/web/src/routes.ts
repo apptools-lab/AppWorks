@@ -1,9 +1,9 @@
-import JSONForm from '@/pages/JSONForm/index';
+import JsonForm from '@/pages/JsonForm/index';
 
 const routerConfig = [
   {
     path: '/',
-    component: JSONForm,
+    component: JsonForm,
   },
 ];
 
