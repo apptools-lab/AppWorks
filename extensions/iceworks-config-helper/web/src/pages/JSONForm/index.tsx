@@ -101,7 +101,12 @@ const JsonForm = () => {
 
   useEffect(() => {
     const init = async () => {
-      const { formCannotEditProps: setFormCannotEditProps, schema, jsonContent, editingJsonFile: setEditingJsonFile } = await callService('config', 'getInitData');
+      const {
+        formCannotEditProps: setFormCannotEditProps,
+        schema,
+        jsonContent,
+        editingJsonFile: setEditingJsonFile,
+      } = await callService('config', 'getInitData');
       formCannotEditProps.current = setFormCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);
       editingJsonFile.current = setEditingJsonFile;
@@ -124,10 +129,10 @@ const JsonForm = () => {
       ) : (
         <Card free style={CARD_STYLE}>
           <configHelperProvider.Provider
-            value={{ 
+            value={{
               jsonContent,
               defaultSchema: schemaDefaultValue.current,
-              editingJsonFile: editingJsonFile.current
+              editingJsonFile: editingJsonFile.current,
             }}
           >
             <MemoJsonSchemaForm

@@ -21,19 +21,17 @@ export function createIncremetalUpdate(newData, lastSyncJson, schemaDefaultValue
   _.forIn(newData, (value, key) => {
     if ([...formCannotEditProps, ...Object.keys(lastSyncJson)].includes(key)) {
       // change nothing
-    } else {
-      if (schemaDefaultValue[key] !== undefined) {
-        // 如果 schema 中有默认值
-        // 1. 新数据的值不等于默认值，意味着新增了数据，记录此数据
-        // 2. 新数据的值等于默认值，则丢弃此值，不记录
-        if (!_.isEqual(newData[key], schemaDefaultValue[key])) {
-          incrementalChange[key] = value;
-          newSyncJson[key] = value;
-        }
-      } else {
+    } else if (schemaDefaultValue[key] !== undefined) {
+      // 如果 schema 中有默认值
+      // 1. 新数据的值不等于默认值，意味着新增了数据，记录此数据
+      // 2. 新数据的值等于默认值，则丢弃此值，不记录
+      if (!_.isEqual(newData[key], schemaDefaultValue[key])) {
         incrementalChange[key] = value;
         newSyncJson[key] = value;
       }
+    } else {
+      incrementalChange[key] = value;
+      newSyncJson[key] = value;
     }
   });
   return { incrementalChange, newSyncJson };

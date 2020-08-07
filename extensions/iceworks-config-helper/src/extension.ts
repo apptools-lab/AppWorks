@@ -68,7 +68,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
   subscriptions.push(
     vscode.workspace.onDidChangeTextDocument((event) => {
-      if (configWebviewPanel && isConfigJson(event.document, ['build.json', 'app.json']) && event.contentChanges.length > 0 && !getIsUpdatingJsonFile()) {
+      if (
+        configWebviewPanel &&
+        isConfigJson(event.document, ['build.json', 'app.json']) &&
+        event.contentChanges.length > 0 &&
+        !getIsUpdatingJsonFile()
+      ) {
         console.log('do update webview Json', event.contentChanges);
         try {
           const jsonContent = JSON.parse(event.document.getText());
@@ -79,7 +84,7 @@ export async function activate(context: vscode.ExtensionContext) {
         } catch (error) {
           // ignore
         }
-      } 
+      }
     })
   );
 }

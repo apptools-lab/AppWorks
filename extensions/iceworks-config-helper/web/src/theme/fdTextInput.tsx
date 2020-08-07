@@ -37,7 +37,7 @@ const FdTextWeight: React.FC<WidgetProps> = (props) => {
   useEffect(() => {
     inputChange(value);
   }, [value]);
-  
+
   return (
     <Input
       value={inputValue}
