@@ -4,7 +4,7 @@ import callService from '../callService';
 import { configHelperProvider } from '../pages/JSONForm/index';
 
 const EditInFile = ({ name }) => {
-  const { jsonFileName } = React.useContext(configHelperProvider);
+  const { editingJSONFile } = React.useContext(configHelperProvider);
   const intl = useIntl();
   const { defaultSchema } = React.useContext(configHelperProvider);
   const sendDefaultValue = () => {
@@ -14,7 +14,7 @@ const EditInFile = ({ name }) => {
   };
   return (
     <a onClick={sendDefaultValue}>
-      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJson.editInJsonLink' }, { jsonFileName })}
+      {intl.formatMessage({ id: 'web.iceworksConfigHelper.editInJson.editInJsonLink' }, { editingJSONFile })}
     </a>
   );
 };

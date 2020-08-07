@@ -1,4 +1,4 @@
 {
   "web.iceworksConfigHelper.index.settingFileNotReady": "Setting file is not valiable now...   Please fix it and retry.",
-  "web.iceworksConfigHelper.editInJson.editInJsonLink": "Edit in {jsonFileName}."
+  "web.iceworksConfigHelper.editInJson.editInJsonLink": "Edit in {editingJSONFile}."
 }

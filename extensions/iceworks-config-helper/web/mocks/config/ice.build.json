@@ -9,7 +9,7 @@
   "properties": {
     "alias": {
       "type": "object",
-      "description": "使用别名简化引入语句。在 icejs 默认配置了 { \"@\": \"./src/\" }。",
+      "description": "这是一个对象。",
       "default": {},
       "examples": [
         {
@@ -19,28 +19,14 @@
     },
     "publicPath": {
       "type": "string",
-      "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 build 命令时生效。",
-      "default": "",
-      "examples": ["/"]
-    },
-    "devPublicPath": {
-      "type": "string",
-      "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 start 命令时生效。",
+      "description": "这是一个字符串。",
       "default": "",
       "examples": ["/"]
     },
     "sourceMap": {
       "type": "boolean",
-      "description": "是否生成 sourceMap",
-      "default": false,
+      "description": "这是一个布尔值。",
       "examples": [false]
-    },
-    "externals": {
-      "type": "object",
-      "description": "将某些 import 的包排除在 bundle 之外，在运行时再去外部获取这些依赖。 比如，从 CDN 引入 React 资源，而不是将它打包, 详细配置同 webpack 的 extenerals 请参考 https://webpack.js.org/configuration/externals .",
-      "default": {},
-      "examples": [{}],
-      "additionalProperties": true
     },
     "hash": {
       "oneOf": [
@@ -54,153 +40,31 @@
           "examples": [false]
         }
       ],
-      "description": "如果希望构建后的资源带 hash 版本，可以将 hash 设置为 true，也可以通过设置为 contenthash 的方式：\"hash\": \"contenthash\"",
+      "description": "这是一个 oneOf。",
       "default": false,
       "properties": {}
-    },
-    "injectBabel": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "boolean",
-
-          "default": false,
-          "examples": [false]
-        }
-      ],
-      "description": "默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 targets 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 runtime。 如果想手动 polyfill，可以将配置设置为 false，工程将不会进行自动的 polyfill。",
-      "default": false,
-      "properties": {}
-    },
-    "minify": {
-      "type": "boolean",
-      "description": "构建后的资源将进行压缩，如果不希望资源被压缩可以修改为 false",
-      "default": true,
-      "examples": [false]
-    },
-    "outputAssetsPath": {
-      "type": "object",
-      "description": "修改构建后的 css/js 文件目录，默认情况下 css 在 build/css/ 下，js 在 build/js/ 下",
-      "default": {},
-      "examples": [
-        {
-          "js": "js",
-          "css": "css"
-        }
-      ],
-      "additionalProperties": true
     },
     "outputDir": {
       "type": "string",
-      "description": "修改构建后的文件目录",
+      "description": "这是一个字符串。",
       "default": "",
       "examples": ["build"]
     },
-    "proxy": {
-      "type": "object",
-      "description": "配置 webpack 的 devServer.proxy 属性。建议使用 proxy 来设置代理而不要修改 webpack 的 devServer.proxy",
-      "default": {},
-      "examples": [
-        {
-          "/**": {
-            "enable": true,
-            "target": "http://127.0.0.1:6001"
-          }
-        }
-      ],
-      "additionalProperties": true
-    },
-    "devServer": {
-      "type": "object",
-      "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。",
-      "default": {},
-      "examples": [
-        {
-          "compress": true,
-          "disableHostCheck": true,
-          "clientLogLevel": "error",
-          "hot": true,
-          "quiet": true,
-          "overlay": false
-        }
-      ],
-      "additionalProperties": true,
-      "properties": {
-        "compress": {
-          "type": "boolean",
-          "description": "为所有服务启用 gzip 压缩",
-          "default": false
-        },
-        "disableHostCheck": {
-          "type": "boolean",
-          "description": "当设置为真时，此选项绕过主机检查。我们不建议这样做，因为不检查主机的应用程序容易受到DNS重新绑定攻击。",
-          "default": false
-        },
-        "clientLogLevel": {
-          "type": "string",
-          "description": "DevTools中的控制台将显示不同级别的消息。",
-          "default": "error",
-          "pattern": "^(info|silent|trace|debug|info|warn|error|none|warning)$"
-        },
-        "hot": {
-          "type": "boolean",
-          "description": "启用 webpack 的热模块替换功能",
-          "default": false
-        },
-        "quiet": {
-          "type": "boolean",
-          "description": "是否设置静音。启用静音后，除了初始启动信息外，不会向控制台写入任何内容。",
-          "default": false
-        },
-        "overlay": {
-          "type": "boolean",
-          "description": "当出现编译器错误或警告时，在浏览器中显示全屏覆盖。这将只显示编译器错误。",
-          "default": false
-        }
-      }
-    },
-    "targets": {
-      "type": "object",
-      "description": "配置 @babel/preset-env 的 targets，配置浏览器最低版本，新配置的 targets 会覆盖默认值。",
-      "default": {},
-      "examples": [
-        {
-          "chrome": 49,
-          "ie": 11
-        }
-      ],
-      "required": [],
-      "additionalProperties": true
-    },
     "vendor": {
       "type": "boolean",
-      "description": "配置是否生成 vendor",
+      "description": "这是一个布尔值。",
       "default": true,
       "examples": [true]
     },
     "libraryTarget": {
       "type": "string",
-      "description": "配置 webpack 的 output.libraryTarget 属性。",
-      "default": "",
-      "examples": [""]
-    },
-    "library": {
-      "type": "string",
-      "description": "配置 webpack 的 output.library 属性。",
-      "default": "",
-      "examples": [""]
-    },
-    "libraryExport": {
-      "type": "string",
-      "description": "配置 webpack 的 output.libraryExport 属性。",
+      "description": "这是一个字符串。",
       "default": "",
       "examples": [""]
     },
     "compileDependencies": {
       "type": "array",
-      "description": "默认情况下 babel-loader 会编译相关模块以兼容 IE11。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。",
+      "description": "这是一个数组。",
       "default": [],
       "examples": [["@alifd/next"]],
       "additionalItems": true,
@@ -211,412 +75,6 @@
             "description": "Compile module dependencies under node_modules.",
             "default": "",
             "examples": ["@alifd/next"]
-          }
-        ]
-      }
-    },
-    "cssLoaderOptions": {
-      "type": "object",
-      "description": "为 css-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/css-loader/#options .",
-      "default": {},
-      "examples": [{}],
-      "required": [],
-      "additionalProperties": true,
-      "properties": {}
-    },
-    "lessLoaderOptions": {
-      "type": "object",
-      "description": "为 less-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/less-loader/#options .",
-      "default": {},
-      "examples": [{}],
-      "required": [],
-      "additionalProperties": true,
-      "properties": {}
-    },
-    "sassLoaderOptions": {
-      "type": "object",
-      "description": "为 sass-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/sass-loader/#options .",
-      "default": {},
-      "examples": [{}],
-      "required": [],
-      "additionalProperties": true,
-      "properties": {}
-    },
-    "postcssrc": {
-      "type": "boolean",
-      "description": "开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。",
-      "default": false,
-      "examples": [false]
-    },
-    "terserOptions": {
-      "type": "object",
-      "description": "为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 terser options",
-      "default": {},
-      "examples": [{}],
-      "required": [],
-      "additionalProperties": true,
-      "properties": {}
-    },
-    "babelPlugins": {
-      "type": "array",
-      "description": "为 babel-loader 的配置追加额外的 babel plugin。",
-      "default": [],
-      "examples": [[]],
-      "items": {
-        "type": "object"
-      },
-      "additionalItems": true
-    },
-    "babelPresets": {
-      "type": "array",
-      "description": "为 babel-loader 的配置追加额外的 babel preset。如果配置 preset 与内置相同，则优先使用 babelPresets 中的配置内容。",
-      "default": [],
-      "examples": [[]],
-      "items": {
-        "type": "object"
-      },
-      "additionalItems": true
-    },
-    "ignoreHtmlTemplate": {
-      "type": "boolean",
-      "description": "开启后，在 build 构建时，将移除所有内置 html-webpack-plugin 设置，不再生成 html 文件。",
-      "default": false,
-      "examples": [false]
-    },
-    "eslint": {
-      "oneOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "type": "object",
-          "additionalProperties": true
-        }
-      ],
-      "description": "默认关闭 eslint 代码检测，如需开启配置为 true 即可。",
-      "default": false,
-      "examples": [false],
-      "properties": {}
-    },
-    "disableRuntime": {
-      "type": "boolean",
-      "description": "禁用运行时的能力，如需关闭配置为 true 即可。",
-      "default": false,
-      "examples": [false]
-    },
-    "tsChecker": {
-      "type": "boolean",
-      "description": "默认关闭 TypeScript 类型检测，如需开启配置为 true 即可。",
-      "default": false,
-      "examples": [false]
-    },
-    "plugins": {
-      "type": "array",
-      "description": "编译插件",
-      "default": [],
-      "examples": [
-        [
-          [
-            "build-plugin-fusion",
-            {
-              "themePackage": "@alifd/theme-design-pro"
-            }
-          ],
-          [
-            "build-plugin-moment-locales",
-            {
-              "locales": ["zh-cn"]
-            }
-          ]
-        ]
-      ],
-      "additionalItems": true,
-      "items": {
-        "anyOf": [
-          {
-            "type": "array",
-            "description": "详见 https://ice.work/docs/guide/advance/fusion .",
-            "default": [],
-            "examples": [
-              [
-                "build-plugin-fusion",
-                {
-                  "themePackage": "@alifd/theme-design-pro"
-                }
-              ]
-            ],
-            "additionalItems": true,
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "详见 https://ice.work/docs/guide/advance/fusion .",
-                  "default": "",
-                  "examples": ["build-plugin-fusion"]
-                },
-                {
-                  "type": "object",
-                  "description": "build-plugin-fusion 插件设置.",
-                  "default": {},
-                  "examples": [
-                    {
-                      "themePackage": "@alifd/theme-design-pro"
-                    }
-                  ],
-                  "additionalProperties": true,
-                  "properties": {
-                    "themePackage": {
-                      "type": "string",
-                      "description": "设置主题，例如： @alifd/theme-design-pro .",
-                      "default": "",
-                      "examples": ["@alifd/theme-design-pro"]
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "array",
-            "description": "详见 https://ice.work/docs/guide/advance/antd .",
-            "default": [],
-            "examples": [
-              [
-                "build-plugin-antd",
-                {
-                  "themeConfig": {
-                    "primary-color": "#1DA57A"
-                  }
-                }
-              ]
-            ],
-            "additionalItems": true,
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "详见 https://ice.work/docs/guide/advance/fusion .",
-                  "default": "",
-                  "examples": ["build-plugin-antd"]
-                },
-                {
-                  "type": "object",
-                  "description": "设置 build-plugin-antd 插件.",
-                  "default": {},
-                  "examples": [
-                    {
-                      "themeConfig": {
-                        "primary-color": "#1DA57A"
-                      }
-                    }
-                  ],
-                  "additionalProperties": true,
-                  "properties": {
-                    "themeConfig": {
-                      "type": "string",
-                      "description": "自定义主题",
-                      "default": "",
-                      "examples": [
-                        {
-                          "primary-color": "#1DA57A"
-                        }
-                      ]
-                    },
-                    "importOptions": {
-                      "type": "object",
-                      "description": "importOptions 同 babel-plugin-import 按需加载配置，默认参数 { libraryDirectory: 'es', style: true}，根据用户设置进行合并",
-                      "properties": {
-                        "libraryName": {
-                          "type": "string"
-                        },
-                        "libraryDirectory": {
-                          "type": "string"
-                        },
-                        "style": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "array",
-            "description": "build-plugin-css-assets-local 提供将 css 中的网络资源本地化能力",
-            "default": [],
-            "examples": [
-              [
-                [
-                  "build-plugin-css-assets-local",
-                  {
-                    "outputPath": "assets",
-                    "relativeCssPath": "../"
-                  }
-                ]
-              ]
-            ],
-            "additionalItems": true,
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "build-plugin-css-assets-local 提供将 css 中的网络资源本地化能力",
-                  "default": "",
-                  "examples": ["build-plugin-css-assets-local"]
-                },
-                {
-                  "type": "object",
-                  "description": "build-plugin-css-assets-local 设置",
-                  "default": {},
-                  "examples": [
-                    {
-                      "outputPath": "assets",
-                      "relativeCssPath": "../"
-                    }
-                  ],
-                  "additionalProperties": true,
-                  "properties": {
-                    "outputPath": {
-                      "type": "string",
-                      "description": "提取后的文件目录前缀",
-                      "default": ""
-                    },
-                    "relativeCssPath": {
-                      "type": "string",
-                      "description": "提取的文件后相对于 CSS 的路径",
-                      "default": ""
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "array",
-            "description": "详见 https://ice.work/docs/guide/develop/plugin-list .",
-            "default": [],
-            "examples": [
-              [
-                "build-plugin-moment-locales",
-                {
-                  "locales": ["zh-cn"]
-                }
-              ]
-            ],
-            "additionalItems": true,
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "详见 https://ice.work/docs/guide/develop/plugin-list .",
-                  "default": "",
-                  "examples": ["build-plugin-moment-locales"]
-                },
-                {
-                  "type": "object",
-                  "description": "build-plugin-moment-locales config.",
-                  "default": {},
-                  "examples": [
-                    {
-                      "locales": ["zh-cn"]
-                    }
-                  ],
-                  "additionalProperties": true,
-                  "properties": {
-                    "locales": {
-                      "type": "array",
-                      "description": "build-plugin-moment-locales 插件设置 ",
-                      "default": [],
-                      "examples": [["zh-cn"]],
-                      "additionalItems": true,
-                      "items": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "description": "build-plugin-moment-locales 插件本地化设置",
-                            "default": "",
-                            "examples": ["zh-cn"]
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "array",
-            "description": "插件提供自动加载 assts 资源能力",
-            "default": [],
-            "examples": [
-              [
-                [
-                  "build-plugin-load-assets",
-                  {
-                    "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
-                  }
-                ]
-              ]
-            ],
-            "additionalItems": true,
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "description": "插件提供自动加载 assts 资源能力",
-                  "default": "",
-                  "examples": ["plugin-load-assets"]
-                },
-                {
-                  "type": "object",
-                  "description": "plugin-load-assets 设置.",
-                  "default": {},
-                  "examples": [
-                    {
-                      "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
-                    }
-                  ],
-                  "additionalProperties": true,
-                  "properties": {
-                    "assets": {
-                      "type": "array",
-                      "description": "Load assets from url",
-                      "default": "",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "string",
-            "description": "用于 debug 调试，常见于线上环境加载本地 assets 资源进行调试的场景：",
-            "default": "",
-            "examples": ["build-plugin-smart-debug"]
-          },
-          {
-            "type": "string",
-            "description": "该插件支持了一种 JSX 扩展语法 JSX+，它能帮助业务开发者更爽更快地书写 JSX。JSX+ 不是一种新的概念，它是 JSX 基础上的扩展指令概念",
-            "default": "",
-            "examples": ["build-plugin-jsx-plus"]
-          },
-          {
-            "type": "string",
-            "description": "该插件是对 react-refresh 的集成，一个类似 hot reloading（热更新）的功能，但提供了更为强大的快热更新机制，让你对 React 组件中的更改获得近乎即时（1 ~ 2 秒）的反馈，并且当修改 React 组件发生热更新时不会丢失原有的状态",
-            "default": "",
-            "examples": ["build-plugin-fast-refresh"]
-          },
-          {
-            "type": "string",
-            "description": "用于 icejs 在使用 webpack5 能力上的兼容处理，目前 webpack 5 还未正式发布，请谨慎使用该插件",
-            "default": "",
-            "examples": ["build-plugin-webpack5"]
           }
         ]
       }

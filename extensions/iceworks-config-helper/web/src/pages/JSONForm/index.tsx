@@ -13,10 +13,8 @@ const CARD_STYLE = { background: '#1e1e1e' };
 const LOADING_STYLE = { width: '100%', height: '80vh' };
 
 const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setData }) => {
-  const [formdata, setFormData] = useState(jsonContent);
   const setJson = async (e) => {
     setData(e);
-    setFormData(e);
   };
 
   return (
@@ -27,7 +25,7 @@ const JSONSchemaForm = ({ jsonContent, schema, uiSchema, setData }) => {
       fields={fields}
       widgets={widgets}
       uiSchema={uiSchema}
-      formData={formdata}
+      formData={jsonContent}
       onChange={(e) => setJson(e.formData)}
     >
       <></>
@@ -39,7 +37,7 @@ const MemoJSONSchemaForm = memo(JSONSchemaForm, _.isEqual);
 export const configHelperProvider = React.createContext({
   defaultSchema: {},
   syncJson: {},
-  jsonFileName: '',
+  editingJSONFile: '',
 });
 
 const JSONForm = () => {
@@ -48,8 +46,7 @@ const JSONForm = () => {
   const [loading, setLoading] = useState(true);
   const [currentSchema, setCurrentSchema] = useState({});
   const [syncJson, setSyncJson] = useState({});
-  const [formData, setFormData] = useState(null);
-  const jsonFileName = useRef('build.json');
+  const editingJSONFile = useRef('build.json');
   const uischema = useRef({});
   const formCannotEditProps = useRef([]);
   const schemaDefaultValue = useRef({});
@@ -58,9 +55,9 @@ const JSONForm = () => {
     window.addEventListener(
       'message',
       (e) => {
-        const { command, userSetting } = e.data;
+        const { command, incrementalChange } = e.data;
         if (command === 'iceworks-config-helper: incrementalUpdate') {
-          setSyncJson(getSyncJson(userSetting, syncJson));
+          setSyncJson(getSyncJson(incrementalChange, syncJson));
           setKey(Date.now());
         }
       },
@@ -68,29 +65,30 @@ const JSONForm = () => {
     );
   }, []);
 
-  useEffect(() => {
-    const updateJsonToExtension = async () => {
-      const { incrementalChange, newSyncJson } = createIncremetalUpdate(
-        formData,
-        syncJson,
-        schemaDefaultValue.current,
-        formCannotEditProps.current
-      );
-      if (Object.keys(incrementalChange).length !== 0) {
-        setSyncJson(newSyncJson);
-        await callService('config', 'updateJsonFile', incrementalChange);
-      }
-    };
-    updateJsonToExtension();
-  }, [formData]);
+  async function setSyncAndUpdateJsonFile(newData) {
+    const { incrementalChange, newSyncJson } = createIncremetalUpdate(
+      newData,
+      syncJson,
+      schemaDefaultValue.current,
+      formCannotEditProps.current
+    );
+
+    console.log('newSyncJson', newSyncJson);
+    console.log('incrementalChange', incrementalChange);
+
+    if (Object.keys(incrementalChange).length !== 0) {
+      setSyncJson(newSyncJson);
+      await callService('config', 'updateJsonFile', incrementalChange);
+    }
+  }
 
   useEffect(() => {
     const init = async () => {
-      const { formCannotEditProps, schema, jsonContent, editingJSONFile } = await callService('config', 'getInitData');
-      formCannotEditProps.current = formCannotEditProps;
+      const { formCannotEditProps: setFormCannotEditProps, schema, jsonContent, editingJSONFile: setEditingJSONFile } = await callService('config', 'getInitData');
+      formCannotEditProps.current = setFormCannotEditProps;
       schemaDefaultValue.current = getSchemaDefaultValue(schema);
-      jsonFileName.current = editingJSONFile;
-      uischema.current = getUISchema(formCannotEditProps);
+      editingJSONFile.current = setEditingJSONFile;
+      uischema.current = getUISchema(setFormCannotEditProps);
       setCurrentSchema(schema);
       setSyncJson(getSyncJson(jsonContent, syncJson));
       setKey(Date.now());
@@ -109,13 +107,17 @@ const JSONForm = () => {
       ) : (
         <Card free style={CARD_STYLE}>
           <configHelperProvider.Provider
-            value={{ defaultSchema: schemaDefaultValue.current, syncJson, jsonFileName: jsonFileName.current }}
+            value={{ 
+              syncJson,
+              defaultSchema: schemaDefaultValue.current,
+              editingJSONFile: editingJSONFile.current
+            }}
           >
             <MemoJSONSchemaForm
               jsonContent={syncJson}
               uiSchema={uischema.current}
               key={formKey}
-              setData={setFormData}
+              setData={setSyncAndUpdateJsonFile}
               schema={currentSchema}
             />
           </configHelperProvider.Provider>

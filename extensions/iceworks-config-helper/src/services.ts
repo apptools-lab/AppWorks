@@ -11,7 +11,7 @@ const appJsonPath = `${vscode.workspace.rootPath}/src/app.json`;
 const buildJsonUri = vscode.Uri.file(buildJsonPath);
 const appJsonUri = vscode.Uri.file(appJsonPath);
 
-// witch JSON file is eediting
+// witch JSON file is editing
 // now just support build.json & app.json, so just using the file name
 let editingJSONFile;
 let syncJson;
@@ -153,7 +153,7 @@ export function updateJsonForWeb(content: string, panel?: vscode.WebviewPanel) {
       syncJson = changedJsonContent;
       panel!.webview.postMessage({
         command: 'iceworks-config-helper: incrementalUpdate',
-        userSetting: incrementalChange,
+        incrementalChange,
       });
     }
   } catch {
