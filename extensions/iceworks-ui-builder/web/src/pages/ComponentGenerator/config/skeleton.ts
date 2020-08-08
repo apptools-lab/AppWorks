@@ -115,66 +115,6 @@ export default {
           disableAppComponent: true,
         },
       },
-      {
-        addonKey: 'schema',
-        type: 'PanelIcon',
-        props: {
-          align: 'bottom',
-          icon: 'ceshi',
-          title: 'schema 源码开发',
-          panelProps: {
-            defaultWidth: 480,
-          },
-        },
-      },
-      {
-        addonKey: 'style',
-        type: 'PanelIcon',
-        props: {
-          align: 'bottom',
-          icon: 'SCSS',
-          title: 'scss 全局样式设置',
-          panelProps: {
-            defaultWidth: 480,
-          },
-        },
-      },
-      {
-        addonKey: 'utils',
-        type: 'PanelIcon',
-        props: {
-          align: 'bottom',
-          icon: 'funcsgaiban',
-          title: 'utils 全局公共函数设置',
-          panelProps: {
-            defaultWidth: 540,
-          },
-        },
-      },
-      {
-        addonKey: 'constants',
-        type: 'PanelIcon',
-        props: {
-          align: 'bottom',
-          icon: 'constgaiban',
-          title: 'constants 全局常量设置',
-          panelProps: {
-            defaultWidth: 480,
-          },
-        },
-      },
-      {
-        addonKey: 'canvasSetting',
-        type: 'PanelIcon',
-        props: {
-          align: 'bottom',
-          icon: 'huabushezhi',
-          title: 'canvas 画布配置',
-          panelProps: {
-            defaultWidth: 300,
-          },
-        },
-      },
     ],
     rightArea: [
       {
@@ -188,22 +128,7 @@ export default {
         props: {
           title: '属性',
         },
-      },
-      {
-        addonKey: 'componentEvent',
-        props: {
-          title: '事件',
-        },
-      },
-      {
-        addonKey: 'componentData',
-        props: {
-          title: '数据',
-        },
-        addonProps: {
-          disableDataSourceSelect: true,
-        },
-      },
+      }
     ],
     centerArea: [
       {
@@ -267,39 +192,7 @@ export default {
   extensions: {
     init(appHelper) {
       appHelper.set({
-        entityInfo: {
-          style: 'div {color: #dd2727;}',
-          constants: {
-            name: 'World',
-          },
-          utils: [
-            {
-              name: 'Message',
-              type: 'npm',
-              content: {
-                package: '@alife/next',
-                version: '^1.17.12',
-                destructuring: true,
-                exportName: 'Message',
-              },
-            },
-            {
-              name: 'moment',
-              type: 'npm',
-              content: {
-                package: 'moment',
-                version: '^2.24.0',
-              },
-            },
-            {
-              name: 'test',
-              type: 'function',
-              content() {
-                alert('test');
-              },
-            },
-          ],
-        },
+        entityInfo: {},
         componentMaterial: {
           library: [
             {
@@ -312,7 +205,7 @@ export default {
         componentsMap,
       });
       appHelper.emit('schema.reset', {
-        componentName: 'Page',
+        componentName: 'Block',
         fileName: 'index',
         props: {},
         children: [
@@ -323,7 +216,7 @@ export default {
               {
                 componentName: 'Text',
                 props: {
-                  text: '{{`hello ${this.constants.name}`}}',
+                  text: 'Hello World',
                 },
               },
             ],

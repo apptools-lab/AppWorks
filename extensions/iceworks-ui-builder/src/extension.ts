@@ -36,6 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
     const basePath = path.join(extensionPath, 'build');
     const basePathOnDisk = vscode.Uri.file(basePath);
     const basePathUri = basePathOnDisk.with({ scheme: 'vscode-resource' });
+
     const extraHtml = `<script>
       window.__assets = {
         ideUrl: '${basePathUri}',

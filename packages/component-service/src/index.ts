@@ -19,14 +19,15 @@ import {
   componentsPath,
   getProjectLanguageType
 } from '@iceworks/project-service';
-import CodeGenerator, { IBasicSchema } from '@ali/lowcode-code-generator';
+import CodeGenerator, { IBasicSchema, IComponentsMapItem, IContainerNodeItem,IUtilItem, II18nMap } from '@ali/lowcode-code-generator';
+import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
-import i18n from './i18n';
+import i18nService from './i18n';
 
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
-  const templateError = i18n.format('package.component-service.index.templateError', {
+  const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
   const { name, source } = dataSource;
@@ -68,7 +69,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
 }
 
 export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = i18n.format('package.component-service.index.templateError', {
+  const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
   const activeTextEditor = getLastAcitveTextEditor();
@@ -123,24 +124,35 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
 
-export async function generateComponentCode(version, componentsMap, utils, componentsTree, i18n) {
-  const componentName = await vscode.window.showInputBox({
-    placeHolder: '名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符',
+export async function generateComponentCode(
+  version: string, 
+  componentsMap: IComponentsMapItem[], 
+  utils: IUtilItem[] , 
+  componentsTree: Array<IContainerNodeItem>,
+  i18n: II18nMap
+  ) {
+  let componentName = await vscode.window.showInputBox({
+    placeHolder: i18nService.format('package.component-service.index.inputComponentNamePlaceHolder'),
   });
   if (!componentName) {
     return;
+  }
+  componentName = upperCamelCase(componentName);
+  if (componentsTree[0]) {
+    componentsTree[0].fileName = componentName;
   }
   const schema: IBasicSchema = { version, componentsMap, utils, componentsTree, i18n }
   await generateCode(componentName, schema); 
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
-  const projectLanguageType = await getProjectLanguageType();
+  // const projectLanguageType = await getProjectLanguageType();
   const moduleBuilder = CodeGenerator.createModuleBuilder({
     plugins: [
       CodeGenerator.plugins.react.reactCommonDeps(),
       CodeGenerator.plugins.common.esmodule({
-        fileType: 'jsx',
+        // fileType: `${projectLanguageType}x`,
+        fileType: 'jsx'
       }),
       CodeGenerator.plugins.react.containerClass(),
       CodeGenerator.plugins.react.containerInitState(),

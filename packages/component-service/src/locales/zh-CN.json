@@ -1,3 +1,4 @@
 {
-  "package.component-service.index.templateError": "只能向 <%= jsxFileExtnames %> 文件添加组件代码"
+  "package.component-service.index.templateError": "只能向 <%= jsxFileExtnames %> 文件添加组件代码",
+  "package.component-service.index.inputComponentNamePlaceHolder": "名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符"
 }

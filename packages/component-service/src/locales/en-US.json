@@ -1,3 +1,4 @@
 {
-  "package.component-service.index.templateError": "You can only add component code to <%= jsxFileExtnames %> files"
+  "package.component-service.index.templateError": "You can only add component code to <%= jsxFileExtnames %> files",
+  "package.component-service.index.inputComponentNamePlaceHolder": "Component name must start with [A-Z] and only contains letters and numbers. Special characters are not allowed."
 }
