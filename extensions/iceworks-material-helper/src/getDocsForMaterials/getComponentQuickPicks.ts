@@ -2,6 +2,7 @@
 import { getSourcesByProjectType, getData } from '@iceworks/material-service';
 import * as vscode from 'vscode';
 import { IMaterialData, IMaterialComponent, IMaterialScaffold, IMaterialBase } from '@iceworks/material-utils';
+import { IQuickPickInfo } from './type';
 
 const getQuickPickInfo = async () => {
   const getQuickPickInfoFromData = (sourceJson: IMaterialData) => {
@@ -17,13 +18,11 @@ const getQuickPickInfo = async () => {
     );
   };
 
-  const quickPickInfos: any[] = [];
   const ProjectMaterialSources = await getSourcesByProjectType();
   const materialData = Promise.all(ProjectMaterialSources.map(({ source }) => getData(source)));
-  (await materialData).forEach((data) => {
-    quickPickInfos.push(...getQuickPickInfoFromData(data));
-  });
-  return quickPickInfos;
+  return (await materialData).reduce((quickPickInfos, data) => {
+    return quickPickInfos.concat(getQuickPickInfoFromData(data));
+  }, [] as IQuickPickInfo[]);
 };
 
 export default async function showMaterialQuickPicks() {
