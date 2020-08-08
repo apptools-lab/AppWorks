@@ -28,7 +28,7 @@
 ![使用说明](https://user-images.githubusercontent.com/56879942/89489443-19464000-d7dd-11ea-9eeb-2958027525c4.gif)
 
 1. 打开配置文件，点击鼠标右键
-2. 在右键礼拜中选择 `Iceworks: 可视化设置 xxx.json` 
+2. 在右键列表中选择 `Iceworks: 可视化设置 xxx.json`
 3. 启动可视化配置面板
 
 或者：
@@ -43,7 +43,7 @@
 
 #### 悬停提示
 
-当您将鼠标悬停在某个 JSON 的字段上时，会出现悬浮小部件显示字段的描述。
+当您将鼠标悬停在某个 Json 的字段上时，会出现悬浮小部件显示字段的描述。
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/87398212-290ca300-c5e8-11ea-9596-c15c380c0d7c.gif)
 

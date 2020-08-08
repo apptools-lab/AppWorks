@@ -4,6 +4,7 @@
 
 - feat: add visual editing panel.
 - feat: add rax app.json validation.
+- feat: update browserslist.
 - fix: update ice & rax validation.
 
 ## 0.2.1
