@@ -46,6 +46,8 @@ export async function generateComponent({
   // generate files by template
   const { npmName } = templateOptions;
   const name = /^@/.test(npmName) ? npmName.split('/')[1] : npmName;
+
+  console.log('generateComponent options', templateOptions, 'name', name);
   const options: ITemplateOptions = {
     name,
     title: '示例组件',

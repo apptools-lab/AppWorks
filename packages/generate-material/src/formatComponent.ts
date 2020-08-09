@@ -33,7 +33,9 @@ export default async function formatProject(
 
     if (enablePegasus) {
       pkgData.devDependencies['@ali/build-plugin-rax-seed'] = '^1.0.0';
-      buildData.plugins.push('@ali/build-plugin-rax-seed');
+      buildData.plugins.push(['@ali/build-plugin-rax-seed', {
+        majorVersionIsolation: false,
+      }]);
     }
   }
 
