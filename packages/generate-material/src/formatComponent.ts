@@ -30,7 +30,6 @@ export default async function formatProject({
 
   if (enableDefPublish || enablePegasus) {
     abcData = {
-      type: 'rax',
       builder: '@ali/builder-component',
     };
 

@@ -14,6 +14,7 @@ test.only('generate component', async () => {
   await generateComponent({
     rootDir: projectDir,
     template: '@icedesign/ice-react-material-template',
+    registry: 'https://registry.npmjs.org',
     templateOptions: {
       npmName: '@ali/ice-label',
     },
