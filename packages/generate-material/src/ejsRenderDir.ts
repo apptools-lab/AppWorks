@@ -8,6 +8,7 @@ export default async function(dir: string, options: any): Promise<void> {
     glob('**/*.ejs', {
       cwd: dir,
       nodir: true,
+      ignore: ['node_modules/**'],
     }, (err, files) => {
       if (err) {
         return reject(err);

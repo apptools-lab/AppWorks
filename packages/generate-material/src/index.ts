@@ -1,128 +1,75 @@
 import * as ora from 'ora';
 import * as fse from 'fs-extra';
 import * as path from 'path';
+import * as camelcase from 'camelcase';
 import {
-  isAliNpm, getNpmTarball, getAndExtractTarball
+  getNpmTarball, getAndExtractTarball,
 } from 'ice-npm-utils';
-import * as decamelize from 'decamelize';
 
 import ejsRenderDir from './ejsRenderDir';
+import formatComponent from './formatComponent';
 
-
-/**
- * iceworks init component
- */
-export async function generateComponent() {
-
-}
-
-/**
- * iceworks add block
- */
-export async function addSingleMaterial() {
-
-}
+interface ITemplateOptions {
+  npmName: string;  // @icedesign/ice-label
+  name?: string;   // ice-label (english and variable)
+  title?: string;   //
+  description?: string;
+  className?: string;
+  version?: string;
+  category?: string;
+  // web, miniapp...
+  projectTargets?: string[];
+  adapter?: boolean;
+};
 
 interface IOptions {
-  projectDir: string;
-  // template npmName
+  rootDir: string;
+  // template npmName or relative path
   template: string;
-  type: 'material-collection' | 'component';
   registry?: string;
-  templateOptions?: templateOptions;
-};
-
-interface templateOptions {
-  aliInternal: boolean;
-  npmScope?: '@ali' | '@alife' | '@alipay' | '@kaola' | string;
-  // material collection
-  projectName: string;
-  description?: string;
-  // component
+  templateOptions: ITemplateOptions;
+  enablePegasus?: boolean;
+  enableDefPublish?: boolean;
 };
 
 /**
- * iceworks init material
+ * init component by template
  */
-export async function generateMaterial({
-  projectDir, template, registry, templateOptions
+export async function generateComponent({
+  rootDir, template, registry, templateOptions, enablePegasus, enableDefPublish,
 }: IOptions): Promise<void> {
-  registry = registry || await getNpmRegistry(template);
+  const templateTmpDir = path.join(rootDir, '.tmp');
+  await downloadMaterialTemplate(templateTmpDir, template, registry);
 
-  const templateTmpDir = path.join(projectDir, '.tmp');
-  await downloadMaterialTemplate(templateDir, template, registry);
-
-  const templatePkg = await fse.readJson(path.join(templateDir, 'package.json'));
-  const { npmScope, projectName, description = '' } = templateOptions;
-
-  const npmName = generateNpmName(projectName, npmScope);
-
-  // copy .eslintrc and so on
-  const templatePath = path.join(__dirname, '../../template/initMaterial');
-  await fse.copy(templatePath, projectDir);
+  const templateTmpComponentDir = path.join(templateTmpDir, 'template/component');
 
   // generate files by template
-  await ejsRenderDir(projectDir, {
-    npmName, description, template,
+  const { npmName } = templateOptions;
+  const name = /^@/.test(npmName) ? npmName.split('/')[1] : npmName;
+  const options: ITemplateOptions = {
+    name,
+    title: '示例组件',
+    description: '这个组件的功能是 balabala',
+    className: camelcase(name, { pascalCase: true }),
     version: '0.1.0',
-    materialConfig: templatePkg.materialConfig,
-  });
-
-  fse.removeSync(templateTmpDir);
-
-  const { npmScope, projectName, description } = await initMaterialAsk(cwd, projectType);
-
-
-  // 根据模板创建项目支持的参数
-  ejsOptions = {
-    targets: ['web'],
-    miniappType: 'runtime',
-    mpa: false,
-    ...ejsOptions
+    category: '',
+    projectTargets: ['web'],
+    adapter: false,
+    ...templateOptions,
   };
+  await ejsRenderDir(templateTmpComponentDir, options);
 
-  let tarballURL: string;
-  try {
-    tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
-  } catch (error) {
-    if (error.statusCode === 404) {
-      return Promise.reject(new Error(`获取模板 npm 信息失败，当前的模板地址是：${registry}/${npmName}。`));
-    } else {
-      return Promise.reject(error);
-    }
-  }
-
-  console.log('download tarballURL', tarballURL);
-
-  const spinner = ora('download npm tarball start').start();
-  await getAndExtractTarball(
-    projectDir,
-    tarballURL,
-    (state) => {
-      spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
-    },
-    formatFilename
-  );
-  spinner.succeed('download npm tarball successfully.');
-
-  await ejsRenderDir(projectDir, ejsOptions);
+  await fse.copy(templateTmpComponentDir, rootDir);
+  await fse.remove(templateTmpDir);
 
   try {
-    await formatProject(projectDir, projectName);
+    await formatComponent({
+      rootDir, npmName: templateOptions.npmName, enablePegasus, enableDefPublish,
+    });
   } catch (err) {
-    console.warn('formatProject error', err.message);
+    console.warn('[Warning] formatProject error', err.message);
   }
 };
-
-async function getNpmRegistry(npmName: string): Promise<string> {
-  if (process.env.REGISTRY) {
-    return process.env.REGISTRY;
-  } else if (isAliNpm(npmName)) {
-    return 'https://registry.npm.alibaba-inc.com';
-  } else {
-    return 'https://registry.npm.taobao.org';
-  }
-}
 
 /**
  * 下载 npm 后的文件名处理
@@ -149,7 +96,7 @@ function formatFilename(filename) {
   return filename;
 }
 
-async function downloadMaterialTemplate(dir: string, template: string, registry: string): Promise<void> {
+async function downloadMaterialTemplate(dir: string, template: string, registry?: string): Promise<void> {
   await fse.emptyDir(dir);
 
   const isLocalPath = /^[./]|(^[a-zA-Z]:)/.test(template);
@@ -158,6 +105,7 @@ async function downloadMaterialTemplate(dir: string, template: string, registry:
   } else {
     const tarballURL = await getNpmTarball(template, 'latest', registry);
     console.log('download template tarball', tarballURL);
+
     const spinner = ora('download npm tarball start').start();
     await getAndExtractTarball(
       dir,
@@ -165,15 +113,8 @@ async function downloadMaterialTemplate(dir: string, template: string, registry:
       (state) => {
         spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
       },
-      formatFilename
+      formatFilename,
     );
     spinner.succeed('download npm tarball successfully.');
   }
 }
-
-
-function generateNpmName(name: string, npmScope?: string): string {
-  // WebkitTransform -> webkit-transform
-  name = decamelize(name, '-');
-  return npmScope ? `${npmScope}/${name}` : name;
-};
