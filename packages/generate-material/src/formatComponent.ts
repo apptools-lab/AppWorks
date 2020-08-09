@@ -7,11 +7,14 @@ interface IOptions {
   npmName?: string;
   enableDefPublish?: boolean;
   enablePegasus?: boolean;
-};
+}
 
-export default async function formatProject(
-  { rootDir, npmName, enableDefPublish, enablePegasus }: IOptions,
-): Promise<void> {
+export default async function formatProject({
+  rootDir,
+  npmName,
+  enableDefPublish,
+  enablePegasus,
+}: IOptions): Promise<void> {
   const abcPath = path.join(rootDir, 'abc.json');
   const pkgPath = path.join(rootDir, 'package.json');
   const buildJsonPath = path.join(rootDir, 'build.json');
@@ -33,9 +36,12 @@ export default async function formatProject(
 
     if (enablePegasus) {
       pkgData.devDependencies['@ali/build-plugin-rax-seed'] = '^1.0.0';
-      buildData.plugins.push(['@ali/build-plugin-rax-seed', {
-        majorVersionIsolation: false,
-      }]);
+      buildData.plugins.push([
+        '@ali/build-plugin-rax-seed',
+        {
+          majorVersionIsolation: false,
+        },
+      ]);
     }
   }
 

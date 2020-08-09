@@ -2,17 +2,15 @@ import * as ora from 'ora';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as camelcase from 'camelcase';
-import {
-  getNpmTarball, getAndExtractTarball,
-} from 'ice-npm-utils';
+import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 
 import ejsRenderDir from './ejsRenderDir';
 import formatComponent from './formatComponent';
 
 interface ITemplateOptions {
-  npmName: string;  // @icedesign/ice-label
-  name?: string;   // ice-label (english and variable)
-  title?: string;   //
+  npmName: string; // @icedesign/ice-label
+  name?: string; // ice-label (english and variable)
+  title?: string; //
   description?: string;
   className?: string;
   version?: string;
@@ -20,7 +18,7 @@ interface ITemplateOptions {
   // web, miniapp...
   projectTargets?: string[];
   adapter?: boolean;
-};
+}
 
 interface IOptions {
   rootDir: string;
@@ -30,13 +28,18 @@ interface IOptions {
   templateOptions: ITemplateOptions;
   enablePegasus?: boolean;
   enableDefPublish?: boolean;
-};
+}
 
 /**
  * init component by template
  */
 export async function generateComponent({
-  rootDir, template, registry, templateOptions, enablePegasus, enableDefPublish,
+  rootDir,
+  template,
+  registry,
+  templateOptions,
+  enablePegasus,
+  enableDefPublish,
 }: IOptions): Promise<void> {
   const templateTmpDir = path.join(rootDir, '.tmp');
   await downloadMaterialTemplate(templateTmpDir, template, registry);
@@ -66,12 +69,15 @@ export async function generateComponent({
 
   try {
     await formatComponent({
-      rootDir, npmName: templateOptions.npmName, enablePegasus, enableDefPublish,
+      rootDir,
+      npmName: templateOptions.npmName,
+      enablePegasus,
+      enableDefPublish,
     });
   } catch (err) {
     console.warn('[Warning] formatProject error', err.message);
   }
-};
+}
 
 /**
  * 下载 npm 后的文件名处理
@@ -115,7 +121,7 @@ async function downloadMaterialTemplate(dir: string, template: string, registry?
       (state) => {
         spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
       },
-      formatFilename,
+      formatFilename
     );
     spinner.succeed('download npm tarball successfully.');
   }
