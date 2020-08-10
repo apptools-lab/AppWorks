@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@alifd/next": "~1.19.2",
+    "@iceworks/vscode-webview": "^0.1.5",
     "@rjsf/core": "^2.2.2",
     "lodash": "^4.17.19",
     "react": "^16.4.1",
