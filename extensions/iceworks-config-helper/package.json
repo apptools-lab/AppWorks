@@ -21,8 +21,8 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "iceworks-config-helper.buildJson.start",
-    "iceworks-config-helper.appJson.start",
+    "onCommand:iceworks-config-helper.buildJson.start",
+    "onCommand:iceworks-config-helper.appJson.start",
     "onLanguage:json"
   ],
   "main": "./build/extension.js",
