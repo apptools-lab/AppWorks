@@ -22,4 +22,3 @@ test.only('generate component', async () => {
     enablePegasus: true,
   });
 });
-
