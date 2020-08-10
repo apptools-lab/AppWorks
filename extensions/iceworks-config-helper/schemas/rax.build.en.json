@@ -1,0 +1,171 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "rax-app build.json",
+  "required": ["plugins"],
+  "properties": {
+    "publicPath": {
+      "type": "string",
+      "description": "The public URL of the output directory.",
+      "default": "/"
+    },
+    "devPublicPath": {
+      "type": "string",
+      "description": "The public URL of the dev server output directory.",
+      "default": "/"
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "The build file directory",
+      "default": "",
+      "examples": ["build"]
+    },
+    "hash": {
+      "type": "boolean",
+      "description": "Whether each webpack build generates a unique hash",
+      "default": false
+    },
+    "alias": {
+      "type": "object",
+      "description": "Create aliases to import or require certain modules more easily.",
+      "default": {},
+      "examples": [
+        {
+          "@components": "src/components/"
+        }
+      ]
+    },
+    "devServer": {
+      "type": "object",
+      "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
+      "default": {},
+      "properties": {
+        "compress": {
+          "type": "boolean",
+          "description": "Enable gzip compression for everything served",
+          "default": false
+        },
+        "disableHostCheck": {
+          "type": "boolean",
+          "description": "When set to true this option bypasses host checking. THIS IS NOT RECOMMENDED as apps that do not check the host are vulnerable to DNS rebinding attacks.",
+          "default": false
+        },
+        "clientLogLevel": {
+          "type": "string",
+          "description": "The the console in your DevTools will show different level messages.",
+          "default": "error",
+          "pattern": "^(info|silent|trace|debug|info|warn|error|none|warning)$"
+        },
+        "hot": {
+          "type": "boolean",
+          "description": "Enable webpack's Hot Module Replacement feature",
+          "default": false
+        },
+        "quiet": {
+          "type": "boolean",
+          "description": "With devServer.quiet enabled, nothing except the initial startup information will be written to the console.",
+          "default": false
+        },
+        "overlay": {
+          "type": "boolean",
+          "description": "Shows a full-screen overlay in the browser when there are compiler errors or warnings. If you want to show only compiler errors.",
+          "default": false
+        },
+        "port": {
+          "type": "integer",
+          "description": "Specify a port number to listen for requests on.",
+          "default": 9999
+        }
+      }
+    },
+    "plugins": {
+      "type": "array",
+      "description": "Compiler plugins",
+      "additionalItems": true,
+      "default": [],
+      "items": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "string",
+                "description": "Build Rax App",
+                "enum": ["build-plugin-rax-app"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "Platform targets",
+                    "items": {
+                      "type": "string",
+                      "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
+                    }
+                  }
+                },
+                "required": ["targets"]
+              }
+            ]
+          },
+          {
+            "type": "array",
+            "items": [
+              {
+                "type": "string",
+                "description": "Rax PWA plugin",
+                "enum": ["build-plugin-rax-pwa"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "manifest": {
+                    "type": "object",
+                    "description": "Browsers can save PWA-enabled websites to the desktop for a smaller size and more powerful functionality than native apps. It can have a splash screen like a native APP, or a full screen display like a native APP.",
+                    "default": {},
+                    "additionalProperties": true
+                  },
+                  "snapshot": {
+                    "type": "boolean",
+                    "description": "The snapshot can fill the HTML container with the content corresponding to the last time the user visited it. It makes displaying page content in a high speed, and improves the loading speed of the first screen.",
+                    "default": false
+                  },
+                  "serviceWorker": {
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Use the Service Worker to control the cache for faster loading times."
+                  }
+                }
+              }
+            ],
+            "examples": [
+              [
+                "build-plugin-rax-pwa",
+                {
+                  "snapshot": true
+                }
+              ]
+            ]
+          },
+          {
+            "type": "array"
+          },
+          {
+            "type": "string",
+            "examples": [
+              "build-plugin-rax-compat-react",
+              "build-plugin-rax-ssr",
+              "build-plugin-rax-multi-pages",
+              "build-plugin-rax-component"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

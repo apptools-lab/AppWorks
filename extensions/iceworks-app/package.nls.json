@@ -13,7 +13,7 @@
   "iceworksApp.command.npmScripts.refresh.title": "Refresh",
   "iceworksApp.command.npmScripts.run.title": "Run Script",
   "iceworksApp.command.npmScripts.stop.title": "Stop Script",
-  "iceworksApp.command.npmScripts.runDev.title": "Iceworks: Run Dev",
+  "iceworksApp.command.npmScripts.runDebug.title": "Iceworks: Debug",
   "iceworksApp.command.npmScripts.stopDev.title": "Iceworks: Stop Dev",
   "iceworksApp.command.npmScripts.runBuild.title": "Iceworks: Run Build",
   "iceworksApp.command.pages.add.title": "Add Pages",

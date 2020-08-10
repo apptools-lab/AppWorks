@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.4.4
+- feat: add Iceworks debug.
+
 ## 0.4.3
 
 - fix: build error

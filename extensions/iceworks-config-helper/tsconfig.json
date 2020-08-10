@@ -8,5 +8,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "exclude": ["node_modules"]
+  "include": ["src", "schema"],
+  "exclude": ["node_modules", "web"]
 }
