@@ -15,11 +15,12 @@
   margin: 0 10px 20px 10px;
   cursor: pointer;
   position: relative;
-  background-color: white;
 
   :global {
     .next-card-media {
       height: 230px;
+      overflow: hidden;
+
       img {
         max-height: none;
       }
@@ -71,5 +72,5 @@
 }
 
 .active {
-  border: 1px solid $color-notice-3;
+  border: 2px solid $color-notice-3;
 }

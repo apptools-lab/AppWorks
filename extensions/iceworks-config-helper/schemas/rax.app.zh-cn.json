@@ -1,0 +1,226 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "Rax app.json",
+  "description": "Application configuration for rax-app",
+  "default": {},
+  "examples": [{}],
+  "required": [],
+  "properties": {
+    "routes": {
+      "type": "array",
+      "description": "路由配置",
+      "default": [],
+      "examples": [
+        [
+          {
+            "path": "/",
+            "source": "pages/Home/index"
+          }
+        ]
+      ],
+      "items": {
+        "anyOf": [
+          {
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "hydrate": {
+      "type": "boolean",
+      "description": "渲染内容时是否保留原有 DOM 结构并补充事件绑定，详见 https://rax.js.org/docs/api/hydrate",
+      "default": false
+    },
+    "shell": {
+      "type": "object",
+      "description": "设置 PWA AppShell，详见 https://rax.js.org/docs/guide/web-app-shell",
+      "default": {},
+      "examples": [{ "source": "shell/index" }]
+    },
+    "window": {
+      "type": "object",
+      "description": "设置应用窗口表现",
+      "default": {},
+      "properties": {
+        "titleBarColor": {
+          "type": "string",
+          "description": "标题栏颜色，使用十进制颜色值，范围:(0-255) (只在小程序里使用) ",
+          "examples": [255]
+        },
+        "pullRefresh": {
+          "type": "boolean",
+          "description": "是否允许下拉刷新，默认 true。(只在小程序里使用)",
+          "default": false
+        },
+        "title": {
+          "type": "string",
+          "description": "标题 （可在小程序和网页里使用）",
+          "default": "",
+          "examples": ["title"]
+        },
+        "defaultTitle": {
+          "type": "string",
+          "description": "页面默认标题。",
+          "default": "",
+          "examples": ["title"]
+        },
+        "allowsBounceVertical": {
+          "type": "boolean",
+          "description": "是否允许向下拉拽。默认 YES, 支持 YES / NO ",
+          "default": false
+        },
+        "transparentTitle": {
+          "type": "string",
+          "description": "导航栏透明设置。默认 none，支持 always 一直透明 / auto 滑动自适应 / none 不透明 ",
+          "default": "none",
+          "enum": ["none", "always", "auto"]
+        },
+        "titlePenetrate": {
+          "type": "string",
+          "description": "是否允许导航栏点击穿透。默认 NO，支持 YES / NO。",
+          "default": "NO",
+          "enum": ["YES", "NO"]
+        },
+        "showTitleLoading": {
+          "type": "string",
+          "description": "是否进入时显示导航栏的 loading。默认 NO，支持 YES / NO。",
+          "default": "NO",
+          "enum": ["YES", "NO"]
+        },
+        "titleImage": {
+          "type": "string",
+          "description": "导航栏图片地址。",
+          "default": "",
+          "examples": ["https://img.alicdn.com/tfs/TB1iCt_bVP7gK0jSZFjXXc5aXXa-82-30.png"]
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "页面的背景色。例：白色 \"#FFFFFF\"。",
+          "default": "",
+          "examples": ["#FFFFFF"]
+        },
+        "backgroundImageColor": {
+          "type": "string",
+          "description": "下拉露出显示背景图的底色。例：白色 \"#FFFFFF\"。",
+          "default": "",
+          "examples": ["#FFFFFF"]
+        },
+        "backgroundImageUrl": {
+          "type": "string",
+          "description": "下拉露出显示背景图的链接。",
+          "default": "",
+          "examples": ["#FFFFFF"]
+        },
+        "gestureBack": {
+          "type": "string",
+          "description": "仅支持 iOS，是否支持手势返回。默认 YES，支持 YES / NO。",
+          "default": "NO",
+          "enum": ["YES", "NO"]
+        },
+        "onReachBottomDistance": {
+          "type": "string",
+          "description": "页面上拉触底时触发时距离页面底部的距离，单位为px。相关文档页面事件处理函数。",
+          "default": "NO",
+          "enum": ["YES", "NO"]
+        },
+        "enableScrollBar": {
+          "type": "string",
+          "description": " 仅支持 Android，是否显示 WebView 滚动条。默认 YES，支持 YES / NO。",
+          "default": "",
+          "examples": ["50px"]
+        },
+        "responsive": {
+          "type": "boolean",
+          "description": " rpx 单位是否宽度自适应 ，默认true，当设置为 false 时，2rpx 将恒等于 1px，不再根据屏幕宽度进行自适应，注意，此时 750rpx 将不再等于100% 宽度。",
+          "default": true,
+          "examples": ["50px"]
+        }
+      }
+    },
+    "tarBar": {
+      "type": "object",
+      "description": "设置应用底部 TabBar 的表现。",
+      "default": {},
+      "properties": {
+        "textColor": {
+          "type": "string",
+          "description": "文字颜色",
+          "default": "",
+          "examples": ["#dddddd"]
+        },
+        "selectedColor": {
+          "type": "string",
+          "description": "选中文字颜色",
+          "default": "",
+          "examples": ["#dddddd"]
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "背景色",
+          "default": "",
+          "examples": ["#dddddd"]
+        },
+        "items": {
+          "type": "array",
+          "description": "每个 tab 的设置",
+          "": ["name"],
+          "default": [
+            {
+              "pagePath": "",
+              "name": ""
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "pagePath": {
+                "type": "string",
+                "description": " 设置页面路径",
+                "default": "",
+                "examples": ["pages/index/index"]
+              },
+              "name": {
+                "type": "string",
+                "description": " 名称",
+                "default": "",
+                "examples": ["首页"]
+              },
+              "icon": {
+                "type": "string",
+                "description": "平常图标路径（非选中状态）",
+                "default": "",
+                "examples": ["logo.png"]
+              },
+              "activeIcon": {
+                "type": "string",
+                "description": "高亮图标路径（选中状态）",
+                "default": "",
+                "examples": ["activeLogo.png"]
+              }
+            }
+          }
+        }
+      },
+      "examples": [
+        {
+          "tabBar": {
+            "textColor": "#dddddd",
+            "selectedColor": "#49a9ee",
+            "backgroundColor": "#ffffff",
+            "items": [
+              {
+                "pagePath": "pages/index/index",
+                "name": "首页"
+              },
+              {
+                "pagePath": "pages/logs/logs",
+                "name": "日志"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
