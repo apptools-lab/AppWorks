@@ -5,11 +5,13 @@ import * as camelcase from 'camelcase';
 import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 
 import ejsRenderDir from './ejsRenderDir';
-import formatComponent from './formatComponent';
+import formatProject from './formatProject';
 
-interface ITemplateOptions {
+export interface ITemplateOptions {
   npmName: string; // @icedesign/ice-label
   name?: string; // ice-label (english and variable)
+  kebabCaseName?: string; // ice-label
+  npmScope?: string; // @icedesign
   title?: string; //
   description?: string;
   className?: string;
@@ -20,7 +22,7 @@ interface ITemplateOptions {
   adapter?: boolean;
 }
 
-interface IOptions {
+export interface IOptions {
   rootDir: string;
   // template npmName or relative path
   template: string;
@@ -28,31 +30,42 @@ interface IOptions {
   templateOptions: ITemplateOptions;
   enablePegasus?: boolean;
   enableDefPublish?: boolean;
+  materialType?: 'component' | 'block' | 'scope';
+  needDownloadTemplate?: boolean;
 }
 
 /**
  * init component by template
  */
-export async function generateComponent({
+export async function generateMaterial({
   rootDir,
   template,
   registry,
   templateOptions,
   enablePegasus,
   enableDefPublish,
+  materialType = 'component',
+  needDownloadTemplate,
 }: IOptions): Promise<void> {
-  const templateTmpDir = path.join(rootDir, '.tmp');
-  await downloadMaterialTemplate(templateTmpDir, template, registry);
+  const templateTmpDir = needDownloadTemplate ? path.join(rootDir, '.tmp') : template;
+  if (needDownloadTemplate) {
+    await downloadMaterialTemplate(templateTmpDir, template, registry);
+  }
 
-  const templateTmpComponentDir = path.join(templateTmpDir, 'template/component');
+  const templateTmpComponentDir = path.join(templateTmpDir, 'template', materialType);
+  if (!fse.existsSync(templateTmpComponentDir)) {
+    throw new Error(`当前物料模板不存在 ${materialType} 类型的物料`);
+  }
 
   // generate files by template
   const { npmName } = templateOptions;
   const name = /^@/.test(npmName) ? npmName.split('/')[1] : npmName;
+  const npmScope = /^@/.test(npmName) ? npmName.split('/')[0] : '';
 
-  console.log('generateComponent options', templateOptions, 'name', name);
   const options: ITemplateOptions = {
     name,
+    kebabCaseName: name,
+    npmScope,
     title: '示例组件',
     description: '这个组件的功能是 balabala',
     className: camelcase(name, { pascalCase: true }),
@@ -62,17 +75,19 @@ export async function generateComponent({
     adapter: false,
     ...templateOptions,
   };
+  // TODO: scaffold 不转换某些类型
   await ejsRenderDir(templateTmpComponentDir, options);
 
   await fse.copy(templateTmpComponentDir, rootDir);
   await fse.remove(templateTmpDir);
 
   try {
-    await formatComponent({
+    await formatProject({
       rootDir,
-      npmName: templateOptions.npmName,
+      templateOptions,
       enablePegasus,
       enableDefPublish,
+      materialType,
     });
   } catch (err) {
     console.warn('[Warning] formatProject error', err.message);
@@ -104,7 +119,7 @@ function formatFilename(filename) {
   return filename;
 }
 
-async function downloadMaterialTemplate(dir: string, template: string, registry?: string): Promise<void> {
+export async function downloadMaterialTemplate(dir: string, template: string, registry?: string): Promise<void> {
   await fse.emptyDir(dir);
 
   const isLocalPath = /^[./]|(^[a-zA-Z]:)/.test(template);
