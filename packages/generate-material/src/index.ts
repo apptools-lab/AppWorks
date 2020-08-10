@@ -30,8 +30,8 @@ export interface IOptions {
   templateOptions: ITemplateOptions;
   enablePegasus?: boolean;
   enableDefPublish?: boolean;
-  materialType?: 'component' | 'block' | 'scope';
-  needDownloadTemplate?: boolean;
+  materialType?: 'component' | 'block' | 'scaffold';
+  disbaleDownloadTemplate?: boolean;
 }
 
 /**
@@ -45,10 +45,10 @@ export async function generateMaterial({
   enablePegasus,
   enableDefPublish,
   materialType = 'component',
-  needDownloadTemplate,
+  disbaleDownloadTemplate,
 }: IOptions): Promise<void> {
-  const templateTmpDir = needDownloadTemplate ? path.join(rootDir, '.tmp') : template;
-  if (needDownloadTemplate) {
+  const templateTmpDir = disbaleDownloadTemplate ? template: path.join(rootDir, '.tmp');
+  if (!disbaleDownloadTemplate) {
     await downloadMaterialTemplate(templateTmpDir, template, registry);
   }
 
