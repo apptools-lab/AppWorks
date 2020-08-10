@@ -113,7 +113,7 @@ async function setJsonValidationUrl() {
         return;
       }
 
-      const packageJson = extension.packageJson;
+      const packageJson = extension.packageJSON;
       if (packageJson && packageJson.contributes && (projectFramework === 'rax-app' || projectFramework === 'icejs')) {
         const jsonValidation = packageJson.contributes.jsonValidation;
         jsonValidation[0].url = `./schemas/${projectFramework === 'icejs' ? 'ice' : 'rax'}.build.${
