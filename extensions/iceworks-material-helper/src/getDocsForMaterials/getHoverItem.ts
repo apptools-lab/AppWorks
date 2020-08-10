@@ -8,7 +8,7 @@ export default function getHoverItem(tagName: string) {
     return info.label === tagName;
   });
   if (tagInfo) {
-    const commandUri = vscode.Uri.parse(getSource('docsCommand')[tagInfo.homepage]);
+    const commandUri = vscode.Uri.parse(`command:${getSource('docsCommand')[tagInfo.homepage]}`);
     const docsLink = new vscode.MarkdownString(`[Docs for ${tagInfo.label}](${commandUri}) `);
     // To enable command URIs in Markdown content, you must set the `isTrusted` flag.
     // https://code.visualstudio.com/api/extension-guides/command

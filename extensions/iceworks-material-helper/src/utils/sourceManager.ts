@@ -47,7 +47,9 @@ function createDocsCommand(url: string) {
   const docsCommand = `iceworks:material-helper.openDocUrl:${url}`;
   source.docsCommand[url] = docsCommand;
   vscode.commands.registerCommand(docsCommand, () => {
+    console.log(docsCommand);
     openInExternalBrowser(url);
     recordDAU();
   });
+  console.log('commandRegister',docsCommand);
 }
