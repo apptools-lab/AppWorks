@@ -69,6 +69,9 @@ PS: 可将 .vscode 目录添加至 .gitignore 配置中。
 
 ```
 
+## 更改端口号
+若需要 debug 的工程调试链接不为 `http://localhost:3333` 时，可以修改 launch.json 中的 `url` 和 `urlFilter` 配置的地址链接，以及 tasks.json 中的 `endsPattern` 为新的调试地址即可。
+
 ## Chrome 实例
 
 默认开启新的 Chrome 实例进行调试。首次启动为无数据 Chrome (无用户态，无插件），在调试过程操作的数据将得以保存（历史，安装插件等）。
