@@ -14,7 +14,7 @@ let FUSION_VARIABLES: IVariables = {};
 
 // Markdown for key and value
 function getMarkdownInfo(key: string, value: string): string {
-  return `**Iceworks Style Helper** \n **${key}**: ${value}; \n `;
+  return `**${key}**: ${value}; \n `;
 }
 
 // Variable definition
@@ -66,6 +66,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
 
     const completionItem = new vscode.CompletionItem(variable, vscode.CompletionItemKind.Variable);
 
+    completionItem.detail = 'Iceworks';
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
 
