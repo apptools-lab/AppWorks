@@ -24,8 +24,6 @@ import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import i18nService from './i18n';
 
-console.log("CodeGenerator", CodeGenerator);
-
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
