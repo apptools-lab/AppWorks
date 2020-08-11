@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { componentsMap, componentList } from '@ali/iceluna-config-example';
+import componentList from './componentList';
+import componentsMap from './componentsMap';
 import { vscode } from '@iceworks/vscode-webview/lib/webview';
 import callService from '../../../callService';
 
@@ -71,8 +72,11 @@ export default {
           width: 86,
         },
         addonProps: {
-          onClick: async (version, componentsMap, utils, componentsTree, i18n) => {
+          onClick: async (version, componentsMap, componentsTree) => {
             try {
+              const utils = this.appHelper.uitls;
+              const i18n = this.appHelper.i18n;
+              console.log('utils ==>', utils, '18n ==>', i18n);
               await callService('component', 'generateComponentCode', version, componentsMap, utils, componentsTree, i18n);
             } catch (err) {
               console.error(err);
@@ -208,20 +212,7 @@ export default {
         componentName: 'Block',
         fileName: 'index',
         props: {},
-        children: [
-          {
-            componentName: 'Div',
-            props: {},
-            children: [
-              {
-                componentName: 'Text',
-                props: {
-                  text: 'Hello World',
-                },
-              },
-            ],
-          },
-        ],
+        children: [],
       });
     },
     destroy(appHelper) { },

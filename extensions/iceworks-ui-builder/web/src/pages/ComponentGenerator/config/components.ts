@@ -3,7 +3,7 @@ import LunaLogo from '@ali/iceluna-addons-logo';
 import LunaDesignMode from '@ali/iceluna-addons-design-mode';
 import LunaUndoRedo from '@ali/iceluna-addons-undo-redo';
 import LunaPreview from '@ali/iceluna-addons-preview';
-import LunaGenerateCode from '@ali/iceluna-addons-generate-code';
+import LunaGenerateCode from '@ali/iceluna-addons-save';
 import LunaComponentTree from '@ali/iceluna-addons-component-tree';
 import LunaComponentList from '@ali/iceluna-addons-component-list';
 import LunaCanvasSetting from '@ali/iceluna-addons-canvas-setting';

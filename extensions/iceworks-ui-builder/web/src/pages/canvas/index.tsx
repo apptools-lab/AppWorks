@@ -3,7 +3,7 @@
  * 用于渲染编排模块
  */
 import React from 'react';
-import Designer from '@ali/iceluna-designer';
+import Canvas from '@ali/iceluna-canvas';
 import components from './config/components';
 import utils from './config/utils';
 import pkg from '../../../package.json';
@@ -15,7 +15,7 @@ const appHelper = window.parent && window.parent.__ctx && window.parent.__ctx.ap
 
 export default function () {
   return (
-    <Designer
+    <Canvas
       components={components}
       utils={utils}
       appHelper={appHelper}

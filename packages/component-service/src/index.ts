@@ -19,10 +19,12 @@ import {
   componentsPath,
   getProjectLanguageType
 } from '@iceworks/project-service';
-import CodeGenerator, { IBasicSchema, IComponentsMapItem, IContainerNodeItem,IUtilItem, II18nMap } from '@ali/lowcode-code-generator';
+import CodeGenerator, { IBasicSchema, IComponentsMapItem, IContainerNodeItem,IUtilItem, II18nMap } from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import i18nService from './i18n';
+
+console.log("CodeGenerator", CodeGenerator);
 
 const { window, Position } = vscode;
 
@@ -158,7 +160,16 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
       CodeGenerator.plugins.react.containerInitState(),
       CodeGenerator.plugins.react.containerLifeCycle(),
       CodeGenerator.plugins.react.containerMethod(),
-      CodeGenerator.plugins.react.jsx(),
+      CodeGenerator.plugins.react.jsx({
+        fileType: 'jsx',
+        nodeTypeMapping: {
+          'Block': 'div',
+          'Div': 'div',
+          'Text': 'span',
+          'A': 'a',
+          'Image': 'img'
+        }
+      }),
       CodeGenerator.plugins.style.css(),
     ],
     postProcessors: [CodeGenerator.postprocessor.prettier()],
