@@ -24,14 +24,11 @@ export interface ITemplateOptions {
 
 export interface IOptions {
   rootDir: string;
-  // template npmName or relative path
-  template: string;
-  registry?: string;
+  materialTemplateDir: string;
   templateOptions: ITemplateOptions;
   enablePegasus?: boolean;
   enableDefPublish?: boolean;
-  materialType?: 'component' | 'block' | 'scaffold';
-  disbaleDownloadTemplate?: boolean;
+  materialType: 'component' | 'block' | 'scaffold';
 }
 
 /**
@@ -39,23 +36,20 @@ export interface IOptions {
  */
 export async function generateMaterial({
   rootDir,
-  template,
-  registry,
+  materialTemplateDir,
   templateOptions,
   enablePegasus,
   enableDefPublish,
   materialType = 'component',
-  disbaleDownloadTemplate,
 }: IOptions): Promise<void> {
-  const templateTmpDir = disbaleDownloadTemplate ? template: path.join(rootDir, '.tmp');
-  if (!disbaleDownloadTemplate) {
-    await downloadMaterialTemplate(templateTmpDir, template, registry);
-  }
-
-  const templateTmpComponentDir = path.join(templateTmpDir, 'template', materialType);
-  if (!fse.existsSync(templateTmpComponentDir)) {
+  const templateDir = path.join(materialTemplateDir, 'template', materialType);
+  if (!fse.existsSync(templateDir)) {
     throw new Error(`当前物料模板不存在 ${materialType} 类型的物料`);
   }
+
+  const templateTmpDir = path.join(materialTemplateDir, '.tmp');
+  await fse.emptyDir(templateTmpDir);
+  await fse.copy(templateDir, templateTmpDir);
 
   // generate files by template
   const { npmName } = templateOptions;
@@ -75,10 +69,9 @@ export async function generateMaterial({
     adapter: false,
     ...templateOptions,
   };
-  // TODO: scaffold 不转换某些类型
-  await ejsRenderDir(templateTmpComponentDir, options);
 
-  await fse.copy(templateTmpComponentDir, rootDir);
+  await ejsRenderDir(templateTmpDir, options);
+  await fse.copy(templateTmpDir, rootDir);
   await fse.remove(templateTmpDir);
 
   try {
@@ -94,32 +87,7 @@ export async function generateMaterial({
   }
 }
 
-/**
- * 下载 npm 后的文件名处理
- */
-function formatFilename(filename) {
-  // 只转换特定文件，防止误伤
-  const dotFilenames = [
-    '_eslintrc.js',
-    '_eslintrc',
-    '_eslintignore',
-    '_gitignore',
-    '_stylelintrc.js',
-    '_stylelintrc',
-    '_stylelintignore',
-    '_editorconfig',
-    '_prettierrc.js',
-    '_prettierignore',
-  ];
-  if (dotFilenames.indexOf(filename) !== -1) {
-    // _eslintrc.js -> .eslintrc.js
-    filename = filename.replace(/^_/, '.');
-  }
-
-  return filename;
-}
-
-export async function downloadMaterialTemplate(dir: string, template: string, registry?: string): Promise<void> {
+export async function downloadMaterialTemplate(dir: string, template: string, registry?: string, materialType?: boolean): Promise<void> {
   await fse.emptyDir(dir);
 
   const isLocalPath = /^[./]|(^[a-zA-Z]:)/.test(template);
@@ -136,7 +104,14 @@ export async function downloadMaterialTemplate(dir: string, template: string, re
       (state) => {
         spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
       },
-      formatFilename
+      // format filename
+      (filename) => {
+        if (filename === '_package.json') {
+          // 兼容
+          filename = 'package.json.ejs';
+        }
+        return filename;
+      },
     );
     spinner.succeed('download npm tarball successfully.');
   }
