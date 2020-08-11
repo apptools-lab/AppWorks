@@ -103,7 +103,6 @@
     "@iceworks/vscode-webview": "^0.1.5",
     "generate-schema": "^2.6.0",
     "lodash.forin": "^4.4.0",
-    "lodash.isequal": "^4.5.0",
-    "typescript-json-schema": "^0.42.0"
+    "lodash.isequal": "^4.5.0"
   }
 }

@@ -5,12 +5,11 @@ import { recordDAU, Recorder } from '@iceworks/recorder';
 import { getProjectFramework } from '@iceworks/project-service';
 import { services, getIsUpdatingJsonFile, setEditingJsonFileUri } from './services';
 import i18n from './i18n';
-import { getFileNameFromUri, getBaseNameFromUri, canEditInPanel } from './utils';
+import { getBaseNameFromUri, canEditInPanel } from './utils';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
-const CANNOT_EDIT_FILE_NAMES = ['package-lock.json'];
 
 export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
@@ -62,11 +61,6 @@ export async function activate(context: vscode.ExtensionContext) {
     );
     connectService(configWebviewPanel, context, { services, recorder });
   }
-
-  // activePanelEntry();
-  // vscode.window.onDidChangeActiveTextEditor(() => {
-  //   // activePanelEntry();
-  // });
 
   subscriptions.push(
     vscode.commands.registerCommand('iceworks-config-helper.configPanel.start', (uri) => {
