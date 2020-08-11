@@ -5,6 +5,7 @@ import getJsxElements from '../utils/getJsxElements';
 import { openInBrowser } from './openInBowser';
 import { getAllDocInfos } from './getAllDocInfos';
 import { IMaterialDocInfo } from './type';
+import i18n from '../i18n';
 
 export default async function showAllMaterialQuickPicks() {
   showQuickPick(await getAllDocInfos());
@@ -16,44 +17,48 @@ export async function showDocumentMaterialQuickPick(uri: vscode.Uri) {
 }
 
 function showQuickPick(quickPickItems: any[]) {
-  const quickPick = vscode.window.createQuickPick();
-  quickPick.items = quickPickItems;
-  quickPick.onDidChangeSelection((selection) => {
-    if (selection[0]['command']) {
-      vscode.commands.executeCommand(selection[0]['command']);
-    } else {
-      openInBrowser(selection[0]['url']);
-    }
-    quickPick.dispose();
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
+  if (quickPickItems.length === 0) {
+    vscode.window.showWarningMessage(i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.noMaterial'));
+  } else {
+    const quickPick = vscode.window.createQuickPick();
+    quickPick.items = quickPickItems;
+    quickPick.onDidChangeSelection((selection) => {
+      if (selection[0]['command']) {
+        vscode.commands.executeCommand(selection[0]['command']);
+      } else {
+        openInBrowser(selection[0]['url']);
+      }
+      quickPick.dispose();
+    });
+    quickPick.onDidHide(() => quickPick.dispose());
+    quickPick.show();
+  }
 }
 
 async function getDocInfos(documentText = ''): Promise<IMaterialDocInfo[]> {
-  const docInfo: IMaterialDocInfo[] = [];
-  const allDocInfo = getAllDocInfos();
+  const docInfos: IMaterialDocInfo[] = [];
+  const allDocInfos = getAllDocInfos();
 
   const materialNames = getAllDocInfos().map((docInfo) => docInfo.label);
-  const jsxElementsOfUsedMaterials = getJsxElements(documentText, (element) => {
+  const useingMaterialsJsxElements = getJsxElements(documentText, (element) => {
     return materialNames.includes(element.name['name'] || '');
   });
 
-  jsxElementsOfUsedMaterials.forEach((elements) => {
-    docInfo.push(
-      allDocInfo.find((info) => {
-        return (info.label = elements?.name['name']);
+  useingMaterialsJsxElements.forEach((elements) => {
+    docInfos.push(
+      allDocInfos.find((info) => {
+        return info.label === elements?.name['name'];
       })!
     );
   });
-  docInfo.push({
-    label: '更多物料',
-    description: '展示所有物料的文档',
-    detail: '展示所有物料的文档',
+  docInfos.push({
+    label: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.label'),
+    description: '',
+    detail: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail'),
     command: 'iceworks-material-helper:showAllMaterialQuickPicks',
     url: '',
   });
-  return docInfo;
+  return docInfos;
 }
 
 function getVisibleEditer(uri: vscode.Uri) {

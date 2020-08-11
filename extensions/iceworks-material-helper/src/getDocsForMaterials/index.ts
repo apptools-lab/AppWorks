@@ -16,7 +16,7 @@ async function provideHover(document, position): Promise<vscode.Hover | undefine
 }
 
 // Set completion
-export default function hoverDocs() {
+export default function registerMaterialDocFunction() {
   vscode.languages.registerHoverProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
     provideHover,
   });

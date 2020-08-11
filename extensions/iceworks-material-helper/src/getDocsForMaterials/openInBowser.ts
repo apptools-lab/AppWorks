@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
+import i18n from '../i18n';
 
 function openInExternalBrowser(url) {
   vscode.env.openExternal(url);
@@ -9,7 +10,7 @@ function openInInternalBrowser(url: string) {
   if (hasBrowserPreviewExtension()) {
     vscode.commands.executeCommand('browser-preview.openPreview', url);
   } else {
-    vscode.window.showErrorMessage('你必须先安装 vscode-browser-preview 插件才能在内部浏览器中打开。');
+    vscode.window.showErrorMessage(i18n.format('extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview'));
   }
 }
 

@@ -6,6 +6,7 @@ import { window } from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
 import { IMaterialDocInfo } from './type';
 import { openInBrowser } from './openInBowser';
+import i18n from '../i18n';
 
 let loading = true;
 let docInfoCache: IMaterialDocInfo[] = [];
@@ -13,12 +14,12 @@ export function getAllDocInfos(): IMaterialDocInfo[] {
   if (!loading) {
     return docInfoCache;
   } else {
-    window.showInformationMessage('Source Loading... Try again later.');
+    window.showInformationMessage(i18n.format('extension.iceworksMaterialHelper.getAllDocsInfo.sourceLoading'));
     return [];
   }
 }
 
-export async function initSource() {
+export async function initDocInfo() {
   docInfoCache = await getDocInfos();
   loading = false;
 }

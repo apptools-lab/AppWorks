@@ -6,8 +6,8 @@ import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 import showAllMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
-import { initSource } from './getDocsForMaterials/getAllDocInfos';
-import hoverDocs from './getDocsForMaterials';
+import { initDocInfo } from './getDocsForMaterials/getAllDocInfos';
+import initMaterialDocInfo from './getDocsForMaterials';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // auto set configuration
   initExtension(context);
-  initSource();
+  initDocInfo();
 
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
@@ -71,5 +71,5 @@ export function activate(context: vscode.ExtensionContext) {
 
   // set propsAutoCompleter
   propsAutoComplete();
-  hoverDocs();
+  initMaterialDocInfo();
 }
