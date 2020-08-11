@@ -87,7 +87,7 @@ export async function generateMaterial({
   }
 }
 
-export async function downloadMaterialTemplate(dir: string, template: string, registry?: string, materialType?: boolean): Promise<void> {
+export async function downloadMaterialTemplate(dir: string, template: string, registry?: string): Promise<void> {
   await fse.emptyDir(dir);
 
   const isLocalPath = /^[./]|(^[a-zA-Z]:)/.test(template);
