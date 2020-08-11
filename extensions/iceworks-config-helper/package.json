@@ -39,7 +39,7 @@
     "commands": [
       {
         "command": "iceworks-config-helper.configPanel.start",
-        "title": "%iceworksConfigHelper.commands.start.buildJson.title%",
+        "title": "%iceworksConfigHelper.commands.start.configHelperPanel.title%",
         "icon": {
           "light": "./icons/preview-right-light.svg",
           "dark": "./icons/preview-right-dark.svg"
