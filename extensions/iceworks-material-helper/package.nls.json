@@ -1,5 +1,6 @@
 {
   "iceworksMaterialHelper.commands.start.title": "Iceworks: Import Material",
   "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: Search Material Docs",
-  "iceworksMaterialHelper.commands.showCurrentMaterialQuickPicks.title": "Iceworks: Show Material Docs In Current File"
+  "iceworksMaterialHelper.commands.showCurrentMaterialQuickPicks.title": "Iceworks: Show Material Docs In Current File",
+  "iceworksMaterialHelper.configuration.openInBrowserDescription": "Whether open doc url inside VSCode, this function relys on 「Browser Preview」 extension，you need to install it manually before you can use this function"
 }

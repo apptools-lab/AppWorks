@@ -1,10 +1,10 @@
-export interface IQuickPickInfo {
+import { Uri } from 'vscode';
+
+export interface IMaterialDocInfo {
   label: string;
   detail: string;
   description: string;
-  homepage: string;
-}
-export enum SourceType{
-  QUICK_PICK_INFO = 'quickPickInfo',
-  COMMAND = 'commands'
+  url: string;
+  command: string;
+  commandUrl?: Uri;
 }

@@ -1,50 +1,63 @@
 /* eslint-disable dot-notation */
 /* eslint-disable dot-notation */
 import * as vscode from 'vscode';
-import { getSources } from '@iceworks/material-service';
 import getJsxElements from '../utils/getJsxElements';
 import { openInBrowser } from './openInBowser';
-import { getSource } from './sourceManager';
-import { SourceType, IQuickPickInfo } from './type';
+import { getAllDocInfos } from './getAllDocInfos';
+import { IMaterialDocInfo } from './type';
 
 export default async function showAllMaterialQuickPicks() {
-  showQuickPick(
-    await getSource(SourceType.QUICK_PICK_INFO)
-  );
+  showQuickPick(await getAllDocInfos());
 }
 
-export async function showDocumentMaterialQuickPick(uri: vscode.Uri){
+export async function showDocumentMaterialQuickPick(uri: vscode.Uri) {
   const documentEditor = getVisibleEditer(uri);
-  showQuickPick(
-    await getMaterialsInfo(documentEditor?.document.getText())
-  )
+  showQuickPick(await getDocInfos(documentEditor?.document.getText()));
 }
 
-function showQuickPick(quickPickItems: any[]){
+function showQuickPick(quickPickItems: any[]) {
   const quickPick = vscode.window.createQuickPick();
   quickPick.items = quickPickItems;
   quickPick.onDidChangeSelection((selection) => {
-    if (selection[0]) {
-      openInBrowser(selection[0]['homepage']);
-      quickPick.dispose();
+    if (selection[0]['command']) {
+      vscode.commands.executeCommand(selection[0]['command']);
+    } else {
+      openInBrowser(selection[0]['url']);
     }
+    quickPick.dispose();
   });
-  quickPick.onDidHide(()=>quickPick.dispose());
+  quickPick.onDidHide(() => quickPick.dispose());
   quickPick.show();
 }
 
-async function getMaterialsInfo(documentText=''): Promise<IQuickPickInfo[]>{
-  const materialInfo = await getSources(SourceType.QUICK_PICK_INFO);
-  const materialNameList = materialInfo.map(info=>info.name);
-  const elements =  getJsxElements(documentText,element=>{
-      return materialNameList.includes(element.name['name']||'')
+async function getDocInfos(documentText = ''): Promise<IMaterialDocInfo[]> {
+  const docInfo: IMaterialDocInfo[] = [];
+  const allDocInfo = getAllDocInfos();
+
+  const materialNames = getAllDocInfos().map((docInfo) => docInfo.label);
+  const jsxElementsOfUsedMaterials = getJsxElements(documentText, (element) => {
+    return materialNames.includes(element.name['name'] || '');
   });
-  console.log('elements',elements);
-  return [{label:'更多物料',description:'展示所有物料的文档',detail:'',homepage: vscode.Uri.parse('iceworks-material-helper:showAllMaterialQuickPicks',true).toString()}]
+
+  jsxElementsOfUsedMaterials.forEach((elements) => {
+    docInfo.push(
+      allDocInfo.find((info) => {
+        return (info.label = elements?.name['name']);
+      })!
+    );
+  });
+  docInfo.push({
+    label: '更多物料',
+    description: '展示所有物料的文档',
+    detail: '展示所有物料的文档',
+    command: 'iceworks-material-helper:showAllMaterialQuickPicks',
+    url: '',
+  });
+  return docInfo;
 }
 
-function getVisibleEditer(uri: vscode.Uri){
-  return vscode.window.visibleTextEditors.find(editor=>{
+function getVisibleEditer(uri: vscode.Uri) {
+  return vscode.window.visibleTextEditors.find((editor) => {
     return editor.document.uri.toString() === uri.toString();
-  })
+  });
 }

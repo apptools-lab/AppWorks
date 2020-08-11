@@ -52,10 +52,21 @@
         },
         {
           "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
-          "group": "2_workspace",
-          "when": "*"
+          "group": "iceworksMaterialHelper",
+          "when": "editorTextFocus && iceworks:isJSXFile"
         }
       ]
+    },
+    "configuration": {
+      "title": "iceworks Material Helper",
+      "properties": {
+        "iceworks.materialHelper.openDocLinkInsideVSCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",
+          "title": "Open Doc Link Inside VSCode"
+        }
+      }
     }
   },
   "scripts": {

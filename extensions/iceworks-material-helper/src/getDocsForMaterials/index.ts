@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import getCurrentJsxElement from './getCurrentJsxElement';
 import getHoverItem from './getHoverItem';
-import { showDocumentMaterialQuickPick } from './getComponentQuickPicks';
+import showAllMaterialQuickPicks, { showDocumentMaterialQuickPick } from './getComponentQuickPicks';
 
 async function provideHover(document, position): Promise<vscode.Hover | undefined> {
   // const { Position } = vscode;
@@ -20,7 +20,10 @@ export default function hoverDocs() {
   vscode.languages.registerHoverProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
     provideHover,
   });
-  vscode.commands.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks',(uri: vscode.Uri)=>{
-    showDocumentMaterialQuickPick(uri)
-  })
+  vscode.commands.registerCommand('iceworks-material-helper:showAllMaterialQuickPicks', () => {
+    showAllMaterialQuickPicks();
+  });
+  vscode.commands.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks', (uri: vscode.Uri) => {
+    showDocumentMaterialQuickPick(uri);
+  });
 }

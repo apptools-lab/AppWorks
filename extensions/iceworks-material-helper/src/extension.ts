@@ -6,7 +6,7 @@ import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 import showAllMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
-import { initSource } from './getDocsForMaterials/sourceManager';
+import { initSource } from './getDocsForMaterials/getAllDocInfos';
 import hoverDocs from './getDocsForMaterials';
 
 // eslint-disable-next-line
@@ -66,9 +66,6 @@ export function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworks-material-helper.start', function () {
       activeWebview();
-    }),
-    registerCommand('iceworks-material-helper:showComoponentQuickPick', () => {
-      showAllMaterialQuickPicks();
     })
   );
 
