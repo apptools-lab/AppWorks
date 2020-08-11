@@ -21,8 +21,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-config-helper.buildJson.start",
-    "onCommand:iceworks-config-helper.appJson.start",
+    "onCommand:iceworks-config-helper.configPanel.start",
     "onLanguage:json"
   ],
   "main": "./build/extension.js",
@@ -39,16 +38,8 @@
     ],
     "commands": [
       {
-        "command": "iceworks-config-helper.buildJson.start",
+        "command": "iceworks-config-helper.configPanel.start",
         "title": "%iceworksConfigHelper.commands.start.buildJson.title%",
-        "icon": {
-          "light": "./icons/preview-right-light.svg",
-          "dark": "./icons/preview-right-dark.svg"
-        }
-      },
-      {
-        "command": "iceworks-config-helper.appJson.start",
-        "title": "%iceworksConfigHelper.commands.start.appJson.title%",
         "icon": {
           "light": "./icons/preview-right-light.svg",
           "dark": "./icons/preview-right-dark.svg"
@@ -58,37 +49,22 @@
     "menus": {
       "editor/context": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "iceworks:showWebViewPanelForBuildJson",
-          "group": "configHelper"
-        },
-        {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "iceworks:showWebViewPanelForAppJson",
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json",
           "group": "configHelper"
         }
       ],
       "editor/title": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "iceworks:showWebViewPanelForBuildJson",
-          "group": "navigation"
-        },
-        {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "iceworks:showWebViewPanelForAppJson",
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "resourceFilename == build.json",
-          "group": "2_workspace"
-        },
-        {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "resourceFilename == app.json",
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "resourceExtname == .json",
           "group": "2_workspace"
         }
       ]

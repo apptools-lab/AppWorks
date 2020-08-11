@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension } from '@iceworks/common-service';
 import { recordDAU, Recorder } from '@iceworks/recorder';
@@ -9,6 +10,7 @@ import i18n from './i18n';
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
+const CANNOT_EDIT_FILE_NAMES = ['package-lock'];
 
 export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
@@ -20,14 +22,21 @@ export async function activate(context: vscode.ExtensionContext) {
 
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 
-  function activeConfigWebview(JsonFileName: string) {
+  function activeConfigWebview(JsonFileUri: vscode.Uri) {
     recordDAU();
     recorder.record({
       module: 'main',
       action: 'activeConfigWebview',
     });
 
-    setEditingJsonFile(JsonFileName);
+    const fileName = getFileNameFromUri(JsonFileUri);
+
+    if(CANNOT_EDIT_FILE_NAMES.includes(fileName)){
+      vscode.window.showWarningMessage(`请不要在面板中编辑 ${fileName}`);
+      return;
+    }else{
+      setEditingJsonFile(fileName);
+    }
 
     if (configWebviewPanel) {
       configWebviewPanel.dispose();
@@ -52,17 +61,14 @@ export async function activate(context: vscode.ExtensionContext) {
     connectService(configWebviewPanel, context, { services, recorder });
   }
 
-  activePanelEntry();
-  vscode.window.onDidChangeActiveTextEditor(() => {
-    activePanelEntry();
-  });
+  // activePanelEntry();
+  // vscode.window.onDidChangeActiveTextEditor(() => {
+  //   // activePanelEntry();
+  // });
 
   subscriptions.push(
-    vscode.commands.registerCommand('iceworks-config-helper.buildJson.start', () => {
-      activeConfigWebview('build');
-    }),
-    vscode.commands.registerCommand('iceworks-config-helper.appJson.start', () => {
-      activeConfigWebview('app');
+    vscode.commands.registerCommand('iceworks-config-helper.configPanel.start', (uri) => {
+      activeConfigWebview(uri);
     })
   );
 
@@ -89,20 +95,20 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
-function activePanelEntry() {
-  const currentActiveEditor = vscode.window.activeTextEditor;
-  if (!currentActiveEditor) return;
-  if (currentActiveEditor?.document.uri.fsPath.endsWith('build.json')) {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', true);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
-  } else if (currentActiveEditor?.document.uri.fsPath.endsWith('app.json')) {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', true);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
-  } else {
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
-    vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
-  }
-}
+// function activePanelEntry() {
+//   const currentActiveEditor = vscode.window.activeTextEditor;
+//   if (!currentActiveEditor) return;
+//   if (currentActiveEditor?.document.uri.fsPath.endsWith('build.json')) {
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', true);
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
+//   } else if (currentActiveEditor?.document.uri.fsPath.endsWith('app.json')) {
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', true);
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
+//   } else {
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForBuildJson', false);
+//     vscode.commands.executeCommand('setContext', 'iceworks:showWebViewPanelForAppJson', false);
+//   }
+// }
 
 async function setJsonValidationUrl() {
   try {
@@ -133,4 +139,8 @@ function isConfigJson(document: vscode.TextDocument, filenames: string[]) {
   return filenames.find((e) => {
     return document.uri.fsPath.endsWith(e);
   });
+}
+
+function getFileNameFromUri(uri: vscode.Uri){
+  return path.parse(uri.fsPath).name;
 }

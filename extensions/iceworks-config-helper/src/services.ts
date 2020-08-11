@@ -16,7 +16,7 @@ let editingJsonFile;
 
 const getInitData = async () => {
   // eslint-disable-next-line
-  const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${editingJsonFile}.${
+  const schema = require(`../schemas/${(await getFrameWorkFragement())}.${editingJsonFile}.${
     vscode.env.language
   }.json`);
 
@@ -133,4 +133,16 @@ function getFormCannotEditProps(schema) {
     }
   });
   return webViewCannotEditProps;
+}
+
+async function getFrameWorkFragement(){
+  const framwork = await getProjectFramework();
+  switch(framwork){
+    case 'icejs':
+      return 'ice';
+    case 'rax-app':
+      return 'rax';
+    default:
+      return 'NO-Frame'
+  } 
 }
