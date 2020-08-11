@@ -35,8 +35,12 @@
         "title": "%iceworksMaterialHelper.commands.start.title%"
       },
       {
-        "command": "iceworks-material-helper:showComoponentQuickPick",
-        "title": "%iceworksMaterialHelper.commands.showComoponentQuickPick.title%"
+        "command": "iceworks-material-helper:showAllMaterialQuickPicks",
+        "title": "%iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title%"
+      },
+      {
+        "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+        "title": "%iceworksMaterialHelper.commands.showCurrentMaterialQuickPicks.title%"
       }
     ],
     "menus": {
@@ -45,6 +49,11 @@
           "command": "iceworks-material-helper.start",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
+        },
+        {
+          "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+          "group": "2_workspace",
+          "when": "*"
         }
       ]
     }

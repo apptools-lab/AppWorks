@@ -5,8 +5,8 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
-import showMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
-import { initSource } from './utils/sourceManager';
+import showAllMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
+import { initSource } from './getDocsForMaterials/sourceManager';
 import hoverDocs from './getDocsForMaterials';
 
 // eslint-disable-next-line
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
       activeWebview();
     }),
     registerCommand('iceworks-material-helper:showComoponentQuickPick', () => {
-      showMaterialQuickPicks();
+      showAllMaterialQuickPicks();
     })
   );
 

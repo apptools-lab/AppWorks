@@ -1,25 +1,25 @@
 /* eslint-disable dot-notation */
 import * as vscode from 'vscode';
 import { IMaterialData, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
-import { getSourcesByProjectType, getData } from '@iceworks/material-service';
+import { getSourcesByProjectType, getData, getSources } from '@iceworks/material-service';
 import { window } from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
-import { IQuickPickInfo } from '../getDocsForMaterials/type';
-import { openInExternalBrowser } from '../getDocsForMaterials/openInBowser';
+import { IQuickPickInfo, SourceType } from './type';
+import { openInBrowser } from './openInBowser';
 
 const source = {
-  quickPickInfo: [] as IQuickPickInfo[],
-  docsCommand: {},
+  [SourceType.QUICK_PICK_INFO]: [] as IQuickPickInfo[],
+  [SourceType.COMMAND]: {},
 };
 let loading = true;
 
-export function getSource(sourceName: string) {
-  if (!loading) return source[sourceName];
+export function getSource(sourceType: SourceType): any {
+  if (!loading) return source[sourceType];
   else window.showInformationMessage('Source Loading... Try again later.');
 }
 
 export async function initSource() {
-  source.quickPickInfo = await createQuickPickInfo();
+  source[SourceType.QUICK_PICK_INFO] = await createQuickPickInfo();
   loading = false;
 }
 
@@ -45,11 +45,11 @@ async function createQuickPickInfo() {
 
 function createDocsCommand(url: string) {
   const docsCommand = `iceworks:material-helper.openDocUrl:${url}`;
-  source.docsCommand[url] = docsCommand;
+  getSources(SourceType.COMMAND)[url] = docsCommand;
   vscode.commands.registerCommand(docsCommand, () => {
     console.log(docsCommand);
-    openInExternalBrowser(url);
+    openInBrowser(url);
     recordDAU();
   });
-  console.log('commandRegister',docsCommand);
+  // console.log(SourceType.COMMAND,docsCommand);
 }

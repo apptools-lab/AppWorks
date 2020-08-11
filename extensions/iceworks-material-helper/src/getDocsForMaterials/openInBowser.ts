@@ -1,9 +1,15 @@
 import * as vscode from 'vscode';
+import { recordDAU } from '@iceworks/recorder';
 
-export function openInExternalBrowser(url) {
+function openInExternalBrowser(url) {
   vscode.env.openExternal(url);
 }
 
-export function openInInternalBrowser(url: string) {
+function openInInternalBrowser(url: string) {
   vscode.commands.executeCommand('browser-preview.openPreview',url);
+}
+
+export function openInBrowser(url){
+  openInExternalBrowser(url);
+  recordDAU();
 }

@@ -1,4 +1,5 @@
 {
   "iceworksMaterialHelper.commands.start.title": "Iceworks: Import Material",
-  "iceworksMaterialHelper.commands.showComoponentQuickPick.title": "Iceworks: Search Material Docs"
+  "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: Search Material Docs",
+  "iceworksMaterialHelper.commands.showCurrentMaterialQuickPicks.title": "Iceworks: Show Material Docs In Current File"
 }

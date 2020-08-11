@@ -1,4 +1,5 @@
 {
   "iceworksMaterialHelper.commands.start.title": "Iceworks: 添加组件",
-  "iceworksMaterialHelper.commands.showComoponentQuickPick.title": "Iceworks: 查找组件"
+  "iceworksMaterialHelper.commands.showComoponentQuickPick.title": "Iceworks: 查找组件",
+  "iceworksMaterialHelper.commands.showCurrentMaterialQuickPicks.title": "Iceworks: 展示当前页面物料文档"
 }

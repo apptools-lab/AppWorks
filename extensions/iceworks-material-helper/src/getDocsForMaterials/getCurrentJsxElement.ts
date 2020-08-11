@@ -1,5 +1,5 @@
 import { JSXOpeningElement } from '@babel/types';
-import origingetCurrentJsxElement from '../utils/getCurrentJsxElement';
+import originGetCurrentJsxElement from '../utils/getCurrentJsxElement';
 
 // <T|ext  >...</Text>
 function conditionOfHover(cursorPosition: number, jsxOpeningElement: JSXOpeningElement): boolean {
@@ -13,5 +13,5 @@ function conditionOfHover(cursorPosition: number, jsxOpeningElement: JSXOpeningE
 
 type CurrentJsxElement = JSXOpeningElement | null;
 export default function getCurrentJsxElement(documentText: string, cursorPosition): CurrentJsxElement {
-  return origingetCurrentJsxElement(documentText, cursorPosition, conditionOfHover);
+  return originGetCurrentJsxElement(documentText, cursorPosition, conditionOfHover);
 }
