@@ -10,7 +10,7 @@ fs.removeSync(tmpPath);
 
 test('generate component', async () => {
   const projectDir = path.resolve(tmpPath, 'ice-component');
-  const materialTemplateDir = path.join(projectDir, '.tmp')
+  const materialTemplateDir = path.join(projectDir, '.tmp');
   await fs.ensureDir(projectDir);
 
   await downloadMaterialTemplate(materialTemplateDir, '@icedesign/ice-react-material-template', registry);
@@ -28,7 +28,7 @@ test('generate component', async () => {
 
 test('generate block', async () => {
   const projectDir = path.resolve(tmpPath, 'ice-block');
-  const materialTemplateDir = path.join(projectDir, '.tmp')
+  const materialTemplateDir = path.join(projectDir, '.tmp');
   await fs.ensureDir(projectDir);
 
   await downloadMaterialTemplate(materialTemplateDir, '@icedesign/ice-react-material-template', registry);
@@ -44,7 +44,7 @@ test('generate block', async () => {
 
 test('generate scaffold', async () => {
   const projectDir = path.resolve(tmpPath, 'ice-scaffold');
-  const materialTemplateDir = path.join(projectDir, '.tmp')
+  const materialTemplateDir = path.join(projectDir, '.tmp');
   await fs.ensureDir(projectDir);
 
   await downloadMaterialTemplate(materialTemplateDir, '@icedesign/ice-react-material-template', registry);
@@ -57,4 +57,3 @@ test('generate scaffold', async () => {
     },
   });
 });
-
