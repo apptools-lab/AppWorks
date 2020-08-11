@@ -10,6 +10,7 @@ export default async function (dir: string, options: any): Promise<void> {
       {
         cwd: dir,
         nodir: true,
+        dot: true,
         ignore: ['node_modules/**'],
       },
       (err, files) => {
