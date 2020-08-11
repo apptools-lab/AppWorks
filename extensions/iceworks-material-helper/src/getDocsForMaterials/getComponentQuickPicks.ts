@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import * as vscode from 'vscode';
-import { openInExternalBrowser } from './openInBowser';
+import { openInExternalBrowser, openInInternalBrowser } from './openInBowser';
 import { getSource } from '../utils/sourceManager';
 
 export default async function showMaterialQuickPicks() {
@@ -8,7 +8,7 @@ export default async function showMaterialQuickPicks() {
   quickPick.items = await getSource('quickPickInfo');
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
-      openInExternalBrowser(selection[0]['homepage']);
+      openInInternalBrowser(selection[0]['homepage']);
       quickPick.dispose();
     }
   });
