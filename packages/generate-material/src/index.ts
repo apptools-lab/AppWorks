@@ -19,7 +19,7 @@ export interface ITemplateOptions {
   category?: string;
   // web, miniapp...
   projectTargets?: string[];
-  adapter?: boolean;
+  adaptor?: boolean;
 }
 
 export interface IOptions {
@@ -66,7 +66,7 @@ export async function generateMaterial({
     version: '0.1.0',
     category: '',
     projectTargets: ['web'],
-    adapter: false,
+    adaptor: false,
     ...templateOptions,
   };
 
