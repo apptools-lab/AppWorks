@@ -26,8 +26,8 @@ export default async function formatProject({
   const pkgData = fse.readJsonSync(pkgPath);
   let abcData = null;
 
-  // fusion cool adapter
-  if (materialType === 'component' && templateOptions.adapter) {
+  // fusion cool adaptor
+  if (materialType === 'component' && templateOptions.adaptor) {
     const templatePath = path.join(__dirname, './template/componentAdaptor');
     await fse.copy(templatePath, rootDir);
   }
