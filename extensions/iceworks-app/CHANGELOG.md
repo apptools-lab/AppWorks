@@ -1,7 +1,7 @@
 # Change Log
 
 ## 0.4.5
-- feat: add component quick pick.
+- feat: add component-generator and component-creator quickPick.
 
 ## 0.4.4
 - feat: add Iceworks debug.
