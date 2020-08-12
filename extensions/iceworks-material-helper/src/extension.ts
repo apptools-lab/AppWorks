@@ -5,9 +5,7 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
-import showAllMaterialQuickPicks from './getDocsForMaterials/getComponentQuickPicks';
-import { initDocInfo } from './getDocsForMaterials/getAllDocInfos';
-import initMaterialDocInfo from './getDocsForMaterials';
+import registerMaterialDocFunction from './materialDocSupport';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -16,13 +14,12 @@ const recorder = new Recorder(name, version);
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const { extensionPath, subscriptions, globalState } = context;
+  const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
 
   // auto set configuration
   initExtension(context);
-  initDocInfo();
 
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
@@ -71,5 +68,5 @@ export function activate(context: vscode.ExtensionContext) {
 
   // set propsAutoCompleter
   propsAutoComplete();
-  initMaterialDocInfo();
+  registerMaterialDocFunction();
 }

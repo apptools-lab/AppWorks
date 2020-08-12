@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import getCurrentJsxElement from './getCurrentJsxElement';
 import getHoverItem from './getHoverItem';
-import showAllMaterialQuickPicks, { showDocumentMaterialQuickPick } from './getComponentQuickPicks';
+import showMaterialDocQuickPicks, { showUsedMaterialDocQuickPicks } from './getComponentQuickPicks';
+import { initDocInfos } from './docInfoCache';
 
 async function provideHover(document, position): Promise<vscode.Hover | undefined> {
   // const { Position } = vscode;
@@ -21,9 +22,10 @@ export default function registerMaterialDocFunction() {
     provideHover,
   });
   vscode.commands.registerCommand('iceworks-material-helper:showAllMaterialQuickPicks', () => {
-    showAllMaterialQuickPicks();
+    showMaterialDocQuickPicks();
   });
   vscode.commands.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks', (uri: vscode.Uri) => {
-    showDocumentMaterialQuickPick(uri);
+    showUsedMaterialDocQuickPicks(uri);
   });
+  initDocInfos();
 }

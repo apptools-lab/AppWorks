@@ -1,6 +1,6 @@
 {
   "iceworksMaterialHelper.commands.start.title": "Iceworks: 添加组件",
   "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: 查找组件",
-  "iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title": "Iceworks: 展示当前页面物料文档",
+  "iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title": "Iceworks: 展示当前文件的组件文档",
   "iceworksMaterialHelper.configuration.openInBrowserDescription": "是否在 VSCode 中打开网页，这个功能的实现依赖于 「Browser Preview」 插件，您需要手动安装此插件后才能使用这个功能。"
 }

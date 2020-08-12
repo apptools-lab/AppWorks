@@ -58,7 +58,7 @@
       ]
     },
     "configuration": {
-      "title": "iceworks Material Helper",
+      "title": "Iceworks Material Helper",
       "properties": {
         "iceworks.materialHelper.openDocLinkInsideVSCode": {
           "type": "boolean",

@@ -10,7 +10,7 @@ import i18n from '../i18n';
 
 let loading = true;
 let docInfoCache: IMaterialDocInfo[] = [];
-export function getAllDocInfos(): IMaterialDocInfo[] {
+export function getDocInfos(): IMaterialDocInfo[] {
   if (!loading) {
     return docInfoCache;
   } else {
@@ -19,12 +19,12 @@ export function getAllDocInfos(): IMaterialDocInfo[] {
   }
 }
 
-export async function initDocInfo() {
-  docInfoCache = await getDocInfos();
+export async function initDocInfos() {
+  docInfoCache = await originGetDocInfos();
   loading = false;
 }
 
-async function getDocInfos() {
+async function originGetDocInfos() {
   const getDocInfoFromMaterial = (sourceJson: IMaterialInfo) => {
     return [...sourceJson.components, ...(sourceJson.bases || [])].map((e: IMaterialComponent | IMaterialBase) => {
       return {

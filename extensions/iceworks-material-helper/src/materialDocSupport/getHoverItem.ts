@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { getAllDocInfos } from './getAllDocInfos';
+import { getDocInfos } from './docInfoCache';
 import i18n from '../i18n';
 
 export default function getHoverItem(tagName: string) {
-  const materialInfos = getAllDocInfos();
+  const materialInfos = getDocInfos();
   const tagInfo = materialInfos.find((info) => {
     return info.label === tagName;
   });

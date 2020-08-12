@@ -1,19 +1,20 @@
 /* eslint-disable dot-notation */
-/* eslint-disable dot-notation */
 import * as vscode from 'vscode';
 import getJsxElements from '../utils/getJsxElements';
 import { openInBrowser } from './openInBowser';
-import { getAllDocInfos } from './getAllDocInfos';
+import { getDocInfos } from './docInfoCache';
 import { IMaterialDocInfo } from './type';
 import i18n from '../i18n';
 
-export default async function showAllMaterialQuickPicks() {
-  showQuickPick(await getAllDocInfos());
+// 这里展示的是框架所能提供的所有物料的文档。
+export default async function showMaterialDocQuickPicks() {
+  showQuickPick(await getDocInfos());
 }
 
-export async function showDocumentMaterialQuickPick(uri: vscode.Uri) {
+// 这里展示的是当前文件中使用的物料的文档。
+export async function showUsedMaterialDocQuickPicks(uri: vscode.Uri) {
   const documentEditor = getVisibleEditer(uri);
-  showQuickPick(await getDocInfos(documentEditor?.document.getText()));
+  showQuickPick(await getUsedMaterialDocInfos(documentEditor?.document.getText()));
 }
 
 function showQuickPick(quickPickItems: any[]) {
@@ -35,11 +36,11 @@ function showQuickPick(quickPickItems: any[]) {
   }
 }
 
-async function getDocInfos(documentText = ''): Promise<IMaterialDocInfo[]> {
+async function getUsedMaterialDocInfos(documentText = ''): Promise<IMaterialDocInfo[]> {
   const docInfos: IMaterialDocInfo[] = [];
-  const allDocInfos = getAllDocInfos();
+  const allDocInfos = getDocInfos();
 
-  const materialNames = getAllDocInfos().map((docInfo) => docInfo.label);
+  const materialNames = getDocInfos().map((docInfo) => docInfo.label);
   const useingMaterialsJsxElements = getJsxElements(documentText, (element) => {
     return materialNames.includes(element.name['name'] || '');
   });
