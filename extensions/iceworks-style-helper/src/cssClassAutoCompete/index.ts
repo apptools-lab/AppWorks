@@ -30,7 +30,9 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     recordDAU();
   }
   return unique(classNames).map((className) => {
-    return new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
+    const completionItem = new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
+    completionItem.detail = 'Iceworks';
+    return completionItem;
   });
 }
 

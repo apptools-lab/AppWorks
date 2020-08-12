@@ -58,7 +58,9 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
         // Remove class selector `.`, When use styles.xxx.
-        return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
+        const completionItem = new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
+        completionItem.detail = 'Iceworks';
+        return completionItem;
       });
     }
   }
