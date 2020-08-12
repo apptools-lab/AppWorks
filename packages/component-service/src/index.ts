@@ -8,6 +8,7 @@ import {
   CONFIGURATION_KEY_PCKAGE_MANAGER,
   getDataFromSettingJson,
   getIceworksTerminal,
+  checkPathExists
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -141,6 +142,18 @@ export async function generateComponentCode(
 ) {
   let componentName = await vscode.window.showInputBox({
     placeHolder: i18nService.format('package.component-service.index.inputComponentNamePlaceHolder'),
+    validateInput: async (value) => {
+      try {
+        const pathExists = await checkPathExists(componentsPath, upperCamelCase(value));
+        if (pathExists) {
+          return i18nService.format('package.component-service.index.componentNameExistError');
+        } else {
+          return ''
+        }
+      } catch {
+        return '';
+      }
+    }
   });
   if (!componentName) {
     return;

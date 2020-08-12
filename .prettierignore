@@ -12,4 +12,3 @@ es
 package-lock.json
 yarn.lock
 def-login-client
-sass
