@@ -8,7 +8,7 @@ import {
   CONFIGURATION_KEY_PCKAGE_MANAGER,
   getDataFromSettingJson,
   getIceworksTerminal,
-  checkPathExists
+  checkPathExists,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -148,12 +148,12 @@ export async function generateComponentCode(
         if (pathExists) {
           return i18nService.format('package.component-service.index.componentNameExistError');
         } else {
-          return ''
+          return '';
         }
       } catch {
         return '';
       }
-    }
+    },
   });
   if (!componentName) {
     return;
