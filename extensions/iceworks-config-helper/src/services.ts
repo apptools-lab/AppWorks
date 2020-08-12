@@ -2,30 +2,31 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import forIn from 'lodash.forin';
 import * as generateSchema from 'generate-schema';
-import { getProjectFramework } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
 import i18n from './i18n';
-import { getFileNameFromUri, getBaseNameFromUri } from './utils';
-
-let editingJsonFileUri: vscode.Uri;
+import {
+  getEditingFileName,
+  getEditingFileBaseName,
+  getFrameWorkFragement,
+  findVisibleTextEditorFromBaseName,
+  getEditingJsonFileUri,
+} from './utils';
 
 const getInitData = async () => {
   let schema;
   try {
     // eslint-disable-next-line
-    schema = require(`../schemas/${await getFrameWorkFragement()}.${getFileNameFromUri(editingJsonFileUri)}.${
-      vscode.env.language
-    }.json`);
+    schema = require(`../schemas/${await getFrameWorkFragement()}.${getEditingFileName()}.${vscode.env.language}.json`);
   } catch (e) {
-    schema = generateSchema.json(getBaseNameFromUri(editingJsonFileUri), getEditingJsonFileValue());
+    schema = generateSchema.json(getEditingFileBaseName(), getEditingJsonFileValue());
   }
 
-  console.log(`schema for ${getBaseNameFromUri(editingJsonFileUri)}:`, schema);
+  console.log(`schema for ${getEditingFileBaseName()}:`, schema);
   const initmessage = {
     jsonContent: getEditingJsonFileValue(),
     schema,
     formCannotEditProps: getFormCannotEditProps(schema),
-    editingJsonFile: getBaseNameFromUri(editingJsonFileUri),
+    editingJsonFile: getEditingFileBaseName(),
   };
 
   return initmessage;
@@ -39,7 +40,7 @@ export function getIsUpdatingJsonFile() {
 }
 
 const updateJsonFile = async (incrementalChange) => {
-  const currentJsonTextEditor = findVisibleTextEditor(getBaseNameFromUri(editingJsonFileUri));
+  const currentJsonTextEditor = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
   const json = getEditingJsonByIncrementalChange(incrementalChange, false);
 
   if (currentJsonTextEditor) {
@@ -50,22 +51,22 @@ const updateJsonFile = async (incrementalChange) => {
     });
     isUpdatingJsonFile = false;
   } else {
-    fse.writeFile(editingJsonFileUri.fsPath, JSON.stringify(json, null, '\t'), (err) => {
+    fse.writeFile(getEditingJsonFileUri().fsPath, JSON.stringify(json, null, '\t'), (err) => {
       console.log(err);
     });
   }
 };
 
 const editInJsonFile = (incrementalChange) => {
-  let currentJsonEditer = findVisibleTextEditor(getBaseNameFromUri(editingJsonFileUri));
+  let currentJsonEditer = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
   const json = getEditingJsonByIncrementalChange(incrementalChange, true);
 
   const currentKey = Object.keys(incrementalChange)[0];
   if (!currentJsonEditer) {
-    vscode.window.showTextDocument(editingJsonFileUri, {
+    vscode.window.showTextDocument(getEditingJsonFileUri(), {
       viewColumn: vscode.window.activeTextEditor?.viewColumn === 1 ? 2 : 1,
     });
-    currentJsonEditer = findVisibleTextEditor(getFileNameFromUri(editingJsonFileUri));
+    currentJsonEditer = findVisibleTextEditorFromBaseName(getEditingFileName());
   }
 
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
@@ -84,32 +85,22 @@ export const services = {
   common,
 };
 
-export function setEditingJsonFileUri(uri: vscode.Uri) {
-  editingJsonFileUri = uri;
-}
-
 function getEditingJsonFileValue() {
-  const currentJsonTextEditor = findVisibleTextEditor(getBaseNameFromUri(editingJsonFileUri));
+  const currentJsonTextEditor = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
   try {
     if (currentJsonTextEditor) {
       return JSON.parse(currentJsonTextEditor.document.getText());
     } else {
-      return fse.readJsonSync(editingJsonFileUri.fsPath);
+      return fse.readJsonSync(getEditingJsonFileUri().fsPath);
     }
   } catch (e) {
     console.error(e);
     vscode.window.showWarningMessage(
       i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', {
-        JsonFileName: getBaseNameFromUri(editingJsonFileUri),
+        JsonFileName: getEditingFileBaseName(),
       })
     );
   }
-}
-
-function findVisibleTextEditor(fileName: string) {
-  return vscode.window.visibleTextEditors.find((editor) => {
-    return editor.document.uri.fsPath.endsWith(fileName);
-  });
 }
 
 function getEditingJsonByIncrementalChange(incrementalChange, useSnippet: boolean) {
@@ -132,16 +123,4 @@ function getFormCannotEditProps(schema) {
     }
   });
   return webViewCannotEditProps;
-}
-
-async function getFrameWorkFragement() {
-  const framwork = await getProjectFramework();
-  switch (framwork) {
-    case 'icejs':
-      return 'ice';
-    case 'rax-app':
-      return 'rax';
-    default:
-      return 'NO-Frame';
-  }
 }

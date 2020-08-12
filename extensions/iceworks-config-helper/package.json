@@ -44,20 +44,33 @@
           "light": "./icons/preview-right-light.svg",
           "dark": "./icons/preview-right-dark.svg"
         }
+      },
+      {
+        "command": "iceworks-config-helper.configPanel.showSource",
+        "title": "show Source",
+        "icon": {
+          "light": "./icons/file-search-light.svg",
+          "dark": "./icons/file-search-dark.svg"
+        }
       }
     ],
     "menus": {
       "editor/context": [
         {
           "command": "iceworks-config-helper.configPanel.start",
-          "when": "editorLangId == json",
+          "when": "editorLangId == json || editorLangId == jsonc",
           "group": "configHelper"
         }
       ],
       "editor/title": [
         {
           "command": "iceworks-config-helper.configPanel.start",
-          "when": "editorLangId == json",
+          "when": "editorLangId == json || editorLangId == jsonc",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-config-helper.configPanel.showSource",
+          "when": "explorerViewletVisible && iceworks.config-helper.panelAcitve",
           "group": "navigation"
         }
       ],
