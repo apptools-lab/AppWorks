@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
+import { recordCompletionItemProvider } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 
 function unique(arr: string[]) {
@@ -27,11 +27,12 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     }
   });
   if (classNames.length) {
-    recordDAU();
+    recordCompletionItemProvider();
   }
   return unique(classNames).map((className) => {
     const completionItem = new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
     completionItem.detail = 'Iceworks';
+    completionItem.command = { command: 'iceworksApp.recorder.recordCompletionItemSelect', title: '' };
     return completionItem;
   });
 }

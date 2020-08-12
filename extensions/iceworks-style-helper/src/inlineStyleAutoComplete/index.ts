@@ -104,9 +104,6 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
       });
     }
   }
-  if (completions.length > 0) {
-    recordDAU();
-  }
   return completions;
 }
 

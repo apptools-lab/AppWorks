@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
+import { recordCompletionItemProvider, recordDefinitionProvider, recordHoverProvider } from '@iceworks/recorder';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
 import getFullModulePath from './getFullModulePath';
 import colorPreviewDisplay from './colorPreviewDisplay';
@@ -25,7 +25,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
   if (matchedVariable) {
-    recordDAU();
+    recordDefinitionProvider();
     return new vscode.Location(vscode.Uri.file(matchedVariable.filePath), matchedVariable.position);
   }
 }
@@ -39,13 +39,14 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
-    recordDAU();
+    recordHoverProvider()
     return new vscode.Hover(
+      `**Iceworks** \n ${
       getMarkdownInfo(
         word,
         // Show color preview display
         `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`
-      )
+      )}`
     );
   }
 }
@@ -58,7 +59,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   // Variables shows in value part, like color: xxx.
   if (line.text.indexOf(':') === -1) return;
 
-  recordDAU();
+  recordCompletionItemProvider();
   return Object.keys(variables).map((variable) => {
     const variableValue = variables[variable].value;
     // Show color preview display
@@ -67,6 +68,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     const completionItem = new vscode.CompletionItem(variable, vscode.CompletionItemKind.Variable);
 
     completionItem.detail = 'Iceworks';
+    completionItem.command = { command: 'iceworksApp.recorder.recordCompletionItemSelect', title: '' };
     completionItem.filterText = `${variable}: ${variableValue};`;
     completionItem.documentation = new vscode.MarkdownString(getMarkdownInfo(variable, variableValueText));
 
