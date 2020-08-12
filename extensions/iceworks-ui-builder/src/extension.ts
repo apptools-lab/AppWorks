@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
     
-    const cdnUrl = 'https://dev.g.alicdn.com/ice/iceworks-component-generator/0.1.0'
+    const cdnUrl = 'http://localhost:3333'
     const extraHtml = `<script>
       window.__assets = {
         ideUrl: '${cdnUrl}',
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     </script>
     `;
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'home', true, cdnUrl, extraHtml);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true, cdnUrl, extraHtml);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(

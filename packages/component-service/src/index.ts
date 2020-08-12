@@ -22,6 +22,8 @@ import {
 import CodeGenerator, { IBasicSchema, IComponentsMapItem, IContainerNodeItem,IUtilItem, II18nMap } from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
+import transformComponentsMap from './utils/transformComponentsMap';
+import transformTextComponent from './utils/transformTextComponent';
 import i18nService from './i18n';
 
 const { window, Position } = vscode;
@@ -126,9 +128,9 @@ export async function addBaseCode(dataSource: IMaterialBase) {
 
 export async function generateComponentCode(
   version: string, 
-  componentsMap: IComponentsMapItem[], 
-  utils: IUtilItem[] , 
-  componentsTree: Array<IContainerNodeItem>,
+  componentsMap: any,
+  componentsTree: IContainerNodeItem,
+  utils: IUtilItem[],
   i18n: II18nMap
   ) {
   let componentName = await vscode.window.showInputBox({
@@ -138,10 +140,14 @@ export async function generateComponentCode(
     return;
   }
   componentName = upperCamelCase(componentName);
-  if (componentsTree[0]) {
-    componentsTree[0].fileName = componentName;
+  if (componentsTree) {
+    componentsTree.fileName = componentName;
   }
-  const schema: IBasicSchema = { version, componentsMap, utils, componentsTree, i18n }
+  componentsTree = transformTextComponent(componentsTree);
+
+  componentsMap = transformComponentsMap(JSON.parse(componentsMap));
+  
+  const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils }
   await generateCode(componentName, schema); 
 }
 
