@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
+import { recordDefinitionProvider, recordHoverProvider, recordCompletionItemProvider } from '@iceworks/recorder';
 import { findStyle, IStylePosition } from './findStyle';
 import { findStyleDependencies } from './findStyleDependencies';
 import findStyleSelectors from './findStyleSelectors';
@@ -16,7 +16,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
     const matchedPosition: IStylePosition = matched.position;
-    recordDAU();
+    recordDefinitionProvider();
     return new vscode.Location(
       vscode.Uri.file(matched.file),
       // The zero-based line and character value.
@@ -33,9 +33,9 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
-    recordDAU();
+    recordHoverProvider();
     // Markdown css code
-    return new vscode.Hover(`\`\`\`css \n ${matched.code} \n \`\`\`\``);
+    return new vscode.Hover(`**Iceworks** \n \`\`\`css \n ${matched.code} \n \`\`\`\``);
   }
 }
 
@@ -44,11 +44,13 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   const { line, fileName, directory } = getFocusCodeInfo(document, position);
   if (!/style|className/g.test(line.text)) return;
 
-  recordDAU();
   // In case of cursor shaking
   const word = line.text.substring(0, position.character);
   const styleDependencies = findStyleDependencies(fileName);
 
+  if (styleDependencies.length) {
+    recordCompletionItemProvider();
+  }
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     if (
       // className=xxx
@@ -58,7 +60,10 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
         // Remove class selector `.`, When use styles.xxx.
-        return new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
+        const completionItem = new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
+        completionItem.detail = 'Iceworks';
+        completionItem.command = { command: 'iceworksApp.recorder.recordCompletionItemSelect', title: '' };
+        return completionItem;
       });
     }
   }
