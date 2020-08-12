@@ -1,6 +1,6 @@
 import { Uri } from 'vscode';
 
-export interface IMaterialDocInfo {
+export interface IComponentDocInfo {
   label: string;
   detail: string;
   description: string;

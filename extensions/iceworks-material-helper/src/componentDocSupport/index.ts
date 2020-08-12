@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import getCurrentJsxElement from './getCurrentJsxElement';
 import getHoverItem from './getHoverItem';
-import showMaterialDocQuickPicks, { showUsedMaterialDocQuickPicks } from './getComponentQuickPicks';
+import { showUsedComponentDocQuickPicks, showComponentDocQuickPicks } from './componentQuickPicks';
 import { initDocInfos } from './docInfoCache';
+import services from '../services';
 
 async function provideHover(document, position): Promise<vscode.Hover | undefined> {
   // const { Position } = vscode;
@@ -17,15 +18,15 @@ async function provideHover(document, position): Promise<vscode.Hover | undefine
 }
 
 // Set completion
-export default function registerMaterialDocFunction() {
+export default function registerComponentDocSupport() {
   vscode.languages.registerHoverProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
     provideHover,
   });
-  vscode.commands.registerCommand('iceworks-material-helper:showAllMaterialQuickPicks', () => {
-    showMaterialDocQuickPicks();
+  services.common.registerCommand('iceworks-material-helper:showAllMaterialQuickPicks', () => {
+    showComponentDocQuickPicks();
   });
-  vscode.commands.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks', (uri: vscode.Uri) => {
-    showUsedMaterialDocQuickPicks(uri);
+  services.common.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks', (uri: vscode.Uri) => {
+    showUsedComponentDocQuickPicks(uri);
   });
   initDocInfos();
 }

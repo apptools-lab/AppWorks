@@ -1,16 +1,15 @@
 /* eslint-disable dot-notation */
-import * as vscode from 'vscode';
-import { IMaterialData as IMaterialInfo, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
+import { IMaterialData, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
 import { getSourcesByProjectType, getData } from '@iceworks/material-service';
 import { window } from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
-import { IMaterialDocInfo } from './type';
-import { openInBrowser } from './openInBowser';
+import { IComponentDocInfo } from './type';
+import openInBrowser from './openInBowser';
 import i18n from '../i18n';
+import services from '../services';
 
 let loading = true;
-let docInfoCache: IMaterialDocInfo[] = [];
-export function getDocInfos(): IMaterialDocInfo[] {
+let docInfoCache: IComponentDocInfo[] = [];
+export function getDocInfos(): IComponentDocInfo[] {
   if (!loading) {
     return docInfoCache;
   } else {
@@ -25,7 +24,7 @@ export async function initDocInfos() {
 }
 
 async function originGetDocInfos() {
-  const getDocInfoFromMaterial = (sourceJson: IMaterialInfo) => {
+  const getDocInfoFromMaterial = (sourceJson: IMaterialData) => {
     return [...sourceJson.components, ...(sourceJson.bases || [])].map((e: IMaterialComponent | IMaterialBase) => {
       return {
         label: e.name,
@@ -38,18 +37,17 @@ async function originGetDocInfos() {
   };
 
   const projectSource = await getSourcesByProjectType();
-  const materialInfos = Promise.all(projectSource.map(({ source }) => getData(source)));
-  return (await materialInfos).reduce((materialDocInfos, materialInfo) => {
-    return materialDocInfos.concat(getDocInfoFromMaterial(materialInfo));
-  }, [] as IMaterialDocInfo[]);
+  const componentInfos = Promise.all(projectSource.map(({ source }) => getData(source)));
+  return (await componentInfos).reduce((componentDocInfos, materialInfo) => {
+    return componentDocInfos.concat(getDocInfoFromMaterial(materialInfo));
+  }, [] as IComponentDocInfo[]);
 }
 
 function getDocInfoCommand(url: string) {
   const command = `iceworks:material-helper.openDocUrl:${url}`;
-  vscode.commands.registerCommand(command, () => {
+  services.common.registerCommand(command, () => {
     console.log(command);
     openInBrowser(url);
-    recordDAU();
   });
   return command;
 }

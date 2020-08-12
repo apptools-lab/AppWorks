@@ -1,20 +1,20 @@
 /* eslint-disable dot-notation */
 import * as vscode from 'vscode';
 import getJsxElements from '../utils/getJsxElements';
-import { openInBrowser } from './openInBowser';
+import openInBrowser from './openInBowser';
 import { getDocInfos } from './docInfoCache';
-import { IMaterialDocInfo } from './type';
+import { IComponentDocInfo } from './type';
 import i18n from '../i18n';
 
 // 这里展示的是框架所能提供的所有物料的文档。
-export default async function showMaterialDocQuickPicks() {
+export async function showComponentDocQuickPicks() {
   showQuickPick(await getDocInfos());
 }
 
 // 这里展示的是当前文件中使用的物料的文档。
-export async function showUsedMaterialDocQuickPicks(uri: vscode.Uri) {
+export async function showUsedComponentDocQuickPicks(uri: vscode.Uri) {
   const documentEditor = getVisibleEditer(uri);
-  showQuickPick(await getUsedMaterialDocInfos(documentEditor?.document.getText()));
+  showQuickPick(await getUsedComponentDocInfos(documentEditor?.document.getText()));
 }
 
 function showQuickPick(quickPickItems: any[]) {
@@ -36,16 +36,16 @@ function showQuickPick(quickPickItems: any[]) {
   }
 }
 
-async function getUsedMaterialDocInfos(documentText = ''): Promise<IMaterialDocInfo[]> {
-  const docInfos: IMaterialDocInfo[] = [];
+async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDocInfo[]> {
+  const docInfos: IComponentDocInfo[] = [];
   const allDocInfos = getDocInfos();
 
-  const materialNames = getDocInfos().map((docInfo) => docInfo.label);
-  const useingMaterialsJsxElements = getJsxElements(documentText, (element) => {
-    return materialNames.includes(element.name['name'] || '');
+  const componentNames = getDocInfos().map((docInfo) => docInfo.label);
+  const usedComponentJsxElements = getJsxElements(documentText, (element) => {
+    return componentNames.includes(element.name['name'] || '');
   });
 
-  useingMaterialsJsxElements.forEach((elements) => {
+  usedComponentJsxElements.forEach((elements) => {
     docInfos.push(
       allDocInfos.find((info) => {
         return info.label === elements?.name['name'];

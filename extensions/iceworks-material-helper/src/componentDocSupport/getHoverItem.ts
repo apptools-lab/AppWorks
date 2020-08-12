@@ -3,15 +3,15 @@ import { getDocInfos } from './docInfoCache';
 import i18n from '../i18n';
 
 export default function getHoverItem(tagName: string) {
-  const materialInfos = getDocInfos();
-  const tagInfo = materialInfos.find((info) => {
+  const docInfos = getDocInfos();
+  const tagInfo = docInfos.find((info) => {
     return info.label === tagName;
   });
   if (tagInfo) {
     const commandUri = vscode.Uri.parse(`command:${tagInfo.command}`, true);
     const docsLink = new vscode.MarkdownString(
       i18n.format('extension.iceworksMaterialHelper.getHoverItem.hoverItemLink', {
-        materialName: tagInfo.label,
+        componentName: tagInfo.label,
         commandUri,
       })
     );

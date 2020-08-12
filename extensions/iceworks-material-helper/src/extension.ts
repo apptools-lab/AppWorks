@@ -5,7 +5,7 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
-import registerMaterialDocFunction from './materialDocSupport';
+import registerComponentDocSupport from './componentDocSupport';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -68,5 +68,5 @@ export function activate(context: vscode.ExtensionContext) {
 
   // set propsAutoCompleter
   propsAutoComplete();
-  registerMaterialDocFunction();
+  registerComponentDocSupport();
 }

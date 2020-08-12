@@ -14,19 +14,19 @@ function openInInternalBrowser(url: string) {
   }
 }
 
-export function openInBrowser(url) {
-  if (openDocLinkInsideVSCode()) {
-    openInInternalBrowser(url);
-  } else {
-    openInExternalBrowser(url);
-  }
-  recordDAU();
-}
-
 function openDocLinkInsideVSCode() {
   return vscode.workspace.getConfiguration('iceworks.materialHelper').get('openDocLinkInsideVSCode');
 }
 
 function hasBrowserPreviewExtension() {
   return vscode.extensions.getExtension('auchenberg.vscode-browser-preview');
+}
+
+export default function openInBrowser(url) {
+  if (openDocLinkInsideVSCode()) {
+    openInInternalBrowser(url);
+  } else {
+    openInExternalBrowser(url);
+  }
+  recordDAU();
 }
