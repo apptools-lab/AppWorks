@@ -102,7 +102,7 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
 
   registerCommand('iceworksApp.components.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.create-component');
-    showAddComponentQuickPick()
+    showAddComponentQuickPick();
   });
   registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
