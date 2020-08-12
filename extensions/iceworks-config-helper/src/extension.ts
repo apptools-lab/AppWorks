@@ -6,12 +6,10 @@ import { getProjectFramework } from '@iceworks/project-service';
 import { services, getIsUpdatingJsonFile } from './services';
 import i18n from './i18n';
 import {
-  getEditingFileBaseName,
   canEditInPanel,
   getFrameWorkFragement,
   setEditingJsonFileUri,
   getEditingJsonFileUri,
-  getVisibleTextEditor,
   getBaseNameFormUri,
   getEditingJsonEditor,
 } from './utils';

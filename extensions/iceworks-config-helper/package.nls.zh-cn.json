@@ -1,3 +1,4 @@
 {
-  "iceworksConfigHelper.commands.start.configHelperPanel.title": "Iceworks: 可视化设置 json 文件"
+  "iceworksConfigHelper.commands.start.configHelperPanel.title": "Iceworks: 可视化设置 json 文件",
+  "iceworksConfigHelper.commands.configHelperPanel.showSource": "打开源文件"
 }

@@ -47,7 +47,7 @@
       },
       {
         "command": "iceworks-config-helper.configPanel.showSource",
-        "title": "show Source",
+        "title": "iceworksConfigHelper.commands.configHelperPanel.showSource",
         "icon": {
           "light": "./icons/file-search-light.svg",
           "dark": "./icons/file-search-dark.svg"
