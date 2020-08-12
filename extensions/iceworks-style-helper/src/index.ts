@@ -11,7 +11,6 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 function activate(context: vscode.ExtensionContext) {
-
   cssClassAutoCompete(context);
   inlineStyleAutoComplete(context);
   styleInfoViewer(context);
@@ -20,7 +19,7 @@ function activate(context: vscode.ExtensionContext) {
   registerCommand('iceworksApp.recorder.recordCompletionItemSelect', () => {
     recordDAU();
     recordCompletionItemSelect();
-  })
+  });
 
   recorder.recordActivate();
 }

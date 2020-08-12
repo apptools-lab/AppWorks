@@ -39,10 +39,9 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
   const matchedVariable = findVariables(fileName)[word] || FUSION_VARIABLES[word];
 
   if (matchedVariable) {
-    recordHoverProvider()
+    recordHoverProvider();
     return new vscode.Hover(
-      `**Iceworks** \n ${
-      getMarkdownInfo(
+      `**Iceworks** \n ${getMarkdownInfo(
         word,
         // Show color preview display
         `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`
