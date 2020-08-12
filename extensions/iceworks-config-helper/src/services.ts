@@ -8,7 +8,7 @@ import {
   getEditingFileName,
   getEditingFileBaseName,
   getFrameWorkFragement,
-  findVisibleTextEditorFromBaseName,
+  getEditingJsonEditor,
   getEditingJsonFileUri,
 } from './utils';
 
@@ -40,7 +40,7 @@ export function getIsUpdatingJsonFile() {
 }
 
 const updateJsonFile = async (incrementalChange) => {
-  const currentJsonTextEditor = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
+  const currentJsonTextEditor = getEditingJsonEditor();
   const json = getEditingJsonByIncrementalChange(incrementalChange, false);
 
   if (currentJsonTextEditor) {
@@ -58,7 +58,7 @@ const updateJsonFile = async (incrementalChange) => {
 };
 
 const editInJsonFile = (incrementalChange) => {
-  let currentJsonEditer = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
+  let currentJsonEditer = getEditingJsonEditor();
   const json = getEditingJsonByIncrementalChange(incrementalChange, true);
 
   const currentKey = Object.keys(incrementalChange)[0];
@@ -66,7 +66,7 @@ const editInJsonFile = (incrementalChange) => {
     vscode.window.showTextDocument(getEditingJsonFileUri(), {
       viewColumn: vscode.window.activeTextEditor?.viewColumn === 1 ? 2 : 1,
     });
-    currentJsonEditer = findVisibleTextEditorFromBaseName(getEditingFileName());
+    currentJsonEditer = getEditingJsonEditor();
   }
 
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
@@ -86,7 +86,7 @@ export const services = {
 };
 
 function getEditingJsonFileValue() {
-  const currentJsonTextEditor = findVisibleTextEditorFromBaseName(getEditingFileBaseName());
+  const currentJsonTextEditor = getEditingJsonEditor();
   try {
     if (currentJsonTextEditor) {
       return JSON.parse(currentJsonTextEditor.document.getText());

@@ -35,12 +35,10 @@ export async function getFrameWorkFragement() {
   }
 }
 
-export function findVisibleTextEditorFromBaseName(baseName: string) {
-  return vscode.window.visibleTextEditors.find((editor) => {
-    return editor.document.uri.fsPath.endsWith(baseName);
-  });
+export function getEditingJsonEditor() {
+  return getVisibleTextEditor(editingJsonFileUri);
 }
-export function findVisibleTextEditorFromUri(uri: vscode.Uri) {
+export function getVisibleTextEditor(uri: vscode.Uri) {
   return vscode.window.visibleTextEditors.find((editor) => {
     return editor.document.uri.toString() === uri.toString();
   });

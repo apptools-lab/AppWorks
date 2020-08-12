@@ -9,10 +9,11 @@ import {
   getEditingFileBaseName,
   canEditInPanel,
   getFrameWorkFragement,
-  findVisibleTextEditorFromBaseName,
   setEditingJsonFileUri,
   getEditingJsonFileUri,
-  findVisibleTextEditorFromUri,
+  getVisibleTextEditor,
+  getBaseNameFormUri,
+  getEditingJsonEditor,
 } from './utils';
 
 // eslint-disable-next-line
@@ -34,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
     if (!canEditInPanel(jsonFileUri)) {
       vscode.window.showWarningMessage(
         i18n.format('extension.iceworksConfigHelper.loadJson.cannotEditInPanel', {
-          editingJsonBaseName: getEditingFileBaseName(),
+          editingJsonBaseName: getBaseNameFormUri(jsonFileUri),
         })
       );
     } else {
@@ -77,7 +78,7 @@ export async function activate(context: vscode.ExtensionContext) {
       activeConfigWebview(uri);
     }),
     vscode.commands.registerCommand('iceworks-config-helper.configPanel.showSource', () => {
-      const sourceFilePanel = findVisibleTextEditorFromUri(getEditingJsonFileUri());
+      const sourceFilePanel = getEditingJsonEditor();
       if (sourceFilePanel) {
         sourceFilePanel.show();
       } else {
