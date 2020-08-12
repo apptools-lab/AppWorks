@@ -32,6 +32,7 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   return unique(classNames).map((className) => {
     const completionItem = new vscode.CompletionItem(`.${className}`, vscode.CompletionItemKind.Text);
     completionItem.detail = 'Iceworks';
+    completionItem.insertText = `.${className} {\n  \n}`;
     completionItem.command = { command: 'iceworksApp.recorder.recordCompletionItemSelect', title: '' };
     return completionItem;
   });
