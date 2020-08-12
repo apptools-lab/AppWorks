@@ -1,4 +1,4 @@
-import { IClone } from '@jscpd/core';
+// import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
   ignoreDirs: string[];
@@ -36,7 +36,8 @@ export interface IMaintainabilityReports {
 
 export interface IRepeatabilityReports {
   score: number;
-  clones: IClone[];
+  // clones: IClone[];
+  clones: any[];
 }
 
 export interface IALiEslintReports {
