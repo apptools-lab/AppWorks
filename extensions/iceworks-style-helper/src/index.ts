@@ -17,7 +17,6 @@ function activate(context: vscode.ExtensionContext) {
   sassVariablesViewer(context);
 
   registerCommand('iceworksApp.recorder.recordCompletionItemSelect', () => {
-    recordDAU();
     recordCompletionItemSelect();
   });
 
