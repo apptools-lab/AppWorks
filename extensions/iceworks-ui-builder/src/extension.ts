@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
@@ -33,20 +32,18 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    const basePath = path.join(extensionPath, 'build');
-    const basePathOnDisk = vscode.Uri.file(basePath);
-    const basePathUri = basePathOnDisk.with({ scheme: 'vscode-resource' });
-
+    
+    const cdnUrl = 'https://dev.g.alicdn.com/ice/iceworks-component-generator/0.1.0'
     const extraHtml = `<script>
       window.__assets = {
-        ideUrl: '${basePathUri}',
-        canvasUrl: '${basePathUri}',
-        vendorUrl: '${basePathUri}',
+        ideUrl: '${cdnUrl}',
+        canvasUrl: '${cdnUrl}',
+        vendorUrl: '${cdnUrl}',
         vendorEntry: 'vendor',
       }
     </script>
     `;
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true, extraHtml);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'home', true, cdnUrl, extraHtml);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(

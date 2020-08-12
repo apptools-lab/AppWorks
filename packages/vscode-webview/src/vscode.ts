@@ -75,19 +75,19 @@ export function connectService(
 }
 
 const DEFAULT_ENTRY = 'index';
-export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean, extraHtml = ''): string {
+export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean, cdnBasePath?: string, extraHtml = ''): string {
   entryName = entryName || DEFAULT_ENTRY;
-  const basePath = path.join(extensionPath, 'build');
-  const scriptPathOnDisk = vscode.Uri.file(path.join(basePath, `js/${entryName}.js`));
-  const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
-  const stylePathOnDisk = vscode.Uri.file(path.join(basePath, `css/${entryName}.css`));
-  const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
+  const localBasePath = path.join(extensionPath, 'build');
+  const scriptPath = path.join(cdnBasePath || localBasePath, `js/${entryName}.js`);
+  const scriptUri = cdnBasePath ? scriptPath : vscode.Uri.file(scriptPath).with({ scheme: 'vscode-resource' });
+  const stylePath = path.join(cdnBasePath || localBasePath, `css/${entryName}.css`);
+  const styleUri = cdnBasePath ? stylePath : vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
 
   // vendor for MPA
-  const vendorStylePathOnDisk = vscode.Uri.file(path.join(basePath, 'css/vendor.css'));
-  const vendorStyleUri = vendorStylePathOnDisk.with({ scheme: 'vscode-resource' });
-  const vendorScriptPathOnDisk = vscode.Uri.file(path.join(basePath, 'js/vendor.js'));
-  const vendorScriptUri = vendorScriptPathOnDisk.with({ scheme: 'vscode-resource' });
+  const vendorStylePath = path.join(cdnBasePath || localBasePath, 'css/vendor.css')
+  const vendorStyleUri = cdnBasePath ? vendorStylePath : vscode.Uri.file(vendorStylePath).with({ scheme: 'vscode-resource' });
+  const vendorScriptPath = path.join(cdnBasePath || localBasePath, 'js/vendor.js')
+  const vendorScriptUri = cdnBasePath ? vendorScriptPath : vscode.Uri.file(path.join(localBasePath, 'js/vendor.js')).with({ scheme: 'vscode-resource' });
 
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
