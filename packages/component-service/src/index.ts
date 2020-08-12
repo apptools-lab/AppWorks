@@ -18,7 +18,7 @@ import {
   checkIsTemplate,
   getPackageJSON,
   componentsPath,
-  getProjectLanguageType,
+  // getProjectLanguageType,
 } from '@iceworks/project-service';
 import CodeGenerator, {
   IBasicSchema,
@@ -171,6 +171,7 @@ export async function generateComponentCode(
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
+  // TODO: support generate .tsx 
   // const projectLanguageType = await getProjectLanguageType();
   const moduleBuilder = CodeGenerator.createModuleBuilder({
     plugins: [
