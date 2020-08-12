@@ -72,6 +72,10 @@ It is automatically injected by Iceworks and is a standard VS Code debugging con
 }
 
 ```
+
+## Change dev url
+If the project dev url is not `http://localhost:3333`, you can modify the url address configured by `url` and `urlFilter` in launch.json, and `endsPattern` in tasks.json with the new dev url.
+
 ## Chrome 
 
 A new instance of Chrome is opened for debugging. The first time you start Chrome without data (no user mode, no extensions), the data operated during the debugging process will be saved (history, installed extensions ...).
