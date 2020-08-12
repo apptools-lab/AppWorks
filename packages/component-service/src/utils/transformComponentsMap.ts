@@ -1,11 +1,11 @@
 /**
  * 将 componentsMap 转换为数组
- * @param {*} componentsMap 
+ * @param {*} componentsMap
  */
 export default function transformComponentsMap(componentsMap) {
   const transformedComponentsMap = [];
   const excludeComponentKeys = ['Block', 'Page', 'Component', 'Div', 'A', 'Image', 'Text'];
-  Object.keys(componentsMap).forEach(key => {
+  Object.keys(componentsMap).forEach((key) => {
     if (excludeComponentKeys.includes(key)) {
       return;
     }
@@ -19,9 +19,9 @@ export default function transformComponentsMap(componentsMap) {
       destructuring,
       exportName,
       subName,
-      main
-    })
-  })
+      main,
+    });
+  });
 
   return transformedComponentsMap;
 }

@@ -17,9 +17,15 @@ import {
   checkIsTemplate,
   getPackageJSON,
   componentsPath,
-  getProjectLanguageType
+  getProjectLanguageType,
 } from '@iceworks/project-service';
-import CodeGenerator, { IBasicSchema, IComponentsMapItem, IContainerNodeItem,IUtilItem, II18nMap } from '@iceworks/code-generator';
+import CodeGenerator, {
+  IBasicSchema,
+  IComponentsMapItem,
+  IContainerNodeItem,
+  IUtilItem,
+  II18nMap,
+} from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
@@ -127,12 +133,12 @@ export async function addBaseCode(dataSource: IMaterialBase) {
 }
 
 export async function generateComponentCode(
-  version: string, 
+  version: string,
   componentsMap: any,
   componentsTree: IContainerNodeItem,
   utils: IUtilItem[],
   i18n: II18nMap
-  ) {
+) {
   let componentName = await vscode.window.showInputBox({
     placeHolder: i18nService.format('package.component-service.index.inputComponentNamePlaceHolder'),
   });
@@ -146,9 +152,9 @@ export async function generateComponentCode(
   componentsTree = transformTextComponent(componentsTree);
 
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
-  
-  const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils }
-  await generateCode(componentName, schema); 
+
+  const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
+  await generateCode(componentName, schema);
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
@@ -158,7 +164,7 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
       CodeGenerator.plugins.react.reactCommonDeps(),
       CodeGenerator.plugins.common.esmodule({
         // fileType: `${projectLanguageType}x`,
-        fileType: 'jsx'
+        fileType: 'jsx',
       }),
       CodeGenerator.plugins.react.containerClass(),
       CodeGenerator.plugins.react.containerInitState(),
@@ -167,12 +173,12 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
       CodeGenerator.plugins.react.jsx({
         fileType: 'jsx',
         nodeTypeMapping: {
-          'Block': 'div',
-          'Div': 'div',
-          'Text': 'span',
-          'A': 'a',
-          'Image': 'img'
-        }
+          Block: 'div',
+          Div: 'div',
+          Text: 'span',
+          A: 'a',
+          Image: 'img',
+        },
       }),
       CodeGenerator.plugins.style.css(),
     ],
@@ -191,6 +197,6 @@ function writeResultToDisk(code, path, componentName) {
   return publisher.publish({
     project: code,
     outputPath: path,
-    projectSlug: componentName
+    projectSlug: componentName,
   });
 }

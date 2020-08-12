@@ -32,8 +32,8 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    
-    const cdnUrl = 'http://localhost:3333'
+
+    const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.0';
     const extraHtml = `<script>
       window.__assets = {
         ideUrl: '${cdnUrl}',
@@ -91,4 +91,4 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() { }
+export function deactivate() {}

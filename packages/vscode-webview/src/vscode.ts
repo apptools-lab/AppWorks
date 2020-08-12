@@ -75,7 +75,13 @@ export function connectService(
 }
 
 const DEFAULT_ENTRY = 'index';
-export function getHtmlForWebview(extensionPath: string, entryName?: string, needVendor?: boolean, cdnBasePath?: string, extraHtml = ''): string {
+export function getHtmlForWebview(
+  extensionPath: string,
+  entryName?: string,
+  needVendor?: boolean,
+  cdnBasePath?: string,
+  extraHtml = ''
+): string {
   entryName = entryName || DEFAULT_ENTRY;
   const localBasePath = path.join(extensionPath, 'build');
   const scriptPath = path.join(cdnBasePath || localBasePath, `js/${entryName}.js`);
@@ -84,10 +90,14 @@ export function getHtmlForWebview(extensionPath: string, entryName?: string, nee
   const styleUri = cdnBasePath ? stylePath : vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
 
   // vendor for MPA
-  const vendorStylePath = path.join(cdnBasePath || localBasePath, 'css/vendor.css')
-  const vendorStyleUri = cdnBasePath ? vendorStylePath : vscode.Uri.file(vendorStylePath).with({ scheme: 'vscode-resource' });
-  const vendorScriptPath = path.join(cdnBasePath || localBasePath, 'js/vendor.js')
-  const vendorScriptUri = cdnBasePath ? vendorScriptPath : vscode.Uri.file(path.join(localBasePath, 'js/vendor.js')).with({ scheme: 'vscode-resource' });
+  const vendorStylePath = path.join(cdnBasePath || localBasePath, 'css/vendor.css');
+  const vendorStyleUri = cdnBasePath
+    ? vendorStylePath
+    : vscode.Uri.file(vendorStylePath).with({ scheme: 'vscode-resource' });
+  const vendorScriptPath = path.join(cdnBasePath || localBasePath, 'js/vendor.js');
+  const vendorScriptUri = cdnBasePath
+    ? vendorScriptPath
+    : vscode.Uri.file(path.join(localBasePath, 'js/vendor.js')).with({ scheme: 'vscode-resource' });
 
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();

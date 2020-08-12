@@ -4,7 +4,7 @@ export const vscode = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi(
 
 export const callService = function (service: string, method: string, ...args) {
   return new Promise((resolve, reject) => {
-    const eventId = setTimeout(() => { });
+    const eventId = setTimeout(() => {});
     console.log('webview call vscode service:', service, method, eventId, args);
 
     const handler = (event) => {
