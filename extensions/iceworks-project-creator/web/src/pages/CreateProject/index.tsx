@@ -21,7 +21,6 @@ const CreateProject: React.FC = () => {
   const [curProjectField, setCurProjectField] = useState<IProjectField>({} as any);
   const [curDEFProjectField, setCurDEFProjectField] = useState<IDEFProjectField>({} as any);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
-  const [createDEFProjectDisabled, setCreateDEFProjectDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
   const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
@@ -43,6 +42,7 @@ const CreateProject: React.FC = () => {
       onOpenFolderDialog={onOpenFolderDialog}
       onChange={onProjectFormChange}
       errorMsg={projectFormErrorMsg}
+      loading={createProjectLoading}
     >
       <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
@@ -52,7 +52,7 @@ const CreateProject: React.FC = () => {
           className={styles.btn}
           onClick={(values, error) => onProjectDetailSubmit(values, error, true)}
           validate
-          disabled={createDEFProjectDisabled}
+          disabled={createProjectLoading}
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createDEF" />
         </Form.Submit>
@@ -72,7 +72,12 @@ const CreateProject: React.FC = () => {
     steps.splice(
       2,
       0,
-      <CreateDEFProjectForm value={curDEFProjectField} onChange={onDEFProjectFormChange} errorMsg={DEFFormErrorMsg}>
+      <CreateDEFProjectForm
+        value={curDEFProjectField}
+        onChange={onDEFProjectFormChange}
+        errorMsg={DEFFormErrorMsg}
+        loading={createDEFProjectLoading}
+      >
         <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
         </Button>
@@ -81,7 +86,7 @@ const CreateProject: React.FC = () => {
           onClick={onDEFProjectDetailSubmit}
           validate
           loading={createDEFProjectLoading}
-          disabled={createDEFProjectDisabled}
+          disabled={createDEFProjectLoading}
           className={styles.btn}
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
@@ -132,7 +137,7 @@ const CreateProject: React.FC = () => {
     }
     setCreateProjectLoading(true);
     setPrevBtnDisabled(true);
-    setCreateDEFProjectDisabled(true);
+    // setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
@@ -152,7 +157,7 @@ const CreateProject: React.FC = () => {
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
-      setCreateDEFProjectDisabled(false);
+      // setCreateDEFProjectDisabled(false);
     }
   }
 
@@ -170,7 +175,6 @@ const CreateProject: React.FC = () => {
   async function onDEFProjectDetailSubmit(values: any, errors: any) {
     setDEFFormErrorMsg('');
     if (errors) {
-      setCreateDEFProjectLoading(false);
       return;
     }
     setCreateDEFProjectLoading(true);

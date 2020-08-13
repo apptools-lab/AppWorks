@@ -8,10 +8,11 @@ import styles from './index.module.scss';
 
 interface IScaffoldTypeForm {
   value: IProjectField;
+  disabled: boolean;
   onChange: (value: object) => void;
 }
 
-const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) => {
+const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onChange }) => {
   const intl = useIntl();
   const [selectedTargets, setSelectedTargets] = useState(() => {
     if (value.ejsOptions && value.ejsOptions.targets && value.ejsOptions.targets instanceof Array) {
@@ -108,6 +109,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
               align="t"
               trigger={
                 <MenuCard
+                  disabled={disabled}
                   key={item.type}
                   selected={selected}
                   title={item.title}
@@ -134,6 +136,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                 align="t"
                 trigger={
                   <MenuCard
+                    disabled={disabled}
                     key={item.type}
                     style={{ width: 100, height: 36 }}
                     selected={isMpa === (item.type === 'mpa')}
@@ -162,6 +165,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, onChange }) =
                 trigger={
                   <MenuCard
                     key={item.type}
+                    disabled={disabled}
                     style={{ width: 100, height: 36 }}
                     selected={selectedMiniAppType === item.type}
                     title={item.title}

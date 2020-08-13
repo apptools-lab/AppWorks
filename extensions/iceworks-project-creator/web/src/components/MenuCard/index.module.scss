@@ -30,6 +30,10 @@
   border: 1px solid $color-notice-3;
 }
 
+.disabled {
+  cursor: none;
+}
+
 .successIcon {
   width: 20px;
   height: 20px;
