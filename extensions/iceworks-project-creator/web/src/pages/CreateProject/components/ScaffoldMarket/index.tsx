@@ -126,7 +126,7 @@ const ScaffoldMarket = ({
                 );
               })}
           </div>
-          {!isAliInternal ? <PegasusCard /> : null}
+          {isAliInternal ? <PegasusCard /> : null}
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}>
               <Icon type="add" />

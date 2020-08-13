@@ -1,0 +1,20 @@
+{
+  "name": "@iceworks/pegasus-service",
+  "version": "0.1.0",
+  "description": "Iceworks project service for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
