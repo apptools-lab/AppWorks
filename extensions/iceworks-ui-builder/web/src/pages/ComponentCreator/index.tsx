@@ -7,8 +7,6 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
-window.__changeTheme__('@alifd/theme-iceworks-dark');
-
 const Home = () => {
   const intl = useIntl();
   const [selectedBlock, setSelectedBlock] = useState();

@@ -13,8 +13,6 @@ import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-window.__changeTheme__('@alifd/theme-iceworks-dark');
-
 const Home = () => {
   const intl = useIntl();
   const [selectedBlocks, setSelectedBlocks] = useState([]);
