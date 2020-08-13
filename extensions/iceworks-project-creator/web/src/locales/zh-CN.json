@@ -27,6 +27,7 @@
   "web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath": "请选择应用存储的本地路径",
   "web.iceworksProjectCreator.ScaffoldMarket.noTemplate": "暂无模板",
   "web.iceworksProjectCreator.ScaffoldMarket.more": "查看更多",
+  "web.iceworksProjectCreator.ScaffoldMarket.pegasus": "天马模块",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt": "请至少选择一个 Target",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "Target(请至少选择一个)",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle": "为 Web 应用选择应用类型",

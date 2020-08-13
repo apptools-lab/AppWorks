@@ -27,6 +27,7 @@
   "web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath": "Choose Local Path for Application",
   "web.iceworksProjectCreator.ScaffoldMarket.noTemplate": "There is no template, comming soon...",
   "web.iceworksProjectCreator.ScaffoldMarket.more": "More",
+  "web.iceworksProjectCreator.ScaffoldMarket.pegasus": "Pegasus",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt": "Please choose at least one target",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "Target(please choose at least one)",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle": "Choose Web App type",
