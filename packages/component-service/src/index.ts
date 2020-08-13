@@ -18,11 +18,10 @@ import {
   checkIsTemplate,
   getPackageJSON,
   componentsPath,
-  // getProjectLanguageType,
+  getProjectLanguageType,
 } from '@iceworks/project-service';
 import CodeGenerator, {
   IBasicSchema,
-  IComponentsMapItem,
   IContainerNodeItem,
   IUtilItem,
   II18nMap,
@@ -164,6 +163,7 @@ export async function generateComponentCode(
   }
   componentsTree = transformTextComponent(componentsTree);
 
+  console.log(JSON.parse(componentsMap));
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
 
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
@@ -172,20 +172,20 @@ export async function generateComponentCode(
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
   // TODO: support generate .tsx 
-  // const projectLanguageType = await getProjectLanguageType();
+  const projectLanguageType = await getProjectLanguageType();
+  const fileType = `${projectLanguageType}x`;
   const moduleBuilder = CodeGenerator.createModuleBuilder({
     plugins: [
       CodeGenerator.plugins.react.reactCommonDeps(),
       CodeGenerator.plugins.common.esmodule({
-        // fileType: `${projectLanguageType}x`,
-        fileType: 'jsx',
+        fileType
       }),
       CodeGenerator.plugins.react.containerClass(),
       CodeGenerator.plugins.react.containerInitState(),
       CodeGenerator.plugins.react.containerLifeCycle(),
       CodeGenerator.plugins.react.containerMethod(),
       CodeGenerator.plugins.react.jsx({
-        fileType: 'jsx',
+        fileType,
         nodeTypeMapping: {
           Block: 'div',
           Div: 'div',
