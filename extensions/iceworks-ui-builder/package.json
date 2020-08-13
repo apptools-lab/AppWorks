@@ -21,7 +21,8 @@
   "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-ui-builder.generate-page",
-    "onCommand:iceworks-ui-builder.create-component"
+    "onCommand:iceworks-ui-builder.create-component",
+    "onCommand:iceworks-ui-builder.generate-component"
   ],
   "repository": {
     "type": "git",
@@ -30,6 +31,10 @@
   "main": "./build/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "iceworks-ui-builder.generate-component",
+        "title": "%iceworksUIBuilder.commands.generateComponent.title%"
+      },
       {
         "command": "iceworks-ui-builder.create-component",
         "title": "%iceworksUIBuilder.commands.createComponent.title%"
@@ -109,14 +114,15 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/recorder": "^0.1.0",
     "@iceworks/block-service": "^0.1.5",
-    "@iceworks/page-service": "^0.1.5",
     "@iceworks/common-service": "^0.1.3",
+    "@iceworks/component-service": "^0.1.3",
+    "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-service": "^0.1.3",
+    "@iceworks/page-service": "^0.1.5",
     "@iceworks/project-service": "^0.1.4",
-    "@iceworks/vscode-webview": "^0.1.1",
-    "@iceworks/i18n": "^0.1.0"
+    "@iceworks/recorder": "^0.1.0",
+    "@iceworks/vscode-webview": "^0.1.1"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.md",
   "bugs": {

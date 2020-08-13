@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.6
+
+- feat: disable form input when submitting
+
 ## 0.3.5
 
 - feat: support create Mini Program App

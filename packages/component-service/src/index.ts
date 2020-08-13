@@ -8,6 +8,7 @@ import {
   CONFIGURATION_KEY_PCKAGE_MANAGER,
   getDataFromSettingJson,
   getIceworksTerminal,
+  checkPathExists,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -16,14 +17,20 @@ import {
   packageJSONFilename,
   checkIsTemplate,
   getPackageJSON,
+  componentsPath,
+  getProjectLanguageType,
 } from '@iceworks/project-service';
+import CodeGenerator, { IBasicSchema, IContainerNodeItem, IUtilItem, II18nMap } from '@iceworks/code-generator';
+import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
-import i18n from './i18n';
+import transformComponentsMap from './utils/transformComponentsMap';
+import transformTextComponent from './utils/transformTextComponent';
+import i18nService from './i18n';
 
 const { window, Position } = vscode;
 
 export async function addBizCode(dataSource: IMaterialComponent) {
-  const templateError = i18n.format('package.component-service.index.templateError', {
+  const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
   const { name, source } = dataSource;
@@ -65,7 +72,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
 }
 
 export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = i18n.format('package.component-service.index.templateError', {
+  const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
   const activeTextEditor = getLastAcitveTextEditor();
@@ -118,4 +125,90 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   });
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
+}
+
+export async function generateComponentCode(
+  version: string,
+  componentsMap: any,
+  componentsTree: IContainerNodeItem,
+  utils: IUtilItem[],
+  i18n: II18nMap
+) {
+  let componentName = await vscode.window.showInputBox({
+    placeHolder: i18nService.format('package.component-service.index.inputComponentNamePlaceHolder'),
+    validateInput: async (value) => {
+      try {
+        const pathExists = await checkPathExists(componentsPath, upperCamelCase(value));
+        if (pathExists) {
+          return i18nService.format('package.component-service.index.componentNameExistError');
+        } else {
+          return '';
+        }
+      } catch {
+        return '';
+      }
+    },
+  });
+  if (!componentName) {
+    return;
+  }
+  componentName = upperCamelCase(componentName);
+  if (componentsTree) {
+    componentsTree.fileName = componentName;
+  }
+  componentsTree = transformTextComponent(componentsTree);
+
+  componentsMap = transformComponentsMap(JSON.parse(componentsMap));
+
+  const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
+
+  try {
+    await generateCode(componentName, schema);
+    vscode.window.showErrorMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
+  } catch (e) {
+    vscode.window.showErrorMessage(e.message);
+  }
+}
+
+async function generateCode(componentName: string, schema: IBasicSchema) {
+  // TODO: support generate .tsx
+  const projectLanguageType = await getProjectLanguageType();
+  const fileType = `${projectLanguageType}x`;
+  const moduleBuilder = CodeGenerator.createModuleBuilder({
+    plugins: [
+      CodeGenerator.plugins.react.reactCommonDeps(),
+      CodeGenerator.plugins.common.esmodule({
+        fileType,
+      }),
+      CodeGenerator.plugins.react.containerClass(),
+      CodeGenerator.plugins.react.containerInitState(),
+      CodeGenerator.plugins.react.containerLifeCycle(),
+      CodeGenerator.plugins.react.containerMethod(),
+      CodeGenerator.plugins.react.jsx({
+        fileType,
+        nodeTypeMapping: {
+          Block: 'div',
+          Div: 'div',
+          Text: 'span',
+          A: 'a',
+          Image: 'img',
+        },
+      }),
+      CodeGenerator.plugins.style.css(),
+    ],
+    postProcessors: [CodeGenerator.postprocessor.prettier()],
+    mainFileName: 'index',
+  });
+  const result = moduleBuilder.generateModuleCode(schema);
+  writeResultToDisk(result, componentsPath, componentName);
+}
+
+function writeResultToDisk(code, path, componentName) {
+  const publisher = CodeGenerator.publishers.disk();
+
+  return publisher.publish({
+    project: code,
+    outputPath: path,
+    projectSlug: componentName,
+  });
 }

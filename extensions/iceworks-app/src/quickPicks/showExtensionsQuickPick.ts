@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { Recorder, recordDAU } from '@iceworks/recorder';
 import i18n from '../i18n';
 
 const { window, commands } = vscode;

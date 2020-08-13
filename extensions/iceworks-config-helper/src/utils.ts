@@ -10,13 +10,16 @@ export function getEditingFileName() {
 export function getBaseNameFormUri(uri: vscode.Uri) {
   return path.parse(uri.fsPath).base;
 }
+export function getExtNameFormUri(uri: vscode.Uri) {
+  return path.extname(uri.fsPath);
+}
 export function getEditingFileBaseName() {
   return path.parse(editingJsonFileUri.fsPath).base;
 }
 
 export function canEditInPanel(uri: vscode.Uri) {
   const forbiddenJsonFileList = ['package-lock.json'];
-  if (forbiddenJsonFileList.includes(getBaseNameFormUri(uri))) {
+  if (getExtNameFormUri(uri) !== '.json' || forbiddenJsonFileList.includes(getBaseNameFormUri(uri))) {
     return false;
   } else {
     return true;
