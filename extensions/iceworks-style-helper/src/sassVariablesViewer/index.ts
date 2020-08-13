@@ -93,7 +93,7 @@ function processFusionVariables() {
         // "themePackage": [{ "name": "@alifd/theme-iceworks-dark" }]
         themePackageName = fusionConfig[1].themePackage[0].name;
       }
-      
+
       FUSION_VARIABLES = findVariables(getFullModulePath(`~${themePackageName} `));
     }
   } catch (e) {
