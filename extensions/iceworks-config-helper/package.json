@@ -47,7 +47,7 @@
       },
       {
         "command": "iceworks-config-helper.configPanel.showSource",
-        "title": "iceworksConfigHelper.commands.configHelperPanel.showSource",
+        "title": "%iceworksConfigHelper.commands.configHelperPanel.showSource%",
         "icon": {
           "light": "./icons/file-search-light.svg",
           "dark": "./icons/file-search-dark.svg"
@@ -55,6 +55,16 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json || editorLangId == jsonc"
+        },
+        {
+          "command": "iceworks-config-helper.configPanel.showSource",
+          "when": "explorerViewletVisible && iceworks.config-helper.panelAcitve"
+        }
+      ],
       "editor/context": [
         {
           "command": "iceworks-config-helper.configPanel.start",
