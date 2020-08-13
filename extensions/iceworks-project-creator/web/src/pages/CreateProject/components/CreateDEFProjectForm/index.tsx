@@ -160,14 +160,16 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
         </Form.Item>
         <Form.Item
           colSpan={6}
-          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.reposity' })}
+          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.repository' })}
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })}
+          requiredMessage={intl.formatMessage({
+            id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputRepository',
+          })}
           autoValidate
           validator={onValidateProjectName}
         >
           <Input
-            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })}
+            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputRepository' })}
             name="project"
             disabled={loading}
           />
