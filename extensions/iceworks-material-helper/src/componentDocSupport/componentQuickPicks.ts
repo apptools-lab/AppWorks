@@ -37,8 +37,8 @@ function showQuickPick(quickPickItems: any[]) {
 }
 
 async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDocInfo[]> {
-  const docInfos: IComponentDocInfo[] = [];
-  const allDocInfos = getDocInfos();
+  const usedComponentDocInfos: Set<IComponentDocInfo> = new Set();
+  const docInfos = getDocInfos();
 
   const componentNames = getDocInfos().map((docInfo) => docInfo.label);
   const usedComponentJsxElements = getJsxElements(documentText, (element) => {
@@ -46,20 +46,20 @@ async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDo
   });
 
   usedComponentJsxElements.forEach((elements) => {
-    docInfos.push(
-      allDocInfos.find((info) => {
+    usedComponentDocInfos.add(
+      docInfos.find((info) => {
         return info.label === elements?.name['name'];
       })!
     );
   });
-  docInfos.push({
+  usedComponentDocInfos.add({
     label: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.label'),
     description: '',
     detail: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail'),
     command: 'iceworks-material-helper:showAllMaterialQuickPicks',
     url: '',
   });
-  return docInfos;
+  return Array.from(usedComponentDocInfos);
 }
 
 function getVisibleEditer(uri: vscode.Uri) {
