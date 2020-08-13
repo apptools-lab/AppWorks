@@ -83,9 +83,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (uri) {
         activeConfigWebview(uri);
       } else {
-        vscode.window.showWarningMessage(
-          i18n.format('extension.iceworksConfigHelper.start.error')
-        );
+        vscode.window.showWarningMessage(i18n.format('extension.iceworksConfigHelper.start.error'));
       }
     }),
     registerCommand('iceworks-config-helper.configPanel.showSource', async () => {
@@ -99,14 +97,14 @@ export async function activate(context: vscode.ExtensionContext) {
       let textDocument: vscode.TextDocument;
       if (sourceFilePanel) {
         console.debug('sourceFilePanel', sourceFilePanel);
-        textDocument = sourceFilePanel.document
+        textDocument = sourceFilePanel.document;
       } else {
         const editingJsonFileUri = getEditingJsonFileUri();
         console.debug('editingJsonFileUri', editingJsonFileUri);
         if (editingJsonFileUri) {
           try {
             textDocument = await vscode.workspace.openTextDocument(editingJsonFileUri);
-          } catch(error) {
+          } catch (error) {
             // ignore ...
           }
         }
@@ -116,13 +114,13 @@ export async function activate(context: vscode.ExtensionContext) {
       if (textDocument) {
         try {
           await vscode.window.showTextDocument(textDocument, {
-            viewColumn: 2
+            viewColumn: 2,
           });
         } catch (error) {
           console.error(error);
           vscode.window.showWarningMessage(
             i18n.format('extension.iceworksConfigHelper.showSource.error', {
-              uri: textDocument.uri.fsPath
+              uri: textDocument.uri.fsPath,
             })
           );
         }
