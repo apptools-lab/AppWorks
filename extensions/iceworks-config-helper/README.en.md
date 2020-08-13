@@ -5,7 +5,7 @@ English | [简体中文](./README.md)
 
 # Iceworks Config Helper
 
-For icejs and rax-app configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features. It also provides visualization for all json files.
+For [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features. It also provides visualization for all json files.
 
 ## Usage
 
