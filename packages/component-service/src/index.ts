@@ -164,7 +164,7 @@ export async function generateComponentCode(
 
   try {
     await generateCode(componentName, schema);
-    vscode.window.showErrorMessage('生成组件成功');
+    vscode.window.showErrorMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
   }
