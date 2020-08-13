@@ -3,12 +3,12 @@ build/
 tests/
 demo/
 .ice/
-packages/common-service/def-login-client/
+def-login-client/
 
 # node 覆盖率文件
 coverage/
 node_modules
-extensions/*/out
+extensions/*/build/
 .vscode-test
 packages/*/lib/
 packages/*/es/
