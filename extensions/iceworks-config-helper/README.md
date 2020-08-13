@@ -5,7 +5,7 @@
 
 # Iceworks 应用配置辅助开发插件
 
-为 icejs 和 rax-app 的配置类文件(build.json/app.json)提供可视化表单设置或代码编辑提醒、校验等功能。
+为 icejs 和 rax-app 的配置类文件(build.json/app.json) 提供可视化表单设置或代码编辑提醒、校验等功能。并且为所有 json 类型的配置文件提供可视化编辑功能
 
 ## 功能
 
@@ -58,6 +58,12 @@
 预设标准的代码片段，方便您进行快速配置。
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
+
+#### 打开源文件
+
+在可视化面板中唤醒源文件的编辑器
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90103045-7493a780-dd74-11ea-836c-13ad2a3ad3d5.gif)
 
 ## 更多
 
