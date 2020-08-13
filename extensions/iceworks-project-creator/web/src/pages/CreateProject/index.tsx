@@ -137,7 +137,6 @@ const CreateProject: React.FC = () => {
     }
     setCreateProjectLoading(true);
     setPrevBtnDisabled(true);
-    // setCreateDEFProjectDisabled(true);
     const { projectPath, projectName } = values;
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
@@ -157,7 +156,6 @@ const CreateProject: React.FC = () => {
     } finally {
       setCreateProjectLoading(false);
       setPrevBtnDisabled(false);
-      // setCreateDEFProjectDisabled(false);
     }
   }
 
