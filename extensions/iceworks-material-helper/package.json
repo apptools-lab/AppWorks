@@ -33,6 +33,14 @@
       {
         "command": "iceworks-material-helper.start",
         "title": "%iceworksMaterialHelper.commands.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper:showAllMaterialQuickPicks",
+        "title": "%iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title%"
+      },
+      {
+        "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+        "title": "%iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title%"
       }
     ],
     "menus": {
@@ -41,8 +49,24 @@
           "command": "iceworks-material-helper.start",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
+        },
+        {
+          "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+          "group": "iceworksMaterialHelper",
+          "when": "editorTextFocus && iceworks:isJSXFile"
         }
       ]
+    },
+    "configuration": {
+      "title": "Iceworks Material Helper",
+      "properties": {
+        "iceworks.materialHelper.openDocLinkInsideVSCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",
+          "title": "Open Doc Link Inside VSCode"
+        }
+      }
     }
   },
   "scripts": {
