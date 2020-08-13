@@ -164,6 +164,7 @@ export async function generateComponentCode(
 
   try {
     await generateCode(componentName, schema);
+    vscode.window.showErrorMessage('生成组件成功');
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
   }
@@ -198,10 +199,8 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
     postProcessors: [CodeGenerator.postprocessor.prettier()],
     mainFileName: 'index',
   });
-
-  moduleBuilder.generateModuleCode(schema).then((result) => {
-    writeResultToDisk(result, componentsPath, componentName);
-  });
+  const result = moduleBuilder.generateModuleCode(schema);
+  writeResultToDisk(result, componentsPath, componentName);
 }
 
 function writeResultToDisk(code, path, componentName) {

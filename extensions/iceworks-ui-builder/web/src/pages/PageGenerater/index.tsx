@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';

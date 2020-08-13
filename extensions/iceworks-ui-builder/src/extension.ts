@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    vscode.commands.registerCommand('iceworks-ui-builder.generate-component', function () {
+    registerCommand('iceworks-ui-builder.generate-component', function () {
       activeComponentGeneratorWebview();
     })
   );
