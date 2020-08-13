@@ -73,14 +73,14 @@
 ![使用说明](https://user-images.githubusercontent.com/56879942/90112444-93009f80-dd82-11ea-8413-9578f7244a21.gif)
 
 1. 将鼠标悬停在需要查找文档的组件标签上
-2. 点击文档链接。
+2. 点击文档链接
 3. 确认打开链接
 
 #### 文档页面设置
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105048-d4d81880-dd77-11ea-8fcf-76da90af3a23.gif)
 
-您可以选择是否在 vscode 内部打开文档网页，这一功能依靠 [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) 实现。 如果您希望在 vscode 内部打开文档网页，请先安装此插件。
+您可以选择是否在 vscode 内部打开文档网页，这一功能依赖 [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) 插件实现。 如果您希望在 vscode 内部打开文档网页，请先安装此插件。
 
 ## 更多
 
