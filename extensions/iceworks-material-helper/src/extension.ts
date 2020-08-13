@@ -5,6 +5,7 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
+import registerComponentDocSupport from './componentDocSupport';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -13,7 +14,7 @@ const recorder = new Recorder(name, version);
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
-  const { extensionPath, subscriptions, globalState } = context;
+  const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
 
@@ -67,4 +68,5 @@ export function activate(context: vscode.ExtensionContext) {
 
   // set propsAutoCompleter
   propsAutoComplete();
+  registerComponentDocSupport();
 }
