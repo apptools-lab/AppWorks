@@ -85,7 +85,16 @@ function processFusionVariables() {
     );
     // Get themePackage config from build.json
     if (fusionConfig[1].themePackage) {
-      FUSION_VARIABLES = findVariables(getFullModulePath(`~${fusionConfig[1].themePackage} `));
+      let themePackageName = '';
+      if (typeof fusionConfig[1].themePackage === 'string') {
+        // "themePackage": "@alifd/theme-design-pro"
+        themePackageName = fusionConfig[1].themePackage;
+      } else if (Array.isArray(fusionConfig[1].themePackage)) {
+        // "themePackage": [{ "name": "@alifd/theme-iceworks-dark" }]
+        themePackageName = fusionConfig[1].themePackage[0].name;
+      }
+
+      FUSION_VARIABLES = findVariables(getFullModulePath(`~${themePackageName} `));
     }
   } catch (e) {
     // ignore
