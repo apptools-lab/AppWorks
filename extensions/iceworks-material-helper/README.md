@@ -48,6 +48,39 @@
 1. 在 JSX 文件中使用组件（如 View ）
 2. 在组件标签内输入属性的部分内容，将会激活自动补全提醒。
 
+### 组件文档支持
+
+#### 激活组件文档支持
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90105060-d73a7280-dd77-11ea-8cb6-dbda547adcf2.gif)
+
+或
+在文档中激活
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90105045-d3a6eb80-dd77-11ea-9d4e-e0f4433e36c1.gif)
+
+#### 使用
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90105039-d1449180-dd77-11ea-9497-1e29a96b16e9.gif)
+
+1. 搜索您需要查找文档的组件名
+2. 点击激活后出现的选择菜单
+3. 确认打开链接
+
+或
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90107037-d6571000-dd7a-11ea-8048-60eb2e0689db.gif)
+
+1. 将鼠标悬停在需要查找文档的组件标签上
+2. 点击文档链接。
+3. 确认打开链接
+
+#### 文档页面设置
+
+![使用说明](https://user-images.githubusercontent.com/56879942/90105048-d4d81880-dd77-11ea-8fcf-76da90af3a23.gif)
+
+您可以选择是否在 vscode 内部打开文档网页，这一功能依靠 [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) 实现。 如果您希望在 vscode 内部打开文档网页，请先安装此插件。
+
 ## 更多
 
 访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
