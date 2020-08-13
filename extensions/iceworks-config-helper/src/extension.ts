@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { initExtension } from '@iceworks/common-service';
-import { recordDAU, Recorder } from '@iceworks/recorder';
+import { initExtension, registerCommand } from '@iceworks/common-service';
+import { Recorder } from '@iceworks/recorder';
 import { getProjectFramework } from '@iceworks/project-service';
 import { services, getIsUpdatingJsonFile } from './services';
 import i18n from './i18n';
@@ -17,6 +17,10 @@ import {
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
+
+function setPanelActiveContext(value) {
+  vscode.commands.executeCommand('setContext', 'iceworks.config-helper.panelAcitve', value);
+}
 
 export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
@@ -38,10 +42,16 @@ export async function activate(context: vscode.ExtensionContext) {
       );
     } else {
       setEditingJsonFileUri(jsonFileUri);
+      recorder.record({
+        module: 'main',
+        action: 'activeConfigWebview',
+      });
+
       if (configWebviewPanel) {
         configWebviewPanel.dispose();
       }
-
+      
+      setPanelActiveContext(true);
       configWebviewPanel = vscode.window.createWebviewPanel(
         'iceworks',
         i18n.format('extension.iceworksConfigHelper.index.webviewTitle'),
@@ -55,34 +65,60 @@ export async function activate(context: vscode.ExtensionContext) {
       configWebviewPanel.onDidDispose(
         () => {
           configWebviewPanel = undefined;
-          vscode.commands.executeCommand('setContext', 'iceworks.config-helper.panelAcitve', false);
+          setPanelActiveContext(false);
         },
         null,
         context.subscriptions
       );
-      connectService(configWebviewPanel, context, { services, recorder });
-
-      vscode.commands.executeCommand('setContext', 'iceworks.config-helper.panelAcitve', true);
-      recordDAU();
-      recorder.record({
-        module: 'main',
-        action: 'activeConfigWebview',
+      configWebviewPanel.onDidChangeViewState((webviewPanelOnDidChangeViewStateEvent) => {
+        setPanelActiveContext(webviewPanelOnDidChangeViewStateEvent.webviewPanel.active);
       });
+      connectService(configWebviewPanel, context, { services, recorder });
     }
   }
 
   subscriptions.push(
-    vscode.commands.registerCommand('iceworks-config-helper.configPanel.start', (uri) => {
+    registerCommand('iceworks-config-helper.configPanel.start', (uri) => {
       activeConfigWebview(uri);
     }),
-    vscode.commands.registerCommand('iceworks-config-helper.configPanel.showSource', () => {
+    registerCommand('iceworks-config-helper.configPanel.showSource', async () => {
+      recorder.record({
+        module: 'main',
+        action: 'activeShowSource',
+      });
+
       const sourceFilePanel = getEditingJsonEditor();
+
+      let textDocument: vscode.TextDocument;
       if (sourceFilePanel) {
-        sourceFilePanel.show();
+        console.debug('sourceFilePanel', sourceFilePanel);
+        textDocument = sourceFilePanel.document
       } else {
-        vscode.window.showTextDocument(getEditingJsonFileUri(), {
-          viewColumn: 2,
-        });
+        const editingJsonFileUri = getEditingJsonFileUri();
+        console.debug('editingJsonFileUri', editingJsonFileUri);
+        if (editingJsonFileUri) {
+          try {
+            textDocument = await vscode.workspace.openTextDocument(editingJsonFileUri);
+          } catch(error) {
+            // ignore ...
+          }
+        }
+      }
+
+      // @ts-ignore
+      if (textDocument) {
+        try {
+          await vscode.window.showTextDocument(textDocument, {
+            viewColumn: 2
+          });
+        } catch (error) {
+          console.error(error);
+          vscode.window.showWarningMessage(
+            i18n.format('extension.iceworksConfigHelper.showSource.error', {
+              uri: textDocument.uri.fsPath
+            })
+          );
+        }
       }
     })
   );
