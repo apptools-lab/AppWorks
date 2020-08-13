@@ -112,7 +112,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 async function setJsonValidationUrl() {
   try {
-    const projectFramework = await getProjectFramework();
+    const projectFrameworkFragment = await getFrameWorkFragement();
 
     vscode.extensions.all.forEach((extension) => {
       if (extension.id !== 'iceworks-team.iceworks-config-helper') {
@@ -120,10 +120,14 @@ async function setJsonValidationUrl() {
       }
 
       const packageJson = extension.packageJSON;
-      if (packageJson && packageJson.contributes && (projectFramework === 'rax-app' || projectFramework === 'icejs')) {
+      if (
+        packageJson &&
+        packageJson.contributes &&
+        (projectFrameworkFragment === 'rax' || projectFrameworkFragment === 'ice')
+      ) {
         const jsonValidation = packageJson.contributes.jsonValidation;
-        jsonValidation[0].url = `./schemas/${getFrameWorkFragement()}.build.${vscode.env.language}.json`;
-        if (projectFramework === 'rax-app') {
+        jsonValidation[0].url = `./schemas/${projectFrameworkFragment}.build.${vscode.env.language}.json`;
+        if (projectFrameworkFragment === 'rax') {
           jsonValidation[1].url = `./schemas/rax.app.${vscode.env.language}.json`;
         }
       }
