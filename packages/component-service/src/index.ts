@@ -20,12 +20,7 @@ import {
   componentsPath,
   getProjectLanguageType,
 } from '@iceworks/project-service';
-import CodeGenerator, {
-  IBasicSchema,
-  IContainerNodeItem,
-  IUtilItem,
-  II18nMap,
-} from '@iceworks/code-generator';
+import CodeGenerator, { IBasicSchema, IContainerNodeItem, IUtilItem, II18nMap } from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
@@ -171,14 +166,14 @@ export async function generateComponentCode(
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
-  // TODO: support generate .tsx 
+  // TODO: support generate .tsx
   const projectLanguageType = await getProjectLanguageType();
   const fileType = `${projectLanguageType}x`;
   const moduleBuilder = CodeGenerator.createModuleBuilder({
     plugins: [
       CodeGenerator.plugins.react.reactCommonDeps(),
       CodeGenerator.plugins.common.esmodule({
-        fileType
+        fileType,
       }),
       CodeGenerator.plugins.react.containerClass(),
       CodeGenerator.plugins.react.containerInitState(),
