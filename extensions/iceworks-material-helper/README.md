@@ -50,11 +50,11 @@
 
 ### 组件文档支持
 
-#### 激活组件文档支持
+#### 激活
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105060-d73a7280-dd77-11ea-8cb6-dbda547adcf2.gif)
 
-或着：
+或者：
 
 在文档中激活
 
@@ -76,7 +76,7 @@
 2. 点击文档链接
 3. 确认打开链接
 
-#### 文档页面设置
+#### 文档打开方式设置
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105048-d4d81880-dd77-11ea-8fcf-76da90af3a23.gif)
 

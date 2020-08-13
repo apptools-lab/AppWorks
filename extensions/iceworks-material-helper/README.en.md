@@ -48,7 +48,7 @@ When editing the props of a component in a JSX file, an automatic completion rem
 
 ### Component Document Support
 
-#### Active Component Document Support
+#### Active
 
 ![demo](https://user-images.githubusercontent.com/56879942/90105043-d275be80-dd77-11ea-9723-0ce16206c134.gif)
 
@@ -78,7 +78,7 @@ Or
 2. Click the document link.
 3. Confirm to open copmonent document link
 
-#### Setting
+#### Document Opening Mode
 
 ![demo](https://user-images.githubusercontent.com/56879942/90105064-d86b9f80-dd77-11ea-999e-d93974b9e6c5.gif)
 

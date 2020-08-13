@@ -52,9 +52,9 @@ Use code snippets for quick configuration:
 
 ![demo](https://user-images.githubusercontent.com/56879942/87398223-2d38c080-c5e8-11ea-8eef-2f208f498210.gif)
 
-#### Open Source File
+#### Reveal Source File
 
-Open source file editor in panel.
+Quickly locate the source file of panel and open an editor of sourceFile.
 
 ![demo](https://user-images.githubusercontent.com/56879942/90112437-91cf7280-dd82-11ea-875f-dc85459bfcc7.gif)
 
