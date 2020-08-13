@@ -54,22 +54,23 @@
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105060-d73a7280-dd77-11ea-8cb6-dbda547adcf2.gif)
 
-或
+或着：
+
 在文档中激活
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105045-d3a6eb80-dd77-11ea-9d4e-e0f4433e36c1.gif)
 
 #### 使用
 
-![使用说明](https://user-images.githubusercontent.com/56879942/90105039-d1449180-dd77-11ea-9497-1e29a96b16e9.gif)
+![使用说明](https://user-images.githubusercontent.com/56879942/90112425-8d0abe80-dd82-11ea-955c-38fdaea2e7eb.gif)
 
 1. 搜索您需要查找文档的组件名
 2. 点击激活后出现的选择菜单
 3. 确认打开链接
 
-或
+或者：
 
-![使用说明](https://user-images.githubusercontent.com/56879942/90107037-d6571000-dd7a-11ea-8048-60eb2e0689db.gif)
+![使用说明](https://user-images.githubusercontent.com/56879942/90112444-93009f80-dd82-11ea-8413-9578f7244a21.gif)
 
 1. 将鼠标悬停在需要查找文档的组件标签上
 2. 点击文档链接。

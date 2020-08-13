@@ -62,25 +62,25 @@ Or Active In Editor
 1. Right Clikc In a Jsx File Editor.
 2. Choose `Iceworks: Show Compoents Docs In Current File`.
 
-#### 使用
+#### Component Document Support Usage
 
-![使用说明](https://user-images.githubusercontent.com/56879942/90105051-d570af00-dd77-11ea-86b6-b460fa6cf430.gif)
+![demo](https://user-images.githubusercontent.com/56879942/90105051-d570af00-dd77-11ea-86b6-b460fa6cf430.gif)
 
 1. Search the component label for the document you need to find
 2. Click the item that appears after activation
 3. Confirm to open component document link
 
-或
+Or
 
-![使用说明](https://user-images.githubusercontent.com/56879942/90107055-dbb45a80-dd7a-11ea-98eb-6fa6ecf3acc8.gif)
+![demo](https://user-images.githubusercontent.com/56879942/90107055-dbb45a80-dd7a-11ea-98eb-6fa6ecf3acc8.gif)
 
 1. Move the mouse over the component label.
 2. Click the document link.
 3. Confirm to open copmonent document link
 
-#### 文档页面设置
+#### Setting
 
-![使用说明](https://user-images.githubusercontent.com/56879942/90105064-d86b9f80-dd77-11ea-999e-d93974b9e6c5.gif)
+![demo](https://user-images.githubusercontent.com/56879942/90105064-d86b9f80-dd77-11ea-999e-d93974b9e6c5.gif)
 
 You can choose whether to open the document link in VSCode, which depends on the extension [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview). If you want to open the document page in VSCode, install Browser Preview first.
 

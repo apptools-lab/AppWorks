@@ -56,7 +56,7 @@ Use code snippets for quick configuration:
 
 Open source file editor in panel.
 
-![demo](https://user-images.githubusercontent.com/56879942/90103045-7493a780-dd74-11ea-836c-13ad2a3ad3d5.gif)
+![demo](https://user-images.githubusercontent.com/56879942/90112437-91cf7280-dd82-11ea-875f-dc85459bfcc7.gif)
 
 ## More
 
