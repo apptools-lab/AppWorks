@@ -37,7 +37,6 @@ export default async function formatProject(projectDir: string, projectName?: st
 
   const buildJsonPath = path.join(projectDir, 'build.json');
   if (fse.existsSync(buildJsonPath)) {
-    const buildJsonPath = path.join(projectDir, 'build.json');
     const buildData = fse.readJsonSync(buildJsonPath);
     buildData.plugins = buildData.plugins || [];
 
