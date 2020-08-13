@@ -158,11 +158,15 @@ export async function generateComponentCode(
   }
   componentsTree = transformTextComponent(componentsTree);
 
-  console.log(JSON.parse(componentsMap));
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
 
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
-  await generateCode(componentName, schema);
+
+  try {
+    await generateCode(componentName, schema);
+  } catch (e) {
+    vscode.window.showErrorMessage(e.message);
+  }
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
