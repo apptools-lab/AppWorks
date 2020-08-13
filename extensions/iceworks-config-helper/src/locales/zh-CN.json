@@ -2,5 +2,6 @@
   "extension.iceworksConfigHelper.index.webviewTitle": "可视化配置 - Iceworks",
   "extension.iceworksConfigHelper.loadJson.JsonErr": "无法解析 <%= editingJsonFile %>.json, 请改正后重试",
   "extension.iceworksConfigHelper.loadJson.cannotEditInPanel": "请不要使用面板编辑 <%= editingJsonBaseName %>",
-  "extension.iceworksConfigHelper.showSource.error": "无法打开源文件： <%= uri %>"
+  "extension.iceworksConfigHelper.showSource.error": "无法打开源文件： <%= uri %>",
+  "extension.iceworksConfigHelper.start.error": "源文件不符合规范"
 }

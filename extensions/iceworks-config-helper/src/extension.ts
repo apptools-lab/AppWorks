@@ -11,6 +11,7 @@ import {
   setEditingJsonFileUri,
   getEditingJsonFileUri,
   getBaseNameFormUri,
+  getExtNameFormUri,
   getEditingJsonEditor,
 } from './utils';
 
@@ -32,7 +33,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 
-  // TODO: 是否需要将这个函数从 active 中剥离出来？
   function activeConfigWebview(jsonFileUri: vscode.Uri) {
     if (!canEditInPanel(jsonFileUri)) {
       vscode.window.showWarningMessage(
@@ -50,7 +50,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (configWebviewPanel) {
         configWebviewPanel.dispose();
       }
-      
+
       setPanelActiveContext(true);
       configWebviewPanel = vscode.window.createWebviewPanel(
         'iceworks',
@@ -78,8 +78,15 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   subscriptions.push(
-    registerCommand('iceworks-config-helper.configPanel.start', (uri) => {
-      activeConfigWebview(uri);
+    registerCommand('iceworks-config-helper.configPanel.start', (uri?) => {
+      uri = uri || vscode.window.activeTextEditor?.document.uri;
+      if (uri) {
+        activeConfigWebview(uri);
+      } else {
+        vscode.window.showWarningMessage(
+          i18n.format('extension.iceworksConfigHelper.start.error')
+        );
+      }
     }),
     registerCommand('iceworks-config-helper.configPanel.showSource', async () => {
       recorder.record({
