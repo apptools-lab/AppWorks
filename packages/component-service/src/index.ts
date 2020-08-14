@@ -161,10 +161,9 @@ export async function generateComponentCode(
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
 
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
-
   try {
     await generateCode(componentName, schema);
-    vscode.window.showErrorMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
+    vscode.window.showInformationMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
   }
@@ -199,7 +198,7 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
     postProcessors: [CodeGenerator.postprocessor.prettier()],
     mainFileName: 'index',
   });
-  const result = moduleBuilder.generateModuleCode(schema);
+  const result = await moduleBuilder.generateModuleCode(schema);
   writeResultToDisk(result, componentsPath, componentName);
 }
 
