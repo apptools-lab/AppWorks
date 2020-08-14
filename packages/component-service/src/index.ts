@@ -161,7 +161,6 @@ export async function generateComponentCode(
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
 
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
-  console.log(schema, 'schema');
   try {
     await generateCode(componentName, schema);
     vscode.window.showInformationMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
