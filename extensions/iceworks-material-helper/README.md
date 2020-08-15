@@ -5,7 +5,7 @@
 
 # React 组件开发辅助插件
 
-在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快更好地添加组件、编写组件属性，对 React 和 [Rax](https://rax.js.org/) 应用友好。
+在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快更好地添加组件、编写组件属性、查找组件文档，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
 ## 功能
 
@@ -39,24 +39,16 @@
 3. 选择需要插入物料的代码位置
 4. 搜索组件，点击需要使用的组件，物料代码将自动添加到相应的位置中
 
-### 组件属性自动补全
 
-在 JSX 文件中编辑组件的属性时将给予自动补全提醒：
-
-![使用说明](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
-
-1. 在 JSX 文件中使用组件（如 View ）
-2. 在组件标签内输入属性的部分内容，将会激活自动补全提醒。
-
-### 组件文档支持
+### 组件文档搜索
 
 #### 激活
 
+通过命名面板激活：
+
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105060-d73a7280-dd77-11ea-8cb6-dbda547adcf2.gif)
 
-或者：
-
-在文档中激活
+或者在 JSX 中通过鼠标右键激活：
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105045-d3a6eb80-dd77-11ea-9d4e-e0f4433e36c1.gif)
 
@@ -65,8 +57,8 @@
 ![使用说明](https://user-images.githubusercontent.com/56879942/90112425-8d0abe80-dd82-11ea-955c-38fdaea2e7eb.gif)
 
 1. 搜索您需要查找文档的组件名
-2. 点击激活后出现的选择菜单
-3. 确认打开链接
+2. 点击组件名后，选择打开组件文档的方式
+3. 浏览文档
 
 或者：
 
@@ -74,13 +66,22 @@
 
 1. 将鼠标悬停在需要查找文档的组件标签上
 2. 点击文档链接
-3. 确认打开链接
+3. 浏览文档
 
-#### 文档打开方式设置
+#### 文档浏览方式设置
 
 ![使用说明](https://user-images.githubusercontent.com/56879942/90105048-d4d81880-dd77-11ea-8fcf-76da90af3a23.gif)
 
-您可以选择是否在 vscode 内部打开文档网页，这一功能依赖 [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) 插件实现。 如果您希望在 vscode 内部打开文档网页，请先安装此插件。
+您可以选择是否在 VS Code 浏览文档网页，这一功能依赖 [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) 插件进行实现。 如果您希望在 VS Code 内部浏览文档，请先安装此插件。
+
+### 组件属性自动补全
+
+在 JSX 文件中编辑组件的属性时将给予自动补全提醒：
+
+![使用说明](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
+
+1. 在 JSX 文件中使用组件（如 View ）
+2. 在组件标签内输入属性的部分内容，将会激活自动补全提醒。
 
 ## 更多
 

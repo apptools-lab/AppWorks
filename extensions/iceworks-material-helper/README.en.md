@@ -82,7 +82,7 @@ Or
 
 ![demo](https://user-images.githubusercontent.com/56879942/90105064-d86b9f80-dd77-11ea-999e-d93974b9e6c5.gif)
 
-You can choose whether to open the document link in VSCode, which depends on the extension [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview). If you want to open the document page in VSCode, install Browser Preview first.
+You can choose whether to open the document link in VS Code, which depends on the extension [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview). If you want to open the document page in VS Code, install Browser Preview first.
 
 ## More
 
