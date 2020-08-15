@@ -17,7 +17,7 @@ const extensionOptions = [
   {
     label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.label'),
     detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail'),
-    command: 'iceworks-ui-builder.create-component',
+    command: 'iceworks-ui-builder.generate-component',
   },
   {
     label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.materialImport.label'),
