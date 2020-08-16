@@ -5,6 +5,8 @@
   "extension.iceworksApp.showExtensionsQuickPick.pageBuilder.detail": "通过区块组装的方式生成页面",
   "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label": "Iceworks 生成组件",
   "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail": "通过可视化搭建生成组件",
+  "extension.iceworksApp.showExtensionsQuickPick.createComponent.label": "Iceworks 创建组件",
+  "extension.iceworksApp.showExtensionsQuickPick.createComponent.detail": "通过选择下载远程区块创建组件",
   "extension.iceworksApp.showExtensionsQuickPick.materialImport.label": "Iceworks 添加组件",
   "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail": "通过可视化操作添加组件到应用代码",
   "extension.iceworksApp.showExtensionsQuickPick.openSettings.label": "Iceworks 设置",

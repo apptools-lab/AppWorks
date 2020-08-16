@@ -7,6 +7,8 @@
   "extension.iceworksApp.showExtensionsQuickPick.materialImport.detail": "Add Component to the Application in a visual way.",
   "extension.iceworksApp.showExtensionsQuickPick.generateComponent.label": "Iceworks: Generate Component",
   "extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail": "Generate components in a visual way.",
+  "extension.iceworksApp.showExtensionsQuickPick.createComponent.label": "Iceworks: Create Component",
+  "extension.iceworksApp.showExtensionsQuickPick.createComponent.detail": "Create Component by downloading materials.",
   "extension.iceworksApp.showExtensionsQuickPick.openSettings.label": "Iceworks: Settings",
   "extension.iceworksApp.showExtensionsQuickPick.openSettings.detail": "Set the related functions provided by Iceworks",
   "extension.iceworksApp.showExtensionsQuickPick.showMaterialDocs.label": "Iceworks: Find Component Document",
