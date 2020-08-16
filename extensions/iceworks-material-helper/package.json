@@ -35,11 +35,11 @@
         "title": "%iceworksMaterialHelper.commands.start.title%"
       },
       {
-        "command": "iceworks-material-helper:showAllMaterialQuickPicks",
+        "command": "iceworks-material-helper.showMaterialDocs",
         "title": "%iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title%"
       },
       {
-        "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+        "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
         "title": "%iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title%"
       }
     ],
@@ -51,7 +51,7 @@
           "when": "editorTextFocus && iceworks:isJSXFile"
         },
         {
-          "command": "iceworks-material-helper:showCurrentMaterialQuickPicks",
+          "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
         }

@@ -22,10 +22,10 @@ export default function registerComponentDocSupport() {
   vscode.languages.registerHoverProvider(['javascript', 'javascriptreact', 'typescript', 'typescriptreact'], {
     provideHover,
   });
-  services.common.registerCommand('iceworks-material-helper:showAllMaterialQuickPicks', () => {
+  services.common.registerCommand('iceworks-material-helper.showMaterialDocs', () => {
     showComponentDocQuickPicks();
   });
-  services.common.registerCommand('iceworks-material-helper:showCurrentMaterialQuickPicks', (uri: vscode.Uri) => {
+  services.common.registerCommand('iceworks-material-helper.showMaterialDocsForCurrentFile', (uri: vscode.Uri) => {
     showUsedComponentDocQuickPicks(uri);
   });
   initDocInfos();
