@@ -163,7 +163,11 @@ export async function generateComponentCode(
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
   try {
     await generateCode(componentName, schema);
-    vscode.window.showInformationMessage(i18nService.format('package.component-service.index.createComponentSuccess'));
+    vscode.window.showInformationMessage(
+      i18nService.format('package.component-service.index.createComponentSuccess', {
+        componentPath: path.join(componentsPath, componentName),
+      })
+    );
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
   }

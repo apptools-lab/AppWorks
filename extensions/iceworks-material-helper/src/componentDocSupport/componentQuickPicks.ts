@@ -56,7 +56,7 @@ async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDo
     label: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.label'),
     description: '',
     detail: i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail'),
-    command: 'iceworks-material-helper:showAllMaterialQuickPicks',
+    command: 'iceworks-material-helper.showMaterialDocs',
     url: '',
   });
   return Array.from(usedComponentDocInfos);
