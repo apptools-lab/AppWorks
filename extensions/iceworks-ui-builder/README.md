@@ -57,7 +57,6 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 ![使用示例](https://img.alicdn.com/tfs/TB1hMmdRxz1gK0jSZSgXXavwpXa-2880-1800.gif)
 
 - 通过 `⇧⌘P` ( MacOS ) 或 `Ctrl+Shift+p` ( Windows ) 快捷键唤起命令面板, 输入 `Iceworks: 生成组件` ，激活插件。
-- 点击左侧面板中组件列表中的 `+` 图标，点击 `Iceworks: 生成组件` 激活插件。
 
 ### 使用
 

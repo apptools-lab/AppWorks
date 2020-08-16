@@ -55,7 +55,6 @@ Generate components in a visual way.
 ![demo](https://img.alicdn.com/tfs/TB1hMmdRxz1gK0jSZSgXXavwpXa-2880-1800.gif)
 
 - Activate vscode command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: Generate Component` to activate the extension.
-- Click the `+` icon in the components list of the left panel and click the `Iceworks: Generate Component` to activate the extension.
 
 ### Usage
 
