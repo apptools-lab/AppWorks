@@ -48,6 +48,24 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 2. 组件名输入框下方选择一个使用的区块；
 3. 点击 `创建组件` 按钮，生成组件代码。
 
+## 生成组件
+
+通过可视化的方式生成组件
+
+### 激活
+
+![使用示例](https://img.alicdn.com/tfs/TB1hMmdRxz1gK0jSZSgXXavwpXa-2880-1800.gif)
+
+- 通过 `⇧⌘P` ( MacOS ) 或 `Ctrl+Shift+p` ( Windows ) 快捷键唤起命令面板, 输入 `Iceworks: 生成组件` ，激活插件。
+- 点击左侧面板中组件列表中的 `+` 图标，点击 `Iceworks: 生成组件` 激活插件。
+
+### 使用
+
+![使用示例](https://img.alicdn.com/tfs/TB1VGQHeypE_u4jSZKbXXbCUVXa-1440-900.gif)
+
+1. 拖拽左侧的组件到中间的画布面板中;
+2. 按下 `⌘+S` ( MacOS ) 或 `Ctrl+S` ( Windows ) ，在输入框中填写组件名，按下回车键即可生成组件到项目中。
+
 ## 更多
 
 访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
