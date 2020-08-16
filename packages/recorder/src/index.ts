@@ -180,7 +180,7 @@ export function recordExecuteCommand(command: string) {
     module: RECORD_MODULE_KEY,
     action: 'executeCommand',
     data: {
-      command
+      command,
     },
   });
 }
