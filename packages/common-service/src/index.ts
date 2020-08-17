@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
 import axios from 'axios';
-import { recordDAU } from '@iceworks/recorder';
+import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -71,6 +71,7 @@ export function registerCommand(command: string, callback: (...args: any[]) => a
     command,
     (...args) => {
       recordDAU();
+      recordExecuteCommand(command);
       callback(...args);
     },
     thisArg

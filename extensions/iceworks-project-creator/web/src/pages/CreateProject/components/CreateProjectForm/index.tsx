@@ -12,6 +12,7 @@ interface IProjectFormProps {
   onChange: (value: object) => void;
   onOpenFolderDialog: () => void;
   errorMsg?: string;
+  loading: boolean;
 }
 
 const CreateProjectForm: React.FC<IProjectFormProps> = ({
@@ -20,6 +21,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
   children,
   onChange,
   errorMsg,
+  loading,
 }) => {
   const intl = useIntl();
   const {
@@ -40,6 +42,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           <Input
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.inputProjectName' })}
             name="projectName"
+            disabled={loading}
           />
         </Form.Item>
         <Form.Item
@@ -56,6 +59,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
             innerAfter={
               <img onClick={onOpenFolderDialog} className={styles.folderIcon} src={folderIcon} alt="folder" />
             }
+            disabled={loading}
           />
         </Form.Item>
         <Form.Item>
@@ -65,7 +69,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
       </Form>
       {type === 'rax' && (
         <div className={styles.scaffoldTypeForm}>
-          <RaxScaffoldTypeForm onChange={onChange} value={value} />
+          <RaxScaffoldTypeForm onChange={onChange} value={value} disabled={loading} />
         </div>
       )}
     </div>

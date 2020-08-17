@@ -1,10 +1,12 @@
 import * as _ from 'lodash';
 
-export const getSchemaDefaultValue = (schema) => {
+export const getSchemaDefaultValue = (schema, jsonContent) => {
   const DefaultSchema = {};
+  console.log('schema&content', schema, jsonContent);
   _.forIn(schema.properties, (value, key) => {
-    DefaultSchema[key] = value.default;
+    DefaultSchema[key] = value.default !== undefined ? value.default : jsonContent[key];
   });
+  console.log('DefaultSchema', DefaultSchema);
   return DefaultSchema;
 };
 

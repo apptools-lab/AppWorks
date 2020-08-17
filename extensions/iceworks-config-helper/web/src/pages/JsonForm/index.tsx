@@ -108,7 +108,7 @@ const JsonForm = () => {
         editingJsonFile: setEditingJsonFile,
       } = await callService('config', 'getInitData');
       formCannotEditProps.current = setFormCannotEditProps;
-      schemaDefaultValue.current = getSchemaDefaultValue(schema);
+      schemaDefaultValue.current = getSchemaDefaultValue(schema, jsonContent);
       editingJsonFile.current = setEditingJsonFile;
       uischema.current = getUISchema(setFormCannotEditProps);
       setCurrentSchema(schema);

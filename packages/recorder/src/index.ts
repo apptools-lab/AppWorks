@@ -117,6 +117,75 @@ export function recordDAU() {
   });
 }
 
+// call in DefinitionProvider
+export function recordDefinitionProvider() {
+  console.log('recorder[definitionProvider]');
+  return recordUV({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'definitionProvider',
+    data: {
+      platform: process.platform,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+    },
+  });
+}
+
+// call in HoverProvider
+export function recordHoverProvider() {
+  console.log('recorder[hoverProvider]');
+  return recordUV({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'hoverProvider',
+    data: {
+      platform: process.platform,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+    },
+  });
+}
+
+// call in CompletionItemProvider
+export function recordCompletionItemProvider() {
+  console.log('recorder[completionItemProvider]');
+  return recordUV({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'completionItemProvider',
+    data: {
+      platform: process.platform,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+    },
+  });
+}
+
+// call in completion item select commands
+export function recordCompletionItemSelect() {
+  console.log('recorder[completionItemSelect]');
+  return recordUV({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'completionItemSelect',
+    data: {
+      platform: process.platform,
+      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+    },
+  });
+}
+
+export function recordExecuteCommand(command: string) {
+  console.log('recorder[recordExecuteCommand]');
+  return record({
+    namespace: MAIN_KEY,
+    module: RECORD_MODULE_KEY,
+    action: 'executeCommand',
+    data: {
+      command,
+    },
+  });
+}
+
+// active a extension
 export function recordActivate(data: { extension: string; version?: string }) {
   return record({
     namespace: MAIN_KEY,

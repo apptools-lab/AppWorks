@@ -8,6 +8,7 @@ interface IMenuCard {
   selected: boolean;
   icon?: string;
   style?: object;
+  disabled?: boolean;
   onClick?: () => void;
   // only for Balloon Component
   // Ref: https://ice.work/component/balloon#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F
@@ -15,11 +16,20 @@ interface IMenuCard {
   onMouseEnter?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-const MenuCard: React.FC<IMenuCard> = ({ style, title, icon, onClick, selected, onMouseLeave, onMouseEnter }) => {
+const MenuCard: React.FC<IMenuCard> = ({
+  style,
+  title,
+  icon,
+  selected,
+  disabled = false,
+  onClick,
+  onMouseLeave,
+  onMouseEnter,
+}) => {
   return (
     <div
       style={{ ...style }}
-      className={classnames(styles.card, { [styles.active]: selected })}
+      className={classnames(styles.card, { [styles.active]: selected, [styles.disabled]: disabled })}
       onClick={onClick}
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseEnter}

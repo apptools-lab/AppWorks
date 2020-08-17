@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- feat: add Component Doc Helper
+
 ## 0.2.5
 
 - fix: build error

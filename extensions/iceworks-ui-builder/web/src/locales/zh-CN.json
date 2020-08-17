@@ -8,14 +8,12 @@
   "web.iceworksUIBuilder.componentCreator.inputComponentNamePlaceHolder": "名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符",
   "web.iceworksUIBuilder.componentCreator.selectBlock": "2. 选择使用的区块：",
   "web.iceworksUIBuilder.componentCreator.generate": "创建组件",
-
   "web.iceworksUIBuilder.pageGenerater.failGetMaterial": "获取物料源失败，请稍后再试。",
   "web.iceworksUIBuilder.pageGenerater.failGetData": "获取物料集合信息失败，请稍后再试。",
   "web.iceworksUIBuilder.pageGenerater.enterPageName": "请填写页面名称。",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "生成页面成功",
-  "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "1. 填写页面名称：",
   "web.iceworksUIBuilder.pageGenerater.pageNameFormat": "名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符",
-  "web.iceworksUIBuilder.pageGenerater.chooseBlock": "2. 选择区块：",
+  "web.iceworksUIBuilder.pageGenerater.chooseBlock": "选择区块",
   "web.iceworksUIBuilder.pageGenerater.createPage": "生成页面",
   "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "请从右侧选择区块。"
 }

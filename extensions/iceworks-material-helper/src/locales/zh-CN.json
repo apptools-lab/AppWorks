@@ -1,3 +1,9 @@
 {
-  "extension.iceworksMaterialHelper.extension.title": "添加组件 - Iceworks"
+  "extension.iceworksMaterialHelper.extension.title": "添加组件 - Iceworks",
+  "extension.iceworksMaterialHelper.getAllDocsInfo.sourceLoading": "正在加载资源中... 请稍后再试。",
+  "extension.iceworksMaterialHelper.getComponentQuickPicks.noMaterial": "没有找到符合此项目的物料库。",
+  "extension.iceworksMaterialHelper.getComponentQuickPicks.more.label": "更多物料",
+  "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "展示所有物料的文档",
+  "extension.iceworksMaterialHelper.getHoverItem.hoverItemLink": "[<%= componentName %> 文档](<%= commandUri %>)",
+  "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "你必须先安装 「vscode-browser-preview 插件」 才能在 vscode 内部浏览器中打开。"
 }

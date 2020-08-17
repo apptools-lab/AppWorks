@@ -3,7 +3,7 @@
   "displayName": "React Component Helper",
   "description": "Easily use Component in React/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -33,6 +33,14 @@
       {
         "command": "iceworks-material-helper.start",
         "title": "%iceworksMaterialHelper.commands.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper.showMaterialDocs",
+        "title": "%iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title%"
+      },
+      {
+        "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
+        "title": "%iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title%"
       }
     ],
     "menus": {
@@ -41,8 +49,24 @@
           "command": "iceworks-material-helper.start",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
+        },
+        {
+          "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
+          "group": "iceworksMaterialHelper",
+          "when": "editorTextFocus && iceworks:isJSXFile"
         }
       ]
+    },
+    "configuration": {
+      "title": "Iceworks Material Helper",
+      "properties": {
+        "iceworks.materialHelper.openDocLinkInsideVSCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",
+          "title": "Open Doc Link Inside VSCode"
+        }
+      }
     }
   },
   "scripts": {

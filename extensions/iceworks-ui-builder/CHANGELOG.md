@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.4
+
+- feat: support generate component
+
 ## 0.1.3
 
 - fix: build error

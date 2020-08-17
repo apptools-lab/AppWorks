@@ -1,4 +1,4 @@
 {
-  "iceworksConfigHelper.commands.start.buildJson.title": "Iceworks: 可视化设置 build.json",
-  "iceworksConfigHelper.commands.start.appJson.title": "Iceworks: 可视化设置 app.json."
+  "iceworksConfigHelper.commands.start.configHelperPanel.title": "Iceworks: 可视化设置 json 文件",
+  "iceworksConfigHelper.commands.configHelperPanel.showSource": "Iceworks: 显示源"
 }

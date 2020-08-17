@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.1
+
+- feat: support all json files.
+- fix: display incorrect language.
+- fix: update config helper active event.
+
 ## 0.3.0
 
 - feat: add visual editing panel.
