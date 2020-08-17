@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as ejs from 'ejs';
 import * as fse from 'fs-extra';
-import { ITemplateOptions } from 'src';
+import { ITemplateOptions } from './index';
 
 export default async function (dir: string, options: ITemplateOptions): Promise<void> {
   return new Promise((resolve, reject) => {
