@@ -20,8 +20,8 @@ function writeConfigFile(filePath: string, config: IDebugConfig) {
   fs.writeFileSync(
     filePath,
     '// See https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md \n' +
-    '// for the documentation about the Iceworks debug \n' +
-    `${JSON.stringify(config, null, '  ')}`
+      '// for the documentation about the Iceworks debug \n' +
+      `${JSON.stringify(config, null, '  ')}`
   );
 }
 
@@ -42,7 +42,7 @@ export function setDebugConfig() {
     if (fs.existsSync(abcConfigFile)) {
       const abcConfig = fs.readJSONSync(abcConfigFile);
       if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
-        specialLaunchUrl = `${BASE_URL}/${abcConfig.group}/${abcConfig.name}`
+        specialLaunchUrl = `${BASE_URL}/${abcConfig.group}/${abcConfig.name}`;
       }
     }
   } catch (e) {
