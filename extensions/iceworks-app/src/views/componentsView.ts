@@ -4,6 +4,7 @@ import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { componentsPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
+import showAddComponentQuickPick from '../quickPicks/showAddComponentQuickPick';
 
 class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private workspaceRoot: string;
@@ -101,7 +102,7 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
 
   registerCommand('iceworksApp.components.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.create-component');
-    vscode.commands.executeCommand('iceworks-ui-builder.create-component');
+    showAddComponentQuickPick();
   });
   registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));

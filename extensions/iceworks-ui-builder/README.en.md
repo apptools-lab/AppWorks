@@ -46,6 +46,23 @@ Iceworks provides a huge amount of high-quality materials for React and [Rax](ht
 2. Select a material below.
 3. Click `Create component` button to generate component code.
 
+## Generate Component
+
+Generate components in a visual way.
+
+### Activate
+
+![demo](https://img.alicdn.com/tfs/TB1hMmdRxz1gK0jSZSgXXavwpXa-2880-1800.gif)
+
+- Activate vscode command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: Generate Component` to activate the extension.
+
+### Usage
+
+![demo](https://img.alicdn.com/tfs/TB1VGQHeypE_u4jSZKbXXbCUVXa-1440-900.gif)
+
+1. Drag the components in the left to the middle panel.
+2. Press `⌘+S` (MacOS) or `Ctrl+S` (Windows), input the name of the component and then press Enter to generate component.
+
 ## More
 
 See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

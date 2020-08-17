@@ -10,10 +10,17 @@ interface ICreateDEFProjectFormProps {
   value: IDEFProjectField;
   children: React.ReactNode;
   errorMsg?: string;
+  loading: boolean;
   onChange: (value: IDEFProjectField) => void;
 }
 
-const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, children, errorMsg, onChange }) => {
+const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
+  value,
+  children,
+  errorMsg,
+  onChange,
+  loading,
+}) => {
   const [empInfoShowed, setEmpInfoShowed] = useState(false);
   const [existProjects, setExistProjects] = useState([]);
   const [gitLabGroups, setGitLabGroups] = useState<IGitLabGroup[]>([]);
@@ -87,6 +94,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
               <Input
                 placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputEmpId' })}
                 name="empId"
+                disabled={loading}
               />
             </Form.Item>
             <Form.Item
@@ -100,6 +108,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
               <Input
                 placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputAccount' })}
                 name="account"
+                disabled={loading}
               />
             </Form.Item>
           </>
@@ -125,6 +134,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
           <Input
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputGitLabToken' })}
             name="gitlabToken"
+            disabled={loading}
           />
         </Form.Item>
         <Form.Item
@@ -141,6 +151,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
             fillProps="name"
             key="name"
             showSearch
+            disabled={loading}
           >
             {gitLabGroups.map((item) => (
               <Select.Option value={item.name}>{item.name}</Select.Option>
@@ -149,15 +160,18 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({ value, chi
         </Form.Item>
         <Form.Item
           colSpan={6}
-          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.reposity' })}
+          label={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.repository' })}
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })}
+          requiredMessage={intl.formatMessage({
+            id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputRepository',
+          })}
           autoValidate
           validator={onValidateProjectName}
         >
           <Input
-            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputReposity' })}
+            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateDEFProjectForm.inputRepository' })}
             name="project"
+            disabled={loading}
           />
         </Form.Item>
         <Form.Item>

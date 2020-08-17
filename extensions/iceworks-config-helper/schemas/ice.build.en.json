@@ -101,6 +101,20 @@
       "default": "",
       "examples": ["build"]
     },
+    "proxy": {
+      "type": "object",
+      "description": "Configure webpack's devServer.proxy attribute.",
+      "default": {},
+      "examples": [
+        {
+          "/**": {
+            "enable": true,
+            "target": "http://127.0.0.1:6001"
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
     "devServer": {
       "type": "object",
       "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
@@ -112,8 +126,7 @@
           "clientLogLevel": "error",
           "hot": true,
           "quiet": true,
-          "overlay": false,
-          "port": 9999
+          "overlay": false
         }
       ],
       "additionalProperties": true,
@@ -156,18 +169,17 @@
         }
       }
     },
-    "proxy": {
+    "targets": {
       "type": "object",
-      "description": "Configure webpack's devServer.proxy attribute.",
+      "description": "Config targets of @babel/preset-env ，the latest version of browser，Newly configured Targets overrides the default value",
       "default": {},
       "examples": [
         {
-          "/**": {
-            "enable": true,
-            "target": "http://127.0.0.1:6001"
-          }
+          "chrome": 49,
+          "ie": 11
         }
       ],
+      "required": [],
       "additionalProperties": true
     },
     "vendor": {
@@ -294,22 +306,6 @@
       "default": false,
       "examples": [false],
       "properties": {}
-    },
-    "targets": {
-      "type": ["object", "array"]
-    },
-    "browserslist": {
-      "type": ["object", "array", "string"],
-      "description": "Configure the targets of @babel/preset-env, configure the minimum version of the browser, the newly configured targets will override the default values.",
-      "default": {},
-      "examples": [
-        {
-          "chrome": 49,
-          "ie": 11
-        }
-      ],
-      "required": [],
-      "additionalProperties": true
     },
     "disableRuntime": {
       "type": "boolean",
