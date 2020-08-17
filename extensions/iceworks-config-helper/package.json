@@ -3,7 +3,7 @@
   "displayName": "Iceworks Config Helper",
   "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -21,8 +21,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "iceworks-config-helper.buildJson.start",
-    "iceworks-config-helper.appJson.start",
+    "onCommand:iceworks-config-helper.configPanel.start",
     "onLanguage:json"
   ],
   "main": "./build/extension.js",
@@ -39,56 +38,56 @@
     ],
     "commands": [
       {
-        "command": "iceworks-config-helper.buildJson.start",
-        "title": "%iceworksConfigHelper.commands.start.buildJson.title%",
+        "command": "iceworks-config-helper.configPanel.start",
+        "title": "%iceworksConfigHelper.commands.start.configHelperPanel.title%",
         "icon": {
           "light": "./icons/preview-right-light.svg",
           "dark": "./icons/preview-right-dark.svg"
         }
       },
       {
-        "command": "iceworks-config-helper.appJson.start",
-        "title": "%iceworksConfigHelper.commands.start.appJson.title%",
+        "command": "iceworks-config-helper.configPanel.showSource",
+        "title": "%iceworksConfigHelper.commands.configHelperPanel.showSource%",
         "icon": {
-          "light": "./icons/preview-right-light.svg",
-          "dark": "./icons/preview-right-dark.svg"
+          "light": "./icons/file-search-light.svg",
+          "dark": "./icons/file-search-dark.svg"
         }
       }
     ],
     "menus": {
-      "editor/context": [
+      "commandPalette": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "iceworks:showWebViewPanelForBuildJson",
-          "group": "configHelper"
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json || editorLangId == jsonc"
         },
         {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "iceworks:showWebViewPanelForAppJson",
+          "command": "iceworks-config-helper.configPanel.showSource",
+          "when": "explorerViewletVisible && iceworks.config-helper.panelAcitve"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json || editorLangId == jsonc",
           "group": "configHelper"
         }
       ],
       "editor/title": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "iceworks:showWebViewPanelForBuildJson",
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "editorLangId == json || editorLangId == jsonc",
           "group": "navigation"
         },
         {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "iceworks:showWebViewPanelForAppJson",
+          "command": "iceworks-config-helper.configPanel.showSource",
+          "when": "explorerViewletVisible && iceworks.config-helper.panelAcitve",
           "group": "navigation"
         }
       ],
       "explorer/context": [
         {
-          "command": "iceworks-config-helper.buildJson.start",
-          "when": "resourceFilename == build.json",
-          "group": "2_workspace"
-        },
-        {
-          "command": "iceworks-config-helper.appJson.start",
-          "when": "resourceFilename == app.json",
+          "command": "iceworks-config-helper.configPanel.start",
+          "when": "resourceExtname == .json",
           "group": "2_workspace"
         }
       ]
@@ -125,6 +124,7 @@
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/project-service": "^0.1.15",
     "@iceworks/vscode-webview": "^0.1.5",
+    "generate-schema": "^2.6.0",
     "lodash.forin": "^4.4.0",
     "lodash.isequal": "^4.5.0"
   }

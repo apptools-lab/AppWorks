@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
-import getBabelParserPlugins from './getBabelParserPlugins';
+import getBabelParserPlugins from '../utils/getBabelParserPlugins';
 
 // Get props keys from .d.ts file,
 export default function getPropKeysFromDefinition(componentPath): string[] {

@@ -1,7 +1,6 @@
-import { parse } from '@babel/parser';
 import { Node, JSXOpeningElement } from '@babel/types';
-import traverse, { Scope } from '@babel/traverse';
-import getBabelParserPlugins from './getBabelParserPlugins';
+import traverse, { Scope, NodePath } from '@babel/traverse';
+import originGetCurrentJsxElement from '../utils/getCurrentJsxElement';
 
 // <Text | >...</Text>
 function isCursorInJsxOpeningElement(cursorPosition: number, jsxOpeningElement: JSXOpeningElement): boolean {
@@ -37,36 +36,18 @@ function isCursorInJsxAttribute(cursorPosition: number, node: Node, scope: Scope
   return result;
 }
 
-type CurrentJsxElement = JSXOpeningElement | null;
-export default function getCurrentJsxElement(documentText: string, cursorPosition): CurrentJsxElement {
-  let currentJsxElement: CurrentJsxElement = null;
+// if <Text |> return Text
+function conditionOfCompletion(
+  cursorPosition,
+  jsxOpeningElement: JSXOpeningElement,
+  path: NodePath<JSXOpeningElement>
+) {
+  return (
+    isCursorInJsxOpeningElement(cursorPosition, jsxOpeningElement) &&
+    !isCursorInJsxAttribute(cursorPosition, jsxOpeningElement, path.scope)
+  );
+}
 
-  try {
-    // https://babeljs.io/docs/en/babel-parser
-    const ast = parse(documentText, {
-      sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
-    });
-
-    if (ast) {
-      // https://babeljs.io/docs/en/babel-traverse
-      traverse(ast, {
-        JSXOpeningElement(path) {
-          const jsxOpeningElement = path.node;
-
-          if (
-            // if <Text |> return Text
-            isCursorInJsxOpeningElement(cursorPosition, jsxOpeningElement) &&
-            !isCursorInJsxAttribute(cursorPosition, jsxOpeningElement, path.scope)
-          ) {
-            currentJsxElement = jsxOpeningElement;
-          }
-        },
-      });
-    }
-  } catch (error) {
-    // ignore
-  }
-
-  return currentJsxElement;
+export default function getCurrentJsxElement(documentType, cursorPosition) {
+  return originGetCurrentJsxElement(documentType, cursorPosition, conditionOfCompletion);
 }

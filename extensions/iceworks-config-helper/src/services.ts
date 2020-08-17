@@ -1,30 +1,32 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import forIn from 'lodash.forin';
-import { getProjectFramework } from '@iceworks/project-service';
+import * as generateSchema from 'generate-schema';
 import * as common from '@iceworks/common-service';
 import i18n from './i18n';
-
-const buildJsonPath = `${vscode.workspace.rootPath}/build.json`;
-const appJsonPath = `${vscode.workspace.rootPath}/src/app.json`;
-const buildJsonUri = vscode.Uri.file(buildJsonPath);
-const appJsonUri = vscode.Uri.file(appJsonPath);
-
-// witch Json file is editing
-// now just support build.json & app.json, so just using the file name
-let editingJsonFile;
+import {
+  getEditingFileName,
+  getEditingFileBaseName,
+  getFrameWorkFragement,
+  getEditingJsonEditor,
+  getEditingJsonFileUri,
+} from './utils';
 
 const getInitData = async () => {
-  // eslint-disable-next-line
-  const schema = require(`../schemas/${(await getProjectFramework()) === 'icejs' ? 'ice' : 'rax'}.${editingJsonFile}.${
-    vscode.env.language
-  }.json`);
+  let schema;
+  try {
+    // eslint-disable-next-line
+    schema = require(`../schemas/${await getFrameWorkFragement()}.${getEditingFileName()}.${vscode.env.language}.json`);
+  } catch (e) {
+    schema = generateSchema.json(getEditingFileBaseName(), getEditingJsonFileValue());
+  }
 
+  console.log(`schema for ${getEditingFileBaseName()}:`, schema);
   const initmessage = {
     jsonContent: getEditingJsonFileValue(),
     schema,
     formCannotEditProps: getFormCannotEditProps(schema),
-    editingJsonFile: `${editingJsonFile}.json`,
+    editingJsonFile: getEditingFileBaseName(),
   };
 
   return initmessage;
@@ -38,7 +40,7 @@ export function getIsUpdatingJsonFile() {
 }
 
 const updateJsonFile = async (incrementalChange) => {
-  const currentJsonTextEditor = findVisibleTextEditor(`${editingJsonFile}.json`);
+  const currentJsonTextEditor = getEditingJsonEditor();
   const json = getEditingJsonByIncrementalChange(incrementalChange, false);
 
   if (currentJsonTextEditor) {
@@ -49,26 +51,22 @@ const updateJsonFile = async (incrementalChange) => {
     });
     isUpdatingJsonFile = false;
   } else {
-    fse.writeFile(
-      editingJsonFile === 'build' ? buildJsonPath : appJsonPath,
-      JSON.stringify(json, null, '\t'),
-      (err) => {
-        console.log(err);
-      }
-    );
+    fse.writeFile(getEditingJsonFileUri().fsPath, JSON.stringify(json, null, '\t'), (err) => {
+      console.log(err);
+    });
   }
 };
 
 const editInJsonFile = (incrementalChange) => {
-  let currentJsonEditer = findVisibleTextEditor(`${editingJsonFile}.json`);
+  let currentJsonEditer = getEditingJsonEditor();
   const json = getEditingJsonByIncrementalChange(incrementalChange, true);
 
   const currentKey = Object.keys(incrementalChange)[0];
   if (!currentJsonEditer) {
-    vscode.window.showTextDocument(editingJsonFile === 'build' ? buildJsonUri : appJsonUri, {
+    vscode.window.showTextDocument(getEditingJsonFileUri(), {
       viewColumn: vscode.window.activeTextEditor?.viewColumn === 1 ? 2 : 1,
     });
-    currentJsonEditer = findVisibleTextEditor(`${editingJsonFile}.json `);
+    currentJsonEditer = getEditingJsonEditor();
   }
 
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
@@ -87,30 +85,22 @@ export const services = {
   common,
 };
 
-export function setEditingJsonFile(name: string) {
-  editingJsonFile = name;
-}
-
 function getEditingJsonFileValue() {
-  const currentJsonTextEditor = findVisibleTextEditor(`${editingJsonFile}.json`);
+  const currentJsonTextEditor = getEditingJsonEditor();
   try {
     if (currentJsonTextEditor) {
       return JSON.parse(currentJsonTextEditor.document.getText());
     } else {
-      return fse.readJsonSync(editingJsonFile === 'build' ? buildJsonPath : appJsonPath);
+      return fse.readJsonSync(getEditingJsonFileUri().fsPath);
     }
   } catch (e) {
     console.error(e);
     vscode.window.showWarningMessage(
-      i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', { JsonFileName: editingJsonFile })
+      i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', {
+        JsonFileName: getEditingFileBaseName(),
+      })
     );
   }
-}
-
-function findVisibleTextEditor(fileName: string) {
-  return vscode.window.visibleTextEditors.find((editor) => {
-    return editor.document.uri.fsPath.endsWith(fileName);
-  });
 }
 
 function getEditingJsonByIncrementalChange(incrementalChange, useSnippet: boolean) {

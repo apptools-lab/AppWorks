@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.5
+- Update completionItem detail text.
+- Update data recorder.
+- Support build-plugin-fusion themePackage.
+
 ## 0.3.4
 - Fix variables completions shown when edit css classes and style keys.
 - Add data recorder.
