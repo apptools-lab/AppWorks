@@ -19,7 +19,6 @@
     { "path": "packages/material-service" },
     { "path": "packages/block-service" },
     { "path": "packages/component-service" },
-    { "path": "packages/page-service" },
-    { "path": "packages/pegasus-service" }
+    { "path": "packages/page-service" }
   ]
 }
