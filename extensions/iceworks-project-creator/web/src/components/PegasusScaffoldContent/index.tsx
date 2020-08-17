@@ -11,27 +11,7 @@ const URL = `https://banff.alibaba-inc.com/iframe/component?from=imgcook&fullScr
   JSON.stringify(PAYLOAD)
 )}`;
 
-const test = {
-  'type': 'init',
-  'data': {
-    'id': 53493,
-    'result': {
-      'status': 'done',
-      'gmtCreate': 1597636540832
-    },
-    'useGenerator': true,
-    'group': 'alimod',
-    'project': 'yangfeng-test4'
-  }
-};
-
 export default () => {
-
-  const testFn = () => {
-    console.log('click');
-    callService('pegasus', 'init', test);
-  }
-
   useEffect(() => {
     // 监听天马 iframe 事件
     window.addEventListener('message', (event) => {
@@ -45,7 +25,7 @@ export default () => {
   }, []);
 
   return (
-    <div className={styles.container} onClick={testFn}>
+    <div className={styles.container}>
       <iframe title="PegasusScaffoldContent" className={styles.content} src={URL} />
     </div>
   );
