@@ -5,6 +5,7 @@ import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
+import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
@@ -31,8 +32,11 @@ const ScaffoldMarket = ({
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [pegasusCardSelected, setPegasusCardSelected] = useState<boolean>(false);
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
+    setPegasusCardSelected(false);
+    toggleNextBtnVisible(true);
     try {
       setLoading(true);
       setSelectedSource(scaffold);
@@ -45,6 +49,19 @@ const ScaffoldMarket = ({
     } finally {
       setLoading(false);
     }
+  }
+
+  function toggleNextBtnVisible(visible: boolean) {
+    const element = document.getElementById('J_SCAFFOLD_MARKET_BTN');
+    if (element) {
+      element.style.display = visible ? 'block' : 'none';
+    }
+  }
+
+  function handlePegasusCardClick() {
+    setSelectedSource({});
+    setPegasusCardSelected(true);
+    toggleNextBtnVisible(false);
   }
 
   function onScaffoldClick(scaffold) {
@@ -126,7 +143,7 @@ const ScaffoldMarket = ({
                 );
               })}
           </div>
-          {isAliInternal ? <PegasusCard /> : null}
+          {isAliInternal ? <PegasusCard onClick={handlePegasusCardClick} selected={pegasusCardSelected} /> : null}
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}>
               <Icon type="add" />
@@ -137,6 +154,8 @@ const ScaffoldMarket = ({
         <div className={styles.scaffolds}>
           {loading ? (
             <Loading visible={loading} className={styles.loading} />
+          ) : pegasusCardSelected ? (
+            <PegasusScaffoldContent />
           ) : (
             <>
               <div className={styles.mainScaffolds}>
