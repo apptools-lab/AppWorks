@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.3.7
+- feat: support create pegasus project 
+
 ## 0.3.6
 
 - feat: disable form input when submitting
