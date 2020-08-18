@@ -24,6 +24,13 @@ const tasksConfigTemplate = `
     "type": "npm",
     "script": "start",
     "isBackground": true,
+    <%_ if (isPegasusProject) { -%>
+    "options": {
+      "env": {
+        "PEGASUS_DEVKIT": "Iceworks"
+      }
+    },
+    <%_ } -%>
     "problemMatcher": {
       "pattern": {
         "regexp": "ERROR in .*"
@@ -63,13 +70,14 @@ export function getLaunchConfig(launchUrl?: string): IDebugConfig {
 }
 
 // https://code.visualstudio.com/docs/editor/tasks#vscode
-export function getTasksConfig(): IDebugConfig {
+export function getTasksConfig(isPegasusProject = false): IDebugConfig {
   const DEBUG_TASKS_VERSION = '2.0.0';
   return {
     version: DEBUG_TASKS_VERSION,
     tasks: JSON.parse(
       ejs.render(tasksConfigTemplate, {
         baseUrl: BASE_URL,
+        isPegasusProject,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
       })

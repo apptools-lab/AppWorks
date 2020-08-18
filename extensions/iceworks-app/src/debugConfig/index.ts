@@ -71,17 +71,8 @@ export function setDebugConfig() {
 
   // Set tasks.json
   let tasksConfig;
-  const defaultTasksConfig = getTasksConfig();
+  const defaultTasksConfig = getTasksConfig(isPegasusProject);
   const tasksConfigPath = path.join(targetDir, 'tasks.json');
-
-  // Set pegasus env variables
-  if (isPegasusProject && defaultTasksConfig.tasks) {
-    defaultTasksConfig.tasks[0].options = {
-      env: {
-        PEGASUS_DEVKIT: 'Iceworks',
-      },
-    };
-  }
 
   if (fs.existsSync(tasksConfigPath)) {
     const tasks: any[] = [];
