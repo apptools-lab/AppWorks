@@ -20,8 +20,8 @@ function writeConfigFile(filePath: string, config: IDebugConfig) {
   fs.writeFileSync(
     filePath,
     '// See https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md \n' +
-      '// for the documentation about the Iceworks debug \n' +
-      `${JSON.stringify(config, null, '  ')}`
+    '// for the documentation about the Iceworks debug \n' +
+    `${JSON.stringify(config, null, '  ')}`
   );
 }
 
@@ -36,12 +36,14 @@ export function setDebugConfig() {
   }
 
   // Set pegasus service url
+  let isPegasusProject = false;
   let specialLaunchUrl = '';
   try {
     const abcConfigFile = path.join(rootPath, 'abc.json');
     if (fs.existsSync(abcConfigFile)) {
       const abcConfig = fs.readJSONSync(abcConfigFile);
       if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
+        isPegasusProject = true;
         specialLaunchUrl = `${BASE_URL}/${abcConfig.group}/${abcConfig.name}`;
       }
     }
@@ -71,6 +73,16 @@ export function setDebugConfig() {
   let tasksConfig;
   const defaultTasksConfig = getTasksConfig();
   const tasksConfigPath = path.join(targetDir, 'tasks.json');
+  
+  // Set pegasus env variables
+  if (isPegasusProject && defaultTasksConfig.tasks) {
+    defaultTasksConfig.tasks[0].options = {
+      env: {
+        PEGASUS_DEVKIT: 'Iceworks',
+      }
+    }
+  }
+
   if (fs.existsSync(tasksConfigPath)) {
     const tasks: any[] = [];
 
