@@ -15,7 +15,7 @@ module.exports = {
     messages: {
       noBroadSemanticVersioning:
         // eslint-disable-next-line
-        "The '{{dependencyName}}' is not recommended to use '{{versioning}}, and it is recommended to use {{newVersioning}}'",
+        "The '{{dependencyName}}' is not recommended to use '{{versioning}}, and it is recommend using {{newVersioning}}'",
     },
   },
 
