@@ -34,7 +34,7 @@ const CreateProject: React.FC = () => {
       onOpenConfigPanel={onOpenConfigPanel}
       materialSources={materialSources}
     >
-      <Button id="J_SCAFFOLD_MARKET_BTN" type="primary" onClick={onScaffoldSubmit}>
+      <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
     </ScaffoldMarket>,

@@ -36,7 +36,6 @@ const ScaffoldMarket = ({
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     setPegasusCardSelected(false);
-    toggleNextBtnVisible(true);
     try {
       setLoading(true);
       setSelectedSource(scaffold);
@@ -51,17 +50,9 @@ const ScaffoldMarket = ({
     }
   }
 
-  function toggleNextBtnVisible(visible: boolean) {
-    const element = document.getElementById('J_SCAFFOLD_MARKET_BTN');
-    if (element) {
-      element.style.display = visible ? 'block' : 'none';
-    }
-  }
-
   function handlePegasusCardClick() {
     setSelectedSource({});
     setPegasusCardSelected(true);
-    toggleNextBtnVisible(false);
   }
 
   function onScaffoldClick(scaffold) {
@@ -248,7 +239,7 @@ const ScaffoldMarket = ({
           )}
         </div>
       </div>
-      <div className={styles.action}>{children}</div>
+      {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
     </div>
   );
 };
