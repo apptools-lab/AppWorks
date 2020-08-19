@@ -3,6 +3,7 @@
 ## 0.3.7
 
 - docs: add more badges.
+- feat: support create pegasus project 
 
 ## 0.3.6
 

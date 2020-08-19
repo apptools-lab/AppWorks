@@ -1,0 +1,40 @@
+.container {
+  width: 160px;
+  border: 1px solid $color-fill1-4;
+  margin: 0 10px 20px 10px;
+  padding: 12px 10px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .title {
+    margin: 0 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+  }
+
+  .newTag {
+    position: absolute;
+    top: -5px;
+    right: 4px;
+    width: 28px;
+    height: 28px;
+  }
+
+  &:hover {
+    border: 1px solid $color-notice-3;
+  }
+}
+
+.active {
+  border: 1px solid $color-notice-3;
+}

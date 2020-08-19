@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.4.6
+- Support pegasus project debugger.
+
 ## 0.4.5
 - feat: add component-generator and component-creator quickPick.
 
