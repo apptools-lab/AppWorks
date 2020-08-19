@@ -18,7 +18,7 @@ module.exports = {
     fixable: null,
     messages: {
       // eslint-disable-next-line
-      noJSInTSProject: "The '{{fileName}}' is not recommended in TS projct",
+      noJSInTSProject: "The '{{fileName}}' is not recommended in TS project",
     },
   },
 

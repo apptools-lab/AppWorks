@@ -22,6 +22,8 @@
     "test": "mocha tests --recursive"
   },
   "dependencies": {
+    "fs-extra": "^9.0.1",
+    "line-column": "^1.0.2",
     "requireindex": "~1.1.0"
   },
   "devDependencies": {

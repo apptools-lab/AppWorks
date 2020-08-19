@@ -16,7 +16,7 @@ ruleTester.run("no-js-in-ts-project", rule, {
         {
             filename: 'home.js', code: "",
             errors: [{
-                message: "The 'home.js' is not recommended in TS projct."
+                message: "The 'home.js' is not recommended in TS project"
             }]
 
         }
