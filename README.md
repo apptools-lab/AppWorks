@@ -1,4 +1,3 @@
-
 简体中文 | [English](./README.en.md)
 
 <p align="center">
@@ -9,7 +8,7 @@
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">基于 VS Code 的多端研发套件</p>
+<p align="center">多端研发套件</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg" /></a>
@@ -22,8 +21,6 @@
 
 ## 快速开始
 
-使用 VS Code 套件快速开发多端应用：
-
 - 点击 VS Code 活动栏上的「插件商店图标」；
 - 在输入框中输入「iceworks」进行搜索；
 - 点击第一个「iceworks」选项上的「安装」按钮。
@@ -34,7 +31,7 @@
 
 ![Iceworks](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
 
-查看 [Iceworks Pack](extensions/iceworks/README.md) 了解更多功能。
+[查看套件了解更多功能](extensions/iceworks/README.md)。
 
 ## 参与贡献
 

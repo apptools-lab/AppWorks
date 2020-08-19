@@ -1,11 +1,13 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.en.md)
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-
 # Iceworks
 
-> 基于 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 框架的多端研发套件，提供可视化和智能化技术构建多端应用。
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
+基于 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 框架的多端研发套件，提供可视化和智能化技术构建多端应用。
 
 ## 快速开始
 
@@ -25,13 +27,11 @@
 
 Iceworks 套件内包含以下插件：
 
-- [应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)：从框架视角全面预览您应用的组织
-- [创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)：通过图像界面引导创建多端应用
-- [可视化搭建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)：通过可视化操作生成用户界面
-- [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)：提供在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 内编写行内样式或使用 SASS/Less 等 CSS 预处理语言的代码编辑提醒
-- [组件开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)：在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 内更快更好地添加组件、编写组件属性，
-- [应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)：为应用的配置类文件提供可视化表单设置或代码编辑提醒、校验等功能
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+插件 | 简介 | 徽标
+--------- | ------- | ---------
+[应用大纲树](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app) | 从框架视角全面预览应用的组织 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[创建应用](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator) | 通过图像界面引导创建多端应用 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[可视化搭建](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder) | 通过可视化操作生成用户界面 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) | 通过可视化操作生成用户界面 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+[组件开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper) | 通过可视化操作生成用户界面 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-material-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
+[应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) | 为应用的配置类文件提供可视化表单设置或代码编辑提醒、校验等功能 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)

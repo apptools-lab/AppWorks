@@ -33,7 +33,7 @@ After installation is successful, click the "Iceworks icon" on Activity Bar of V
 
 ![Iceworks](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
 
-See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
+[See the Pack for more details](extensions/iceworks/README.md).
 
 ## Contributors
 
