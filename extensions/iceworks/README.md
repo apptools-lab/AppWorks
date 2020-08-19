@@ -3,7 +3,7 @@
 [![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 
-# Iceworks 套件
+# Iceworks
 
 > 基于 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 框架的多端研发套件，提供可视化和智能化技术构建多端应用。
 

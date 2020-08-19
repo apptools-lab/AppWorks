@@ -3,7 +3,7 @@ English | [简体中文](./README.md)
 [![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 
-# Iceworks Pack
+# Iceworks
 
 Universal Application Development Pack based on [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) framework, provide visualization and intelligent technology to build Universal Application.
 

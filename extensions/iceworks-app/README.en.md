@@ -98,7 +98,7 @@ For more information, please see [Reference Document](https://github.com/ice-lab
 
 ## More
 
-See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
 
 ## License
 

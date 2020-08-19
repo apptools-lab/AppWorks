@@ -86,7 +86,7 @@ You can choose whether to open the document link in VS Code, which depends on th
 
 ## More
 
-See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
 
 ## License
 

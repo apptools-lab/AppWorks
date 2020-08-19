@@ -68,7 +68,7 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 
 ## 更多
 
-访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
+访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 

@@ -60,7 +60,7 @@ Quickly locate the source file of panel and open an editor of sourceFile.
 
 ## More
 
-See the [Iceworks Pack](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
 
 ## License
 
