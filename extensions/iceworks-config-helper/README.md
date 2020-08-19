@@ -4,7 +4,7 @@
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) 
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 为 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 的配置类文件(build.json/app.json) 提供可视化表单设置或代码编辑提醒、校验等功能。并且为所有 json 类型的配置文件提供可视化编辑功能。

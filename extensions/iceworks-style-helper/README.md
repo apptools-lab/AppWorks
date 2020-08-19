@@ -4,7 +4,7 @@
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) 
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 方便您在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快速地编写内联样式，并对 CSS 、SASS 等样式文件提供强大的辅助开发功能。对 React 和 [Rax](https://rax.js.org/) 应用友好。
