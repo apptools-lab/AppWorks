@@ -1,31 +1,31 @@
-简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.en.md)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.zh-CN.md)
 
-# Iceworks 创建应用插件
+# Iceworks Application Creator
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-快速创建多端应用（例如：React/Rax/Vue...）
+Create a Universal Application(React/Rax/Vue, etc) quickly.
 
-## 功能
+## Usage
 
-### 激活
+### Activate Extension
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87621232-e61b0e80-c752-11ea-852c-77bb164d2dab.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88181928-1e927f00-cc62-11ea-94fb-06d12dab77d1.gif)
 
-1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: createApplication` 激活插件
+1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
+2. Enter `Iceworks: create Application` to activate the extension.
 
-### 创建应用
+### Create a new application
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87621825-41013580-c754-11ea-8da8-e49e71397d08.gif)
+![demo](https://user-images.githubusercontent.com/56879942/88175435-6f9d7580-cc58-11ea-8a88-f74a5ab4f674.gif)
 
-1. 选择模板
-2. 输入应用信息
-3. 创建应用并自动打开应用
+1. Select a scaffold.
+2. Input your application Infomation.
+3. Create your application and open application automatically.
 
-## 更多
+## More
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
