@@ -21,8 +21,8 @@ const tasksConfigTemplate = `
 [
   {
     "label": "<%= startLabel %>",
-    "type": "npm",
-    "script": "start",
+    "command": "npm",
+    "args": ["run", "start", "--", "--disable-open"],
     "isBackground": true,
     "problemMatcher": {
       "pattern": {
