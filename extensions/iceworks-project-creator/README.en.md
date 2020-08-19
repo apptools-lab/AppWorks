@@ -1,9 +1,11 @@
-English | [简体中文](./README.md)
-
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.md)
 
 # Iceworks Application Creator
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 Create a Universal Application(React/Rax/Vue, etc) quickly.
 
@@ -27,7 +29,3 @@ Create a Universal Application(React/Rax/Vue, etc) quickly.
 ## More
 
 See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

@@ -1,9 +1,11 @@
-简体中文 | [English](./README.en.md)
-
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.en.md)
 
 # Iceworks 创建应用插件
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 快速创建多端应用（例如：React/Rax/Vue...）
 
@@ -26,8 +28,4 @@
 
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

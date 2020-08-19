@@ -1,9 +1,11 @@
-简体中文 | [English](./README.en.md)
-
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.en.md)
 
 # Iceworks 可视化搭建插件
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 使用可视化搭建的方式创建用户界面。
 
@@ -68,8 +70,4 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

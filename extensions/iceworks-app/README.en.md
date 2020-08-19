@@ -1,9 +1,11 @@
-English | [简体中文](./README.md)
-
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md)
 
 # Iceworks Application Viewer
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 Preview and manage your application from a framework perspective, including npm scripts, pages, components and dependencies, friendly for React and [Rax](https://rax.js.org/).
 
@@ -99,7 +101,3 @@ For more information, please see [Reference Document](https://github.com/ice-lab
 ## More
 
 See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

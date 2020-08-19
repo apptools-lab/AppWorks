@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.0
+
+- docs: add more badges
+
 ## 0.6.0
 
 - docs: update slogan

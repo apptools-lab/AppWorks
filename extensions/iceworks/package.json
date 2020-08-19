@@ -3,7 +3,7 @@
   "displayName": "Iceworks",
   "description": "Universal Application Development Pack based on icejs(& rax-app) framework, provide visualization and intelligent technology to build Universal Application.",
   "publisher": "iceworks-team",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "engines": {
     "vscode": "^1.41.0"
   },

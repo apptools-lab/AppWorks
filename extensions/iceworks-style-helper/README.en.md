@@ -1,9 +1,11 @@
-English | [简体中文](./README.md)
-
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md)
 
 # Iceworks Style Helper
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) 
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), provide  a powerful auxiliary development functions in style files like CSS, SASS. Friendly for React and [Rax](https://rax.js.org/).
 
@@ -80,7 +82,3 @@ Use `cmd + click`  (Windows: `ctrl + click`) jump to the variable identifier und
 ## More
 
 See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)

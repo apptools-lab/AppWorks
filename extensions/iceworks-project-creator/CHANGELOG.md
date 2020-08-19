@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.7
+
+- docs: add more badges.
+
 ## 0.3.6
 
 - feat: disable form input when submitting
