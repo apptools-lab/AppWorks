@@ -13,9 +13,9 @@ module.exports = {
     },
     fixable: 'code',
     messages: {
-      // eslint-disable-next-line
       noBroadSemanticVersioning:
-        'The \'{{dependencyName}}\' is not recommended to use \'{{versioning}}, and it is recommended to use {{newVersioning}}\'',
+        // eslint-disable-next-line
+        "The '{{dependencyName}}' is not recommended to use '{{versioning}}, and it is recommended to use {{newVersioning}}'",
     },
   },
 
