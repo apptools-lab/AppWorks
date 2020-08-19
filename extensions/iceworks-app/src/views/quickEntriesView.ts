@@ -18,14 +18,14 @@ export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryI
   }
 
   private getEntries() {
-    return entryOptions.map(option => {
+    return entryOptions.map((option) => {
       const { label, detail, command } = option;
       const entryCommand: vscode.Command = {
         command,
-        title: label
+        title: label,
       };
-      return new QuickEntryItem(this.extensionContext, label, detail, entryCommand)
-    })
+      return new QuickEntryItem(this.extensionContext, label, detail, entryCommand);
+    });
   }
 }
 
@@ -34,7 +34,7 @@ class QuickEntryItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly tooltip: string,
-    public readonly command: vscode.Command,
+    public readonly command: vscode.Command
   ) {
     super(label);
   }
@@ -46,7 +46,6 @@ class QuickEntryItem extends vscode.TreeItem {
 
   contextValue = 'quickEntry';
 }
-
 
 export function createQuickEntriesTreeView(context: vscode.ExtensionContext) {
   const quickEntriesProvider = new QuickEntriesProvider(context);
