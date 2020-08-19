@@ -8,7 +8,11 @@
     "vscode": "^1.41.0"
   },
   "categories": [
-    "Extension Packs"
+    "Extension Packs",
+    "Programming Languages",
+    "Visualization",
+    "Debuggers",
+    "Notebooks"
   ],
   "keywords": [
     "ICE",
