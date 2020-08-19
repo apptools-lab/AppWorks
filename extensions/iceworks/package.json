@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "displayName": "Iceworks",
-  "description": "Universal Application Development Pack based on icejs(& rax-app) framework, provide visualization and intelligent technology to build Universal Application.",
+  "description": "Visual Intelligent Programming Assistant, provide visualization and intelligent technology to build Universal Application faster and better.",
   "publisher": "iceworks-team",
   "version": "0.7.0",
   "engines": {

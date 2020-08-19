@@ -7,7 +7,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-Universal Application Development Pack based on [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) framework, provide visualization and intelligent technology to build Universal Application.
+Iceworks is a Visual Intelligent Programming Assistant, provide visualization and intelligent technology to build Universal Application faster and better.
 
 ## Quick start
 
@@ -25,13 +25,13 @@ More features can be obtained by search 'Iceworks' in the Command Panel or click
 
 ## Extensions
 
-Iceowkr Pack extension installs these extensions:
+Iceworks Pack extension installs these extensions:
 
-插件 | 简介 | 徽标
+Extension | Description | State
 --------- | ------- | ---------
 [Application Viewer](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app) | Quick to view and build your Universal Application | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
 [Application Creator](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator) | Quick to create a new Universal Application | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
-[UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder) | Build UI by low-code way | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder) | Build UI by visual way | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [React Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) | Auto completion reminder for writing inline style in [JSX](https://reactjs.org/docs/introducing-jsx.html) | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper) | Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html) | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-material-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
-[Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) | For icejs(& rax-app) configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features. | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+[Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) | For configuration files(like *.json), provides visualization form setting or code editing reminder, verification and other features. | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
