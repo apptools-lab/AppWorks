@@ -28,6 +28,7 @@ const CreateProject: React.FC = () => {
 
   const steps = [
     <ScaffoldMarket
+      isAliInternal={isAliInternal}
       onScaffoldSelect={onScaffoldSelect}
       curProjectField={curProjectField}
       onOpenConfigPanel={onOpenConfigPanel}

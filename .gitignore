@@ -5,12 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-.vscode
 
 node_modules
 .DS_Store
 .eslintcache
 .happypack
+.vscode
 coverage/
 tmp/
 .tmp/
