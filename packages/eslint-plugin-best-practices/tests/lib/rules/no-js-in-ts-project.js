@@ -23,6 +23,5 @@ ruleTester.run("no-js-in-ts-project", rule, {
     errors: [{
       message: "The 'home.js' is not recommended in TS project"
     }]
-
   }]
 });

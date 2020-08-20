@@ -26,6 +26,7 @@ module.exports = deepmerge(defaultEslintConfig, {
     'react/jsx-filename-extension': 0, // For ts
     'max-lines': ['warn', { max: MAX_LINES }],
     'no-unused-vars': ['warn', { varsIgnorePattern: 'createElement' }],
+    '@iceworks/best-practices/deps-no-resolutions': 'warn',
     '@iceworks/best-practices/no-js-in-ts-project': 'warn',
     '@iceworks/best-practices/recommend-functional-component': 'warn',
   },

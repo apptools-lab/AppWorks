@@ -43,6 +43,7 @@ Or you can only use extends to set default rules config.
 
 ## Supported Rules
 
+* [`deps-no-resolutions`](./docs/rules/deps-no-resolutions.md) It is not recommended to use resolutions to lock the version.
 * [`no-broad-semantic-versioning`](./docs/rules/no-broad-semantic-versioning.md) Recommended the semantic versioning include everything greater than a particular version in the same major range.
 * [`no-js-in-ts-project`](./docs/rules/no-js-in-ts-project.md) It is not recommended to use js and ts files at the same time.
 * [`recommend-functional-component`](./docs/rules/recommend-functional-component.md) It is not recommended to use class component.
