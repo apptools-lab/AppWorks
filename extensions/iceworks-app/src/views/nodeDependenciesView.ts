@@ -216,9 +216,7 @@ export function createNodeDependenciesTreeView(context) {
   registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
     showDepsInputBox(nodeDependenciesProvider, 'devDependencies')
   );
-  registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
-    showDepsQuickPick(nodeDependenciesProvider)
-  );
+  registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => showDepsQuickPick(nodeDependenciesProvider));
 
   const pattern = new vscode.RelativePattern(path.join(projectPath, dependencyDir), '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
@@ -241,10 +239,10 @@ function toDep(
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
   const command = outdated
     ? {
-      command: 'iceworksApp.nodeDependencies.upgrade',
-      title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand],
-    }
+        command: 'iceworksApp.nodeDependencies.upgrade',
+        title: 'Upgrade Dependency',
+        arguments: [workspaceDir, npmCommand],
+      }
     : undefined;
   return new DependencyTreeItem(
     extensionContext,

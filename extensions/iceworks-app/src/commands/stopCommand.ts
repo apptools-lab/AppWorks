@@ -8,9 +8,9 @@ export default function stopCommand(command: vscode.Command) {
   }
   const [cwd, script] = commandArgs;
   if (!script) {
-    return
+    return;
   }
-  const currentTerminal = terminals.find((terminal: vscode.Terminal) => terminal.name === script)
+  const currentTerminal = terminals.find((terminal: vscode.Terminal) => terminal.name === script);
   if (currentTerminal) {
     currentTerminal.dispose();
   }

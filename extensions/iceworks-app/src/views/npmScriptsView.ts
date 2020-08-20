@@ -57,8 +57,8 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
 
       const scripts = packageJson.scripts
         ? Object.keys(packageJson.scripts).map((script) =>
-          toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
-        )
+            toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
+          )
         : [];
       return scripts;
     } else {

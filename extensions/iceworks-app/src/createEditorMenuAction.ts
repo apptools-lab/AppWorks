@@ -11,13 +11,11 @@ export default async function createEditorMenuAction() {
     // Check dependences
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
-      executeCommand(
-        {
-          command: EDITOR_MENU_RUN_DEBUG,
-          title: 'Run Install',
-          arguments: [projectPath, createNpmCommand('install')],
-        }
-      );
+      executeCommand({
+        command: EDITOR_MENU_RUN_DEBUG,
+        title: 'Run Install',
+        arguments: [projectPath, createNpmCommand('install')],
+      });
       return;
     }
 
