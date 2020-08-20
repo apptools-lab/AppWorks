@@ -69,9 +69,23 @@ export function setDebugConfig() {
   }
   writeConfigFile(launchConfigPath, launchConfig);
 
+  let disableOpen = false;
+  try {
+    const packageConfigFile = path.join(rootPath, 'package.json');
+    if (fs.existsSync(packageConfigFile)) {
+      const { dependencies = {}, devDependencies = {} } = fs.readJSONSync(packageConfigFile);
+      // Only ice.js support set webpack dev server disable open, for now
+      if (devDependencies['ice.js'] || dependencies['ice.js']) {
+        disableOpen = true;
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
   // Set tasks.json
   let tasksConfig;
-  const defaultTasksConfig = getTasksConfig(isPegasusProject);
+  const defaultTasksConfig = getTasksConfig(isPegasusProject, disableOpen);
   const tasksConfigPath = path.join(targetDir, 'tasks.json');
 
   if (fs.existsSync(tasksConfigPath)) {

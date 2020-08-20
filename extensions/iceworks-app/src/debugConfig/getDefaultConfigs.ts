@@ -22,7 +22,13 @@ const tasksConfigTemplate = `
   {
     "label": "<%= startLabel %>",
     "command": "npm",
-    "args": ["run", "start", "--", "--disable-open"],
+    "args": [
+      "run", 
+      "start"<%_ if (disableOpen) { -%>, 
+      "--", 
+      "--disable-open"
+      <%_ } -%>
+    ],
     "isBackground": true,
     <%_ if (isPegasusProject) { -%>
     "options": {
@@ -70,13 +76,14 @@ export function getLaunchConfig(launchUrl?: string): IDebugConfig {
 }
 
 // https://code.visualstudio.com/docs/editor/tasks#vscode
-export function getTasksConfig(isPegasusProject = false): IDebugConfig {
+export function getTasksConfig(isPegasusProject = false, disableOpen = false): IDebugConfig {
   const DEBUG_TASKS_VERSION = '2.0.0';
   return {
     version: DEBUG_TASKS_VERSION,
     tasks: JSON.parse(
       ejs.render(tasksConfigTemplate, {
         baseUrl: BASE_URL,
+        disableOpen,
         isPegasusProject,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
