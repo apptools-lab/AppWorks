@@ -11,7 +11,6 @@ export interface ITemplateOptions {
   // web, miniapp...
   projectTargets?: string[];
   adaptor?: boolean;
-  useEjsTemplate?: boolean;
 }
 
 export interface IOptions {

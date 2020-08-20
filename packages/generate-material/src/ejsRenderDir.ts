@@ -12,7 +12,7 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
         cwd: dir,
         nodir: true,
         dot: true,
-        ignore: options.useEjsTemplate ? ['**/*.tsx.ejs', '**/*.jsx.ejs', 'node_modules/**'] : ['node_modules/**'],
+        ignore: ['node_modules/**'],
       },
       (err, files) => {
         if (err) {
@@ -23,6 +23,32 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
           files.map((file) => {
             const filepath = path.join(dir, file);
             return renderFile(filepath, options);
+          })
+        )
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }
+    );
+    glob(
+      '**/*._ejs',
+      {
+        cwd: dir,
+        nodir: true,
+        dot: true,
+        ignore: ['node_modules/**'],
+      },
+      (err, files) => {
+        if (err) {
+          return reject(err);
+        }
+
+        Promise.all(
+          files.map((file) => {
+            return renderTemplateFile(file);
           })
         )
           .then(() => {
@@ -47,5 +73,16 @@ function renderFile(filepath: string, options: any): Promise<string> {
       fse.writeFileSync(filepath.replace(/\.ejs$/, ''), result);
       resolve();
     });
+  });
+}
+function renderTemplateFile(filepath: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const templateFilePath = filepath.replace('_ejs', 'ejs');
+    try {
+      fse.rename(filepath, templateFilePath);
+    } catch (err) {
+      return reject(err);
+    }
+    resolve();
   });
 }
