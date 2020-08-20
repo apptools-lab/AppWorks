@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { registerCommand, executeCommand } from '@iceworks/common-service';
 import { entryOptions } from '../constants';
 
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
@@ -50,6 +51,10 @@ class QuickEntryItem extends vscode.TreeItem {
 export function createQuickEntriesTreeView(context: vscode.ExtensionContext) {
   const quickEntriesProvider = new QuickEntriesProvider(context);
   const treeView = vscode.window.createTreeView('quickEntries', { treeDataProvider: quickEntriesProvider });
+
+  registerCommand('iceworksApp.quickEntries.start', (quickEntry: QuickEntryItem) => {
+    executeCommand(quickEntry.command.command)
+  });
 
   return treeView;
 }
