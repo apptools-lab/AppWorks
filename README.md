@@ -8,7 +8,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">Visual Intelligent Programming Assistant</p>
+<p align="center">Visual Intelligent Development Assistant</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg" /></a>

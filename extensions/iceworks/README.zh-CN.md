@@ -7,7 +7,7 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-可视化智能编程助手，通过可视化编程和智能辅助手段，更快更好地构建多端应用。
+可视化智能开发助手，通过可视化编程和智能辅助手段，更快更好地构建多端应用。
 
 ## 快速开始
 
