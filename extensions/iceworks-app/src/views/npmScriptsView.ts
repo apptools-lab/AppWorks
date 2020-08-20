@@ -5,7 +5,6 @@ import { createNpmCommand, checkPathExists, registerCommand } from '@iceworks/co
 import { dependencyDir, packageJSONFilename, projectPath } from '@iceworks/project-service';
 import executeCommand from '../commands/executeCommand';
 import stopCommand from '../commands/stopCommand';
-import { ITerminalMap } from '../types';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
   private workspaceRoot: string | undefined;
@@ -58,8 +57,8 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
 
       const scripts = packageJson.scripts
         ? Object.keys(packageJson.scripts).map((script) =>
-            toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
-          )
+          toScript(script, packageJson.scripts[script], `npmScripts-${script}`)
+        )
         : [];
       return scripts;
     } else {
@@ -88,19 +87,19 @@ export class ScriptTreeItem extends vscode.TreeItem {
   contextValue = 'script';
 }
 
-export function createNpmScriptsTreeView(context: vscode.ExtensionContext, terminals: ITerminalMap) {
+export function createNpmScriptsTreeView(context: vscode.ExtensionContext) {
   const npmScriptsProvider = new NpmScriptsProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('npmScripts', { treeDataProvider: npmScriptsProvider });
 
   registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       script.command.arguments = [projectPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`];
-      executeCommand(terminals, script.command, script.id);
+      executeCommand(script.command);
       return;
     }
-    executeCommand(terminals, script.command, script.id);
+    executeCommand(script.command);
   });
-  registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(terminals, script.id));
+  registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(script.command));
   registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
   const pattern = new vscode.RelativePattern(projectPath, packageJSONFilename);

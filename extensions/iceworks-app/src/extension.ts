@@ -74,16 +74,16 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init tree view
   const treeViews: any[] = [];
-  const terminals: ITerminalMap = new Map<string, Terminal>();
-  window.onDidCloseTerminal((terminal) => {
-    terminals.delete(terminal.name);
-  });
+  // const terminals: ITerminalMap = new Map<string, Terminal>();
+  // window.onDidCloseTerminal((terminal) => {
+  //   terminals.delete(terminal.name);
+  // });
 
   treeViews.push(createQuickEntriesTreeView(context));
-  treeViews.push(createNpmScriptsTreeView(context, terminals));
+  treeViews.push(createNpmScriptsTreeView(context));
   treeViews.push(createComponentsTreeView(context));
   treeViews.push(createPagesTreeView(context));
-  treeViews.push(createNodeDependenciesTreeView(context, terminals));
+  treeViews.push(createNodeDependenciesTreeView(context));
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
@@ -110,6 +110,6 @@ export async function activate(context: vscode.ExtensionContext) {
   if (projectType !== 'unknown') {
     vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
-    await createEditorMenuAction(terminals);
+    await createEditorMenuAction();
   }
 }
