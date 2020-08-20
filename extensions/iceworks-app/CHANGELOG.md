@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.4.6
+- feat: add quick entries in tree view.
+
 ## 0.4.5
 - feat: add component-generator and component-creator quickPick.
 

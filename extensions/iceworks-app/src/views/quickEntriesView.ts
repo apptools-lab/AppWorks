@@ -53,7 +53,7 @@ export function createQuickEntriesTreeView(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('quickEntries', { treeDataProvider: quickEntriesProvider });
 
   registerCommand('iceworksApp.quickEntries.start', (quickEntry: QuickEntryItem) => {
-    executeCommand(quickEntry.command.command)
+    executeCommand(quickEntry.command.command);
   });
 
   return treeView;
