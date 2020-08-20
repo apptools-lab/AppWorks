@@ -1,24 +1,31 @@
 {
   "name": "iceworks",
   "displayName": "Iceworks",
-  "description": "Universal Application Development Pack based on icejs(& rax-app) framework, provide visualization and intelligent technology to build Universal Application.",
+  "description": "Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better.",
   "publisher": "iceworks-team",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "engines": {
     "vscode": "^1.41.0"
   },
   "categories": [
-    "Extension Packs"
+    "Extension Packs",
+    "Programming Languages",
+    "Visualization",
+    "Debuggers",
+    "Notebooks"
   ],
   "keywords": [
+    "React",
+    "Low Code",
+    "Visual",
+    "Intelli Code",
+    "AI",
+    "Autocomplete",
+    "JavaScript",
+    "TypeScript",
     "ICE",
     "Rax",
-    "React",
-    "Low-code",
-    "lowcode",
-    "visual",
-    "IntelliCode",
-    "AI"
+    "小程序"
   ],
   "repository": {
     "type": "git",
