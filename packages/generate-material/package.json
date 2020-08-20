@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/generate-material",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate material collection or single component",
   "files": [
     "lib/"

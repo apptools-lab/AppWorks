@@ -4,6 +4,8 @@ import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/n
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
+import PegasusCard from '@/components/PegasusCard';
+import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
@@ -17,14 +19,23 @@ function checkIsWireless(source) {
   return (source.client && source.client === 'wireless') || source.type === 'rax' || source.type === 'miniProgram';
 }
 
-const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenConfigPanel, materialSources }) => {
+const ScaffoldMarket = ({
+  isAliInternal,
+  onScaffoldSelect,
+  curProjectField,
+  children,
+  onOpenConfigPanel,
+  materialSources,
+}) => {
   const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
   const [mainScaffolds, setMainScaffolds] = useState<IMaterialScaffold[]>([]);
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [pegasusCardSelected, setPegasusCardSelected] = useState<boolean>(false);
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
+    setPegasusCardSelected(false);
     try {
       setLoading(true);
       setSelectedSource(scaffold);
@@ -37,6 +48,11 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
     } finally {
       setLoading(false);
     }
+  }
+
+  function handlePegasusCardClick() {
+    setSelectedSource({});
+    setPegasusCardSelected(true);
   }
 
   function onScaffoldClick(scaffold) {
@@ -118,6 +134,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
                 );
               })}
           </div>
+          {isAliInternal ? <PegasusCard onClick={handlePegasusCardClick} selected={pegasusCardSelected} /> : null}
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}>
               <Icon type="add" />
@@ -128,6 +145,8 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
         <div className={styles.scaffolds}>
           {loading ? (
             <Loading visible={loading} className={styles.loading} />
+          ) : pegasusCardSelected ? (
+            <PegasusScaffoldContent />
           ) : (
             <>
               <div className={styles.mainScaffolds}>
@@ -220,7 +239,7 @@ const ScaffoldMarket = ({ onScaffoldSelect, curProjectField, children, onOpenCon
           )}
         </div>
       </div>
-      <div className={styles.action}>{children}</div>
+      {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
     </div>
   );
 };
