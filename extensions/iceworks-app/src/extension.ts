@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Terminal, window, ViewColumn } from 'vscode';
+import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
@@ -9,7 +9,6 @@ import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
-import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
@@ -74,16 +73,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init tree view
   const treeViews: any[] = [];
-  const terminals: ITerminalMap = new Map<string, Terminal>();
-  window.onDidCloseTerminal((terminal) => {
-    terminals.delete(terminal.name);
-  });
 
   treeViews.push(createQuickEntriesTreeView(context));
-  treeViews.push(createNpmScriptsTreeView(context, terminals));
+  treeViews.push(createNpmScriptsTreeView(context));
   treeViews.push(createComponentsTreeView(context));
   treeViews.push(createPagesTreeView(context));
-  treeViews.push(createNodeDependenciesTreeView(context, terminals));
+  treeViews.push(createNodeDependenciesTreeView(context));
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
@@ -110,6 +105,6 @@ export async function activate(context: vscode.ExtensionContext) {
   if (projectType !== 'unknown') {
     vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
-    await createEditorMenuAction(terminals);
+    await createEditorMenuAction();
   }
 }

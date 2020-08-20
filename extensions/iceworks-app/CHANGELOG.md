@@ -1,8 +1,9 @@
 # Change Log
 
 ## 0.4.6
-- Support pegasus project debugger.
+- feat: support pegasus project debugger.
 - feat: add quick entries in tree view.
+- fix: stop command fail.
 
 ## 0.4.5
 - feat: add component-generator and component-creator quickPick.
