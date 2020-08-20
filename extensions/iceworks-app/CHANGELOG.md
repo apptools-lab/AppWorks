@@ -2,6 +2,7 @@
 
 ## 0.4.6
 - Support pegasus project debugger.
+- feat: add quick entries in tree view.
 
 ## 0.4.5
 - feat: add component-generator and component-creator quickPick.

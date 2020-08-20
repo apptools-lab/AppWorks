@@ -36,8 +36,12 @@
       "iceworksApp": [
         {
           "id": "welcome",
-          "name": "",
+          "name": "Welcome",
           "when": "iceworks:isNotTargetProject"
+        },
+        {
+          "id": "quickEntries",
+          "name": "%iceworksApp.view.quickEntries.name%"
         },
         {
           "id": "npmScripts",
@@ -65,6 +69,10 @@
       {
         "view": "welcome",
         "contents": "%iceworksApp.viewsWelcome.welcome.contents%"
+      },
+      {
+        "view": "quickEntries",
+        "contents": ""
       },
       {
         "view": "npmScripts",
@@ -98,6 +106,14 @@
         "icon": {
           "light": "assets/light/publish.svg",
           "dark": "assets/dark/publish.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.quickEntries.start",
+        "title": "%iceworksApp.command.quickEntries.start.title%",
+        "icon": {
+          "light": "assets/light/run.svg",
+          "dark": "assets/dark/run.svg"
         }
       },
       {
@@ -275,19 +291,14 @@
           "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
-          "command": "iceworksApp.editorMenu.DefPublish",
-          "group": "navigation@02",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
-        },
-        {
           "command": "iceworksApp.editorMenu.runBuild",
           "group": "navigation@02",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && !iceworks:isAliInternal"
+          "when": "iceworks:showScriptIconInEditorTitleMenu"
         },
         {
-          "command": "iceworksApp.configHelper.start",
+          "command": "iceworksApp.editorMenu.DefPublish",
           "group": "navigation@03",
-          "when": "iceworks:showScriptIconInEditorTitleMenu"
+          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
         }
       ],
       "view/title": [
@@ -333,6 +344,11 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "iceworksApp.quickEntries.start",
+          "when": "view == quickEntries && viewItem == quickEntry",
+          "group": "inline"
+        },
         {
           "command": "iceworksApp.npmScripts.run",
           "when": "view == npmScripts && viewItem == script",

@@ -8,10 +8,11 @@ import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
+import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
-import showExtensionsQuickPick from './quickPicks/showExtensionsQuickPick';
+import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
 import createEditorMenuAction from './createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import autoSetViewContext from './autoSetViewContext';
@@ -34,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
     registerCommand(showExtensionsQuickPickCommandId, () => {
       recorder.recordActivate();
 
-      showExtensionsQuickPick();
+      showEntriesQuickPick();
     })
   );
 
@@ -77,6 +78,8 @@ export async function activate(context: vscode.ExtensionContext) {
   window.onDidCloseTerminal((terminal) => {
     terminals.delete(terminal.name);
   });
+
+  treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context, terminals));
   treeViews.push(createComponentsTreeView(context));
   treeViews.push(createPagesTreeView(context));
