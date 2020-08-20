@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Terminal, window, ViewColumn } from 'vscode';
+import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { getProjectType } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
@@ -9,7 +9,6 @@ import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
-import { ITerminalMap } from './types';
 import services from './services';
 import { showExtensionsQuickPickCommandId } from './constants';
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
@@ -74,10 +73,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init tree view
   const treeViews: any[] = [];
-  // const terminals: ITerminalMap = new Map<string, Terminal>();
-  // window.onDidCloseTerminal((terminal) => {
-  //   terminals.delete(terminal.name);
-  // });
 
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
