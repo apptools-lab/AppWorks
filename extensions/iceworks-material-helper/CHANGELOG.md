@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1
+
+- docs: add more badges.
+
 ## 0.3.0
 
 - feat: add Component Doc Helper

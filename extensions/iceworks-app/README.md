@@ -1,104 +1,103 @@
-简体中文 | [English](./README.en.md)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.zh-CN.md)
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+# Iceworks Application Viewer
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-# Iceworks 应用大纲树
+Preview and manage your application from a framework perspective, including npm scripts, pages, components and dependencies, friendly for React and [Rax](https://rax.js.org/).
 
-从框架视角预览和管理您应用的组织，包括 npm 脚本、页面、组件和依赖信息。对 React 和 [Rax](https://rax.js.org/) 应用友好。
+## Usage
 
-## 功能
+### Initialize panel
 
-### 侧边栏 - 初始化
+After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your activity bar. Click it to enter Iceworks panel.
 
-当您安装了插件之后，VS Code 的活动栏上会增加 Iceworks 图标，单击此图标进入应用大纲树插件。
+The initialization panel appears if your current workspace is empty or **isn't React/Rax application**.
 
-如您当前的**工作区为空**或**非 React/Rax 应用**，则会出现初始化侧边栏。
+![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
+### Create a new project
 
-#### 创建项目
+When you open an empty folder, the initialization panel automatically invokes the create application process, which you can also invoke by clicking the Create Application button on the panel.
 
-当您打开一个空文件夹时，初始化侧边栏将自动唤起创建应用流程，您也可以通过点击侧边栏上的「创建应用」按钮来唤起该流程。
+![demo](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87407459-c4a41080-c5f4-11ea-882e-d198afc35413.png)
+#### Setting
 
-#### 设置
+![demo](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87531798-d1903500-c6c4-11ea-9c6d-e19d6241c91a.gif)
+1. Click Settings to enter the Settings page
+2. Configure package management tools (default: npm)
+3. Configure default image source (default: Taobao image)
+4. Set up custom repositories (default: null)
 
-1. 点击设置，进入设置页面
-2. 配置包管理工具（默认为 npm ）
-3. 配置默认镜像源（默认为淘宝网镜像）
-4. 选择自定义物料库 (无默认外部物料库)
+### Iceworks panel
 
-### 侧边栏 - 大纲树
+When your workspace is a React or Rax application, the Iceworks panel appears.
 
-当您的工作区是一个 React 或 Rax 应用，则会出现大纲树侧边栏。
+#### View and execute npm Scripts
 
-#### 查看和执行应用的 npm 脚本
+![demo](https://user-images.githubusercontent.com/56879942/87393980-9f59d700-c5e1-11ea-9e07-0244926f54cc.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393980-9f59d700-c5e1-11ea-9e07-0244926f54cc.gif)
+1. View executable script information in the left pane.
+2. Click the `Play` button to execute the script at terminal immediately.
+3. Click the `Stop` button to end the corresponding script executed at terminal.
 
-1. 在左侧的面板处查看可执行的脚本信息；
-2. 点击 `播放按钮` ，立即在终端执行脚本；
-3. 点击 `终止按钮` ，结束在终端执行的对应脚本。
+### Pages and Components
 
-#### 页面和组件信息
+#### Jump into corresponding pages and components
 
-##### 快速跳转至对应页面和组件的源码
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+1. Click items in PAGES and COMPONENTS on the left panel.
+2. Jump into files of selected projects.
 
-1. 点击左侧面板中页面列表和组件列表中的选项。
-2. 跳转到所选项目所在的源码文件
+#### Activate Generate Page and Create Component(See [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
 
-##### 支持激活添加页面和组件功能 （使用方法参照 [可视化搭建插件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)）
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393953-949f4200-c5e1-11ea-896a-fd2d592050e0.gif)
+1. Click `+` in PAGES header to jump into GENERATE PAGE page.
+2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
 
-1. 点击页面列表标题栏的 `+` 进入生成页面界面；
-2. 点击组件列表标题栏的 `+` 进入创建组件界面。
+### Node Dependencies
 
-#### 应用依赖信息
+#### View the application dependency information and install new dependencies
 
-##### 查看依赖信息、升级依赖包或重装应用依赖
+![demo](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
+1. View all  installed dependencies in the project in NODE DEPENDENCIES in the bottom of ICE panel.
+2. Click `⬆` button next to dependency item,  you can update  the dependency to the latest version.
+3. Click `Reinstall Dependencies` button on  NODE DEPENDENCIES header to reinstall all the dependencisce of the project.
 
-1. 在左下角依赖库中查看应用安装的所有依赖；
-2. 点击依赖项目旁边的 `⬆️` 按钮，即可更新到最新依赖；
-3. 点击依赖列表标题框上的 `重装依赖` 按钮，即可重装应用的所有依赖包。
+#### Install and reinstall dependencies
 
-##### 一键安装或重装指定依赖
+![demo](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
+1. Click the `+` button on the NODE DEPENDENCIES header.
+2. Select Install product Dependency or Debug Devdependency on the command panel that appears.
+3. Type the npm package name and version information to be installed, such as' `typescript@latest`.
+4. The npm package will be installed automatically.
+   NOTE: If the package was installed, it will be reinstalled.
 
-1. 点击依赖列表标题框上面的 `+` 按钮；
-2. 在出现的命令面板上选择安装为 Dependencies (生产环境的依赖)或 devDependencies (开发环境的依赖)；
-3. 输入需要安装的 npm 包及版本信息，例如 `typescript@latest` ；
-4. npm 包将会自动安装，如果这个包已经添加到了依赖中，那么将会重新安装。
+## Iceworks command palette
 
-### 命令面板
+If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
 
-您可以通过点击窗口右下角状态栏上的「Iceworks」按钮激活 Iceworks 命令面板。
+![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
+1. Find Iceworks in the bottom right of VS Code.
+    > NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
+2. Click the Iceworks plugin icon to enter the Iceworks command palette.
 
-1. 找到 VS Code 右下角的 Iceworks 。
-    > 注意 : 如果没有 Iceworks 图标，请按照 `激活` 章节的内容来激活此按钮。
-2. 点击 Iceworks 按钮，打开命令面板。
-
-### 工程调试
+### Debug
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
-更多请看[参考文档](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)
+For more information, please see [Reference Document](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.en.md)
 
-## 更多
+## More
 
-访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
-
-## License
-
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

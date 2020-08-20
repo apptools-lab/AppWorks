@@ -5,13 +5,13 @@ const { window, commands } = vscode;
 
 const addComponentTypeOptions = [
   {
-    label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.label'),
-    detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.generateComponent.detail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.generate-component',
   },
   {
-    label: i18n.format('extension.iceworksApp.showExtensionsQuickPick.createComponent.label'),
-    detail: i18n.format('extension.iceworksApp.showExtensionsQuickPick.createComponent.detail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.detail'),
     command: 'iceworks-ui-builder.create-component',
   },
 ];
