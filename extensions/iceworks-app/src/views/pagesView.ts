@@ -85,13 +85,36 @@ class PageTreeItem extends vscode.TreeItem {
   contextValue = 'page';
 }
 
+const addPageQuickPickItems: any[] = [
+  {
+    label: '创建页面',
+    detail: '通过配置模板的方式创建页面',
+    command: '',
+  },
+  {
+    label: '生成页面',
+    detail: '通过区块组装的方式生成页面',
+    command: 'iceworks-ui-builder.generate-page',
+  },
+];
+function showAddPageQuickPicks() {
+  const quickPick = vscode.window.createQuickPick();
+  quickPick.items = addPageQuickPickItems;
+  quickPick.onDidChangeSelection((change) => {
+    // @ts-ignore
+    vscode.commands.executeCommand(change[0].command);
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+}
+
 export function createPagesTreeView(context: vscode.ExtensionContext) {
   const pagesProvider = new PagesProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
   registerCommand('iceworksApp.pages.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
-    vscode.commands.executeCommand('iceworks-ui-builder.generate-page');
+    showAddPageQuickPicks();
   });
   registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
