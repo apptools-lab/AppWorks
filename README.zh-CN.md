@@ -1,4 +1,4 @@
-English | [简体中文](./README.md)
+简体中文 | [English](./README.md)
 
 <p align="center">
   <a href="https://ice.work">
@@ -8,47 +8,46 @@ English | [简体中文](./README.md)
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">Universal Application Development Pack</p>
+<p align="center">可视化智能开发助手</p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
-  <a href="https://github.com/alibaba/ice/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
+  <a href="https://github.com/ice-lab/iceworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
 
-## Quick Start
+## 快速开始
 
-Use Iceworks to develop Universal Application quickly:
-
-- Click "Shop Icon" on Activity Bar of VS Code
-- Enter "iceworks" in the input box to search
-- Click the Install button on the first iceworks option
+- 点击 VS Code 活动栏上的「插件商店图标」；
+- 在输入框中输入「iceworks」进行搜索；
+- 点击第一个「iceworks」选项上的「安装」按钮。
 
 ![install demo](https://img.alicdn.com/tfs/TB1Bm.kaCR26e4jSZFEXXbwuXXa-1024-766.gif)
 
-After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start:
+安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
 
-![Iceworks](https://img.alicdn.com/tfs/TB1kPb5NoT1gK0jSZFrXXcNCXXa-1024-766.gif)
+![使用示例](https://img.alicdn.com/tfs/TB1nk3YRQL0gK0jSZFtXXXQCXXa-1024-768.png_790x10000.jpg)
 
-See the [Iceworks Pack](extensions/iceworks/README.md) for more details.
+[查看套件了解更多功能](extensions/iceworks/README.md)。
 
-## Contributors
+## 参与贡献
 
-Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on icestore.
+欢迎通过 [issue](https://github.com/ice-lab/iceworks/issues/new) 反馈问题。
 
-If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
+如果对 `Iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## ICE Ecosystem
+## ICE 生态
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
-| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | A universal framework based on react.js |
-| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | Micro Frontends solution for large application |
-| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | Simple and friendly state for React |
-| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | Alibaba Group Unified Form Solution |
+| [icejs] | [![icejs-status]][icejs-package] | [docs][icejs-docs] | 基于 React 的企业级研发框架 |
+| [icestark] | [![icestark-status]][icestark-package] | [docs][icestark-docs] | 面向大型应用的微前端解决方案 |
+| [icestore] | [![icestore-status]][icestore-package] | [docs][icestore-docs] | 简单友好的轻量级状态管理方案 |
+| [formily] | [![formily-status]][formily-package] | [docs][formily-docs] | 能力完备性能出众的表单解决方案 |
 
 [icejs]: https://github.com/alibaba/ice
 [icestark]: https://github.com/ice-lab/icestark
@@ -70,9 +69,9 @@ If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
 
-## Community
+## 社区
 
-| DingTalk community                               | GitHub issues |  Gitter |
+| 钉钉群	                             | GitHub issues |  Gitter |
 |-------------------------------------|--------------|---------|
 | <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
 

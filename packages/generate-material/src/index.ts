@@ -7,6 +7,9 @@ import { getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 import ejsRenderDir from './ejsRenderDir';
 import formatProject from './formatProject';
 
+/**
+ * init component by template
+ */
 export interface ITemplateOptions {
   npmName: string; // @icedesign/ice-label
   name?: string; // ice-label (english and variable)
@@ -31,9 +34,6 @@ export interface IOptions {
   materialType: 'component' | 'block' | 'scaffold';
 }
 
-/**
- * init component by template
- */
 export async function generateMaterial({
   rootDir,
   materialTemplateDir,
