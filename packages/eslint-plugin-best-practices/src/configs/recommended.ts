@@ -19,6 +19,7 @@ module.exports = deepmerge(defaultEslintConfig, {
         quotes: 'off',
         '@iceworks/best-practices/deps-no-ice-scripts': 'warn',
         '@iceworks/best-practices/deps-no-resolutions': 'warn',
+        '@iceworks/best-practices/deps-no-router-library': 'warn',
         '@iceworks/best-practices/no-broad-semantic-versioning': 'error',
       },
     },
