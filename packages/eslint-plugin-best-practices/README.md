@@ -46,6 +46,7 @@ Or you can only use extends to set default rules config.
 * [`deps-no-ice-scripts`](./docs/rules/deps-no-ice-scripts.md) It is not recommended to use ice-scripts, the new version is ice.js.
 * [`deps-no-resolutions`](./docs/rules/deps-no-resolutions.md) It is not recommended to use resolutions to lock the version.
 * [`deps-no-router-library`](./docs/rules/deps-no-router-library.md) It is not recommended to directly rely on routing libraries, such as react-router-dom, react-router. 
+* [`deps-recommend-update-rax`](./docs/rules/ddeps-recommend-update-rax.md) Rax version < 1.0 , recommend to update Rax.
 * [`no-broad-semantic-versioning`](./docs/rules/no-broad-semantic-versioning.md) Recommended the semantic versioning include everything greater than a particular version in the same major range.
 * [`no-js-in-ts-project`](./docs/rules/no-js-in-ts-project.md) It is not recommended to use js and ts files at the same time.
 * [`recommend-functional-component`](./docs/rules/recommend-functional-component.md) It is not recommended to use class component.

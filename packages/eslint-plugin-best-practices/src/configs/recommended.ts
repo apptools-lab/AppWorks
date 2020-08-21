@@ -20,6 +20,7 @@ module.exports = deepmerge(defaultEslintConfig, {
         '@iceworks/best-practices/deps-no-ice-scripts': 'warn',
         '@iceworks/best-practices/deps-no-resolutions': 'warn',
         '@iceworks/best-practices/deps-no-router-library': 'warn',
+        '@iceworks/best-practices/deps-recommend-update-rax': 'warn',
         '@iceworks/best-practices/no-broad-semantic-versioning': 'error',
       },
     },

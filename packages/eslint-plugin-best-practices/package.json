@@ -24,7 +24,8 @@
   "dependencies": {
     "fs-extra": "^9.0.1",
     "line-column": "^1.0.2",
-    "requireindex": "~1.1.0"
+    "requireindex": "~1.1.0",
+    "semver": "^7.3.2"
   },
   "devDependencies": {
     "eslint": "^7.1.0",

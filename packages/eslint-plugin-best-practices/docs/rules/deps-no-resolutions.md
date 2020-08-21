@@ -1,6 +1,6 @@
 # deps-no-resolutions
 
-It is not recommended to use resolutions to lock the version
+It is not recommended to use resolutions to lock the version.
 
 ## Rule Details
 

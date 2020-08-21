@@ -1,7 +1,6 @@
 # deps-no-ice-scripts
 
-It is not recommended to use ice-scripts, the new version is ice.js. See [https://ice.work/](https://ice.work/)
-
+It is not recommended to use ice-scripts, the new version is ice.js. See [https://ice.work/](https://ice.work/).
 ## Rule Details
 
 Examples of **incorrect** code for this rule:
