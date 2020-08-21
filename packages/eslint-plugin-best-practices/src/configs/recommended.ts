@@ -17,6 +17,7 @@ module.exports = deepmerge(defaultEslintConfig, {
       processor: '@iceworks/best-practices/.json',
       rules: {
         quotes: 'off',
+        '@iceworks/best-practices/deps-no-ice-scripts': 'warn',
         '@iceworks/best-practices/deps-no-resolutions': 'warn',
         '@iceworks/best-practices/no-broad-semantic-versioning': 'error',
       },

@@ -34,26 +34,13 @@ module.exports = {
           node.value.properties.forEach((property) => {
             if (property.key && property.key.value) {
               const dependencyName = property.key.value;
-              console.log(dependencyName);
 
               if (dependencyName === 'ice-scripts') {
-                console.log(1111);
+                context.report({
+                  loc: property.loc,
+                  messageId: 'depsNoResolutions',
+                });
               }
-
-              // const dependencyPackage = fs.readJSONSync(dependencyPackageFile);
-              // const license = dependencyPackage.license || '';
-              // https://spdx.org/licenses/
-              //   if (license.indexOf('Patent') > -1) {
-              //     context.report({
-              //       loc: property.loc,
-              //       messageId: 'noPatentLicenses',
-              //       data: {
-              //         dependencyName,
-              //         license,
-              //       },
-              //     });
-
-              // }
             }
           });
         }
