@@ -1,5 +1,12 @@
 # Change Log
 
+<<<<<<< HEAD
+=======
+## 0.7.0
+
+- docs: add more badges
+
+>>>>>>> origin/master
 ## 0.6.0
 
 - docs: update slogan

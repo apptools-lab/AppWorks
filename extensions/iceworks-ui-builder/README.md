@@ -1,53 +1,65 @@
-简体中文 | [English](./README.en.md)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.zh-CN.md)
 
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+# Iceworks UI Builder
+
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-# Iceworks 可视化搭建插件
+Build UI by low-code way.
 
-使用可视化搭建的方式创建用户界面。
+## Generate Component
 
-## 生成页面
+Generate components in a visual way.
 
-通过可视化操作，以区块拼装的方式快速生成页面。
+### Activate
 
-### 激活
+![demo](https://img.alicdn.com/tfs/TB1hMmdRxz1gK0jSZSgXXavwpXa-2880-1800.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87402315-f49be580-c5ed-11ea-87a8-4143a461124f.gif)
+- Activate vscode command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: Generate Component` to activate the extension.
 
-1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 在命令面板中输入 `Iceworks: 生成页面` ，点击选中的项目或按下键盘回车键，激活页面生成插件
+### Usage
 
-### 使用
+![demo](https://img.alicdn.com/tfs/TB1VGQHeypE_u4jSZKbXXbCUVXa-1440-900.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87531900-f5ec1180-c6c4-11ea-8753-ad269d5768d5.gif)
+1. Drag the components in the left to the middle panel.
+2. Press `⌘+S` (MacOS) or `Ctrl+S` (Windows), input the name of the component and then press Enter to generate component.
 
-1. 输入页面名称（将用作文件夹名）
-2. 从右侧的区块列表中选择页面需要使用的区块，点击添加到左侧页面预览区
-3. 在左侧页面预览区可通过拖拽排序区块的顺序，或点击右上角的删除图标移除区块
-4. 点击“生成页面”按钮，生成页面代码，页面代码将生成到 `src/pages/` 目录下
+## Generate Page
 
-## 创建组件
+Through GUI, you can quickly assemble pages with materials.
 
-通过物料快速创建前端组件。
+### Activate
 
-### 激活
+![demo](https://user-images.githubusercontent.com/56879942/88197953-bf3e6a00-cc75-11ea-81c2-b75a55d649bd.gif)
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87535699-77926e00-c6ca-11ea-9e21-65fad2e95e0f.gif)
+1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
+2. In the command palette, type 'Iceworks: Generate page' and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
-1. 通过 `⇧⌘P` ( MacOS ) 或 `Ctrl+Shift+p` ( Windows ) 快捷键唤起命令面板;
-2. 输入 `Iceworks: 创建组件` ，点击选中的项目或按下键盘回车键，激活插件
+### Usage
 
-### 使用
+![demo](https://user-images.githubusercontent.com/56879942/88197942-bb124c80-cc75-11ea-8caa-68fe2dc4cbc3.gif)
 
-Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质量物料，可一键添加到您的应用中。
+1. Enter the page name (to be used as the folder name).
+2. Select the block to be used for the page from the block list on the right, click to add it to the page preview area on the left.
+3. Rearrange blocks by dragging and dropping the order of the blocks in the left page preview area, or delete blocks by clicking icons in the upper right corner.
+4. Click `Generate page` button to generate page code. The page code will be generated into 'src /pages/'
 
-![使用示例](https://user-images.githubusercontent.com/56879942/87535673-6f3a3300-c6ca-11ea-852e-f3a2bb3eb7bc.gif)
+## Create Component
 
-1. 填写组件名（同时也是组件所在文件夹的名称)；
-2. 组件名输入框下方选择一个使用的区块；
-3. 点击 `创建组件` 按钮，生成组件代码。
+Iceworks provides a huge amount of high-quality materials for React and [Rax](https://rax.js.org/) apps that can be added to your app with one click.
 
+### Activate
+
+![demo](https://user-images.githubusercontent.com/56879942/88188643-b4320c80-cc6a-11ea-9cbd-251fd6d8acf1.gif)
+
+1. Through (Ctrl+Shift+P or ⇧⌘P) evoke vscode command palette
+2. In the vscode command palette, enter 'Iceworks: Create component', click the selected item or press enter to arouse the plugin;
+
+### Usage
+
+<<<<<<< HEAD
 ## 生成组件
 
 通过可视化搭建的方式生成组件
@@ -66,9 +78,14 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 2. 按下 `⌘+S` ( MacOS ) 或 `Ctrl+S` ( Windows ) ，在输入框中填写组件名，按下回车键即可生成组件到项目中。
 
 ## 更多
+=======
+![demo](https://user-images.githubusercontent.com/56879942/88188623-af6d5880-cc6a-11ea-8b33-3304926f5ce7.gif)
+>>>>>>> origin/master
 
-访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
+1. Fill in the component name (also the folder name of the componenent)
+2. Select a material below.
+3. Click `Create component` button to generate component code.
 
-## License
+## More
 
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

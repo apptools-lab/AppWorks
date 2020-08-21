@@ -1,11 +1,21 @@
 # Change Log
 
+<<<<<<< HEAD
 ## 0.3.5
+=======
+## 0.3.6
+
+- docs: add more badges.
+
+## 0.3.5
+
+>>>>>>> origin/master
 - Update completionItem detail text.
 - Update data recorder.
 - Support build-plugin-fusion themePackage.
 
 ## 0.3.4
+
 - Fix variables completions shown when edit css classes and style keys.
 - Add data recorder.
 

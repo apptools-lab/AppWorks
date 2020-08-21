@@ -1433,7 +1433,11 @@
   resolved "https://registry.npm.taobao.org/@icedesign/skin/download/@icedesign/skin-0.1.14.tgz#be8e62f467a5a2eabe79f54de23b0925e830dae2"
   integrity sha1-vo5i9Gelouq+efVN4jsJJegw2uI=
 
+<<<<<<< HEAD
 "@iceworks/code-generator@^0.1.0":
+=======
+"@iceworks/code-generator@^0.1.2":
+>>>>>>> origin/master
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/@iceworks/code-generator/download/@iceworks/code-generator-0.1.2.tgz?cache=0&sync_timestamp=1597288372252&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40iceworks%2Fcode-generator%2Fdownload%2F%40iceworks%2Fcode-generator-0.1.2.tgz#92361b3535c00df48de941dc9aec60a2cbca66dc"
   integrity sha1-kjYbNTXADfSN6UHcmuxgosvKZtw=

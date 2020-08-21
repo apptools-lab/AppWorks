@@ -1,5 +1,12 @@
 # Change Log
 
+<<<<<<< HEAD
+=======
+## 0.3.1
+
+- docs: add more badges.
+
+>>>>>>> origin/master
 ## 0.3.0
 
 - feat: add Component Doc Helper

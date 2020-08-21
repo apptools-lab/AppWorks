@@ -3,7 +3,11 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
+<<<<<<< HEAD
   "version": "0.3.5",
+=======
+  "version": "0.3.6",
+>>>>>>> origin/master
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -39,11 +43,19 @@
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
-  "main": "./build/index.js",
+  "main": "./build/extension.js",
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./tsconfig.json"
+    "vscode:prepublish": "rm -rf build && webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworksApp.recorder.recordCompletionItemSelect"
+      }
+    ]
   },
   "contributes": {
     "commands": [
@@ -67,7 +79,9 @@
     "datauri": "^2.0.0",
     "line-column": "^1.0.2",
     "tinycolor2": "^1.4.1",
-    "vscode-web-custom-data": "^0.1.4"
+    "vscode-web-custom-data": "^0.1.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md",
   "bugs": {

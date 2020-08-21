@@ -1,5 +1,16 @@
 # Change Log
 
+<<<<<<< HEAD
+=======
+## 0.1.6
+
+- docs: add more badges.
+
+## 0.1.5
+
+- fix: build error
+
+>>>>>>> origin/master
 ## 0.1.4
 
 - feat: support generate component

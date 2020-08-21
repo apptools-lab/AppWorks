@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 
 const EXTENSION_PATH = path.join(__dirname, '../extensions');
-const ZHCN_DOC = 'README.md';
-const I18N_DOC = 'README.en.md';
+const ZHCN_DOC = 'README.zh-CN.md';
+const I18N_DOC = 'README.md';
 const DOCS = [];
 
 // 加载所有docs
