@@ -96,9 +96,6 @@ export async function activate(context: vscode.ExtensionContext) {
       recorder.record({
         module: 'treeView',
         action: 'active',
-        data: {
-          title,
-        },
       });
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
