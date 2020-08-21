@@ -52,7 +52,3 @@ Or you can only use extends to set default rules config.
 * [`no-lowercase-component-name`](./docs/rules/no-lowercase-component-name.md) It is not recommended to name components in lower case.
 * [`no-multi-nested-page`](./docs/rules/no-multi-nested-page.md) Multiple nested pages are not recommended.
 * [`recommend-functional-component`](./docs/rules/recommend-functional-component.md) It is not recommended to use class component.
-
-
-
-
