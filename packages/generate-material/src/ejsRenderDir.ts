@@ -2,17 +2,17 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as ejs from 'ejs';
 import * as fse from 'fs-extra';
-import { ITemplateOptions } from './type';
+import { ITemplateOptions } from './index';
 
 export default async function (dir: string, options: ITemplateOptions): Promise<void> {
   return new Promise((resolve, reject) => {
     glob(
-      '**/*.ejs',
+      '**/*.?(_)ejs',
       {
         cwd: dir,
         nodir: true,
         dot: true,
-        ignore: options.useEjsTemplate ? ['**/*.tsx.ejs', '**/*.jsx.ejs', 'node_modules/**'] : ['node_modules/**'],
+        ignore: ['node_modules/**'],
       },
       (err, files) => {
         if (err) {
@@ -38,14 +38,19 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
 
 function renderFile(filepath: string, options: any): Promise<string> {
   return new Promise((resolve, reject) => {
-    ejs.renderFile(filepath, options, (err, result) => {
-      if (err) {
-        return reject(err);
-      }
-
-      fse.removeSync(filepath);
-      fse.writeFileSync(filepath.replace(/\.ejs$/, ''), result);
+    if (filepath.endsWith('_ejs')) {
+      const templateFilePath = filepath.replace(/_ejs$/, 'ejs');
+      fse.renameSync(filepath, templateFilePath);
       resolve();
-    });
+    } else {
+      ejs.renderFile(filepath, options, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        fse.removeSync(filepath);
+        fse.writeFileSync(filepath.replace(/\.ejs$/, ''), result);
+        resolve();
+      });
+    }
   });
 }

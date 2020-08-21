@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { isAliNpm } from 'ice-npm-utils';
-import { ITemplateOptions } from './type';
+import { ITemplateOptions } from './index';
 
 interface IOptions {
   rootDir: string;
