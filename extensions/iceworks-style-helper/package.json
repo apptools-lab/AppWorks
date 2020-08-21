@@ -3,11 +3,7 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
-<<<<<<< HEAD
-  "version": "0.3.5",
-=======
   "version": "0.3.6",
->>>>>>> origin/master
   "engines": {
     "vscode": "^1.41.0"
   },

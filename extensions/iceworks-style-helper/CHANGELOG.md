@@ -1,15 +1,11 @@
 # Change Log
 
-<<<<<<< HEAD
-## 0.3.5
-=======
 ## 0.3.6
 
 - docs: add more badges.
 
 ## 0.3.5
 
->>>>>>> origin/master
 - Update completionItem detail text.
 - Update data recorder.
 - Support build-plugin-fusion themePackage.

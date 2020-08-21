@@ -1,15 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.zh-CN.md)
 
-<<<<<<< HEAD
-[![Version](https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
-
-# Iceworks 套件
-
-> 基于 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 框架的多端研发套件，提供可视化和智能化技术构建多端应用。
-=======
 # Iceworks
->>>>>>> origin/master
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
@@ -19,31 +10,19 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 Iceworks is a Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better.
 
-<<<<<<< HEAD
-**第一步**：点击活动栏上的 Iceworks 图标，打开侧边栏和创建应用流程：
-=======
 ## Quick start
 
 Click "Iceworks Icon" on the **Activity Bar** to open the **Iceworks Side Bar**:
 
 ![demo](https://img.alicdn.com/tfs/TB1aRI.RHr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
->>>>>>> origin/master
 
 After the application is created, NPM script execution/page creation/component creation and other operations are performed in **Iceworks Side Bar**:
 
-<<<<<<< HEAD
-**第二步**：应用创建完成，在 Iceworks 侧边栏上进行 npm 脚本执行、生成页面、创建组件等操作：
-=======
 ![demo](https://img.alicdn.com/tfs/TB1lyV9inM11u4jSZPxXXahcXXa-1024-768.png_790x10000.jpg)
->>>>>>> origin/master
 
 More features can be obtained by search 'Iceworks' in the Command Panel or click "Iceworks button" on the Status Bar:
 
-<<<<<<< HEAD
-**第三步**：更多功能，可以点击状态栏右下角的「Iceworks」进行获取：
-=======
 ![demo](https://img.alicdn.com/tfs/TB1ickZRQL0gK0jSZFtXXXQCXXa-1024-768.png_790x10000.jpg)
->>>>>>> origin/master
 
 ## Extensions
 

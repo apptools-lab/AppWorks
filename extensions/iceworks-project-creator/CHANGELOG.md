@@ -1,13 +1,10 @@
 # Change Log
 
-<<<<<<< HEAD
-=======
 ## 0.3.7
 
 - docs: add more badges.
 - feat: support create pegasus project 
 
->>>>>>> origin/master
 ## 0.3.6
 
 - feat: disable form input when submitting

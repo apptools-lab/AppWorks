@@ -2,14 +2,10 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 # Iceworks Config Helper
 
-<<<<<<< HEAD
-为 [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) 的配置类文件(build.json/app.json) 提供可视化表单设置或代码编辑提醒、校验等功能。并且为所有 json 类型的配置文件提供可视化编辑功能。
-=======
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
->>>>>>> origin/master
 
 For [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) configuration files(like app.json/build.json), provides visualization form setting or code editing reminder, verification and other features. It also provides visualization for all json files.
 
@@ -60,17 +56,7 @@ Use code snippets for quick configuration:
 
 #### Reveal Source File
 
-<<<<<<< HEAD
-#### 显示源文件
-
-在可视化面板中快速定位到源文件并进行代码编辑。
-
-![使用说明](https://user-images.githubusercontent.com/56879942/90103045-7493a780-dd74-11ea-836c-13ad2a3ad3d5.gif)
-
-## 更多
-=======
 Quickly locate the source file of panel and open an editor of sourceFile.
->>>>>>> origin/master
 
 ![demo](https://user-images.githubusercontent.com/56879942/90112437-91cf7280-dd82-11ea-875f-dc85459bfcc7.gif)
 

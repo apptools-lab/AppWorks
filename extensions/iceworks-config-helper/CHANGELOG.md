@@ -1,12 +1,9 @@
 # Change Log
 
-<<<<<<< HEAD
-=======
 ## 0.3.2
 
 - docs: add more badges.
 
->>>>>>> origin/master
 ## 0.3.1
 
 - feat: support all json files.

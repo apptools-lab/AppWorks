@@ -3,11 +3,7 @@
   "displayName": "Iceworks UI Builder",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-<<<<<<< HEAD
-  "version": "0.1.4",
-=======
   "version": "0.1.6",
->>>>>>> origin/master
   "engines": {
     "vscode": "^1.41.0"
   },
