@@ -92,6 +92,11 @@ export async function activate(context: vscode.ExtensionContext) {
           },
         });
       }
+
+      recorder.record({
+        module: 'treeView',
+        action: 'active',
+      });
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         recordDAU();
