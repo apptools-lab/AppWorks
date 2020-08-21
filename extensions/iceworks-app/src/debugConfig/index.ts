@@ -75,6 +75,7 @@ export function setDebugConfig() {
     if (fs.existsSync(packageConfigFile)) {
       const { dependencies = {}, devDependencies = {} } = fs.readJSONSync(packageConfigFile);
       // Only ice.js support set webpack dev server disable open, for now
+      // TODO wait rax script support --disable-open or sync getProjectFramework method
       if (devDependencies['ice.js'] || dependencies['ice.js']) {
         disableOpen = true;
       }
