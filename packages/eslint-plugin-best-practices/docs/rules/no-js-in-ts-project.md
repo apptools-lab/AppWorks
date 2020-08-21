@@ -5,8 +5,6 @@ It is not recommended to use js and ts files at the same time
 
 ## Rule Details
 
-This rule aims to...
-
 Examples of **incorrect** directory for this rule:(contains xx.js in ts project)
 
 ```Bash

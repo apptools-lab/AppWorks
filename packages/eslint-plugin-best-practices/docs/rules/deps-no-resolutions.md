@@ -4,10 +4,9 @@ It is not recommended to use resolutions to lock the version
 
 ## Rule Details
 
-
 Examples of **incorrect** code for this rule:
 
-```js
+```json
 {
   "resolutions": {
     "package-a": "1.0.0",
