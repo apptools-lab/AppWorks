@@ -194,31 +194,29 @@ class DependencyTreeItem extends vscode.TreeItem {
   };
 }
 
-export function createNodeDependenciesTreeView(context, terminals) {
+export function createNodeDependenciesTreeView(context) {
   const nodeDependenciesProvider = new DepNodeProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
 
   registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
     if (node.command) {
-      executeCommand(terminals, node.command, node.id);
+      executeCommand(node.command);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();
-      executeCommand(terminals, script!);
+      executeCommand(script);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
-    showDepsInputBox(terminals, nodeDependenciesProvider, 'dependencies')
+    showDepsInputBox(nodeDependenciesProvider, 'dependencies')
   );
   registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
-    showDepsInputBox(terminals, nodeDependenciesProvider, 'devDependencies')
+    showDepsInputBox(nodeDependenciesProvider, 'devDependencies')
   );
-  registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () =>
-    showDepsQuickPick(terminals, nodeDependenciesProvider)
-  );
+  registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => showDepsQuickPick(nodeDependenciesProvider));
 
   const pattern = new vscode.RelativePattern(path.join(projectPath, dependencyDir), '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

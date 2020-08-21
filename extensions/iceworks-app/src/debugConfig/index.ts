@@ -5,10 +5,10 @@ import { parse } from 'comment-json';
 import { getLaunchConfig, getTasksConfig } from './getDefaultConfigs';
 
 // Iceworks debug config
+export const BASE_URL = 'http://localhost:3333';
 export const CONFIG_NAME = 'Iceworks Debug';
 export const CONFIG_START_LABEL = 'Iceworks Start Background Tasks';
 export const CONFIG_STOP_LABEL = 'Iceworks Stop Background Tasks';
-export const START_URL = 'http://localhost:3333';
 
 export interface IDebugConfig {
   version?: string;
@@ -35,9 +35,25 @@ export function setDebugConfig() {
     fs.mkdirSync(targetDir);
   }
 
+  // Set pegasus service url
+  let isPegasusProject = false;
+  let specialLaunchUrl = '';
+  try {
+    const abcConfigFile = path.join(rootPath, 'abc.json');
+    if (fs.existsSync(abcConfigFile)) {
+      const abcConfig = fs.readJSONSync(abcConfigFile);
+      if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
+        isPegasusProject = true;
+        specialLaunchUrl = `${BASE_URL}/${abcConfig.group}/${abcConfig.name}`;
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
   // Set launch.json
   let launchConfig;
-  const defaultLaunchConfig = getLaunchConfig();
+  const defaultLaunchConfig = getLaunchConfig(specialLaunchUrl);
   const launchConfigPath = path.join(targetDir, 'launch.json');
   if (fs.existsSync(launchConfigPath)) {
     const configurations: any[] = [];
@@ -53,10 +69,26 @@ export function setDebugConfig() {
   }
   writeConfigFile(launchConfigPath, launchConfig);
 
+  let disableOpen = false;
+  try {
+    const packageConfigFile = path.join(rootPath, 'package.json');
+    if (fs.existsSync(packageConfigFile)) {
+      const { dependencies = {}, devDependencies = {} } = fs.readJSONSync(packageConfigFile);
+      // Only ice.js support set webpack dev server disable open, for now
+      // TODO wait rax script support --disable-open or sync getProjectFramework method
+      if (devDependencies['ice.js'] || dependencies['ice.js']) {
+        disableOpen = true;
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
   // Set tasks.json
   let tasksConfig;
-  const defaultTasksConfig = getTasksConfig();
+  const defaultTasksConfig = getTasksConfig(isPegasusProject, disableOpen);
   const tasksConfigPath = path.join(targetDir, 'tasks.json');
+
   if (fs.existsSync(tasksConfigPath)) {
     const tasks: any[] = [];
 

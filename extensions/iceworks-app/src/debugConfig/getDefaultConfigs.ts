@@ -1,5 +1,5 @@
 import * as ejs from 'ejs';
-import { CONFIG_NAME, START_URL, CONFIG_START_LABEL, CONFIG_STOP_LABEL, IDebugConfig } from './index';
+import { CONFIG_NAME, BASE_URL, CONFIG_START_LABEL, CONFIG_STOP_LABEL, IDebugConfig } from './index';
 
 const launchConfigTemplate = `
 [
@@ -8,7 +8,7 @@ const launchConfigTemplate = `
     "request": "launch",
     "name": "<%= configName %>",
     "url": "<%= startUrl %>",
-    "urlFilter": "<%= startUrl %>/**/*",
+    "urlFilter": "<%= baseUrl %>/**/*",
     "webRoot": "\${workspaceFolder}",
     "userDataDir": "\${workspaceFolder}/.vscode/chrome-debug-user-data",
     "preLaunchTask": "<%= startLabel %>",
@@ -21,16 +21,29 @@ const tasksConfigTemplate = `
 [
   {
     "label": "<%= startLabel %>",
-    "type": "npm",
-    "script": "start",
+    "command": "npm",
+    "args": [
+      "run", 
+      "start"<%_ if (disableOpen) { -%>, 
+      "--", 
+      "--disable-open"
+      <%_ } -%>
+    ],
     "isBackground": true,
+    <%_ if (isPegasusProject) { -%>
+    "options": {
+      "env": {
+        "PEGASUS_DEVKIT": "Iceworks"
+      }
+    },
+    <%_ } -%>
     "problemMatcher": {
       "pattern": {
         "regexp": "ERROR in .*"
       },
       "background": {
         "beginsPattern": ".*(@alib/build-scripts|ice\\\\.js|rax\\\\.js).*",
-        "endsPattern": ".*<%= startUrl %>.*"
+        "endsPattern": ".*<%= baseUrl %>.*"
       }
     }
   },
@@ -46,14 +59,15 @@ const tasksConfigTemplate = `
 `;
 
 // https://code.visualstudio.com/docs/editor/debugging#_launch-configurations
-export function getLaunchConfig(): IDebugConfig {
+export function getLaunchConfig(launchUrl?: string): IDebugConfig {
   const DEBUG_LAUNCH_VERSION = '0.2.0';
   return {
     version: DEBUG_LAUNCH_VERSION,
     configurations: JSON.parse(
       ejs.render(launchConfigTemplate, {
         configName: CONFIG_NAME,
-        startUrl: START_URL,
+        startUrl: launchUrl || BASE_URL,
+        baseUrl: BASE_URL,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
       })
@@ -62,13 +76,15 @@ export function getLaunchConfig(): IDebugConfig {
 }
 
 // https://code.visualstudio.com/docs/editor/tasks#vscode
-export function getTasksConfig(): IDebugConfig {
+export function getTasksConfig(isPegasusProject = false, disableOpen = false): IDebugConfig {
   const DEBUG_TASKS_VERSION = '2.0.0';
   return {
     version: DEBUG_TASKS_VERSION,
     tasks: JSON.parse(
       ejs.render(tasksConfigTemplate, {
-        startUrl: START_URL,
+        baseUrl: BASE_URL,
+        disableOpen,
+        isPegasusProject,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
       })

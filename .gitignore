@@ -11,6 +11,7 @@ node_modules
 .DS_Store
 .eslintcache
 .happypack
+.vscode
 coverage/
 tmp/
 .tmp/
