@@ -39,19 +39,14 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
 function renderFile(filepath: string, options: any): Promise<string> {
   return new Promise((resolve, reject) => {
     if (filepath.endsWith('_ejs')) {
-      const templateFilePath = filepath.replace('_ejs', 'ejs');
-      try {
-        fse.renameSync(filepath, templateFilePath);
-      } catch (err) {
-        reject(err);
-      }
+      const templateFilePath = filepath.replace(/_ejs$/, 'ejs');
+      fse.renameSync(filepath, templateFilePath);
       resolve();
     } else {
       ejs.renderFile(filepath, options, (err, result) => {
         if (err) {
           return reject(err);
         }
-
         fse.removeSync(filepath);
         fse.writeFileSync(filepath.replace(/\.ejs$/, ''), result);
         resolve();
