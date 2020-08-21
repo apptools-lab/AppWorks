@@ -31,6 +31,7 @@ module.exports = deepmerge(defaultEslintConfig, {
     'max-lines': ['warn', { max: MAX_LINES }],
     'no-unused-vars': ['warn', { varsIgnorePattern: 'createElement' }],
     '@iceworks/best-practices/no-js-in-ts-project': 'warn',
+    '@iceworks/best-practices/no-lowercase-component-name': 'warn',
     '@iceworks/best-practices/recommend-functional-component': 'warn',
   },
 });

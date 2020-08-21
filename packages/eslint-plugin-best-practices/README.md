@@ -49,6 +49,7 @@ Or you can only use extends to set default rules config.
 * [`deps-recommend-update-rax`](./docs/rules/ddeps-recommend-update-rax.md) Rax version < 1.0 , recommend to update Rax.
 * [`no-broad-semantic-versioning`](./docs/rules/no-broad-semantic-versioning.md) Recommended the semantic versioning include everything greater than a particular version in the same major range.
 * [`no-js-in-ts-project`](./docs/rules/no-js-in-ts-project.md) It is not recommended to use js and ts files at the same time.
+* [`no-lowercase-component-name`](./docs/rules/no-lowercase-component-name.md) It is not recommended to name components in lower case.
 * [`recommend-functional-component`](./docs/rules/recommend-functional-component.md) It is not recommended to use class component.
 
 
