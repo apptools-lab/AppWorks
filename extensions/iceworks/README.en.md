@@ -22,15 +22,11 @@ Includes following feature:
 
 Setp 1: Click "Iceworks Icon" on the **Activity Bar** to open the **Iceworks Side Bar**:
 
-![demo](https://img.alicdn.com/tfs/TB1ts7cNeL2gK0jSZPhXXahvXXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1eXo8R4D1gK0jSZFsXXbldVXa-1024-768.png_790x10000.jpg)
 
 Setp 2: After the application is created, NPM script execution/page creation/component creation and other operations are performed in **Iceworks Side Bar**:
 
-![demo](https://img.alicdn.com/tfs/TB18aIoNkT2gK0jSZFkXXcIQFXa-2048-1536.png_790x10000.jpg)
-
-Setp 3: More features can be obtained by search 'Iceworks' in the Command Panel or click "Iceworks button" on the Status Bar:
-
-![demo](https://img.alicdn.com/tfs/TB1jjUjNaL7gK0jSZFBXXXZZpXa-2048-1536.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1w.xeSkT2gK0jSZFkXXcIQFXa-1024-768.png_790x10000.jpg)
 
 ## License
 

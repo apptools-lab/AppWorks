@@ -26,11 +26,11 @@
 - 在输入框中输入「iceworks」进行搜索；
 - 点击第一个「iceworks」选项上的「安装」按钮。
 
-![install demo](https://img.alicdn.com/tfs/TB1Bm.kaCR26e4jSZFEXXbwuXXa-1024-766.gif)
+![install demo](https://img.alicdn.com/tfs/TB1YM5ESoY1gK0jSZFCXXcwqXXa-2048-1536.png_790x10000.jpg)
 
 安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
 
-![使用示例](https://img.alicdn.com/tfs/TB1nk3YRQL0gK0jSZFtXXXQCXXa-1024-768.png_790x10000.jpg)
+![使用示例](https://img.alicdn.com/tfs/TB1dVOYiRBh1e4jSZFhXXcC9VXa-2048-1536.png_790x10000.jpg)
 
 [查看套件了解更多功能](extensions/iceworks/README.md)。
 
