@@ -18,11 +18,7 @@ Click "Iceworks Icon" on the **Activity Bar** to open the **Iceworks Side Bar**:
 
 After the application is created, NPM script execution/page creation/component creation and other operations are performed in **Iceworks Side Bar**:
 
-![demo](https://img.alicdn.com/tfs/TB1lyV9inM11u4jSZPxXXahcXXa-1024-768.png_790x10000.jpg)
-
-More features can be obtained by search 'Iceworks' in the Command Panel or click "Iceworks button" on the Status Bar:
-
-![demo](https://img.alicdn.com/tfs/TB1ickZRQL0gK0jSZFtXXXQCXXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1w.xeSkT2gK0jSZFkXXcIQFXa-1024-768.png_790x10000.jpg)
 
 ## Extensions
 
