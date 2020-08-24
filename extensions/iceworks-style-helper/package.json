@@ -53,13 +53,6 @@
       }
     ]
   },
-  "contributes": {
-    "commands": [
-      {
-        "command": "iceworksApp.recorder.recordCompletionItemSelect"
-      }
-    ]
-  },
   "devDependencies": {
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
