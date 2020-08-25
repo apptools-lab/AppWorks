@@ -20,9 +20,13 @@ Iceworks 可视化开发提供两个基本功能：可视化搭建和可视化�
 
 ![可视化搭建](https://img.alicdn.com/tfs/TB1yTO8i8Bh1e4jSZFhXXcC9VXa-1440-900.png_790x10000.jpg)
 
+> 更多介绍，请参考[《可视化搭建》](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)。
+
 可视化配置旨在降低前端开发门槛、提升开发体验，提供了流程引导生成代码和表单操作生成代码的能力，该能力支持自定义模板或物料，为开发者提供个性化代码的生成能力：
 
 ![可视化配置](https://img.alicdn.com/tfs/TB1VzS_i8Bh1e4jSZFhXXcC9VXa-1024-768.png_790x10000.jpg)
+
+> 更多介绍，请参考[《可视化配置》](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)。
 
 ### 智能编程
 

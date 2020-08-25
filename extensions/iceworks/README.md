@@ -14,15 +14,19 @@ Iceworks is a Visual Intelligent Development Assistant, provide visualization an
 
 ### Visual Development
 
-Iceworks Visual Development provides functions: Visual Builder and Visual Configuration.
+Iceworks Visual Development provides functions: Visual Construction and Visual Configuration.
 
-Visual Builder provides the drag and drop capability of WYSIWYG, which helps to quickly complete the development of front-end pages.This capability is independent of the specific platform  and framework, after building, you can update UI by code. It greatly reduces the threshold of front-end development and improves the efficiency of front-end development. At the same time, it also takes into account the maintainability and flexibility of the program.
+Visual Construction provides the drag and drop capability of WYSIWYG, which helps to quickly complete the development of front-end pages.This capability is independent of the specific platform  and framework, after building, you can update UI by code. It greatly reduces the threshold of front-end development and improves the efficiency of front-end development. At the same time, it also takes into account the maintainability and flexibility of the program.
 
-![Visual Builder](https://img.alicdn.com/tfs/TB1yTO8i8Bh1e4jSZFhXXcC9VXa-1440-900.png_790x10000.jpg)
+![Visual Construction](https://img.alicdn.com/tfs/TB1yTO8i8Bh1e4jSZFhXXcC9VXa-1440-900.png_790x10000.jpg)
+
+> See [UI Builder Extension](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder) for more details. 
 
 Visual Configuration aims to reduce the threshold of front-end development and improve the development experience. It provides the ability to generate code through process guidance and form operation. The ability supports user-defined templates or materials and provides developers with the ability to generate personalized code.
 
 ![Visual Configuration](https://img.alicdn.com/tfs/TB1vrcOSEz1gK0jSZLeXXb9kVXa-2048-1536.png_790x10000.jpg)
+
+> See [Config Helper Extension](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) for more details. 
 
 ### Intelli Code
 
