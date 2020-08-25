@@ -14,11 +14,11 @@ Iceworks is a Visual Intelligent Development Assistant, provide visualization an
 
 Click "Iceworks Icon" on the **Activity Bar** to open the **Iceworks Side Bar**:
 
-![demo](https://img.alicdn.com/tfs/TB1aRI.RHr1gK0jSZFDXXb9yVXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1Z8T0gzMZ7e4jSZFOXXX7epXa-1024-768.png_790x10000.jpg)
 
 After the application is created, NPM script execution/page creation/component creation and other operations are performed in **Iceworks Side Bar**:
 
-![demo](https://img.alicdn.com/tfs/TB1w.xeSkT2gK0jSZFkXXcIQFXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1qZ7jSBr0gK0jSZFnXXbRRXXa-1024-768.png_790x10000.jpg)
 
 ## Extensions
 

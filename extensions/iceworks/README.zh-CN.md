@@ -14,11 +14,11 @@
 
 点击活动栏上的 Iceworks 图标，打开侧边栏和创建应用流程：
 
-![使用示例](https://img.alicdn.com/tfs/TB1oeKDSoH1gK0jSZSyXXXtlpXa-2048-1536.png_790x10000.jpg)
+![使用示例](https://img.alicdn.com/tfs/TB1Qr7oi8Bh1e4jSZFhXXcC9VXa-1024-768.png_790x10000.jpg)
 
 应用创建完成，在 Iceworks 侧边栏上进行 npm 脚本执行、创建组件、生成页面等操作：
 
-![使用示例](https://img.alicdn.com/tfs/TB1dVOYiRBh1e4jSZFhXXcC9VXa-2048-1536.png_790x10000.jpg)
+![使用示例](https://img.alicdn.com/tfs/TB1knetjk9l0K4jSZFKXXXFjpXa-1024-768.png_790x10000.jpg)
 
 ## 插件列表
 
