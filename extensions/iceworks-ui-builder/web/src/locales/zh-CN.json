@@ -15,6 +15,7 @@
   "web.iceworksUIBuilder.pageCreator.noPageName": "请填写页面名称。",
   "web.iceworksUIBuilder.pageCreator.createPageSuccess": "创建页面成功！",
   "web.iceworksUIBuilder.pageCreator.next": "下一步",
+  "web.iceworksUIBuilder.pageCreator.previous": "上一步",
   "web.iceworksUIBuilder.pageCreator.createPage": "创建页面",
   "web.iceworksUIBuilder.pageGenerater.enterPageName": "请填写页面名称。",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "生成页面成功",

@@ -5,12 +5,65 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
+import '@alifd/next/dist/next.css';
+import ConfigForm from './configForm';
+import schema from './schema.json';
 
 const Home = () => {
   const intl = useIntl();
   const [selectedPage, setSelectedPage] = useState();
-  const [pageName, setPageName] = useState('');
+  const [pageName, setPageName] = useState('T');
   const [isCreating, setIsCreating] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const pages = [
+    <>
+      <div className={styles.list}>
+        <div className={styles.item}>
+          <div className={styles.label}>
+            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.inputPageName" />
+          </div>
+          <div className={styles.field}>
+            <Input
+              placeholder={intl.formatMessage({
+                id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
+              })}
+              className={styles.pageNameInput}
+              value={pageName}
+              onChange={(value) => setPageName(value)}
+              disabled={isCreating}
+            />
+          </div>
+        </div>
+        <div className={styles.item}>
+          <div className={styles.label}>
+            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.selectPage" />
+          </div>
+          <div className={styles.select}>
+            <Material
+              disableLazyLoad
+              getSources={getSources}
+              onSettingsClick={onSettingsClick}
+              getData={getData}
+              onPageClick={onSelect}
+              selectedPages={selectedPage ? [selectedPage] : []}
+              dataWhiteList={['pages']}
+            />
+          </div>
+        </div>
+      </div>
+      <div className={styles.opts}>
+        <Button type="primary" loading={isCreating} onClick={getConfigPage}>
+          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
+        </Button>
+      </div>
+    </>,
+    <ConfigForm data resetData={resetData} currentStep setCurrentStep schema={schema} />,
+  ];
+
+  function resetData() {
+    setSelectedPage(undefined);
+    setPageName('');
+  }
 
   async function onSettingsClick() {
     try {
@@ -47,31 +100,25 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ block, componentName }) {
-    if (!componentName) {
+  function validateData({ page, templateName }) {
+    if (!templateName) {
       return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' });
     }
-    if (!block) {
+    if (!page) {
       return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' });
     }
     return '';
   }
 
-  function onSelect(block) {
-    setSelectedPage(block);
+  function onSelect(page) {
+    setSelectedPage(page);
   }
 
-  function resetData() {
-    setSelectedPage(undefined);
-    setPageName('');
-  }
-
-  async function handleCreate(data) {
-    setIsCreating(true);
+  async function getConfigPage() {
     try {
       const data = {
-        block: selectedPage,
-        componentName: pageName,
+        page: selectedPage,
+        templateName: pageName,
       };
 
       const errorMessage = validateData(data);
@@ -81,67 +128,22 @@ const Home = () => {
         return;
       }
 
-      await callService('block', 'bulkGenerate', [
+      await callService('page', 'configPage', [
         {
           ...selectedPage,
           name: pageName,
         },
       ]);
+      console.log('selectPage', selectedPage, 'schema', schema);
+      setCurrentStep(currentStep + 1);
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
       throw error;
     }
-
-    setIsCreating(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
-    });
-    resetData();
   }
-  return (
-    <div className={styles.wrap}>
-      <div className={styles.list}>
-        <div className={styles.item}>
-          <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.inputPageName" />
-          </div>
-          <div className={styles.field}>
-            <Input
-              placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
-              })}
-              className={styles.pageNameInput}
-              value={pageName}
-              onChange={(value) => setPageName(value)}
-              disabled={isCreating}
-            />
-          </div>
-        </div>
-        <div className={styles.item}>
-          <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.selectPage" />
-          </div>
-          <div className={styles.select}>
-            <Material
-              disableLazyLoad
-              getSources={getSources}
-              onSettingsClick={onSettingsClick}
-              getData={getData}
-              onPageClick={onSelect}
-              selectedPages={selectedPage ? [selectedPage] : []}
-              dataWhiteList={['pages']}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.opts}>
-        <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
-        </Button>
-      </div>
-    </div>
-  );
+
+  return <div className={styles.wrap}>{pages[currentStep]}</div>;
 };
 
 const IntlHome = () => {
