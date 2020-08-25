@@ -10,7 +10,7 @@ import {
 import { CUSTOM_CATEGORY } from './constant';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
-  const { blocks, scaffolds, components, bases } = materialData;
+  const { blocks, scaffolds, components, bases, pages } = materialData;
   const hasBase = bases && bases.length > 0;
   const componentName = hasBase ? '业务组件' : '组件';
   const materialGroup: IMaterialTypeDatum[] = [];
@@ -28,6 +28,14 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
       name: '区块',
       id: 'blocks',
       categoryData: getMaterialCategoryData(blocks),
+    });
+  }
+
+  if (pages) {
+    materialGroup.push({
+      name: '页面',
+      id: 'pages',
+      categoryData: getMaterialCategoryData(pages),
     });
   }
 
@@ -57,6 +65,8 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
   };
   components.forEach((component: IMaterialItem) => {
     const { categories } = component;
+    // debug
+    console.log('component', component, 'category', categories);
     if (categories.length) {
       categories.forEach((category: string) => {
         const cateogryDatum = materialCategoryData.find(({ name }) => name === category);

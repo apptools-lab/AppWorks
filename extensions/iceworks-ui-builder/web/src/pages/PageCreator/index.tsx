@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
@@ -8,8 +8,8 @@ import styles from './index.module.scss';
 
 const Home = () => {
   const intl = useIntl();
-  const [selectedBlock, setSelectedBlock] = useState();
-  const [componentName, setComponentName] = useState('');
+  const [selectedPage, setSelectedPage] = useState();
+  const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
   async function onSettingsClick() {
@@ -49,29 +49,29 @@ const Home = () => {
 
   function validateData({ block, componentName }) {
     if (!componentName) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.noComponentName' });
+      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' });
     }
     if (!block) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.didNotSeletBlock' });
+      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' });
     }
     return '';
   }
 
   function onSelect(block) {
-    setSelectedBlock(block);
+    setSelectedPage(block);
   }
 
   function resetData() {
-    setSelectedBlock(undefined);
-    setComponentName('');
+    setSelectedPage(undefined);
+    setPageName('');
   }
 
   async function handleCreate(data) {
     setIsCreating(true);
     try {
       const data = {
-        block: selectedBlock,
-        componentName,
+        block: selectedPage,
+        componentName: pageName,
       };
 
       const errorMessage = validateData(data);
@@ -83,8 +83,8 @@ const Home = () => {
 
       await callService('block', 'bulkGenerate', [
         {
-          ...selectedBlock,
-          name: componentName,
+          ...selectedPage,
+          name: pageName,
         },
       ]);
     } catch (error) {
@@ -95,7 +95,7 @@ const Home = () => {
 
     setIsCreating(false);
     Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.generateSuccess' }),
+      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
     });
     resetData();
   }
@@ -104,7 +104,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.componentCreator.inputComponentName" />
+            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.inputPageName" />
           </div>
           <div className={styles.field}>
             <Input
@@ -112,15 +112,15 @@ const Home = () => {
                 id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
               })}
               className={styles.pageNameInput}
-              value={componentName}
-              onChange={(value) => setComponentName(value)}
+              value={pageName}
+              onChange={(value) => setPageName(value)}
               disabled={isCreating}
             />
           </div>
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.componentCreator.selectBlock" />
+            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.selectPage" />
           </div>
           <div className={styles.select}>
             <Material
@@ -128,16 +128,16 @@ const Home = () => {
               getSources={getSources}
               onSettingsClick={onSettingsClick}
               getData={getData}
-              onBlockClick={onSelect}
-              selectedBlocks={selectedBlock ? [selectedBlock] : []}
-              dataWhiteList={['blocks']}
+              onPageClick={onSelect}
+              selectedPages={selectedPage ? [selectedPage] : []}
+              dataWhiteList={['pages']}
             />
           </div>
         </div>
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.componentCreator.generateComponent" />
+          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
         </Button>
       </div>
     </div>

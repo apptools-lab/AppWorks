@@ -57,9 +57,11 @@ const Index: React.FC<{
   async function refreshMaterialData(source: string) {
     setIsLoadingData(true);
     const materialData: IMaterialData = await getData(source);
+    console.log('convertMaterialData', convertMaterialData(materialData));
     const data = convertMaterialData(materialData).filter(({ id }) => {
       return !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true);
     });
+    console.log('data', data, 'whitelist', dataWhiteList);
     setIsLoadingData(false);
     setData(data);
   }
