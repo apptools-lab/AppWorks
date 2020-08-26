@@ -18,6 +18,7 @@ interface ICustomMaterialSource {
   onSourceAdd: (values: IMaterialSource) => void;
   onSourceEdit: (values: IMaterialSource, originMaterialSource: IMaterialSource) => void;
   onSourceDelete: (materialSource: IMaterialSource) => void;
+  addMaterialVisible?: boolean;
 }
 
 const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
@@ -25,9 +26,10 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   onSourceAdd,
   onSourceEdit,
   onSourceDelete,
+  addMaterialVisible = false
 }) => {
   const intl = useIntl();
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(addMaterialVisible);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
 

@@ -201,7 +201,7 @@ const CreateProject: React.FC = () => {
 
   async function onOpenConfigPanel() {
     try {
-      await callService('common', 'openConfigPanel');
+      await callService('common', 'openMaterialsSettings');
     } catch (e) {
       Notification.error({ content: e.message });
     }

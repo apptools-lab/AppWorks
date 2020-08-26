@@ -11,7 +11,7 @@ const MaterialsPane: React.FC<any> = () => {
   const intl = useIntl();
   async function onSettingsClick() {
     try {
-      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+      await callService('common', 'openMaterialsSettings'); 
     } catch (e) {
       Notification.error({ content: e.message });
     }
