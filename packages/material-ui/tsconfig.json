@@ -13,7 +13,8 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": ["src/*.ts", "src/*.tsx"],
   "exclude": ["node_modules", "build", "public"]

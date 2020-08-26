@@ -12,7 +12,6 @@ export const MaterialPage: React.FC<{
   function handleClick() {
     onClick && onClick(dataSource);
   }
-  console.log('dataSource', dataSource);
   return (
     <div
       className={classnames({

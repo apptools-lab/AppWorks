@@ -102,6 +102,7 @@ export interface IMaterialPage {
   uid: string[];
   isNewly: boolean;
   configSchema: IPageSchema;
+  templateData?: any;
 }
 
 export interface IPageSchema {

@@ -3,8 +3,9 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "build",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "sourceMap": true
   },
-  "include": ["src"],
+  "include": ["src", "web/src/pages/PageCreator/renderEjsTemplates.ts"],
   "exclude": [".vscode-test", "web"]
 }

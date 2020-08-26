@@ -5,9 +5,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
-import '@alifd/next/dist/next.css';
 import ConfigForm from './configForm';
-import schema from './schema.json';
 
 const Home = () => {
   const intl = useIntl();
@@ -15,6 +13,7 @@ const Home = () => {
   const [pageName, setPageName] = useState('T');
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [schema, setSchema] = useState({});
   const pages = [
     <>
       <div className={styles.list}>
@@ -57,7 +56,13 @@ const Home = () => {
         </Button>
       </div>
     </>,
-    <ConfigForm data resetData={resetData} currentStep setCurrentStep schema={schema} />,
+    <ConfigForm
+      templateSchema={schema}
+      pageName={pageName}
+      resetData={resetData}
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+    />,
   ];
 
   function resetData() {
@@ -115,6 +120,7 @@ const Home = () => {
   }
 
   async function getConfigPage() {
+    setIsCreating(true);
     try {
       const data = {
         page: selectedPage,
@@ -128,13 +134,14 @@ const Home = () => {
         return;
       }
 
-      await callService('page', 'configPage', [
+      const templateConfig = await callService('template', 'getTemplateSchema', [
         {
+          // @ts-ignore
           ...selectedPage,
           name: pageName,
         },
       ]);
-      console.log('selectPage', selectedPage, 'schema', schema);
+      setSchema(templateConfig.schema);
       setCurrentStep(currentStep + 1);
     } catch (error) {
       Notification.error({ content: error.message });

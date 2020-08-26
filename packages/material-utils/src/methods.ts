@@ -65,8 +65,6 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
   };
   components.forEach((component: IMaterialItem) => {
     const { categories } = component;
-    // debug
-    console.log('component', component, 'category', categories);
     if (categories.length) {
       categories.forEach((category: string) => {
         const cateogryDatum = materialCategoryData.find(({ name }) => name === category);

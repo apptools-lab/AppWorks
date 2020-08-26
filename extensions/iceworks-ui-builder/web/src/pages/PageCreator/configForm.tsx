@@ -1,69 +1,142 @@
-import React, { useState } from 'react';
-import { SchemaForm, SchemaMarkupField as Field, FormButtonGroup, Submit, Reset } from '@formily/next';
+/* eslint-disable no-param-reassign */
+import React, { useState, useRef, useEffect } from 'react';
+import { SchemaForm, Submit, Reset } from '@formily/next';
 import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  Input,
-  Radio,
-  Checkbox,
-  Select,
-  DatePicker,
-  NumberPicker,
-  TimePicker,
-  Upload,
-  Switch,
-  Range,
-  Transfer,
-  Rating,
-} from '@formily/next-components'; // 或者@formily/next-components'
-import { Button, Notification } from '@alifd/next';
-import mockSchema from './schema.json';
+import { Input, Checkbox, Select, NumberPicker } from '@formily/next-components'; // 或者@formily/next-components'
+import { Button, Notification, Loading } from '@alifd/next';
+import * as _ from 'lodash';
 import styles from './index.module.scss';
+import callService from '../../callService';
 
 const components = {
   Input,
   Checkbox,
+  Select,
+  NumberPicker,
 };
 
-export default ({ data, schema, resetData, setCurrentStep, currentStep }) => {
+export default ({ templateSchema, pageName, resetData, setCurrentStep, currentStep }) => {
   const intl = useIntl();
   const [isCreating, setIsCreating] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const formilySchema = useRef({});
 
-  async function createPage(data, config) {
-    setIsCreating(true);
+  useEffect(
+    function setFormilySchema() {
+      try {
+        const properties = templateSchema.properties;
+        _.forIn(properties, (prop) => {
+          const propType = prop.type || 'string';
+          switch (propType) {
+            case 'string':
+              prop['x-component'] = 'input';
+              break;
+            case 'boolean':
+              prop['x-component'] = 'CheckBox';
+              break;
+            case 'number':
+              prop['x-component'] = 'NumberPicker';
+              break;
+            default:
+              break;
+          }
+          if (prop.enum) {
+            prop['x-component'] = 'Select';
+          }
+        });
+        console.log('properties', properties);
+      } catch (err) {
+        console.log(err);
+      }
 
-    // TODO: create page
-    console.log(data, config);
+      formilySchema.current = templateSchema;
+      console.log('current', formilySchema.current);
+      setLoading(false);
+    },
+    [templateSchema]
+  );
 
-    setIsCreating(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
+  function getDefaultFromType(type) {
+    console.log('type', type);
+    switch (type) {
+      case 'string':
+        return '';
+      case 'boolean':
+        return false;
+      case 'number':
+        return 0;
+      default:
+        return '';
+    }
+  }
+
+  function getDefaultData(schema) {
+    const defaultSetting = {};
+    _.forIn(schema.properties, (prop, key) => {
+      defaultSetting[key] = prop.default !== undefined ? prop.default : getDefaultFromType(prop.type);
     });
-    resetData();
+    return defaultSetting;
+  }
+
+  function getTemplateData(schema, userConfig) {
+    const templateData = getDefaultData(schema);
+    _.forIn(templateData, (val, key) => {
+      templateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
+    });
+    return templateData;
+  }
+
+  async function createPage(userSetting) {
+    try {
+      setIsCreating(true);
+      const templateData = getTemplateData(templateSchema, userSetting);
+      console.log('templateData', templateData);
+      await callService('template', 'createPage', [
+        {
+          name: pageName,
+          templateData,
+        },
+      ]);
+      Notification.success({
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
+      });
+    } catch (err) {
+      console.log('createPageErr', err);
+    } finally {
+      setIsCreating(false);
+      resetData();
+    }
   }
 
   return (
-    <SchemaForm
-      components={components}
-      schema={schema || mockSchema}
-      onSubmit={(config) => {
-        createPage(data, config);
-        console.log(config);
-      }}
-    >
-      <div className={styles.opts}>
-        <Submit type="primary" loading={isCreating}>
-          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
-        </Submit>
-        <Button
-          type="primary"
-          loading={isCreating}
-          onClick={() => {
-            setCurrentStep(currentStep - 1);
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <SchemaForm
+          components={components}
+          schema={formilySchema.current}
+          onSubmit={(userSetting) => {
+            createPage(userSetting);
+            console.log(userSetting);
           }}
         >
-          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
-        </Button>
-      </div>
-    </SchemaForm>
+          <div className={styles.opts}>
+            <Submit type="primary" loading={isCreating}>
+              <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
+            </Submit>
+            <Reset type="primary">Reset</Reset>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCurrentStep(currentStep - 1);
+              }}
+            >
+              <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
+            </Button>
+          </div>
+        </SchemaForm>
+      )}
+    </>
   );
 };

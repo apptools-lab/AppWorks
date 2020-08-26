@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/block-service",
-  "version": "0.1.13",
-  "description": "Iceworks block service for VSCode extension.",
+  "name": "@iceworks/template-service",
+  "version": "0.1.0",
+  "description": "Iceworks template service for VSCode extension.",
   "files": [
     "lib"
   ],

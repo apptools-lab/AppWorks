@@ -99,12 +99,12 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       }
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pageCreator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
     registerCommand('iceworks-ui-builder.create-page', function () {
-      activePageGeneraterWebview();
+      activePageCreatorWebview();
     })
   );
 }
