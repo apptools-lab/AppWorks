@@ -55,7 +55,7 @@ const Home = () => {
 
   async function onSettingsClick() {
     try {
-      await callService('common', 'openMaterialsSettings'); 
+      await callService('common', 'openMaterialsSettings');
     } catch (e) {
       Notification.error({ content: e.message });
     }

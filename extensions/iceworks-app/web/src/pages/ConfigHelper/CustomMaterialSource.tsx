@@ -26,7 +26,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   onSourceAdd,
   onSourceEdit,
   onSourceDelete,
-  addMaterialVisible = false
+  addMaterialVisible = false,
 }) => {
   const intl = useIntl();
   const [visible, setVisible] = useState<boolean>(addMaterialVisible);
