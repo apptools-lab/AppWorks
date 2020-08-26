@@ -25,14 +25,21 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
     <Dialog
       footer={false}
       visible={visible}
-      title={<div>
-        {title}
-        <Balloon trigger={<Icon type="help" size="small" style={{marginLeft: 6}} />} align="r" alignEdge triggerType="click">
-          <a href="https://ice.work/docs/materials/about" target="_blank">
-            <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
-          </a>
-        </Balloon>
-      </div>}
+      title={
+        <div>
+          {title}
+          <Balloon
+            trigger={<Icon type="help" size="small" style={{ marginLeft: 6 }} />}
+            align="r"
+            alignEdge
+            triggerType="click"
+          >
+            <a href="https://ice.work/docs/materials/about" target="_blank">
+              <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
+            </a>
+          </Balloon>
+        </div>
+      }
       className={styles.dialog}
       onCancel={onCancel}
       onClose={onCancel}
