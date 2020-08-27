@@ -3,7 +3,7 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -49,9 +49,18 @@
   "contributes": {
     "commands": [
       {
+        "title": "recordCompletionItemSelect",
         "command": "iceworksApp.recorder.recordCompletionItemSelect"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "when": "false",
+          "command": "iceworksApp.recorder.recordCompletionItemSelect"
+        }
+      ]
+    }
   },
   "devDependencies": {
     "@types/node": "^12.11.7",
