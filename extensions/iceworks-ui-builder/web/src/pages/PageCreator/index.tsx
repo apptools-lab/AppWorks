@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
@@ -11,6 +11,7 @@ const Home = () => {
   const intl = useIntl();
   const [selectedPage, setSelectedPage] = useState();
   const [pageName, setPageName] = useState('');
+  const [downloading, setDownloading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [schema, setSchema] = useState({});
@@ -51,7 +52,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" loading={isCreating} onClick={getConfigPage}>
+        <Button type="primary" loading={downloading} onClick={getConfigPage}>
           <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
         </Button>
       </div>
@@ -62,6 +63,8 @@ const Home = () => {
       resetData={resetData}
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
+      isCreating={isCreating}
+      setIsCreating={setIsCreating}
     />,
   ];
 
@@ -107,12 +110,11 @@ const Home = () => {
 
   function validateData({ page, templateName }) {
     if (!templateName) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' });
+      throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' }));
     }
     if (!page) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' });
+      throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' }));
     }
-    return '';
   }
 
   function onSelect(page) {
@@ -120,19 +122,14 @@ const Home = () => {
   }
 
   async function getConfigPage() {
-    setIsCreating(true);
+    setDownloading(true);
     try {
       const data = {
         page: selectedPage,
         templateName: pageName,
       };
 
-      const errorMessage = validateData(data);
-      if (errorMessage) {
-        Notification.error({ content: errorMessage });
-        setIsCreating(false);
-        return;
-      }
+      validateData(data);
 
       const templateConfig = await callService('template', 'getTemplateSchema', [
         {
@@ -145,13 +142,9 @@ const Home = () => {
       setCurrentStep(currentStep + 1);
     } catch (error) {
       Notification.error({ content: error.message });
-      setIsCreating(false);
-      throw error;
     }
+    setDownloading(false);
   }
-  useEffect(() => {
-    console.log(schema);
-  }, [schema]);
 
   return <div className={styles.wrap}>{pages[currentStep]}</div>;
 };

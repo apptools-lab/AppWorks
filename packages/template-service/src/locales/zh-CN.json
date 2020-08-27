@@ -11,5 +11,5 @@
   "package.template-service.templateError": "只能向 <%= jsxFileExtnames %> 文件添加模板代码",
   "package.template-service.notPageFileError": "只能向 <%= pagesPath %> 下的页面文件添加模板代码",
   "package.template-service.startObtainTemplate": "> 开始获取模板代码",
-  "package.template-service.obtainDone": "> 已将模板代码下载到：<%= blockDir %>"
+  "package.template-service.obtainDone": "> 已将模板代码下载到：<%= templateDir %>"
 }

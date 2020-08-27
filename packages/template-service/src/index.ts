@@ -58,7 +58,6 @@ export const bulkDownload = async function (templates: IMaterialPage[], log?: (t
             i18n.format('package.template-service.downloadTemplate.process', { percent: (percent * 100).toFixed(2) })
           );
         });
-        log(i18n.format('package.template-service.obtainDone', { templateDir: templateTempDir }));
       } catch (error) {
         error.message = i18n.format('package.template-service.uzipError', { templateName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
@@ -72,9 +71,11 @@ export const bulkDownload = async function (templates: IMaterialPage[], log?: (t
   );
 };
 
-export const createPage = (selesctPage) => {
-  renderTemplate(selesctPage);
-  bulkInstallDependencies(selesctPage);
+export const createPage = async (selesctPage) => {
+  const templateDirPath: string = path.join(pagesPath, '.template');
+  await renderTemplate(selesctPage);
+  await bulkInstallDependencies(selesctPage);
+  await fse.remove(templateDirPath);
 };
 
 export const renderTemplate = async (templates: IMaterialPage[]) => {
@@ -82,6 +83,10 @@ export const renderTemplate = async (templates: IMaterialPage[]) => {
   const templatePath: string = path.join(pagesPath, '.template', `${templateName}`);
   const targetPath: string = path.join(pagesPath, `${templateName}`);
   const templateData = templates[0].templateData;
+
+  if (fse.existsSync(targetPath)) {
+    throw new Error(`${targetPath} already exists!`);
+  }
 
   await renderEjsTemplates(templateData, templatePath);
   const pageSourceSrcPath = path.join(templatePath, 'src');
@@ -101,9 +106,8 @@ export const renderTemplate = async (templates: IMaterialPage[]) => {
       action: 'overwrite',
     });
   }
-
   await fse.move(pageSourceSrcPath, targetPath);
-  await fse.remove(path.resolve(templatePath, '../'));
+
   return targetPath;
 };
 

@@ -15,11 +15,10 @@ const components = {
   NumberPicker,
 };
 
-export default ({ templateSchema, pageName, resetData, setCurrentStep, currentStep }) => {
+export default ({ templateSchema, pageName, resetData, setCurrentStep, currentStep, isCreating, setIsCreating }) => {
   const intl = useIntl();
-  const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
-  const formilySchema = useRef({});
+  const formilySchema = useRef({ title: undefined, description: undefined });
 
   useEffect(
     function setFormilySchema() {
@@ -99,8 +98,8 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       Notification.success({
         content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
       });
-    } catch (err) {
-      console.log('createPageErr', err);
+    } catch (e) {
+      Notification.error({ content: e.message });
     } finally {
       setIsCreating(false);
       resetData();
@@ -126,7 +125,6 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
             schema={formilySchema.current}
             onSubmit={(userSetting) => {
               createPage(userSetting);
-              console.log(userSetting);
             }}
           >
             <div className={styles.opts}>
