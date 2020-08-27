@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.7
+
+- Fix error: property `title` is mandatory and must be of type `string` or `object`.
+
 ## 0.3.6
 
 - docs: add more badges.
