@@ -4,6 +4,7 @@ import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { pagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
+import i18n from '../i18n';
 
 export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private workspaceRoot: string;
@@ -87,13 +88,13 @@ class PageTreeItem extends vscode.TreeItem {
 
 const addPageQuickPickItems: any[] = [
   {
-    label: '创建页面',
-    detail: '通过配置模板的方式创建页面',
+    label: i18n.format('extension.iceworksApp.views.pageViews.createPage'),
+    detail: i18n.format('extension.iceworksApp.views.pageViews.createPageDetail'),
     command: 'iceworks-ui-builder.create-page',
   },
   {
-    label: '生成页面',
-    detail: '通过区块组装的方式生成页面',
+    label: i18n.format('extension.iceworksApp.views.pageViews.generatePage'),
+    detail: i18n.format('extension.iceworksApp.views.pageViews.generatePageDetail'),
     command: 'iceworks-ui-builder.generate-page',
   },
 ];

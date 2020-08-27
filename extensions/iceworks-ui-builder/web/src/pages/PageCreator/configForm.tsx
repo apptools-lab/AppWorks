@@ -113,13 +113,15 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       ) : (
         <>
           <h3>
+            ß
             {formilySchema.current.title ||
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
           </h3>
-          <h3>
+          <p>
+            ß
             {formilySchema.current.description ||
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
-          </h3>
+          </p>
           <SchemaForm
             components={components}
             schema={formilySchema.current}

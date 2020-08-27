@@ -30,5 +30,8 @@
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
   "extension.iceworksApp.extension.title": "设置 - Iceworks",
-  "extension.iceworksApp.extension.emptyWorkplace": "当前工作区为空，请打开应用或新建应用。"
+  "extension.iceworksApp.views.pageViews.createPage": "创建页面",
+  "extension.iceworksApp.views.pageViews.createPageDetail": "通过配置模板的方式创建页面",
+  "extension.iceworksApp.views.pageViews.generatePage": "生成页面",
+  "extension.iceworksApp.views.pageViews.generatePageDetail": "通过区块组装的方式生成页面"
 }
