@@ -2,6 +2,7 @@
   "files": [],
   "references": [
     { "path": "packages/doctor" },
+    { "path": "packages/eslint-plugin-best-practices" },
     { "path": "packages/eslint-plugin-security-practices" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },

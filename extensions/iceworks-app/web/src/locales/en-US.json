@@ -4,6 +4,7 @@
   "web.iceworksApp.customMaterialSource.addMaterialSource": "Add Material Source",
   "web.iceworksApp.customMaterialSource.customMaterialSource": "Custom Material Source",
   "web.iceworksApp.customMaterialSource.add": "Add",
+  "web.iceworksApp.customMaterialSource.help": "See《物料开发》to know how to create a custom material",
   "web.iceworksApp.customMaterialSource.loading": "Loading",
   "web.iceworksApp.index.CUSTOM_NPM_REGISTRY_SELECT_KEY": "Custom NPM Registry",
   "web.iceworksApp.index.addMaterialSuccess": "Added material source successfully",

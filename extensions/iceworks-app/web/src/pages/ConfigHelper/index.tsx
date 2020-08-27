@@ -156,6 +156,7 @@ const ConfigHelper = (props) => {
             onSourceAdd={onSourceAdd}
             onSourceDelete={onMaterialSourceDelete}
             onSourceEdit={onMaterialSourceEdit}
+            addMaterialVisible={window.iceworksAutoFocusField === 'iceworks.materialSources'}
           />
         </div>
       )}
