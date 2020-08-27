@@ -6,6 +6,6 @@
     "resolveJsonModule": true,
     "sourceMap": true
   },
-  "include": ["src", "web/src/pages/PageCreator/renderEjsTemplates.ts"],
+  "include": ["src"],
   "exclude": [".vscode-test", "web"]
 }

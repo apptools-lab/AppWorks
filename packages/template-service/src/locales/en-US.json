@@ -1,15 +1,15 @@
 {
-  "package.block-service.downloadBlock.getDownloadUrl": "Obtain Download URL...",
-  "package.block-service.downloadBlock.getDownloadUrlError": "Failed to obtain url, please copy and open <%= repository %> in browse.",
-  "package.block-service.downloadBlock.unzipCode": "Download and unzip code...",
-  "package.block-service.downloadBlock.unzipCodeError": "Error in unzipping <%= blockName %>，please copy and download from this url: ：<%= tarballURL %>",
-  "package.block-service.downloadBlock.process": "===>>> Downloading：<%= percent %>%",
-  "package.block-service.downloadBlock.downloadError": "Block <%= blockName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
-  "package.block-service.downloadError": "Failed to obtain zips from <%= blockSourceNpm %> ，try to clone the <%= repository %> repository manually.",
-  "package.block-service.uzipError": "Failed to unzip <%= blockName %>，download from：<%= tarballURL %>",
-  "package.block-service.uzipOutTime": "Uzip <%= blockName %> timeout，download from：<%= tarballURL %>",
-  "package.block-service.templateError": "You can only add block codes to  <%= jsxFileExtnames %> ",
-  "package.block-service.notPageFileError": "You can only add block codes to files in <%= pagesPath %>",
-  "package.block-service.startObtainBlock": "> Obtain block codes...",
-  "package.block-service.obtainDone": "> The block code has been downloaded to <%= blockDir %>"
+  "package.template-service.downloadTemplate.getDownloadUrl": "Obtain Download URL...",
+  "package.template-service.downloadTemplate.getDownloadUrlError": "Failed to obtain url, please copy and open <%= repository %> in browse.",
+  "package.template-service.downloadTemplate.unzipCode": "Download and unzip code...",
+  "package.template-service.downloadTemplate.unzipCodeError": "Error in unzipping <%= templateName %>，please copy and download from this url: ：<%= tarballURL %>",
+  "package.template-service.downloadTemplate.process": "===>>> Downloading：<%= percent %>%",
+  "package.template-service.downloadTemplate.downloadError": "Template <%= templateName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
+  "package.template-service.downloadError": "Failed to obtain zips from <%= templateSourceNpm %> ，try to clone the <%= repository %> repository manually.",
+  "package.template-service.uzipError": "Failed to unzip <%= templateName %>，download from：<%= tarballURL %>",
+  "package.template-service.uzipOutTime": "Uzip <%= templateName %> timeout，download from：<%= tarballURL %>",
+  "package.template-service.templateError": "You can only add template codes to  <%= jsxFileExtnames %> ",
+  "package.template-service.notPageFileError": "You can only add template codes to files in <%= pagesPath %>",
+  "package.template-service.startObtainTemplate": "> Obtain template codes...",
+  "package.template-service.obtainDone": "> The template code has been downloaded to <%= templateDir %>"
 }

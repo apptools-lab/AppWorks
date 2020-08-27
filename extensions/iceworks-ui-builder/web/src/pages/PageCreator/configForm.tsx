@@ -113,8 +113,14 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
         <Loading />
       ) : (
         <>
-          <h3>{formilySchema.current.title || '页面模板配置表单'}</h3>
-          <h3>{formilySchema.current.description || '请进行配置以生成个性化表格'}</h3>
+          <h3>
+            {formilySchema.current.title ||
+              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+          </h3>
+          <h3>
+            {formilySchema.current.description ||
+              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
+          </h3>
           <SchemaForm
             components={components}
             schema={formilySchema.current}
@@ -122,11 +128,10 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
               createPage(userSetting);
               console.log(userSetting);
             }}
-            // className = {styles.form}
           >
             <div className={styles.opts}>
               <Reset type="primary" className={styles.btn}>
-                重置
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
               </Reset>
               <Button
                 type="primary"

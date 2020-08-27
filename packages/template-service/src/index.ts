@@ -11,8 +11,8 @@ import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
 
-function getPageType(blockSourceSrcPath) {
-  const files = readFiles(blockSourceSrcPath);
+function getPageType(templateSourceSrcPath) {
+  const files = readFiles(templateSourceSrcPath);
 
   const index = files.findIndex((item) => {
     return /\.ts(x)/.test(item);
@@ -40,29 +40,34 @@ export const bulkDownload = async function (templates: IMaterialPage[], log?: (t
 
       let tarballURL: string;
       try {
-        log(i18n.format('package.block-service.downloadBlock.getDownloadUrl'));
+        log(i18n.format('package.template-service.downloadTemplate.getDownloadUrl'));
         tarballURL = await getTarballURLByMaterielSource(template.source);
       } catch (error) {
-        error.message = i18n.format('package.block-service.downloadBlock.downloadError', { templateName, tarballURL });
+        error.message = i18n.format('package.template-service.downloadTemplate.downloadError', {
+          templateName,
+          tarballURL,
+        });
         throw error;
       }
-      log(i18n.format('package.block-service.downloadBlock.unzipCode'));
-      const blockDir = path.join(pagesPath, templateName);
-      const blockTempDir = path.join(pagesPath, '.template', `${templateName}`);
+      log(i18n.format('package.template-service.downloadTemplate.unzipCode'));
+      const templateTempDir = path.join(pagesPath, '.template', `${templateName}`);
 
       try {
-        await getAndExtractTarball(blockTempDir, tarballURL, ({ percent }) => {
-          log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
+        await getAndExtractTarball(templateTempDir, tarballURL, ({ percent }) => {
+          log(
+            i18n.format('package.template-service.downloadTemplate.process', { percent: (percent * 100).toFixed(2) })
+          );
         });
+        log(i18n.format('package.template-service.obtainDone', { templateDir: templateTempDir }));
       } catch (error) {
-        error.message = i18n.format('package.block-service.uzipError', { blockName: templateName, tarballURL });
+        error.message = i18n.format('package.template-service.uzipError', { templateName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.block-service.uzipOutTime', { blockName: templateName, tarballURL });
+          error.message = i18n.format('package.template-service.uzipOutTime', { templateName, tarballURL });
         }
-        await fse.remove(blockTempDir);
+        await fse.remove(templateTempDir);
         throw error;
       }
-      return blockTempDir;
+      return templateTempDir;
     })
   );
 };
@@ -82,8 +87,6 @@ export const renderTemplate = async (templates: IMaterialPage[]) => {
   const pageSourceSrcPath = path.join(templatePath, 'src');
   const pageType = getPageType(pageSourceSrcPath);
   const projectType = await getProjectLanguageType();
-
-  console.log('blockType: ', pageType, 'projectType: ', projectType);
 
   if (pageType === 'ts' && projectType === 'js') {
     const files = glob.sync('**/*.@(ts|tsx)', {
@@ -105,12 +108,12 @@ export const renderTemplate = async (templates: IMaterialPage[]) => {
 };
 
 /**
- * Installation block dependencies
+ * Installatio template dependencies
  */
 export const bulkInstallDependencies = async function (pages: IMaterialPage[]) {
   const projectPackageJSON = await readPackageJSON(projectPath);
 
-  // get all dependencies from blocks
+  // get all dependencies from templates
   const pagesDependencies: { [packageName: string]: string } = {};
   pages.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
 

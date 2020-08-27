@@ -7,6 +7,6 @@ export default async function callService(service: string, method: string, ...ar
     return await originCallService.apply(null, arguments);
   } else {
     console.log(require(`../mocks/${service}/${method}`));
-    return require(`../mocks/${service}/${method}`) || require(`../mocks/${service}/${method}`).default;
+    return require(`../mocks/${service}/${method}`);
   }
 }

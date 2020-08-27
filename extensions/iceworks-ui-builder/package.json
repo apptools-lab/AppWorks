@@ -112,7 +112,6 @@
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
-    "@types/ejs": "^3.0.4",
     "@types/lodash": "^4.14.160",
     "@types/node": "^13.11.0",
     "@types/vscode": "^1.41.0",
@@ -130,7 +129,6 @@
     "@iceworks/project-service": "^0.1.4",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.1",
-    "ejs": "^3.1.5",
     "loadash": "^1.0.0"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.md",
