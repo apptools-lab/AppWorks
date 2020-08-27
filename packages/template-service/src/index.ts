@@ -78,7 +78,7 @@ export const renderTemplate = async (templates: IMaterialPage[]) => {
   const targetPath: string = path.join(pagesPath, `${templateName}`);
   const templateData = templates[0].templateData;
 
-  renderEjsTemplates(templateData, templatePath);
+  await renderEjsTemplates(templateData, templatePath);
   const pageSourceSrcPath = path.join(templatePath, 'src');
   const pageType = getPageType(pageSourceSrcPath);
   const projectType = await getProjectLanguageType();

@@ -59,11 +59,9 @@ const Index: React.FC<{
     /**
      *  DEVELOPMENT
      */
-    console.log(source);
-    // const materialData: IMaterialData = await getData(source);
-    // eslint-disable-next-line
-    const materialData: IMaterialData = require('./mockData.json');
-    console.log('materialData', JSON.stringify(materialData));
+    const materialData: IMaterialData = await getData(source);
+
+    // console.log('materialData',JSON.stringify(materialData))
     // DEVELOPMENT
     const data = convertMaterialData(materialData).filter(({ id }) => {
       return !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true);

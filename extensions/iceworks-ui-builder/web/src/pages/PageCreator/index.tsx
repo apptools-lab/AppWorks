@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
@@ -10,7 +10,7 @@ import ConfigForm from './configForm';
 const Home = () => {
   const intl = useIntl();
   const [selectedPage, setSelectedPage] = useState();
-  const [pageName, setPageName] = useState('T');
+  const [pageName, setPageName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [schema, setSchema] = useState({});
@@ -149,6 +149,9 @@ const Home = () => {
       throw error;
     }
   }
+  useEffect(() => {
+    console.log(schema);
+  }, [schema]);
 
   return <div className={styles.wrap}>{pages[currentStep]}</div>;
 };

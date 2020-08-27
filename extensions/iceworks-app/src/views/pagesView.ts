@@ -89,7 +89,7 @@ const addPageQuickPickItems: any[] = [
   {
     label: '创建页面',
     detail: '通过配置模板的方式创建页面',
-    command: '',
+    command: 'iceworks-ui-builder.create-page',
   },
   {
     label: '生成页面',

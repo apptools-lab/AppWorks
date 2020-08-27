@@ -8,7 +8,6 @@
   "web.iceworksUIBuilder.componentCreator.inputComponentName": "1. 填写组件名：",
   "web.iceworksUIBuilder.componentCreator.selectBlock": "2. 选择使用的区块：",
   "web.iceworksUIBuilder.componentCreator.generateComponent": "创建组件",
-  "web.iceworksUIBuilder.pageCreator.createPageError": "请选择使用的页面模板。",
   "web.iceworksUIBuilder.pageCreator.didNotSeletPage": "请选择使用的页面模板。",
   "web.iceworksUIBuilder.pageCreator.inputPageName": "1. 填写页面名：",
   "web.iceworksUIBuilder.pageCreator.selectPage": "2. 选择使用的页面：",
@@ -19,6 +18,7 @@
   "web.iceworksUIBuilder.pageCreator.createPage": "创建页面",
   "web.iceworksUIBuilder.pageGenerater.enterPageName": "请填写页面名称。",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "生成页面成功",
+  "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "填写页面名称",
   "web.iceworksUIBuilder.pageGenerater.chooseBlock": "选择区块",
   "web.iceworksUIBuilder.pageGenerater.createPage": "生成页面",
   "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "请从右侧选择区块。"

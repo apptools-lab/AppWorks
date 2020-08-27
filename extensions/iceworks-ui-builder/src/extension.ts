@@ -92,7 +92,7 @@ export function activate(context: vscode.ExtensionContext) {
   function activePageCreatorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
       'iceworks',
-      'Iceworks - Page Creator',
+      i18n.format('extension.iceworksPageCreator.extensnion.webViewTitle'),
       ViewColumn.One,
       {
         enableScripts: true,

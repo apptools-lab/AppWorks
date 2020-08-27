@@ -50,7 +50,6 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       }
 
       formilySchema.current = templateSchema;
-      console.log('current', formilySchema.current);
       setLoading(false);
     },
     [templateSchema]
@@ -113,29 +112,37 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       {loading ? (
         <Loading />
       ) : (
-        <SchemaForm
-          components={components}
-          schema={formilySchema.current}
-          onSubmit={(userSetting) => {
-            createPage(userSetting);
-            console.log(userSetting);
-          }}
-        >
-          <div className={styles.opts}>
-            <Submit type="primary" loading={isCreating}>
-              <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
-            </Submit>
-            <Reset type="primary">Reset</Reset>
-            <Button
-              type="primary"
-              onClick={() => {
-                setCurrentStep(currentStep - 1);
-              }}
-            >
-              <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
-            </Button>
-          </div>
-        </SchemaForm>
+        <>
+          <h3>{formilySchema.current.title || '页面模板配置表单'}</h3>
+          <h3>{formilySchema.current.description || '请进行配置以生成个性化表格'}</h3>
+          <SchemaForm
+            components={components}
+            schema={formilySchema.current}
+            onSubmit={(userSetting) => {
+              createPage(userSetting);
+              console.log(userSetting);
+            }}
+            // className = {styles.form}
+          >
+            <div className={styles.opts}>
+              <Reset type="primary" className={styles.btn}>
+                重置
+              </Reset>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setCurrentStep(currentStep - 1);
+                }}
+                className={styles.btn}
+              >
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
+              </Button>
+              <Submit type="primary" loading={isCreating} className={styles.btn}>
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
+              </Submit>
+            </div>
+          </SchemaForm>
+        </>
       )}
     </>
   );
