@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.8
+
+- feat: update pegasus project git clone action.
+
 ## 0.3.7
 
 - docs: add more badges.
