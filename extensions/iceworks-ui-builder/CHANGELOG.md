@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.7
+
+- fix: open material settings fallback to VS Code Setings
+
 ## 0.1.6
 
 - docs: add more badges.
