@@ -56,13 +56,7 @@ const Index: React.FC<{
 
   async function refreshMaterialData(source: string) {
     setIsLoadingData(true);
-    /**
-     *  DEVELOPMENT
-     */
     const materialData: IMaterialData = await getData(source);
-
-    // console.log('materialData',JSON.stringify(materialData))
-    // DEVELOPMENT
     const data = convertMaterialData(materialData).filter(({ id }) => {
       return !dataBlackList.includes(id) && (dataWhiteList.length > 0 ? dataWhiteList.includes(id) : true);
     });

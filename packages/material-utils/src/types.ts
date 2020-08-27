@@ -101,20 +101,7 @@ export interface IMaterialPage {
   updateTime: string[];
   uid: string[];
   isNewly: boolean;
-  configSchema: IPageSchema;
   templateData?: any;
-}
-
-export interface IPageSchema {
-  schema: string;
-  title: string;
-  properties: { [prop: string]: IPageProp };
-}
-
-export interface IPageProp {
-  name: string;
-  type: string;
-  description?: string;
 }
 
 export interface IMaterialData {
