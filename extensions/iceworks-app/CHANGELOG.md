@@ -1,5 +1,8 @@
 # Change Log
 
+# 0.4.7
+- chore: quick entries title and detail
+
 ## 0.4.6
 - feat: support pegasus project debugger.
 - feat: add quick entries in tree view.
