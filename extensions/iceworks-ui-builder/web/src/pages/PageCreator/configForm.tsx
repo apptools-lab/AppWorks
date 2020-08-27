@@ -15,6 +15,8 @@ const components = {
   NumberPicker,
 };
 
+console.log(Input);
+
 export default ({ templateSchema, pageName, resetData, setCurrentStep, currentStep, isCreating, setIsCreating }) => {
   const intl = useIntl();
   const [loading, setLoading] = useState(true);

@@ -6,6 +6,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '../../callService';
 import styles from './index.module.scss';
 import ConfigForm from './configForm';
+import '@alifd/theme-iceworks-dark/dist/next.css';
 
 const Home = () => {
   const intl = useIntl();
