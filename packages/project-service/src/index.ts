@@ -41,7 +41,10 @@ export async function getProjectLanguageType() {
 
 export async function getProjectType() {
   try {
-    const { dependencies = {} } = await readPackageJSON(projectPath);
+    const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+    if (devDependencies['@ali/build-plugin-pegasus-base']) {
+      return 'pegasus';
+    }
     if (dependencies.rax) {
       return 'rax';
     }

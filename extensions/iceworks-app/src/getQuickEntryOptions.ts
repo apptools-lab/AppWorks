@@ -47,7 +47,7 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
     command: 'iceworksApp.configHelper.start',
   },
-]
+];
 
 const optionalEntries = [
   {
@@ -55,14 +55,14 @@ const optionalEntries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.generate-component',
   },
-]
+];
 
 export default async () => {
   const projectType = await getProjectType();
   if (projectType === 'pegasus' || projectType === 'rax' || projectType === 'vue') {
-    return entries
+    return entries;
   } else {
     entries.splice(1, 0, ...optionalEntries);
-    return entries
+    return entries;
   }
-}
+};
