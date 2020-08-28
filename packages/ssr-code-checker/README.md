@@ -56,7 +56,7 @@ module.exports = {
 	  const sourceCodeText = sourceCode.getText();
     const uri = context.getFilename();
     
-    noUnitLessLineHeight(wrongGlobalVariableUsage, uri).forEach((problem)=>{
+    noUnitLessLineHeight(sourceCodeText, uri).forEach((problem)=>{
       context.report({
         message: problem.rule,
         loc: {
