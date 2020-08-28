@@ -2,7 +2,7 @@
 
 ## 0.1.8
 
-- feat: support page material
+- feat: support create page
 
 ## 0.1.7
 

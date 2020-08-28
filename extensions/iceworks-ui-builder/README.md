@@ -48,23 +48,23 @@ Through GUI, you can quickly assemble pages with materials.
 
 ## Create Page
 
-Through GUI, you can create pages by setting the page level templates.
+Create the page by visual configuration
 
-### 激活
+### Activate
 
 ![demo](https://user-images.githubusercontent.com/56879942/91519113-4a211d00-e924-11ea-8fbe-36170dedc765.gif)
 
 1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
 2. In the command palette, type `Iceworks: Create page` and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
-### 使用
+### Usage
 
 ![demo](https://user-images.githubusercontent.com/56879942/91519118-4c837700-e924-11ea-80f4-1919380c7d9f.gif)
 
 1. Select a page template.
 2. Click `NEXT` to enter the configuration page.
-3. Setting page templates that are provided by the developer of the template. You can use these settings to customize pages.
-4. Click the `CREATE PAGE` button to enter the routing configuration form.
+3. Configure page templates to generate a customized page.
+4. Click the `CREATE PAGE` button to add the page information.
 5. Enter the name of the page and route information.
 6. Click `OK` button to generate page code, which will be generated under 'SRC/Pages/' directory.
 
