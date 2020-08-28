@@ -1,14 +1,21 @@
 # Change Log
 
+# 0.4.7
+- feat: auto focus field
+- chore: quick entries title and detail
+
 ## 0.4.6
+
 - feat: support pegasus project debugger.
 - feat: add quick entries in tree view.
 - fix: stop command fail.
 
 ## 0.4.5
+
 - feat: add component-generator and component-creator quickPick.
 
 ## 0.4.4
+
 - feat: add Iceworks debug.
 
 ## 0.4.3

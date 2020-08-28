@@ -4,6 +4,7 @@
   "web.iceworksApp.customMaterialSource.addMaterialSource": "新增物料源",
   "web.iceworksApp.customMaterialSource.customMaterialSource": "自定义物料源",
   "web.iceworksApp.customMaterialSource.add": "添加",
+  "web.iceworksApp.customMaterialSource.help": "查看《物料开发》了解如何开发自定义物料源",
   "web.iceworksApp.customMaterialSource.loading": "加载中...",
   "web.iceworksApp.index.CUSTOM_NPM_REGISTRY_SELECT_KEY": "npm - 自定义镜像源",
   "web.iceworksApp.index.addMaterialSuccess": "新增物料源成功",
