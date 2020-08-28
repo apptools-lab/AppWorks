@@ -7,6 +7,7 @@ import {
   IMaterialBlock,
   IMaterialComponent,
   IMaterialBase,
+  IMaterialPage,
 } from '@iceworks/material-utils';
 import { MaterialType } from './type';
 import * as styles from './view.module.scss';
@@ -28,10 +29,12 @@ export const MaterialView: React.FC<{
   disableLazyLoad?: boolean;
   selectedBlocks?: IMaterialBlock[];
   selectedComponents?: IMaterialComponent[];
+  selectedPages?: IMaterialPage[];
   selectedBases?: IMaterialBase[];
   onBaseClick?: (dataSource: IMaterialBase) => void;
   onComponentClick?: (dataSource: IMaterialComponent) => void;
   onBlockClick?: (dataSource: IMaterialBlock) => void;
+  onPageClick?: (dataSorce: IMaterialPage[]) => void;
   onScaffoldClick?: (dataSource: IMaterialScaffold) => void;
 }> = ({ sources, currentSource, onChangeSource, extra, isLoadingSources, ...others }) => {
   const sourceActiveKey = sources.length ? currentSource : EMPTY_TAB_KEY;

@@ -5,8 +5,8 @@ import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
+import RouterDetailForm from '@/components/RouterDetailForm';
 import PageSelected from './components/PageSelected';
-import RouterDetailForm from './components/RouterDetailForm';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
@@ -27,7 +27,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetMaterial' }),
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
       });
     }
 
@@ -40,7 +40,7 @@ const Home = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetData' }) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }) });
     }
     console.log('getData', data);
     return data;

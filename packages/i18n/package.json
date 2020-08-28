@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/i18n",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "I18nService for iceworks",
   "main": "lib/index.js",
   "scripts": {
@@ -12,8 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "loadash": "^1.0.0",
-    "lodash": "^4.17.19"
+    "lodash.template": "^4.5.0"
   },
   "publishConfig": {
     "access": "public"

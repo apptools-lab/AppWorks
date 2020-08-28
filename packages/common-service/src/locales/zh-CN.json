@@ -1,0 +1,8 @@
+{
+  "package.common-service.downloadMaterial.getDownloadUrl": "获取物料代码包下载地址",
+  "package.common-service.downloadMaterial.downloadError": "物料<%= materialName %>下载超时，请手动下载物料：<%= tarballURL %>",
+  "package.common-service.downloadMaterial.unzipCode": "下载物料代码包并解压",
+  "package.common-service.downloadMaterial.process": "===>>> 进度：<%= percent %>%",
+  "package.common-service.uzipError": "解压 <%= materialName %> 失败，压缩包链接地址是：<%= tarballURL %>",
+  "package.common-service.uzipOutTime": "解压 <%= materialName %> 超时，压缩包链接地址是：<%= tarballURL %>"
+}

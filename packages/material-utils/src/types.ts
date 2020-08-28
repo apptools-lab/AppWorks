@@ -86,10 +86,30 @@ export interface IMaterialBlock {
   isNewly: boolean;
 }
 
+export interface IMaterialPage {
+  name: string;
+  title: string;
+  description: string;
+  homepage: string;
+  categories: string[];
+  repository: string;
+  source: IMaterialNpmSource;
+  dependencies: INpmDependencies;
+  screenshot: string;
+  screenshots: string[];
+  publishTime: string;
+  updateTime: string[];
+  uid: string[];
+  isNewly: boolean;
+  templateData?: any;
+  pageName: any;
+}
+
 export interface IMaterialData {
   type: string;
   name: string;
   blocks: IMaterialBlock[];
+  pages: IMaterialPage[];
   components: IMaterialComponent[];
   scaffolds: IMaterialScaffold[];
   bases?: IMaterialBase[];

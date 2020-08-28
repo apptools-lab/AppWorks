@@ -89,6 +89,24 @@ export function activate(context: vscode.ExtensionContext) {
       activePageGeneraterWebview();
     })
   );
+  function activePageCreatorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksPageCreator.extensnion.webViewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworks-ui-builder.create-page', function () {
+      activePageCreatorWebview();
+    })
+  );
 }
 
 export function deactivate() {}

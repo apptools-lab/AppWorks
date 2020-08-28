@@ -1,0 +1,8 @@
+{
+  "package.common-service.downloadMaterial.getDownloadUrl": "Obtain Download URL...",
+  "package.common-service.downloadMaterial.downloadError": "Material <%= materialName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
+  "package.common-service.downloadMaterial.unzipCode": "Download and unzip code...",
+  "package.common-service.downloadMaterial.process": "===>>> Downloading：<%= percent %>%",
+  "package.common-service.uzipError": "Failed to unzip <%= materialName %>，download from：<%= tarballURL %>",
+  "package.common-service.uzipOutTime": "Uzip <%= materialName %> timeout，download from：<%= tarballURL %>"
+}

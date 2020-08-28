@@ -1,5 +1,6 @@
 {
   "extension.iceworksComponentGenerator.extension.webviewTitle": "生成组件 - Iceworks",
   "extension.iceworksComponentBuilder.extension.webviewTitle": "创建组件 - Iceworks",
-  "extension.iceworksPageBuilder.extensnion.webViewTitle": "生成页面 - Iceworks"
+  "extension.iceworksPageBuilder.extensnion.webViewTitle": "生成页面 - Iceworks",
+  "extension.iceworksPageCreator.extensnion.webViewTitle": "创建页面 - Iceworks"
 }

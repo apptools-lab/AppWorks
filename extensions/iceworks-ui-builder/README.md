@@ -31,7 +31,7 @@ Through GUI, you can quickly assemble pages with materials.
 ### Activate
 
 1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
-2. In the command palette, type 'Iceworks: Generate page' and click on the selected item or press enter on the keyboard to evoke page-builder extension.
+2. In the command palette, type `Iceworks: Generate page` and click on the selected item or press enter on the keyboard to evoke page-builder extension.
 
 ### Usage
 
@@ -40,6 +40,28 @@ Through GUI, you can quickly assemble pages with materials.
 3. Click `Generate page` button to generate page code. Input the page name and the router path and then click `ok` button. The page code will be generated into 'src /pages/'
 
 ![generate-page](https://img.alicdn.com/tfs/TB1ErOEjnM11u4jSZPxXXahcXXa-1440-900.gif)
+
+## Create Page
+
+Create the page by visual configuration
+
+### Activate
+
+![demo](https://user-images.githubusercontent.com/56879942/91519113-4a211d00-e924-11ea-8fbe-36170dedc765.gif)
+
+1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
+2. In the command palette, type `Iceworks: Create page` and click on the selected item or press enter on the keyboard to evoke page-builder extension.
+
+### Usage
+
+![demo](https://user-images.githubusercontent.com/56879942/91536884-03451e80-e948-11ea-98e6-6bf89b62e932.gif)
+
+1. Select a page template.
+2. Click `NEXT` to enter the configuration page.
+3. Configure page templates to generate a customized page.
+4. Click the `CREATE PAGE` button to add the page information.
+5. Enter the name of the page and route information.
+6. Click `OK` button to generate page code, which will be generated under 'SRC/Pages/' directory.
 
 ## Create Component
 

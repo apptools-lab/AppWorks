@@ -4,6 +4,7 @@ import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { pagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
+import i18n from '../i18n';
 
 export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private workspaceRoot: string;
@@ -85,13 +86,36 @@ class PageTreeItem extends vscode.TreeItem {
   contextValue = 'page';
 }
 
+const addPageQuickPickItems: any[] = [
+  {
+    label: i18n.format('extension.iceworksApp.views.pageViews.createPage'),
+    detail: i18n.format('extension.iceworksApp.views.pageViews.createPageDetail'),
+    command: 'iceworks-ui-builder.create-page',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.views.pageViews.generatePage'),
+    detail: i18n.format('extension.iceworksApp.views.pageViews.generatePageDetail'),
+    command: 'iceworks-ui-builder.generate-page',
+  },
+];
+function showAddPageQuickPicks() {
+  const quickPick = vscode.window.createQuickPick();
+  quickPick.items = addPageQuickPickItems;
+  quickPick.onDidChangeSelection((change) => {
+    // @ts-ignore
+    vscode.commands.executeCommand(change[0].command);
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+}
+
 export function createPagesTreeView(context: vscode.ExtensionContext) {
   const pagesProvider = new PagesProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
   registerCommand('iceworksApp.pages.add', () => {
     console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
-    vscode.commands.executeCommand('iceworks-ui-builder.generate-page');
+    showAddPageQuickPicks();
   });
   registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
   registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));

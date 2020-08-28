@@ -4,5 +4,6 @@
   "iceworksUIBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。",
   "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: 生成组件",
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: 创建组件",
-  "iceworksUIBuilder.commands.generatePage.title": "Iceworks: 生成页面"
+  "iceworksUIBuilder.commands.generatePage.title": "Iceworks: 生成页面",
+  "iceworksUIBuilder.commands.createPage.title": "Iceworks: 创建页面"
 }

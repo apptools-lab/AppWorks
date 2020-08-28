@@ -22,7 +22,8 @@
   "activationEvents": [
     "onCommand:iceworks-ui-builder.generate-page",
     "onCommand:iceworks-ui-builder.create-component",
-    "onCommand:iceworks-ui-builder.generate-component"
+    "onCommand:iceworks-ui-builder.generate-component",
+    "onCommand:iceworks-ui-builder.create-page"
   ],
   "repository": {
     "type": "git",
@@ -42,6 +43,10 @@
       {
         "command": "iceworks-ui-builder.generate-page",
         "title": "%iceworksUIBuilder.commands.generatePage.title%"
+      },
+      {
+        "command": "iceworks-ui-builder.create-page",
+        "title": "%iceworksUIBuilder.commands.createPage.title%"
       }
     ],
     "configuration": {
@@ -107,6 +112,7 @@
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.160",
     "@types/node": "^13.11.0",
     "@types/vscode": "^1.41.0",
     "ts-loader": "^7.0.5",
