@@ -20,7 +20,7 @@
     "ejs": "^3.1.3",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "transform-ts-to-js": "^0.1.0",
     "uppercamelcase": "^3.0.0"
   },
