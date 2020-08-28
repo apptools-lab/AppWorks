@@ -12,8 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "loadash": "^1.0.0",
-    "lodash": "^4.17.19"
+    "lodash.template": "^4.5.0"
   },
   "publishConfig": {
     "access": "public"

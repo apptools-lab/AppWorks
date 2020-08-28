@@ -10,31 +10,15 @@ import '@alifd/theme-iceworks-dark/dist/next.css';
 
 const Home = () => {
   const intl = useIntl();
-  const [selectedPage, setSelectedPage] = useState();
-  const [pageName, setPageName] = useState('');
+  const [selectedPage, setSelectedPage] = useState([]);
   const [downloading, setDownloading] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [schema, setSchema] = useState({});
+  const [templateName, setTemplateName] = useState('');
   const pages = [
     <>
       <div className={styles.list}>
-        <div className={styles.item}>
-          <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.inputPageName" />
-          </div>
-          <div className={styles.field}>
-            <Input
-              placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
-              })}
-              className={styles.pageNameInput}
-              value={pageName}
-              onChange={(value) => setPageName(value)}
-              disabled={isCreating}
-            />
-          </div>
-        </div>
         <div className={styles.item}>
           <div className={styles.label}>
             <FormattedMessage id="web.iceworksUIBuilder.pageCreator.selectPage" />
@@ -60,18 +44,18 @@ const Home = () => {
     </>,
     <ConfigForm
       templateSchema={schema}
-      pageName={pageName}
-      resetData={resetData}
+      originResetData={resetData}
       currentStep={currentStep}
       setCurrentStep={setCurrentStep}
       isCreating={isCreating}
       setIsCreating={setIsCreating}
+      templateName={templateName}
     />,
   ];
 
   function resetData() {
     setSelectedPage(undefined);
-    setPageName('');
+    setTemplateName('');
   }
 
   async function onSettingsClick() {
@@ -109,36 +93,32 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ page, templateName }) {
-    if (!templateName) {
-      throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' }));
-    }
-    if (!page) {
-      throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' }));
-    }
-  }
+  // function validateData({ page, templateName }) {
+  //   if (!templateName) {
+  //     throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' }));
+  //   }
+
+  // }
 
   function onSelect(page) {
+    console.log(page);
     setSelectedPage(page);
+    setTemplateName(page.name);
   }
 
   async function getConfigPage() {
+    console.log('selectedPage', selectedPage);
     setDownloading(true);
     try {
       const data = {
         page: selectedPage,
-        templateName: pageName,
       };
 
-      validateData(data);
+      if (data.page.length < 1) {
+        throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' }));
+      }
 
-      const templateConfig = await callService('template', 'getTemplateSchema', [
-        {
-          // @ts-ignore
-          ...selectedPage,
-          name: pageName,
-        },
-      ]);
+      const templateConfig = await callService('page', 'getTemplateSchema', [selectedPage]);
       setSchema(templateConfig.schema);
       setCurrentStep(currentStep + 1);
     } catch (error) {

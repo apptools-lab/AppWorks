@@ -1,7 +1,8 @@
 import * as path from 'path';
-import * as fsExtra from 'fs-extra';
+import * as fse from 'fs-extra';
 import * as prettier from 'prettier';
-import { IMaterialBlock } from '@iceworks/material-utils';
+import * as glob from 'glob';
+import { IMaterialBlock, IMaterialPage } from '@iceworks/material-utils';
 import {
   pagesPath,
   COMPONENT_DIR_NAME,
@@ -9,13 +10,16 @@ import {
   getProjectFramework,
   projectPath,
 } from '@iceworks/project-service';
+import { bulkDownload, bulkInstallDependencies, getFileType } from '@iceworks/common-service';
 import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
+import * as transfromTsToJs from 'transform-ts-to-js';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
 import { bulkCreate } from './router';
 import i18n from './i18n';
+import renderEjsTemplates from './utils/renderEjsTemplates';
 
 export * from './router';
 
@@ -36,9 +40,9 @@ export const generate = async function ({
   const pagePath = path.join(pagesPath, pageName);
 
   // ensure that the root directory of the page store exists
-  await fsExtra.mkdirp(pagePath);
+  await fse.mkdirp(pagePath);
 
-  const isPagePathExists = await fsExtra.pathExists(pagePath);
+  const isPagePathExists = await fse.pathExists(pagePath);
   if (!isPagePathExists) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
   }
@@ -71,7 +75,7 @@ export const generate = async function ({
       parser: prettierParserType,
     });
 
-    await fsExtra.writeFile(dist, rendered, 'utf-8');
+    await fse.writeFile(dist, rendered, 'utf-8');
   } catch (error) {
     remove(pageName);
     throw error;
@@ -94,9 +98,56 @@ export async function createRouter(data) {
  * @param name {string} Page folder name
  */
 export const remove = async function (name: string) {
-  await fsExtra.remove(path.join(pagesPath, name));
+  await fse.remove(path.join(pagesPath, name));
 };
 
 export const addBlocks = async function (blocks: IMaterialBlock[], pageName: string) {
   return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
+};
+
+export const getTemplateSchema = async (templates: IMaterialPage[]) => {
+  const templateTempDir = path.join(pagesPath, '.template');
+  await bulkDownload(templates, templateTempDir);
+  return fse.readJSONSync(path.join(pagesPath, '.template', templates[0].name, 'config', 'settings.json'));
+};
+
+export const createPage = async (selesctPage) => {
+  const templateDirPath: string = path.join(pagesPath, '.template');
+  await renderTemplate(selesctPage);
+  await bulkInstallDependencies(selesctPage);
+  await fse.remove(templateDirPath);
+};
+
+export const renderTemplate = async (pages: IMaterialPage[]) => {
+  const templateName = pages[0].templateName;
+  const pageName: string = upperCamelCase(pages[0].name);
+  const templatePath: string = path.join(pagesPath, '.template', `${templateName}`);
+  const targetPath: string = path.join(pagesPath, `${pageName}`);
+  const templateData = pages[0].templateData;
+
+  if (fse.existsSync(targetPath)) {
+    throw new Error(`${targetPath} already exists!`);
+  }
+
+  await renderEjsTemplates(templateData, templatePath);
+  const pageSourceSrcPath = path.join(templatePath, 'src');
+  const pageType = getFileType(pageSourceSrcPath);
+  const projectType = await getProjectLanguageType();
+
+  if (pageType === 'ts' && projectType === 'js') {
+    const files = glob.sync('**/*.@(ts|tsx)', {
+      cwd: pageSourceSrcPath,
+    });
+
+    console.log('transfrom ts to js', files.join(','));
+
+    transfromTsToJs(files, {
+      cwd: pageSourceSrcPath,
+      outDir: pageSourceSrcPath,
+      action: 'overwrite',
+    });
+  }
+  await fse.move(pageSourceSrcPath, targetPath);
+
+  return targetPath;
 };

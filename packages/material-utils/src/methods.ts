@@ -54,6 +54,7 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
       categoryData: getMaterialCategoryData(bases as IMaterialBase[]),
     });
   }
+  console.log('materialGroup', materialGroup);
   return materialGroup;
 }
 

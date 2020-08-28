@@ -1,3 +1,16 @@
 {
-  "package.pageService.index.pagePathExistError": "页面文件夹「<%= name %>」已存在，无法覆盖，请输入新的页面名称。"
+  "package.pageService.index.pagePathExistError": "页面文件夹「<%= name %>」已存在，无法覆盖，请输入新的页面名称。",
+  "package.pageService.downloadTemplate.getDownloadUrl": "获取模板代码包下载地址",
+  "package.pageService.downloadTemplate.getDownloadUrlError": "获取模板代码包地址失败，请手动拷贝代码仓库：<%= repository %>",
+  "package.pageService.downloadTemplate.unzipCode": "下载模板代码包并解压",
+  "package.pageService.downloadTemplate.unzipCodeError": "解压模板<%= templateName %>出错，请手动下载模板：<%= tarballURL %>",
+  "package.pageService.downloadTemplate.process": "===>>> 进度：<%= percent %>%",
+  "package.pageService.downloadTemplate.downloadError": "模板<%= templateName %>下载超时，请手动下载模板：<%= tarballURL %>",
+  "package.pageService.downloadError": "从 <%= blockSourceNpm %> 获取压缩包链接失败，您可以尝试手动克隆 <%= repository %> 仓库",
+  "package.pageService.uzipError": "解压 <%= templateName %> 失败，压缩包链接地址是：<%= tarballURL %>",
+  "package.pageService.uzipOutTime": "解压 <%= templateName %> 超时，压缩包链接地址是：<%= tarballURL %>",
+  "package.pageService.templateError": "只能向 <%= jsxFileExtnames %> 文件添加模板代码",
+  "package.pageService.notPageFileError": "只能向 <%= pagesPath %> 下的页面文件添加模板代码",
+  "package.pageService.startObtainTemplate": "> 开始获取模板代码",
+  "package.pageService.obtainDone": "> 已将模板代码下载到：<%= templateDir %>"
 }

@@ -16,6 +16,20 @@
       "userTitle": {
         "type": "number",
         "title": "用户页面标题"
+      },
+      "object": {
+        "type": "object",
+        "title": "object"
+      },
+      "array": {
+        "type": "array<string>",
+        "title": "array",
+        "x-component": ""
+      },
+      "select": {
+        "type": "string",
+        "title": "select",
+        "enum": [1, 2, 3, 4]
       }
     }
   }

@@ -3,10 +3,8 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as glob from 'glob';
 import * as readFiles from 'fs-readdir-recursive';
-import { getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
-import { getTarballURLByMaterielSource, IMaterialBlock } from '@iceworks/material-utils';
+import { IMaterialBlock } from '@iceworks/material-utils';
 import {
-  projectPath,
   getProjectLanguageType,
   pagesPath,
   COMPONENT_DIR_NAME,
@@ -14,12 +12,13 @@ import {
   checkIsTemplate,
 } from '@iceworks/project-service';
 import {
-  createNpmCommand,
   getTagTemplate,
   getImportInfos,
   getLastAcitveTextEditor,
   getImportTemplate,
-  getIceworksTerminal,
+  getFileType,
+  bulkInstallDependencies,
+  bulkDownload,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -28,66 +27,35 @@ import { generateBlockName } from './utils/generateBlockName';
 
 const { window, Position } = vscode;
 
-function getBlockType(blockSourceSrcPath) {
-  const files = readFiles(blockSourceSrcPath);
-
-  const index = files.findIndex((item) => {
-    return /\.ts(x)/.test(item);
-  });
-
-  return index >= 0 ? 'ts' : 'js';
-}
-
 /**
  * Generate block code
  */
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
-  await bulkDownload(blocks, localPath);
+  const blockTempDir = path.join(localPath, '.temp-block');
+  await bulkDownload(blocks, blockTempDir);
+  await renderBlock(blocks, blockTempDir, localPath);
   await bulkInstallDependencies(blocks);
 };
 
 /**
  * Download blocks code to page
  */
-export const bulkDownload = async function (blocks: IMaterialBlock[], localPath: string, log?: (text: string) => void) {
+export const renderBlock = async function (
+  blocks: IMaterialBlock[],
+  blockTempDir: string,
+  targetDir: string,
+  log?: (text: string) => void
+) {
   if (!log) {
     log = (text) => console.log(text);
   }
 
   return await Promise.all(
     blocks.map(async (block: any) => {
-      const blockSourceNpm = block.source.npm;
-
-      await fsExtra.mkdirp(localPath);
-      const blockName: string = upperCamelCase(block.name);
-
-      let tarballURL: string;
-      try {
-        log(i18n.format('package.block-service.downloadBlock.getDownloadUrl'));
-        tarballURL = await getTarballURLByMaterielSource(block.source);
-      } catch (error) {
-        error.message = i18n.format('package.block-service.downloadBlock.downloadError', { blockName, tarballURL });
-        throw error;
-      }
-      log(i18n.format('package.block-service.downloadBlock.unzipCode'));
-      const blockDir = path.join(localPath, blockName);
-      const blockTempDir = path.join(localPath, `.${blockName}.temp`);
-
-      try {
-        await getAndExtractTarball(blockTempDir, tarballURL, ({ percent }) => {
-          log(i18n.format('package.block-service.downloadBlock.process', { percent: (percent * 100).toFixed(2) }));
-        });
-      } catch (error) {
-        error.message = i18n.format('package.block-service.uzipError', { blockName, tarballURL });
-        if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.block-service.uzipOutTime', { blockName, tarballURL });
-        }
-        await fsExtra.remove(blockTempDir);
-        throw error;
-      }
-
-      const blockSourceSrcPath = path.join(blockTempDir, 'src');
-      const blockType = getBlockType(blockSourceSrcPath);
+      const blockName = upperCamelCase(block.name);
+      const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
+      const blockSrcPath = path.join(targetDir, blockName, 'src');
+      const blockType = getFileType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
       console.log('blockType: ', blockType, 'projectType: ', projectType);
@@ -106,47 +74,11 @@ export const bulkDownload = async function (blocks: IMaterialBlock[], localPath:
         });
       }
 
-      await fsExtra.move(blockSourceSrcPath, blockDir);
+      await fsExtra.move(blockSourceSrcPath, blockSrcPath);
       await fsExtra.remove(blockTempDir);
-      return blockDir;
+      return targetDir;
     })
   );
-};
-
-/**
- * Installation block dependencies
- */
-export const bulkInstallDependencies = async function (blocks: IMaterialBlock[]) {
-  const projectPackageJSON = await readPackageJSON(projectPath);
-  const { terminals } = vscode.window;
-
-  // get all dependencies from blocks
-  const blocksDependencies: { [packageName: string]: string } = {};
-  blocks.forEach(({ dependencies }: any) => Object.assign(blocksDependencies, dependencies));
-
-  // filter existing dependencies of project
-  const filterDependencies: { [packageName: string]: string }[] = [];
-  Object.keys(blocksDependencies).forEach((packageName) => {
-    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
-      filterDependencies.push({
-        [packageName]: blocksDependencies[packageName],
-      });
-    }
-  });
-
-  if (filterDependencies.length > 0) {
-    const deps = filterDependencies.map((dependency) => {
-      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
-      return `${packageName}@${version}`;
-    });
-
-    const terminal = getIceworksTerminal();
-    terminal.show();
-    terminal.sendText(`cd '${projectPath}'`, true);
-    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
-  } else {
-    return [];
-  }
 };
 
 export async function addBlockCode(block: IMaterialBlock) {

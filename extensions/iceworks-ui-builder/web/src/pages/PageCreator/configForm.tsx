@@ -2,12 +2,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SchemaForm, Submit, Reset } from '@formily/next';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Input, Checkbox, Select, NumberPicker } from '@formily/next-components'; // 或者@formily/next-components'
+import { Input, Checkbox, Select, NumberPicker, setup } from '@formily/next-components'; // 或者@formily/next-components'
 import { Button, Notification, Loading } from '@alifd/next';
-import * as _ from 'lodash';
+import forIn from 'lodash.forin';
+import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
 
+setup();
 const components = {
   Input,
   Checkbox,
@@ -17,16 +19,29 @@ const components = {
 
 console.log(Input);
 
-export default ({ templateSchema, pageName, resetData, setCurrentStep, currentStep, isCreating, setIsCreating }) => {
+export default ({
+  templateName,
+  templateSchema,
+  originResetData,
+  setCurrentStep,
+  currentStep,
+  isCreating,
+  setIsCreating,
+}) => {
   const intl = useIntl();
   const [loading, setLoading] = useState(true);
   const formilySchema = useRef({ title: undefined, description: undefined });
+  const [visible, setVisible] = useState(false);
+  const [routerConfig, setRouterConfig] = useState([]);
+  const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
+  // const [userSetting, setUserSetting] = useState({});
+  const [templateData, setTemplateData] = useState({});
 
   useEffect(
     function setFormilySchema() {
       try {
         const properties = templateSchema.properties;
-        _.forIn(properties, (prop) => {
+        forIn(properties, (prop) => {
           const propType = prop.type || 'string';
           switch (propType) {
             case 'string':
@@ -49,7 +64,6 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       } catch (err) {
         console.log(err);
       }
-
       formilySchema.current = templateSchema;
       setLoading(false);
     },
@@ -70,33 +84,53 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
     }
   }
 
-  function getDefaultData(schema) {
+  function getDefaultData() {
     const defaultSetting = {};
-    _.forIn(schema.properties, (prop, key) => {
+    forIn(templateSchema.properties, (prop, key) => {
       defaultSetting[key] = prop.default !== undefined ? prop.default : getDefaultFromType(prop.type);
     });
     return defaultSetting;
   }
 
-  function getTemplateData(schema, userConfig) {
-    const templateData = getDefaultData(schema);
-    _.forIn(templateData, (val, key) => {
+  function getTemplateData(userConfig) {
+    const templateData = getDefaultData();
+    forIn(templateData, (val, key) => {
       templateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
     });
     return templateData;
   }
 
-  async function createPage(userSetting) {
+  async function getRouterForm(setting) {
+    try {
+      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      setIsConfigurableRouter(isRouteConfigPathExists);
+      if (isRouteConfigPathExists) {
+        // configurable router
+        const config = await callService('page', 'getAll');
+        setRouterConfig(config);
+      }
+      setTemplateData(getTemplateData(setting));
+      setVisible(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function createPage(values) {
     try {
       setIsCreating(true);
-      const templateData = getTemplateData(templateSchema, userSetting);
       console.log('templateData', templateData);
-      await callService('template', 'createPage', [
+      await callService('page', 'createPage', [
         {
-          name: pageName,
+          templateName,
+          name: values.pageName,
           templateData,
         },
       ]);
+
+      if (isConfigurableRouter) {
+        await callService('page', 'createRouter', values);
+      }
       Notification.success({
         content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
       });
@@ -104,8 +138,17 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       Notification.error({ content: e.message });
     } finally {
       setIsCreating(false);
+      setVisible(false);
       resetData();
     }
+  }
+
+  function resetData() {
+    originResetData();
+    setRouterConfig([]);
+  }
+  function onClose() {
+    setVisible(false);
   }
 
   return (
@@ -115,20 +158,18 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
       ) : (
         <>
           <h3>
-            ß
             {formilySchema.current.title ||
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
           </h3>
           <p>
-            ß
             {formilySchema.current.description ||
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
           </p>
           <SchemaForm
             components={components}
             schema={formilySchema.current}
-            onSubmit={(userSetting) => {
-              createPage(userSetting);
+            onSubmit={(setting) => {
+              getRouterForm(setting);
             }}
           >
             <div className={styles.opts}>
@@ -144,10 +185,18 @@ export default ({ templateSchema, pageName, resetData, setCurrentStep, currentSt
               >
                 <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
               </Button>
-              <Submit type="primary" loading={isCreating} className={styles.btn}>
+              <Submit type="primary" className={styles.btn}>
                 <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
               </Submit>
             </div>
+            <RouterDetailForm
+              visible={visible}
+              isCreating={isCreating}
+              routerConfig={routerConfig}
+              isConfigurableRouter={isConfigurableRouter}
+              onSubmit={createPage}
+              onClose={onClose}
+            />
           </SchemaForm>
         </>
       )}

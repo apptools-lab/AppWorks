@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import template from 'lodash.template';
 
 export interface ITextMap {
   // "${namespace}.${extensionName}.${moudelName}.${fieldName}": "xxx"
@@ -24,6 +24,6 @@ export default class I18n {
       return '';
     }
 
-    return args ? _.template(i18nformatString)(args) : i18nformatString;
+    return args ? template(i18nformatString)(args) : i18nformatString;
   }
 }

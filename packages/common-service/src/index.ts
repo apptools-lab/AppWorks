@@ -1,7 +1,8 @@
-import { checkAliInternal } from 'ice-npm-utils';
+import { checkAliInternal, getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
 import {
@@ -10,7 +11,11 @@ import {
   ALI_FUSION_MATERIAL_URL,
   ALI_NPM_REGISTRY,
 } from '@iceworks/constant';
+import * as upperCamelCase from 'uppercamelcase';
+import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
+import { projectPath, getProjectLanguageType, pagesPath } from '@iceworks/project-service';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const co = require('co');
@@ -307,3 +312,90 @@ export function getIceworksTerminal(terminalName = 'Iceworks') {
 
   return terminal;
 }
+
+export const getFileType = (templateSourceSrcPath) => {
+  const files = readFiles(templateSourceSrcPath);
+
+  const index = files.findIndex((item) => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+};
+
+/**
+ * Install template or block dependencies
+ */
+export const bulkInstallDependencies = async function (pages: IMaterialPage[] | IMaterialBlock[]) {
+  const projectPackageJSON = await readPackageJSON(projectPath);
+
+  // get all dependencies from templates
+  const pagesDependencies: { [packageName: string]: string } = {};
+  pages.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
+
+  // filter existing dependencies of project
+  const filterDependencies: { [packageName: string]: string }[] = [];
+  Object.keys(pagesDependencies).forEach((packageName) => {
+    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
+      filterDependencies.push({
+        [packageName]: pagesDependencies[packageName],
+      });
+    }
+  });
+
+  if (filterDependencies.length > 0) {
+    const deps = filterDependencies.map((dependency) => {
+      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
+      return `${packageName}@${version}`;
+    });
+
+    const terminal = getIceworksTerminal();
+    terminal.show();
+    terminal.sendText(`cd '${projectPath}'`, true);
+    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
+  } else {
+    return [];
+  }
+};
+
+// TODO: 如果规定 templates 的类型为 IMaterialPage[] | IMaterialBlock[]
+// 则在 368 行会出现不兼容错误 ts 2349.
+export const bulkDownload = async function (templates: any, tmpPath: string, log?: (text: string) => void) {
+  if (!log) {
+    log = (text) => console.log(text);
+  }
+
+  return await Promise.all(
+    templates.map(async (template: any) => {
+      console.log('template', template);
+      await fse.mkdirp(pagesPath);
+      const templateName: string = upperCamelCase(template.name);
+
+      let tarballURL: string;
+      try {
+        log(i18n.format('package.common-service.downloadTemplate.getDownloadUrl'));
+        tarballURL = await getTarballURLByMaterielSource(template.source);
+      } catch (error) {
+        error.message = i18n.format('package.common-service.downloadTemplate.downloadError', {
+          templateName,
+          tarballURL,
+        });
+        throw error;
+      }
+      log(i18n.format('package.common-service.downloadTemplate.unzipCode'));
+      const downloadPath = path.join(tmpPath, templateName);
+      try {
+        await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
+          log(i18n.format('package.common-service.downloadTemplate.process', { percent: (percent * 100).toFixed(2) }));
+        });
+      } catch (error) {
+        error.message = i18n.format('package.common-service.uzipError', { templateName, tarballURL });
+        if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+          error.message = i18n.format('package.common-service.uzipOutTime', { templateName, tarballURL });
+        }
+        await fse.remove(tmpPath);
+        throw error;
+      }
+    })
+  );
+};
