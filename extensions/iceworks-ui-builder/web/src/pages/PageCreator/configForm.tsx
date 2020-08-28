@@ -2,22 +2,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SchemaForm, Submit, Reset } from '@formily/next';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Input, Checkbox, Select, NumberPicker, setup } from '@formily/next-components'; // 或者@formily/next-components'
+import * as nextComponents from '@formily/next-components';
+// import { Input, Checkbox, Select, NumberPicker, setup } from '@formily/next-components'; // 或者@formily/next-components'
 import { Button, Notification, Loading } from '@alifd/next';
 import forIn from 'lodash.forin';
 import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
 
-setup();
-const components = {
-  Input,
-  Checkbox,
-  Select,
-  NumberPicker,
-};
+console.log('nextComponents', nextComponents);
 
-console.log(Input);
+nextComponents.setup();
+// const components = {
+//   Input,
+//   Checkbox,
+//   Select,
+//   NumberPicker,
+// };
+
+// console.log(Input);
 
 export default ({
   templateName,
@@ -34,44 +37,23 @@ export default ({
   const [visible, setVisible] = useState(false);
   const [routerConfig, setRouterConfig] = useState([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
-  // const [userSetting, setUserSetting] = useState({});
   const [templateData, setTemplateData] = useState({});
+  const [components, setComponents] = useState({});
 
-  useEffect(
-    function setFormilySchema() {
-      try {
-        const properties = templateSchema.properties;
-        forIn(properties, (prop) => {
-          const propType = prop.type || 'string';
-          switch (propType) {
-            case 'string':
-              prop['x-component'] = 'input';
-              break;
-            case 'boolean':
-              prop['x-component'] = 'CheckBox';
-              break;
-            case 'number':
-              prop['x-component'] = 'NumberPicker';
-              break;
-            default:
-              break;
-          }
-          if (prop.enum) {
-            prop['x-component'] = 'Select';
-          }
-        });
-        console.log('properties', properties);
-      } catch (err) {
-        console.log(err);
+  useEffect(() => {
+    const tmpComponents = {};
+    forIn(nextComponents, (value, key) => {
+      if (key !== 'setup') {
+        tmpComponents[key] = value;
       }
-      formilySchema.current = templateSchema;
-      setLoading(false);
-    },
-    [templateSchema]
-  );
+    });
+    setComponents(tmpComponents);
+    setLoading(false);
+  }, []);
 
   function getDefaultFromType(type) {
     console.log('type', type);
+    // TODO: 丰富所有类型的默认值。
     switch (type) {
       case 'string':
         return '';
@@ -79,6 +61,10 @@ export default ({
         return false;
       case 'number':
         return 0;
+      case 'array':
+        return [];
+      case 'object':
+        return {};
       default:
         return '';
     }
@@ -167,7 +153,7 @@ export default ({
           </p>
           <SchemaForm
             components={components}
-            schema={formilySchema.current}
+            schema={templateSchema}
             onSubmit={(setting) => {
               getRouterForm(setting);
             }}

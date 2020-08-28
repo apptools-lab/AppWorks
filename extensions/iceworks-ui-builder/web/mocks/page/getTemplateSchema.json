@@ -11,7 +11,9 @@
       },
       "title": {
         "type": "string",
-        "title": "标题"
+        "title": "标题",
+        "description": "我是一个 Description",
+        "x-component": "Input"
       },
       "userTitle": {
         "type": "number",
@@ -21,15 +23,81 @@
         "type": "object",
         "title": "object"
       },
-      "array": {
-        "type": "array<string>",
-        "title": "array",
-        "x-component": ""
-      },
       "select": {
         "type": "string",
         "title": "select",
         "enum": [1, 2, 3, 4]
+      },
+      "datarange": {
+        "type": "daterange",
+        "title": "daterange"
+      },
+      "Time": {
+        "type": "time",
+        "title": "time"
+      },
+      "array": {
+        "type": "array",
+        "title": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "NO_NAME_FIELD_$0": {
+              "key": "NO_NAME_FIELD_$0",
+              "type": "object",
+              "name": "NO_NAME_FIELD_$0",
+              "x-component-props": {
+                "labelCol": 6,
+                "wrapperCol": 8
+              },
+              "properties": {
+                "aa": {
+                  "key": "aa",
+                  "name": "aa",
+                  "x-component": "input",
+                  "description": "hello world",
+                  "title": "字段1"
+                },
+                "bb": {
+                  "key": "bb",
+                  "name": "bb",
+                  "x-component": "input",
+                  "title": "字段2"
+                },
+                "cc": {
+                  "key": "cc",
+                  "name": "cc",
+                  "x-component": "input",
+                  "title": "字段3"
+                },
+                "dd": {
+                  "key": "dd",
+                  "name": "dd",
+                  "x-component": "input",
+                  "title": "字段5"
+                },
+                "ee": {
+                  "key": "ee",
+                  "name": "ee",
+                  "x-component": "input",
+                  "title": "字段6"
+                },
+                "ff": {
+                  "key": "ff",
+                  "name": "ff",
+                  "x-component": "input",
+                  "title": "字段7"
+                },
+                "gg": {
+                  "key": "gg",
+                  "name": "gg",
+                  "x-component": "rangepicker",
+                  "title": "字段8"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
