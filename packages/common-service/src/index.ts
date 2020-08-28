@@ -226,10 +226,6 @@ export async function getExistProjects(token: string) {
   return res.data;
 }
 
-export function openConfigPanel() {
-  vscode.commands.executeCommand('iceworksApp.configHelper.start');
-}
-
 export function getLastAcitveTextEditor() {
   const { visibleTextEditors } = window;
   const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activeTextEditorId);
@@ -397,3 +393,10 @@ export const bulkDownload = async function (templates: any, tmpPath: string, log
     })
   );
 };
+export function openMaterialsSettings() {
+  if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+    executeCommand('iceworksApp.configHelper.start', 'iceworks.materialSources');
+  } else {
+    executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
+  }
+}
