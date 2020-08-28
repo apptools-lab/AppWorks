@@ -15,7 +15,6 @@ const Home = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [schema, setSchema] = useState({});
-  const [templateName, setTemplateName] = useState('');
   const pages = [
     <>
       <div className={styles.list}>
@@ -49,13 +48,12 @@ const Home = () => {
       setCurrentStep={setCurrentStep}
       isCreating={isCreating}
       setIsCreating={setIsCreating}
-      templateName={templateName}
+      selectedPage={selectedPage}
     />,
   ];
 
   function resetData() {
     setSelectedPage(undefined);
-    setTemplateName('');
   }
 
   async function onSettingsClick() {
@@ -96,7 +94,6 @@ const Home = () => {
   function onSelect(page) {
     console.log(page);
     setSelectedPage(page);
-    setTemplateName(page.name);
   }
 
   async function getConfigPage() {
@@ -110,8 +107,7 @@ const Home = () => {
       if (data.page.length < 1) {
         throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' }));
       }
-
-      const templateConfig = await callService('page', 'getTemplateSchema', [selectedPage]);
+      const templateConfig = await callService('page', 'getTemplateSchema', selectedPage);
       setSchema(templateConfig.schema);
       setCurrentStep(currentStep + 1);
     } catch (error) {
