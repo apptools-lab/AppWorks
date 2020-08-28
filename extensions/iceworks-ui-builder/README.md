@@ -54,7 +54,7 @@ Create the page by visual configuration
 
 ### Usage
 
-![demo](https://user-images.githubusercontent.com/56879942/91519118-4c837700-e924-11ea-80f4-1919380c7d9f.gif)
+![demo](https://user-images.githubusercontent.com/56879942/91536884-03451e80-e948-11ea-98e6-6bf89b62e932.gif)
 
 1. Select a page template.
 2. Click `NEXT` to enter the configuration page.

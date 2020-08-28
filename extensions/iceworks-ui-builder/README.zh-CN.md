@@ -54,7 +54,7 @@
 
 ### 使用
 
-![使用示例](https://user-images.githubusercontent.com/56879942/91519125-52795800-e924-11ea-904f-9cc0caf6af5e.gif)
+![使用示例](https://user-images.githubusercontent.com/56879942/91536902-08a26900-e948-11ea-9c80-41fe4387b48f.gif)
 
 1. 选择一个页面模板
 2. 点击 `下一步` ，进入配置页面
