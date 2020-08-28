@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.8
+
+- feat: support create page
+
 ## 0.1.7
 
 - fix: open material settings fallback to VS Code Setings
