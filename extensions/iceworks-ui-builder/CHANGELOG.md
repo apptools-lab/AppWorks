@@ -3,6 +3,7 @@
 ## 0.1.8
 
 - feat: support create page
+- feat: support component-generator dark theme
 
 ## 0.1.7
 
