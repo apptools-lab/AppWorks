@@ -1,7 +1,7 @@
 {
   "name": "iceworks",
   "displayName": "Iceworks",
-  "description": "Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better.",
+  "description": "Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
   "version": "0.7.0",
   "engines": {

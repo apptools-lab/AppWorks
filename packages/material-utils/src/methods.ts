@@ -10,7 +10,7 @@ import {
 import { CUSTOM_CATEGORY } from './constant';
 
 export function convertMaterialData(materialData: IMaterialData): IMaterialTypeDatum[] {
-  const { blocks, scaffolds, components, bases } = materialData;
+  const { blocks, scaffolds, components, bases, pages } = materialData;
   const hasBase = bases && bases.length > 0;
   const componentName = hasBase ? '业务组件' : '组件';
   const materialGroup: IMaterialTypeDatum[] = [];
@@ -31,6 +31,14 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
     });
   }
 
+  if (pages) {
+    materialGroup.push({
+      name: '页面',
+      id: 'pages',
+      categoryData: getMaterialCategoryData(pages),
+    });
+  }
+
   if (components) {
     materialGroup.push({
       name: componentName,
@@ -46,6 +54,7 @@ export function convertMaterialData(materialData: IMaterialData): IMaterialTypeD
       categoryData: getMaterialCategoryData(bases as IMaterialBase[]),
     });
   }
+  console.log('materialGroup', materialGroup);
   return materialGroup;
 }
 

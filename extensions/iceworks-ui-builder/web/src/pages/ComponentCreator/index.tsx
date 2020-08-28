@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
@@ -14,7 +14,7 @@ const Home = () => {
 
   async function onSettingsClick() {
     try {
-      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+      await callService('common', 'openMaterialsSettings');
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -26,7 +26,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getMaterialError' }),
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
       });
     }
 
@@ -40,7 +40,7 @@ const Home = () => {
       data = await callService('material', 'getData', source);
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.getDataError' }),
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }),
       });
     }
     console.log('getData', data);
@@ -109,7 +109,7 @@ const Home = () => {
           <div className={styles.field}>
             <Input
               placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.componentCreator.inputComponentNamePlaceHolder',
+                id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
               })}
               className={styles.pageNameInput}
               value={componentName}
@@ -137,7 +137,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.componentCreator.generate" />
+          <FormattedMessage id="web.iceworksUIBuilder.componentCreator.generateComponent" />
         </Button>
       </div>
     </div>

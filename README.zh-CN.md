@@ -13,7 +13,8 @@
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
   <a href="https://github.com/ice-lab/iceworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
@@ -26,11 +27,11 @@
 - 在输入框中输入「iceworks」进行搜索；
 - 点击第一个「iceworks」选项上的「安装」按钮。
 
-![install demo](https://img.alicdn.com/tfs/TB1Bm.kaCR26e4jSZFEXXbwuXXa-1024-766.gif)
+![安装 Iceworks](https://img.alicdn.com/tfs/TB1vS2kg9R26e4jSZFEXXbwuXXa-1024-768.png_790x10000.jpg)
 
 安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
 
-![使用示例](https://img.alicdn.com/tfs/TB1nk3YRQL0gK0jSZFtXXXQCXXa-1024-768.png_790x10000.jpg)
+![使用示例](https://img.alicdn.com/tfs/TB1Qr7oi8Bh1e4jSZFhXXcC9VXa-1024-768.png_790x10000.jpg)
 
 [查看套件了解更多功能](extensions/iceworks/README.md)。
 

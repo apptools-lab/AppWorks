@@ -13,7 +13,8 @@ English | [简体中文](./README.zh-CN.md)
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
   <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
   <a href="https://github.com/ice-lab/iceworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
@@ -28,11 +29,11 @@ Use Iceworks to develop Universal Application quickly:
 - Enter "iceworks" in the input box to search
 - Click the Install button on the first iceworks option
 
-![install demo](https://img.alicdn.com/tfs/TB1jDJ7R8r0gK0jSZFnXXbRRXXa-1024-768.png)
+![install demo](https://img.alicdn.com/tfs/TB1.Wz9SuH2gK0jSZJnXXaT1FXa-1024-768.png_790x10000.jpg)
 
 After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start:
 
-![Iceworks](https://img.alicdn.com/tfs/TB1lyV9inM11u4jSZPxXXahcXXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/tfs/TB1Z8T0gzMZ7e4jSZFOXXX7epXa-1024-768.png_790x10000.jpg)
 
 [See the Pack for more details](extensions/iceworks/README.md).
 

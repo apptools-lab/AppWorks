@@ -1,6 +1,6 @@
 # no-patent-licenses
 
- Recommend to use the dependency with Open-Source license.
+ Recommend using the dependency with Open-Source license.
 
 ## Rule Details
 

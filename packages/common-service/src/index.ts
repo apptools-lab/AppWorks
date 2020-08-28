@@ -1,7 +1,8 @@
-import { checkAliInternal } from 'ice-npm-utils';
+import { checkAliInternal, getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
 import {
@@ -10,7 +11,10 @@ import {
   ALI_FUSION_MATERIAL_URL,
   ALI_NPM_REGISTRY,
 } from '@iceworks/constant';
+import * as upperCamelCase from 'uppercamelcase';
+import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const co = require('co');
@@ -222,10 +226,6 @@ export async function getExistProjects(token: string) {
   return res.data;
 }
 
-export function openConfigPanel() {
-  vscode.commands.executeCommand('iceworksApp.configHelper.start');
-}
-
 export function getLastAcitveTextEditor() {
   const { visibleTextEditors } = window;
   const activeTextEditor = visibleTextEditors.find((item: any) => item.id === activeTextEditorId);
@@ -306,4 +306,103 @@ export function getIceworksTerminal(terminalName = 'Iceworks') {
   }
 
   return terminal;
+}
+
+export const getFolderLanguageType = (templateSourceSrcPath) => {
+  const files = readFiles(templateSourceSrcPath);
+
+  const index = files.findIndex((item) => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+};
+
+/**
+ * Install materials dependencies
+ */
+export const bulkInstallMaterialsDependencies = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  projectPath: string
+) {
+  const projectPackageJSON = await readPackageJSON(projectPath);
+
+  // get all dependencies from templates
+  const pagesDependencies: { [packageName: string]: string } = {};
+  materials.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
+
+  // filter existing dependencies of project
+  const filterDependencies: { [packageName: string]: string }[] = [];
+  Object.keys(pagesDependencies).forEach((packageName) => {
+    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
+      filterDependencies.push({
+        [packageName]: pagesDependencies[packageName],
+      });
+    }
+  });
+
+  if (filterDependencies.length > 0) {
+    const deps = filterDependencies.map((dependency) => {
+      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
+      return `${packageName}@${version}`;
+    });
+
+    const terminal = getIceworksTerminal();
+    terminal.show();
+    terminal.sendText(`cd '${projectPath}'`, true);
+    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
+  } else {
+    return [];
+  }
+};
+
+export const bulkDownloadMaterials = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  tmpPath: string,
+  log?: (text: string) => void
+) {
+  if (!log) {
+    log = (text) => console.log(text);
+  }
+
+  return await Promise.all(
+    // @ts-ignore
+    materials.map(async (template: any) => {
+      await fse.mkdirp(tmpPath);
+      const materialName: string = upperCamelCase(template.name);
+
+      let tarballURL: string;
+      try {
+        log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
+        tarballURL = await getTarballURLByMaterielSource(template.source);
+      } catch (error) {
+        error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
+          materialName,
+          tarballURL,
+        });
+        throw error;
+      }
+      log(i18n.format('package.common-service.downloadMaterial.unzipCode'));
+      const downloadPath = path.join(tmpPath, materialName);
+      try {
+        await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
+          log(i18n.format('package.common-service.downloadMaterial.process', { percent: (percent * 100).toFixed(2) }));
+        });
+      } catch (error) {
+        error.message = i18n.format('package.common-service.uzipError', { materialName, tarballURL });
+        if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+          error.message = i18n.format('package.common-service.uzipOutTime', { materialName, tarballURL });
+        }
+        await fse.remove(tmpPath);
+        throw error;
+      }
+    })
+  );
+};
+export function openMaterialsSettings() {
+  if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+    executeCommand('iceworksApp.configHelper.start', 'iceworks.materialSources');
+  } else {
+    executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
+  }
 }

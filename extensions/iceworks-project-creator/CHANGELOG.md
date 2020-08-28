@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.8
+
+- feat: update pegasus project git clone action.
+- fix: open material settings fallback to VS Code Setings
+
 ## 0.3.7
 
 - docs: add more badges.

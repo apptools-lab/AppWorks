@@ -8,11 +8,13 @@ import {
   IMaterialComponent,
   IMaterialBase,
   CUSTOM_CATEGORY,
+  IMaterialPage,
 } from '@iceworks/material-utils';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';
 import { MaterialBase } from './base';
+import { MaterialPage } from './page';
 import * as styles from './type.module.scss';
 
 const { Cell } = ResponsiveGrid;
@@ -24,9 +26,11 @@ interface ContentProps extends IMaterialTypeDatum {
   selectedBlocks?: IMaterialBlock[];
   selectedComponents?: IMaterialComponent[];
   selectedBases?: IMaterialBase[];
+  selectedPages?: IMaterialPage[];
   onComponentClick?: (dataSource: IMaterialComponent) => void;
   onBaseClick?: (dataSource: IMaterialBase) => void;
   onBlockClick?: (dataSource: IMaterialBlock) => void;
+  onPageClick?: (dataSource: IMaterialPage) => void;
   onScaffoldClick?: (dataSource: IMaterialScaffold) => void;
 }
 
@@ -36,10 +40,12 @@ const Content: React.FC<ContentProps> = ({
   typeId,
   colSpan,
   selectedBlocks,
+  selectedPages,
   selectedComponents,
   selectedBases,
   onComponentClick,
   onBaseClick,
+  onPageClick,
   onBlockClick,
   onScaffoldClick,
 }) => {
@@ -105,6 +111,28 @@ const Content: React.FC<ContentProps> = ({
                         );
                       } else {
                         $ele = $block;
+                      }
+                    } else if (typeId === 'pages') {
+                      const $page = (
+                        <MaterialPage
+                          // @ts-ignore
+                          dataSource={item}
+                          selected={
+                            selectedPages
+                              ? !!selectedPages.find((sellectedPage) => sellectedPage.name === item.name)
+                              : false
+                          }
+                          onClick={onPageClick}
+                        />
+                      );
+                      if (cIndex === 0 && index > 3 && scrollId) {
+                        $ele = (
+                          <LazyLoad scrollContainer={`#${scrollId}`} height={240}>
+                            {$page}
+                          </LazyLoad>
+                        );
+                      } else {
+                        $ele = $page;
                       }
                     } else if (typeId === 'components') {
                       $ele = (

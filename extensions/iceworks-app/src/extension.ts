@@ -40,7 +40,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init config webview
   let webviewPanel: vscode.WebviewPanel | undefined;
-  function activeConfigWebview() {
+  function activeConfigWebview(focusField: string) {
     if (webviewPanel) {
       webviewPanel.reveal();
     } else {
@@ -53,7 +53,11 @@ export async function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         }
       );
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      const extraHtml = `<script>
+        window.iceworksAutoFocusField = "${focusField}";
+      </script>
+      `;
+      webviewPanel.webview.html = getHtmlForWebview(extensionPath, undefined, false, undefined, extraHtml);
       webviewPanel.onDidDispose(
         () => {
           webviewPanel = undefined;
@@ -65,9 +69,9 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   }
   subscriptions.push(
-    registerCommand('iceworksApp.configHelper.start', function () {
+    registerCommand('iceworksApp.configHelper.start', function (focusField: string) {
       recorder.recordActivate();
-      activeConfigWebview();
+      activeConfigWebview(focusField);
     })
   );
 
@@ -92,6 +96,11 @@ export async function activate(context: vscode.ExtensionContext) {
           },
         });
       }
+
+      recorder.record({
+        module: 'treeView',
+        action: 'active',
+      });
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         recordDAU();
