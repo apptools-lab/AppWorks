@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as ejs from 'ejs';
 import * as util from 'util';
+import * as prettier from 'prettier';
 
 export default async function renderEjsTemplates(templateData: object, templateDir: string) {
   return new Promise((resolve, reject) => {
@@ -36,8 +37,12 @@ export default async function renderEjsTemplates(templateData: object, templateD
 async function renderFile(templateFilepath: string, data: any) {
   const asyncRenderFile = util.promisify(ejs.renderFile);
   try {
-    const content = await asyncRenderFile(templateFilepath, data);
+    let content = await asyncRenderFile(templateFilepath, data);
     const targetFilePath = templateFilepath.replace(/\.ejs$/, '');
+    if (targetFilePath.match(/tsx$|jsx$/)) {
+      // TODO: 需要对换行进行进一步的处理。
+      content = prettier.format(content, { singleQuote: true, filepath: targetFilePath });
+    }
     await fse.rename(templateFilepath, targetFilePath);
     await fse.writeFile(targetFilePath, content);
   } catch (err) {
