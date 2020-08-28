@@ -18,7 +18,7 @@ import {
   getImportTemplate,
   getFolderLanguageType,
   bulkInstallMaterialsDependencies,
-  bulkDownload,
+  bulkDownloadMaterials,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -32,14 +32,14 @@ const { window, Position } = vscode;
  */
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   const blocksTempDir = path.join(localPath, '.temp-block');
-  await bulkDownload(blocks, blocksTempDir);
+  await bulkDownloadMaterials(blocks, blocksTempDir);
   await renderBlocks(blocks, blocksTempDir, localPath);
   await fsExtra.remove(blocksTempDir);
   await bulkInstallMaterialsDependencies(blocks, projectPath);
 };
 
 /**
- * Render blocks code to page
+ * Render blocks code to targetDir
  */
 export const renderBlocks = async function (
   blocks: IMaterialBlock[],
@@ -115,7 +115,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
-    const blockDir = await bulkDownload([{ ...block, name: blockName }], componentsPath, (text) => {
+    const blockDir = await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
     materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));

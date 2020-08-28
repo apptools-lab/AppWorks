@@ -356,7 +356,7 @@ export const bulkInstallMaterialsDependencies = async function (
   }
 };
 
-export const bulkDownload = async function (
+export const bulkDownloadMaterials = async function (
   materials: IMaterialPage[] | IMaterialBlock[],
   tmpPath: string,
   log?: (text: string) => void

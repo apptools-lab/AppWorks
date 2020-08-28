@@ -11,7 +11,11 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
-import { bulkDownload, bulkInstallMaterialsDependencies, getFolderLanguageType } from '@iceworks/common-service';
+import {
+  bulkDownloadMaterials,
+  bulkInstallMaterialsDependencies,
+  getFolderLanguageType,
+} from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -108,7 +112,7 @@ export const addBlocks = async function (blocks: IMaterialBlock[], pageName: str
 export const getTemplateSchema = async (selectPage: IMaterialPage) => {
   const templateTempDir = path.join(pagesPath, '.template');
   try {
-    await bulkDownload([selectPage], templateTempDir);
+    await bulkDownloadMaterials([selectPage], templateTempDir);
     const templateSchema = await fse.readJSON(
       path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json')
     );
@@ -123,7 +127,7 @@ export const getTemplateSchema = async (selectPage: IMaterialPage) => {
 export const createPage = async (selectPage: IMaterialPage) => {
   const templateTempDir: string = path.join(pagesPath, '.template');
   try {
-    await bulkDownload([selectPage], templateTempDir);
+    await bulkDownloadMaterials([selectPage], templateTempDir);
     await renderPage(selectPage);
     await bulkInstallMaterialsDependencies([selectPage], projectPath);
     await fse.remove(templateTempDir);
