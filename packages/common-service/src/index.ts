@@ -308,7 +308,7 @@ export function getIceworksTerminal(terminalName = 'Iceworks') {
   return terminal;
 }
 
-export const getFileType = (templateSourceSrcPath) => {
+export const getFolderLanguageType = (templateSourceSrcPath) => {
   const files = readFiles(templateSourceSrcPath);
 
   const index = files.findIndex((item) => {
@@ -319,14 +319,17 @@ export const getFileType = (templateSourceSrcPath) => {
 };
 
 /**
- * Install template or block dependencies
+ * Install materials dependencies
  */
-export const bulkInstallDependencies = async function (pages: IMaterialPage[] | IMaterialBlock[], projectPath: string) {
+export const bulkInstallMaterialsDependencies = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  projectPath: string
+) {
   const projectPackageJSON = await readPackageJSON(projectPath);
 
   // get all dependencies from templates
   const pagesDependencies: { [packageName: string]: string } = {};
-  pages.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
+  materials.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
 
   // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
@@ -353,39 +356,42 @@ export const bulkInstallDependencies = async function (pages: IMaterialPage[] | 
   }
 };
 
-// TODO: 如果规定 templates 的类型为 IMaterialPage[] | IMaterialBlock[]
-// 则在 368 行会出现不兼容错误 ts 2349.
-export const bulkDownload = async function (templates: any, tmpPath: string, log?: (text: string) => void) {
+export const bulkDownload = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  tmpPath: string,
+  log?: (text: string) => void
+) {
   if (!log) {
     log = (text) => console.log(text);
   }
 
   return await Promise.all(
-    templates.map(async (template: any) => {
+    // @ts-ignore
+    materials.map(async (template: any) => {
       await fse.mkdirp(tmpPath);
-      const templateName: string = upperCamelCase(template.name);
+      const materialName: string = upperCamelCase(template.name);
 
       let tarballURL: string;
       try {
-        log(i18n.format('package.common-service.downloadTemplate.getDownloadUrl'));
+        log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
         tarballURL = await getTarballURLByMaterielSource(template.source);
       } catch (error) {
-        error.message = i18n.format('package.common-service.downloadTemplate.downloadError', {
-          templateName,
+        error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
+          materialName,
           tarballURL,
         });
         throw error;
       }
-      log(i18n.format('package.common-service.downloadTemplate.unzipCode'));
-      const downloadPath = path.join(tmpPath, templateName);
+      log(i18n.format('package.common-service.downloadMaterial.unzipCode'));
+      const downloadPath = path.join(tmpPath, materialName);
       try {
         await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
-          log(i18n.format('package.common-service.downloadTemplate.process', { percent: (percent * 100).toFixed(2) }));
+          log(i18n.format('package.common-service.downloadMaterial.process', { percent: (percent * 100).toFixed(2) }));
         });
       } catch (error) {
-        error.message = i18n.format('package.common-service.uzipError', { templateName, tarballURL });
+        error.message = i18n.format('package.common-service.uzipError', { materialName, tarballURL });
         if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.common-service.uzipOutTime', { templateName, tarballURL });
+          error.message = i18n.format('package.common-service.uzipOutTime', { materialName, tarballURL });
         }
         await fse.remove(tmpPath);
         throw error;

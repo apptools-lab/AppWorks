@@ -1,15 +1,8 @@
 {
-  "package.common-service.downloadBlock.getDownloadUrl": "Obtain Download URL...",
-  "package.common-service.downloadBlock.getDownloadUrlError": "Failed to obtain url, please copy and open <%= repository %> in browse.",
-  "package.common-service.downloadBlock.unzipCode": "Download and unzip code...",
-  "package.common-service.downloadBlock.unzipCodeError": "Error in unzipping <%= blockName %>，please copy and download from this url: ：<%= tarballURL %>",
-  "package.common-service.downloadBlock.process": "===>>> Downloading：<%= percent %>%",
-  "package.common-service.downloadBlock.downloadError": "Block <%= blockName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
-  "package.common-service.downloadError": "Failed to obtain zips from <%= blockSourceNpm %> ，try to clone the <%= repository %> repository manually.",
-  "package.common-service.uzipError": "Failed to unzip <%= blockName %>，download from：<%= tarballURL %>",
-  "package.common-service.uzipOutTime": "Uzip <%= blockName %> timeout，download from：<%= tarballURL %>",
-  "package.common-service.templateError": "You can only add block codes to  <%= jsxFileExtnames %> ",
-  "package.common-service.notPageFileError": "You can only add block codes to files in <%= pagesPath %>",
-  "package.common-service.startObtainBlock": "> Obtain block codes...",
-  "package.common-service.obtainDone": "> The block code has been downloaded to <%= blockDir %>"
+  "package.common-service.downloadMaterial.getDownloadUrl": "Obtain Download URL...",
+  "package.common-service.downloadMaterial.downloadError": "Material <%= materialName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
+  "package.common-service.downloadMaterial.unzipCode": "Download and unzip code...",
+  "package.common-service.downloadMaterial.process": "===>>> Downloading：<%= percent %>%",
+  "package.common-service.uzipError": "Failed to unzip <%= materialName %>，download from：<%= tarballURL %>",
+  "package.common-service.uzipOutTime": "Uzip <%= materialName %> timeout，download from：<%= tarballURL %>"
 }

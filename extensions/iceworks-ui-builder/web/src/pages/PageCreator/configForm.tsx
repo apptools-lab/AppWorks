@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { SchemaForm, Submit, Reset } from '@formily/next';
 import { FormattedMessage, useIntl } from 'react-intl';
 import * as nextComponents from '@formily/next-components';
-// import { Input, Checkbox, Select, NumberPicker, setup } from '@formily/next-components'; // 或者@formily/next-components'
 import { Button, Notification, Loading } from '@alifd/next';
 import forIn from 'lodash.forin';
 import RouterDetailForm from '@/components/RouterDetailForm';
@@ -13,13 +12,13 @@ import callService from '../../callService';
 nextComponents.setup();
 
 export default ({
-  templateName,
   templateSchema,
   originResetData,
   setCurrentStep,
   currentStep,
   isCreating,
   setIsCreating,
+  selectedPage,
 }) => {
   const intl = useIntl();
   const [loading, setLoading] = useState(true);
@@ -30,7 +29,6 @@ export default ({
   const [templateData, setTemplateData] = useState({});
   const [components, setComponents] = useState({});
 
-  console.log('templateName', templateName);
   useEffect(() => {
     const tmpComponents = {};
     forIn(nextComponents, (value, key) => {
@@ -43,7 +41,6 @@ export default ({
   }, []);
 
   function getDefaultFromType(type) {
-    console.log('type', type);
     // TODO: 丰富所有类型的默认值。
     switch (type) {
       case 'string':
@@ -89,21 +86,20 @@ export default ({
       setTemplateData(getTemplateData(setting));
       setVisible(true);
     } catch (err) {
-      console.log(err);
+      Notification.error({
+        className: err.message,
+      });
     }
   }
 
   async function createPage(values) {
     try {
       setIsCreating(true);
-      console.log('templateData', templateData);
-      await callService('page', 'createPage', [
-        {
-          templateName,
-          name: values.pageName,
-          templateData,
-        },
-      ]);
+      await callService('page', 'createPage', {
+        ...selectedPage,
+        pageName: values.pageName,
+        templateData,
+      });
 
       if (isConfigurableRouter) {
         await callService('page', 'createRouter', values);

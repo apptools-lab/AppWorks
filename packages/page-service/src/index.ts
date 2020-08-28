@@ -11,7 +11,7 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
-import { bulkDownload, bulkInstallDependencies, getFileType } from '@iceworks/common-service';
+import { bulkDownload, bulkInstallMaterialsDependencies, getFolderLanguageType } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -105,25 +105,41 @@ export const addBlocks = async function (blocks: IMaterialBlock[], pageName: str
   return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
 };
 
-export const getTemplateSchema = async (templates: IMaterialPage[]) => {
+export const getTemplateSchema = async (selectPage: IMaterialPage) => {
   const templateTempDir = path.join(pagesPath, '.template');
-  await bulkDownload(templates, templateTempDir);
-  return fse.readJSONSync(path.join(pagesPath, '.template', templates[0].name, 'config', 'settings.json'));
+  try {
+    await bulkDownload([selectPage], templateTempDir);
+    const templateSchema = await fse.readJSON(
+      path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json')
+    );
+    await fse.remove(templateTempDir);
+    return templateSchema;
+  } catch (err) {
+    await fse.remove(templateTempDir);
+    throw err;
+  }
 };
 
-export const createPage = async (selesctPage) => {
-  const templateDirPath: string = path.join(pagesPath, '.template');
-  await renderTemplate(selesctPage);
-  await bulkInstallDependencies(selesctPage, projectPath);
-  await fse.remove(templateDirPath);
+export const createPage = async (selectPage: IMaterialPage) => {
+  const templateTempDir: string = path.join(pagesPath, '.template');
+  try {
+    await bulkDownload([selectPage], templateTempDir);
+    await renderPage(selectPage);
+    await bulkInstallMaterialsDependencies([selectPage], projectPath);
+    await fse.remove(templateTempDir);
+  } catch (err) {
+    await fse.remove(templateTempDir);
+    throw err;
+  }
 };
 
-export const renderTemplate = async (pages: IMaterialPage[]) => {
-  const templateName = pages[0].templateName;
-  const pageName: string = upperCamelCase(pages[0].name);
+export const renderPage = async (page: IMaterialPage) => {
+  console.log('renderPage', page);
+  const templateName = page.name;
+  const pageName: string = upperCamelCase(page.pageName);
   const templatePath: string = path.join(pagesPath, '.template', `${templateName}`);
   const targetPath: string = path.join(pagesPath, `${pageName}`);
-  const templateData = pages[0].templateData;
+  const templateData = page.templateData;
 
   if (fse.existsSync(targetPath)) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name: pageName }));
@@ -131,7 +147,7 @@ export const renderTemplate = async (pages: IMaterialPage[]) => {
 
   await renderEjsTemplates(templateData, templatePath);
   const pageSourceSrcPath = path.join(templatePath, 'src');
-  const pageType = getFileType(pageSourceSrcPath);
+  const pageType = getFolderLanguageType(pageSourceSrcPath);
   const projectType = await getProjectLanguageType();
 
   if (pageType === 'ts' && projectType === 'js') {

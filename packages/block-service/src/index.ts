@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as glob from 'glob';
-import * as readFiles from 'fs-readdir-recursive';
 import { IMaterialBlock } from '@iceworks/material-utils';
 import {
   getProjectLanguageType,
@@ -17,8 +16,8 @@ import {
   getImportInfos,
   getLastAcitveTextEditor,
   getImportTemplate,
-  getFileType,
-  bulkInstallDependencies,
+  getFolderLanguageType,
+  bulkInstallMaterialsDependencies,
   bulkDownload,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
@@ -32,16 +31,17 @@ const { window, Position } = vscode;
  * Generate block code
  */
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
-  const blockTempDir = path.join(localPath, '.temp-block');
-  await bulkDownload(blocks, blockTempDir);
-  await renderBlock(blocks, blockTempDir, localPath);
-  await bulkInstallDependencies(blocks, projectPath);
+  const blocksTempDir = path.join(localPath, '.temp-block');
+  await bulkDownload(blocks, blocksTempDir);
+  await renderBlocks(blocks, blocksTempDir, localPath);
+  await fsExtra.remove(blocksTempDir);
+  await bulkInstallMaterialsDependencies(blocks, projectPath);
 };
 
 /**
- * Download blocks code to page
+ * Render blocks code to page
  */
-export const renderBlock = async function (
+export const renderBlocks = async function (
   blocks: IMaterialBlock[],
   blockTempDir: string,
   targetDir: string,
@@ -56,7 +56,7 @@ export const renderBlock = async function (
       const blockName = upperCamelCase(block.name);
       const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
       const blockSrcPath = path.join(targetDir, blockName, 'src');
-      const blockType = getFileType(blockSourceSrcPath);
+      const blockType = getFolderLanguageType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
       console.log('blockType: ', blockType, 'projectType: ', projectType);
@@ -76,7 +76,6 @@ export const renderBlock = async function (
       }
 
       await fsExtra.move(blockSourceSrcPath, blockSrcPath);
-      await fsExtra.remove(blockTempDir);
       return targetDir;
     })
   );
@@ -128,7 +127,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   }
 
   // install block dependencies
-  await bulkInstallDependencies([block], projectPath);
+  await bulkInstallMaterialsDependencies([block], projectPath);
 }
 
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {
