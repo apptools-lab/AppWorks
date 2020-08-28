@@ -1,4 +1,4 @@
-import { getProjectType } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject } from '@iceworks/project-service';
 import i18n from './i18n';
 
 const entries = [
@@ -59,7 +59,8 @@ const optionalEntries = [
 
 export default async () => {
   const projectType = await getProjectType();
-  if (projectType === 'pegasus' || projectType === 'rax' || projectType === 'vue') {
+  const isPegasusProject = await checkIsPegasusProject();
+  if (isPegasusProject || projectType === 'rax' || projectType === 'vue') {
     return entries;
   } else {
     entries.splice(1, 0, ...optionalEntries);

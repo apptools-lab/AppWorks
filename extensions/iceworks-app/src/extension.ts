@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { getProjectType } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
@@ -25,7 +25,8 @@ export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
   const projectType = await getProjectType();
-  vscode.commands.executeCommand('setContext', 'iceworks:projectType', projectType);
+  const isPegasusProject = checkIsPegasusProject();
+  vscode.commands.executeCommand('setContext', 'iceworks:isPegasusProject', isPegasusProject);
   // auto set configuration
   initExtension(context);
 
@@ -83,7 +84,7 @@ export async function activate(context: vscode.ExtensionContext) {
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
-  if (projectType !== 'pegasus') {
+  if (!isPegasusProject) {
     treeViews.push(createComponentsTreeView(context));
     treeViews.push(createPagesTreeView(context));
   }
