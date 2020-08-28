@@ -10,17 +10,7 @@ import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
 
-console.log('nextComponents', nextComponents);
-
 nextComponents.setup();
-// const components = {
-//   Input,
-//   Checkbox,
-//   Select,
-//   NumberPicker,
-// };
-
-// console.log(Input);
 
 export default ({
   templateName,
@@ -40,6 +30,7 @@ export default ({
   const [templateData, setTemplateData] = useState({});
   const [components, setComponents] = useState({});
 
+  console.log('templateName', templateName);
   useEffect(() => {
     const tmpComponents = {};
     forIn(nextComponents, (value, key) => {
