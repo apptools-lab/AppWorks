@@ -41,10 +41,7 @@ export async function getProjectLanguageType() {
 
 export async function getProjectType() {
   try {
-    const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
-    if (devDependencies['@ali/build-plugin-pegasus-base']) {
-      return 'pegasus';
-    }
+    const { dependencies = {} } = await readPackageJSON(projectPath);
     if (dependencies.rax) {
       return 'rax';
     }
@@ -59,6 +56,19 @@ export async function getProjectType() {
     console.error(e);
     return 'unknown';
   }
+}
+
+export async function checkIsPegasusProject() {
+  let isPegasus = false;
+  const abcConfigFile = path.join(projectPath, 'abc.json');
+  if (fsExtra.existsSync(abcConfigFile)) {
+    const abcConfig = await fsExtra.readJSON(abcConfigFile);
+    if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
+      isPegasus = true;
+    }
+  }
+
+  return isPegasus;
 }
 
 export async function getProjectFramework() {
