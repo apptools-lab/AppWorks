@@ -26,6 +26,7 @@ export default () => {
 
   return (
     <div className={styles.container}>
+      <p className={styles.tip}>注：请使用域账号密码进行登录</p>
       <iframe title="PegasusScaffoldContent" className={styles.content} src={URL} />
     </div>
   );
