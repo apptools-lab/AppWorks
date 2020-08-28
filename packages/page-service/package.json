@@ -13,12 +13,15 @@
     "@babel/traverse": "^7.10.5",
     "@babel/types": "^7.10.5",
     "@iceworks/block-service": "^0.1.5",
+    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/project-service": "^0.1.4",
-    "@iceworks/i18n": "^0.1.0",
     "ejs": "^3.1.3",
     "fs-extra": "^9.0.0",
+    "glob": "^7.1.6",
     "prettier": "^2.0.5",
+    "transform-ts-to-js": "^0.1.0",
     "uppercamelcase": "^3.0.0"
   },
   "devDependencies": {
