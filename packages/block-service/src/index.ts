@@ -10,6 +10,7 @@ import {
   COMPONENT_DIR_NAME,
   jsxFileExtnames,
   checkIsTemplate,
+  projectPath,
 } from '@iceworks/project-service';
 import {
   getTagTemplate,
@@ -34,7 +35,7 @@ export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath:
   const blockTempDir = path.join(localPath, '.temp-block');
   await bulkDownload(blocks, blockTempDir);
   await renderBlock(blocks, blockTempDir, localPath);
-  await bulkInstallDependencies(blocks);
+  await bulkInstallDependencies(blocks, projectPath);
 };
 
 /**
@@ -127,7 +128,7 @@ export async function addBlockCode(block: IMaterialBlock) {
   }
 
   // install block dependencies
-  await bulkInstallDependencies([block]);
+  await bulkInstallDependencies([block], projectPath);
 }
 
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {

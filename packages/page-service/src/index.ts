@@ -10,8 +10,8 @@ import {
   getProjectFramework,
   projectPath,
 } from '@iceworks/project-service';
-import { bulkDownload, bulkInstallDependencies, getFileType } from '@iceworks/common-service';
 import { bulkGenerate } from '@iceworks/block-service';
+import { bulkDownload, bulkInstallDependencies, getFileType } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -114,7 +114,7 @@ export const getTemplateSchema = async (templates: IMaterialPage[]) => {
 export const createPage = async (selesctPage) => {
   const templateDirPath: string = path.join(pagesPath, '.template');
   await renderTemplate(selesctPage);
-  await bulkInstallDependencies(selesctPage);
+  await bulkInstallDependencies(selesctPage, projectPath);
   await fse.remove(templateDirPath);
 };
 

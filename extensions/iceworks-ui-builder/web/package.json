@@ -1,6 +1,6 @@
 {
   "name": "web-for-iceworks-component-builder",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "web for Iceworks component builder",
   "private": true,
   "devDependencies": {

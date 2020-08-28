@@ -13,7 +13,6 @@ import {
 } from '@iceworks/constant';
 import * as upperCamelCase from 'uppercamelcase';
 import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
-import { projectPath, getProjectLanguageType, pagesPath } from '@iceworks/project-service';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 import i18n from './i18n';
 
@@ -326,7 +325,7 @@ export const getFileType = (templateSourceSrcPath) => {
 /**
  * Install template or block dependencies
  */
-export const bulkInstallDependencies = async function (pages: IMaterialPage[] | IMaterialBlock[]) {
+export const bulkInstallDependencies = async function (pages: IMaterialPage[] | IMaterialBlock[], projectPath: string) {
   const projectPackageJSON = await readPackageJSON(projectPath);
 
   // get all dependencies from templates
@@ -367,8 +366,7 @@ export const bulkDownload = async function (templates: any, tmpPath: string, log
 
   return await Promise.all(
     templates.map(async (template: any) => {
-      console.log('template', template);
-      await fse.mkdirp(pagesPath);
+      await fse.mkdirp(tmpPath);
       const templateName: string = upperCamelCase(template.name);
 
       let tarballURL: string;

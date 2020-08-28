@@ -5,8 +5,8 @@ import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
+import RouterDetailForm from '@/components/RouterDetailForm';
 import PageSelected from './components/PageSelected';
-import RouterDetailForm from './components/RouterDetailForm';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
