@@ -3,6 +3,7 @@
 # 0.4.7
 - feat: auto focus field
 - chore: quick entries title and detail
+- feat: hide some entries and treeview in pegasus project
 
 ## 0.4.6
 
