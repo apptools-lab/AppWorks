@@ -1,16 +1,3 @@
 {
-  "package.pageService.index.pagePathExistError": "Page folder「<%= name %> exists，please enter a new page name。",
-  "package.pageService.downloadTemplate.getDownloadUrl": "Obtain Download URL...",
-  "package.pageService.downloadTemplate.getDownloadUrlError": "Failed to obtain url, please copy and open <%= repository %> in browse.",
-  "package.pageService.downloadTemplate.unzipCode": "Download and unzip code...",
-  "package.pageService.downloadTemplate.unzipCodeError": "Error in unzipping <%= templateName %>，please copy and download from this url: ：<%= tarballURL %>",
-  "package.pageService.downloadTemplate.process": "===>>> Downloading：<%= percent %>%",
-  "package.pageService.downloadTemplate.downloadError": "Template <%= templateName %> download timeout, please copy and download from this url: ：<%= tarballURL %>",
-  "package.pageService.downloadError": "Failed to obtain zips from <%= templateSourceNpm %> ，try to clone the <%= repository %> repository manually.",
-  "package.pageService.uzipError": "Failed to unzip <%= templateName %>，download from：<%= tarballURL %>",
-  "package.pageService.uzipOutTime": "Uzip <%= templateName %> timeout，download from：<%= tarballURL %>",
-  "package.pageService.templateError": "You can only add template codes to  <%= jsxFileExtnames %> ",
-  "package.pageService.notPageFileError": "You can only add template codes to files in <%= pagesPath %>",
-  "package.pageService.startObtainTemplate": "> Obtain template codes...",
-  "package.pageService.obtainDone": "> The template code has been downloaded to <%= templateDir %>"
+  "package.pageService.index.pagePathExistError": "Page folder「<%= name %> exists，please enter a new page name。"
 }

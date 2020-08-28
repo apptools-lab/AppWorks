@@ -126,7 +126,7 @@ export const renderTemplate = async (pages: IMaterialPage[]) => {
   const templateData = pages[0].templateData;
 
   if (fse.existsSync(targetPath)) {
-    throw new Error(`${targetPath} already exists!`);
+    throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name: pageName }));
   }
 
   await renderEjsTemplates(templateData, templatePath);

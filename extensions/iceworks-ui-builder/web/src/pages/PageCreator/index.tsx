@@ -93,13 +93,6 @@ const Home = () => {
     return data;
   }
 
-  // function validateData({ page, templateName }) {
-  //   if (!templateName) {
-  //     throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.noPageName' }));
-  //   }
-
-  // }
-
   function onSelect(page) {
     console.log(page);
     setSelectedPage(page);
