@@ -33,10 +33,10 @@ export async function activate(context: vscode.ExtensionContext) {
   const extensionsStatusBar = createExtensionsStatusBar();
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
-    registerCommand(showExtensionsQuickPickCommandId, () => {
+    registerCommand(showExtensionsQuickPickCommandId, async () => {
       recorder.recordActivate();
 
-      showEntriesQuickPick();
+      await showEntriesQuickPick();
     })
   );
 
