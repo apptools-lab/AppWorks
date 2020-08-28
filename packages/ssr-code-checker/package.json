@@ -1,0 +1,23 @@
+{
+  "name": "@iceworks/ssr-code-checker",
+  "version": "0.1.0",
+  "description": "SSR wrong code checker",
+  "bin": {
+    "ssr-code-checker": "bin/checker.js"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@babel/parser": "^7.10.3",
+    "@babel/traverse": "^7.10.3",
+    "argv-parse": "^1.0.1",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "line-column": "^1.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

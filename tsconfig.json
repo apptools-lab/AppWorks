@@ -19,6 +19,7 @@
     { "path": "packages/material-service" },
     { "path": "packages/block-service" },
     { "path": "packages/component-service" },
-    { "path": "packages/page-service" }
+    { "path": "packages/page-service" },
+    { "path": "packages/ssr-code-checker" }
   ]
 }
