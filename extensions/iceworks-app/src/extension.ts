@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { getProjectType } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
@@ -24,6 +24,9 @@ const recorder = new Recorder(name, version);
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
+  const projectType = await getProjectType();
+  const isPegasusProject = checkIsPegasusProject();
+  vscode.commands.executeCommand('setContext', 'iceworks:isPegasusProject', isPegasusProject);
   // auto set configuration
   initExtension(context);
 
@@ -31,10 +34,10 @@ export async function activate(context: vscode.ExtensionContext) {
   const extensionsStatusBar = createExtensionsStatusBar();
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
-    registerCommand(showExtensionsQuickPickCommandId, () => {
+    registerCommand(showExtensionsQuickPickCommandId, async () => {
       recorder.recordActivate();
 
-      showEntriesQuickPick();
+      await showEntriesQuickPick();
     })
   );
 
@@ -80,9 +83,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
-  treeViews.push(createComponentsTreeView(context));
-  treeViews.push(createPagesTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
+  if (!isPegasusProject) {
+    treeViews.push(createComponentsTreeView(context));
+    treeViews.push(createPagesTreeView(context));
+  }
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
@@ -110,7 +115,6 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   // init editor title menu
-  const projectType = await getProjectType();
   if (projectType !== 'unknown') {
     vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
