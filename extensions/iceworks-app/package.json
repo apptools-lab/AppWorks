@@ -51,12 +51,12 @@
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject && iceworks:projectType != pegasus"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:isNotTargetProject  && iceworks:projectType != pegasus"
         },
         {
           "id": "nodeDependencies",

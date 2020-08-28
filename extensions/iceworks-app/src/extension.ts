@@ -24,6 +24,8 @@ const recorder = new Recorder(name, version);
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
+  const projectType = await getProjectType();
+  vscode.commands.executeCommand('setContext', 'iceworks:projectType', projectType);
   // auto set configuration
   initExtension(context);
 
@@ -80,9 +82,11 @@ export async function activate(context: vscode.ExtensionContext) {
 
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
-  treeViews.push(createComponentsTreeView(context));
-  treeViews.push(createPagesTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
+  if (projectType !== 'pegasus') {
+    treeViews.push(createComponentsTreeView(context));
+    treeViews.push(createPagesTreeView(context));
+  }
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
@@ -110,7 +114,6 @@ export async function activate(context: vscode.ExtensionContext) {
   });
 
   // init editor title menu
-  const projectType = await getProjectType();
   if (projectType !== 'unknown') {
     vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
