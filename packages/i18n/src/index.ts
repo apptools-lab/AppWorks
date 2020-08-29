@@ -1,4 +1,4 @@
-import template from 'lodash.template';
+import * as template from 'lodash.template';
 
 export interface ITextMap {
   // "${namespace}.${extensionName}.${moudelName}.${fieldName}": "xxx"

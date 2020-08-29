@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
   const projectType = await getProjectType();
-  const isPegasusProject = checkIsPegasusProject();
+  const isPegasusProject = await checkIsPegasusProject();
   vscode.commands.executeCommand('setContext', 'iceworks:isPegasusProject', isPegasusProject);
   // auto set configuration
   initExtension(context);
