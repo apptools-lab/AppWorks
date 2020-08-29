@@ -367,14 +367,14 @@ export const bulkDownloadMaterials = async function (
 
   return await Promise.all(
     // @ts-ignore
-    materials.map(async (template: any) => {
+    materials.map(async (material: any) => {
       await fse.mkdirp(tmpPath);
-      const materialName: string = upperCamelCase(template.name);
+      const materialName: string = upperCamelCase(material.name);
 
       let tarballURL: string;
       try {
         log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
-        tarballURL = await getTarballURLByMaterielSource(template.source);
+        tarballURL = await getTarballURLByMaterielSource(material.source);
       } catch (error) {
         error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
           materialName,

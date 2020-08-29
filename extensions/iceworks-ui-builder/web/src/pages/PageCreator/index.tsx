@@ -97,7 +97,6 @@ const Home = () => {
   }
 
   async function getConfigPage() {
-    console.log('selectedPage', selectedPage);
     setDownloading(true);
     try {
       const data = {
