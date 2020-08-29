@@ -21,6 +21,17 @@ import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
 
+export async function autoSetContext() {
+  const isPegasus = await checkIsPegasusProject();
+  const languageType = await getProjectLanguageType();
+  const type = await getProjectType();
+  const framework = await getProjectFramework();
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectLanguageType', languageType);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectType', type);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectFramework', framework);
+}
+
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
 

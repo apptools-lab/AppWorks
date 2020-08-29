@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { getProjectType, checkIsPegasusProject } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject, autoSetContext as autoSetContextByProject  } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
@@ -24,11 +24,12 @@ const recorder = new Recorder(name, version);
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
+  // auto set configuration & context
+  initExtension(context);
+  autoSetContextByProject();
+
   const projectType = await getProjectType();
   const isPegasusProject = await checkIsPegasusProject();
-  vscode.commands.executeCommand('setContext', 'iceworks:isPegasusProject', isPegasusProject);
-  // auto set configuration
-  initExtension(context);
 
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
