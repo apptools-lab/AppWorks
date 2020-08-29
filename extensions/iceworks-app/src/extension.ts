@@ -117,7 +117,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // init editor title menu
   if (projectType !== 'unknown') {
-    vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
     await createEditorMenuAction();
   }

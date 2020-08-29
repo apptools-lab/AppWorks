@@ -99,7 +99,13 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetNpmConfiguration(globalState);
 
+  await autoSetContext();
+
   onChangeActiveTextEditor(context);
+}
+
+async function autoSetContext() {
+  vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
