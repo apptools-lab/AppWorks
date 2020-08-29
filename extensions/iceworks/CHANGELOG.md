@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.0
+
+- docs: add features
+
 ## 0.7.0
 
 - docs: add more badges
