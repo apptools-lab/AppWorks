@@ -1,4 +1,4 @@
-import { getProjectFramework, checkIsPegasusProject } from '@iceworks/project-service';
+import { getProjectFramework, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
 import { checkIsAliInternal } from '@iceworks/common-service';
 import i18n from './i18n';
 
@@ -13,7 +13,7 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-ui-builder.generate-page',
     condition: async function() {
-      return !(await checkIsPegasusProject());
+      return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
     },
   },
   {
@@ -21,7 +21,7 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
     command: 'iceworks-ui-builder.create-page',
     condition: async function() {
-      return !(await checkIsPegasusProject());
+      return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
     },
   },
   {
@@ -37,6 +37,9 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.detail'),
     command: 'iceworks-material-helper.start',
+    condition: async function() {
+      return !(await checkIsNotTarget());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label'),
@@ -47,29 +50,41 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.detail'),
     command: 'iceworksApp.editorMenu.runDebug',
+    condition: async function() {
+      return !(await checkIsNotTarget());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.detail'),
     command: 'iceworksApp.editorMenu.runBuild',
+    condition: async function() {
+      return !(await checkIsNotTarget());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.detail'),
     command: 'iceworksApp.editorMenu.DefPublish',
     condition: async function() {
-      return await checkIsAliInternal();
+      return await checkIsAliInternal() && !(await checkIsNotTarget());
     },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.reinstall.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.reinstall.detail'),
     command: 'iceworksApp.nodeDependencies.reinstall',
+    condition: async function() {
+      return !(await checkIsNotTarget());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.detail'),
     command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
+    condition: async function() {
+      return !(await checkIsNotTarget());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),

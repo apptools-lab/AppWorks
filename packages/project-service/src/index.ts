@@ -45,6 +45,7 @@ export async function checkIsNotTarget() {
       isNotTarget = true;
     }
   }
+  return isNotTarget;
 }
 
 export async function getProjectLanguageType() {
