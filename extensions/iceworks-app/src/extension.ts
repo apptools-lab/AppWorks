@@ -14,7 +14,7 @@ import { showExtensionsQuickPickCommandId } from './constants';
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
 import createEditorMenuAction from './createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoSetViewContext from './autoSetViewContext';
+import autoStart from './autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -110,7 +110,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         recordDAU();
-        autoSetViewContext();
+        autoStart();
       }
     });
   });

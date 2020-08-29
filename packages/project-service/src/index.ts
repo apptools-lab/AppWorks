@@ -26,10 +26,25 @@ export async function autoSetContext() {
   const languageType = await getProjectLanguageType();
   const type = await getProjectType();
   const framework = await getProjectFramework();
+  const isNotTarget = await checkIsNotTarget();
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTarget', isNotTarget);
   vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
   vscode.commands.executeCommand('setContext', 'iceworks:projectLanguageType', languageType);
   vscode.commands.executeCommand('setContext', 'iceworks:projectType', type);
   vscode.commands.executeCommand('setContext', 'iceworks:projectFramework', framework);
+}
+
+export async function checkIsNotTarget() {
+  let isNotTarget = false;
+  if (!vscode.workspace.rootPath) {
+    isNotTarget = true;
+  } else {
+    try {
+      isNotTarget = (await getProjectType()) === 'unknown';
+    } catch (e) {
+      isNotTarget = true;
+    }
+  }
 }
 
 export async function getProjectLanguageType() {
