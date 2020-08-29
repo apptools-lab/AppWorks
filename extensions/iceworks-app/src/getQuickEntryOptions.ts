@@ -1,4 +1,4 @@
-import { getProjectFramework } from '@iceworks/project-service';
+import { getProjectFramework, checkIsPegasusProject } from '@iceworks/project-service';
 import i18n from './i18n';
 
 const entries = [
@@ -11,6 +11,18 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.pageBuilder.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.pageBuilder.detail'),
     command: 'iceworks-ui-builder.generate-page',
+    condition: async function() {
+      return !(await checkIsPegasusProject());
+    },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
+    command: 'iceworks-ui-builder.generate-component',
+    condition: async function() {
+      const projectFramework = await getProjectFramework();
+      return projectFramework === 'icejs';
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.label'),
@@ -49,21 +61,15 @@ const entries = [
   },
 ];
 
-const optionalEntries = [
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
-    command: 'iceworks-ui-builder.generate-component',
-  },
-];
 
-export default async () => {
-  const projectFramework = await getProjectFramework();
-  if (projectFramework === 'icejs') {
-    const newEntries = [...entries];
-    newEntries.splice(1, 0, ...optionalEntries);
-    return newEntries;
-  } else {
-    return entries;
-  }
+export default async function () {
+	const conditionResults = await Promise.all(entries.map(async function({ condition }) {
+    if (condition) {
+      return await condition();
+    } else {
+      return true;
+    }
+  }));
+
+  return entries.filter((v, index) => conditionResults[index]);
 };
