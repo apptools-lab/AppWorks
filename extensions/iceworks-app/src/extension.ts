@@ -1,7 +1,11 @@
 import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { getProjectType, checkIsPegasusProject, autoSetContext as autoSetContextByProject  } from '@iceworks/project-service';
+import {
+  getProjectType,
+  checkIsPegasusProject,
+  autoSetContext as autoSetContextByProject,
+} from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
