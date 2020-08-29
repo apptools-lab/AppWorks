@@ -102,7 +102,7 @@ export async function initExtension(context: vscode.ExtensionContext) {
   onChangeActiveTextEditor(context);
 }
 
-export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
+function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       if (editor) {
@@ -121,7 +121,7 @@ export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   );
 }
 
-export async function autoInitMaterialSource(globalState: vscode.Memento) {
+async function autoInitMaterialSource(globalState: vscode.Memento) {
   console.log('autoInitMaterialSource: run');
   const stateKey = 'iceworks.materialSourceIsSet';
   const materialSourceIsSet = globalState.get(stateKey);
@@ -149,7 +149,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
   });
 }
 
-export async function autoSetNpmConfiguration(globalState: vscode.Memento) {
+async function autoSetNpmConfiguration(globalState: vscode.Memento) {
   const isAliInternal = await checkAliInternal();
   autoSetPackageManagerConfiguration(globalState, isAliInternal);
   autoSetNpmRegistryConfiguration(globalState, isAliInternal);
