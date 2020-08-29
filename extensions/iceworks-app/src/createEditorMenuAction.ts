@@ -20,7 +20,7 @@ export default async function createEditorMenuAction() {
     }
 
     // Prepare VS Code debug config
-    setDebugConfig();
+    await setDebugConfig();
 
     // Run Debug
     let workspaceFolder;
