@@ -34,9 +34,5 @@
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
   "extension.iceworksApp.extension.title": "Iceworks Settings",
-  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application.",
-  "extension.iceworksApp.views.pageViews.createPage": "Create Page",
-  "extension.iceworksApp.views.pageViews.createPageDetail": "Create page through page templates",
-  "extension.iceworksApp.views.pageViews.generatePage": "Generate Page",
-  "extension.iceworksApp.views.pageViews.generatePageDetail": "Generate page through assmebling component materials"
+  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
 }

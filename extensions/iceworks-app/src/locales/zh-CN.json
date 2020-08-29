@@ -33,9 +33,5 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "发布到生产环境",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
-  "extension.iceworksApp.extension.title": "设置 - Iceworks",
-  "extension.iceworksApp.views.pageViews.createPage": "创建页面",
-  "extension.iceworksApp.views.pageViews.createPageDetail": "通过配置模板的方式创建页面",
-  "extension.iceworksApp.views.pageViews.generatePage": "生成页面",
-  "extension.iceworksApp.views.pageViews.generatePageDetail": "通过区块组装的方式生成页面"
+  "extension.iceworksApp.extension.title": "设置 - Iceworks"
 }
