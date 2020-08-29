@@ -276,6 +276,10 @@
           "when": "false"
         },
         {
+          "command": "iceworksApp.pages.add",
+          "when": "false"
+        },
+        {
           "command": "iceworksApp.pages.refresh",
           "when": "false"
         },
@@ -285,6 +289,10 @@
         },
         {
           "command": "iceworksApp.pages.delete",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.components.add",
           "when": "false"
         },
         {
