@@ -8,9 +8,17 @@ const entries = [
     command: 'iceworks-project-creator.start',
   },
   {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.pageBuilder.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.pageBuilder.detail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-ui-builder.generate-page',
+    condition: async function() {
+      return !(await checkIsPegasusProject());
+    },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
+    command: 'iceworks-ui-builder.create-page',
     condition: async function() {
       return !(await checkIsPegasusProject());
     },
