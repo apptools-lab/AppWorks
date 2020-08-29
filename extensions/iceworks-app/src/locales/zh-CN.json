@@ -19,6 +19,8 @@
   "extension.iceworksApp.showEntriesQuickPick.runDebug.detail": "通过 VS Code 调试并预览应用",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.label": "执行构建",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.detail": "构建出应用的线上前端资源",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.label": "DEF 发布",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.detail": "发布应用到 DEF 平台",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.label": "重装依赖",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.detail": "重新安装应用的依赖包",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label": "添加依赖",

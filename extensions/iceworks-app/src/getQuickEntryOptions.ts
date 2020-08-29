@@ -1,4 +1,5 @@
 import { getProjectFramework, checkIsPegasusProject } from '@iceworks/project-service';
+import { checkIsAliInternal } from '@iceworks/common-service';
 import i18n from './i18n';
 
 const entries = [
@@ -51,6 +52,14 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.detail'),
     command: 'iceworksApp.editorMenu.runBuild',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.detail'),
+    command: 'iceworksApp.editorMenu.DefPublish',
+    condition: async function() {
+      return await checkIsAliInternal();
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.reinstall.label'),
