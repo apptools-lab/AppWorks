@@ -145,15 +145,11 @@ const Home = () => {
     const selected = await callService(
       'common',
       'showInformationMessage',
-      intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }, { path: pageDist })
+      intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }, { path: pageDist }),
       [action]
     );
     if (selected === action) {
-      await callService(
-        'common',
-        'showTextDocument',
-        pageDist
-      )
+      await callService('common', 'showTextDocument', pageDist);
     }
   }
 

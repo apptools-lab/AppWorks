@@ -82,7 +82,7 @@ export async function getProjectType() {
   } catch (error) {
     // ignore error
   }
- 
+
   return type;
 }
 
