@@ -412,3 +412,11 @@ export function openMaterialsSettings() {
     executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
   }
 }
+
+export function showInformationMessage(...args) {
+  return vscode.window.showInformationMessage.apply(null, args);
+}
+
+export function showTextDocument(resource: string) {
+  return vscode.window.showTextDocument(vscode.Uri.file(resource));
+}

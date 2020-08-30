@@ -51,12 +51,15 @@ export const generate = async function ({
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
   }
 
+  const projectFramework = await getProjectFramework();
+  const isVueProjectFramework = projectFramework === 'vue';
+  const projectLanguageType = await getProjectLanguageType();
+  const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
+  const dist = path.join(pagePath, fileName);
+
   try {
     await addBlocks(blocks, pageName);
-    const projectFramework = await getProjectFramework();
-    const isVueProjectFramework = projectFramework === 'vue';
     const fileStr = isVueProjectFramework ? vuePageTemplate : reactPageTemplate;
-
     const fileContent = ejs.compile(fileStr)({
       blocks: blocks.map((block: any) => {
         const blockName = upperCamelCase(block.name);
@@ -69,9 +72,6 @@ export const generate = async function ({
       className: pageName,
       pageName,
     });
-    const projectLanguageType = await getProjectLanguageType();
-    const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
-    const dist = path.join(pagePath, fileName);
     const prettierParserType = isVueProjectFramework ? 'vue' : 'babel';
     const rendered = prettier.format(fileContent, {
       singleQuote: true,
@@ -85,7 +85,7 @@ export const generate = async function ({
     throw error;
   }
 
-  return pageName;
+  return dist;
 };
 
 /**
