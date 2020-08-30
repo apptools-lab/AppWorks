@@ -140,17 +140,17 @@ const Home = () => {
     setVisible(false);
     resetData();
 
-    const action = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
-    const selected = await callService(
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const selectedAction = await callService(
       'common',
       'showInformationMessage',
       intl.formatMessage(
         { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
         { path: pageIndexPath }
       ),
-      [action]
+      [openFileAction]
     );
-    if (selected === action) {
+    if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
     }
   }

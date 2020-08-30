@@ -119,8 +119,8 @@ export default ({
     setVisible(false);
     resetData();
 
-    const action = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
-    const selected = await callService(
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const selectedAction = await callService(
       'common',
       'showInformationMessage',
       intl.formatMessage(
@@ -131,9 +131,9 @@ export default ({
         },
         { path: pageIndexPath }
       ),
-      pageIndexPath ? [action] : []
+      pageIndexPath ? [openFileAction] : []
     );
-    if (selected === action) {
+    if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
     }
   }
