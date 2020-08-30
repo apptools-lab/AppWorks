@@ -3,7 +3,12 @@ import * as fse from 'fs-extra';
 import * as prettier from 'prettier';
 import * as glob from 'glob';
 import { IMaterialBlock, IMaterialPage } from '@iceworks/material-utils';
-import { findIndexFile } from '@iceworks/common-service';
+import {
+  findIndexFile,
+  bulkDownloadMaterials,
+  bulkInstallMaterialsDependencies,
+  getFolderLanguageType,
+} from '@iceworks/common-service';
 import {
   pagesPath,
   COMPONENT_DIR_NAME,
@@ -12,11 +17,7 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
-import {
-  bulkDownloadMaterials,
-  bulkInstallMaterialsDependencies,
-  getFolderLanguageType,
-} from '@iceworks/common-service';
+
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
