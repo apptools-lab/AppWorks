@@ -99,10 +99,16 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetNpmConfiguration(globalState);
 
+  await autoSetContext();
+
   onChangeActiveTextEditor(context);
 }
 
-export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
+async function autoSetContext() {
+  vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+}
+
+function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       if (editor) {
@@ -121,7 +127,7 @@ export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   );
 }
 
-export async function autoInitMaterialSource(globalState: vscode.Memento) {
+async function autoInitMaterialSource(globalState: vscode.Memento) {
   console.log('autoInitMaterialSource: run');
   const stateKey = 'iceworks.materialSourceIsSet';
   const materialSourceIsSet = globalState.get(stateKey);
@@ -149,7 +155,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
   });
 }
 
-export async function autoSetNpmConfiguration(globalState: vscode.Memento) {
+async function autoSetNpmConfiguration(globalState: vscode.Memento) {
   const isAliInternal = await checkAliInternal();
   autoSetPackageManagerConfiguration(globalState, isAliInternal);
   autoSetNpmRegistryConfiguration(globalState, isAliInternal);
