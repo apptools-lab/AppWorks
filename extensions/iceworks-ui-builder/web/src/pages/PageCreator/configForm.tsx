@@ -93,26 +93,48 @@ export default ({
   }
 
   async function createPage(values) {
+    setIsCreating(true);
+    let pageIndexPath = '';
     try {
-      setIsCreating(true);
-      await callService('page', 'createPage', {
+      pageIndexPath = await callService('page', 'createPage', {
         ...selectedPage,
         pageName: values.pageName,
         templateData,
       });
 
       if (isConfigurableRouter) {
-        await callService('page', 'createRouter', values);
+        try {
+          await callService('page', 'createRouter', values);
+        } catch (error) {
+          Notification.error({ content: error.message });
+        }
       }
-      Notification.success({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.createPageSuccess' }),
-      });
-    } catch (e) {
-      Notification.error({ content: e.message });
-    } finally {
+    } catch (error) {
+      Notification.error({ content: error.message });
       setIsCreating(false);
-      setVisible(false);
-      resetData();
+      throw error;
+    }
+
+    setIsCreating(false);
+    setVisible(false);
+    resetData();
+
+    const action = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const selected = await callService(
+      'common',
+      'showInformationMessage',
+      intl.formatMessage(
+        {
+          id: pageIndexPath
+            ? 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath'
+            : 'web.iceworksUIBuilder.pageGenerater.successCreatePage',
+        },
+        { path: pageIndexPath }
+      ),
+      pageIndexPath ? [action] : []
+    );
+    if (selected === action) {
+      await callService('common', 'showTextDocument', pageIndexPath);
     }
   }
 

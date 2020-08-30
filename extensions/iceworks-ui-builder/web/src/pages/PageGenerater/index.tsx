@@ -116,13 +116,12 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
-    let pageDist = '';
+    let pageIndexPath = '';
     try {
-      const data = {
+      pageIndexPath = await callService('page', 'generate', {
         blocks: selectedBlocks,
         pageName: values.pageName,
-      };
-      pageDist = await callService('page', 'generate', data);
+      });
 
       if (isConfigurableRouter) {
         try {
@@ -145,11 +144,14 @@ const Home = () => {
     const selected = await callService(
       'common',
       'showInformationMessage',
-      intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }, { path: pageDist }),
+      intl.formatMessage(
+        { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
+        { path: pageIndexPath }
+      ),
       [action]
     );
     if (selected === action) {
-      await callService('common', 'showTextDocument', pageDist);
+      await callService('common', 'showTextDocument', pageIndexPath);
     }
   }
 

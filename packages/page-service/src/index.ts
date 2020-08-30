@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as prettier from 'prettier';
 import * as glob from 'glob';
 import { IMaterialBlock, IMaterialPage } from '@iceworks/material-utils';
+import { findIndexFile } from '@iceworks/common-service';
 import {
   pagesPath,
   COMPONENT_DIR_NAME,
@@ -128,9 +129,10 @@ export const createPage = async (selectPage: IMaterialPage) => {
   const templateTempDir: string = path.join(pagesPath, '.template');
   try {
     await bulkDownloadMaterials([selectPage], templateTempDir);
-    await renderPage(selectPage);
+    const pageIndexPath = await renderPage(selectPage);
     await bulkInstallMaterialsDependencies([selectPage], projectPath);
     await fse.remove(templateTempDir);
+    return pageIndexPath;
   } catch (err) {
     await fse.remove(templateTempDir);
     throw err;
@@ -169,5 +171,5 @@ export const renderPage = async (page: IMaterialPage) => {
   }
   await fse.move(pageSourceSrcPath, targetPath);
 
-  return targetPath;
+  return findIndexFile(targetPath);
 };
