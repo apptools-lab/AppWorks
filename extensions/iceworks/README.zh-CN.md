@@ -67,3 +67,15 @@ Iceworks 套件内包含以下插件：
 [样式开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) | 提供在 JSX 内编写行内样式或使用 SASS/Less 等 CSS 预处理语言的代码编辑智能辅助 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [组件开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper) | 在 JSX 内更快更好地添加组件、编写组件属性 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-material-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
 [应用配置开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) | 为应用的配置类文件（例如 *.json）提供可视化表单设置或代码编辑提醒、校验等功能 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+
+## 获取帮助
+
+- 加入[钉钉](https://www.dingtalk.com/)交流群
+
+  ![二维码](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_360x10000.jpg)
+- 提交问题
+
+  向 Iceworks 的 Github 仓库提交 [issue](https://github.com/ice-lab/iceworks/issues/new) ，我们会快速响应所提交的问题。
+- 预约培训
+
+  对于打算大规模使用的公司或团队，我们可以提供免费的培训，具体请咨询 @梧忌(wuji.xwt@alibabab-inc.com)
