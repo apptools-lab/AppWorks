@@ -56,8 +56,8 @@
     "menus": {
       "commandPalette": [
         {
-          "when": "false",
-          "command": "iceworksApp.recorder.recordCompletionItemSelect"
+          "command": "iceworksApp.recorder.recordCompletionItemSelect",
+          "when": "false"
         }
       ]
     }

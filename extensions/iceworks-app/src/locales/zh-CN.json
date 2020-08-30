@@ -1,8 +1,10 @@
 {
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.label": "创建应用",
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.detail": "快速创建多端应用（例如：React/Rax/Vue...）",
-  "extension.iceworksApp.showEntriesQuickPick.pageBuilder.label": "通过区块组装页面",
-  "extension.iceworksApp.showEntriesQuickPick.pageBuilder.detail": "通过区块组装的方式生成页面",
+  "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "使用区块组装页面",
+  "extension.iceworksApp.showEntriesQuickPick.generatePage.detail": "通过区块组装的方式生成页面",
+  "extension.iceworksApp.showEntriesQuickPick.createPage.label": "使用模板配置生成页面",
+  "extension.iceworksApp.showEntriesQuickPick.createPage.detail": "通过使用模板可视化配置的方式生成页面",
   "extension.iceworksApp.showEntriesQuickPick.generateComponent.label": "可视化搭建组件",
   "extension.iceworksApp.showEntriesQuickPick.generateComponent.detail": "通过可视化方式搭建生成组件",
   "extension.iceworksApp.showEntriesQuickPick.createComponent.label": "下载物料到本地",
@@ -17,6 +19,8 @@
   "extension.iceworksApp.showEntriesQuickPick.runDebug.detail": "通过 VS Code 调试并预览应用",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.label": "执行构建",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.detail": "构建出应用的线上前端资源",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.label": "DEF 发布",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.detail": "发布应用到 DEF 平台",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.label": "重装依赖",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.detail": "重新安装应用的依赖包",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label": "添加依赖",
@@ -29,9 +33,5 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "发布到生产环境",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
-  "extension.iceworksApp.extension.title": "设置 - Iceworks",
-  "extension.iceworksApp.views.pageViews.createPage": "创建页面",
-  "extension.iceworksApp.views.pageViews.createPageDetail": "通过配置模板的方式创建页面",
-  "extension.iceworksApp.views.pageViews.generatePage": "生成页面",
-  "extension.iceworksApp.views.pageViews.generatePageDetail": "通过区块组装的方式生成页面"
+  "extension.iceworksApp.extension.title": "设置 - Iceworks"
 }

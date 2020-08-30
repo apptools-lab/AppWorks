@@ -88,13 +88,13 @@ class PageTreeItem extends vscode.TreeItem {
 
 const addPageQuickPickItems: any[] = [
   {
-    label: i18n.format('extension.iceworksApp.views.pageViews.createPage'),
-    detail: i18n.format('extension.iceworksApp.views.pageViews.createPageDetail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
     command: 'iceworks-ui-builder.create-page',
   },
   {
-    label: i18n.format('extension.iceworksApp.views.pageViews.generatePage'),
-    detail: i18n.format('extension.iceworksApp.views.pageViews.generatePageDetail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-ui-builder.generate-page',
   },
 ];
@@ -114,7 +114,6 @@ export function createPagesTreeView(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
   registerCommand('iceworksApp.pages.add', () => {
-    console.log('iceworksApp: activate iceworks-ui-builder.generate-page');
     showAddPageQuickPicks();
   });
   registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());

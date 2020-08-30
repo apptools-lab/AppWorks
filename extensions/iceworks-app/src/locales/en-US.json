@@ -1,8 +1,10 @@
 {
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.label": "Create Application",
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.detail": "Create a Universal Application(React/Rax/Vue, etc) quickly",
-  "extension.iceworksApp.showEntriesQuickPick.pageBuilder.label": "Build Page",
-  "extension.iceworksApp.showEntriesQuickPick.pageBuilder.detail": "Build Page by assemblying blocks",
+  "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "Build Page by assembling",
+  "extension.iceworksApp.showEntriesQuickPick.generatePage.detail": "Generating pages by block assembly",
+  "extension.iceworksApp.showEntriesQuickPick.createPage.label": "Build page by configure",
+  "extension.iceworksApp.showEntriesQuickPick.createPage.detail": "Generate pages by using template visualization configuration",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.label": "Import Component",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "Add Component to the Application in a visual way",
   "extension.iceworksApp.showEntriesQuickPick.generateComponent.label": "Generate Component",
@@ -17,6 +19,8 @@
   "extension.iceworksApp.showEntriesQuickPick.runDebug.detail": "Debug and Preview the application through VS Code",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.label": "Run Build",
   "extension.iceworksApp.showEntriesQuickPick.runBuild.detail": "Build the application of online resources",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.label": "DEF Publish",
+  "extension.iceworksApp.showEntriesQuickPick.DefPublish.detail": "Publish Application to DEF",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.label": "Reinstall Dependencies",
   "extension.iceworksApp.showEntriesQuickPick.reinstall.detail": "Reinstall the dependency packages for the application",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label": "Add Dependency",
@@ -30,9 +34,5 @@
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
   "extension.iceworksApp.extension.title": "Iceworks Settings",
-  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application.",
-  "extension.iceworksApp.views.pageViews.createPage": "Create Page",
-  "extension.iceworksApp.views.pageViews.createPageDetail": "Create page through page templates",
-  "extension.iceworksApp.views.pageViews.generatePage": "Generate Page",
-  "extension.iceworksApp.views.pageViews.generatePageDetail": "Generate page through assmebling component materials"
+  "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
 }
