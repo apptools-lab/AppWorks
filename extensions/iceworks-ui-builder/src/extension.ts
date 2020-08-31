@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
 
-    const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.5';
+    const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.6';
     const extraHtml = `<script>
       window.__assets = {
         ideUrl: '${cdnUrl}',
