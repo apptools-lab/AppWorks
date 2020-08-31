@@ -67,22 +67,23 @@ export async function getProjectLanguageType() {
 }
 
 export async function getProjectType() {
+  let type = 'unknown';
   try {
     const { dependencies = {} } = await readPackageJSON(projectPath);
     if (dependencies.rax) {
-      return 'rax';
+      type = 'rax';
     }
     if (dependencies.react) {
-      return 'react';
+      type = 'react';
     }
     if (dependencies.vue) {
-      return 'vue';
+      type = 'vue';
     }
-    return 'unknown';
-  } catch (e) {
-    console.error(e);
-    return 'unknown';
+  } catch (error) {
+    // ignore error
   }
+
+  return type;
 }
 
 export async function checkIsPegasusProject() {
@@ -99,17 +100,23 @@ export async function checkIsPegasusProject() {
 }
 
 export async function getProjectFramework() {
-  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
-  if (dependencies['rax-app']) {
-    return 'rax-app';
+  let framework = 'unknown';
+  try {
+    const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+    if (dependencies['rax-app']) {
+      framework = 'rax-app';
+    }
+    if (devDependencies['ice.js'] || dependencies['ice.js']) {
+      framework = 'icejs';
+    }
+    if (dependencies.vue) {
+      framework = 'vue';
+    }
+  } catch (error) {
+    // ignore error
   }
-  if (devDependencies['ice.js'] || dependencies['ice.js']) {
-    return 'icejs';
-  }
-  if (dependencies.vue) {
-    return 'vue';
-  }
-  return 'unknown';
+
+  return framework;
 }
 
 export async function getPackageJSON(packagePath: string): Promise<any> {

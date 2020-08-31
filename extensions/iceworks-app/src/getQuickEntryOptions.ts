@@ -17,14 +17,6 @@ const entries = [
     },
   },
   {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
-    command: 'iceworks-ui-builder.create-page',
-    async condition() {
-      return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
-    },
-  },
-  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.generate-component',
@@ -45,6 +37,14 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail'),
     command: 'iceworks-material-helper.showMaterialDocs',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
+    command: 'iceworks-ui-builder.create-page',
+    async condition() {
+      return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
+    },
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.label'),
