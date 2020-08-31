@@ -152,8 +152,7 @@ export default ({
       ) : (
         <>
           <h3>
-            {templateSchema.title ||
-              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
           </h3>
           <p>
             {templateSchema.description ||
