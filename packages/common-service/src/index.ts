@@ -419,7 +419,9 @@ export function openMaterialsSettings() {
 }
 
 export function showInformationMessage(...args) {
-  return vscode.window.showInformationMessage.apply(null, args);
+  // TODO Parameter type judgment
+  const reset = args.length > 2 ? args.slice(0, args.length - 2) : args;
+  return vscode.window.showInformationMessage.apply(null, reset);
 }
 
 export function showTextDocument(resource: string) {

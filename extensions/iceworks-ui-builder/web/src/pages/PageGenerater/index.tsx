@@ -148,7 +148,7 @@ const Home = () => {
         { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
         { path: pageIndexPath }
       ),
-      [openFileAction]
+      openFileAction
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);

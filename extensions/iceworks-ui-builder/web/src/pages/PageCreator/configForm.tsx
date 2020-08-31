@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SchemaForm, Submit, Reset } from '@formily/next';
 import { FormattedMessage, useIntl } from 'react-intl';
 import * as nextComponents from '@formily/next-components';
@@ -22,7 +22,6 @@ export default ({
 }) => {
   const intl = useIntl();
   const [loading, setLoading] = useState(true);
-  const formilySchema = useRef({ title: undefined, description: undefined });
   const [visible, setVisible] = useState(false);
   const [routerConfig, setRouterConfig] = useState([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
@@ -131,7 +130,7 @@ export default ({
         },
         { path: pageIndexPath }
       ),
-      pageIndexPath ? [openFileAction] : []
+      pageIndexPath ? openFileAction : []
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
@@ -153,11 +152,10 @@ export default ({
       ) : (
         <>
           <h3>
-            {formilySchema.current.title ||
-              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
           </h3>
           <p>
-            {formilySchema.current.description ||
+            {templateSchema.description ||
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
           </p>
           <SchemaForm
