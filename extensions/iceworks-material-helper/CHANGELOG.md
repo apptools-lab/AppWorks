@@ -1,6 +1,10 @@
 # Change Log
 
-# 0.3.3
+## 0.3.4
+
+- docs: en-US demo
+
+## 0.3.3
 
 - fix: build error
 
