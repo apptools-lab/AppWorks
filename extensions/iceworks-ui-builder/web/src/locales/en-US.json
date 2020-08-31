@@ -17,7 +17,7 @@
   "web.iceworksUIBuilder.pageCreator.createPage": "CREATE PAGE",
   "web.iceworksUIBuilder.pageCreator.reset": "RESET",
   "web.iceworksUIBuilder.pageCreator.defaultTitle": "Page Template Setting",
-  "web.iceworksUIBuilder.pageCreator.defaultDescription": "Plase Complete This Form To Customize Page Material",
+  "web.iceworksUIBuilder.pageCreator.defaultDescription": "Plase complete this Form to generate customize page",
   "web.iceworksUIBuilder.pageGenerater.enterPageName": "Please enter page name.",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "Successfully generated page code!",
   "web.iceworksUIBuilder.pageGenerater.successCreatePageToPath": "Successfully generated page code to {path}",

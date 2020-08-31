@@ -7,38 +7,49 @@
     "properties": {
       "isShowUser": {
         "type": "boolean",
-        "title": "是否显示用户信息"
+        "title": "布尔值"
       },
       "title": {
         "type": "string",
-        "title": "标题",
-        "description": "我是一个 Description",
+        "title": "字符串",
+        "description": "描述",
         "x-component": "Input"
       },
       "userTitle": {
         "type": "number",
-        "title": "用户页面标题"
-      },
-      "object": {
-        "type": "object",
-        "title": "object"
+        "title": "数字"
       },
       "select": {
         "type": "string",
-        "title": "select",
+        "title": "下拉选择",
         "enum": [1, 2, 3, 4]
       },
       "datarange": {
         "type": "daterange",
-        "title": "daterange"
+        "title": "日期选择"
       },
-      "Time": {
+      "time": {
         "type": "time",
-        "title": "time"
+        "title": "时间选择"
+      },
+      "object": {
+        "type": "object",
+        "title": "对象",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "姓名"
+          },
+          "age": {
+            "type": "number",
+            "title": "年龄"
+          }
+        }
       },
       "array": {
         "type": "array",
-        "title": "array",
+        "title": "数组",
         "items": {
           "type": "object",
           "properties": {
@@ -51,48 +62,13 @@
                 "wrapperCol": 8
               },
               "properties": {
-                "aa": {
-                  "key": "aa",
-                  "name": "aa",
-                  "x-component": "input",
-                  "description": "hello world",
+                "foo1": {
+                  "type": "string",
                   "title": "字段1"
                 },
-                "bb": {
-                  "key": "bb",
-                  "name": "bb",
-                  "x-component": "input",
+                "userTitle": {
+                  "type": "number",
                   "title": "字段2"
-                },
-                "cc": {
-                  "key": "cc",
-                  "name": "cc",
-                  "x-component": "input",
-                  "title": "字段3"
-                },
-                "dd": {
-                  "key": "dd",
-                  "name": "dd",
-                  "x-component": "input",
-                  "title": "字段5"
-                },
-                "ee": {
-                  "key": "ee",
-                  "name": "ee",
-                  "x-component": "input",
-                  "title": "字段6"
-                },
-                "ff": {
-                  "key": "ff",
-                  "name": "ff",
-                  "x-component": "input",
-                  "title": "字段7"
-                },
-                "gg": {
-                  "key": "gg",
-                  "name": "gg",
-                  "x-component": "rangepicker",
-                  "title": "字段8"
                 }
               }
             }
