@@ -7,7 +7,7 @@ import {
   autoSetContext as autoSetContextByProject,
 } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { initExtension, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
+import { initExtension, registerCommand } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';

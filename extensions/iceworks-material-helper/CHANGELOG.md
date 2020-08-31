@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.3.3
+
+- fix: build error
+
 ## 0.3.2
 
 - fix: open material settings fallback to VS Code Setings
