@@ -45,8 +45,12 @@ let activeTextEditorId: string;
 
 const { window, Position } = vscode;
 
+let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
-  const isAliInternal = await checkAliInternal();
+  if (typeof isAliInternal === 'undefined') {
+    isAliInternal = await checkAliInternal();
+  }
+
   return isAliInternal;
 }
 
