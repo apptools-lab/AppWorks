@@ -32,7 +32,7 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
             trigger={<Icon type="help" size="small" style={{ marginLeft: 6 }} />}
             align="r"
             alignEdge
-            triggerType="click"
+            triggerType="hover"
           >
             <a href="https://ice.work/docs/materials/about" target="_blank">
               <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
