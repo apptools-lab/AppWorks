@@ -1,7 +1,7 @@
 import * as kebabCase from 'lodash.kebabcase';
 import axios from 'axios';
-import { checkIsAliInternal } from '@iceworks/common-service';
 import {
+  checkIsAliInternal,
   saveDataToSettingJson,
   getDataFromSettingJson,
   CONFIGURATION_KEY_MATERIAL_SOURCES,
