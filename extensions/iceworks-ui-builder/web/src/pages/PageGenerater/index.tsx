@@ -5,8 +5,8 @@ import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
+import RouterDetailForm from '@/components/RouterDetailForm';
 import PageSelected from './components/PageSelected';
-import RouterDetailForm from './components/RouterDetailForm';
 import callService from '../../callService';
 import styles from './index.module.scss';
 
@@ -27,7 +27,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetMaterial' }),
+        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
       });
     }
 
@@ -40,7 +40,7 @@ const Home = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.failGetData' }) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }) });
     }
     console.log('getData', data);
     return data;
@@ -55,7 +55,7 @@ const Home = () => {
 
   async function onSettingsClick() {
     try {
-      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+      await callService('common', 'openMaterialsSettings');
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -116,12 +116,12 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
+    let pageIndexPath = '';
     try {
-      const data = {
+      pageIndexPath = await callService('page', 'generate', {
         blocks: selectedBlocks,
         pageName: values.pageName,
-      };
-      await callService('page', 'generate', data);
+      });
 
       if (isConfigurableRouter) {
         try {
@@ -138,10 +138,21 @@ const Home = () => {
 
     setIsCreating(false);
     setVisible(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
-    });
     resetData();
+
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const selectedAction = await callService(
+      'common',
+      'showInformationMessage',
+      intl.formatMessage(
+        { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
+        { path: pageIndexPath }
+      ),
+      openFileAction
+    );
+    if (selectedAction === openFileAction) {
+      await callService('common', 'showTextDocument', pageIndexPath);
+    }
   }
 
   return (

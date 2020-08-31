@@ -4,6 +4,19 @@
   height: 100%;
   padding-left: 8px;
 
+  .tip {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 8px;
+    padding-left: 10px;
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    background-color: #fefbe6;
+    border: 1px solid #ffe58f;
+  }
+
   .content {
     border: none;
     width: 100%;

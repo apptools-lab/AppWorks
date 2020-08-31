@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Viewer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -37,7 +37,7 @@
         {
           "id": "welcome",
           "name": "Welcome",
-          "when": "iceworks:isNotTargetProject"
+          "when": "iceworks:projectIsNotTarget"
         },
         {
           "id": "quickEntries",
@@ -46,22 +46,22 @@
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:projectIsNotTarget"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "!iceworks:isNotTargetProject"
+          "when": "!iceworks:projectIsNotTarget"
         }
       ]
     },
@@ -146,14 +146,6 @@
         "icon": {
           "light": "assets/light/runDev.svg",
           "dark": "assets/dark/runDev.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.npmScripts.stopDev",
-        "title": "%iceworksApp.command.npmScripts.stopDev.title%",
-        "icon": {
-          "light": "assets/light/stop.svg",
-          "dark": "assets/dark/stop.svg"
         }
       },
       {
@@ -272,16 +264,56 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "iceworksApp.nodeDependencies.reinstall"
+          "command": "iceworksApp.npmScripts.refresh",
+          "when": "false"
         },
         {
-          "command": "iceworksApp.nodeDependencies.dependencies.add"
+          "command": "iceworksApp.npmScripts.run",
+          "when": "false"
         },
         {
-          "command": "iceworksApp.nodeDependencies.devDependencies.add"
+          "command": "iceworksApp.npmScripts.stop",
+          "when": "false"
         },
         {
-          "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps"
+          "command": "iceworksApp.pages.add",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.pages.refresh",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.pages.openFile",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.pages.delete",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.components.add",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.components.refresh",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.components.delete",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.components.openFile",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.refresh",
+          "when": "false"
+        },
+        {
+          "command": "iceworksApp.nodeDependencies.upgrade",
+          "when": "false"
         }
       ],
       "editor/title": [

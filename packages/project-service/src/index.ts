@@ -21,6 +21,33 @@ import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
 
+export async function autoSetContext() {
+  const isPegasus = await checkIsPegasusProject();
+  const languageType = await getProjectLanguageType();
+  const type = await getProjectType();
+  const framework = await getProjectFramework();
+  const isNotTarget = await checkIsNotTarget();
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTarget', isNotTarget);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectLanguageType', languageType);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectType', type);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectFramework', framework);
+}
+
+export async function checkIsNotTarget() {
+  let isNotTarget = false;
+  if (!vscode.workspace.rootPath) {
+    isNotTarget = true;
+  } else {
+    try {
+      isNotTarget = (await getProjectType()) === 'unknown';
+    } catch (e) {
+      isNotTarget = true;
+    }
+  }
+  return isNotTarget;
+}
+
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
 
@@ -40,36 +67,56 @@ export async function getProjectLanguageType() {
 }
 
 export async function getProjectType() {
+  let type = 'unknown';
   try {
     const { dependencies = {} } = await readPackageJSON(projectPath);
     if (dependencies.rax) {
-      return 'rax';
+      type = 'rax';
     }
     if (dependencies.react) {
-      return 'react';
+      type = 'react';
     }
     if (dependencies.vue) {
-      return 'vue';
+      type = 'vue';
     }
-    return 'unknown';
-  } catch (e) {
-    console.error(e);
-    return 'unknown';
+  } catch (error) {
+    // ignore error
   }
+
+  return type;
+}
+
+export async function checkIsPegasusProject() {
+  let isPegasus = false;
+  const abcConfigFile = path.join(projectPath, 'abc.json');
+  if (fsExtra.existsSync(abcConfigFile)) {
+    const abcConfig = await fsExtra.readJSON(abcConfigFile);
+    if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
+      isPegasus = true;
+    }
+  }
+
+  return isPegasus;
 }
 
 export async function getProjectFramework() {
-  const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
-  if (dependencies['rax-app']) {
-    return 'rax-app';
+  let framework = 'unknown';
+  try {
+    const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
+    if (dependencies['rax-app']) {
+      framework = 'rax-app';
+    }
+    if (devDependencies['ice.js'] || dependencies['ice.js']) {
+      framework = 'icejs';
+    }
+    if (dependencies.vue) {
+      framework = 'vue';
+    }
+  } catch (error) {
+    // ignore error
   }
-  if (devDependencies['ice.js'] || dependencies['ice.js']) {
-    return 'icejs';
-  }
-  if (dependencies.vue) {
-    return 'vue';
-  }
-  return 'unknown';
+
+  return framework;
 }
 
 export async function getPackageJSON(packagePath: string): Promise<any> {

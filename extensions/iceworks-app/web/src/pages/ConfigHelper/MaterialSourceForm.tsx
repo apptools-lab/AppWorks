@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, Form, Input, Button } from '@alifd/next';
+import { Dialog, Form, Input, Button, Balloon, Icon } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './MaterialSourceForm.module.scss';
@@ -25,7 +25,21 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
     <Dialog
       footer={false}
       visible={visible}
-      title={title}
+      title={
+        <div>
+          {title}
+          <Balloon
+            trigger={<Icon type="help" size="small" style={{ marginLeft: 6 }} />}
+            align="r"
+            alignEdge
+            triggerType="hover"
+          >
+            <a href="https://ice.work/docs/materials/about" target="_blank">
+              <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
+            </a>
+          </Balloon>
+        </div>
+      }
       className={styles.dialog}
       onCancel={onCancel}
       onClose={onCancel}

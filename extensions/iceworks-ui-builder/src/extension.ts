@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
 
-    const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.2';
+    const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.6';
     const extraHtml = `<script>
       window.__assets = {
         ideUrl: '${cdnUrl}',
@@ -87,6 +87,24 @@ export function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworks-ui-builder.generate-page', function () {
       activePageGeneraterWebview();
+    })
+  );
+  function activePageCreatorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksPageCreator.extensnion.webViewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworks-ui-builder.create-page', function () {
+      activePageCreatorWebview();
     })
   );
 }

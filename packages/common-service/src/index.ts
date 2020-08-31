@@ -1,7 +1,8 @@
-import { checkAliInternal } from 'ice-npm-utils';
+import { checkAliInternal, getAndExtractTarball, readPackageJSON } from 'ice-npm-utils';
 import * as fse from 'fs-extra';
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
 import {
@@ -10,7 +11,10 @@ import {
   ALI_FUSION_MATERIAL_URL,
   ALI_NPM_REGISTRY,
 } from '@iceworks/constant';
+import * as upperCamelCase from 'uppercamelcase';
+import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
+import i18n from './i18n';
 
 // eslint-disable-next-line
 const co = require('co');
@@ -22,6 +26,7 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+export const indexFileSuffix = ['.jsx', '.js', '.tsx', '.ts', '.rml', '.vue'];
 
 let Client;
 let defClient;
@@ -40,8 +45,12 @@ let activeTextEditorId: string;
 
 const { window, Position } = vscode;
 
+let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
-  const isAliInternal = await checkAliInternal();
+  if (typeof isAliInternal === 'undefined') {
+    isAliInternal = await checkAliInternal();
+  }
+
   return isAliInternal;
 }
 
@@ -95,10 +104,16 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetNpmConfiguration(globalState);
 
+  await autoSetContext();
+
   onChangeActiveTextEditor(context);
 }
 
-export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
+async function autoSetContext() {
+  vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+}
+
+function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       if (editor) {
@@ -117,7 +132,7 @@ export function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   );
 }
 
-export async function autoInitMaterialSource(globalState: vscode.Memento) {
+async function autoInitMaterialSource(globalState: vscode.Memento) {
   console.log('autoInitMaterialSource: run');
   const stateKey = 'iceworks.materialSourceIsSet';
   const materialSourceIsSet = globalState.get(stateKey);
@@ -145,7 +160,7 @@ export async function autoInitMaterialSource(globalState: vscode.Memento) {
   });
 }
 
-export async function autoSetNpmConfiguration(globalState: vscode.Memento) {
+async function autoSetNpmConfiguration(globalState: vscode.Memento) {
   const isAliInternal = await checkAliInternal();
   autoSetPackageManagerConfiguration(globalState, isAliInternal);
   autoSetNpmRegistryConfiguration(globalState, isAliInternal);
@@ -220,10 +235,6 @@ export async function getExistProjects(token: string) {
   });
   console.log('exist projects', res.data);
   return res.data;
-}
-
-export function openConfigPanel() {
-  vscode.commands.executeCommand('iceworksApp.configHelper.start');
 }
 
 export function getLastAcitveTextEditor() {
@@ -306,4 +317,118 @@ export function getIceworksTerminal(terminalName = 'Iceworks') {
   }
 
   return terminal;
+}
+
+export const getFolderLanguageType = (templateSourceSrcPath) => {
+  const files = readFiles(templateSourceSrcPath);
+
+  const index = files.findIndex((item) => {
+    return /\.ts(x)/.test(item);
+  });
+
+  return index >= 0 ? 'ts' : 'js';
+};
+
+/**
+ * Install materials dependencies
+ */
+export const bulkInstallMaterialsDependencies = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  projectPath: string
+) {
+  const projectPackageJSON = await readPackageJSON(projectPath);
+
+  // get all dependencies from templates
+  const pagesDependencies: { [packageName: string]: string } = {};
+  materials.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
+
+  // filter existing dependencies of project
+  const filterDependencies: { [packageName: string]: string }[] = [];
+  Object.keys(pagesDependencies).forEach((packageName) => {
+    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
+      filterDependencies.push({
+        [packageName]: pagesDependencies[packageName],
+      });
+    }
+  });
+
+  if (filterDependencies.length > 0) {
+    const deps = filterDependencies.map((dependency) => {
+      const [packageName, version]: [string, string] = Object.entries(dependency)[0];
+      return `${packageName}@${version}`;
+    });
+
+    const terminal = getIceworksTerminal();
+    terminal.show();
+    terminal.sendText(`cd '${projectPath}'`, true);
+    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
+  } else {
+    return [];
+  }
+};
+
+export const bulkDownloadMaterials = async function (
+  materials: IMaterialPage[] | IMaterialBlock[],
+  tmpPath: string,
+  log?: (text: string) => void
+) {
+  if (!log) {
+    log = (text) => console.log(text);
+  }
+
+  return await Promise.all(
+    // @ts-ignore
+    materials.map(async (material: any) => {
+      await fse.mkdirp(tmpPath);
+      const materialName: string = upperCamelCase(material.name);
+
+      let tarballURL: string;
+      try {
+        log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
+        tarballURL = await getTarballURLByMaterielSource(material.source);
+      } catch (error) {
+        error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
+          materialName,
+          tarballURL,
+        });
+        throw error;
+      }
+      log(i18n.format('package.common-service.downloadMaterial.unzipCode'));
+      const downloadPath = path.join(tmpPath, materialName);
+      try {
+        await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
+          log(i18n.format('package.common-service.downloadMaterial.process', { percent: (percent * 100).toFixed(2) }));
+        });
+      } catch (error) {
+        error.message = i18n.format('package.common-service.uzipError', { materialName, tarballURL });
+        if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+          error.message = i18n.format('package.common-service.uzipOutTime', { materialName, tarballURL });
+        }
+        await fse.remove(tmpPath);
+        throw error;
+      }
+    })
+  );
+};
+export function openMaterialsSettings() {
+  if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+    executeCommand('iceworksApp.configHelper.start', 'iceworks.materialSources');
+  } else {
+    executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
+  }
+}
+
+export function showInformationMessage(...args) {
+  // TODO Parameter type judgment
+  const reset = args.length > 2 ? args.slice(0, args.length - 2) : args;
+  return vscode.window.showInformationMessage.apply(null, reset);
+}
+
+export function showTextDocument(resource: string) {
+  return vscode.window.showTextDocument(vscode.Uri.file(resource));
+}
+
+export function findIndexFile(targetPath: string): string {
+  const currentSuffix = indexFileSuffix.find((suffix) => fse.pathExistsSync(path.join(targetPath, `index${suffix}`)));
+  return currentSuffix ? path.join(targetPath, `index${currentSuffix}`) : undefined;
 }

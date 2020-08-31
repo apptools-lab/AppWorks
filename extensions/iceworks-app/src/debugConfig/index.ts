@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { parse } from 'comment-json';
+import { checkIsPegasusProject } from '@iceworks/project-service';
 import { getLaunchConfig, getTasksConfig } from './getDefaultConfigs';
 
 // Iceworks debug config
@@ -26,7 +27,7 @@ function writeConfigFile(filePath: string, config: IDebugConfig) {
 }
 
 // Prepare VS Code debug config
-export function setDebugConfig() {
+export async function setDebugConfig() {
   const { rootPath = __dirname } = vscode.workspace;
 
   // Make .vscode directory
@@ -36,14 +37,13 @@ export function setDebugConfig() {
   }
 
   // Set pegasus service url
-  let isPegasusProject = false;
+  const isPegasusProject = await checkIsPegasusProject();
   let specialLaunchUrl = '';
   try {
     const abcConfigFile = path.join(rootPath, 'abc.json');
     if (fs.existsSync(abcConfigFile)) {
       const abcConfig = fs.readJSONSync(abcConfigFile);
       if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
-        isPegasusProject = true;
         specialLaunchUrl = `${BASE_URL}/${abcConfig.group}/${abcConfig.name}`;
       }
     }

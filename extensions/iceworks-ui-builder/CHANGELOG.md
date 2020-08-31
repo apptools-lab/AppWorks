@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.1.8
+
+- feat: support create page
+- feat: support component-generator dark theme
+
+## 0.1.7
+
+- fix: open material settings fallback to VS Code Setings
+
 ## 0.1.6
 
 - docs: add more badges.

@@ -20,7 +20,7 @@ module.exports = {
 
   create(context) {
     if (path.basename(context.getFilename()) !== 'package.json') {
-      return;
+      return {};
     }
 
     const cwd = context.getCwd();

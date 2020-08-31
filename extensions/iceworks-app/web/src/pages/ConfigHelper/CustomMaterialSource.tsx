@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from 'react';
-import { Icon, List, Button, Dialog, Avatar } from '@alifd/next';
+import { Icon, List, Button, Dialog, Avatar, Balloon } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import editIcon from '../../../public/assets/edit.svg';
@@ -18,6 +18,7 @@ interface ICustomMaterialSource {
   onSourceAdd: (values: IMaterialSource) => void;
   onSourceEdit: (values: IMaterialSource, originMaterialSource: IMaterialSource) => void;
   onSourceDelete: (materialSource: IMaterialSource) => void;
+  addMaterialVisible?: boolean;
 }
 
 const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
@@ -25,9 +26,10 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   onSourceAdd,
   onSourceEdit,
   onSourceDelete,
+  addMaterialVisible = false,
 }) => {
   const intl = useIntl();
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(addMaterialVisible);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
 
@@ -73,6 +75,16 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
       <div className={styles.row}>
         <span className={styles.label}>
           <FormattedMessage id="web.iceworksApp.customMaterialSource.customMaterialSource" />
+          <Balloon
+            trigger={<Icon type="help" size="small" style={{ marginLeft: 6 }} />}
+            align="r"
+            alignEdge
+            triggerType="hover"
+          >
+            <a href="https://ice.work/docs/materials/about" target="_blank">
+              <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
+            </a>
+          </Balloon>
         </span>
         <div className={styles.btn}>
           <Button onClick={onAdd}>

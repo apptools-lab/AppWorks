@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -12,11 +12,15 @@
     "@babel/parser": "^7.10.4",
     "@babel/traverse": "^7.10.4",
     "@iceworks/constant": "^0.1.0",
+    "@iceworks/i18n": "^0.1.0",
+    "@iceworks/material-utils": "^0.1.5",
     "@iceworks/recorder": "^0.1.0",
     "axios": "^0.19.2",
     "co": "4.6.0",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^2.0.0"
+    "fs-readdir-recursive": "^1.1.0",
+    "ice-npm-utils": "^2.0.0",
+    "uppercamelcase": "^3.0.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

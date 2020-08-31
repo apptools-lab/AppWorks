@@ -1,13 +1,4 @@
 {
-  "package.block-service.downloadBlock.getDownloadUrl": "获取区块代码包下载地址",
-  "package.block-service.downloadBlock.getDownloadUrlError": "获取区块代码包地址失败，请手动拷贝代码仓库：<%= repository %>",
-  "package.block-service.downloadBlock.unzipCode": "下载区块代码包并解压",
-  "package.block-service.downloadBlock.unzipCodeError": "解压区块<%= blockName %>出错，请手动下载区块：<%= tarballURL %>",
-  "package.block-service.downloadBlock.process": "===>>> 进度：<%= percent %>%",
-  "package.block-service.downloadBlock.downloadError": "区块<%= blockName %>下载超时，请手动下载区块：<%= tarballURL %>",
-  "package.block-service.downloadError": "从 <%= blockSourceNpm %> 获取压缩包链接失败，您可以尝试手动克隆 <%= repository %> 仓库",
-  "package.block-service.uzipError": "解压 <%= blockName %> 失败，压缩包链接地址是：<%= tarballURL %>",
-  "package.block-service.uzipOutTime": "解压 <%= blockName %> 超时，压缩包链接地址是：<%= tarballURL %>",
   "package.block-service.templateError": "只能向 <%= jsxFileExtnames %> 文件添加区块代码",
   "package.block-service.notPageFileError": "只能向 <%= pagesPath %> 下的页面文件添加区块代码",
   "package.block-service.startObtainBlock": "> 开始获取区块代码",
