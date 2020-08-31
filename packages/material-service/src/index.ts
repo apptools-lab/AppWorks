@@ -1,6 +1,6 @@
 import * as kebabCase from 'lodash.kebabcase';
 import axios from 'axios';
-import { checkAliInternal } from 'ice-npm-utils';
+import { checkIsAliInternal } from '@iceworks/common-service';
 import {
   saveDataToSettingJson,
   getDataFromSettingJson,
@@ -79,7 +79,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     specifiedType = 'react';
   }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
-  const isAliInternal = await checkAliInternal();
+  const isAliInternal = await checkIsAliInternal();
   officalsources = officalsources.concat(
     isAliInternal ? OFFICAL_MATERIAL_SOURCES_FOR_INTERNAL : OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL
   );
