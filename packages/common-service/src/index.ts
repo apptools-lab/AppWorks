@@ -50,7 +50,7 @@ export async function checkIsAliInternal(): Promise<boolean> {
   if (typeof isAliInternal === 'undefined') {
     isAliInternal = await checkAliInternal();
   }
-  
+
   return isAliInternal;
 }
 
