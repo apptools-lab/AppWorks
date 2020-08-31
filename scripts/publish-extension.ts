@@ -88,7 +88,7 @@ async function start() {
         updateBetaDependencies(name, directory);
         // Update inside web project package json
         updateBetaDependencies(name, path.join(directory, 'web'));
-  
+
         shouldPublishExtensions.push(extensionInfos[i]);
       }
     }
@@ -106,15 +106,14 @@ async function start() {
       // Pack extension first.
       extensions.push(`${name}:${localVersion}`);
       packExtension(name, directory, localVersion);
-        publishedCount++;
-        console.log(`--- ${name}@${localVersion} ---`);
-        publish(name, directory, localVersion);
-        publishedExtensions.push(`${name}:${localVersion}`);
+      publishedCount++;
+      console.log(`--- ${name}@${localVersion} ---`);
+      publish(name, directory, localVersion);
+      publishedExtensions.push(`${name}:${localVersion}`);
     }
     uploadExtesions(extensions, true);
     console.log(`[PUBLISH EXTENSION PRODUCTION] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
-
   } catch (e) {
     console.error(e);
     process.exit(1);
