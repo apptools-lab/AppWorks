@@ -116,12 +116,12 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
+    let pageIndexPath = '';
     try {
-      const data = {
+      pageIndexPath = await callService('page', 'generate', {
         blocks: selectedBlocks,
         pageName: values.pageName,
-      };
-      await callService('page', 'generate', data);
+      });
 
       if (isConfigurableRouter) {
         try {
@@ -138,10 +138,21 @@ const Home = () => {
 
     setIsCreating(false);
     setVisible(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.successCreatePage' }),
-    });
     resetData();
+
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const selectedAction = await callService(
+      'common',
+      'showInformationMessage',
+      intl.formatMessage(
+        { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
+        { path: pageIndexPath }
+      ),
+      [openFileAction]
+    );
+    if (selectedAction === openFileAction) {
+      await callService('common', 'showTextDocument', pageIndexPath);
+    }
   }
 
   return (

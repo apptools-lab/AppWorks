@@ -26,6 +26,7 @@ export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+export const indexFileSuffix = ['.jsx', '.js', '.tsx', '.ts', '.rml', '.vue'];
 
 let Client;
 let defClient;
@@ -411,4 +412,17 @@ export function openMaterialsSettings() {
   } else {
     executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
   }
+}
+
+export function showInformationMessage(...args) {
+  return vscode.window.showInformationMessage.apply(null, args);
+}
+
+export function showTextDocument(resource: string) {
+  return vscode.window.showTextDocument(vscode.Uri.file(resource));
+}
+
+export function findIndexFile(targetPath: string): string {
+  const currentSuffix = indexFileSuffix.find((suffix) => fse.pathExistsSync(path.join(targetPath, `index${suffix}`)));
+  return currentSuffix ? path.join(targetPath, `index${currentSuffix}`) : undefined;
 }

@@ -67,3 +67,15 @@ Extension | Description | State
 [React Style Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper) | Auto completion reminder for writing inline style in [JSX](https://reactjs.org/docs/introducing-jsx.html) | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [React Component Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper) | Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introducing-jsx.html) | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-material-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
 [Config Helper](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper) | For configuration files(like *.json), provides visualization form setting or code editing reminder, verification and other features. | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
+
+## Help
+
+- Join [Dingtalk](https://www.dingtalk.com/) Group
+
+  ![qrcode](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_360x10000.jpg)
+- Open an [issue](https://github.com/ice-lab/iceworks/issues/new)
+
+  We will respond quickly to the submitted issues.
+- Appointment training
+
+  For company or team that intend to use Iceworks on a large scale, we can provide free training. Please consult us for details by Email: wuji.xwt@alibabab-inc.com
