@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.1.9
+
+- fix: build error
+
 ## 0.1.8
 
 - feat: support create page
