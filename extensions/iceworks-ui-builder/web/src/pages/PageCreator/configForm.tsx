@@ -131,7 +131,7 @@ export default ({
         },
         { path: pageIndexPath }
       ),
-      pageIndexPath ? [openFileAction] : []
+      pageIndexPath ? openFileAction : []
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
