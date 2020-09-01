@@ -96,7 +96,6 @@ export default class Scanner {
         reports.maintainability.score,
         reports.repeatability.score,
       ]);
-      
     } catch (error) {
       // ignore
       console.log(error);
