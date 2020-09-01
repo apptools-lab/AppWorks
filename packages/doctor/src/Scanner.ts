@@ -77,7 +77,7 @@ export default class Scanner {
           bestPracticesScore.plus(bonus);
         }
         // recommend-typescript
-        if (packageObj.devDependencies['typescript']) {
+        if (packageObj.dependencies.typescript) {
           bestPracticesScore.plus(bonus);
         }
         // recommend-eslint-config-rax

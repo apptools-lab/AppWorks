@@ -1,6 +1,6 @@
 function getTwoMinNums(arr: number[]): number[] {
-  let a = arr[0],
-    b = arr[1];
+  let a = arr[0];
+  let b = arr[1];
   if (a < b) {
     const temp = a;
     a = b;
