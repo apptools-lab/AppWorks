@@ -55,7 +55,7 @@ export const renderBlocks = async function (
     blocks.map(async (block: any) => {
       const blockName = upperCamelCase(block.name);
       const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
-      const blockSrcPath = path.join(targetDir, blockName, 'src');
+      const targetPath = path.join(targetDir, blockName);
       const blockType = getFolderLanguageType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
@@ -75,7 +75,7 @@ export const renderBlocks = async function (
         });
       }
 
-      await fsExtra.move(blockSourceSrcPath, blockSrcPath);
+      await fsExtra.move(blockSourceSrcPath, targetPath);
       return targetDir;
     })
   );
@@ -110,19 +110,23 @@ export async function addBlockCode(block: IMaterialBlock) {
   await insertBlock(activeTextEditor, blockName);
 
   // download block
-  const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
+  const componentsPath = path.join(pagePath, '.temp');
+  const targetPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
+  materialOutputChannel.appendLine(`download block to ${componentsPath}`);
   try {
     const blockDir = await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
     materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));
+    await renderBlocks([{ ...block, name: blockName }], componentsPath, targetPath);
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
   } finally {
     // activate the textEditor
+    await fsExtra.remove(componentsPath);
     window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
   }
 
