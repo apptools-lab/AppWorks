@@ -1,0 +1,13 @@
+.information {
+  margin-top: 30px;
+
+  .cardList {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+
+    .cardItem {
+      width: 33%;
+    }
+  }
+}
