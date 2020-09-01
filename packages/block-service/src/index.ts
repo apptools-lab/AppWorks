@@ -115,7 +115,6 @@ export async function addBlockCode(block: IMaterialBlock) {
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
-  materialOutputChannel.appendLine(`download block to ${componentsPath}`);
   try {
     const blockDir = await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
