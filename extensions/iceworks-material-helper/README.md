@@ -32,21 +32,12 @@ Use Component and Write Props easier in [JSX](https://reactjs.org/docs/introduci
 
 #### Use in Components
 
-![demo](https://user-images.githubusercontent.com/56879942/88197942-bb124c80-cc75-11ea-8caa-68fe2dc4cbc3.gif)
+![demo](https://user-images.githubusercontent.com/56879942/87619875-c2a29480-c74f-11ea-945e-788a32e65881.gif)
 
 1. Click src/components/*/index.tsx in the resource panel to open a page.
 2. Activate the material-import extension.
 3. Move cursor to a position for materials.
 4. Search for component materials. Click the material to be used, and the material code will be automatically added to the corresponding position.
-
-### Props Autocomplete
-
-When editing the props of a component in a JSX file, an automatic completion reminder will be given:
-
-![demo](https://user-images.githubusercontent.com/56879942/88197950-bd74a680-cc75-11ea-8650-dec13706366c.gif)
-
-1. Use materials in JSX files (such as View).
-2. Enter part of props in the material tag, it will arouse automatic completion.
 
 ### Component Document Support
 
@@ -85,6 +76,15 @@ Or
 ![demo](https://user-images.githubusercontent.com/56879942/90105064-d86b9f80-dd77-11ea-999e-d93974b9e6c5.gif)
 
 You can choose whether to open the document link in VS Code, which depends on the extension [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview). If you want to open the document page in VS Code, install Browser Preview first.
+
+### Props Autocomplete
+
+When editing the props of a component in a JSX file, an automatic completion reminder will be given:
+
+![demo](https://user-images.githubusercontent.com/56879942/87399599-2dd25680-c5ea-11ea-9402-5e36ba7b8f98.gif)
+
+1. Use materials in JSX files (such as View).
+2. Enter part of props in the material tag, it will arouse automatic completion.
 
 ## More
 
