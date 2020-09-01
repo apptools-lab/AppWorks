@@ -101,6 +101,10 @@
         }
       },
       {
+        "command": "iceworksApp.welcome.start",
+        "title": "%iceworksApp.command.welcome.start.title%"
+      },
+      {
         "command": "iceworksApp.editorMenu.DefPublish",
         "title": "%iceworksApp.command.DefPublish.title%",
         "icon": {

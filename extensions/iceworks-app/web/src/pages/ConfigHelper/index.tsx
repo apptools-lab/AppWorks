@@ -5,8 +5,8 @@ import { IMaterialSource } from '@iceworks/material-utils';
 import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
 import { useIntl } from 'react-intl';
-import { LocaleProvider } from '../../i18n';
-import CustomMaterialSource from './CustomMaterialSource';
+import { LocaleProvider } from '@/i18n';
+import CustomMaterialSource from './components/CustomMaterialSource';
 import styles from './index.module.scss';
 
 const FormItem = Form.Item;
@@ -110,56 +110,56 @@ const ConfigHelper = (props) => {
       {loading ? (
         <Loading visible={loading} className={styles.loading} />
       ) : (
-        <div className={styles.container}>
-          <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmPackageManager' })}>
-              <Select
-                name="packageManager"
-                placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmPackageManager' })}
-                style={{ width: '100%' }}
-              >
-                {packageManagers.map((item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-            </FormItem>
-            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmRegistry' })}>
-              <Select
-                name="npmRegistry"
-                placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmRegistry' })}
-                style={{ width: '100%' }}
-              >
-                {npmRegistries.map((item) => (
-                  <Select.Option key={item} value={item}>
-                    {item}
-                  </Select.Option>
-                ))}
-              </Select>
-            </FormItem>
-            {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-              <FormItem
-                label=" "
-                format="url"
-                formatMessage={intl.formatMessage({ id: 'web.iceworksApp.index.formatUrl' })}
-              >
-                <Input
-                  name="customNpmRegistry"
-                  placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.customNpmRegistryPlaceHolder' })}
-                />
+          <div className={styles.container}>
+            <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
+              <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmPackageManager' })}>
+                <Select
+                  name="packageManager"
+                  placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmPackageManager' })}
+                  style={{ width: '100%' }}
+                >
+                  {packageManagers.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
               </FormItem>
-            )}
-          </Form>
-          <CustomMaterialSource
-            sources={materialSources}
-            onSourceAdd={onSourceAdd}
-            onSourceDelete={onMaterialSourceDelete}
-            onSourceEdit={onMaterialSourceEdit}
-            addMaterialVisible={window.iceworksAutoFocusField === 'iceworks.materialSources'}
-          />
-        </div>
-      )}
+              <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmRegistry' })}>
+                <Select
+                  name="npmRegistry"
+                  placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmRegistry' })}
+                  style={{ width: '100%' }}
+                >
+                  {npmRegistries.map((item) => (
+                    <Select.Option key={item} value={item}>
+                      {item}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </FormItem>
+              {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
+                <FormItem
+                  label=" "
+                  format="url"
+                  formatMessage={intl.formatMessage({ id: 'web.iceworksApp.index.formatUrl' })}
+                >
+                  <Input
+                    name="customNpmRegistry"
+                    placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.customNpmRegistryPlaceHolder' })}
+                  />
+                </FormItem>
+              )}
+            </Form>
+            <CustomMaterialSource
+              sources={materialSources}
+              onSourceAdd={onSourceAdd}
+              onSourceDelete={onMaterialSourceDelete}
+              onSourceEdit={onMaterialSourceEdit}
+              addMaterialVisible={window.iceworksAutoFocusField === 'iceworks.materialSources'}
+            />
+          </div>
+        )}
     </>
   );
 };

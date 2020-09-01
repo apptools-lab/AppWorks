@@ -2,10 +2,10 @@ import React, { useState, Suspense } from 'react';
 import { Icon, List, Button, Dialog, Avatar, Balloon } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { FormattedMessage, useIntl } from 'react-intl';
-import editIcon from '../../../public/assets/edit.svg';
-import deleteIcon from '../../../public/assets/delete.svg';
-import MaterialSourceForm from './MaterialSourceForm';
-import styles from './CustomMaterialSource.module.scss';
+import editIcon from '../../../../../public/assets/edit.svg';
+import deleteIcon from '../../../../../public/assets/delete.svg';
+import MaterialSourceForm from '../MaterialSourceForm';
+import styles from './index.module.scss';
 
 enum Operation {
   Edit,

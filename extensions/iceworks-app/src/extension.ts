@@ -47,14 +47,14 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   // init config webview
-  let webviewPanel: vscode.WebviewPanel | undefined;
+  let configWebviewPanel: vscode.WebviewPanel | undefined;
   function activeConfigWebview(focusField: string) {
-    if (webviewPanel) {
-      webviewPanel.reveal();
+    if (configWebviewPanel) {
+      configWebviewPanel.reveal();
     } else {
-      webviewPanel = window.createWebviewPanel(
+      configWebviewPanel = window.createWebviewPanel(
         'iceworks',
-        i18n.format('extension.iceworksApp.extension.title'),
+        i18n.format('extension.iceworksApp.configHelper.extension.webviewTitle'),
         ViewColumn.One,
         {
           enableScripts: true,
@@ -65,21 +65,41 @@ export async function activate(context: vscode.ExtensionContext) {
         window.iceworksAutoFocusField = "${focusField}";
       </script>
       `;
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath, undefined, false, undefined, extraHtml);
-      webviewPanel.onDidDispose(
+      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'confighelper', true, undefined, extraHtml);
+      configWebviewPanel.onDidDispose(
         () => {
-          webviewPanel = undefined;
+          configWebviewPanel = undefined;
         },
         null,
         context.subscriptions
       );
-      connectService(webviewPanel, context, { services, recorder });
+      connectService(configWebviewPanel, context, { services, recorder });
     }
   }
   subscriptions.push(
     registerCommand('iceworksApp.configHelper.start', function (focusField: string) {
       recorder.recordActivate();
       activeConfigWebview(focusField);
+    })
+  );
+  // init welcome webview
+  let welcomeWebviewPanel: vscode.WebviewPanel | undefined;
+  function activeWelcomeWebview() {
+    const welcomeWebviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksApp.welcome.extension.webviewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      }
+    );
+    welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome', true);
+    connectService(welcomeWebviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworksApp.welcome.start', function () {
+      activeWelcomeWebview();
     })
   );
 

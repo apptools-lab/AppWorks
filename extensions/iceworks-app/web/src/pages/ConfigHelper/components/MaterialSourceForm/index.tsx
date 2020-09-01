@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, Form, Input, Button, Balloon, Icon } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styles from './MaterialSourceForm.module.scss';
+import styles from './index.module.scss';
 
 interface IMaterialSourceForm {
   title: string;
