@@ -20,8 +20,8 @@ const videosList = [
   {
     name: '课程4',
     videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-  }
-]
+  },
+];
 
 const Content = () => {
   const [selectedKey, setSelectedKey] = useState(videosList[0].name);
@@ -41,11 +41,12 @@ const Content = () => {
           defaultSelectedKeys={[videosList[0].name]}
           onSelect={(selectedKeys: string[], extra: any) => {
             const { selected, node } = extra;
-            if (selected)
-              setSelectedKey(node.props.label);
+            if (selected) setSelectedKey(node.props.label);
           }}
         >
-          {videosList.map(item => <TreeNode key={item.name} label={item.name} />)}
+          {videosList.map((item) => (
+            <TreeNode key={item.name} label={item.name} />
+          ))}
         </Tree>
       </div>
     </div>
