@@ -1,10 +1,12 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import Scorer from './Scorer';
 import { IScannerOptions, IFileInfo, IScannerReports } from './types/Scanner';
 import getEslintReports from './getEslintReports';
 import getMaintainabilityReports from './getMaintainabilityReports';
 import getRepeatabilityReports from './getRepeatabilityReports';
 import getFiles from './getFiles';
+import getFinalScore from './getFinalScore';
 
 export default class Scanner {
   public options: IScannerOptions;
@@ -34,8 +36,10 @@ export default class Scanner {
       reports.aliEslint = getEslintReports('eslint-config-ali', 0.3, 0.7, files);
 
       // Process package.json file
+      let packageObj;
       const packageFile = path.join(directory, 'package.json');
       if (fs.existsSync(packageFile)) {
+        packageObj = fs.readJSONSync(packageFile);
         const packageSource = fs.readFileSync(packageFile, 'utf-8');
         files.push({
           path: packageFile,
@@ -63,8 +67,39 @@ export default class Scanner {
         this.options.supportExts,
         this.options.ignoreDirs
       );
+
+      // Calculate bonus
+      const bonus = 2;
+      if (packageObj) {
+        const bestPracticesScore = new Scorer({ start: reports.bestPractices.score });
+        // recommend-deps-fusion-design
+        if (packageObj.dependencies['@alifd/next']) {
+          bestPracticesScore.plus(bonus);
+        }
+        // recommend-typescript
+        if (packageObj.devDependencies['typescript']) {
+          bestPracticesScore.plus(bonus);
+        }
+        // recommend-eslint-config-rax
+        if (packageObj.devDependencies['eslint-config-rax']) {
+          bestPracticesScore.plus(bonus);
+        }
+
+        reports.bestPractices.score = bestPracticesScore.getScore();
+      }
+
+      // Calculate total score
+      reports.score = getFinalScore([
+        reports.aliEslint.score,
+        reports.bestPractices.score,
+        reports.securityPractices.score,
+        reports.maintainability.score,
+        reports.repeatability.score,
+      ]);
+      
     } catch (error) {
       // ignore
+      console.log(error);
     }
 
     return reports;

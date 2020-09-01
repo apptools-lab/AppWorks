@@ -49,6 +49,7 @@ export interface IScannerReports {
     count: number;
     lines: number;
   };
+  score?: number;
   aliEslint?: IEslintReports;
   bestPractices?: IEslintReports;
   securityPractices?: IEslintReports;

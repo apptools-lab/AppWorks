@@ -51,6 +51,7 @@ if (args.scan) {
         count: result.filesInfo.count,
         lines: result.filesInfo.lines
       },
+      score: result.score,
       aliEslint: result.aliEslint.score,
       bestPractices: result.bestPractices.score,
       securityPractices: result.securityPractices.score,
