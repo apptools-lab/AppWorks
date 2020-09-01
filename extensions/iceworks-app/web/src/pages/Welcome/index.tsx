@@ -1,9 +1,5 @@
 import React from 'react';
 
 export default () => {
-  return (
-    <div>
-      welcome
-    </div>
-  )
-}
+  return <div>welcome</div>;
+};
