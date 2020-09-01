@@ -55,7 +55,7 @@ export const renderBlocks = async function (
     blocks.map(async (block: any) => {
       const blockName = upperCamelCase(block.name);
       const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
-      const blockSrcPath = path.join(targetDir, blockName, 'src');
+      const blockSrcPath = path.join(targetDir, blockName);
       const blockType = getFolderLanguageType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
