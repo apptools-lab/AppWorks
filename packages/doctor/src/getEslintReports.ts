@@ -1,12 +1,10 @@
 import { CLIEngine } from 'eslint';
 import Scorer from './Scorer';
-import { IFileInfo, IALiEslintReports } from './types/Scanner';
+import { IFileInfo, IEslintReports } from './types/Scanner';
 
-const warningWeight = 0.3;
-const errorWeight = 0.7;
 
-// https://www.npmjs.com/package/eslint-config-ali
-export default function getAliEslintReports(files: IFileInfo[], LoC: number): IALiEslintReports {
+export default function getBestPracticesReports(extendsConfigName: string, warningWeight: number, errorWeight: number, files: IFileInfo[]): IEslintReports {
+
   let warningScore = 0;
   let errorScore = 0;
 
@@ -14,13 +12,13 @@ export default function getAliEslintReports(files: IFileInfo[], LoC: number): IA
 
   const aliEslintCliEngine = new CLIEngine({
     baseConfig: {
-      extends: 'eslint-config-ali',
+      extends: extendsConfigName,
     },
     useEslintrc: false,
   });
 
   files.forEach((file) => {
-    aliEslintCliEngine.executeOnText(file.source).results.forEach((result) => {
+    aliEslintCliEngine.executeOnText(file.source, file.path).results.forEach((result) => {
       reports.push({
         ...result,
         filePath: file.path,
