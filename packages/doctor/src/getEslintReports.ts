@@ -2,9 +2,12 @@ import { CLIEngine } from 'eslint';
 import Scorer from './Scorer';
 import { IFileInfo, IEslintReports } from './types/Scanner';
 
-
-export default function getBestPracticesReports(extendsConfigName: string, warningWeight: number, errorWeight: number, files: IFileInfo[]): IEslintReports {
-
+export default function getBestPracticesReports(
+  extendsConfigName: string,
+  warningWeight: number,
+  errorWeight: number,
+  files: IFileInfo[]
+): IEslintReports {
   let warningScore = 0;
   let errorScore = 0;
 

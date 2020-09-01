@@ -42,7 +42,7 @@ export default class Scanner {
           source: packageSource,
           // lines of code
           LoC: (packageSource.match(/\n/g) || '').length + 1,
-        })
+        });
       }
 
       // Calculate best practices
@@ -63,7 +63,6 @@ export default class Scanner {
         this.options.supportExts,
         this.options.ignoreDirs
       );
-
     } catch (error) {
       // ignore
     }
