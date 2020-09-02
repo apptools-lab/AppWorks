@@ -33,9 +33,10 @@ const { window, Position } = vscode;
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   const blocksTempDir = path.join(localPath, '.temp-block');
   await bulkDownloadMaterials(blocks, blocksTempDir);
-  await renderBlocks(blocks, blocksTempDir, localPath);
+  const blockIndexPaths = await renderBlocks(blocks, blocksTempDir, localPath);
   await fsExtra.remove(blocksTempDir);
   await bulkInstallMaterialsDependencies(blocks, projectPath);
+  return blockIndexPaths;
 };
 
 /**
@@ -76,7 +77,7 @@ export const renderBlocks = async function (
       }
 
       await fsExtra.move(blockSourceSrcPath, blockSrcPath);
-      return targetDir;
+      return blockSrcPath;
     })
   );
 };

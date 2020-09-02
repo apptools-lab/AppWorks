@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 
 const Home = () => {
   const intl = useIntl();
-  const [selectedBlock, setSelectedBlock] = useState();
+  const [selectedBlock, setSelectedBlock] = useState({});
   const [componentName, setComponentName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
@@ -66,27 +66,27 @@ const Home = () => {
     setComponentName('');
   }
 
-  async function handleCreate(data) {
+  async function handleCreate() {
+    const data = {
+      block: selectedBlock,
+      componentName,
+    };
+
+    const errorMessage = validateData(data);
+    if (errorMessage) {
+      Notification.error({ content: errorMessage });
+      setIsCreating(false);
+      return;
+    }
+
     setIsCreating(true);
+    let blockIndexPath = '';
     try {
-      const data = {
-        block: selectedBlock,
-        componentName,
-      };
-
-      const errorMessage = validateData(data);
-      if (errorMessage) {
-        Notification.error({ content: errorMessage });
-        setIsCreating(false);
-        return;
-      }
-
-      await callService('block', 'bulkGenerate', [
-        {
-          ...selectedBlock,
-          name: componentName,
-        },
-      ]);
+      const distPaths = await callService('block', 'bulkGenerate', [{
+        ...selectedBlock,
+        name: componentName,
+      }]);
+      blockIndexPath = distPaths[0];
     } catch (error) {
       Notification.error({ content: error.message });
       setIsCreating(false);
@@ -94,10 +94,21 @@ const Home = () => {
     }
 
     setIsCreating(false);
-    Notification.success({
-      content: intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.generateSuccess' }),
-    });
     resetData();
+
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.openFile' });
+    const selectedAction = await callService(
+      'common',
+      'showInformationMessage',
+      intl.formatMessage(
+        { id: 'web.iceworksUIBuilder.componentCreator.successCreateToPath' },
+        { path: blockIndexPath }
+      ),
+      openFileAction
+    );
+    if (selectedAction === openFileAction) {
+      await callService('common', 'showTextDocument', blockIndexPath);
+    }
   }
   return (
     <div className={styles.wrap}>
