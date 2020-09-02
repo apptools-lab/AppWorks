@@ -8,7 +8,7 @@ import uploadExtesions from './upload-extensions';
 import { getPublishedPackages } from './published-info';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
-import updateBetaDependencies from './fn/updateExtensionDependencies';
+import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
 // Wait for npm module publish and sync.
 function sleep(time) {
@@ -85,9 +85,9 @@ async function start() {
       const { name, directory, shouldPublish } = extensionInfos[i];
       if (shouldPublish) {
         // Update extension package json
-        updateBetaDependencies(name, directory);
+        updateExtensionDependencies(name, directory);
         // Update inside web project package json
-        updateBetaDependencies(name, path.join(directory, 'web'));
+        updateExtensionDependencies(name, path.join(directory, 'web'));
 
         shouldPublishExtensions.push(extensionInfos[i]);
       }

@@ -6,7 +6,7 @@ import { spawnSync } from 'child_process';
 import uploadExtesions from './upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
 import extensionDepsInstall from './fn/extension-deps-install';
-import updateBetaDependencies from './fn/updateExtensionDependencies';
+import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce package
@@ -26,9 +26,9 @@ getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
     const { name, directory, shouldPublish } = extensionInfos[i];
     if (shouldPublish) {
       // Update extension package json
-      updateBetaDependencies(name, directory);
+      updateExtensionDependencies(name, directory);
       // Update inside web project package json
-      updateBetaDependencies(name, path.join(directory, 'web'));
+      updateExtensionDependencies(name, path.join(directory, 'web'));
 
       shouldPublishExtensions.push(extensionInfos[i]);
     }
