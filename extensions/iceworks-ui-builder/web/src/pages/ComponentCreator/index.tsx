@@ -82,10 +82,12 @@ const Home = () => {
     setIsCreating(true);
     let blockIndexPath = '';
     try {
-      const distPaths = await callService('block', 'bulkGenerate', [{
-        ...selectedBlock,
-        name: componentName,
-      }]);
+      const distPaths = await callService('block', 'bulkGenerate', [
+        {
+          ...selectedBlock,
+          name: componentName,
+        },
+      ]);
       blockIndexPath = distPaths[0];
     } catch (error) {
       Notification.error({ content: error.message });
