@@ -32,10 +32,13 @@ const { window, Position } = vscode;
  */
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   const blocksTempDir = path.join(localPath, '.temp-block');
-  await bulkDownloadMaterials(blocks, blocksTempDir);
-  await renderBlocks(blocks, blocksTempDir, localPath);
-  await fsExtra.remove(blocksTempDir);
-  await bulkInstallMaterialsDependencies(blocks, projectPath);
+  try {
+    await bulkDownloadMaterials(blocks, blocksTempDir);
+    await renderBlocks(blocks, blocksTempDir, localPath);
+    await bulkInstallMaterialsDependencies(blocks, projectPath);
+  } finally {
+    await fsExtra.remove(blocksTempDir);
+  }
 };
 
 /**
@@ -59,7 +62,11 @@ export const renderBlocks = async function (
       const blockType = getFolderLanguageType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
-      console.log('blockType: ', blockType, 'projectType: ', projectType);
+      // fs 的异步版 exists 已经被弃用 http://nodejs.cn/api/fs.html#fs_fs_exists_path_callback
+      const isTargetDirExists = fsExtra.existsSync(targetPath);
+      if (isTargetDirExists) {
+        throw new Error(i18n.format('package.block-service.targetDirExists', { targetPath }));
+      }
 
       if (blockType === 'ts' && projectType === 'js') {
         const files = glob.sync('**/*.@(ts|tsx)', {
@@ -116,10 +123,10 @@ export async function addBlockCode(block: IMaterialBlock) {
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
-    const blockDir = await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
+    await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
-    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));
+    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir: targetPath }));
     await renderBlocks([{ ...block, name: blockName }], componentsPath, targetPath);
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);

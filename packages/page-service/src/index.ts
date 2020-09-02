@@ -131,11 +131,9 @@ export const createPage = async (selectPage: IMaterialPage) => {
     await bulkDownloadMaterials([selectPage], templateTempDir);
     const pageIndexPath = await renderPage(selectPage);
     await bulkInstallMaterialsDependencies([selectPage], projectPath);
-    await fse.remove(templateTempDir);
     return pageIndexPath;
-  } catch (err) {
+  } finally {
     await fse.remove(templateTempDir);
-    throw err;
   }
 };
 
