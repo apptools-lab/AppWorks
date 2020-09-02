@@ -26,6 +26,14 @@ const entries = [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.detail'),
+    command: 'iceworks-ui-builder.create-component',
+    async condition() {
+      return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.detail'),
     command: 'iceworks-material-helper.start',
