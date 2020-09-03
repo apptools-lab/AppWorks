@@ -75,11 +75,11 @@ export default ({
 
   async function getRouterForm(setting) {
     try {
-      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      const isRouteConfigPathExists = await callService('router', 'checkConfigPathExists');
       setIsConfigurableRouter(isRouteConfigPathExists);
       if (isRouteConfigPathExists) {
         // configurable router
-        const config = await callService('page', 'getAll');
+        const config = await callService('router', 'getAll');
         setRouterConfig(config);
       }
       setTemplateData(getTemplateData(setting));
@@ -103,7 +103,7 @@ export default ({
 
       if (isConfigurableRouter) {
         try {
-          await callService('page', 'createRouter', values);
+          await callService('router', 'create', values);
         } catch (error) {
           Notification.error({ content: error.message });
         }
