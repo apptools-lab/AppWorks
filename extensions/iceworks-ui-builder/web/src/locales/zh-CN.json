@@ -8,6 +8,7 @@
   "web.iceworksUIBuilder.componentCreator.inputComponentName": "1. 填写组件名：",
   "web.iceworksUIBuilder.componentCreator.selectBlock": "2. 选择使用的区块：",
   "web.iceworksUIBuilder.componentCreator.generateComponent": "创建组件",
+  "web.iceworksUIBuilder.componentCreator.openFile": "打开文件",
   "web.iceworksUIBuilder.pageCreator.didNotSeletPage": "请选择使用的页面模板。",
   "web.iceworksUIBuilder.pageCreator.selectPage": "选择使用的页面模板：",
   "web.iceworksUIBuilder.pageCreator.noPageName": "请填写页面名称。",

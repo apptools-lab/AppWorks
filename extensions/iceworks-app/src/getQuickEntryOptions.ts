@@ -1,4 +1,4 @@
-import { getProjectFramework, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
 import { checkIsAliInternal } from '@iceworks/common-service';
 import i18n from './i18n';
 
@@ -21,8 +21,8 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.generate-component',
     async condition() {
-      const projectFramework = await getProjectFramework();
-      return projectFramework === 'icejs';
+      const projectType = await getProjectType();
+      return projectType === 'react';
     },
   },
   {
