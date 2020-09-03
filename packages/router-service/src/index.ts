@@ -4,15 +4,46 @@ import traverse from '@babel/traverse';
 import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
+import * as prettier from 'prettier';
 import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
-import formatCodeFromAST from './formatCodeFromAST';
-import { IRouter, IRouterOptions } from './types';
+
+interface IRouter {
+  /**
+   * URL path
+   */
+  path: string;
+
+  /**
+   * component name
+   */
+  component?: string;
+
+  /**
+   * layout name
+   */
+  layout?: string;
+
+  /**
+   * children routes
+   */
+  children?: IRouter[];
+}
+
+interface IRouterOptions {
+  type?: string;
+  replacement?: boolean;
+  parent?: string;
+}
 
 const routerConfigFileName = 'routes';
 const ROUTER_CONFIG_VARIABLE = 'routerConfig';
 const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive', 'children', 'redirect'];
-
 const noPathPrefix = false;
+
+export async function create(data) {
+  const { path, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
+}
 
 export async function getAll() {
   const routerConfigAST = await getRouterConfigAST(projectPath);
@@ -29,7 +60,7 @@ export async function getAll() {
   return config;
 }
 
-export async function checkRouteConfigPathExists() {
+export async function checkConfigPathExists() {
   const projectLanguageType = await getProjectLanguageType();
   const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const pathExists: boolean = await fse.pathExists(routeConfigPath);
@@ -356,4 +387,16 @@ function findLastImportIndex(routerConfigAST, existLazy) {
     }
   });
   return lastIndex;
+}
+
+function formatCodeFromAST(ast: any): string {
+  return prettier.format(
+    generate(ast, {
+      retainLines: true,
+    }).code,
+    {
+      singleQuote: true,
+      trailingComma: 'es5',
+    }
+  );
 }

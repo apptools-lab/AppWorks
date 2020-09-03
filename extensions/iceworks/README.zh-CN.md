@@ -72,7 +72,7 @@ Iceworks 套件内包含以下插件：
 
 - 加入[钉钉](https://www.dingtalk.com/)交流群
 
-  ![二维码](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_360x10000.jpg)
+  ![二维码](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_220x10000.jpg)
 - 提交问题
 
   向 Iceworks 的 Github 仓库提交 [issue](https://github.com/ice-lab/iceworks/issues/new) ，我们会快速响应所提交的问题。

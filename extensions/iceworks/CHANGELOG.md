@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.9.0
+
+- docs: qrcode size
+
 ## 0.8.0
 
 - docs: add features

@@ -19,6 +19,7 @@ import {
   getFolderLanguageType,
   bulkInstallMaterialsDependencies,
   bulkDownloadMaterials,
+  findIndexFile,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -32,13 +33,11 @@ const { window, Position } = vscode;
  */
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   const blocksTempDir = path.join(localPath, '.temp-block');
-  try {
-    await bulkDownloadMaterials(blocks, blocksTempDir);
-    await renderBlocks(blocks, blocksTempDir, localPath);
-    await bulkInstallMaterialsDependencies(blocks, projectPath);
-  } finally {
-    await fsExtra.remove(blocksTempDir);
-  }
+  await bulkDownloadMaterials(blocks, blocksTempDir);
+  const blockIndexPaths = await renderBlocks(blocks, blocksTempDir, localPath);
+  await fsExtra.remove(blocksTempDir);
+  await bulkInstallMaterialsDependencies(blocks, projectPath);
+  return blockIndexPaths;
 };
 
 /**
@@ -83,7 +82,7 @@ export const renderBlocks = async function (
       }
 
       await fsExtra.move(blockSourceSrcPath, targetPath);
-      return targetDir;
+      return findIndexFile(targetPath);
     })
   );
 };

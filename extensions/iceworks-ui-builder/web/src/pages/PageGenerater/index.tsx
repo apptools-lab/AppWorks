@@ -100,11 +100,11 @@ const Home = () => {
     }
 
     try {
-      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      const isRouteConfigPathExists = await callService('router', 'checkConfigPathExists');
       setIsConfigurableRouter(isRouteConfigPathExists);
       if (isRouteConfigPathExists) {
         // configurable router
-        const config = await callService('page', 'getAll');
+        const config = await callService('router', 'getAll');
         setRouterConfig(config);
       }
 
@@ -125,7 +125,7 @@ const Home = () => {
 
       if (isConfigurableRouter) {
         try {
-          await callService('page', 'createRouter', values);
+          await callService('router', 'create', values);
         } catch (error) {
           Notification.error({ content: error.message });
         }

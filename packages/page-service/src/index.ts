@@ -23,11 +23,8 @@ import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
-import { bulkCreate } from './router';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
-
-export * from './router';
 
 /**
  * Generate page code based on blocks
@@ -88,14 +85,6 @@ export const generate = async function ({
     return dist;
   }
 };
-
-/**
- *  write the router config
- */
-export async function createRouter(data) {
-  const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
-}
 
 /**
  * Remove page files

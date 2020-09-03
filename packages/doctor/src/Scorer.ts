@@ -14,7 +14,7 @@ export default class Scanner {
     this.lowestScore = options.lowestScore || 0;
     this.digits = options.digits || 2;
 
-    this.currentScore = this.highestScore;
+    this.currentScore = options.start || this.highestScore;
   }
 
   public plus(score: number): number {
