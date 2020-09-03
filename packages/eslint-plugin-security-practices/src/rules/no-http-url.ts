@@ -18,7 +18,7 @@ module.exports = {
   create(context: any) {
     return {
       Literal: function handleRequires(node: any) {
-        if (node.value && node.value.indexOf('http:') === 0) {
+        if (node.value && typeof node.value === 'string' && node.value.indexOf('http:') === 0) {
           context.report({
             node,
             messageId: 'noHttpUrl',

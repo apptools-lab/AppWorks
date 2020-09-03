@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.5
+
+- docs: en-US demo
+
+## 0.3.4
+
+- fix: generate block code error
+
+## 0.3.3
+
+- fix: build error
+
 ## 0.3.2
 
 - fix: open material settings fallback to VS Code Setings

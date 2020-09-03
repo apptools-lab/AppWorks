@@ -4,7 +4,7 @@
   "web.iceworksUIBuilder.inputComponentNamePlaceHolder": "Component name must start with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
   "web.iceworksUIBuilder.componentCreator.noComponentName": "Please Enter Component Name.",
   "web.iceworksUIBuilder.componentCreator.didNotSeletBlock": "Please choose a block before generate.",
-  "web.iceworksUIBuilder.componentCreator.generateSuccess": "Create component successfully.",
+  "web.iceworksUIBuilder.componentCreator.successCreateToPath": "Successfully generated component code to {path}",
   "web.iceworksUIBuilder.componentCreator.inputComponentName": "1. Enter Component Name.",
   "web.iceworksUIBuilder.componentCreator.selectBlock": "2. Choose A Block",
   "web.iceworksUIBuilder.componentCreator.generateComponent": "Create Component",
