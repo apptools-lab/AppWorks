@@ -4,7 +4,8 @@
 
 - feat: show open file action after create component
 - refactor: router logic
-- fix: fail to generate text style
+- fix: fail to generate text style in component-generator 
+- fix: fail to preview component attributes in component-generator canvas panel
 
 ## 0.1.10
 
