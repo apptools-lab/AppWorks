@@ -10,7 +10,7 @@ export default function transformTextComponent(componentsTree) {
   componentsTree.children.forEach((item) => {
     if (item.componentName === 'Text') {
       item.children = item.props.text;
-      item.props = {};
+      delete item.props.text;
     }
     return transformTextComponent(item);
   });
