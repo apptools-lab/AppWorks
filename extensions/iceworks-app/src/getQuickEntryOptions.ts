@@ -1,4 +1,4 @@
-import { getProjectFramework, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
+import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
 import { checkIsAliInternal } from '@iceworks/common-service';
 import i18n from './i18n';
 
