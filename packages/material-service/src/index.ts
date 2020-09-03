@@ -27,9 +27,6 @@ const OFFICAL_MATERIAL_SOURCES = [
     source: ICE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.webDescription'),
   },
-];
-
-const OFFICAL_MATERIAL_SOURCES_FOR_INTERNAL = [
   {
     name: i18n.format('package.materialService.index.raxTitle'),
     type: 'rax',
@@ -80,9 +77,9 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   }
   let officalsources: IMaterialSource[] = getOfficalMaterialSources();
   const isAliInternal = await checkIsAliInternal();
-  officalsources = officalsources.concat(
-    isAliInternal ? OFFICAL_MATERIAL_SOURCES_FOR_INTERNAL : OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL
-  );
+  if (!isAliInternal) {
+    officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
+  }
   const userSources: IMaterialSource[] = getUserSources();
   const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
