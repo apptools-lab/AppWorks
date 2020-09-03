@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.9
+
+- feat: add create component to quick entry
+
 ## 0.4.8
 
 - fix: build error

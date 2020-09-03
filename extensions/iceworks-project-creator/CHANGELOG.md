@@ -1,8 +1,12 @@
 # Change Log
 
-## 0.3.9
+## 0.3.10
 
 - feat: add Rax scaffolds to external
+
+## 0.3.9
+
+- fix: build error
 
 ## 0.3.8
 

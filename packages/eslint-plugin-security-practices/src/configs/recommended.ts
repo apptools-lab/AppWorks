@@ -20,6 +20,7 @@ module.exports = deepmerge(defaultEslintConfig, {
     },
   ],
   rules: {
+    'no-unused-vars': ['warn', { varsIgnorePattern: 'createElement' }],
     'react/react-in-jsx-scope': 'off', // For rax
     '@iceworks/security-practices/no-http-url': 'warn',
     '@iceworks/security-practices/no-internal-url': ['warn', ['taobao.net']],
