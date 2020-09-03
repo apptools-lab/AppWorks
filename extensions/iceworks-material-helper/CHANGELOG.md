@@ -1,8 +1,12 @@
 # Change Log
 
-## 0.3.4
+## 0.3.5
 
 - docs: en-US demo
+
+## 0.3.4
+
+- fix: generate block code error
 
 ## 0.3.3
 

@@ -1,8 +1,12 @@
 # Change Log
 
-## 0.1.10
+## 0.1.11
 
 - feat: show open file action after create component
+
+## 0.1.10
+
+- fix: generate block code error
 
 ## 0.1.9
 
