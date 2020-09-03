@@ -4,6 +4,7 @@
 
 - feat: show open file action after create component
 - refactor: router logic
+- fix: fail to generate text style
 
 ## 0.1.10
 
