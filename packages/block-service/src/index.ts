@@ -19,6 +19,7 @@ import {
   getFolderLanguageType,
   bulkInstallMaterialsDependencies,
   bulkDownloadMaterials,
+  findIndexFile,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -81,7 +82,7 @@ export const renderBlocks = async function (
       }
 
       await fsExtra.move(blockSourceSrcPath, targetPath);
-      return targetPath;
+      return findIndexFile(targetPath);
     })
   );
 };
