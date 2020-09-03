@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.9
+
+- feat: add Rax scaffolds to external
+
 ## 0.3.8
 
 - feat: update pegasus project git clone action.
