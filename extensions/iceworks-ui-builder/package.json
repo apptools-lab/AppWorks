@@ -120,6 +120,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/router-service": "^0.1.0",
     "@iceworks/block-service": "^0.1.5",
     "@iceworks/common-service": "^0.1.3",
     "@iceworks/component-service": "^0.1.3",

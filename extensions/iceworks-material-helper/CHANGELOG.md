@@ -3,6 +3,7 @@
 ## 0.3.5
 
 - docs: en-US demo
+- refactor: remove page logic
 
 ## 0.3.4
 
