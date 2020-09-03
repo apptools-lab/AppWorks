@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.10
+
+- feat: show open file action after create component
+
 ## 0.1.9
 
 - fix: build error
