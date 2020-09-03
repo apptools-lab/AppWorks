@@ -21,8 +21,8 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.generate-component',
     async condition() {
-      const projectFramework = await getProjectFramework();
-      return projectFramework === 'icejs';
+      const projectType = await getProjectType();
+      return projectType === 'react';
     },
   },
   {
