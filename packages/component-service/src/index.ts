@@ -21,7 +21,13 @@ import {
   componentsPath,
   getProjectLanguageType,
 } from '@iceworks/project-service';
-import CodeGenerator, { IBasicSchema, IContainerNodeItem, IUtilItem, II18nMap, IResultDir } from '@iceworks/code-generator';
+import CodeGenerator, {
+  IBasicSchema,
+  IContainerNodeItem,
+  IUtilItem,
+  II18nMap,
+  IResultDir,
+} from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
