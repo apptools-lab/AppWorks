@@ -24,9 +24,13 @@ export default class Scanner {
 
       // Calculate Ali eslint
       if (!options || options.disableAliEslint !== true) {
-        // level waring minus 0.3 point
-        // level error minus 0.7 point
-        reports.aliEslint = getEslintReports('eslint-config-ali', 0.3, 0.7, files);
+        reports.aliEslint = getEslintReports(
+          'eslint-config-ali',
+          0.3, // level waring minus 0.3 point
+          0.7, // level error minus 0.7 point
+          files,
+          options && options.fix
+        );
       }
 
       // Ali eslint don't check package.json.
@@ -46,9 +50,13 @@ export default class Scanner {
 
       // Calculate best practices
       if (!options || options.disableBestPractices !== true) {
-        // level waring minus 1 point
-        // level error minus 3 point
-        reports.bestPractices = getEslintReports('plugin:@iceworks/best-practices/recommended', 1, 3, files);
+        reports.bestPractices = getEslintReports(
+          'plugin:@iceworks/best-practices/recommended',
+          1, // level waring minus 1 point
+          3, // level error minus 3 point
+          files,
+          options && options.fix
+        );
 
         // Calculate bonus
         const bonus = 2;
@@ -73,9 +81,13 @@ export default class Scanner {
 
       // Calculate security practices
       if (!options || options.disableSecurityPractices !== true) {
-        // level waring minus 1 point
-        // level error minus 5 point
-        reports.securityPractices = getEslintReports('plugin:@iceworks/security-practices/recommended', 1, 5, files);
+        reports.securityPractices = getEslintReports(
+          'plugin:@iceworks/security-practices/recommended',
+          1, // level waring minus 1 point
+          5, // level error minus 5 point
+          files,
+          options && options.fix
+        );
       }
 
       // Calculate maintainability

@@ -6,6 +6,7 @@ export interface IScannerOptions {
 }
 
 export interface IScanOptions {
+  fix?: boolean;
   disableAliEslint?: boolean;
   disableBestPractices?: boolean;
   disableSecurityPractices?: boolean;
