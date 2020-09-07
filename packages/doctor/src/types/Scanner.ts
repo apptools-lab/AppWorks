@@ -5,6 +5,14 @@ export interface IScannerOptions {
   supportExts: string[];
 }
 
+export interface IScanOptions {
+  disableAliEslint?: boolean;
+  disableBestPractices?: boolean;
+  disableSecurityPractices?: boolean;
+  disableMaintainability?: boolean;
+  disableRepeatability?: boolean;
+}
+
 export interface IFileInfo {
   path: string;
   source: string;

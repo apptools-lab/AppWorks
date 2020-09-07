@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import Scorer from './Scorer';
-import { IScannerOptions, IFileInfo, IScannerReports } from './types/Scanner';
+import { IScannerOptions, IScanOptions, IFileInfo, IScannerReports } from './types/Scanner';
 import getEslintReports from './getEslintReports';
 import getMaintainabilityReports from './getMaintainabilityReports';
 import getRepeatabilityReports from './getRepeatabilityReports';
@@ -16,86 +16,92 @@ export default class Scanner {
   }
 
   // Entry
-  public async scan(directory: string): Promise<IScannerReports> {
+  public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
     const reports = {} as IScannerReports;
 
     try {
       const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignoreDirs);
-      const totalLoc = files.reduce((total, file) => {
-        return total + file.LoC;
-      }, 0);
-
-      reports.filesInfo = {
-        count: files.length,
-        lines: totalLoc,
-      };
 
       // Calculate Ali eslint
-      // level waring minus 0.3 point
-      // level error minus 0.7 point
-      reports.aliEslint = getEslintReports('eslint-config-ali', 0.3, 0.7, files);
-
-      // Process package.json file
-      let packageObj;
-      const packageFile = path.join(directory, 'package.json');
-      if (fs.existsSync(packageFile)) {
-        packageObj = fs.readJSONSync(packageFile);
-        const packageSource = fs.readFileSync(packageFile, 'utf-8');
-        files.push({
-          path: packageFile,
-          source: packageSource,
-          // lines of code
-          LoC: (packageSource.match(/\n/g) || '').length + 1,
-        });
+      if (!options || options.disableAliEslint !== true) {
+        // level waring minus 0.3 point
+        // level error minus 0.7 point
+        reports.aliEslint = getEslintReports('eslint-config-ali', 0.3, 0.7, files);
       }
 
+      // Ali eslint don't check package.json.
+      // Process package.json file after Ali eslint calculate.
+      let packageObj;
+      const packageFileInfo = getFiles(path.join(directory, 'package.json'), ['json'])[0];
+      if (packageFileInfo) {
+        packageObj = fs.readJSONSync(packageFileInfo.path);
+        files.push(packageFileInfo);
+      }
+
+      // Set files info
+      reports.filesInfo = {
+        count: files.length,
+        lines: files.reduce((total, file) => total + file.LoC, 0),
+      };
+
       // Calculate best practices
-      // level waring minus 1 point
-      // level error minus 3 point
-      reports.bestPractices = getEslintReports('plugin:@iceworks/best-practices/recommended', 1, 3, files);
+      if (!options || options.disableBestPractices !== true) {
+        // level waring minus 1 point
+        // level error minus 3 point
+        reports.bestPractices = getEslintReports('plugin:@iceworks/best-practices/recommended', 1, 3, files);
+
+        // Calculate bonus
+        const bonus = 2;
+        if (packageObj) {
+          const bestPracticesScore = new Scorer({ start: reports.bestPractices.score });
+          // recommend-deps-fusion-design
+          if (packageObj.dependencies['@alifd/next']) {
+            bestPracticesScore.plus(bonus);
+          }
+          // recommend-typescript
+          if (packageObj.dependencies.typescript) {
+            bestPracticesScore.plus(bonus);
+          }
+          // recommend-eslint-config-rax
+          if (packageObj.devDependencies['eslint-config-rax']) {
+            bestPracticesScore.plus(bonus);
+          }
+
+          reports.bestPractices.score = bestPracticesScore.getScore();
+        }
+      }
 
       // Calculate security practices
-      // level waring minus 1 point
-      // level error minus 5 point
-      reports.securityPractices = getEslintReports('plugin:@iceworks/security-practices/recommended', 1, 5, files);
+      if (!options || options.disableSecurityPractices !== true) {
+        // level waring minus 1 point
+        // level error minus 5 point
+        reports.securityPractices = getEslintReports('plugin:@iceworks/security-practices/recommended', 1, 5, files);
+      }
 
       // Calculate maintainability
-      reports.maintainability = getMaintainabilityReports(files);
+      if (!options || options.disableMaintainability !== true) {
+        reports.maintainability = getMaintainabilityReports(files);
+      }
+
       // Calculate repeatability
-      reports.repeatability = await getRepeatabilityReports(
-        directory,
-        this.options.supportExts,
-        this.options.ignoreDirs
-      );
-
-      // Calculate bonus
-      const bonus = 2;
-      if (packageObj) {
-        const bestPracticesScore = new Scorer({ start: reports.bestPractices.score });
-        // recommend-deps-fusion-design
-        if (packageObj.dependencies['@alifd/next']) {
-          bestPracticesScore.plus(bonus);
-        }
-        // recommend-typescript
-        if (packageObj.dependencies.typescript) {
-          bestPracticesScore.plus(bonus);
-        }
-        // recommend-eslint-config-rax
-        if (packageObj.devDependencies['eslint-config-rax']) {
-          bestPracticesScore.plus(bonus);
-        }
-
-        reports.bestPractices.score = bestPracticesScore.getScore();
+      if (!options || options.disableRepeatability !== true) {
+        reports.repeatability = await getRepeatabilityReports(
+          directory,
+          this.options.supportExts,
+          this.options.ignoreDirs
+        );
       }
 
       // Calculate total score
-      reports.score = getFinalScore([
-        reports.aliEslint.score,
-        reports.bestPractices.score,
-        reports.securityPractices.score,
-        reports.maintainability.score,
-        reports.repeatability.score,
-      ]);
+      reports.score = getFinalScore(
+        [
+          (reports.aliEslint || {}).score,
+          (reports.bestPractices || {}).score,
+          (reports.securityPractices || {}).score,
+          (reports.maintainability || {}).score,
+          (reports.repeatability || {}).score,
+        ].filter((score) => !isNaN(score))
+      );
     } catch (error) {
       // ignore
       console.log(error);

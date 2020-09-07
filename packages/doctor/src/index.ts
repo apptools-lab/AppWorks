@@ -1,6 +1,6 @@
 import Scanner from './Scanner';
 import { IDoctorOptions } from './types/Doctor';
-import { IScannerReports } from './types/Scanner';
+import { IScanOptions, IScannerReports } from './types/Scanner';
 
 // Ignore directories
 const defaultIgnoreDirs = ['build', 'es', 'dist', 'lib', 'node_modules', 'public', 'test', '__tests__'];
@@ -20,8 +20,8 @@ class Doctor {
     });
   }
 
-  scan(directory: string): Promise<IScannerReports> {
-    return this.scanner.scan(directory);
+  scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
+    return this.scanner.scan(directory, options);
   }
 }
 
