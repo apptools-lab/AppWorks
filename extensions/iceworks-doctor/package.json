@@ -1,0 +1,53 @@
+{
+  "name": "iceworks-doctor",
+  "displayName": "Iceworks Doctor",
+  "description": "A free security and quality audit tool for modern DevOps teams",
+  "publisher": "iceworks-team",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "eslint",
+    "checker",
+    "fixer",
+    "scan",
+    "quality",
+    "repeatability",
+    "maintainability",
+    "dashboard"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./client/out/extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-doctor/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:web",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.158",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
