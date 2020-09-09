@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.12
+
+- docs: update text for find component and generate page
+
 ## 0.1.11
 
 - feat: show open file action after create component
