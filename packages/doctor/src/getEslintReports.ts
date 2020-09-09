@@ -18,6 +18,7 @@ export default function getBestPracticesReports(
     baseConfig: {
       extends: extendsConfigName,
     },
+    cwd: __dirname,
     fix: !!fix,
     useEslintrc: false,
   });

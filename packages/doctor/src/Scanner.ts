@@ -63,15 +63,15 @@ export default class Scanner {
         if (packageObj) {
           const bestPracticesScore = new Scorer({ start: reports.bestPractices.score });
           // recommend-deps-fusion-design
-          if (packageObj.dependencies['@alifd/next']) {
+          if (packageObj.dependencies && packageObj.dependencies['@alifd/next']) {
             bestPracticesScore.plus(bonus);
           }
           // recommend-typescript
-          if (packageObj.dependencies.typescript) {
+          if (packageObj.dependencies && packageObj.dependencies.typescript) {
             bestPracticesScore.plus(bonus);
           }
           // recommend-eslint-config-rax
-          if (packageObj.devDependencies['eslint-config-rax']) {
+          if (packageObj.devDependencies && packageObj.devDependencies['eslint-config-rax']) {
             bestPracticesScore.plus(bonus);
           }
 

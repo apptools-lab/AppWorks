@@ -11,7 +11,7 @@ export default class Scanner {
 
   constructor(options = {} as IScorerOptions) {
     this.highestScore = options.highestScore || 100;
-    this.lowestScore = options.lowestScore || 0;
+    this.lowestScore = options.lowestScore || 30;
     this.digits = options.digits || 2;
 
     this.currentScore = options.start || this.highestScore;
