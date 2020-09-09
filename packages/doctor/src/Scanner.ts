@@ -97,11 +97,7 @@ export default class Scanner {
 
       // Calculate repeatability
       if (!options || options.disableRepeatability !== true) {
-        reports.repeatability = await getRepeatabilityReports(
-          directory,
-          this.options.supportExts,
-          this.options.ignore
-        );
+        reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore);
       }
 
       // Calculate total score
