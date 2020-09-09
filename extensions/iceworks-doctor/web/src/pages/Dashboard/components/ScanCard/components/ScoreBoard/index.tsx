@@ -3,7 +3,7 @@ import { Affix } from '@alifd/next';
 import { Link } from 'react-scroll';
 import classNames from 'classnames';
 import { reportKeys, IReportKeys } from '@/config';
-import ScoreRing from '../ScoreRing/';
+import ScoreRing from '../ScoreRing';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
@@ -29,7 +29,7 @@ const ScoreBoard = (props) => {
               className={styles.scoreInfo}
             >
               <ScoreRing score={70.11} size={scoreBoradSize} />
-              {scoresAffixed ? null : <p>{window['USE_EN'] ? reportKey.nameEn : reportKey.name}</p>}
+              {scoresAffixed ? null : <p>{window.USE_EN ? reportKey.nameEn : reportKey.name}</p>}
             </Link>
           );
         })}

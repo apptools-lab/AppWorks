@@ -1,6 +1,13 @@
 import { createApp } from 'ice';
 import callService from '@/callService';
 
+declare global {
+  // eslint-disable-next-line
+  interface Window {
+    USE_EN: any;
+  }
+}
+
 const appConfig = {
   app: {
     rootId: 'ice-container',
@@ -15,7 +22,7 @@ async function getLanguage() {
   } catch (e) {
     // ignore
   }
-  window['USE_EN'] = lang !== 'zh-cn';
+  window.USE_EN = lang !== 'zh-cn';
 }
 
 getLanguage().then(() => {

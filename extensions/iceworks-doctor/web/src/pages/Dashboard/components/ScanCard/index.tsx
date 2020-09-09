@@ -28,7 +28,7 @@ const ScanCard = () => {
                 name={reportKey.key}
                 onClick={scrollToTop}
                 style={{ position: 'relative', backgroundColor: `#${index}${index}${index}`, width: 300, height: 4000 }}
-              ></Element>
+              />
             );
           })}
         </div>
