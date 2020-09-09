@@ -7,7 +7,6 @@ import ScoreBoard from './components/ScoreBoard';
 import styles from './index.module.scss';
 
 const ScanCard = () => {
-
   const [loading, setLoading] = useState(false);
 
   const scrollToTop = () => {
@@ -29,9 +28,8 @@ const ScanCard = () => {
                 name={reportKey.key}
                 onClick={scrollToTop}
                 style={{ position: 'relative', backgroundColor: `#${index}${index}${index}`, width: 300, height: 4000 }}
-              >
-              </Element>
-            )
+              ></Element>
+            );
           })}
         </div>
 

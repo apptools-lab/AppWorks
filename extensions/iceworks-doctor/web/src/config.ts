@@ -1,4 +1,3 @@
-
 export interface IScoreLevelInfo {
   name: string;
   color: string;
@@ -45,33 +44,32 @@ export const reportKeys: IReportKeys[] = [
   {
     name: '最佳实践',
     nameEn: 'Best Practices',
-    key: 'bestPractices'
+    key: 'bestPractices',
   },
   {
     name: '安全实践',
     nameEn: 'Security Practices',
-    key: 'securityPractices'
+    key: 'securityPractices',
   },
   {
     name: '阿里规约',
     nameEn: 'Ali ESLint',
-    key: 'aliEslint'
+    key: 'aliEslint',
   },
   {
     name: '代码可维护度',
     nameEn: 'Maintainability',
-    key: 'maintainability'
+    key: 'maintainability',
   },
   {
     name: '代码重复度',
     nameEn: 'Repeatability',
-    key: 'repeatability'
+    key: 'repeatability',
   },
 ];
 
-
 export default {
-  scoreLevelInfos
+  scoreLevelInfos,
 };
 
 export function getScoreLevelInfo(scroe: number): IScoreLevelInfo {

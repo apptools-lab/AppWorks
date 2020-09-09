@@ -7,7 +7,6 @@ import ScoreRing from '../ScoreRing/';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
-
   const [scoresAffixed, setScoresAffixed] = useState(false);
   const scoreBoradSize = scoresAffixed ? 'small' : 'normal';
 
@@ -19,7 +18,6 @@ const ScoreBoard = (props) => {
       }}
     >
       <div className={classNames(styles.scores, { [styles['scores-affixed']]: scoresAffixed })}>
-
         {reportKeys.map((reportKey: IReportKeys) => {
           return (
             <Link
@@ -33,7 +31,7 @@ const ScoreBoard = (props) => {
               <ScoreRing score={70.11} size={scoreBoradSize} />
               {scoresAffixed ? null : <p>{window['USE_EN'] ? reportKey.nameEn : reportKey.name}</p>}
             </Link>
-          )
+          );
         })}
       </div>
     </Affix>

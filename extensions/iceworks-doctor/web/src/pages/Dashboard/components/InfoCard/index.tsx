@@ -3,7 +3,6 @@ import callService from '@/callService';
 import styles from './index.module.scss';
 
 const InfoCard = () => {
-
   const [data, setData] = useState({ name: '', description: '', list: [] });
   useEffect(() => {
     async function getData() {
@@ -32,10 +31,13 @@ const InfoCard = () => {
               return (
                 <div className={styles.info} key={`value-${item.label}`}>
                   <p className={styles.label}>{item.label}</p>
-                  {item.link ?
-                    <a className={styles.detail} href={item.link} target="_blank">{item.value}</a> :
+                  {item.link ? (
+                    <a className={styles.detail} href={item.link} target="_blank">
+                      {item.value}
+                    </a>
+                  ) : (
                     <p className={styles.detail}>{item.value}</p>
-                  }
+                  )}
                 </div>
               );
             })}
