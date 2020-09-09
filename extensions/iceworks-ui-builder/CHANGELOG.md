@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.1.13
+
+- docs: update text for find component and generate page
+
+## 0.1.12
+
+- fix: fix form style.
+
 ## 0.1.11
 
 - feat: show open file action after create component
