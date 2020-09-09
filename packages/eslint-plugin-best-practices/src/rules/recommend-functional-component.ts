@@ -29,7 +29,7 @@ module.exports = {
             superName = node.superClass.property.name;
           }
         }
-        
+
         // Class Component
         if (superName === 'Component') {
           context.report({
