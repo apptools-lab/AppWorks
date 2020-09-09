@@ -1,15 +1,31 @@
-.scoreBoard {
-  transition: all 0.2s ease-in;
+.scores {
+  user-select: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
 }
 
-.scoreBoard-base {
-  font-size: 20px !important;
-  width: 65px !important;
-  height: 65px !important;
+.scores-affixed {
+  z-index: 9999;
+  padding: 8px 8px 0;
+  border-bottom: 1px solid $color-line1-1;
+  background-color: $color-fill1-1;
 }
 
-.scoreBoard-small {
-  font-size: 12px !important;
-  width: 38px !important;
-  height: 38px !important;
+.scoreInfo {
+  padding-bottom: 8px;
+  margin: 0 8px;
+  text-align: center;
+
+  p {
+    margin-top: 4px;
+    color: $color-text1-4;
+    font-size: 12px;
+  }
+}
+
+.scoreInfo-active {
+  border-bottom: 2px solid $color-brand1-9;
 }

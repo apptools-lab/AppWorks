@@ -1,23 +1,42 @@
-import * as React from 'react';
-import { Progress } from '@alifd/next';
+import React, { useState } from 'react';
+import { Affix } from '@alifd/next';
+import { Link } from 'react-scroll';
 import classNames from 'classnames';
-import getScoreLevelInfo from '../../getScoreLevelInfo';
+import { reportKeys, IReportKeys } from '@/config';
+import ScoreRing from '../ScoreRing/';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
-  const { score, size } = props;
+
+  const [scoresAffixed, setScoresAffixed] = useState(false);
+  const scoreBoradSize = scoresAffixed ? 'small' : 'normal';
 
   return (
-    <Progress
-      shape="circle"
-      percent={score}
-      color={getScoreLevelInfo(score).color}
-      textRender={(percent) => percent}
-      className={classNames(styles.scoreBoard, {
-        [styles['scoreBoard-base']]: size !== 'small',
-        [styles['scoreBoard-small']]: size === 'small',
-      })}
-    />
+    <Affix
+      style={{ zIndex: 999 }}
+      onAffix={(affixed) => {
+        setScoresAffixed(affixed);
+      }}
+    >
+      <div className={classNames(styles.scores, { [styles['scores-affixed']]: scoresAffixed })}>
+
+        {reportKeys.map((reportKey: IReportKeys) => {
+          return (
+            <Link
+              to={reportKey.key}
+              spy
+              smooth
+              duration={200}
+              activeClass={styles['scoreInfo-active']}
+              className={styles.scoreInfo}
+            >
+              <ScoreRing score={70.11} size={scoreBoradSize} />
+              {scoresAffixed ? null : <p>{window['USE_EN'] ? reportKey.nameEn : reportKey.name}</p>}
+            </Link>
+          )
+        })}
+      </div>
+    </Affix>
   );
 };
 
