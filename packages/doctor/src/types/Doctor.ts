@@ -1,4 +1,4 @@
 export interface IDoctorOptions {
-  ignoreDirs?: string[];
+  ignore?: string[];
   supportExts?: string[];
 }

@@ -17,13 +17,13 @@ function getFileInfo(filePath: string): IFileInfo {
   };
 }
 
-export default function getFiles(directory: string, supportExts: string[], ignoreDirs?: string[]): IFileInfo[] {
+export default function getFiles(directory: string, supportExts: string[], ignore?: string[]): IFileInfo[] {
   const options: any = {
     nodir: true,
   };
 
-  if (ignoreDirs) {
-    options.ignore = ignoreDirs.map((ignoreDir) => `${directory}/**/${ignoreDir}/**`);
+  if (ignore) {
+    options.ignore = ignore.map((ignoreDir) => `${directory}/**/${ignoreDir}/**`);
   }
 
   if (!fs.existsSync(directory)) {

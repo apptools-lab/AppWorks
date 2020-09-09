@@ -20,7 +20,7 @@ export default class Scanner {
     const reports = {} as IScannerReports;
 
     try {
-      const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignoreDirs);
+      const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignore);
 
       // Calculate Ali eslint
       if (!options || options.disableAliEslint !== true) {
@@ -100,7 +100,7 @@ export default class Scanner {
         reports.repeatability = await getRepeatabilityReports(
           directory,
           this.options.supportExts,
-          this.options.ignoreDirs
+          this.options.ignore
         );
       }
 

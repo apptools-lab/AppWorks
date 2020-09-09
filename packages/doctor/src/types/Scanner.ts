@@ -1,7 +1,7 @@
 import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
-  ignoreDirs: string[];
+  ignore: string[];
   supportExts: string[];
 }
 
