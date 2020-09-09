@@ -13,7 +13,7 @@
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "通过可视化操作添加组件到应用代码",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "设置",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "设置 Iceworks 提供的相关功能",
-  "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "组件文档",
+  "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "查找组件",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "快速搜索组件文档并进行浏览",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.label": "启动调试",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.detail": "通过 VS Code 调试并预览应用",
