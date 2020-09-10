@@ -5,6 +5,7 @@ import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
+import * as upperCamelCase from 'uppercamelcase';
 import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
 
 interface IRouter {
@@ -42,7 +43,7 @@ const noPathPrefix = false;
 
 export async function create(data) {
   const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
+  await bulkCreate(projectPath, [{ path, component: upperCamelCase(pageName) }], { parent });
 }
 
 export async function getAll() {
@@ -200,6 +201,9 @@ function changeImportDeclarations(routerConfigAST, data) {
   // router import page or layout have @
   let existAtSign = false;
   let existLazy = false;
+  // React.lazy(): the existLazyPrefix is true
+  // lazy(): the existLazyPrefix is false
+  let existLazyPrefix = false;
 
   traverse(routerConfigAST, {
     ImportDeclaration: ({ node, key }) => {
@@ -234,17 +238,20 @@ function changeImportDeclarations(routerConfigAST, data) {
       const code = generate(node.declarations[0]).code;
       // parse const declaration to get directory type (layouts or pages)
       // support three path types
-      // 1. const xxx = React.lazy(() => import('pages/xxx'));
-      // 2. const xxx = React.lazy(() => import('./pages/xxx'));
-      // 3. const xxx = React.lazy(() => import('@/pages/xxx'));
-      const noPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
-      const hasPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
+      // 1. const xxx = (React.)?lazy(() => import('pages/xxx'));
+      // 2. const xxx = (React.)?lazy(() => import('./pages/xxx'));
+      // 3. const xxx = (React.)?lazy(() => import('@/pages/xxx'));
+      const noPrefixReg = /(\w+)\s=\s(React\.)?lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
+      const hasPrefixReg = /(\w+)\s=\s(React\.)?lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
       const matchLazyReg = noPathPrefix ? noPrefixReg : hasPrefixReg;
-      const idx = noPathPrefix ? 4 : 5;
+      const idx = noPathPrefix ? 5 : 6;
       const match = code.match(matchLazyReg);
 
       if (match && match.length > idx) {
         existLazy = true;
+        if (match[2]) {
+          existLazyPrefix = true;
+        }
         existAtSign = match[idx - 1] === '@';
         importDeclarations.push({
           index: key,
@@ -350,7 +357,7 @@ function changeImportDeclarations(routerConfigAST, data) {
       importCode += `import ${name} from '${sign}/${type}/${name}';\n`;
     } else {
       // use lazy `const Page = React.lazy(() => import('@/pages/Page'))`
-      lazyCode += `const ${name} = React.lazy(() => import('${sign}/${type}/${name}'));\n`;
+      lazyCode += `const ${name} = ${existLazyPrefix ? 'React.' : ''}lazy(() => import('${sign}/${type}/${name}'));\n`;
     }
   });
 
