@@ -45,12 +45,21 @@ const EslintMessages = (props) => {
 
                 return (
                   <div className={styles.message} key={`message${idx}`}>
-                    <Icon
-                      type="error"
-                      size="small"
-                      className={styles.icon}
-                      style={{ color: getScoreLevelInfo(0).color }}
-                    />
+                    {message.severity === 2 ? (
+                      <Icon
+                        type="error"
+                        size="small"
+                        className={styles.icon}
+                        style={{ color: getScoreLevelInfo(0).color }}
+                      />
+                    ) : (
+                      <Icon
+                        type="warning"
+                        size="small"
+                        className={styles.icon}
+                        style={{ color: getScoreLevelInfo(60).color }}
+                      />
+                    )}
                     <Tooltip delay={100} align="t" trigger={messageItem} className={styles.tooltip}>
                       <p className={styles.ruleId}>{message.ruleId}</p>
                       <p className={styles.messageText}>{message.message}</p>
