@@ -3,7 +3,7 @@ import { getReportKey } from '@/config';
 import EslintMessages from '../EslintMessages';
 import styles from './index.module.scss';
 
-const AliEslint = (props) => {
+const AliEslintReport = (props) => {
   const { data = {} } = props;
 
   const Description = (
@@ -26,4 +26,4 @@ const AliEslint = (props) => {
   );
 };
 
-export default AliEslint;
+export default AliEslintReport;

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Message, Loading } from '@alifd/next';
-import { Element, animateScroll as scroll } from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 import { reportKeys, IReportKeys } from '@/config';
 import callService from '@/callService';
 import Header from './components/Header';
 import ScoreBoard from './components/ScoreBoard';
 import BestPracticesReport from './components/BestPracticesReport';
 import SecurityPracticesReport from './components/SecurityPracticesReport';
-import AliEslint from './components/AliEslint';
+import AliEslintReport from './components/AliEslintReport';
+import MaintainabilityReport from './components/MaintainabilityReport';
+import RepeatabilityReport from './components/RepeatabilityReport';
 
 import styles from './index.module.scss';
 
@@ -75,16 +77,13 @@ const ScanCard = () => {
                 case 'securityPractices':
                   return <SecurityPracticesReport key={key} data={data[key]} />;
                 case 'aliEslint':
-                  return <AliEslint key={key} data={data[key]} />;
+                  return <AliEslintReport key={key} data={data[key]} />;
+                case 'maintainability':
+                  return <MaintainabilityReport key={key} data={data[key]} />;
+                case 'repeatability':
+                  return <RepeatabilityReport key={key} data={data[key]} />;
                 default:
-                  return (
-                    <Element
-                      key={reportKey.key}
-                      name={reportKey.key}
-                      onClick={scrollToTop}
-                      style={{ position: 'relative', backgroundColor: `#${index}${index}${index}`, height: 4000 }}
-                    />
-                  );
+                  return null;
               }
             })}
           </div>
