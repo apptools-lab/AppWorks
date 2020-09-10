@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Element } from 'react-scroll';
 import { Balloon, Icon } from '@alifd/next';
 import { getScoreLevelInfo } from '@/config';
+import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
 
 const Tooltip = Balloon.Tooltip;
@@ -25,16 +26,7 @@ const EslintMessages = (props) => {
 
   return (
     <Element name={reportKey.key} className={styles.container}>
-      <div className={styles.header}>
-        <p className={styles.title}>
-          {window.USE_EN ? reportKey.nameEn : reportKey.name}
-          <span className={styles.number} style={{ backgroundColor: getScoreLevelInfo(score).color }}>
-            {getMessagesLength(reports)}
-          </span>
-        </p>
-        {Description}
-      </div>
-
+      <ReportHeader number={getMessagesLength(reports)} reportKey={reportKey} score={score} Description={Description} />
       <div className={styles.wrap}>
         {(reports || []).map((report, index) => {
           return (

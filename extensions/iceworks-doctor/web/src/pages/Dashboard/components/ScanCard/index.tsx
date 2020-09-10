@@ -25,21 +25,22 @@ const ScanCard = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const scanReport = await callService('data', 'scanReport');
-        if (scanReport.errorMsg) {
-          setErrorMsg(scanReport.errorMsg);
-        } else {
-          setErrorMsg('');
-          setData(scanReport);
-        }
-      } catch (e) {
-        // ignore
+  async function getData() {
+    try {
+      const scanReport = await callService('data', 'scanReport');
+      if (scanReport.errorMsg) {
+        setErrorMsg(scanReport.errorMsg);
+      } else {
+        setErrorMsg('');
+        setData(scanReport);
       }
-      setLoading(false);
+    } catch (e) {
+      // ignore
     }
+    setLoading(false);
+  }
+
+  useEffect(() => {
     getData();
   }, []);
 
