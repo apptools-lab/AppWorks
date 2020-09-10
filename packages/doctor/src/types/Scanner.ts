@@ -1,8 +1,17 @@
 import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
-  ignoreDirs: string[];
+  ignore: string[];
   supportExts: string[];
+}
+
+export interface IScanOptions {
+  fix?: boolean;
+  disableAliEslint?: boolean;
+  disableBestPractices?: boolean;
+  disableSecurityPractices?: boolean;
+  disableMaintainability?: boolean;
+  disableRepeatability?: boolean;
 }
 
 export interface IFileInfo {

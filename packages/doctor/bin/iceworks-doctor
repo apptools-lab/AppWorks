@@ -35,8 +35,8 @@ if (args.help) {
 if (args.scan) {
 
   const options = {};
-  if (Array.isArray(args.ignoreDir)) {
-    options.ignoreDir = args.ignoreDir;
+  if (Array.isArray(args.ignore)) {
+    options.ignore = args.ignore;
   }
 
   if (Array.isArray(args.supportExts)) {
