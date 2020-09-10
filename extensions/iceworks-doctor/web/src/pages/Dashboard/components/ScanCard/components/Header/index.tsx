@@ -2,7 +2,7 @@ import * as React from 'react';
 import { scoreLevelInfos, getScoreLevelInfo } from '@/config';
 import styles from './index.module.scss';
 
-const ScoreBoard = (props) => {
+const Header = (props) => {
   const { filesInfo = {}, score } = props;
   return (
     <div className={styles.header}>
@@ -39,4 +39,4 @@ const ScoreBoard = (props) => {
   );
 };
 
-export default ScoreBoard;
+export default Header;

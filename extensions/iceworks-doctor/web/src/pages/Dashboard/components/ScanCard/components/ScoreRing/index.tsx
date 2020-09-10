@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { getScoreLevelInfo } from '@/config';
 import styles from './index.module.scss';
 
-const ScoreBoard = (props) => {
+const ScoreRing = (props) => {
   const { score, size } = props;
 
   return (
@@ -21,4 +21,4 @@ const ScoreBoard = (props) => {
   );
 };
 
-export default ScoreBoard;
+export default ScoreRing;

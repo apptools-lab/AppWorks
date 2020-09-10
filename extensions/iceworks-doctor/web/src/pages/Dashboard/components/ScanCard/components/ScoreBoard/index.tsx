@@ -25,7 +25,7 @@ const ScoreBoard = (props) => {
             <Link
               spy
               smooth
-              offset={-80}
+              offset={-70}
               to={reportKey.key}
               key={reportKey.key}
               duration={200}

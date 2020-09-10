@@ -6,6 +6,8 @@ import callService from '@/callService';
 import Header from './components/Header';
 import ScoreBoard from './components/ScoreBoard';
 import BestPracticesReport from './components/BestPracticesReport';
+import SecurityPracticesReport from './components/SecurityPracticesReport';
+import AliEslint from './components/AliEslint';
 
 import styles from './index.module.scss';
 
@@ -64,9 +66,15 @@ const ScanCard = () => {
           <ScoreBoard data={data} />
           <div className={styles.reportWrap}>
             {reportKeys.map((reportKey: IReportKeys, index) => {
-              switch (reportKey.key) {
+              const key = reportKey.key;
+
+              switch (key) {
                 case 'bestPractices':
-                  return <BestPracticesReport key={reportKey.key} data={data.bestPractices} />;
+                  return <BestPracticesReport key={key} data={data[key]} />;
+                case 'securityPractices':
+                  return <SecurityPracticesReport key={key} data={data[key]} />;
+                case 'aliEslint':
+                  return <AliEslint key={key} data={data[key]} />;
                 default:
                   return (
                     <Element
