@@ -7,7 +7,7 @@ import ScoreRing from '../ScoreRing';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
-  const { data } = props;
+  const { data, onAffix } = props;
 
   const [scoresAffixed, setScoresAffixed] = useState(false);
   const ScoreRingSize = scoresAffixed ? 'small' : 'normal';
@@ -16,6 +16,7 @@ const ScoreBoard = (props) => {
     <Affix
       style={{ zIndex: 999 }}
       onAffix={(affixed) => {
+        onAffix(affixed);
         setScoresAffixed(affixed);
       }}
     >

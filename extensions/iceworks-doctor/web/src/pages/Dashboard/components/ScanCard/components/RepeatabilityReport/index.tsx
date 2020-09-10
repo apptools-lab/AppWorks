@@ -3,6 +3,7 @@ import { Element } from 'react-scroll';
 import { Icon } from '@alifd/next';
 import Code from 'react-code-space';
 import { getReportKey } from '@/config';
+import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
 
@@ -29,43 +30,49 @@ const RepeatabilityReport = (props) => {
         score={data.score}
         Description={Description}
       />
-      {(data.clones || []).map((clone, index) => {
-        console.log(clone);
-        const duplicationA = clone.duplicationA || {};
-        const duplicationB = clone.duplicationB || {};
 
-        return (
-          <div key={`clone${index}`} className={styles.clone}>
-            <p className={styles.title}> {window.USE_EN ? 'Similar code detected' : '检测到相似重复代码'} </p>
+      {data.score === 100 ? (
+        <Appreciate />
+      ) : (
+        <div>
+          {(data.clones || []).map((clone, index) => {
+            const duplicationA = clone.duplicationA || {};
+            const duplicationB = clone.duplicationB || {};
 
-            <a className={styles.file}>
-              <Icon type="copy" size="small" />
-              {duplicationA.sourceId}
-            </a>
-            <Code dark theme="material" language="jsx">
-              <Code.Body numbered start={duplicationA.start.line} content={duplicationA.fragment} />
-            </Code>
-            <a className={styles.file}>
-              <Icon type="copy" size="small" />
-              {duplicationB.sourceId}
-            </a>
-            <Code dark theme="material" language="jsx">
-              <Code.Body
-                numbered
-                start={duplicationB.start.line}
-                highlight={`${duplicationB.start.line}-${duplicationB.end.line}`}
-                content={duplicationB.fragment}
-              />
-            </Code>
-            <p className={styles.tips}>
-              <Icon type="prompt" size="small" />
-              {window.USE_EN
-                ? 'We recommend that you extract common code to reduce code duplication.'
-                : '建议提取公共代码，减低代码重复度'}
-            </p>
-          </div>
-        );
-      })}
+            return (
+              <div key={`clone${index}`} className={styles.clone}>
+                <p className={styles.title}> {window.USE_EN ? 'Similar code detected' : '检测到相似重复代码'} </p>
+
+                <a className={styles.file}>
+                  <Icon type="copy" size="small" />
+                  {duplicationA.sourceId}
+                </a>
+                <Code dark theme="material" language="jsx">
+                  <Code.Body numbered start={duplicationA.start.line} content={duplicationA.fragment} />
+                </Code>
+                <a className={styles.file}>
+                  <Icon type="copy" size="small" />
+                  {duplicationB.sourceId}
+                </a>
+                <Code dark theme="material" language="jsx">
+                  <Code.Body
+                    numbered
+                    start={duplicationB.start.line}
+                    highlight={`${duplicationB.start.line}-${duplicationB.end.line}`}
+                    content={duplicationB.fragment}
+                  />
+                </Code>
+                <p className={styles.tips}>
+                  <Icon type="prompt" size="small" />
+                  {window.USE_EN
+                    ? 'We recommend that you extract common code to reduce code duplication.'
+                    : '建议提取公共代码，减低代码重复度'}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </Element>
   );
 };

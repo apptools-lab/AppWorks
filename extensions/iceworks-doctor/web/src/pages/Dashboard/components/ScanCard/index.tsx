@@ -25,9 +25,11 @@ const ScanCard = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [affixed, setAffixed] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   async function getData() {
+    setLoading(true);
     try {
       const scanReport = await callService('data', 'scanReport');
       if (scanReport.errorMsg) {
@@ -66,11 +68,10 @@ const ScanCard = () => {
       ) : (
         <div className={styles.container}>
           <Header score={data.score} filesInfo={data.filesInfo} />
-          <ScoreBoard data={data} />
+          <ScoreBoard data={data} onAffix={(affixed) => setAffixed(affixed)} />
           <div className={styles.reportWrap}>
             {reportKeys.map((reportKey: IReportKeys, index) => {
               const key = reportKey.key;
-
               switch (key) {
                 case 'bestPractices':
                   return <BestPracticesReport key={key} data={data[key]} />;
@@ -88,8 +89,12 @@ const ScanCard = () => {
             })}
           </div>
 
-          <div>
-            <Button type="primary" size="large">
+          <div onClick={scrollToTop} className={styles.backTop} style={{ visibility: affixed ? 'visible' : 'hidden' }}>
+            <img src="https://img.alicdn.com/tfs/TB1ce16k79l0K4jSZFKXXXFjpXa-128-128.png" alt="back top" />
+          </div>
+
+          <div className={styles.actions} style={{ visibility: affixed ? 'visible' : 'hidden' }}>
+            <Button type="primary" size="medium" onClick={getData}>
               一键修复
             </Button>
           </div>

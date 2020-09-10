@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Element } from 'react-scroll';
 import { Balloon, Icon } from '@alifd/next';
 import { getReportKey, getScoreLevelInfo } from '@/config';
+import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
 
@@ -30,59 +31,67 @@ const MaintainabilityReport = (props) => {
         score={data.score}
         Description={Description}
       />
-      {(data.reports || []).map((report, index) => {
-        const aggregate = report.aggregate || {};
-        const lineNumber = aggregate.sloc && aggregate.sloc.physical;
-        const cyclomatic = aggregate.cyclomatic;
-        const difficulty = (aggregate.halstead && aggregate.halstead.difficulty) || 0;
-        const maintainability = report.maintainability;
-        return (
-          <div key={`report${index}`} className={styles.report}>
-            <a className={styles.file}>{report.filePath}</a>
-            <div className={styles.card}>
-              <p className={styles.info} style={{ flex: 0, marginRight: 10 }}>
-                {window.USE_EN ? 'LoC ' : '行数 '}
-                {lineNumber}
-              </p>
-              <Tooltip
-                align="t"
-                trigger={
-                  <p className={styles.info}>
-                    <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity ' : '圈复杂度 '}
-                    {cyclomatic}
+      {data.score === 100 ? (
+        <Appreciate />
+      ) : (
+        <div>
+          {(data.reports || []).map((report, index) => {
+            const aggregate = report.aggregate || {};
+            const lineNumber = aggregate.sloc && aggregate.sloc.physical;
+            const cyclomatic = aggregate.cyclomatic;
+            const difficulty = (aggregate.halstead && aggregate.halstead.difficulty) || 0;
+            const maintainability = report.maintainability;
+            return (
+              <div key={`report${index}`} className={styles.report}>
+                <a className={styles.file}>{report.filePath}</a>
+                <div className={styles.card}>
+                  <p className={styles.info} style={{ flex: 0, marginRight: 10 }}>
+                    {window.USE_EN ? 'LoC ' : '行数 '}
+                    {lineNumber}
                   </p>
-                }
-              >
-                <p className={styles.message}>
-                  {window.USE_EN
-                    ? 'This metric counts the number of distinct paths through a block of code. Lower values are better.'
-                    : '此指标计算通过代码块的不同路径的数量。值越低越好。'}
-                </p>
-              </Tooltip>
-              <Tooltip
-                align="t"
-                trigger={
+                  <Tooltip
+                    align="t"
+                    trigger={
+                      <p className={styles.info}>
+                        <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity ' : '圈复杂度 '}
+                        {cyclomatic}
+                      </p>
+                    }
+                  >
+                    <p className={styles.message}>
+                      {window.USE_EN
+                        ? 'This metric counts the number of distinct paths through a block of code. Lower values are better.'
+                        : '此指标计算通过代码块的不同路径的数量。值越低越好。'}
+                    </p>
+                  </Tooltip>
+                  <Tooltip
+                    align="t"
+                    trigger={
+                      <p className={styles.info}>
+                        <Icon type="prompt" size="xs" />
+                        {window.USE_EN ? 'Difficulty ' : '可读性 '}
+                        {difficulty}
+                      </p>
+                    }
+                  >
+                    <p className={styles.message}>
+                      {window.USE_EN
+                        ? 'The difficulty measure is related to the difficulty of the program to write or understand. Lower values are better.'
+                        : '难度测量与程序编写或理解的难度有关。值越低越好。'}
+                    </p>
+                  </Tooltip>
                   <p className={styles.info}>
-                    <Icon type="prompt" size="xs" />
-                    {window.USE_EN ? 'Difficulty ' : '可读性 '}
-                    {difficulty}
+                    {window.USE_EN ? 'Maintainability ' : '可维护度 '}
+                    <span style={{ color: getScoreLevelInfo(maintainability).color }}>
+                      {maintainability.toFixed(2)}
+                    </span>
                   </p>
-                }
-              >
-                <p className={styles.message}>
-                  {window.USE_EN
-                    ? 'The difficulty measure is related to the difficulty of the program to write or understand. Lower values are better.'
-                    : '难度测量与程序编写或理解的难度有关。值越低越好。'}
-                </p>
-              </Tooltip>
-              <p className={styles.info}>
-                {window.USE_EN ? 'Maintainability ' : '可维护度 '}
-                <span style={{ color: getScoreLevelInfo(maintainability).color }}>{maintainability.toFixed(2)}</span>
-              </p>
-            </div>
-          </div>
-        );
-      })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </Element>
   );
 };
