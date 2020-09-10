@@ -58,7 +58,7 @@ export const generate = async function ({
     try {
       await addBlocks(blocks, pageName);
 
-      // get page ejs template 
+      // get page ejs template
       let fileStr = '';
       if (projectFramework === 'icejs') {
         fileStr = reactPageTemplate;
