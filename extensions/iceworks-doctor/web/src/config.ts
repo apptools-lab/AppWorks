@@ -77,3 +77,6 @@ export function getScoreLevelInfo(scroe: number): IScoreLevelInfo {
     scoreLevelInfos.find((config) => scroe >= config.range.start && scroe <= config.range.end) || scoreLevelInfos[0]
   );
 }
+export function getReportKey(key: string): IReportKeys {
+  return reportKeys.find((reportKey) => reportKey.key === key) || reportKeys[0];
+}

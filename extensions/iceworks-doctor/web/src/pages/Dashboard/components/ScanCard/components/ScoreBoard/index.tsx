@@ -7,8 +7,10 @@ import ScoreRing from '../ScoreRing';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
+  const { data } = props;
+
   const [scoresAffixed, setScoresAffixed] = useState(false);
-  const scoreBoradSize = scoresAffixed ? 'small' : 'normal';
+  const ScoreRingSize = scoresAffixed ? 'small' : 'normal';
 
   return (
     <Affix
@@ -21,14 +23,16 @@ const ScoreBoard = (props) => {
         {reportKeys.map((reportKey: IReportKeys) => {
           return (
             <Link
-              to={reportKey.key}
               spy
               smooth
+              offset={-80}
+              to={reportKey.key}
+              key={reportKey.key}
               duration={200}
               activeClass={styles['scoreInfo-active']}
               className={styles.scoreInfo}
             >
-              <ScoreRing score={70.11} size={scoreBoradSize} />
+              <ScoreRing score={data[reportKey.key].score} size={ScoreRingSize} />
               {scoresAffixed ? null : <p>{window.USE_EN ? reportKey.nameEn : reportKey.name}</p>}
             </Link>
           );

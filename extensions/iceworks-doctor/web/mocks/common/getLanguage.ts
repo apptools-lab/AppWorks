@@ -1,1 +1,1 @@
-export default 'en';
+export default 'zh-cn';

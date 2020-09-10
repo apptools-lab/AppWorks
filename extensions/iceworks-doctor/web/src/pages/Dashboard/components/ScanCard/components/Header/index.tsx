@@ -3,7 +3,7 @@ import { scoreLevelInfos, getScoreLevelInfo } from '@/config';
 import styles from './index.module.scss';
 
 const ScoreBoard = (props) => {
-  const { count, LoC, score } = props;
+  const { filesInfo = {}, score } = props;
   return (
     <div className={styles.header}>
       <div className={styles.infos}>
@@ -16,10 +16,10 @@ const ScoreBoard = (props) => {
 
         <div className={styles.info}>
           <p className={styles.title}>{window.USE_EN ? 'Project Scale' : '项目规模'}</p>
-          <p className={styles.detail}>{`${window.USE_EN ? 'Files Number: ' : '文件总数：'} ${count}`}</p>
+          <p className={styles.detail}>{`${window.USE_EN ? 'Files Number: ' : '文件总数：'} ${filesInfo.count}`}</p>
           <p className={styles.label}>{window.USE_EN ? 'LoC/Average LoC' : '总行数/平均行数'}</p>
           <p className={styles.detail}>
-            {LoC}/{Math.round(LoC / count)}
+            {filesInfo.lines}/{Math.round(filesInfo.lines / filesInfo.count)}
           </p>
         </div>
       </div>
