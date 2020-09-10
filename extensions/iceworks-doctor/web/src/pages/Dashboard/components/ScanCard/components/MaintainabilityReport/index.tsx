@@ -41,13 +41,15 @@ const MaintainabilityReport = (props) => {
             <a className={styles.file}>{report.filePath}</a>
             <div className={styles.card}>
               <p className={styles.info} style={{ flex: 0, marginRight: 10 }}>
-                {window.USE_EN ? 'LoC' : '行数'} {lineNumber}
+                {window.USE_EN ? 'LoC ' : '行数 '}
+                {lineNumber}
               </p>
               <Tooltip
                 align="t"
                 trigger={
                   <p className={styles.info}>
-                    <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity' : '圈复杂度'} {cyclomatic}
+                    <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity ' : '圈复杂度 '}
+                    {cyclomatic}
                   </p>
                 }
               >
@@ -62,7 +64,8 @@ const MaintainabilityReport = (props) => {
                 trigger={
                   <p className={styles.info}>
                     <Icon type="prompt" size="xs" />
-                    {window.USE_EN ? 'Difficulty' : '可读性'} {difficulty}
+                    {window.USE_EN ? 'Difficulty ' : '可读性 '}
+                    {difficulty}
                   </p>
                 }
               >
@@ -73,7 +76,7 @@ const MaintainabilityReport = (props) => {
                 </p>
               </Tooltip>
               <p className={styles.info}>
-                {window.USE_EN ? 'Maintainability' : '可维护度'}
+                {window.USE_EN ? 'Maintainability ' : '可维护度 '}
                 <span style={{ color: getScoreLevelInfo(maintainability).color }}>{maintainability.toFixed(2)}</span>
               </p>
             </div>
