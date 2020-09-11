@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Element } from 'react-scroll';
 import { Balloon, Icon } from '@alifd/next';
 import { getScoreLevelInfo } from '@/config';
+import callService from '@/callService';
 import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
@@ -25,6 +26,11 @@ function getMessagesLength(reports): number {
 const EslintMessages = (props) => {
   const { reportKey, reports, score, Description } = props;
 
+  const openFile = (item) => {
+    const { filePath, line, column } = item;
+    callService('action', 'open', { filePath, line, column });
+  };
+
   return (
     <Element name={reportKey.key} className={styles.container}>
       <ReportHeader number={getMessagesLength(reports)} reportKey={reportKey} score={score} Description={Description} />
@@ -33,6 +39,7 @@ const EslintMessages = (props) => {
       ) : (
         <div className={styles.wrap}>
           {(reports || []).map((report, index) => {
+            if (!report.messages || report.messages.length === 0) return null;
             return (
               <div className={styles.item} key={`report${index}`}>
                 <a className={styles.file}>{report.filePath}</a>
@@ -48,7 +55,13 @@ const EslintMessages = (props) => {
                   );
 
                   return (
-                    <div className={styles.message} key={`message${idx}`}>
+                    <div
+                      className={styles.message}
+                      key={`message${idx}`}
+                      onClick={() => {
+                        openFile({ ...message, filePath: report.filePath });
+                      }}
+                    >
                       {message.severity === 2 ? (
                         <Icon
                           type="error"

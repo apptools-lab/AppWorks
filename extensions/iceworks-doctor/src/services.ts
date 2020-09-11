@@ -5,11 +5,11 @@ import { projectPath } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
 import getProjectInfo from './getProjectInfo';
 
-const scanReport = async (fix) => {
+const scanReport = async (options) => {
   let report;
   try {
     const doctor = new Doctor({});
-    report = await doctor.scan(projectPath, { fix });
+    report = await doctor.scan(projectPath, options);
   } catch (e) {
     report = {
       error: e,
@@ -19,7 +19,14 @@ const scanReport = async (fix) => {
   return report;
 };
 
+const openFile = (options) => {
+  console.log(options);
+};
+
 export const services = {
+  action: {
+    open: openFile,
+  },
   data: {
     projectInfo: getProjectInfo,
     scanReport,

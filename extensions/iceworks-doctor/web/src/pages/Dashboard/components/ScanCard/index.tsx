@@ -26,16 +26,17 @@ const ScanCard = () => {
 
   const [loading, setLoading] = useState(true);
   const [affixed, setAffixed] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [hasError, setHasError] = useState(false);
 
-  async function getData() {
+  async function getData(options?) {
     setLoading(true);
     try {
-      const scanReport = await callService('data', 'scanReport');
-      if (scanReport.errorMsg) {
-        setErrorMsg(scanReport.errorMsg);
+      const scanReport = await callService('data', 'scanReport', options);
+      if (scanReport.error) {
+        setHasError(true);
+        console.error(scanReport.error);
       } else {
-        setErrorMsg('');
+        setHasError(false);
         setData(scanReport);
       }
     } catch (e) {
@@ -61,9 +62,13 @@ const ScanCard = () => {
       style={{ display: 'block' }}
       visible={loading}
     >
-      {errorMsg ? (
+      {hasError ? (
         <Message title="Error" type="error">
-          {`${window.USE_EN ? 'Scan Failed: ' : '扫描失败：'} ${errorMsg}`}
+          {window.USE_EN ? 'Scan Failed, see ' : '扫描失败，请至 '}
+          <a href="https://github.com/ice-lab/iceworks/issues" target="_blank">
+            https://github.com/ice-lab/iceworks/issues
+          </a>
+          {window.USE_EN ? ' report your problem' : ' 反馈'}
         </Message>
       ) : (
         <div className={styles.container}>
@@ -94,7 +99,13 @@ const ScanCard = () => {
           </div>
 
           <div className={styles.actions} style={{ visibility: affixed ? 'visible' : 'hidden' }}>
-            <Button type="primary" size="medium" onClick={getData}>
+            <Button
+              type="primary"
+              size="medium"
+              onClick={() => {
+                getData({ fix: true });
+              }}
+            >
               一键修复
             </Button>
           </div>

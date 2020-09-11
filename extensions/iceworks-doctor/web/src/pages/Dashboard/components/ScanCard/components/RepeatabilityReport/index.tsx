@@ -3,6 +3,7 @@ import { Element } from 'react-scroll';
 import { Icon } from '@alifd/next';
 import Code from 'react-code-space';
 import { getReportKey } from '@/config';
+import callService from '@/callService';
 import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
@@ -21,6 +22,11 @@ const Description = (
 
 const RepeatabilityReport = (props) => {
   const { data = {} } = props;
+
+  const openFile = (item) => {
+    const { sourceId, start } = item;
+    callService('action', 'open', { filePath: sourceId, line: start.line, column: start.column });
+  };
 
   return (
     <Element name={reportKey.key} className={styles.container}>
@@ -43,14 +49,24 @@ const RepeatabilityReport = (props) => {
               <div key={`clone${index}`} className={styles.clone}>
                 <p className={styles.title}> {window.USE_EN ? 'Similar code detected' : '检测到相似重复代码'} </p>
 
-                <a className={styles.file}>
+                <a
+                  className={styles.file}
+                  onClick={() => {
+                    openFile(duplicationA);
+                  }}
+                >
                   <Icon type="copy" size="small" />
                   {duplicationA.sourceId}
                 </a>
                 <Code dark theme="material" language="jsx">
                   <Code.Body numbered start={duplicationA.start.line} content={duplicationA.fragment} />
                 </Code>
-                <a className={styles.file}>
+                <a
+                  className={styles.file}
+                  onClick={() => {
+                    openFile(duplicationB);
+                  }}
+                >
                   <Icon type="copy" size="small" />
                   {duplicationB.sourceId}
                 </a>

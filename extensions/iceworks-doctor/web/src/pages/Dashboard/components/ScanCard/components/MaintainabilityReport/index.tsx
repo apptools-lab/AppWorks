@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Element } from 'react-scroll';
 import { Balloon, Icon } from '@alifd/next';
 import { getReportKey, getScoreLevelInfo } from '@/config';
+import callService from '@/callService';
 import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
@@ -23,6 +24,11 @@ const Description = (
 const MaintainabilityReport = (props) => {
   const { data = {} } = props;
 
+  const openFile = (item) => {
+    const { filePath } = item;
+    callService('action', 'open', { filePath, line: 0, column: 0 });
+  };
+
   return (
     <Element name={reportKey.key} className={styles.container}>
       <ReportHeader
@@ -42,7 +48,13 @@ const MaintainabilityReport = (props) => {
             const difficulty = (aggregate.halstead && aggregate.halstead.difficulty) || 0;
             const maintainability = report.maintainability;
             return (
-              <div key={`report${index}`} className={styles.report}>
+              <div
+                key={`report${index}`}
+                className={styles.report}
+                onClick={() => {
+                  openFile(report);
+                }}
+              >
                 <a className={styles.file}>{report.filePath}</a>
                 <div className={styles.card}>
                   <p className={styles.info} style={{ flex: 0, marginRight: 10 }}>
