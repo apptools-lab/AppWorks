@@ -21,6 +21,7 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@commitlint/cli": "^9.1.2",
     "@ice/spec": "^1.0.1",
     "@iceworks/eslint-plugin-best-practices": "^0.1.0",
     "@iceworks/eslint-plugin-security-practices": "^0.1.0",
@@ -33,6 +34,7 @@
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "jscpd": "^3.3.3",
+    "stylelint": "^13.7.0",
     "typhonjs-escomplex": "^0.1.0"
   }
 }
