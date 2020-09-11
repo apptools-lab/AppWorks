@@ -127,7 +127,11 @@ const Home = () => {
           await callService('router', 'create', values);
           const layout = routerConfig.find((item) => item.path === values.parent);
           const layoutName = layout.component;
-          await callService('menu', 'createMenu', { ...values, path: isConfigurableRouter ? values.path : `/${values.pageName}`, layoutName });
+          await callService('menu', 'createMenu', {
+            ...values,
+            path: isConfigurableRouter ? values.path : `/${values.pageName}`,
+            layoutName,
+          });
         }
       } catch (e) {
         Notification.error({ content: e.message });
