@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Affix } from '@alifd/next';
 import { Link } from 'react-scroll';
 import classNames from 'classnames';
@@ -9,11 +9,19 @@ import styles from './index.module.scss';
 const ScoreBoard = (props) => {
   const { data, onAffix } = props;
 
+  const [resizeTemp, setResizeTemp] = useState(0);
   const [scoresAffixed, setScoresAffixed] = useState(false);
   const ScoreRingSize = scoresAffixed ? 'small' : 'normal';
 
+  useEffect(() => {
+    window.addEventListener('optimizedResize', () => {
+      setResizeTemp(Date.now());
+    });
+  }, []);
+
   return (
     <Affix
+      key={resizeTemp}
       style={{ zIndex: 999 }}
       onAffix={(affixed) => {
         onAffix(affixed);

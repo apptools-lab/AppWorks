@@ -1,22 +1,27 @@
 import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
+import { Doctor } from '@iceworks/doctor';
+import { projectPath } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
+import getProjectInfo from './getProjectInfo';
 
-const projectInfo = async () => {
-  // TODO
-  return {};
-};
+const scanReport = async (fix) => {
+  let report;
+  try {
+    const doctor = new Doctor({});
+    report = await doctor.scan(projectPath, { fix });
+  } catch (e) {
+    report = {
+      error: e,
+    };
+  }
 
-const scanReport = async () => {
-  // TODO
-  return {
-    errorMsg: 'Hello',
-  };
+  return report;
 };
 
 export const services = {
   data: {
-    projectInfo,
+    projectInfo: getProjectInfo,
     scanReport,
   },
   common,
