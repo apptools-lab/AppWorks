@@ -24,8 +24,14 @@ const RepeatabilityReport = (props) => {
   const { data = {} } = props;
 
   const openFile = (item) => {
-    const { sourceId, start } = item;
-    callService('action', 'open', { filePath: sourceId, line: start.line, column: start.column });
+    const { sourceId, start, end } = item;
+    callService('action', 'open', {
+      filePath: sourceId,
+      line: start.line,
+      column: start.column,
+      endLine: end.line,
+      endColumn: end.column,
+    });
   };
 
   return (

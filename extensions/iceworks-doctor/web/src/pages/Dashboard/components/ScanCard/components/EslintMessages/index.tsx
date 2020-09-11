@@ -27,8 +27,8 @@ const EslintMessages = (props) => {
   const { reportKey, reports, score, Description } = props;
 
   const openFile = (item) => {
-    const { filePath, line, column } = item;
-    callService('action', 'open', { filePath, line, column });
+    const { filePath, line, column, endLine, endColumn } = item;
+    callService('action', 'open', { filePath, line, column, endLine, endColumn });
   };
 
   return (

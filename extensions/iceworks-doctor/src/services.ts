@@ -21,6 +21,15 @@ const scanReport = async (options) => {
 
 const openFile = (options) => {
   console.log(options);
+  const { commands, Position, Range, Uri, ViewColumn } = vscode;
+
+  commands.executeCommand('vscode.open', Uri.file(options.filePath), {
+    viewColumn: ViewColumn.One,
+    selection: new Range(
+      new Position(options.line - 1, options.column - 1),
+      new Position(options.endLine - 1, options.endColumn - 1)
+    ),
+  });
 };
 
 export const services = {

@@ -26,7 +26,8 @@ const MaintainabilityReport = (props) => {
 
   const openFile = (item) => {
     const { filePath } = item;
-    callService('action', 'open', { filePath, line: 0, column: 0 });
+    // VSCode position start with 1
+    callService('action', 'open', { filePath, line: 1, column: 1, endLine: 1, endColumn: 1 });
   };
 
   return (

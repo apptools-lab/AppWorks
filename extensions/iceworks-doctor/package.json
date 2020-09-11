@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.14",
-    "@iceworks/doctor": "0.1.4-0",
+    "@iceworks/doctor": "0.1.4-3",
     "@iceworks/project-service": "^0.1.17",
     "@iceworks/recorder": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.5",
