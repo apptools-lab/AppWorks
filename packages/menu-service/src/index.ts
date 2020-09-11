@@ -14,20 +14,23 @@ const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
 export async function createMenu(layoutName: string, data: IMenuData, menuType: MenuType) {
   const menuConfigPath = path.join(projectPath, LAYOUT_DIRECTORY, layoutName, 'menuConfig.js');
   const menuConfigAST = await getMenuConfigAST(menuConfigPath);
-  const { headerMenuConfig, asideMenuConfig }: { headerMenuConfig: IMenuData[]; asideMenuConfig: IMenuData[] } = getAllConfig(menuConfigAST);
+  const {
+    headerMenuConfig,
+    asideMenuConfig,
+  }: { headerMenuConfig: IMenuData[]; asideMenuConfig: IMenuData[] } = getAllConfig(menuConfigAST);
 
   if (menuType === 'headerMenuConfig') {
     headerMenuConfig.push(data);
   } else if (menuType === 'asideMenuConfig') {
-    asideMenuConfig.push(data)
+    asideMenuConfig.push(data);
   }
 
-  generateCode(headerMenuConfig, asideMenuConfig, menuConfigAST, menuConfigPath)
+  generateCode(headerMenuConfig, asideMenuConfig, menuConfigAST, menuConfigPath);
 }
 
 /**
- * get header menu configs and aside menu configs 
- * @param menuConfigAST 
+ * get header menu configs and aside menu configs
+ * @param menuConfigAST
  */
 export function getAllConfig(menuConfigAST: t.File) {
   let headerMenuConfig = [];
@@ -36,15 +39,15 @@ export function getAllConfig(menuConfigAST: t.File) {
     VariableDeclarator: ({ node }) => {
       // find headerMenuConfig
       if (t.isIdentifier(node.id, { name: HEADER_MENU_CONFIG_VARIABLES }) && t.isArrayExpression(node.init)) {
-        headerMenuConfig = parseMenuConfig(node.init.elements)
+        headerMenuConfig = parseMenuConfig(node.init.elements);
       }
       // find asideMenuConfig
       if (t.isIdentifier(node.id, { name: ASIDE_MENU_CONFIG_VARIABLES }) && t.isArrayExpression(node.init)) {
-        asideMenuConfig = parseMenuConfig(node.init.elements)
+        asideMenuConfig = parseMenuConfig(node.init.elements);
       }
     },
   });
-  return { headerMenuConfig, asideMenuConfig }
+  return { headerMenuConfig, asideMenuConfig };
 }
 
 async function getMenuConfigAST(menuConfigPath: string) {
@@ -58,7 +61,7 @@ function getASTByCode(code: string) {
     allowImportExportEverywhere: true,
     sourceType: 'module',
     plugins: ['dynamicImport'],
-  })
+  });
 }
 
 function parseMenuConfig(elements: any[]) {
@@ -72,15 +75,20 @@ function parseMenuConfig(elements: any[]) {
       if (keyName === 'children') {
         item.children = parseMenuConfig(value.elements);
       } else {
-        item[keyName] = value.value
+        item[keyName] = value.value;
       }
     });
-    config.push(item)
-  })
+    config.push(item);
+  });
   return config;
 }
 
-function generateCode(headerMenuConfig: IMenuData[], asideMenuConfig: IMenuData[], menuConfigAST: any, menuConfigPath: string) {
+function generateCode(
+  headerMenuConfig: IMenuData[],
+  asideMenuConfig: IMenuData[],
+  menuConfigAST: any,
+  menuConfigPath: string
+) {
   const headerMenuConfigAST = getASTByCode(JSON.stringify(headerMenuConfig));
   const asideMenuConfigAST = getASTByCode(JSON.stringify(asideMenuConfig));
   traverse(menuConfigAST, {

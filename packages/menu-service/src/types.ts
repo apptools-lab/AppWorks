@@ -5,4 +5,4 @@ export interface IMenuData {
   children?: IMenuData[];
 }
 
-export type MenuType = 'headerMenuConfig' | 'asideMenuConfig'
+export type MenuType = 'headerMenuConfig' | 'asideMenuConfig';
