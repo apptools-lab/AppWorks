@@ -33,6 +33,9 @@ export default function getBestPracticesReports(
   });
 
   reports.forEach((report) => {
+    if (fix) {
+      CLIEngine.outputFixes(report);
+    }
     warningScore += report.warningCount * warningWeight;
     errorScore += report.errorCount * errorWeight;
   });
