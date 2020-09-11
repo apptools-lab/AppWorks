@@ -10,7 +10,7 @@ node_modules
 .DS_Store
 .eslintcache
 .happypack
-.vscode
+extensions/*/web/.vscode
 coverage/
 tmp/
 .tmp/

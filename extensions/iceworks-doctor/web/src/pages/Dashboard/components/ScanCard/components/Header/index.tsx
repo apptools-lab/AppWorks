@@ -16,10 +16,12 @@ const Header = (props) => {
 
         <div className={styles.info}>
           <p className={styles.title}>{window.USE_EN ? 'Project Scale' : '项目规模'}</p>
-          <p className={styles.detail}>{`${window.USE_EN ? 'Files Number: ' : '文件总数：'} ${filesInfo.count}`}</p>
+          <p className={styles.detail}>{`${window.USE_EN ? 'Files Number: ' : '文件总数：'} ${
+            filesInfo.count || 0
+          }`}</p>
           <p className={styles.label}>{window.USE_EN ? 'LoC/Average LoC' : '总行数/平均行数'}</p>
           <p className={styles.detail}>
-            {filesInfo.lines}/{Math.round(filesInfo.lines / filesInfo.count)}
+            {filesInfo.lines || 0}/{Math.round(filesInfo.lines / filesInfo.count) || 0}
           </p>
         </div>
       </div>
