@@ -122,13 +122,15 @@ const Home = () => {
         blocks: selectedBlocks,
         pageName: values.pageName,
       });
-
-      if (isConfigurableRouter) {
-        try {
+      try {
+        if (isConfigurableRouter) {
           await callService('router', 'create', values);
-        } catch (error) {
-          Notification.error({ content: error.message });
+          const layout = routerConfig.find((item) => item.path === values.parent);
+          const layoutName = layout.component;
+          await callService('menu', 'createMenu', { ...values, path: isConfigurableRouter ? values.path : `/${values.pageName}`, layoutName });
         }
+      } catch (e) {
+        Notification.error({ content: e.message });
       }
     } catch (error) {
       Notification.error({ content: error.message });

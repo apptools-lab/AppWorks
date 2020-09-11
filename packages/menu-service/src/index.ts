@@ -5,25 +5,32 @@ import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
-import { projectPath, LAYOUT_DIRECTORY } from '@iceworks/project-service';
+import { layoutsPath, getProjectLanguageType } from '@iceworks/project-service';
 import { IMenuData, MenuType } from './types';
 
 const HEADER_MENU_CONFIG_VARIABLES = 'headerMenuConfig';
 const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
 
-export async function createMenu(layoutName: string, data: IMenuData, menuType: MenuType) {
-  const menuConfigPath = path.join(projectPath, LAYOUT_DIRECTORY, layoutName, 'menuConfig.js');
+export async function createMenu(data) {
+  const { path: pagePath, pageName, layoutName } = data;
+  const curPageMenuConfig = { path: pagePath, name: pageName };
+  const projectLanguageType = await getProjectLanguageType();
+  const menuConfigPath = path.join(layoutsPath, layoutName, `menuConfig.${projectLanguageType}`);
+  if (!fse.pathExistsSync(menuConfigPath)) {
+    return;
+  }
   const menuConfigAST = await getMenuConfigAST(menuConfigPath);
   const {
     headerMenuConfig,
     asideMenuConfig,
   }: { headerMenuConfig: IMenuData[]; asideMenuConfig: IMenuData[] } = getAllConfig(menuConfigAST);
 
-  if (menuType === 'headerMenuConfig') {
-    headerMenuConfig.push(data);
-  } else if (menuType === 'asideMenuConfig') {
-    asideMenuConfig.push(data);
-  }
+  // if (menuType === 'headerMenuConfig') {
+  //   headerMenuConfig.push(curPageMenuConfig);
+  // } else if (menuType === 'asideMenuConfig') {
+  //   asideMenuConfig.push(curPageMenuConfig);
+  // }
+  asideMenuConfig.push(curPageMenuConfig);
 
   generateCode(headerMenuConfig, asideMenuConfig, menuConfigAST, menuConfigPath);
 }

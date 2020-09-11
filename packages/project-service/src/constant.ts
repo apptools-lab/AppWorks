@@ -13,6 +13,7 @@ export const packageJSONFilename = 'package.json';
 export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
 export const pagesPath = path.join(projectPath, 'src', PAGE_DIRECTORY);
 export const componentsPath = path.join(projectPath, 'src', COMPONENT_DIR_NAME);
+export const layoutsPath = path.join(projectPath, 'src', LAYOUT_DIRECTORY);
 export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
 export const generatorCreatetaskUrl = ALI_CREATETASK_URL;
