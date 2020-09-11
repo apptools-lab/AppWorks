@@ -34,7 +34,7 @@ $ iceworks-doctor -s ./
 
 ## Options
 
-* ignoreDirs, string[] Ignore directories, example ['mock'] .
+* ignore, string[] Ignore directories, example ['mock'] .
 * supportExts, string[] Support file exts, example ['css'] .
 
 ## CLI
@@ -51,5 +51,5 @@ iceworks-doctor -s ./
 
 Options
 ```shell
-iceworks-doctor -s ./ --ignoreDir types mock --supportExts css json
+iceworks-doctor -s ./ --ignore types mock --supportExts css json
 ```

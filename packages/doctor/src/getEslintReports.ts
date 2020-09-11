@@ -6,7 +6,8 @@ export default function getBestPracticesReports(
   extendsConfigName: string,
   warningWeight: number,
   errorWeight: number,
-  files: IFileInfo[]
+  files: IFileInfo[],
+  fix?: boolean
 ): IEslintReports {
   let warningScore = 0;
   let errorScore = 0;
@@ -17,6 +18,8 @@ export default function getBestPracticesReports(
     baseConfig: {
       extends: extendsConfigName,
     },
+    cwd: __dirname,
+    fix: !!fix,
     useEslintrc: false,
   });
 
