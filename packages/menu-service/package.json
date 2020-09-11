@@ -1,0 +1,25 @@
+{
+  "name": "@iceworks/menu-service",
+  "version": "0.1.0",
+  "description": "Iceworks menu service for VSCode extension.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/generator": "^7.10.5",
+    "@babel/parser": "^7.10.5",
+    "@babel/traverse": "^7.10.5",
+    "@babel/types": "^7.10.5",
+    "@iceworks/project-service": "^0.1.17",
+    "fs-extra": "^9.0.0",
+    "prettier": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.45.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
