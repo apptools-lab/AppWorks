@@ -4,6 +4,8 @@ import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { registerCommand } from '@iceworks/common-service';
+import getScanReport from './getScanReport';
+import setDiagnostics from './setDiagnostics';
 import * as zhCNTextMap from './locales/zh-CN.json';
 import * as enUSTextMap from './locales/en-US.json';
 import { services } from './services';
@@ -13,17 +15,44 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 function activate(context: vscode.ExtensionContext) {
-  const { workspace } = vscode;
+  const { window, workspace } = vscode;
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
 
   let reportWebviewPanel: vscode.WebviewPanel | undefined;
 
+  // Check code when save
+  vscode.workspace.onDidSaveTextDocument(
+    (editor) => {
+      if (editor && editor.fileName) {
+        console.log(editor);
+        // TODO config 判断
+        getScanReport(editor.fileName, {
+          disableAliEslint: true,
+          disableBestPractices: true,
+          disableMaintainability: true,
+          disableRepeatability: true,
+        })
+          .then((report) => {
+            if (report.securityPractices) {
+              setDiagnostics(report.securityPractices);
+            }
+          })
+          .catch((e) => {
+            // ignore
+          });
+      }
+    },
+    null,
+    context.subscriptions
+  );
+
+  // Code Quality Dashboard
   registerCommand('iceworks-doctor.dashboard', () => {
     recordDAU();
 
     if (!fse.existsSync(path.join(workspace.rootPath || '', 'package.json'))) {
-      vscode.window.showErrorMessage(
+      window.showErrorMessage(
         useEn
           ? enUSTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory']
           : zhCNTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory']
@@ -33,7 +62,7 @@ function activate(context: vscode.ExtensionContext) {
 
     if (reportWebviewPanel) {
       reportWebviewPanel.reveal();
-      vscode.window.showWarningMessage(
+      window.showWarningMessage(
         useEn
           ? enUSTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen']
           : zhCNTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen']
@@ -41,7 +70,7 @@ function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    reportWebviewPanel = vscode.window.createWebviewPanel('iceworks', 'Iceworks Doctor', vscode.ViewColumn.Two, {
+    reportWebviewPanel = window.createWebviewPanel('iceworks', 'Iceworks Doctor', vscode.ViewColumn.Two, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

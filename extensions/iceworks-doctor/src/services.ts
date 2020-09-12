@@ -1,20 +1,15 @@
 import * as vscode from 'vscode';
-import { Doctor } from '@iceworks/doctor';
 import { projectPath } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
 import getProjectInfo from './getProjectInfo';
+import getScanReport from './getScanReport';
+import setDiagnostics from './setDiagnostics';
 
 const scanReport = async (options) => {
-  let report;
-  try {
-    const doctor = new Doctor({ ignore: ['.vscode', '.ice', 'mocks', '.eslintrc.js', 'webpack.config.js'] });
-    report = await doctor.scan(projectPath, options);
-  } catch (e) {
-    report = {
-      error: e,
-    };
+  const report = await getScanReport(projectPath, options);
+  if (!report.error && report.securityPractices) {
+    setDiagnostics(report.securityPractices, true);
   }
-
   return report;
 };
 
