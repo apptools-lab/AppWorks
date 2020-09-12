@@ -151,8 +151,8 @@ function setData(data, routerConfigAST, routeConfigPath) {
     ObjectProperty({ node }) {
       // @ts-ignore
       if (['component'].indexOf(node.key.value) > -1) {
-        const { value } = node;
-        node.value = t.identifier(value.value);
+        // @ts-ignore
+        node.value = t.identifier(node.value.value);
       }
     },
   });

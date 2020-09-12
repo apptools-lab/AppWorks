@@ -35,7 +35,8 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 function getAndExtractTarball(
   destDir: string,
   tarball: string,
-  progressFunc = () => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  progressFunc = (state) => {},
   formatFilename = (filename: string): string => {
     // 为了兼容
     if (filename === '_package.json') {

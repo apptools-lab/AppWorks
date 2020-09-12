@@ -31,8 +31,8 @@
     "dependency:check": "ts-node ./scripts/dependency-check.ts",
     "docs:check": "ts-node ./scripts/extension-docs-check.ts",
     "env": "node ./scripts/env.js",
-    "xima-scan": "xima scan",
-    "xima-fix": "xima fix"
+    "xima:scan": "xima scan",
+    "xima:fix": "xima fix"
   },
   "resolutions": {
     "eslint-plugin-import": "2.20.2"
