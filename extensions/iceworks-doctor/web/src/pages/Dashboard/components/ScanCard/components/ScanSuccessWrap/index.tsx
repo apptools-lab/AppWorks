@@ -59,7 +59,7 @@ const ScanSuccessWrap = (props) => {
             getData({ fix: true });
           }}
         >
-          一键修复
+          {window.USE_EN ? 'Fix Problems' : '一键修复'}
         </Button>
       </div>
     </div>

@@ -25,22 +25,28 @@ function activate(context: vscode.ExtensionContext) {
   vscode.workspace.onDidSaveTextDocument(
     (editor) => {
       if (editor && editor.fileName) {
-        console.log(editor);
-        // TODO config 判断
-        getScanReport(editor.fileName, {
-          disableAliEslint: true,
-          disableBestPractices: true,
-          disableMaintainability: true,
-          disableRepeatability: true,
-        })
-          .then((report) => {
-            if (report.securityPractices) {
-              setDiagnostics(report.securityPractices);
-            }
+        const configuration = workspace.getConfiguration();
+
+        if (
+          configuration.get('Iceworks.Doctor.enableCheckSecurityPracticesOnSave') &&
+          // Only check js file
+          /(jsx|js|tsx|ts)$/.test(editor.fileName)
+        ) {
+          getScanReport(editor.fileName, {
+            disableAliEslint: true,
+            disableBestPractices: true,
+            disableMaintainability: true,
+            disableRepeatability: true,
           })
-          .catch((e) => {
-            // ignore
-          });
+            .then((report) => {
+              if (report.securityPractices) {
+                setDiagnostics(report.securityPractices);
+              }
+            })
+            .catch((e) => {
+              // ignore
+            });
+        }
       }
     },
     null,
