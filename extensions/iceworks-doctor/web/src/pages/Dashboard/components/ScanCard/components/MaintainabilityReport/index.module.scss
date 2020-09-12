@@ -1,8 +1,32 @@
 .description {
-  margin: 0;
-  font-size: 12px;
-  line-height: 12px;
-  color: $color-text1-3;
+  .title {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 12px;
+    color: $color-text1-3;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+
+    .info {
+      margin: 0 5px 0 0;
+      white-space: nowrap;
+      color: $color-text1-4;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    i {
+      color: $color-data1-2;
+      margin-right: 5px;
+    }
+  }
 }
 
 .report {
@@ -33,11 +57,6 @@
       color: $color-text1-4;
       font-size: 14px;
       font-weight: bold;
-    }
-
-    i {
-      color: $color-brand1-9;
-      margin-right: 5px;
     }
   }
 

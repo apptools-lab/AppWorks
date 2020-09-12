@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Message, Loading } from '@alifd/next';
-import { animateScroll as scroll } from 'react-scroll';
-import { reportKeys, IReportKeys } from '@/config';
+import React, { useState } from 'react';
 import callService from '@/callService';
-import Header from './components/Header';
-import ScoreBoard from './components/ScoreBoard';
-import BestPracticesReport from './components/BestPracticesReport';
-import SecurityPracticesReport from './components/SecurityPracticesReport';
-import AliEslintReport from './components/AliEslintReport';
-import MaintainabilityReport from './components/MaintainabilityReport';
-import RepeatabilityReport from './components/RepeatabilityReport';
+import WelcomeWrap from './components/WelcomeWrap';
+import ScanningWrap from './components/ScanningWrap';
+import ScanSuccessWrap from './components/ScanSuccessWrap';
+import ScanFailedWrap from './components/ScanFailedWrap';
 
 import styles from './index.module.scss';
 
@@ -23,95 +17,44 @@ const ScanCard = () => {
     maintainability: {},
     repeatability: {},
   });
-
-  const [loading, setLoading] = useState(true);
-  const [affixed, setAffixed] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  // 1: welcome page; 2: scanning;  3: scan success;  4: scan failed;
+  const [status, setStatus] = useState(1);
 
   async function getData(options?) {
-    setLoading(true);
+    setStatus(2); // scanning
     try {
       const scanReport = await callService('data', 'scanReport', options);
       if (scanReport.error) {
-        setHasError(true);
+        setStatus(4); // scan failed
         console.error(scanReport.error);
       } else {
-        setHasError(false);
+        setStatus(3); // scan success
         setData(scanReport);
       }
     } catch (e) {
-      // ignore
+      setStatus(4); // scan failed
+      console.error(e);
     }
-    setLoading(false);
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const scrollToTop = () => {
-    scroll.scrollToTop({
-      duration: 200,
-    });
+  const getWrap = () => {
+    switch (status) {
+      case 1:
+        return <WelcomeWrap getData={getData} />;
+      case 2:
+        return <ScanningWrap />;
+      case 3:
+        return <ScanSuccessWrap data={data} getData={getData} />;
+      default:
+        return <ScanFailedWrap />;
+    }
   };
 
   return (
-    <Loading
-      tip={window.USE_EN ? 'Scanning' : '代码扫描中'}
-      size="large"
-      style={{ display: 'block' }}
-      visible={loading}
-    >
-      {hasError ? (
-        <Message title="Error" type="error">
-          {window.USE_EN ? 'Scan Failed, see ' : '扫描失败，请至 '}
-          <a href="https://github.com/ice-lab/iceworks/issues" target="_blank">
-            https://github.com/ice-lab/iceworks/issues
-          </a>
-          {window.USE_EN ? ' report your problem' : ' 反馈'}
-        </Message>
-      ) : (
-        <div className={styles.container}>
-          <Header score={data.score} filesInfo={data.filesInfo} />
-          <ScoreBoard data={data} onAffix={(affixed) => setAffixed(affixed)} />
-          <div className={styles.reportWrap}>
-            {reportKeys.map((reportKey: IReportKeys, index) => {
-              const key = reportKey.key;
-              switch (key) {
-                case 'bestPractices':
-                  return <BestPracticesReport key={key} data={data[key]} />;
-                case 'securityPractices':
-                  return <SecurityPracticesReport key={key} data={data[key]} />;
-                case 'aliEslint':
-                  return <AliEslintReport key={key} data={data[key]} />;
-                case 'maintainability':
-                  return <MaintainabilityReport key={key} data={data[key]} />;
-                case 'repeatability':
-                  return <RepeatabilityReport key={key} data={data[key]} />;
-                default:
-                  return null;
-              }
-            })}
-          </div>
-
-          <div onClick={scrollToTop} className={styles.backTop} style={{ visibility: affixed ? 'visible' : 'hidden' }}>
-            <img src="https://img.alicdn.com/tfs/TB1ce16k79l0K4jSZFKXXXFjpXa-128-128.png" alt="back top" />
-          </div>
-
-          <div className={styles.actions} style={{ visibility: affixed ? 'visible' : 'hidden' }}>
-            <Button
-              type="primary"
-              size="medium"
-              onClick={() => {
-                getData({ fix: true });
-              }}
-            >
-              一键修复
-            </Button>
-          </div>
-        </div>
-      )}
-    </Loading>
+    <div className={styles.container}>
+      <p className={styles.title}>{window.USE_EN ? 'Code Quality' : '代码质量'}</p>
+      {getWrap()}
+    </div>
   );
 };
 

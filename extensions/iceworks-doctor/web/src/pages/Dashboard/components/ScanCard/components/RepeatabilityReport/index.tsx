@@ -64,9 +64,11 @@ const RepeatabilityReport = (props) => {
                   <Icon type="copy" size="small" />
                   {duplicationA.sourceId}
                 </a>
-                <Code dark theme="material" language="jsx">
-                  <Code.Body numbered start={duplicationA.start.line} content={duplicationA.fragment} />
-                </Code>
+                {index === 0 ? (
+                  <Code dark theme="material" language="jsx">
+                    <Code.Body numbered start={duplicationA.start.line} content={duplicationA.fragment} />
+                  </Code>
+                ) : null}
                 <a
                   className={styles.file}
                   onClick={() => {
@@ -76,14 +78,16 @@ const RepeatabilityReport = (props) => {
                   <Icon type="copy" size="small" />
                   {duplicationB.sourceId}
                 </a>
-                <Code dark theme="material" language="jsx">
-                  <Code.Body
-                    numbered
-                    start={duplicationB.start.line}
-                    highlight={`${duplicationB.start.line}-${duplicationB.end.line}`}
-                    content={duplicationB.fragment}
-                  />
-                </Code>
+                {index === 0 ? (
+                  <Code dark theme="material" language="jsx">
+                    <Code.Body
+                      numbered
+                      start={duplicationB.start.line}
+                      highlight={`${duplicationB.start.line}-${duplicationB.end.line}`}
+                      content={duplicationB.fragment}
+                    />
+                  </Code>
+                ) : null}
                 <p className={styles.tips}>
                   <Icon type="prompt" size="small" />
                   {window.USE_EN

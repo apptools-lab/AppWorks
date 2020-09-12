@@ -19,14 +19,22 @@
   padding-bottom: 8px;
   margin: 0 8px;
   text-align: center;
+  cursor: pointer;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: $color-transparent;
 
   p {
     margin-top: 4px;
     color: $color-text1-4;
     font-size: 12px;
   }
+
+  &:hover {
+    border-bottom-color: $color-data1-2;
+  }
 }
 
 .scoreInfo-active {
-  border-bottom: 2px solid $color-brand1-9;
+  border-bottom-color: $color-data1-2;
 }

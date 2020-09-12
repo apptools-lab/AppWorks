@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as fse from 'fs-extra';
 import { Doctor } from '@iceworks/doctor';
 import { projectPath } from '@iceworks/project-service';
 import * as common from '@iceworks/common-service';
