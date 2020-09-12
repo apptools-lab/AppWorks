@@ -10,7 +10,7 @@ export default function findStyleSelectors(directory: string, styleDependencies:
 
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     const file = path.join(directory, styleDependencies[i].source);
-    const stylesheet = css.parse(fs.readFileSync(file, 'utf-8')).stylesheet;
+    const { stylesheet } = css.parse(fs.readFileSync(file, 'utf-8'));
 
     // eslint-disable-next-line
     stylesheet.rules.forEach((rule: IStyle) => {

@@ -115,7 +115,7 @@ export const getTemplateSchema = async (selectPage: IMaterialPage) => {
   try {
     await bulkDownloadMaterials([selectPage], templateTempDir);
     const templateSchema = await fse.readJSON(
-      path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json')
+      path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json'),
     );
     await fse.remove(templateTempDir);
     return templateSchema;
@@ -143,7 +143,7 @@ export const renderPage = async (page: IMaterialPage) => {
   const pageName: string = upperCamelCase(page.pageName);
   const templatePath: string = path.join(pagesPath, '.template', `${templateName}`);
   const targetPath: string = path.join(pagesPath, `${pageName}`);
-  const templateData = page.templateData;
+  const { templateData } = page;
 
   if (fse.existsSync(targetPath)) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name: pageName }));

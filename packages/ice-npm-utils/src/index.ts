@@ -43,7 +43,7 @@ function getAndExtractTarball(
     } else {
       return filename.replace(/^_/, '.');
     }
-  }
+  },
 ): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const allFiles = [];
@@ -54,7 +54,7 @@ function getAndExtractTarball(
       request({
         url: tarball,
         timeout: 10000,
-      })
+      }),
     )
       .on('progress', progressFunc)
       .on('error', reject)
@@ -87,7 +87,7 @@ function getAndExtractTarball(
               .pipe(fs.createWriteStream(destPath))
               .on('finish', () => streamResolve())
               .on('close', () => streamResolve()); // resolve when file is empty in node v8
-          })
+          }),
         );
       })
       .on('end', () => {

@@ -47,8 +47,8 @@ const Home = () => {
     return data;
   }
 
-  function validateData({ block, componentName }) {
-    if (!componentName) {
+  function validateData({ block, componentName: name }) {
+    if (!name) {
       return intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.noComponentName' });
     }
     if (!block) {
@@ -104,9 +104,9 @@ const Home = () => {
       'showInformationMessage',
       intl.formatMessage(
         { id: 'web.iceworksUIBuilder.componentCreator.successCreateToPath' },
-        { path: blockIndexPath }
+        { path: blockIndexPath },
       ),
-      openFileAction
+      openFileAction,
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', blockIndexPath);

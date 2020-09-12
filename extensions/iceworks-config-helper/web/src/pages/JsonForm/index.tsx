@@ -78,7 +78,7 @@ const JsonForm = () => {
           setJsonContent(jsonContent);
         }
       },
-      false
+      false,
     );
   }, []);
 
@@ -87,7 +87,7 @@ const JsonForm = () => {
       newData,
       jsonContent,
       schemaDefaultValue.current,
-      formCannotEditProps.current
+      formCannotEditProps.current,
     );
 
     console.log('newSyncJson', newSyncJson);

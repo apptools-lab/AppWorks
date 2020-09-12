@@ -7,7 +7,7 @@ type CurrentJsxElement = JSXOpeningElement | null;
 export default function getCurrentJsxElement(
   documentText: string,
   cursorPosition,
-  condition: (cursorPosition, jsxOpeningElement: JSXOpeningElement, path: NodePath<JSXOpeningElement>) => boolean
+  condition: (cursorPosition, jsxOpeningElement: JSXOpeningElement, path: NodePath<JSXOpeningElement>) => boolean,
 ): CurrentJsxElement {
   let currentJsxElement: CurrentJsxElement = null;
 

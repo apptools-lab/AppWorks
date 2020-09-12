@@ -29,7 +29,7 @@ export default class Scanner {
           0.3, // level waring minus 0.3 point
           0.7, // level error minus 0.7 point
           files,
-          options && options.fix
+          options && options.fix,
         );
       }
 
@@ -55,7 +55,7 @@ export default class Scanner {
           1, // level waring minus 1 point
           3, // level error minus 3 point
           files,
-          options && options.fix
+          options && options.fix,
         );
 
         // Calculate bonus
@@ -86,7 +86,7 @@ export default class Scanner {
           1, // level waring minus 1 point
           5, // level error minus 5 point
           files,
-          options && options.fix
+          options && options.fix,
         );
       }
 
@@ -108,7 +108,7 @@ export default class Scanner {
           (reports.securityPractices || {}).score,
           (reports.maintainability || {}).score,
           (reports.repeatability || {}).score,
-        ].filter((score) => !isNaN(score))
+        ].filter((score) => !isNaN(score)),
       );
     } catch (error) {
       // ignore

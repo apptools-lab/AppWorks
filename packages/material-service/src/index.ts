@@ -165,13 +165,13 @@ export const addSource = async function (materialSource: IMaterialSource) {
 export const updateSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(
-    ({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source
+    ({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source,
   );
   if (existedSource) {
     throw Error(i18n.format('package.materialService.index.materialSourceExistError'));
   }
   const existedName = sources.some(
-    ({ name: defaultName }) => defaultName === newMaterialSource.name && defaultName !== originSource.name
+    ({ name: defaultName }) => defaultName === newMaterialSource.name && defaultName !== originSource.name,
   );
   if (existedName) {
     throw Error(i18n.format('package.materialService.index.materialNameExistError'));

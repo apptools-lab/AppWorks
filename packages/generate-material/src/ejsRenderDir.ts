@@ -23,7 +23,7 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
           files.map((file) => {
             const filepath = path.join(dir, file);
             return renderFile(filepath, options);
-          })
+          }),
         )
           .then(() => {
             resolve();
@@ -31,7 +31,7 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
           .catch((err) => {
             reject(err);
           });
-      }
+      },
     );
   });
 }

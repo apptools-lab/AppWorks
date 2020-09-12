@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
         {
           enableScripts: true,
           retainContextWhenHidden: true,
-        }
+        },
       );
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.onDidDispose(
@@ -40,16 +40,16 @@ export function activate(context: vscode.ExtensionContext) {
           webviewPanel = undefined;
         },
         null,
-        context.subscriptions
+        context.subscriptions,
       );
       connectService(webviewPanel, context, { services, recorder });
     }
   }
 
   subscriptions.push(
-    registerCommand('iceworks-project-creator.start', function () {
+    registerCommand('iceworks-project-creator.start', () => {
       activeWebview();
-    })
+    }),
   );
 
   const stateKey = 'iceworks.projectCreator.autoActivedWebview';

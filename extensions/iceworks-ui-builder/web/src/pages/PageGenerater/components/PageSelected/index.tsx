@@ -28,11 +28,10 @@ export const SelectedBlock = SortableElement(
         <Icon className={styles.delete} type="ashbin" onClick={() => onDelete(targetIndex)} />
       </div>
     );
-  }
+  },
 );
 
 const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSorting }) => {
-  const intl = useIntl();
   return (
     <div className={styles.pageSelected}>
       {blocks.length ? (

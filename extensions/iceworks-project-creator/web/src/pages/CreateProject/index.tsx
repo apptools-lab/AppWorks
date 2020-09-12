@@ -10,7 +10,7 @@ import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
 
-const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
+const { CLIENT_TOKEN } = process.env;
 
 const CreateProject: React.FC = () => {
   const intl = useIntl();
@@ -23,7 +23,7 @@ const CreateProject: React.FC = () => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
-  const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
+  const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const steps = [
@@ -92,7 +92,7 @@ const CreateProject: React.FC = () => {
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
-      </CreateDEFProjectForm>
+      </CreateDEFProjectForm>,
     );
   }
 

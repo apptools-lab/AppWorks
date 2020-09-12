@@ -22,7 +22,7 @@ export default async function (dir: string, options: any): Promise<void> {
           files.map((file) => {
             const filepath = path.join(dir, file);
             return renderFile(filepath, options);
-          })
+          }),
         )
           .then(() => {
             resolve();
@@ -30,7 +30,7 @@ export default async function (dir: string, options: any): Promise<void> {
           .catch((err) => {
             reject(err);
           });
-      }
+      },
     );
   });
 }

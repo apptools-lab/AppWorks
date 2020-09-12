@@ -86,7 +86,7 @@ export default function cssClassAutoCompete(context: vscode.ExtensionContext): v
         { scheme: 'file', language: 'scss' },
       ],
       { provideCompletionItems },
-      '.'
-    )
+      '.',
+    ),
   );
 }

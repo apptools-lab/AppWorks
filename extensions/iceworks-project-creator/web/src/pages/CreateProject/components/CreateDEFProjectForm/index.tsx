@@ -27,7 +27,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
 
   useEffect(() => {
     async function initData() {
-      let gitlabToken = value.gitlabToken;
+      let { gitlabToken } = value;
       if (!(value.empId && value.account)) {
         gitlabToken = await getUserInfo();
       }

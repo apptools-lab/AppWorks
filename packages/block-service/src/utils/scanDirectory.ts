@@ -29,7 +29,7 @@ export const scanDirectory = async (directoryPath: string): Promise<string[]> =>
           console.warn('accessAsync got error:', error);
         }
       }
-    })
+    }),
   );
 
   return targetFiles;

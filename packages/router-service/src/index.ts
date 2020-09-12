@@ -151,7 +151,7 @@ function setData(data, routerConfigAST, routeConfigPath) {
     ObjectProperty({ node }) {
       // @ts-ignore
       if (['component'].indexOf(node.key.value) > -1) {
-        const value: any = node.value;
+        const { value } = node;
         node.value = t.identifier(value.value);
       }
     },
@@ -235,7 +235,7 @@ function changeImportDeclarations(routerConfigAST, data) {
 
     // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
     VariableDeclaration: ({ node, key }) => {
-      const code = generate(node.declarations[0]).code;
+      const { code } = generate(node.declarations[0]);
       // parse const declaration to get directory type (layouts or pages)
       // support three path types
       // 1. const xxx = (React.)?lazy(() => import('pages/xxx'));
@@ -404,6 +404,6 @@ function formatCodeFromAST(ast: any): string {
     {
       singleQuote: true,
       trailingComma: 'es5',
-    }
+    },
   );
 }

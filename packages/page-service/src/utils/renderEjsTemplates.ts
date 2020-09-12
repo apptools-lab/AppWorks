@@ -25,11 +25,11 @@ export default async function renderEjsTemplates(templateData: object, templateD
           files.map((file) => {
             const filepath = path.join(templateDir, file);
             return renderFile(filepath, templateData);
-          })
+          }),
         )
           .then(() => resolve())
           .catch(reject);
-      }
+      },
     );
   });
 }

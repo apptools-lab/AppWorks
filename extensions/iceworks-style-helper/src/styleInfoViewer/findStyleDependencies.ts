@@ -29,7 +29,7 @@ export function findStyleDependencies(file: string) {
         // Example /\.css$|\.scss$|\.sass$/
         if (
           new RegExp(`${supportFiles.map((supportFile) => `\\.${supportFile}$`).join('|')}`, 'i').test(
-            node.source.value
+            node.source.value,
           )
         ) {
           StyleDependencies.push({

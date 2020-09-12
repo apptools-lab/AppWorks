@@ -63,7 +63,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
         ejsOptions.mpa = ismpa;
       } else if (
         !selectedTargets.some(
-          (target) => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken'
+          (target) => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken',
         )
       ) {
         setSelectedMiniAppType(miniAppTypes[0].type);

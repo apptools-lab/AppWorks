@@ -12,7 +12,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
-    PageTreeItem | undefined
+  PageTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
@@ -73,7 +73,7 @@ class PageTreeItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command: vscode.Command,
-    public readonly path: string
+    public readonly path: string,
   ) {
     super(label);
   }
