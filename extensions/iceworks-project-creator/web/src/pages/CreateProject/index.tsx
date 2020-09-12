@@ -208,9 +208,9 @@ const CreateProject: React.FC = () => {
   }
 
   async function getMaterialSources() {
-    const materialSources: any = (await callService('material', 'getSources')) as IMaterialSource[];
-    setMaterialSources(materialSources);
-    return materialSources;
+    const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
+    setMaterialSources(sources);
+    return sources;
   }
   async function refreshMaterialSources() {
     const sources = await getMaterialSources();
@@ -220,11 +220,10 @@ const CreateProject: React.FC = () => {
   useEffect(() => {
     async function checkAliInternal() {
       try {
-        const isAliInternal = (await callService('common', 'checkIsAliInternal')) as boolean;
-        setIsAliInternal(isAliInternal);
+        const result = (await callService('common', 'checkIsAliInternal')) as boolean;
+        setIsAliInternal(result);
       } catch (e) {
         Notification.error({ content: e.message });
-        return false;
       }
     }
     async function setDefaultFields() {
@@ -232,8 +231,8 @@ const CreateProject: React.FC = () => {
       setCurProjectField({ ...curProjectField, projectPath: workspace });
     }
     async function initMaterialSources() {
-      const materialSources = await getMaterialSources();
-      setMaterialSources(materialSources);
+      const sources = await getMaterialSources();
+      setMaterialSources(sources);
     }
     async function initData() {
       try {

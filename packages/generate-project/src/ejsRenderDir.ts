@@ -27,8 +27,8 @@ export default async function (dir: string, options: any): Promise<void> {
           .then(() => {
             resolve();
           })
-          .catch((err) => {
-            reject(err);
+          .catch((e) => {
+            reject(e);
           });
       },
     );

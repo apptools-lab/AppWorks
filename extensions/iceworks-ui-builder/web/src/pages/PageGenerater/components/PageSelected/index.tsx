@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, Input } from '@alifd/next';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { PLACEHOLDER_IMG } from '@iceworks/material-utils';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import * as styles from './index.module.scss';
 
 export const BlockDragHandle = SortableHandle(({ title, screenshot }) => (

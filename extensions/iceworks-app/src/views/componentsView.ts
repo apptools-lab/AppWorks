@@ -83,6 +83,7 @@ class ComponentTreeItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command: vscode.Command,
+    // eslint-disable-next-line no-shadow
     public readonly path: string,
   ) {
     super(label);

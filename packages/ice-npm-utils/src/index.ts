@@ -35,7 +35,7 @@ function getNpmTarball(npm: string, version?: string, registry?: string): Promis
 function getAndExtractTarball(
   destDir: string,
   tarball: string,
-  progressFunc = (state) => {},
+  progressFunc = () => {},
   formatFilename = (filename: string): string => {
     // 为了兼容
     if (filename === '_package.json') {
@@ -223,7 +223,7 @@ function checkAliInternal(): Promise<boolean> {
     timeout: 3 * 1000,
     resolveWithFullResponse: true,
   })
-    .catch((err) => {
+    .catch(() => {
       return false;
     })
     .then((response) => {

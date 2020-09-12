@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
@@ -6,7 +5,7 @@ import * as ejs from 'ejs';
 import * as util from 'util';
 import * as prettier from 'prettier';
 
-export default async function renderEjsTemplates(templateData: object, templateDir: string) {
+export default async function renderEjsTemplates(templateData: Record<string, unknown>, templateDir: string) {
   return new Promise((resolve, reject) => {
     glob(
       '**',

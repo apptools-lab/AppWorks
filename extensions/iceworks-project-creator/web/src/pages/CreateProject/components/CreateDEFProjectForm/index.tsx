@@ -73,8 +73,8 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
     await getExistProjects(value.gitlabToken);
   }
 
-  function onValidateProjectName(rule: any, value: string, callback: (error?: string) => void) {
-    if (existProjects.filter((item: IGitLabExistProject) => item.name === value).length) {
+  function onValidateProjectName(rule: any, setValue: string, callback: (error?: string) => void) {
+    if (existProjects.filter((item: IGitLabExistProject) => item.name === setValue).length) {
       return callback(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.nameExist' }));
     }
     return callback();

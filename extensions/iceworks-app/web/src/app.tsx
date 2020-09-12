@@ -1,4 +1,3 @@
-import React from 'react';
 import { createApp } from 'ice';
 
 const appConfig = {

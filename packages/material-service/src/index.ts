@@ -103,8 +103,8 @@ export const getData = async function (source: string): Promise<IMaterialData> {
     let bases: IMaterialBase[];
     if (isIceMaterial(source)) {
       try {
-        const result = await axios({ url: ICE_BASE_COMPONENTS_SOURCE });
-        bases = result.data.map((base: any) => {
+        const baseResult = await axios({ url: ICE_BASE_COMPONENTS_SOURCE });
+        bases = baseResult.data.map((base: any) => {
           const { name, title, type, importStatement } = base;
           return {
             name,

@@ -42,8 +42,8 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 const noPathPrefix = false;
 
 export async function create(data) {
-  const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: upperCamelCase(pageName) }], { parent });
+  const { path: setPath, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path: setPath, component: upperCamelCase(pageName) }], { parent });
 }
 
 export async function getAll() {
@@ -68,11 +68,11 @@ export async function checkConfigPathExists() {
   return pathExists;
 }
 
-export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
+export async function bulkCreate(targetProjectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
-  const routerConfigAST = await getRouterConfigAST(projectPath);
+  const routerConfigAST = await getRouterConfigAST(targetProjectPath);
   const projectLanguageType = await getProjectLanguageType();
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const routeConfigPath = path.join(targetProjectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const currentData = await getAll();
 
   if (!replacement) {
@@ -95,9 +95,9 @@ export async function bulkCreate(projectPath: string, data: IRouter[], options: 
   setData(data, routerConfigAST, routeConfigPath);
 }
 
-async function getRouterConfigAST(projectPath) {
+async function getRouterConfigAST(targetProjectPath) {
   const projectLanguageType = await getProjectLanguageType();
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const routeConfigPath = path.join(targetProjectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
   const routerConfigAST = getASTByCode(routerConfigString);
   return routerConfigAST;
@@ -199,7 +199,6 @@ function changeImportDeclarations(routerConfigAST, data) {
   const importDeclarations = [];
   const removeIndex = [];
   // router import page or layout have @
-  let existAtSign = false;
   let existLazy = false;
   // React.lazy(): the existLazyPrefix is true
   // lazy(): the existLazyPrefix is false
@@ -222,9 +221,6 @@ function changeImportDeclarations(routerConfigAST, data) {
       if (match && match[idx]) {
         const { specifiers } = node;
         const { name } = specifiers[0].local;
-        if (!noPathPrefix) {
-          existAtSign = match[idx - 1] === '@';
-        }
         importDeclarations.push({
           index: key,
           name,
@@ -252,7 +248,6 @@ function changeImportDeclarations(routerConfigAST, data) {
         if (match[2]) {
           existLazyPrefix = true;
         }
-        existAtSign = match[idx - 1] === '@';
         importDeclarations.push({
           index: key,
           name: match[1],

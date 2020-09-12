@@ -28,8 +28,8 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
           .then(() => {
             resolve();
           })
-          .catch((err) => {
-            reject(err);
+          .catch((e) => {
+            reject(e);
           });
       },
     );

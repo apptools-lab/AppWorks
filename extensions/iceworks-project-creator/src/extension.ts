@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 

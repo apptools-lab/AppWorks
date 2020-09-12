@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
-import { getProjectFramework } from '@iceworks/project-service';
 import { services, getIsUpdatingJsonFile } from './services';
 import i18n from './i18n';
 import {
@@ -11,7 +10,6 @@ import {
   setEditingJsonFileUri,
   getEditingJsonFileUri,
   getBaseNameFormUri,
-  getExtNameFormUri,
   getEditingJsonEditor,
 } from './utils';
 
