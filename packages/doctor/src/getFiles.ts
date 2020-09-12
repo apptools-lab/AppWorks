@@ -2,6 +2,9 @@ import * as fs from 'fs-extra';
 import { glob } from 'glob';
 import { IFileInfo } from './types/Scanner';
 
+// Supprot check file's max LoC
+const MAX_CHECK_LOC = 3000;
+
 function getFileInfo(filePath: string): IFileInfo {
   let source = fs.readFileSync(filePath).toString().trim();
 
@@ -37,7 +40,7 @@ export default function getFiles(directory: string, supportExts: string[], ignor
     }
 
     // https://www.npmjs.com/package/glob
-    return glob.sync(`${directory}/**/*.+(${supportExts.join('|')})`, options).map(getFileInfo);
+    return glob.sync(`${directory}/**/*.+(${supportExts.join('|')})`, options).map(getFileInfo).filter(file => file.LoC <= MAX_CHECK_LOC);
   } catch (e) {
     console.log('Get files failed!', e);
     return [];
