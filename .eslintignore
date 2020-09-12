@@ -1,20 +1,15 @@
 # 忽略目录
-build/
-tests/
-demo/
-.ice/
-def-login-client/
-
-# node 覆盖率文件
-coverage/
+build
+lib
+es
+dist
+tests
+demo
 node_modules
-extensions/*/build/
+.ice
+def-login-client
+coverage/
 .vscode-test
-packages/*/lib/
-packages/*/es/
-packages/*/build/
-app/main_dist/
-app/build/
 tmp
 .tmp
 __mocks__
