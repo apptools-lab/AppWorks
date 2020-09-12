@@ -8,7 +8,7 @@ import getProjectInfo from './getProjectInfo';
 const scanReport = async (options) => {
   let report;
   try {
-    const doctor = new Doctor({});
+    const doctor = new Doctor({ ignore: ['.vscode', '.ice', 'mocks', '.eslintrc.js', 'webpack.config.js'] });
     report = await doctor.scan(projectPath, options);
   } catch (e) {
     report = {
