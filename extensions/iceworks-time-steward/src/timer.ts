@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import { packageJson } from './typings/package';
 import { Recorder } from '@iceworks/recorder';
+import { packageJson } from './typings/package';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
