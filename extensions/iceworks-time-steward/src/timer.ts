@@ -93,7 +93,7 @@ export class Timer {
                 data: {
                   user: name,
                   timestamp: subTime,
-                  project:  project,
+                  project,
                 },
               });
             }
