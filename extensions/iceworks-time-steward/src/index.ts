@@ -1,17 +1,15 @@
-import * as vscode from 'vscode';
-import { registerCommand, getUserInfo } from '@iceworks/common-service';
+import { getUserInfo } from '@iceworks/common-service';
 import { Timer } from './timer';
-import { LogLevel } from './constants';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
 let timer: Timer;
 
-export function activate(ctx: vscode.ExtensionContext) {
+export function activate() {
   console.info('start timer');
   const user = { account: '' };
   const init = (user) => {
-    timer = new Timer(ctx.extensionPath, user, { name, version });
+    timer = new Timer(user, { name, version });
     timer.initialize();
   };
   getUserInfo()
