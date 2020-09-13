@@ -1,55 +1,57 @@
 import * as vscode from 'vscode';
-import { Logger } from './logger';
 import * as fs from 'fs';
 import * as request from 'request';
 import { packageJson } from './typings/package';
 
-export class WakaTime {
+export class Timer {
   private disposable: vscode.Disposable;
+
   private lastFile: string = 'null';
+
   private lastHeartbeat: number = 0;
+
   private extensionPath: string;
 
-  private logger: Logger;
   private user = { account: '' };
+
   private options = { name: '', version: '' };
 
-  constructor(extensionPath: string, logger: Logger, user, options) {
+  constructor(extensionPath: string, user, options) {
     this.extensionPath = extensionPath;
-    this.logger = logger;
     this.user = user;
     this.options = options;
   }
 
   public initialize(): void {
-    this.logger.info('initialize setupEventListeners');
+    console.info('initialize setupEventListeners');
     this.setupEventListeners();
   }
 
   private setupEventListeners(): void {
     // subscribe to selection change and editor activation events
-    let subscriptions: vscode.Disposable[] = [];
-    //监听光标位置变化
+    const subscriptions: vscode.Disposable[] = [];
+    // 监听光标位置变化
     vscode.window.onDidChangeTextEditorSelection(
       this.onChange,
       this,
       subscriptions
     );
-    //监听左侧文件树当前激活的文件变化
+    // 监听左侧文件树当前激活的文件变化
     vscode.window.onDidChangeActiveTextEditor(
       this.onChange,
       this,
       subscriptions
     );
-    //监听编辑器失去焦点的变化情况
+    // 监听编辑器失去焦点的变化情况
     vscode.window.onDidChangeWindowState(this.onFocus, this, subscriptions);
-    //监听保存事件
+    // 监听保存事件
     vscode.workspace.onDidSaveTextDocument(this.onSave, this, subscriptions);
 
     // create a combined disposable from both event subscriptions
     this.disposable = vscode.Disposable.from(...subscriptions);
-    this.logger.info('end=====');
+    console.info('end=====');
   }
+
   public dispose() {
     this.disposable.dispose();
   }
@@ -70,18 +72,18 @@ export class WakaTime {
   }
 
   private onEvent(isWrite: boolean): void {
-    let editor = vscode.window.activeTextEditor;
-    this.logger.info(`editor: `, editor);
+    const editor = vscode.window.activeTextEditor;
+    console.info('editor: ', editor);
     if (editor) {
-      let doc = editor.document;
-      this.logger.info(`doc: `, doc);
+      const doc = editor.document;
+      console.info('doc: ', doc);
       if (doc) {
-        let file: string = doc.fileName;
-        this.logger.info(`file: `, file);
-        this.logger.info(`lastHeartbeat: `, this.lastHeartbeat);
+        const file: string = doc.fileName;
+        console.info('file: ', file);
+        console.info('lastHeartbeat: ', this.lastHeartbeat);
         if (file) {
-          let time: number = Date.now();
-          this.logger.info(
+          const time: number = Date.now();
+          console.info(
             `isWrite:${isWrite} enoughTimePassed: ${this.enoughTimePassed(
               time
             )} lastFile: ${this.lastFile !== file}`
@@ -97,18 +99,18 @@ export class WakaTime {
             this.enoughTimePassed(time) ||
             this.lastFile !== file
           ) {
-            this.logger.info(`subTime: ${time - this.lastHeartbeat}`);
+            console.info(`subTime: ${time - this.lastHeartbeat}`);
             const project = this.getProjectName(file);
             const subTime = time - this.lastHeartbeat;
             const account = this.user.account;
             if (this.lastHeartbeat !== 0) {
               const url = `http://gm.mmstat.com/efficiency.editor.codetime.vscode.editTime?user=${account}&timestamp=${subTime}&project=${project}&v=${this.options.version}`;
-              this.logger.info('sendUrl: ', url);
+              console.info('sendUrl: ', url);
               request(url, (error) => {
                 if (!error) {
-                  this.logger.info(`===success===`);
+                  console.info('===success===');
                 } else {
-                  this.logger.error(`===error: ${error}===`);
+                  console.error(`===error: ${error}===`);
                 }
               });
             }
@@ -126,27 +128,27 @@ export class WakaTime {
   }
 
   private getProjectName(file: string): string {
-    let uri = vscode.Uri.file(file);
-    let workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+    const uri = vscode.Uri.file(file);
+    const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
     console.log(workspaceFolder);
     if (vscode.workspace && workspaceFolder) {
       try {
-        let packageJsonResultStr = fs.readFileSync(
+        const packageJsonResultStr = fs.readFileSync(
           `${workspaceFolder.uri.path}/package.json`,
           'utf-8'
         );
 
-        let packageJsonResultObj: packageJson = JSON.parse(
+        const packageJsonResultObj: packageJson = JSON.parse(
           packageJsonResultStr
         );
         return packageJsonResultObj.name;
       } catch (e) {
-        this.logger.error(e.message);
+        console.error(e.message);
       }
       try {
         return workspaceFolder.name;
       } catch (e) {
-        this.logger.error(e.message);
+        console.error(e.message);
       }
     }
     return '';
