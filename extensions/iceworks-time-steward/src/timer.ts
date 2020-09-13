@@ -1,7 +1,11 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import * as request from 'request';
 import { packageJson } from './typings/package';
+import { Recorder } from '@iceworks/recorder';
+
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
 
 export class Timer {
   private disposable: vscode.Disposable;
@@ -12,15 +16,11 @@ export class Timer {
 
   private user = { account: '' };
 
-  private options = { name: '', version: '' };
-
-  constructor(user, options) {
+  constructor(user) {
     this.user = user;
-    this.options = options;
   }
 
   public initialize(): void {
-    console.info('initialize setupEventListeners');
     this.setupEventListeners();
   }
 
@@ -87,13 +87,14 @@ export class Timer {
             const subTime = time - this.lastHeartbeat;
             const account = this.user.account;
             if (this.lastHeartbeat !== 0) {
-              const url = `http://gm.mmstat.com/efficiency.editor.codetime.vscode.editTime?user=${account}&timestamp=${subTime}&project=${project}&v=${this.options.version}`;
-              request(url, (error) => {
-                if (!error) {
-                  console.info('===success===');
-                } else {
-                  console.error(`===error: ${error}===`);
-                }
+              recorder.record({
+                module: 'main',
+                action: 'tracking',
+                data: {
+                  user: account,
+                  timestamp: subTime,
+                  project:  project,
+                },
               });
             }
 
