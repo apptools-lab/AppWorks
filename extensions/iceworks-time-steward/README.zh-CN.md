@@ -14,3 +14,7 @@
 **我们从不访问您的代码**：我们不处理、发送或存储您的代码，我们只提供有关编程的度量。时间管家是开源的，你可以很容易地看到我们收集了什么数据。
 
 **您的数据是私有的**：我们永远不会与任何人共享您的个人数据。
+
+## 更多
+
+访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

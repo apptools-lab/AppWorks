@@ -14,3 +14,7 @@ Metrics, insights, and time tracking automatically generated from your programmi
 **We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Steward is an open source plugin, we make it easy to see the data we collect.
 
 **Your data is private**: We will never share your individually identifiable data with anyone.
+
+## More
+
+See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
