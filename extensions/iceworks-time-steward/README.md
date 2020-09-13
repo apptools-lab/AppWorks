@@ -9,7 +9,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 Metrics, insights, and time tracking automatically generated from your programming activity.
 
-## Security and Privacy 
+## Security and Privacy
 
 **We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Steward is an open source plugin, we make it easy to see the data we collect.
 
