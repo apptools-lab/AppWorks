@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import { Recorder } from '@iceworks/recorder';
-import { packageJson } from './typings/package';
+import { IPackageJson } from './typings/package';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -69,20 +69,14 @@ export class Timer {
         if (file) {
           const time: number = Date.now();
           const enoughTimePassed = this.enoughTimePassed(time);
-          console.info(
-            `isWrite:${isWrite}; enoughTimePassed: ${enoughTimePassed}; lastFile: ${this.lastFile}`
-          );
+          console.info(`isWrite:${isWrite}; enoughTimePassed: ${enoughTimePassed}; lastFile: ${this.lastFile}`);
           /**
            * 发送规则：
            * 1. 保存时必然发送
            * 2. 切换文件时必然发送
            * 3. 在同一个文件里面每隔2分钟发送一次
            */
-          if (
-            isWrite ||
-            enoughTimePassed ||
-            this.lastFile !== file
-          ) {
+          if (isWrite || enoughTimePassed || this.lastFile !== file) {
             const project = this.getProjectName(file);
             const subTime = time - this.lastHeartbeat;
             const { name } = this.user;
@@ -115,7 +109,9 @@ export class Timer {
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
     if (workspaceFolder) {
       try {
-        const packageJsonResultObj: packageJson = JSON.parse(fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8'));
+        const packageJsonResultObj: IPackageJson = JSON.parse(
+          fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8')
+        );
         return packageJsonResultObj.name;
       } catch (e) {
         console.error(e.message);

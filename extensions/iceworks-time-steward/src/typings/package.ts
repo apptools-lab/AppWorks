@@ -1,3 +1,3 @@
-export interface packageJson {
+export interface IPackageJson {
   name: string;
 }
