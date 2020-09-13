@@ -6,3 +6,6 @@ web/**
 **/tsconfig.json
 **/*.map
 **/*.ts
+
+node_modules/typescript
+node_modules/ts-loader

@@ -36,7 +36,7 @@ export default (report, rewrite?: boolean) => {
             new vscode.Position(message.endLine - 1, message.endColumn - 1)
           ),
           severity: message.severity === 1 ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
-          source: '',
+          source: 'Iceworks Doctor',
         });
       });
 
