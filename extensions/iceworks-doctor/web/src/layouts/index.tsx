@@ -55,7 +55,7 @@ export default function BasicLayout({ children }: { children: React.ReactNode })
       <Shell
         style={{
           overflow: 'auto',
-          minWidth: '200px',
+          minWidth: '350px',
           minHeight: '100vh',
         }}
       >

@@ -2,6 +2,8 @@
 
 # Iceworks Doctor
 
+Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫描仪的设计，Iceworks Doctor 可以在一次快速扫描中检测到应用程序和基础设施代码中的各种安全漏洞，而无需任何远程服务器!导航到源代码，并通过与扫描结果进行交互来修复结果。
+
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
