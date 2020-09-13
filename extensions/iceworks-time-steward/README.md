@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.zh-CN.md)
 
-# Iceworks Time Steward
+# Iceworks Time Steward(Beta)
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-steward.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
@@ -14,6 +14,10 @@ Metrics, insights, and time tracking automatically generated from your programmi
 **We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Steward is an open source plugin, we make it easy to see the data we collect.
 
 **Your data is private**: We will never share your individually identifiable data with anyone.
+
+## Check Data
+
+This plugin is still in the internal testing stage, please contact the author to check the data.
 
 ## More
 
