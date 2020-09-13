@@ -14,7 +14,7 @@ export class Timer {
 
   private lastHeartbeat: number = 0;
 
-  private user = { account: '' };
+  private user;
 
   constructor(user) {
     this.user = user;
@@ -85,13 +85,13 @@ export class Timer {
           ) {
             const project = this.getProjectName(file);
             const subTime = time - this.lastHeartbeat;
-            const account = this.user.account;
+            const { name } = this.user;
             if (this.lastHeartbeat !== 0) {
               recorder.record({
                 module: 'main',
                 action: 'tracking',
                 data: {
-                  user: account,
+                  user: name,
                   timestamp: subTime,
                   project:  project,
                 },

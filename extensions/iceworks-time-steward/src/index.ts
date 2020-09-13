@@ -1,24 +1,20 @@
-import { getUserInfo } from '@iceworks/common-service';
+import * as vscode from 'vscode';
+import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import { Timer } from './timer';
 
 let timer: Timer;
 
-export function activate() {
+export async function activate() {
   console.info('start timer');
-  const user = { account: '' };
-  const init = (user) => {
-    timer = new Timer(user);
-    timer.initialize();
-  };
-  getUserInfo()
-    .then((userInfo) => {
-      console.info('userInfo: ', userInfo);
-      init(userInfo);
-    })
-    .catch((e) => {
-      console.error(e.message);
-      init(user);
-    });
+  let user = { name: vscode.env.machineId };
+
+  const isAliInternal = await checkIsAliInternal();
+  if (isAliInternal) {
+    user = await getUserInfo();
+  }
+
+  timer = new Timer(user);
+  timer.initialize();
 }
 
 export function deactivate() {
