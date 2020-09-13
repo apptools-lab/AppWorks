@@ -1,7 +1,7 @@
 {
-  "name": "iceworks-code-time",
-  "displayName": "iceworks CodeTime",
-  "description": "Statistical code time",
+  "name": "iceworks-time-steward",
+  "displayName": "Iceworks Time Steward",
+  "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "engines": {
@@ -11,9 +11,12 @@
     "Other"
   ],
   "keywords": [
-    "VSCode",
     "Time",
-    "iceworks"
+    "Metrics",
+    "Insights",
+    "Tracker",
+    "Time Tracking",
+    "Timer"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
@@ -30,41 +33,20 @@
     "webpack-dev": "webpack --mode development --watch",
     "compile": "tsc -p ./tsconfig.json"
   },
-  "contributes": {
-    "commands": [
-      {
-        "title": "getUser",
-        "command": "getUser"
-      }
-    ]
-  },
   "devDependencies": {
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
     "@types/request": "^2.48.5",
-    "@types/adm-zip": "^0.4.33",
-    "@types/rimraf": "^3.0.0",
     "ts-loader": "^8.0.3",
-    "typescript": "^3.6.4"
-  },
-  "dependencies": {
-    "@ali/def-login-client": "^1.2.0",
-    "@babel/parser": "^7.10.3",
-    "@babel/traverse": "^7.10.3",
-    "@iceworks/common-service": "^0.1.14",
-    "@iceworks/recorder": "^0.1.1",
-    "adm-zip": "^0.4.16",
-    "datauri": "^2.0.0",
-    "line-column": "^1.0.2",
-    "original-fs": "^1.1.0",
-    "request": "2.88.0",
-    "rimraf": "^3.0.2",
-    "tinycolor2": "^1.4.1",
-    "vscode-web-custom-data": "^0.1.4",
+    "typescript": "^3.6.4",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
-  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-code-time/README.md",
+  "dependencies": {
+    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/recorder": "^0.1.1"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
