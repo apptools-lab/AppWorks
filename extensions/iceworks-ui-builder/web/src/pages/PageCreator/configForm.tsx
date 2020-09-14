@@ -5,7 +5,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import * as nextComponents from '@formily/next-components';
 import { Button, Notification, Loading } from '@alifd/next';
 import forIn from 'lodash.forin';
-import * as upperCamelCase from 'uppercamelcase';
 import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
@@ -95,15 +94,18 @@ export default ({
     setIsCreating(true);
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'createPage', {
+      const result = await callService('page', 'createPage', {
         ...selectedPage,
         pageName: values.pageName,
         templateData,
       });
 
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', { ...values, pageName: upperCamelCase(values.pageName) });
+          await callService('router', 'create', { ...values, pageName });
         } catch (error) {
           Notification.error({ content: error.message });
         }

@@ -119,14 +119,17 @@ const Home = () => {
     setIsCreating(true);
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'generate', {
+      const result = await callService('page', 'generate', {
         blocks: selectedBlocks,
         pageName: values.pageName,
       });
 
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', { ...values, pageName: upperCamelCase(values.pageName) });
+          await callService('router', 'create', { ...values, pageName });
         } catch (error) {
           Notification.error({ content: error.message });
         }
