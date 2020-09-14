@@ -150,49 +150,49 @@ export default ({
       {loading ? (
         <Loading />
       ) : (
-          <>
-            <h3>
-              {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
-            </h3>
-            <p>
-              {templateSchema.description ||
-                intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
-            </p>
-            <SchemaForm
-              components={tmpComponents}
-              schema={templateSchema}
-              onSubmit={(setting) => {
-                getRouterForm(setting);
-              }}
-            >
-              <div className={styles.opts}>
-                <Reset type="primary" className={styles.btn}>
-                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
-                </Reset>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setCurrentStep(currentStep - 1);
-                  }}
-                  className={styles.btn}
-                >
-                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
-                </Button>
-                <Submit type="primary" className={styles.btn}>
-                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
-                </Submit>
-              </div>
-              <RouterDetailForm
-                visible={visible}
-                isCreating={isCreating}
-                routerConfig={routerConfig}
-                isConfigurableRouter={isConfigurableRouter}
-                onSubmit={createPage}
-                onClose={onClose}
-              />
-            </SchemaForm>
-          </>
-        )}
+        <>
+          <h3>
+            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+          </h3>
+          <p>
+            {templateSchema.description ||
+              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
+          </p>
+          <SchemaForm
+            components={tmpComponents}
+            schema={templateSchema}
+            onSubmit={(setting) => {
+              getRouterForm(setting);
+            }}
+          >
+            <div className={styles.opts}>
+              <Reset type="primary" className={styles.btn}>
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
+              </Reset>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setCurrentStep(currentStep - 1);
+                }}
+                className={styles.btn}
+              >
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
+              </Button>
+              <Submit type="primary" className={styles.btn}>
+                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
+              </Submit>
+            </div>
+            <RouterDetailForm
+              visible={visible}
+              isCreating={isCreating}
+              routerConfig={routerConfig}
+              isConfigurableRouter={isConfigurableRouter}
+              onSubmit={createPage}
+              onClose={onClose}
+            />
+          </SchemaForm>
+        </>
+      )}
     </>
   );
 };
