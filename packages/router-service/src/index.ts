@@ -5,7 +5,6 @@ import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
-import * as upperCamelCase from 'uppercamelcase';
 import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
 
 interface IRouter {
@@ -43,7 +42,7 @@ const noPathPrefix = false;
 
 export async function create(data) {
   const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: upperCamelCase(pageName) }], { parent });
+  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
 }
 
 export async function getAll() {
