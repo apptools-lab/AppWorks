@@ -2,7 +2,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 # Iceworks Doctor
 
-Iceworks Doctor is a free security and quality audit tool for modern DevOps teams. With an integrated multi-scanner based design, Iceworks Doctor can detect various kinds of security flaws in your application and infrastructure code in a single fast [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) scanner without the need for any remote server! 
+Iceworks Doctor is a free security and quality audit tool for modern DevOps teams. With an integrated multi-scanner based design, Iceworks Doctor can detect various kinds of security flaws in your application and infrastructure code in a single fast [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) scanner without the need for any remote server!
 Navigate to the source code and remediate the results by interacting with the scan results.
 
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
