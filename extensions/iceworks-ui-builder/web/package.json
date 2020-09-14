@@ -27,7 +27,8 @@
     "react-dom": "^16.8.0",
     "react-intl": "^5.3.2",
     "react-sortable-hoc": "^1.11.0",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "uppercamelcase": "^3.0.0"
   },
   "scripts": {
     "start": "icejs start --disable-reload",

@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import * as nextComponents from '@formily/next-components';
 import { Button, Notification, Loading } from '@alifd/next';
 import forIn from 'lodash.forin';
+import * as upperCamelCase from 'uppercamelcase';
 import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
@@ -102,7 +103,7 @@ export default ({
 
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', values);
+          await callService('router', 'create', { ...values, pageName: upperCamelCase(values.pageName) });
         } catch (error) {
           Notification.error({ content: error.message });
         }
@@ -149,49 +150,49 @@ export default ({
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <h3>
-            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
-          </h3>
-          <p>
-            {templateSchema.description ||
-              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
-          </p>
-          <SchemaForm
-            components={tmpComponents}
-            schema={templateSchema}
-            onSubmit={(setting) => {
-              getRouterForm(setting);
-            }}
-          >
-            <div className={styles.opts}>
-              <Reset type="primary" className={styles.btn}>
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
-              </Reset>
-              <Button
-                type="primary"
-                onClick={() => {
-                  setCurrentStep(currentStep - 1);
-                }}
-                className={styles.btn}
-              >
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
-              </Button>
-              <Submit type="primary" className={styles.btn}>
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
-              </Submit>
-            </div>
-            <RouterDetailForm
-              visible={visible}
-              isCreating={isCreating}
-              routerConfig={routerConfig}
-              isConfigurableRouter={isConfigurableRouter}
-              onSubmit={createPage}
-              onClose={onClose}
-            />
-          </SchemaForm>
-        </>
-      )}
+          <>
+            <h3>
+              {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+            </h3>
+            <p>
+              {templateSchema.description ||
+                intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
+            </p>
+            <SchemaForm
+              components={tmpComponents}
+              schema={templateSchema}
+              onSubmit={(setting) => {
+                getRouterForm(setting);
+              }}
+            >
+              <div className={styles.opts}>
+                <Reset type="primary" className={styles.btn}>
+                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
+                </Reset>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setCurrentStep(currentStep - 1);
+                  }}
+                  className={styles.btn}
+                >
+                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
+                </Button>
+                <Submit type="primary" className={styles.btn}>
+                  <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
+                </Submit>
+              </div>
+              <RouterDetailForm
+                visible={visible}
+                isCreating={isCreating}
+                routerConfig={routerConfig}
+                isConfigurableRouter={isConfigurableRouter}
+                onSubmit={createPage}
+                onClose={onClose}
+              />
+            </SchemaForm>
+          </>
+        )}
     </>
   );
 };

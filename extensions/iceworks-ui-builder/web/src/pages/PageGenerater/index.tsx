@@ -6,6 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
 import RouterDetailForm from '@/components/RouterDetailForm';
+import * as upperCamelCase from 'uppercamelcase';
 import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
@@ -125,7 +126,7 @@ const Home = () => {
 
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', values);
+          await callService('router', 'create', { ...values, pageName: upperCamelCase(values.pageName) });
         } catch (error) {
           Notification.error({ content: error.message });
         }
