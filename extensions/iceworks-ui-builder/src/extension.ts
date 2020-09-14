@@ -4,6 +4,7 @@ import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
+import { showPageDevelopQuickPicks } from './pageDevelope';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -105,6 +106,11 @@ export function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworks-ui-builder.create-page', function () {
       activePageCreatorWebview();
+    })
+  );
+  subscriptions.push(
+    registerCommand('iceworks-ui-builder.debug-page', function () {
+      showPageDevelopQuickPicks();
     })
   );
 }

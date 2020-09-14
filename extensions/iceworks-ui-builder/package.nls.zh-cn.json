@@ -5,5 +5,6 @@
   "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: 可视化搭建组件",
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: 下载物料到本地",
   "iceworksUIBuilder.commands.generatePage.title": "Iceworks: 使用区块组装页面",
-  "iceworksUIBuilder.commands.createPage.title": "Iceworks: 使用模板生成页面"
+  "iceworksUIBuilder.commands.createPage.title": "Iceworks: 使用模板创建页面",
+  "iceworksUIBuilder.commands.debugPage.title": "Iceworks: 调试页面模板"
 }

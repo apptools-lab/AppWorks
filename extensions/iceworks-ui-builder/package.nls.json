@@ -5,5 +5,6 @@
   "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: Generate Component by visualization",
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: Download Component Materials",
   "iceworksUIBuilder.commands.generatePage.title": "Iceworks: Generate Page by assembling",
-  "iceworksUIBuilder.commands.createPage.title": "Iceworks: Generate Page by configure"
+  "iceworksUIBuilder.commands.createPage.title": "Iceworks: Create Page By Templates",
+  "iceworksUIBuilder.commands.debugPage.title": "Iceworks: Develop Page Templates"
 }

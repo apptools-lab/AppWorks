@@ -47,6 +47,10 @@
       {
         "command": "iceworks-ui-builder.create-page",
         "title": "%iceworksUIBuilder.commands.createPage.title%"
+      },
+      {
+        "command": "iceworks-ui-builder.debug-page",
+        "title": "%iceworksUIBuilder.commands.debugPage.title%"
       }
     ],
     "configuration": {
