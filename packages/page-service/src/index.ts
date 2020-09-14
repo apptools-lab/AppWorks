@@ -22,6 +22,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import reactPageTemplate from './templates/template.react';
+import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
@@ -56,7 +57,17 @@ export const generate = async function ({
 
     try {
       await addBlocks(blocks, pageName);
-      const fileStr = isVueProjectFramework ? vuePageTemplate : reactPageTemplate;
+
+      // get page ejs template
+      let fileStr = '';
+      if (projectFramework === 'icejs') {
+        fileStr = reactPageTemplate;
+      } else if (projectFramework === 'vue') {
+        fileStr = vuePageTemplate;
+      } else if (projectFramework === 'rax-app') {
+        fileStr = raxPageTemplate;
+      }
+
       const fileContent = ejs.compile(fileStr)({
         blocks: blocks.map((block: any) => {
           const blockName = upperCamelCase(block.name);
@@ -104,7 +115,7 @@ export const getTemplateSchema = async (selectPage: IMaterialPage) => {
   try {
     await bulkDownloadMaterials([selectPage], templateTempDir);
     const templateSchema = await fse.readJSON(
-      path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json')
+      path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json'),
     );
     await fse.remove(templateTempDir);
     return templateSchema;
@@ -132,7 +143,7 @@ export const renderPage = async (page: IMaterialPage) => {
   const pageName: string = upperCamelCase(page.pageName);
   const templatePath: string = path.join(pagesPath, '.template', `${templateName}`);
   const targetPath: string = path.join(pagesPath, `${pageName}`);
-  const templateData = page.templateData;
+  const { templateData } = page;
 
   if (fse.existsSync(targetPath)) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name: pageName }));

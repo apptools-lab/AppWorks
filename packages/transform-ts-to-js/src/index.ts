@@ -25,7 +25,7 @@ function sylvanas(files: string[], option: IOption) {
         targetFilePath,
         data: fs.readFileSync(filePath, 'utf8'),
       };
-    }
+    },
   );
 
   const parsedFileList = parse(fileList, option);
@@ -52,7 +52,7 @@ sylvanas.parseText = function parseText(text: string, option: IBabelOption = {})
         data: text,
       },
     ],
-    option
+    option,
   );
 
   return result[0].data;

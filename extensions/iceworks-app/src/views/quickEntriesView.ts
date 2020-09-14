@@ -36,7 +36,7 @@ class QuickEntryItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly tooltip: string,
-    public readonly command: vscode.Command
+    public readonly command: vscode.Command,
   ) {
     super(label);
   }

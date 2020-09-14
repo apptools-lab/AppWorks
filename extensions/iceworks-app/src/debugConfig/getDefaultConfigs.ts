@@ -70,7 +70,7 @@ export function getLaunchConfig(launchUrl?: string): IDebugConfig {
         baseUrl: BASE_URL,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
-      })
+      }),
     ),
   };
 }
@@ -87,7 +87,7 @@ export function getTasksConfig(isPegasusProject = false, disableOpen = false): I
         isPegasusProject,
         startLabel: CONFIG_START_LABEL,
         stopLabel: CONFIG_STOP_LABEL,
-      })
+      }),
     ),
   };
 }

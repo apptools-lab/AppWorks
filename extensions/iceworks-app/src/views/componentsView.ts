@@ -12,7 +12,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<
-    ComponentTreeItem | undefined
+  ComponentTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;
@@ -47,12 +47,12 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
     }
   }
 
-  private async getComponents(componentsPath: string) {
+  private async getComponents(targetPath: string) {
     try {
-      const isComponentPathExists = await checkPathExists(componentsPath);
+      const isComponentPathExists = await checkPathExists(targetPath);
       if (isComponentPathExists) {
         const toComponent = (componentName: string) => {
-          const componentPath = path.join(componentsPath, componentName);
+          const componentPath = path.join(targetPath, componentName);
 
           const command: vscode.Command = {
             command: 'iceworksApp.components.openFile',
@@ -62,10 +62,10 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
 
           return new ComponentTreeItem(this.extensionContext, componentName, command, componentPath);
         };
-        const dirNames = await fse.readdir(componentsPath);
+        const dirNames = await fse.readdir(targetPath);
         // except file
         const componentNames = dirNames.filter((dirname) => {
-          const stat = fse.statSync(path.join(componentsPath, dirname));
+          const stat = fse.statSync(path.join(targetPath, dirname));
           return stat.isDirectory();
         });
         return componentNames.map((componentName) => toComponent(componentName));
@@ -83,7 +83,8 @@ class ComponentTreeItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command: vscode.Command,
-    public readonly path: string
+    // eslint-disable-next-line no-shadow
+    public readonly path: string,
   ) {
     super(label);
   }

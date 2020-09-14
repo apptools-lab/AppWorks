@@ -23,15 +23,15 @@ export default async function (dir: string, options: ITemplateOptions): Promise<
           files.map((file) => {
             const filepath = path.join(dir, file);
             return renderFile(filepath, options);
-          })
+          }),
         )
           .then(() => {
             resolve();
           })
-          .catch((err) => {
-            reject(err);
+          .catch((e) => {
+            reject(e);
           });
-      }
+      },
     );
   });
 }

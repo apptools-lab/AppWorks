@@ -47,13 +47,13 @@ export const renderBlocks = async function (
   blocks: IMaterialBlock[],
   blockTempDir: string,
   targetDir: string,
-  log?: (text: string) => void
+  log?: (text: string) => void,
 ) {
   if (!log) {
     log = (text) => console.log(text);
   }
 
-  return await Promise.all(
+  const indexes = await Promise.all(
     blocks.map(async (block: any) => {
       const blockName = upperCamelCase(block.name);
       const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
@@ -83,8 +83,10 @@ export const renderBlocks = async function (
 
       await fsExtra.move(blockSourceSrcPath, targetPath);
       return findIndexFile(targetPath);
-    })
+    }),
   );
+
+  return indexes;
 };
 
 export async function addBlockCode(block: IMaterialBlock) {
@@ -97,7 +99,7 @@ export async function addBlockCode(block: IMaterialBlock) {
     throw new Error(templateError);
   }
 
-  const fsPath = activeTextEditor.document.uri.fsPath;
+  const { fsPath } = activeTextEditor.document.uri;
 
   const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {

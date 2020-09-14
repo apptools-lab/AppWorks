@@ -18,9 +18,9 @@ function checkVersionExists(extension: string, version: string, retry = 0): Prom
     .get(
       // Use VS Code Extension assets icon check version.
       `http://iceworks-team.gallery.vsassets.io/_apis/public/gallery/publisher/iceworks-team/extension/${encodeURIComponent(
-        extension
+        extension,
       )}/${encodeURIComponent(version)}/assetbyname/Microsoft.VisualStudio.Services.Icons.Default`,
-      { timeout: TIMEOUT }
+      { timeout: TIMEOUT },
     )
     .then((res) => res.status === 200)
     .catch((err) => {
@@ -68,7 +68,7 @@ export async function getExtensionInfos(): Promise<IExtensionInfo[]> {
         } else {
           console.log(`[ERROR] ${extensionFolder}'s package.json not found.`);
         }
-      })
+      }),
     );
   }
   return extensionInfos;

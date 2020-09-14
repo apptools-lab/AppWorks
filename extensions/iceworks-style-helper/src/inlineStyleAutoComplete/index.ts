@@ -76,8 +76,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
             propertyName,
             property.description,
             `${CSS_DOCS_URL}/${property.name}`, // Docs
-            `${propertyName}: ` // EXP position:
-          )
+            `${propertyName}: `, // EXP position:
+          ),
         );
       }
     });
@@ -97,8 +97,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
               value.description || '',
               `${CSS_DOCS_URL}/${property.name}#Values`, // Docs
               `'${value.name}'${!isEndsWithComma(currentText) ? ',' : ''}`, // EXP 'relative',
-              'Value'
-            )
+              'Value',
+            ),
           );
         }
       });
@@ -122,7 +122,7 @@ export default function inlineStyleAutoComplete(context: vscode.ExtensionContext
         { scheme: 'file', language: 'typescript' },
         { scheme: 'file', language: 'typescriptreact' },
       ],
-      { provideCompletionItems }
-    )
+      { provideCompletionItems },
+    ),
   );
 }

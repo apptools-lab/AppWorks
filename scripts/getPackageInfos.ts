@@ -58,7 +58,7 @@ export async function getPackageInfos(): Promise<IPackageInfo[]> {
         } else {
           console.log(`[ERROR] ${packageFolder}'s package.json not found.`);
         }
-      })
+      }),
     );
   }
   return packageInfos;

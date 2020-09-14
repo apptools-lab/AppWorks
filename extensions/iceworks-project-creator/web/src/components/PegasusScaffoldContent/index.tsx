@@ -8,7 +8,7 @@ const PAYLOAD = {
   terminal: { value: ['mobile', 'pc'] },
 };
 const URL = `https://banff.alibaba-inc.com/iframe/component?from=imgcook&fullScreen=true&payload=${encodeURIComponent(
-  JSON.stringify(PAYLOAD)
+  JSON.stringify(PAYLOAD),
 )}`;
 
 export default () => {

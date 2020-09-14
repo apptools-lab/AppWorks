@@ -20,7 +20,7 @@ export default function getPropKeysFromCode(componentPath: string, componentName
       traverse(ast, {
         // Get propTypes
         ExpressionStatement(path) {
-          const expression: any = path.node.expression;
+          const { expression } = path.node;
           const { left, right } = expression;
 
           if (left && right) {
@@ -38,8 +38,8 @@ export default function getPropKeysFromCode(componentPath: string, componentName
         // Get props destructuring assignment.
         // Example: const { xxx } = props;
         VariableDeclarator(path) {
-          const id: any = path.node.id;
-          const init: any = path.node.init;
+          const { id } = path.node;
+          const { init } = path.node;
 
           if (init.name === 'props') {
             (id.properties || []).forEach((property) => {

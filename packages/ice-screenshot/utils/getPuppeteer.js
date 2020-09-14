@@ -37,7 +37,7 @@ module.exports = async function getPuppeteer() {
           const result = spawn.sync(
             'npm',
             ['install', 'puppeteer@1.x', '-g', '--registry', 'https://registry.npm.taobao.org'],
-            { stdio: 'inherit' }
+            { stdio: 'inherit' },
           );
           spawn.sync('npm', ['config', 'delete', 'puppeteer_download_host']);
 
@@ -47,8 +47,8 @@ module.exports = async function getPuppeteer() {
             console.log(chalk.white('\n  npm uninstall puppeteer -g'));
             console.log(
               chalk.white(
-                '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'
-              )
+                '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org',
+              ),
             );
             console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
             process.exit(1);

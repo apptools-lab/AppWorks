@@ -12,7 +12,7 @@ import { run } from './fn/shell';
   const packagesPath = path.join(__dirname, '../packages');
   const packageFiles = await fs.readdir(packagesPath);
   return await Promise.all(
-    packageFiles.map(async function (packageFile) {
+    packageFiles.map(async (packageFile) => {
       const cwd = path.join(packagesPath, packageFile);
       const cwdStat = await fs.stat(cwd);
       if (cwdStat.isDirectory()) {
@@ -27,7 +27,7 @@ import { run } from './fn/shell';
           console.log('copy files', files);
 
           return await Promise.all(
-            files.map(async function (file) {
+            files.map(async (file) => {
               const from = path.join(cwd, file);
               const to = path.join(cwd, file.replace(/src\//, 'lib/'));
               console.log('copy from', from);
@@ -35,11 +35,11 @@ import { run } from './fn/shell';
 
               await fs.mkdirp(path.dirname(to));
               await fs.copyFile(from, to);
-            })
+            }),
           );
         }
       }
-    })
+    }),
   );
 })().catch((e) => {
   console.trace(e);
