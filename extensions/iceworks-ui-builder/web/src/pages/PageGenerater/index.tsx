@@ -6,6 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
 import RouterDetailForm from '@/components/RouterDetailForm';
+import { IRouter } from '@/types';
 import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
@@ -18,7 +19,7 @@ const Home = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [routerConfig, setRouterConfig] = useState([]);
+  const [routerConfig, setRouterConfig] = useState<IRouter[]>([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
 
   async function getSources() {
@@ -116,22 +117,28 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
+    const { menuType, pageName, parent, path } = values;
     let pageIndexPath = '';
     try {
       pageIndexPath = await callService('page', 'generate', {
         blocks: selectedBlocks,
-        pageName: values.pageName,
+        pageName,
       });
       try {
         if (isConfigurableRouter) {
           await callService('router', 'create', values);
-          const layout = routerConfig.find((item) => item.path === values.parent);
-          const layoutName = layout.component;
-          await callService('menu', 'createMenu', {
-            ...values,
-            path: isConfigurableRouter ? values.path : `/${values.pageName}`,
-            layoutName,
-          });
+          const layout = routerConfig.find((item) => item.path === parent);
+          if (layout) {
+            const layoutName = layout.component;
+            if (menuType) {
+              await callService('menu', 'createMenu', {
+                ...values,
+                path: isConfigurableRouter ? path : `/${pageName}`,
+                layoutName,
+                menuType,
+              });
+            }
+          }
         }
       } catch (e) {
         Notification.error({ content: e.message });
@@ -145,7 +152,7 @@ const Home = () => {
     setIsCreating(false);
     setVisible(false);
     resetData();
-
+    console.log('pageIndexPath', pageIndexPath);
     const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
     const selectedAction = await callService(
       'common',

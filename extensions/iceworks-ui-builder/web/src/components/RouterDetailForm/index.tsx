@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, Field, Form, Input, Select } from '@alifd/next';
+import callService from '../../callService';
 import styles from './index.module.scss';
 
 interface IPageDetail {
@@ -32,6 +33,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
   onSubmit,
   onClose,
 }) => {
+  const [menuTypes, setMenuTypes] = useState<string[]>([]);
   const field = Field.useField({
     values: {},
   });
@@ -43,6 +45,31 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
     }
 
     onSubmit(field.getValues());
+  };
+
+  const onLayoutChange = async (value: string) => {
+    // find selected layout routers
+    const router = includedChildrenRouterConfig.find(item => item.path === value);
+    if (router) {
+      const layoutName = router.component;
+      if (!layoutName) {
+        return;
+      }
+      const menuConfigPath = await callService('menu', 'getMenuConfigPath', layoutName);
+      if (!menuConfigPath) {
+        setMenuTypes([]);
+        return;
+      }
+      const { headerMenuConfig, asideMenuConfig } = await callService('menu', 'getAllConfig', menuConfigPath);
+      const layoutMenuTypes: string[] = [];
+      if (headerMenuConfig) {
+        layoutMenuTypes.push('headerMenuConfig');
+      }
+      if (asideMenuConfig) {
+        layoutMenuTypes.push('asideMenuConfig');
+      }
+      setMenuTypes(layoutMenuTypes);
+    }
   };
 
   const includedChildrenRouterConfig = routerConfig.filter((item) => !!item.children);
@@ -69,9 +96,18 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         )}
         {isConfigurableRouter && !!includedChildrenRouterConfig.length && (
           <Form.Item label="父级路由" required requiredMessage="请选择父级路由">
-            <Select name="parent" placeholder="请选择父级路由" disabled={isCreating}>
+            <Select name="parent" placeholder="请选择父级路由" disabled={isCreating} onChange={onLayoutChange}>
               {includedChildrenRouterConfig.map((route) => (
                 <Select.Option value={route.path}>{route.component}</Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
+        {isConfigurableRouter && field.getValue('parent') && !!menuTypes.length && (
+          <Form.Item label="菜单类型">
+            <Select name="menuType" placeholder="请选择生成的菜单类型" disabled={isCreating}>
+              {menuTypes.map((item: string) => (
+                <Select.Option value={item}>{item}</Select.Option>
               ))}
             </Select>
           </Form.Item>
