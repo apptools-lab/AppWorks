@@ -33,7 +33,7 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "Release to production environment.",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
-  "extension.iceworksApp.configHelper.extension.webviewTitle": "Iceworks Settings",
-  "extension.iceworksApp.welcome.extension.webviewTitle": "Welcome",
+  "extension.iceworksApp.configHelper.extension.webviewTitle": "Settings - Iceworks",
+  "extension.iceworksApp.welcome.extension.webviewTitle": "Welcome - Iceworks",
   "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
 }

@@ -85,7 +85,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // init welcome webview
   let welcomeWebviewPanel: vscode.WebviewPanel | undefined;
   function activeWelcomeWebview() {
-    const welcomeWebviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+    welcomeWebviewPanel = window.createWebviewPanel(
       'iceworks',
       i18n.format('extension.iceworksApp.welcome.extension.webviewTitle'),
       ViewColumn.One,

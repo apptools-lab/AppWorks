@@ -1,6 +1,10 @@
 .content {
-  margin-top: 30px;
-  width: 1150px;
+  margin: 30px 0 20px;
+  width: 1100px;
+
+  .title {
+    font-size: 20px;
+  }
 
   .desc {
     margin-top: 8px;
@@ -8,23 +12,24 @@
     color: $color-text1-3;
   }
 
-  .video {
-    margin: 5px 0 0 40px;
+  .videoContainer {
     display: flex;
+    margin-top: 30px;
 
     video {
       width: 800px;
       height: 500px;
     }
+
     .divider {
-      margin: 0 20px 0 40px;
-      height: 500px;
+      margin-left: 20px;
+      height: 150px;
     }
 
     .videoList {
       :global {
         .next-tree-node-label {
-          font-size: 18px !important;
+          font-size: 16px !important;
         }
 
         .next-tree-node-inner.next-selected .next-tree-node-label {

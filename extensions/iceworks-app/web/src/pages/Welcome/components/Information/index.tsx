@@ -35,7 +35,7 @@ const Information = () => {
       <div className={styles.cardList}>
         {cardList.map((item) => {
           return (
-            <div className={styles.cardItem}>
+            <div className={styles.cardItem} key={item.title}>
               <InfoCard {...item} />
             </div>
           );

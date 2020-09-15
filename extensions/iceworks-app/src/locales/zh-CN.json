@@ -34,5 +34,5 @@
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
   "extension.iceworksApp.configHelper.extension.webviewTitle": "设置 - Iceworks",
-  "extension.iceworksApp.welcome.extension.webviewTitle": "欢迎"
+  "extension.iceworksApp.welcome.extension.webviewTitle": "欢迎 - Iceworks"
 }
