@@ -117,16 +117,21 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
-    const { menuType, pageName, parent, path } = values;
+    const { menuType, parent, path } = values;
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'generate', {
+      const result = await callService('page', 'generate', {
         blocks: selectedBlocks,
-        pageName,
+        pageName: values.pageName,
       });
-      try {
-        if (isConfigurableRouter) {
-          await callService('router', 'create', values);
+
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
+      if (isConfigurableRouter) {
+        try {
+          await callService('router', 'create', { ...values, pageName });
+
           const layout = routerConfig.find((item) => item.path === parent);
           if (layout) {
             const layoutName = layout.component;
@@ -139,9 +144,9 @@ const Home = () => {
               });
             }
           }
+        } catch (error) {
+          Notification.error({ content: error.message });
         }
-      } catch (e) {
-        Notification.error({ content: e.message });
       }
     } catch (error) {
       Notification.error({ content: error.message });
