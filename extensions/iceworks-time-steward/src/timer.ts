@@ -107,10 +107,10 @@ export class Timer {
   }
 
   /**
-   * 优先级：
-   * - TODO: Git 的 group/project
-   * - package.json 的 name
-   * - 文件夹名称
+   * Priority:
+   * - TODO: Git's group/project
+   * - package.json's name
+   * - Folder name
    */
   private getProjectName(file: string): string {
     const uri = vscode.Uri.file(file);
