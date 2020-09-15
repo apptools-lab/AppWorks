@@ -53,7 +53,7 @@ export const generate = async function ({
     const isVueProjectFramework = projectFramework === 'vue';
     const projectLanguageType = await getProjectLanguageType();
     const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
-    const dist = path.join(pagePath, fileName);
+    const pageIndexPath = path.join(pagePath, fileName);
 
     try {
       await addBlocks(blocks, pageName);
@@ -87,13 +87,13 @@ export const generate = async function ({
         parser: prettierParserType,
       });
 
-      await fse.writeFile(dist, rendered, 'utf-8');
+      await fse.writeFile(pageIndexPath, rendered, 'utf-8');
     } catch (error) {
       remove(pageName);
       throw error;
     }
 
-    return dist;
+    return { pageIndexPath, pageName };
   }
 };
 

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.1.14
+
+- fix: fail to use lazy to import page component in `routes.js`
+- fix: `import React from 'react';` occurs in Rax page
+- fix: the page component name in `routes.js` has capital error
+
 ## 0.1.13
 
 - docs: update text for find component and generate page

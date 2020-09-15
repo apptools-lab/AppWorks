@@ -94,15 +94,18 @@ export default ({
     setIsCreating(true);
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'createPage', {
+      const result = await callService('page', 'createPage', {
         ...selectedPage,
         pageName: values.pageName,
         templateData,
       });
 
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', values);
+          await callService('router', 'create', { ...values, pageName });
         } catch (error) {
           Notification.error({ content: error.message });
         }
