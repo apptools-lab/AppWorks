@@ -6,31 +6,35 @@ import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
 import { layoutsPath, getProjectLanguageType } from '@iceworks/project-service';
-import { IMenuData, MenuType } from './types';
+import { IMenuData } from './types';
 
 const HEADER_MENU_CONFIG_VARIABLES = 'headerMenuConfig';
 const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
 
+/**
+ * generate menu to menuConfig.js
+ * @param data
+ */
 export async function createMenu(data) {
-  const { path: pagePath, pageName, layoutName } = data;
+  const { path: pagePath, pageName, layoutName, menuType } = data;
   const curPageMenuConfig = { path: pagePath, name: pageName };
-  const projectLanguageType = await getProjectLanguageType();
-  const menuConfigPath = path.join(layoutsPath, layoutName, `menuConfig.${projectLanguageType}`);
-  if (!fse.pathExistsSync(menuConfigPath)) {
+
+  const menuConfigPath = await getMenuConfigPath(layoutName);
+  if (!menuConfigPath) {
     return;
   }
+
   const menuConfigAST = await getMenuConfigAST(menuConfigPath);
   const {
     headerMenuConfig,
     asideMenuConfig,
-  }: { headerMenuConfig: IMenuData[]; asideMenuConfig: IMenuData[] } = getAllConfig(menuConfigAST);
+  }: { headerMenuConfig?: IMenuData[]; asideMenuConfig?: IMenuData[] } = await getAllConfig(menuConfigPath);
 
-  // if (menuType === 'headerMenuConfig') {
-  //   headerMenuConfig.push(curPageMenuConfig);
-  // } else if (menuType === 'asideMenuConfig') {
-  //   asideMenuConfig.push(curPageMenuConfig);
-  // }
-  asideMenuConfig.push(curPageMenuConfig);
+  if (menuType === 'headerMenuConfig' && headerMenuConfig instanceof Array) {
+    headerMenuConfig.push(curPageMenuConfig);
+  } else if (menuType === 'asideMenuConfig' && asideMenuConfig instanceof Array) {
+    asideMenuConfig.push(curPageMenuConfig);
+  }
 
   generateCode(headerMenuConfig, asideMenuConfig, menuConfigAST, menuConfigPath);
 }
@@ -39,9 +43,11 @@ export async function createMenu(data) {
  * get header menu configs and aside menu configs
  * @param menuConfigAST
  */
-export function getAllConfig(menuConfigAST: t.File) {
-  let headerMenuConfig = [];
-  let asideMenuConfig = [];
+export async function getAllConfig(menuConfigPath: string) {
+  const menuConfigAST = await getMenuConfigAST(menuConfigPath);
+
+  let headerMenuConfig;
+  let asideMenuConfig;
   traverse(menuConfigAST, {
     VariableDeclarator: ({ node }) => {
       // find headerMenuConfig
@@ -55,6 +61,17 @@ export function getAllConfig(menuConfigAST: t.File) {
     },
   });
   return { headerMenuConfig, asideMenuConfig };
+}
+
+export async function getMenuConfigPath(layoutName: string) {
+  const projectLanguageType = await getProjectLanguageType();
+  const menuConfigPath = path.join(layoutsPath, layoutName, `menuConfig.${projectLanguageType}`);
+
+  if (fse.pathExistsSync(menuConfigPath)) {
+    return menuConfigPath;
+  } else {
+    return false;
+  }
 }
 
 async function getMenuConfigAST(menuConfigPath: string) {
@@ -94,7 +111,7 @@ function generateCode(
   headerMenuConfig: IMenuData[],
   asideMenuConfig: IMenuData[],
   menuConfigAST: any,
-  menuConfigPath: string
+  menuConfigPath: string,
 ) {
   const headerMenuConfigAST = getASTByCode(JSON.stringify(headerMenuConfig));
   const asideMenuConfigAST = getASTByCode(JSON.stringify(asideMenuConfig));
@@ -122,6 +139,6 @@ function formatCodeFromAST(ast: t.Node) {
     {
       singleQuote: true,
       trailingComma: 'es5',
-    }
+    },
   );
 }
