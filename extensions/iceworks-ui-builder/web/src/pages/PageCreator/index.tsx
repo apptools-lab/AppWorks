@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Notification, Button, Input } from '@alifd/next';
+import { Notification, Button } from '@alifd/next';
 import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';

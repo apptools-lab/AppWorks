@@ -152,9 +152,9 @@ const Home = () => {
       'showInformationMessage',
       intl.formatMessage(
         { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
-        { path: pageIndexPath }
+        { path: pageIndexPath },
       ),
-      openFileAction
+      openFileAction,
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);

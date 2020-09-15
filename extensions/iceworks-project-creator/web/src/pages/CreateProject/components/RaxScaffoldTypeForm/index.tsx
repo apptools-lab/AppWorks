@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 interface IScaffoldTypeForm {
   value: IProjectField;
   disabled: boolean;
-  onChange: (value: object) => void;
+  onChange: (value: Record<string, unknown>) => void;
 }
 
 const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onChange }) => {
@@ -63,7 +63,7 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
         ejsOptions.mpa = ismpa;
       } else if (
         !selectedTargets.some(
-          (target) => target === 'miniapp' || target === 'wechat-miniprogram' || target === 'kraken'
+          (selectedTarget) => selectedTarget === 'miniapp' || selectedTarget === 'wechat-miniprogram' || selectedTarget === 'kraken',
         )
       ) {
         setSelectedMiniAppType(miniAppTypes[0].type);

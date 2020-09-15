@@ -11,9 +11,9 @@ export default function executeCommand(command: vscode.Command) {
     return;
   }
 
-  const terminals = vscode.window.terminals;
+  const { terminals } = vscode.window;
 
-  let terminal: Terminal | undefined = terminals.find((terminal: Terminal) => terminal.name === script);
+  let terminal: Terminal | undefined = terminals.find(({ name }) => name === script);
   if (!terminal) {
     const terminalOptions: TerminalOptions = { cwd, name: script };
     terminal = vscode.window.createTerminal(terminalOptions);

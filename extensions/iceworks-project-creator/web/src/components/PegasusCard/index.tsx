@@ -1,8 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import classnames from 'classnames';
-import callService from '@/callService';
-
 import styles from './index.module.scss';
 
 export default (props) => {

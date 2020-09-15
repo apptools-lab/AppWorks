@@ -103,13 +103,14 @@ const entries = [
 
 export default async function () {
   const conditionResults = await Promise.all(
-    entries.map(async function ({ condition }) {
+    entries.map(async ({ condition }) => {
       if (condition) {
-        return await condition();
+        const result = await condition();
+        return result;
       } else {
         return true;
       }
-    })
+    }),
   );
 
   return entries.filter((v, index) => conditionResults[index]);

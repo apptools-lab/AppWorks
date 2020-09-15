@@ -13,7 +13,7 @@ export default function getHoverItem(tagName: string) {
       i18n.format('extension.iceworksMaterialHelper.getHoverItem.hoverItemLink', {
         componentName: tagInfo.label,
         commandUri,
-      })
+      }),
     );
     // To enable command URIs in Markdown content, you must set the `isTrusted` flag.
     // https://code.visualstudio.com/api/extension-guides/command

@@ -49,7 +49,7 @@ async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDo
     usedComponentDocInfos.add(
       docInfos.find((info) => {
         return info.label === elements?.name['name'];
-      })!
+      })!,
     );
   });
   usedComponentDocInfos.add({

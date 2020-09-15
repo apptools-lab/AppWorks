@@ -18,8 +18,8 @@ async function watchFiles(cwd, ext) {
     fileSet.add(path.join(cwd, file));
   }
 
-  const watcher = await nsfw(cwd, (e) => {
-    e.forEach((e) => {
+  const watcher = await nsfw(cwd, (event) => {
+    event.forEach((e) => {
       if (
         e.action === nsfw.actions.CREATED ||
         e.action === nsfw.actions.MODIFIED ||

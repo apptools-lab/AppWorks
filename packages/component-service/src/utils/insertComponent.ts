@@ -6,7 +6,7 @@ const { Position } = vscode;
 
 export default async function insertComponent(activeTextEditor: vscode.TextEditor, name: string, npm: string) {
   const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
-    activeTextEditor.document.getText()
+    activeTextEditor.document.getText(),
   );
   const componentImportDeclaration = importDeclarations.find(({ source }) => source.value === npm);
   let componentName = generateComponentName(name);

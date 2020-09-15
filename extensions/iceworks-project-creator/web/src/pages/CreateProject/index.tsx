@@ -10,7 +10,7 @@ import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
 
-const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
+const { CLIENT_TOKEN } = process.env;
 
 const CreateProject: React.FC = () => {
   const intl = useIntl();
@@ -23,7 +23,7 @@ const CreateProject: React.FC = () => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
-  const [materialSources, setMaterialSources] = useState<Array<IMaterialSource>>([]);
+  const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const steps = [
@@ -92,7 +92,7 @@ const CreateProject: React.FC = () => {
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
-      </CreateDEFProjectForm>
+      </CreateDEFProjectForm>,
     );
   }
 
@@ -208,9 +208,9 @@ const CreateProject: React.FC = () => {
   }
 
   async function getMaterialSources() {
-    const materialSources: any = (await callService('material', 'getSources')) as IMaterialSource[];
-    setMaterialSources(materialSources);
-    return materialSources;
+    const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
+    setMaterialSources(sources);
+    return sources;
   }
   async function refreshMaterialSources() {
     const sources = await getMaterialSources();
@@ -220,11 +220,10 @@ const CreateProject: React.FC = () => {
   useEffect(() => {
     async function checkAliInternal() {
       try {
-        const isAliInternal = (await callService('common', 'checkIsAliInternal')) as boolean;
-        setIsAliInternal(isAliInternal);
+        const result = (await callService('common', 'checkIsAliInternal')) as boolean;
+        setIsAliInternal(result);
       } catch (e) {
         Notification.error({ content: e.message });
-        return false;
       }
     }
     async function setDefaultFields() {
@@ -232,8 +231,8 @@ const CreateProject: React.FC = () => {
       setCurProjectField({ ...curProjectField, projectPath: workspace });
     }
     async function initMaterialSources() {
-      const materialSources = await getMaterialSources();
-      setMaterialSources(materialSources);
+      const sources = await getMaterialSources();
+      setMaterialSources(sources);
     }
     async function initData() {
       try {

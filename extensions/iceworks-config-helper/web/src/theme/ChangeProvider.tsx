@@ -28,7 +28,7 @@ const ChangeProvider = ({ fieldKey, children }) => {
         ((currentValue === '' || currentValue === false) && defaultValue === undefined) ||
         currentValue === undefined
         ? { backgroundColor: DEFUALT_ITEM_COLOR, width: WIDTH, margin: DEFAULT_ITEM_MARGIN }
-        : { backgroundColor: CHANGED_ITEM_COLOR, width: WIDTH, margin: CHANGED_ITEM_MARGIN }
+        : { backgroundColor: CHANGED_ITEM_COLOR, width: WIDTH, margin: CHANGED_ITEM_MARGIN },
     );
   }, [jsonContent]);
 
