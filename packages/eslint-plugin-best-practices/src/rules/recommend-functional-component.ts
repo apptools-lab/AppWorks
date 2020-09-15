@@ -20,12 +20,14 @@ module.exports = {
       ClassDeclaration: function handleRequires(node: any) {
         const name = node.id.name;
         let superName = '';
-        if (node.superClass.name) {
-          // class xxx extends Component
-          superName = node.superClass.name;
-        } else if (node.superClass.property && node.superClass.property.name) {
-          // class xxx extends React.Component
-          superName = node.superClass.property.name;
+        if (node.superClass) {
+          if (node.superClass.name) {
+            // class xxx extends Component
+            superName = node.superClass.name;
+          } else if (node.superClass.property && node.superClass.property.name) {
+            // class xxx extends React.Component
+            superName = node.superClass.property.name;
+          }
         }
 
         // Class Component

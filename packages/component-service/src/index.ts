@@ -9,6 +9,7 @@ import {
   getDataFromSettingJson,
   getIceworksTerminal,
   checkPathExists,
+  showTextDocument,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -20,7 +21,13 @@ import {
   componentsPath,
   getProjectLanguageType,
 } from '@iceworks/project-service';
-import CodeGenerator, { IBasicSchema, IContainerNodeItem, IUtilItem, II18nMap } from '@iceworks/code-generator';
+import CodeGenerator, {
+  IBasicSchema,
+  IContainerNodeItem,
+  IUtilItem,
+  II18nMap,
+  IResultDir,
+} from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
 import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
@@ -163,18 +170,29 @@ export async function generateComponentCode(
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
   try {
     await generateCode(componentName, schema);
-    vscode.window.showInformationMessage(
-      i18nService.format('package.component-service.index.createComponentSuccess', {
-        componentPath: path.join(componentsPath, componentName),
-      })
-    );
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
+    throw e;
+  }
+
+  const projectLanguageType = await getProjectLanguageType();
+  const fileType = `${projectLanguageType}x`;
+
+  const componentPath = path.join(componentsPath, componentName, `index.${fileType}`);
+  const openFileAction = i18nService.format('package.component-service.index.openFile');
+  const selectedAction = await vscode.window.showInformationMessage(
+    i18nService.format('package.component-service.index.createComponentSuccess', {
+      componentPath,
+    }),
+    openFileAction
+  );
+
+  if (selectedAction === openFileAction) {
+    showTextDocument(componentPath);
   }
 }
 
 async function generateCode(componentName: string, schema: IBasicSchema) {
-  // TODO: support generate .tsx
   const projectLanguageType = await getProjectLanguageType();
   const fileType = `${projectLanguageType}x`;
   const moduleBuilder = CodeGenerator.createModuleBuilder({
@@ -206,12 +224,12 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
   writeResultToDisk(result, componentsPath, componentName);
 }
 
-function writeResultToDisk(code, path, componentName) {
+function writeResultToDisk(code: IResultDir, outputPath: string, componentName: string) {
   const publisher = CodeGenerator.publishers.disk();
 
   return publisher.publish({
     project: code,
-    outputPath: path,
+    outputPath,
     projectSlug: componentName,
   });
 }

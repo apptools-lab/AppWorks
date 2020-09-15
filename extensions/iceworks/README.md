@@ -72,7 +72,7 @@ Extension | Description | State
 
 - Join [Dingtalk](https://www.dingtalk.com/) Group
 
-  ![qrcode](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_360x10000.jpg)
+  ![qrcode](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_220x10000.jpg)
 - Open an [issue](https://github.com/ice-lab/iceworks/issues/new)
 
   We will respond quickly to the submitted issues.

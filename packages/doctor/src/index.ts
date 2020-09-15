@@ -1,9 +1,9 @@
 import Scanner from './Scanner';
 import { IDoctorOptions } from './types/Doctor';
-import { IScannerReports } from './types/Scanner';
+import { IScanOptions, IScannerReports } from './types/Scanner';
 
 // Ignore directories
-const defaultIgnoreDirs = ['build', 'es', 'dist', 'lib', 'node_modules', 'public', 'test', '__tests__'];
+const defaultignore = ['build', 'es', 'dist', 'lib', 'node_modules', 'public', 'test', '__tests__'];
 // Support file exts
 const defaultSupportExts = ['js', 'jsx', 'ts', 'tsx'];
 
@@ -15,13 +15,13 @@ class Doctor {
   constructor(options: IDoctorOptions) {
     this.options = options || {};
     this.scanner = new Scanner({
-      ignoreDirs: defaultIgnoreDirs.concat(this.options.ignoreDirs || []),
+      ignore: defaultignore.concat(this.options.ignore || []),
       supportExts: defaultSupportExts.concat(this.options.supportExts || []),
     });
   }
 
-  scan(directory: string): Promise<IScannerReports> {
-    return this.scanner.scan(directory);
+  scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
+    return this.scanner.scan(directory, options);
   }
 }
 

@@ -11,6 +11,13 @@ import callService from '../../callService';
 
 nextComponents.setup();
 
+const tmpComponents = {};
+forIn(nextComponents, (value, key) => {
+  if (key !== 'setup') {
+    tmpComponents[key] = value;
+  }
+});
+
 export default ({
   templateSchema,
   originResetData,
@@ -26,16 +33,8 @@ export default ({
   const [routerConfig, setRouterConfig] = useState([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
   const [templateData, setTemplateData] = useState({});
-  const [components, setComponents] = useState({});
 
   useEffect(() => {
-    const tmpComponents = {};
-    forIn(nextComponents, (value, key) => {
-      if (key !== 'setup') {
-        tmpComponents[key] = value;
-      }
-    });
-    setComponents(tmpComponents);
     setLoading(false);
   }, []);
 
@@ -75,11 +74,11 @@ export default ({
 
   async function getRouterForm(setting) {
     try {
-      const isRouteConfigPathExists = await callService('page', 'checkRouteConfigPathExists');
+      const isRouteConfigPathExists = await callService('router', 'checkConfigPathExists');
       setIsConfigurableRouter(isRouteConfigPathExists);
       if (isRouteConfigPathExists) {
         // configurable router
-        const config = await callService('page', 'getAll');
+        const config = await callService('router', 'getAll');
         setRouterConfig(config);
       }
       setTemplateData(getTemplateData(setting));
@@ -103,7 +102,7 @@ export default ({
 
       if (isConfigurableRouter) {
         try {
-          await callService('page', 'createRouter', values);
+          await callService('router', 'create', values);
         } catch (error) {
           Notification.error({ content: error.message });
         }
@@ -159,7 +158,7 @@ export default ({
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
           </p>
           <SchemaForm
-            components={components}
+            components={tmpComponents}
             schema={templateSchema}
             onSubmit={(setting) => {
               getRouterForm(setting);

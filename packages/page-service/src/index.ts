@@ -23,11 +23,8 @@ import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import reactPageTemplate from './templates/template.react';
 import vuePageTemplate from './templates/template.vue';
-import { bulkCreate } from './router';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
-
-export * from './router';
 
 /**
  * Generate page code based on blocks
@@ -45,58 +42,49 @@ export const generate = async function ({
   const pageName = upperCamelCase(name);
   const pagePath = path.join(pagesPath, pageName);
 
-  // ensure that the root directory of the page store exists
-  await fse.mkdirp(pagePath);
-
   const isPagePathExists = await fse.pathExists(pagePath);
-  if (!isPagePathExists) {
+  if (isPagePathExists) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
+  } else {
+    // ensure that the root directory of the page store exists
+    await fse.mkdirp(pagePath);
+    const projectFramework = await getProjectFramework();
+    const isVueProjectFramework = projectFramework === 'vue';
+    const projectLanguageType = await getProjectLanguageType();
+    const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
+    const dist = path.join(pagePath, fileName);
+
+    try {
+      await addBlocks(blocks, pageName);
+      const fileStr = isVueProjectFramework ? vuePageTemplate : reactPageTemplate;
+      const fileContent = ejs.compile(fileStr)({
+        blocks: blocks.map((block: any) => {
+          const blockName = upperCamelCase(block.name);
+          return {
+            ...block,
+            className: blockName,
+            relativePath: `./${COMPONENT_DIR_NAME}/${blockName}`,
+          };
+        }),
+        className: pageName,
+        pageName,
+      });
+      const prettierParserType = isVueProjectFramework ? 'vue' : 'babel';
+      const rendered = prettier.format(fileContent, {
+        singleQuote: true,
+        trailingComma: 'es5',
+        parser: prettierParserType,
+      });
+
+      await fse.writeFile(dist, rendered, 'utf-8');
+    } catch (error) {
+      remove(pageName);
+      throw error;
+    }
+
+    return dist;
   }
-
-  const projectFramework = await getProjectFramework();
-  const isVueProjectFramework = projectFramework === 'vue';
-  const projectLanguageType = await getProjectLanguageType();
-  const fileName = isVueProjectFramework ? 'index.vue' : `index.${projectLanguageType}x`;
-  const dist = path.join(pagePath, fileName);
-
-  try {
-    await addBlocks(blocks, pageName);
-    const fileStr = isVueProjectFramework ? vuePageTemplate : reactPageTemplate;
-    const fileContent = ejs.compile(fileStr)({
-      blocks: blocks.map((block: any) => {
-        const blockName = upperCamelCase(block.name);
-        return {
-          ...block,
-          className: blockName,
-          relativePath: `./${COMPONENT_DIR_NAME}/${blockName}`,
-        };
-      }),
-      className: pageName,
-      pageName,
-    });
-    const prettierParserType = isVueProjectFramework ? 'vue' : 'babel';
-    const rendered = prettier.format(fileContent, {
-      singleQuote: true,
-      trailingComma: 'es5',
-      parser: prettierParserType,
-    });
-
-    await fse.writeFile(dist, rendered, 'utf-8');
-  } catch (error) {
-    remove(pageName);
-    throw error;
-  }
-
-  return dist;
 };
-
-/**
- *  write the router config
- */
-export async function createRouter(data) {
-  const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
-}
 
 /**
  * Remove page files
@@ -132,11 +120,9 @@ export const createPage = async (selectPage: IMaterialPage) => {
     await bulkDownloadMaterials([selectPage], templateTempDir);
     const pageIndexPath = await renderPage(selectPage);
     await bulkInstallMaterialsDependencies([selectPage], projectPath);
-    await fse.remove(templateTempDir);
     return pageIndexPath;
-  } catch (err) {
+  } finally {
     await fse.remove(templateTempDir);
-    throw err;
   }
 };
 

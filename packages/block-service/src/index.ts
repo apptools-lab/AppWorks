@@ -19,6 +19,7 @@ import {
   getFolderLanguageType,
   bulkInstallMaterialsDependencies,
   bulkDownloadMaterials,
+  findIndexFile,
 } from '@iceworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -33,9 +34,10 @@ const { window, Position } = vscode;
 export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath: string) {
   const blocksTempDir = path.join(localPath, '.temp-block');
   await bulkDownloadMaterials(blocks, blocksTempDir);
-  await renderBlocks(blocks, blocksTempDir, localPath);
+  const blockIndexPaths = await renderBlocks(blocks, blocksTempDir, localPath);
   await fsExtra.remove(blocksTempDir);
   await bulkInstallMaterialsDependencies(blocks, projectPath);
+  return blockIndexPaths;
 };
 
 /**
@@ -55,11 +57,15 @@ export const renderBlocks = async function (
     blocks.map(async (block: any) => {
       const blockName = upperCamelCase(block.name);
       const blockSourceSrcPath = path.join(blockTempDir, blockName, 'src');
-      const blockSrcPath = path.join(targetDir, blockName, 'src');
+      const targetPath = path.join(targetDir, blockName);
       const blockType = getFolderLanguageType(blockSourceSrcPath);
       const projectType = await getProjectLanguageType();
 
-      console.log('blockType: ', blockType, 'projectType: ', projectType);
+      // fs 的异步版 exists 已经被弃用 http://nodejs.cn/api/fs.html#fs_fs_exists_path_callback
+      const isTargetDirExists = fsExtra.existsSync(targetPath);
+      if (isTargetDirExists) {
+        throw new Error(i18n.format('package.block-service.targetDirExists', { targetPath }));
+      }
 
       if (blockType === 'ts' && projectType === 'js') {
         const files = glob.sync('**/*.@(ts|tsx)', {
@@ -75,8 +81,8 @@ export const renderBlocks = async function (
         });
       }
 
-      await fsExtra.move(blockSourceSrcPath, blockSrcPath);
-      return targetDir;
+      await fsExtra.move(blockSourceSrcPath, targetPath);
+      return findIndexFile(targetPath);
     })
   );
 };
@@ -110,19 +116,22 @@ export async function addBlockCode(block: IMaterialBlock) {
   await insertBlock(activeTextEditor, blockName);
 
   // download block
-  const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
+  const componentsPath = path.join(pagePath, '.temp');
+  const targetPath = path.join(pagePath, COMPONENT_DIR_NAME);
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
   try {
-    const blockDir = await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
+    await bulkDownloadMaterials([{ ...block, name: blockName }], componentsPath, (text) => {
       materialOutputChannel.appendLine(`> ${text}`);
     });
-    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir }));
+    materialOutputChannel.appendLine(i18n.format('package.block-service.obtainDone', { blockDir: targetPath }));
+    await renderBlocks([{ ...block, name: blockName }], componentsPath, targetPath);
   } catch (error) {
     materialOutputChannel.appendLine(`> Error: ${error.message}`);
   } finally {
     // activate the textEditor
+    await fsExtra.remove(componentsPath);
     window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
   }
 

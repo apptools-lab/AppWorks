@@ -1,8 +1,17 @@
-// import { IClone } from '@jscpd/core';
+import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
-  ignoreDirs: string[];
+  ignore: string[];
   supportExts: string[];
+}
+
+export interface IScanOptions {
+  fix?: boolean;
+  disableAliEslint?: boolean;
+  disableBestPractices?: boolean;
+  disableSecurityPractices?: boolean;
+  disableMaintainability?: boolean;
+  disableRepeatability?: boolean;
 }
 
 export interface IFileInfo {
@@ -36,11 +45,10 @@ export interface IMaintainabilityReports {
 
 export interface IRepeatabilityReports {
   score: number;
-  // clones: IClone[];
-  clones: any[];
+  clones: IClone[];
 }
 
-export interface IALiEslintReports {
+export interface IEslintReports {
   score: number;
   reports: any[];
 }
@@ -50,7 +58,10 @@ export interface IScannerReports {
     count: number;
     lines: number;
   };
-  aliEslint?: IALiEslintReports;
+  score?: number;
+  aliEslint?: IEslintReports;
+  bestPractices?: IEslintReports;
+  securityPractices?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
 }

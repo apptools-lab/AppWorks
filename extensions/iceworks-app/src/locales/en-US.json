@@ -13,7 +13,7 @@
   "extension.iceworksApp.showEntriesQuickPick.createComponent.detail": "Download coomponent materials to local",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "Settings",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "Set the related functions provided by Iceworks",
-  "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "Component Document",
+  "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "Find Component",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "Quickly search and browse component documents",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.label": "Debug",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.detail": "Debug and Preview the application through VS Code",

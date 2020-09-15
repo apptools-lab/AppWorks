@@ -35,8 +35,8 @@ if (args.help) {
 if (args.scan) {
 
   const options = {};
-  if (Array.isArray(args.ignoreDir)) {
-    options.ignoreDir = args.ignoreDir;
+  if (Array.isArray(args.ignore)) {
+    options.ignore = args.ignore;
   }
 
   if (Array.isArray(args.supportExts)) {
@@ -51,11 +51,14 @@ if (args.scan) {
         count: result.filesInfo.count,
         lines: result.filesInfo.lines
       },
+      score: result.score,
       aliEslint: result.aliEslint.score,
+      bestPractices: result.bestPractices.score,
+      securityPractices: result.securityPractices.score,
       maintainability: result.maintainability.score,
       repeatability: result.repeatability.score
     });
-    
+
   }).catch((err) => {
     console.log('Error!');
     console.error(err);
