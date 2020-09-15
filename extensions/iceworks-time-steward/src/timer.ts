@@ -14,7 +14,7 @@ export class Timer {
 
   private lastHeartbeat: number = 0;
 
-  private user;
+  private user: { empId: string; account: string; };
 
   constructor(user) {
     this.user = user;
@@ -79,15 +79,17 @@ export class Timer {
           if (isWrite || enoughTimePassed || this.lastFile !== file) {
             const project = this.getProjectName(file);
             const subTime = time - this.lastHeartbeat;
-            const { name } = this.user;
+            const { account, empId } = this.user;
             if (this.lastHeartbeat !== 0) {
               recorder.record({
                 module: 'main',
                 action: 'tracking',
                 data: {
-                  user: name,
+                  userName: account,
+                  userId: empId,
                   timestamp: subTime,
                   project,
+                  version,
                 },
               });
             }
@@ -104,6 +106,12 @@ export class Timer {
     return this.lastHeartbeat + 120000 < time;
   }
 
+  /**
+   * 优先级：
+   * - TODO: Git 的 group/project
+   * - package.json 的 name
+   * - 文件夹名称
+   */
   private getProjectName(file: string): string {
     const uri = vscode.Uri.file(file);
     const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);

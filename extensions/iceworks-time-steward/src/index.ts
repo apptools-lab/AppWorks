@@ -6,7 +6,7 @@ let timer: Timer;
 
 export async function activate() {
   console.info('start timer');
-  let user = { name: vscode.env.machineId };
+  let user = { empId: vscode.env.machineId, account: 'anonymous' };
 
   const isAliInternal = await checkIsAliInternal();
   if (isAliInternal) {
