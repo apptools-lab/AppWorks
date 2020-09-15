@@ -14,7 +14,7 @@ export class Timer {
 
   private lastHeartbeat: number = 0;
 
-  private user: { empId: string; account: string; };
+  private user: { empId: string; account: string };
 
   constructor(user) {
     this.user = user;
