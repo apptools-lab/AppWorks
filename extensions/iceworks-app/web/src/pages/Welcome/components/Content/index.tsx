@@ -6,7 +6,7 @@ const TreeNode = Tree.Node;
 
 const videosList = [
   {
-    title: '创建一个 Hello World 应用',
+    title: '创建 Hello World 应用',
     videoUrl: 'https://lark-video.oss-cn-hangzhou.aliyuncs.com/outputs/prod/yuque/2020/371895/mov/1600147884257-e9253ef8-33d8-43e0-96f5-f4c0274fc776.mp4?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1600155163&Signature=QdnNfEXT4qp4Thv1jvhmX75SRzc%3D',
   },
   {
@@ -28,8 +28,8 @@ const Content = () => {
 
   return (
     <div className={styles.content}>
-      <div className={styles.title}>上手课程</div>
-      <div className={styles.desc}>10分钟快速上手使用 Iceworks</div>
+      <div className={styles.title}>上手教程</div>
+      <div className={styles.desc}>30分钟快速上手使用 Iceworks</div>
       <div className={styles.videoContainer}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
