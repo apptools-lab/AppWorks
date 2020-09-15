@@ -90,7 +90,9 @@ export default async () => {
         }
       }
 
-      projectInfo.list.push({ items: baseItems });
+      if (baseItems.length) {
+        projectInfo.list.push({ items: baseItems });
+      }
 
       // Git Info
       const gitItems: IItem[] = [];
@@ -113,7 +115,9 @@ export default async () => {
         });
       }
 
-      projectInfo.list.push({ items: gitItems });
+      if (gitItems.length) {
+        projectInfo.list.push({ items: gitItems });
+      }
 
       // DEF Info
       const defItems: IItem[] = [];
@@ -132,7 +136,9 @@ export default async () => {
         }
       }
 
-      projectInfo.list.push({ items: defItems });
+      if (defItems.length) {
+        projectInfo.list.push({ items: defItems });
+      }
     }
   } catch (e) {
     // ignore

@@ -92,8 +92,6 @@ function activate(context: vscode.ExtensionContext) {
 
     connectService(reportWebviewPanel, context, { services, recorder });
   });
-
-  recorder.recordActivate();
 }
 
 exports.activate = activate;
