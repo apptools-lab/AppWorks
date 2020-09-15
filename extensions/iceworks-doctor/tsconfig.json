@@ -6,7 +6,8 @@
     "noImplicitAny": false,
     "module": "commonjs",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src", "schema"],
   "exclude": ["node_modules", "web"]
