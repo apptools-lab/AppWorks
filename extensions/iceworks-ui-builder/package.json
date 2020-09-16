@@ -99,6 +99,14 @@
             }
           },
           "default": []
+        },
+        "iceworks.generatePagePath": {
+          "type": "string",
+          "default": "src/pages/"
+        },
+        "iceworks.generateComponentPath": {
+          "type": "string",
+          "default": "src/components/"
         }
       }
     }

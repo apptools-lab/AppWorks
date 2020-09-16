@@ -59,8 +59,8 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
       cancelProps={{ disabled: isCreating }}
     >
       <Form field={field} fullWidth className={styles.form}>
-        <Form.Item label="页面目录名" required requiredMessage="请输入页面目录名">
-          <Input name="pageName" placeholder="请输入页面目录名" disabled={isCreating} />
+        <Form.Item label="页面名称" required requiredMessage="请输入页面名称">
+          <Input name="pageName" placeholder="请输入页面名称" disabled={isCreating} />
         </Form.Item>
         {isConfigurableRouter && (
           <Form.Item label="路由路径" required requiredMessage="请输入路由路径">
