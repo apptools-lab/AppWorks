@@ -18,6 +18,7 @@ app/build/
 tmp
 .tmp
 __mocks__
+out
 
 # 忽略文件
 **/*-min.js
