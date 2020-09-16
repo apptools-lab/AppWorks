@@ -2,12 +2,12 @@
 
 # Iceworks Doctor
 
-Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫描仪 [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) 的设计，Iceworks Doctor 可以在一次快速扫描中检测到应用程序和基础设施代码中的各种安全漏洞，而无需任何远程服务器!导航到源代码，并通过与扫描结果进行交互来修复结果。
+Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫描仪 [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) 的设计，Iceworks Doctor 可以在一次扫描中快速检测到应用程序和基础库代码中的各种安全漏洞和质量问题，而无需访问任何远程服务！你可以一键修复所有报告的问题，或者导航到源代码逐条来修复。
 
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: Open Dashboard` 激活插件
+2. 输入 `Iceworks: 打开仪表盘` 激活插件
 
 ## 项目详情
 
@@ -15,11 +15,11 @@ Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集�
 
 ## 质量检测
 
-对项目进行5个维度的检测，`最佳实践`，`安全实践`，`Ali Eslint`，`可维护性` 及 `代码重复度`。
+对项目进行 5 个维度的检测，包含：`最佳实践`、`安全实践`、`Ali Eslint`、`可维护性` 及 `代码重复度`。
 
 ## 文件保存时检测
 
-文件保存时默认进行`安全实践检测`
+文件保存时默认进行`安全实践检测`。
 
 ## 设置
 

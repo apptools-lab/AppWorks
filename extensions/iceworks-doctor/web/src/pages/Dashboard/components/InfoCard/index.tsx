@@ -7,7 +7,7 @@ const InfoCard = () => {
   useEffect(() => {
     async function getData() {
       try {
-        setData(await callService('data', 'projectInfo'));
+        setData(await callService('data', 'getProjectInfo'));
       } catch (e) {
         // ignore
       }
@@ -23,7 +23,7 @@ const InfoCard = () => {
       <p className={styles.description}>{data.description}</p>
 
       {(data.list || []).map((row: any, index) => {
-        const items = row.items;
+        const { items } = row;
         const rowStyle = index === data.list.length - 1 ? { border: 'none' } : {};
         return (
           <div className={styles.row} style={rowStyle} key={`row-${index}`}>

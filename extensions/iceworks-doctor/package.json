@@ -24,7 +24,15 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "*"
+    "onCommand:iceworks-doctor.dashboard",
+    "onLanguage:json",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:scss"
   ],
   "main": "./build/extension.js",
   "repository": {
@@ -76,7 +84,6 @@
     "@types/lodash": "^4.14.158",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "ts-loader": "^7.0.5",
     "typescript": "^3.8.3"
   }
 }

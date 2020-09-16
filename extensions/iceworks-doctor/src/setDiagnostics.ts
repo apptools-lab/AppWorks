@@ -14,33 +14,33 @@ export default (report, rewrite?: boolean) => {
       cache = report;
     } else {
       // Update cache. For single file scan report
-      report.reports.forEach((report) => {
-        const index = (cache.reports || []).findIndex((cacheReport) => cacheReport.filePath === report.filePath);
+      report.reports.forEach((item) => {
+        const index = (cache.reports || []).findIndex((cacheReport) => cacheReport.filePath === item.filePath);
         if (index === -1) {
-          cache.reports.push(report);
+          cache.reports.push(item);
         } else {
-          cache.reports[index] = report;
+          cache.reports[index] = item;
         }
       });
     }
     // Set diagnostics
-    cache.reports.forEach((report) => {
+    cache.reports.forEach((item) => {
       const diagnostics: vscode.Diagnostic[] = [];
 
-      (report.messages || []).forEach((message: any) => {
+      (item.messages || []).forEach((message: any) => {
         diagnostics.push({
           code: '',
           message: message.message,
           range: new vscode.Range(
             new vscode.Position(message.line - 1, message.column - 1),
-            new vscode.Position(message.endLine - 1, message.endColumn - 1)
+            new vscode.Position(message.endLine - 1, message.endColumn - 1),
           ),
           severity: message.severity === 1 ? DiagnosticSeverity.Warning : DiagnosticSeverity.Error,
           source: 'Iceworks Doctor',
         });
       });
 
-      collection.set(Uri.file(report.filePath), diagnostics);
+      collection.set(Uri.file(item.filePath), diagnostics);
     });
   } catch (e) {
     // ignore

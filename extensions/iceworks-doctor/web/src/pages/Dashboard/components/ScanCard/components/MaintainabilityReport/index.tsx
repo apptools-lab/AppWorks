@@ -7,7 +7,7 @@ import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
 
-const Tooltip = Balloon.Tooltip;
+const { Tooltip } = Balloon;
 
 const reportKey = getReportKey('maintainability');
 
@@ -84,9 +84,9 @@ const MaintainabilityReport = (props) => {
           {(data.reports || []).map((report, index) => {
             const aggregate = report.aggregate || {};
             const lineNumber = aggregate.sloc && aggregate.sloc.physical;
-            const cyclomatic = aggregate.cyclomatic;
+            const { cyclomatic } = aggregate;
             const difficulty = (aggregate.halstead && aggregate.halstead.difficulty) || 0;
-            const maintainability = report.maintainability;
+            const { maintainability } = report;
             return (
               <div
                 key={`report${index}`}

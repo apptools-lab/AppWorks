@@ -80,7 +80,7 @@ export default async () => {
 
       if (projectType === 'rax' && buildConfig.plugins) {
         const raxPlugin = buildConfig.plugins.find(
-          (plugin) => Array.isArray(plugin) && plugin[0] === 'build-plugin-rax-app'
+          (plugin) => Array.isArray(plugin) && plugin[0] === 'build-plugin-rax-app',
         );
         if (raxPlugin && raxPlugin[1].targets) {
           baseItems.push({

@@ -7,7 +7,7 @@ import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';
 import styles from './index.module.scss';
 
-const Tooltip = Balloon.Tooltip;
+const { Tooltip } = Balloon;
 
 function getMessagesLength(reports): number {
   let length = 0;

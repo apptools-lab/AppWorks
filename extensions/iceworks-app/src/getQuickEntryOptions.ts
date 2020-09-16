@@ -95,6 +95,14 @@ const entries = [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.detail'),
+    command: 'iceworks-doctor.dashboard',
+    async condition() {
+      return !(await checkIsNotTarget());
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
     command: 'iceworksApp.configHelper.start',

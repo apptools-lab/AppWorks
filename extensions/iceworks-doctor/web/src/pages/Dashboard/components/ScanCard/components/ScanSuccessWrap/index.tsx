@@ -26,10 +26,10 @@ const ScanSuccessWrap = (props) => {
   return (
     <div className={styles.scanSuccessWrap}>
       <Header score={data.score} filesInfo={data.filesInfo} />
-      <ScoreBoard data={data} onAffix={(affixed) => setAffixed(affixed)} />
+      <ScoreBoard data={data} onAffix={(newAffixed) => setAffixed(newAffixed)} />
       <div className={styles.reportWrap}>
         {reportKeys.map((reportKey: IReportKeys) => {
-          const key = reportKey.key;
+          const { key } = reportKey;
           switch (key) {
             case 'bestPractices':
               return <BestPracticesReport key={key} data={data[key]} />;

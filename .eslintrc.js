@@ -3,5 +3,5 @@ module.exports = {
   rules: {
     'no-return-await': 1,
     '@typescript-eslint/no-parameter-properties': 1,
-  }
+  },
 };

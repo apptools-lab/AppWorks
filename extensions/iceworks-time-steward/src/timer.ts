@@ -10,9 +10,9 @@ const recorder = new Recorder(name, version);
 export class Timer {
   private disposable: vscode.Disposable;
 
-  private lastFile: string = '';
+  private lastFile = '';
 
-  private lastHeartbeat: number = 0;
+  private lastHeartbeat = 0;
 
   private user: { empId: string; account: string };
 
@@ -118,7 +118,7 @@ export class Timer {
     if (workspaceFolder) {
       try {
         const packageJsonResultObj: IPackageJson = JSON.parse(
-          fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8')
+          fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8'),
         );
         return packageJsonResultObj.name;
       } catch (e) {
