@@ -38,7 +38,7 @@
   "web.iceworksUIBuilder.RouterDetailForm.parent.placeholder": "Please Select Layout Path",
   "web.iceworksUIBuilder.RouterDetailForm.menuType.label": "Menu Type",
   "web.iceworksUIBuilder.RouterDetailForm.menuType.placeholder": "Please Select Menu Type",
-  "web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage": "Generate Menu Automatically to menu config",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage": "Generate Menu Automatically to Menu Config",
   "web.iceworksUIBuilder.RouterDetailForm.asideMenuConfig.label": "Sidebar Menu",
   "web.iceworksUIBuilder.RouterDetailForm.headerMenuConfig.label": "Header Menu"
 }
