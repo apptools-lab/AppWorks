@@ -8,7 +8,7 @@ declare module 'vscode-web-custom-data/data/browsers.css-data.json' {
     name: string;
     values?: IPropertyValue[];
     syntax?: string;
-    references?: { name: string; url: string }[];
+    references?: Array<{ name: string; url: string }>;
     description: string;
     restrictions?: string[];
   }

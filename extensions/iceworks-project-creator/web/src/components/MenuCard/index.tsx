@@ -7,7 +7,7 @@ interface IMenuCard {
   title: string;
   selected: boolean;
   icon?: string;
-  style?: object;
+  style?: Record<string, unknown>;
   disabled?: boolean;
   onClick?: () => void;
   // only for Balloon Component

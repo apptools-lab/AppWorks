@@ -38,7 +38,7 @@ export default function findVariables(targetPath: string): IVariables {
             position: new vscode.Position(
               // Example: "path": "|/detail",
               positionInfo.line - 1,
-              positionInfo.col
+              positionInfo.col,
             ),
           };
         }

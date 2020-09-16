@@ -1,4 +1,3 @@
-import { pathToRegexp } from 'path-to-regexp';
 import docsUrl from '../docsUrl';
 
 const RULE_NAME = 'no-multi-nested-page';

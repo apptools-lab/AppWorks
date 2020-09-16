@@ -65,11 +65,11 @@ export default ({
   }
 
   function getTemplateData(userConfig) {
-    const templateData = getDefaultData();
-    forIn(templateData, (val, key) => {
-      templateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
+    const defaultTemplateData = getDefaultData();
+    forIn(defaultTemplateData, (val, key) => {
+      defaultTemplateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
     });
-    return templateData;
+    return defaultTemplateData;
   }
 
   async function getRouterForm(setting) {
@@ -130,9 +130,9 @@ export default ({
             ? 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath'
             : 'web.iceworksUIBuilder.pageGenerater.successCreatePage',
         },
-        { path: pageIndexPath }
+        { path: pageIndexPath },
       ),
-      pageIndexPath ? openFileAction : []
+      pageIndexPath ? openFileAction : [],
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
