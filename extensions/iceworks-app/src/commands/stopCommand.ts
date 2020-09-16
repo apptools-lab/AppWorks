@@ -1,12 +1,12 @@
 import * as vscode from 'vscode';
 
 export default function stopCommand(command: vscode.Command) {
-  const terminals = vscode.window.terminals;
+  const { terminals } = vscode.window;
   const commandArgs = command.arguments;
   if (!commandArgs) {
     return;
   }
-  const [cwd, script] = commandArgs;
+  const [script] = commandArgs;
   if (!script) {
     return;
   }

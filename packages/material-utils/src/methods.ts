@@ -90,7 +90,7 @@ export function getMaterialCategoryData(components: IMaterialItem[]): IMaterialC
 
 export const getTarballURLByMaterielSource = async function (
   source: IMaterialNpmSource,
-  iceVersion?: string
+  iceVersion?: string,
 ): Promise<string> {
   let { version } = source;
 

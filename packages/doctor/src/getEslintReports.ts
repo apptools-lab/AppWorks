@@ -7,7 +7,7 @@ export default function getBestPracticesReports(
   warningWeight: number,
   errorWeight: number,
   files: IFileInfo[],
-  fix?: boolean
+  fix?: boolean,
 ): IEslintReports {
   let warningScore = 0;
   let errorScore = 0;

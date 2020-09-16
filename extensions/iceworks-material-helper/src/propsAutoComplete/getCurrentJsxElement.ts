@@ -31,7 +31,7 @@ function isCursorInJsxAttribute(cursorPosition: number, node: Node, scope: Scope
         }
       },
     },
-    scope
+    scope,
   );
   return result;
 }
@@ -40,7 +40,7 @@ function isCursorInJsxAttribute(cursorPosition: number, node: Node, scope: Scope
 function conditionOfCompletion(
   cursorPosition,
   jsxOpeningElement: JSXOpeningElement,
-  path: NodePath<JSXOpeningElement>
+  path: NodePath<JSXOpeningElement>,
 ) {
   return (
     isCursorInJsxOpeningElement(cursorPosition, jsxOpeningElement) &&

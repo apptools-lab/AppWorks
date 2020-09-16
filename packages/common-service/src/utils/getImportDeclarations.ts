@@ -16,7 +16,7 @@ export interface IImportDeclarations {
   source: {
     value: string;
   };
-  specifiers: {
+  specifiers: Array<{
     loc: ILoc;
     local: {
       name: string;
@@ -24,7 +24,7 @@ export interface IImportDeclarations {
     imported: {
       name: string;
     };
-  }[];
+  }>;
   loc: ILoc;
 }
 

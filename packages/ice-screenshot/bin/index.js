@@ -28,7 +28,7 @@ async function exec() {
       .option('-u, --url <url>', 'The target url or path to local server')
       .option(
         '-l, --local [local]',
-        'Set up a local server in [local] directory and take screenshot, defaults set up in `./`'
+        'Set up a local server in [local] directory and take screenshot, defaults set up in `./`',
       )
       .option('-s, --selector <selector>', 'Select a element through CSS selector')
       .option('-t, --timeout <timeout>', 'screenshot with a delay')
@@ -148,8 +148,8 @@ async function screenshot(url, selector, output, timeout) {
       console.log(chalk.white('\n  npm uninstall puppeteer -g'));
       console.log(
         chalk.white(
-          '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org'
-        )
+          '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org',
+        ),
       );
       console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));
     } else {

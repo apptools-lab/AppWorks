@@ -20,7 +20,7 @@ export default class Scanner {
     const reports = {} as IScannerReports;
 
     const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignore);
-
+    
     // Calculate Ali eslint
     if (!options || options.disableAliEslint !== true) {
       reports.aliEslint = getEslintReports(
@@ -40,6 +40,7 @@ export default class Scanner {
       packageObj = fs.readJSONSync(packageFileInfo.path);
       files.push(packageFileInfo);
     }
+
 
     // Set files info
     reports.filesInfo = {

@@ -31,7 +31,7 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 export function connectService(
   webviewPanel: vscode.WebviewPanel,
   context: vscode.ExtensionContext,
-  { services, recorder }
+  { services, recorder },
 ) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
@@ -70,7 +70,7 @@ export function connectService(
       }
     },
     undefined,
-    subscriptions
+    subscriptions,
   );
 }
 
@@ -80,7 +80,7 @@ export function getHtmlForWebview(
   entryName?: string,
   needVendor?: boolean,
   cdnBasePath?: string,
-  extraHtml = ''
+  extraHtml = '',
 ): string {
   entryName = entryName || DEFAULT_ENTRY;
   const localBasePath = path.join(extensionPath, 'build');

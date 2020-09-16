@@ -6,6 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
 import RouterDetailForm from '@/components/RouterDetailForm';
+import * as upperCamelCase from 'uppercamelcase';
 import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
@@ -118,14 +119,17 @@ const Home = () => {
     setIsCreating(true);
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'generate', {
+      const result = await callService('page', 'generate', {
         blocks: selectedBlocks,
         pageName: values.pageName,
       });
 
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', values);
+          await callService('router', 'create', { ...values, pageName });
         } catch (error) {
           Notification.error({ content: error.message });
         }
@@ -146,9 +150,9 @@ const Home = () => {
       'showInformationMessage',
       intl.formatMessage(
         { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
-        { path: pageIndexPath }
+        { path: pageIndexPath },
       ),
-      openFileAction
+      openFileAction,
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);

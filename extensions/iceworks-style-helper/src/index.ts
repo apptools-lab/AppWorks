@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Recorder, recordDAU, recordCompletionItemSelect } from '@iceworks/recorder';
+import { Recorder, recordCompletionItemSelect } from '@iceworks/recorder';
 import { registerCommand } from '@iceworks/common-service';
 import cssClassAutoCompete from './cssClassAutoCompete';
 import inlineStyleAutoComplete from './inlineStyleAutoComplete';
