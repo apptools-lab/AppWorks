@@ -26,5 +26,19 @@
   "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "Enter Page Name",
   "web.iceworksUIBuilder.pageGenerater.chooseBlock": "Choose Blocks",
   "web.iceworksUIBuilder.pageGenerater.createPage": "Generate Page",
-  "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "Please choose block from the right side."
+  "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "Please choose block from the right side.",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.label": "Page Name",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.requiredMessage": "Please Enter Page Name",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.placeholder": "Please Enter Page Name",
+  "web.iceworksUIBuilder.RouterDetailForm.path.label": "Router Path",
+  "web.iceworksUIBuilder.RouterDetailForm.path.requiredMessage": "Please Enter Router Path",
+  "web.iceworksUIBuilder.RouterDetailForm.path.placeholder": "Please Enter Router Path",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.label": "Layout Path",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.requiredMessage": "Please Select Layout Path",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.placeholder": "Please Select Layout Path",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.label": "Menu Type",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.placeholder": "Please Select Menu Type",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage": "Generate Menu Automatically to menu config",
+  "web.iceworksUIBuilder.RouterDetailForm.asideMenuConfig.label": "Sidebar Menu",
+  "web.iceworksUIBuilder.RouterDetailForm.headerMenuConfig.label": "Header Menu"
 }

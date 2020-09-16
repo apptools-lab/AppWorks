@@ -117,7 +117,7 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
-    const { menuType, parent, path } = values;
+    const { menuType, parent } = values;
     let pageIndexPath = '';
     try {
       const result = await callService('page', 'generate', {
@@ -136,9 +136,9 @@ const Home = () => {
           if (layout) {
             const layoutName = layout.component;
             if (menuType) {
-              await callService('menu', 'createMenu', {
+              await callService('menu', 'create', {
                 ...values,
-                path: isConfigurableRouter ? path : `/${pageName}`,
+                pageName,
                 layoutName,
                 menuType,
               });
@@ -157,7 +157,6 @@ const Home = () => {
     setIsCreating(false);
     setVisible(false);
     resetData();
-    console.log('pageIndexPath', pageIndexPath);
     const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
     const selectedAction = await callService(
       'common',

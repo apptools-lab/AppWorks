@@ -15,20 +15,20 @@ const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
  * generate menu to menuConfig.js
  * @param data
  */
-export async function createMenu(data) {
+export async function create(data) {
   const { path: pagePath, pageName, layoutName, menuType } = data;
   const curPageMenuConfig = { path: pagePath, name: pageName };
 
-  const menuConfigPath = await getMenuConfigPath(layoutName);
+  const menuConfigPath = await getConfigPath(layoutName);
   if (!menuConfigPath) {
     return;
   }
 
-  const menuConfigAST = await getMenuConfigAST(menuConfigPath);
+  const menuConfigAST = await getConfigAST(menuConfigPath);
   const {
     headerMenuConfig,
     asideMenuConfig,
-  }: { headerMenuConfig?: IMenuData[]; asideMenuConfig?: IMenuData[] } = await getAllConfig(menuConfigPath);
+  }: { headerMenuConfig?: IMenuData[]; asideMenuConfig?: IMenuData[] } = await getAllConfig(layoutName);
 
   if (menuType === 'headerMenuConfig' && headerMenuConfig instanceof Array) {
     headerMenuConfig.push(curPageMenuConfig);
@@ -43,8 +43,12 @@ export async function createMenu(data) {
  * get header menu configs and aside menu configs
  * @param menuConfigAST
  */
-export async function getAllConfig(menuConfigPath: string) {
-  const menuConfigAST = await getMenuConfigAST(menuConfigPath);
+export async function getAllConfig(layoutName: string) {
+  const menuConfigPath = await getConfigPath(layoutName);
+  if (!menuConfigPath) {
+    return;
+  }
+  const menuConfigAST = await getConfigAST(menuConfigPath);
 
   let headerMenuConfig;
   let asideMenuConfig;
@@ -52,18 +56,18 @@ export async function getAllConfig(menuConfigPath: string) {
     VariableDeclarator: ({ node }) => {
       // find headerMenuConfig
       if (t.isIdentifier(node.id, { name: HEADER_MENU_CONFIG_VARIABLES }) && t.isArrayExpression(node.init)) {
-        headerMenuConfig = parseMenuConfig(node.init.elements);
+        headerMenuConfig = parseConfig(node.init.elements);
       }
       // find asideMenuConfig
       if (t.isIdentifier(node.id, { name: ASIDE_MENU_CONFIG_VARIABLES }) && t.isArrayExpression(node.init)) {
-        asideMenuConfig = parseMenuConfig(node.init.elements);
+        asideMenuConfig = parseConfig(node.init.elements);
       }
     },
   });
   return { headerMenuConfig, asideMenuConfig };
 }
 
-export async function getMenuConfigPath(layoutName: string) {
+export async function getConfigPath(layoutName: string) {
   const projectLanguageType = await getProjectLanguageType();
   const menuConfigPath = path.join(layoutsPath, layoutName, `menuConfig.${projectLanguageType}`);
 
@@ -74,7 +78,7 @@ export async function getMenuConfigPath(layoutName: string) {
   }
 }
 
-async function getMenuConfigAST(menuConfigPath: string) {
+async function getConfigAST(menuConfigPath: string) {
   const menuConfigString = await fse.readFile(menuConfigPath, 'utf-8');
   const menuConfigAST = getASTByCode(menuConfigString);
   return menuConfigAST;
@@ -88,7 +92,7 @@ function getASTByCode(code: string) {
   });
 }
 
-function parseMenuConfig(elements: any[]) {
+function parseConfig(elements: any[]) {
   const config = [];
   elements.forEach((element) => {
     const { properties } = element;
@@ -97,7 +101,7 @@ function parseMenuConfig(elements: any[]) {
       const { key, value } = property;
       const { name: keyName } = key;
       if (keyName === 'children') {
-        item.children = parseMenuConfig(value.elements);
+        item.children = parseConfig(value.elements);
       } else {
         item[keyName] = value.value;
       }
