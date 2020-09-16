@@ -6,3 +6,5 @@ export const showExtensionsQuickPickCommandId = 'iceworksApp.showEntriesQuickPic
 
 export const editorTitleRunDebugCommandId = 'npmScripts-editor-title-run-dev';
 export const editorTitleRunBuildCommandId = 'npmScripts-editor-title-run-build';
+
+export const projectExistsTime = 5;

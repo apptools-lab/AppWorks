@@ -106,11 +106,22 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetContext();
 
+  autoStartWelcomePage(globalState);
+
   onChangeActiveTextEditor(context);
 }
 
 async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+}
+
+async function autoStartWelcomePage(globalState: vscode.Memento) {
+  const globalStateKey = 'iceworks.welcomePageFirstStarted';
+  const welcomePageFirstStarted = globalState.get(globalStateKey);
+  if (!welcomePageFirstStarted) {
+    globalState.update(globalStateKey, true);
+    vscode.commands.executeCommand('iceworksApp.welcome.start');
+  }
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
@@ -431,4 +442,12 @@ export function showTextDocument(resource: string) {
 export function findIndexFile(targetPath: string): string {
   const currentSuffix = indexFileSuffix.find((suffix) => fse.pathExistsSync(path.join(targetPath, `index${suffix}`)));
   return currentSuffix ? path.join(targetPath, `index${currentSuffix}`) : undefined;
+}
+
+export function getFolderExistsTime(folderPath: string) {
+  const stat = fse.statSync(folderPath);
+  const { birthtime } = stat;
+  const curTime = new Date();
+  const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000))
+  return existsTime;
 }

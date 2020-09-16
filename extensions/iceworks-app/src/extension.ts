@@ -5,20 +5,21 @@ import {
   getProjectType,
   checkIsPegasusProject,
   autoSetContext as autoSetContextByProject,
+  projectPath,
 } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { initExtension, registerCommand } from '@iceworks/common-service';
+import { initExtension, registerCommand, getFolderExistsTime } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
-import { showExtensionsQuickPickCommandId } from './constants';
+import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
-import createEditorMenuAction from './createEditorMenuAction';
+import createEditorMenuAction from './utils/createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoStart from './autoStart';
+import autoStart from './utils/autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -155,5 +156,12 @@ export async function activate(context: vscode.ExtensionContext) {
   if (projectType !== 'unknown') {
     vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
     await createEditorMenuAction();
+  }
+
+  if (projectPath) {
+    const curProjectExistsTime = getFolderExistsTime(projectPath);
+    if (projectExistsTime < curProjectExistsTime) {
+      vscode.commands.executeCommand('iceworksApp.welcome.start');
+    }
   }
 }
