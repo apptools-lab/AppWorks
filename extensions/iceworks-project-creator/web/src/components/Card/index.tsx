@@ -8,7 +8,7 @@ interface IScaffoldCardProps {
   title: string | React.ReactNode;
   content?: string | React.ReactNode;
   selected: boolean;
-  style?: object;
+  style?: Record<string, unknown>;
   onClick?: any;
   media?: string;
 }

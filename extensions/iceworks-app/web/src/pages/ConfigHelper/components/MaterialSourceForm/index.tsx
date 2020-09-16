@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 
 interface IMaterialSourceForm {
   title: string;
-  value: IMaterialSource | object;
+  value: IMaterialSource | Record<string, unknown>;
   visible: boolean;
   onSubmit: (value: any) => void;
   onCancel: () => void;

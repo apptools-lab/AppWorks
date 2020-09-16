@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
-import { pagesPath, projectPath } from '@iceworks/project-service';
+import { pagesPath as projectPagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../openEntryFile';
 import i18n from '../i18n';
 
@@ -12,7 +12,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
-    PageTreeItem | undefined
+  PageTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
@@ -73,7 +73,8 @@ class PageTreeItem extends vscode.TreeItem {
     public readonly extensionContext: vscode.ExtensionContext,
     public readonly label: string,
     public readonly command: vscode.Command,
-    public readonly path: string
+    // eslint-disable-next-line no-shadow
+    public readonly path: string,
   ) {
     super(label);
   }
@@ -120,7 +121,7 @@ export function createPagesTreeView(context: vscode.ExtensionContext) {
   registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
   registerCommand('iceworksApp.pages.delete', async (page) => await fse.remove(page.path));
 
-  const pattern = new vscode.RelativePattern(pagesPath, '**');
+  const pattern = new vscode.RelativePattern(projectPagesPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
   fileWatcher.onDidChange(() => pagesProvider.refresh());
   fileWatcher.onDidCreate(() => pagesProvider.refresh());

@@ -30,7 +30,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
 }) => {
   const intl = useIntl();
   const [visible, setVisible] = useState<boolean>(addMaterialVisible);
-  const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | object>({});
+  const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | Record<string, unknown>>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
 
   const onDialogShow = () => setVisible(true);

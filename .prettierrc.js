@@ -1,5 +1,7 @@
-const { prettier, deepmerge } = require('@ice/spec');
-
-module.exports = deepmerge(prettier, {
-  printWidth: 120,
-});
+module.exports = {
+  printWidth: 100,
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true,
+  trailingComma: 'all',
+};

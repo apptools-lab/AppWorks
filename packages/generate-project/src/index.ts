@@ -19,7 +19,7 @@ export async function downloadAndGenerateProject(
   version?: string,
   registry?: string,
   projectName?: string,
-  ejsOptions?: IEjsOptions
+  ejsOptions?: IEjsOptions,
 ): Promise<void> {
   registry = registry || (await getNpmRegistry(npmName));
 
@@ -51,7 +51,7 @@ export async function downloadAndGenerateProject(
     (state) => {
       spinner.text = `download npm tarball progress: ${Math.floor(state.percent * 100)}%`;
     },
-    formatFilename
+    formatFilename,
   );
   spinner.succeed('download npm tarball successfully.');
 

@@ -72,13 +72,13 @@ const JsonForm = () => {
     window.addEventListener(
       'message',
       (e) => {
-        const { command, jsonContent } = e.data;
+        const { command, jsonContent: messageJsonContent } = e.data;
         if (command === 'iceworks-config-helper:updateJson') {
-          console.log('got updateJson message, jsonContent:', jsonContent);
-          setJsonContent(jsonContent);
+          console.log('got updateJson message, jsonContent:', messageJsonContent);
+          setJsonContent(messageJsonContent);
         }
       },
-      false
+      false,
     );
   }, []);
 
@@ -87,7 +87,7 @@ const JsonForm = () => {
       newData,
       jsonContent,
       schemaDefaultValue.current,
-      formCannotEditProps.current
+      formCannotEditProps.current,
     );
 
     console.log('newSyncJson', newSyncJson);
@@ -104,15 +104,15 @@ const JsonForm = () => {
       const {
         formCannotEditProps: setFormCannotEditProps,
         schema,
-        jsonContent,
+        jsonContent: initJsonContent,
         editingJsonFile: setEditingJsonFile,
       } = await callService('config', 'getInitData');
       formCannotEditProps.current = setFormCannotEditProps;
-      schemaDefaultValue.current = getSchemaDefaultValue(schema, jsonContent);
+      schemaDefaultValue.current = getSchemaDefaultValue(schema, initJsonContent);
       editingJsonFile.current = setEditingJsonFile;
       uischema.current = getUISchema(setFormCannotEditProps);
       setCurrentSchema(schema);
-      setJsonContent(jsonContent);
+      setJsonContent(initJsonContent);
       setLoading(false);
     };
     init();
