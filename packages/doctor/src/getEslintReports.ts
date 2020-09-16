@@ -32,6 +32,11 @@ export default function getBestPracticesReports(
     });
   });
 
+  if (fix) {
+    // output fixes to disk
+    CLIEngine.outputFixes(aliEslintCliEngine.executeOnFiles(files.map((file) => file.path)));
+  }
+
   reports.forEach((report) => {
     warningScore += report.warningCount * warningWeight;
     errorScore += report.errorCount * errorWeight;

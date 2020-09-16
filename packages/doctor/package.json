@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/doctor",
   "description": "Analyse react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "keywords": [
     "doctor",
     "analysis",
@@ -27,12 +27,14 @@
     "@jscpd/core": "^3.3.3",
     "argv-parse": "^1.0.1",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.5.0",
+    "eslint": "^6.0.0",
     "eslint-config-ali": "^10.0.0",
     "eslint-plugin-import": "^2.22.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "jscpd": "^3.3.3",
+    "stylelint": "^13.7.0",
+    "typescript": "^3.0.0",
     "typhonjs-escomplex": "^0.1.0"
   }
 }
