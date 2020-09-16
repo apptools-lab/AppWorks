@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.15
+
+- feat: support generating menu to `menuConfig.js` 
+
 ## 0.1.14
 
 - fix: fail to use lazy to import page component in `routes.js`
@@ -16,7 +20,7 @@
 
 ## 0.1.11
 
-- feat: show open file action after create component
+- feat: show open file action after creating component
 - refactor: router logic
 - fix: fail to generate text style in component-generator 
 - fix: fail to preview component attributes in component-generator canvas panel

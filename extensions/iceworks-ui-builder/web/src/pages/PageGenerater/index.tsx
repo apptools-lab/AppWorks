@@ -6,7 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
 import RouterDetailForm from '@/components/RouterDetailForm';
-import * as upperCamelCase from 'uppercamelcase';
+import { IRouter } from '@/types';
 import PageSelected from './components/PageSelected';
 import callService from '../../callService';
 import styles from './index.module.scss';
@@ -19,7 +19,7 @@ const Home = () => {
   const [isSorting, setIsSorting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [routerConfig, setRouterConfig] = useState([]);
+  const [routerConfig, setRouterConfig] = useState<IRouter[]>([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
 
   async function getSources() {
@@ -117,6 +117,7 @@ const Home = () => {
 
   async function handleSubmit(values) {
     setIsCreating(true);
+    const { menuType, parent } = values;
     let pageIndexPath = '';
     try {
       const result = await callService('page', 'generate', {
@@ -130,6 +131,19 @@ const Home = () => {
       if (isConfigurableRouter) {
         try {
           await callService('router', 'create', { ...values, pageName });
+
+          const layout = routerConfig.find((item) => item.path === parent);
+          if (layout) {
+            const layoutName = layout.component;
+            if (menuType) {
+              await callService('menu', 'create', {
+                ...values,
+                pageName,
+                layoutName,
+                menuType,
+              });
+            }
+          }
         } catch (error) {
           Notification.error({ content: error.message });
         }
@@ -143,7 +157,6 @@ const Home = () => {
     setIsCreating(false);
     setVisible(false);
     resetData();
-
     const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
     const selectedAction = await callService(
       'common',

@@ -118,7 +118,7 @@ export class Timer {
     if (workspaceFolder) {
       try {
         const packageJsonResultObj: IPackageJson = JSON.parse(
-          fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8')
+          fs.readFileSync(`${workspaceFolder.uri.path}/package.json`, 'utf-8'),
         );
         return packageJsonResultObj.name;
       } catch (e) {
