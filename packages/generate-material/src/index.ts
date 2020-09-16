@@ -111,7 +111,7 @@ export async function downloadMaterialTemplate(dir: string, template: string, re
           filename = 'package.json.ejs';
         }
         return filename;
-      }
+      },
     );
     spinner.succeed('download npm tarball successfully.');
   }

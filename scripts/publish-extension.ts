@@ -51,7 +51,7 @@ function checkPackagePublished() {
           }
         }, timeout);
       });
-    })
+    }),
   );
 }
 

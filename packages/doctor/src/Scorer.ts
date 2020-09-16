@@ -38,7 +38,9 @@ export default class Scanner {
         list.shift();
       }
 
-      list.forEach((num) => (sum += num));
+      list.forEach((num) => {
+        sum += num;
+      });
       this.currentScore = sum / list.length;
     }
     return this.getScore();

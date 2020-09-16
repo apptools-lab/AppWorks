@@ -1,6 +1,4 @@
-import * as path from 'path';
 import * as vscode from 'vscode';
-import * as fsExtra from 'fs-extra';
 import { findIndexFile } from '@iceworks/common-service';
 
 export default function openEntryFile(p: string) {

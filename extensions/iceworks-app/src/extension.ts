@@ -43,7 +43,7 @@ export async function activate(context: vscode.ExtensionContext) {
       recorder.recordActivate();
 
       await showEntriesQuickPick();
-    })
+    }),
   );
 
   // init config webview
@@ -59,7 +59,7 @@ export async function activate(context: vscode.ExtensionContext) {
         {
           enableScripts: true,
           retainContextWhenHidden: true,
-        }
+        },
       );
       const extraHtml = `<script>
         window.iceworksAutoFocusField = "${focusField}";
@@ -71,16 +71,16 @@ export async function activate(context: vscode.ExtensionContext) {
           webviewPanel = undefined;
         },
         null,
-        context.subscriptions
+        context.subscriptions,
       );
       connectService(webviewPanel, context, { services, recorder });
     }
   }
   subscriptions.push(
-    registerCommand('iceworksApp.configHelper.start', function (focusField: string) {
+    registerCommand('iceworksApp.configHelper.start', (focusField: string) => {
       recorder.recordActivate();
       activeConfigWebview(focusField);
-    })
+    }),
   );
 
   // init tree view

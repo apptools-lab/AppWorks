@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
@@ -138,7 +137,7 @@ export function checkIsTemplate(fsPath: string): boolean {
   return jsxFileExtnames.indexOf(fsExtname) !== -1;
 }
 
-export function getScaffoldResources(): object[] {
+export function getScaffoldResources(): Array<Record<string, unknown>> {
   const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
   return materialSources;
 }
@@ -161,8 +160,8 @@ export async function getProjectPath(): Promise<string> {
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath, projectName, scaffold, ejsOptions } = projectField;
-  const projectDir: string = path.join(projectPath, projectName);
+  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField;
+  const projectDir: string = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));
@@ -185,8 +184,8 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
 }
 
 export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
-  const { projectPath, projectName, group, project } = DEFProjectField;
-  const projectDir = path.join(projectPath, projectName);
+  const { projectPath: setProjectPath, projectName, group, project } = DEFProjectField;
+  const projectDir = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));

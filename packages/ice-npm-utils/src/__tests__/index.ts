@@ -139,7 +139,7 @@ test('getAndExtractTarballWithDir', () => {
   const tempDir = path.resolve(tmpdir(), 'babel_helper_function_name_tarball');
   return getAndExtractTarball(
     tempDir,
-    `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`
+    `${defaultRegistry}/@babel/helper-function-name/download/@babel/helper-function-name-7.1.0.tgz`,
   )
     .then((files) => {
       rimraf.sync(tempDir);

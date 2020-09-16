@@ -18,7 +18,7 @@ module.exports = {
   create(context) {
     return {
       ClassDeclaration: function handleRequires(node: any) {
-        const name = node.id.name;
+        const { name } = node.id;
         let superName = '';
         if (node.superClass) {
           if (node.superClass.name) {

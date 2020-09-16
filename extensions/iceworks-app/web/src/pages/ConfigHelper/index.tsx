@@ -18,7 +18,7 @@ const formItemLayout = {
 const CUSTOM_NPM_REGISTRY_FORM_ITEM_KEY = 'customNpmRegistry';
 const CUSTOM_NPM_REGISTRY_SELECT_KEY = 'npm - 自定义镜像源';
 
-const ConfigHelper = (props) => {
+const ConfigHelper = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [fields, setFields] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);

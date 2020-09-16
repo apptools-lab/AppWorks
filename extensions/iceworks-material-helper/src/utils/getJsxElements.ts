@@ -6,7 +6,7 @@ import getBabelParserPlugins from './getBabelParserPlugins';
 type CurrentJsxElement = JSXOpeningElement | null;
 export default function getJsxElements(
   documentText: string,
-  condition: (jsxOpeningElement: JSXOpeningElement) => boolean
+  condition: (jsxOpeningElement: JSXOpeningElement) => boolean,
 ): CurrentJsxElement[] {
   const targetJsxElements: CurrentJsxElement[] = [];
 

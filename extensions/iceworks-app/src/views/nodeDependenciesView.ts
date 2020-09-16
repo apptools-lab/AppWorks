@@ -21,7 +21,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   private extensionContext: vscode.ExtensionContext;
 
   private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<
-    DependencyTreeItem | undefined
+  DependencyTreeItem | undefined
   >();
 
   readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
@@ -57,14 +57,13 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     } else {
       return Promise.resolve(
         nodeDepTypes.map(
-          (nodeDepType) =>
-            new DependencyTreeItem(
-              this.extensionContext,
-              nodeDepType,
-              vscode.TreeItemCollapsibleState.Collapsed,
-              nodeDepType
-            )
-        )
+          (nodeDepType) => new DependencyTreeItem(
+            this.extensionContext,
+            nodeDepType,
+            vscode.TreeItemCollapsibleState.Collapsed,
+            nodeDepType,
+          ),
+        ),
       );
     }
   }
@@ -96,7 +95,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
               outdated = await this.getNpmOutdated(dep, version);
             }
             return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
-          })
+          }),
         );
       }
 
@@ -166,7 +165,7 @@ class DependencyTreeItem extends vscode.TreeItem {
     public readonly id: string,
     public readonly command?: vscode.Command,
     public readonly version?: string,
-    public readonly outDated?: boolean
+    public readonly outDated?: boolean,
   ) {
     super(label, collapsibleState);
     this.id = id;
@@ -186,10 +185,10 @@ class DependencyTreeItem extends vscode.TreeItem {
 
   iconPath = {
     dark: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`)
+      this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
     ),
     light: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`)
+      this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
     ),
   };
 }
@@ -210,12 +209,8 @@ export function createNodeDependenciesTreeView(context) {
       executeCommand(script);
     }
   });
-  registerCommand('iceworksApp.nodeDependencies.dependencies.add', () =>
-    showDepsInputBox(nodeDependenciesProvider, 'dependencies')
-  );
-  registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () =>
-    showDepsInputBox(nodeDependenciesProvider, 'devDependencies')
-  );
+  registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(nodeDependenciesProvider, 'dependencies'));
+  registerCommand('iceworksApp.nodeDependencies.devDependencies.add', () => showDepsInputBox(nodeDependenciesProvider, 'devDependencies'));
   registerCommand('iceworksApp.nodeDependencies.addDepsAndDevDeps', () => showDepsQuickPick(nodeDependenciesProvider));
 
   const pattern = new vscode.RelativePattern(path.join(projectPath, dependencyDir), '**');
@@ -232,17 +227,17 @@ function toDep(
   workspaceDir: string,
   moduleName: string,
   version: string,
-  outdated: boolean
+  outdated: boolean,
 ) {
   const packageManager = getDataFromSettingJson('packageManager');
   const isYarn = packageManager === 'yarn';
   const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
   const command = outdated
     ? {
-        command: 'iceworksApp.nodeDependencies.upgrade',
-        title: 'Upgrade Dependency',
-        arguments: [workspaceDir, npmCommand],
-      }
+      command: 'iceworksApp.nodeDependencies.upgrade',
+      title: 'Upgrade Dependency',
+      arguments: [workspaceDir, npmCommand],
+    }
     : undefined;
   return new DependencyTreeItem(
     extensionContext,
@@ -251,6 +246,6 @@ function toDep(
     `nodeDependencies-${moduleName}`,
     command,
     version,
-    outdated
+    outdated,
   );
 }
