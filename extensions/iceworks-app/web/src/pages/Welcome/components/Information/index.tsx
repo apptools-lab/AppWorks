@@ -9,7 +9,7 @@ const cardList = [
   {
     imgUrl: DocIcon,
     title: '帮助文档',
-    description: '查看更多 Iceworks 相关文档',
+    description: '帮助文档为你提供更体系化的能力描述',
     linkName: '立即查看',
     link: 'https://ice.work/docs/iceworks/about',
   },
@@ -23,7 +23,7 @@ const cardList = [
   {
     imgUrl: ArticleIcon,
     title: '文章',
-    description: '查看 ICE 和 Rax 文章',
+    description: 'Iceworks 相关文章和动态',
     linkName: '立即查看',
     link: 'https://zhuanlan.zhihu.com/ice-design',
   },

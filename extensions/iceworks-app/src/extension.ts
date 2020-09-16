@@ -85,22 +85,34 @@ export async function activate(context: vscode.ExtensionContext) {
   // init welcome webview
   let welcomeWebviewPanel: vscode.WebviewPanel | undefined;
   function activeWelcomeWebview() {
-    welcomeWebviewPanel = window.createWebviewPanel(
-      'iceworks',
-      i18n.format('extension.iceworksApp.welcome.extension.webviewTitle'),
-      ViewColumn.One,
-      {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      }
-    );
-    welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome', true);
-    connectService(welcomeWebviewPanel, context, { services, recorder });
+    if (welcomeWebviewPanel) {
+      welcomeWebviewPanel.reveal();
+    } else {
+      welcomeWebviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksApp.welcome.extension.webviewTitle'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        },
+      );
+
+      welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome', true);
+      welcomeWebviewPanel.onDidDispose(
+        () => {
+          configWebviewPanel = undefined;
+        },
+        null,
+        context.subscriptions,
+      );
+      connectService(welcomeWebviewPanel, context, { services, recorder });
+    }
   }
   subscriptions.push(
-    registerCommand('iceworksApp.welcome.start', function () {
+    registerCommand('iceworksApp.welcome.start', () => {
       activeWelcomeWebview();
-    })
+    }),
   );
 
   // init tree view
