@@ -108,14 +108,14 @@ const entries = [
     },
   },
   {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
-    command: 'iceworksApp.configHelper.start',
-  },
-  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
     command: 'iceworksApp.welcome.start',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
+    command: 'iceworksApp.configHelper.start',
   },
 ];
 
