@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.11
+
+- chore: update initExtension method
+
 ## 0.3.10
 
 - feat: add Rax scaffolds to external

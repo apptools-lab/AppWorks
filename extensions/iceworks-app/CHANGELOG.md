@@ -4,6 +4,7 @@
 
 - feat: Add Iceworks Doctor
 - feat: Add welcome page
+- chore: update initExtension method
 
 ## 0.4.10
 

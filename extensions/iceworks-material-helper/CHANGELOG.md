@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.3.6
+- chore: update initExtension method
+
 ## 0.3.5
 
 - docs: en-US demo

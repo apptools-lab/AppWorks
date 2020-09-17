@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.3
+
+- chore: update initExtension method
+
 ## 0.3.2
 
 - docs: add more badges.
