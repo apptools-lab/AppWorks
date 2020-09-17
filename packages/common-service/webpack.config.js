@@ -1,4 +1,5 @@
 const path = require('path');
+const RemoveBuildDepsPlugin = require('./removeBuildDepsPlugin');
 
 const tsConfigPath = path.join(__dirname, 'tsconfig.json');
 
@@ -35,6 +36,9 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new RemoveBuildDepsPlugin(),
+  ],
 };
 
 module.exports = config;
