@@ -6,13 +6,10 @@
     { "path": "packages/eslint-plugin-security-practices" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
-    { "path": "packages/ice-npm-utils" },
     { "path": "packages/storage" },
     { "path": "packages/recorder" },
     { "path": "packages/config" },
     { "path": "packages/vscode-webview" },
-    { "path": "packages/generate-project" },
-    { "path": "packages/generate-material" },
     { "path": "packages/material-utils" },
     { "path": "packages/transform-ts-to-js" },
     { "path": "packages/common-service" },
@@ -21,6 +18,7 @@
     { "path": "packages/block-service" },
     { "path": "packages/component-service" },
     { "path": "packages/page-service" },
-    { "path": "packages/router-service" }
+    { "path": "packages/router-service" },
+    { "path": "packages/menu-service" }
   ]
 }
