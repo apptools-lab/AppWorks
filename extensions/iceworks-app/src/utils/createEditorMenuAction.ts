@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
-import { setDebugConfig } from './debugConfig/index';
-import showDefPublishEnvQuickPick from './quickPicks/showDefPublishEnvQuickPick';
-import executeCommand from './commands/executeCommand';
+import { setDebugConfig } from '../debugConfig/index';
+import showDefPublishEnvQuickPick from '../quickPicks/showDefPublishEnvQuickPick';
+import executeCommand from '../commands/executeCommand';
 
 export default async function createEditorMenuAction() {
   const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';

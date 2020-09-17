@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { registerCommand, executeCommand } from '@iceworks/common-service';
-import getQuickEntryOptions from '../getQuickEntryOptions';
+import getQuickEntryOptions from '../utils/getQuickEntryOptions';
 
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
   private extensionContext: vscode.ExtensionContext;

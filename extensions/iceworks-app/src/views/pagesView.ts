@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { pagesPath as projectPagesPath, projectPath } from '@iceworks/project-service';
-import openEntryFile from '../openEntryFile';
+import openEntryFile from '../utils/openEntryFile';
 import i18n from '../i18n';
 
 export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {

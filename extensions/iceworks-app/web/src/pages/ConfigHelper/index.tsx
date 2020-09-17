@@ -5,8 +5,8 @@ import { IMaterialSource } from '@iceworks/material-utils';
 import { packageManagers, npmRegistries, AliNpmRegistry, AliPackageManager, urlRegExp } from '@/constants';
 import callService from '@/callService';
 import { useIntl } from 'react-intl';
-import { LocaleProvider } from '../../i18n';
-import CustomMaterialSource from './CustomMaterialSource';
+import { LocaleProvider } from '@/i18n';
+import CustomMaterialSource from './components/CustomMaterialSource';
 import styles from './index.module.scss';
 
 const FormItem = Form.Item;
@@ -28,7 +28,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'addSource', materialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.index.addMaterialSuccess' }) });
+      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.addMaterialSuccess' }) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -38,7 +38,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'updateSource', materialSource, originMaterialSource);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.index.editMaterialSuccess' }) });
+      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.editMaterialSuccess' }) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -48,7 +48,7 @@ const ConfigHelper = () => {
     try {
       const newMaterialSources = await callService('material', 'removeSource', materialSource.source);
       setMaterialSources(newMaterialSources);
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.index.deleteMaterialSuccess' }) });
+      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.deleteMaterialSuccess' }) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -68,7 +68,7 @@ const ConfigHelper = () => {
       } else {
         await callService('common', 'saveDataToSettingJson', name, value);
       }
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.index.editSettingSuccess' }) });
+      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.editSettingSuccess' }) });
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -112,10 +112,10 @@ const ConfigHelper = () => {
       ) : (
         <div className={styles.container}>
           <Form value={fields} {...formItemLayout} labelTextAlign="left" size="medium" onChange={onFormChange}>
-            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmPackageManager' })}>
+            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.npmPackageManager' })}>
               <Select
                 name="packageManager"
-                placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmPackageManager' })}
+                placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.chooseNpmPackageManager' })}
                 style={{ width: '100%' }}
               >
                 {packageManagers.map((item) => (
@@ -125,10 +125,10 @@ const ConfigHelper = () => {
                 ))}
               </Select>
             </FormItem>
-            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.index.npmRegistry' })}>
+            <FormItem label={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.npmRegistry' })}>
               <Select
                 name="npmRegistry"
-                placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.chooseNpmRegistry' })}
+                placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.chooseNpmRegistry' })}
                 style={{ width: '100%' }}
               >
                 {npmRegistries.map((item) => (
@@ -139,16 +139,16 @@ const ConfigHelper = () => {
               </Select>
             </FormItem>
             {fields.npmRegistry === CUSTOM_NPM_REGISTRY_SELECT_KEY && (
-              <FormItem
-                label=" "
-                format="url"
-                formatMessage={intl.formatMessage({ id: 'web.iceworksApp.index.formatUrl' })}
-              >
-                <Input
-                  name="customNpmRegistry"
-                  placeholder={intl.formatMessage({ id: 'web.iceworksApp.index.customNpmRegistryPlaceHolder' })}
-                />
-              </FormItem>
+            <FormItem
+              label=" "
+              format="url"
+              formatMessage={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.formatUrl' })}
+            >
+              <Input
+                name="customNpmRegistry"
+                placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.customNpmRegistryPlaceHolder' })}
+              />
+            </FormItem>
             )}
           </Form>
           <CustomMaterialSource

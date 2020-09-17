@@ -3,6 +3,7 @@
 ## 0.5.0
 
 - feat: Add Iceworks Doctor
+- feat: Add welcome page
 
 ## 0.4.10
 

@@ -101,6 +101,10 @@
         }
       },
       {
+        "command": "iceworksApp.welcome.start",
+        "title": "%iceworksApp.command.welcome.start.title%"
+      },
+      {
         "command": "iceworksApp.editorMenu.DefPublish",
         "title": "%iceworksApp.command.DefPublish.title%",
         "icon": {
@@ -440,6 +444,11 @@
             "https://registry.npm.taobao.org"
           ],
           "description": "%iceworksApp.configuration.properties.iceworks.npmRegistry.description%"
+        },
+        "iceworks.showWelcomePage": {
+          "type": "boolean",
+          "default": true,
+          "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
         }
       }
     }

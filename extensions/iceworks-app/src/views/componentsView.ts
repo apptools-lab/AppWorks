@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { componentsPath, projectPath } from '@iceworks/project-service';
-import openEntryFile from '../openEntryFile';
+import openEntryFile from '../utils/openEntryFile';
 import showAddComponentQuickPick from '../quickPicks/showAddComponentQuickPick';
 
 class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {

@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
 
   // auto set configuration
-  initExtension(context);
+  initExtension(context, name);
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.3
+
+- feat: Add welcome page
+
 ## 0.3.2
 
 - docs: add more badges.

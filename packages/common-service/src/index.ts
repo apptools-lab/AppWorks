@@ -97,7 +97,7 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtension(context: vscode.ExtensionContext) {
+export async function initExtension(context: vscode.ExtensionContext, extensionName: string) {
   const { globalState } = context;
 
   await autoInitMaterialSource(globalState);
@@ -106,11 +106,38 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetContext();
 
+  autoStartWelcomePage(globalState, extensionName);
+
   onChangeActiveTextEditor(context);
 }
 
 async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+}
+
+async function autoStartWelcomePage(globalState: vscode.Memento, extensionName: string) {
+  let globalStateKey = 'iceworks.version';
+  let iceworksExtensionPackageJSON;
+
+  const iceworksPackPackageJSON = vscode.extensions.getExtension('iceworks-team.iceworks');
+
+  if (iceworksPackPackageJSON) {
+    iceworksExtensionPackageJSON = iceworksPackPackageJSON;
+  } else {
+    // the key of current extension version in globalState
+    globalStateKey = `${extensionName}.version`;
+    iceworksExtensionPackageJSON = vscode.extensions.getExtension(`iceworks-team.${extensionName}`);
+  }
+
+  const iceworksVersion = globalState.get(globalStateKey);
+  // get current Iceworks version
+  const curIceworksVersion = iceworksExtensionPackageJSON.packageJSON.version;
+  // first install Iceworks and iceworks-app exists, welcome page start
+  if (!iceworksVersion && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+    vscode.commands.executeCommand('iceworksApp.welcome.start');
+  }
+  // update the latest Iceworks version in the globalState
+  globalState.update(globalStateKey, curIceworksVersion);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
@@ -431,4 +458,12 @@ export function showTextDocument(resource: string) {
 export function findIndexFile(targetPath: string): string {
   const currentSuffix = indexFileSuffix.find((suffix) => fse.pathExistsSync(path.join(targetPath, `index${suffix}`)));
   return currentSuffix ? path.join(targetPath, `index${currentSuffix}`) : undefined;
+}
+
+export function getFolderExistsTime(folderPath: string) {
+  const stat = fse.statSync(folderPath);
+  const { birthtime } = stat;
+  const curTime = new Date();
+  const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000))
+  return existsTime;
 }

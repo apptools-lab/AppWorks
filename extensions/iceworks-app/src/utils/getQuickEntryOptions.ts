@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
 import { checkIsAliInternal } from '@iceworks/common-service';
-import i18n from './i18n';
+import i18n from '../i18n';
 
 const entries = [
   {
@@ -106,6 +106,11 @@ const entries = [
     async condition() {
       return !(await checkIsNotTarget());
     },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
+    command: 'iceworksApp.welcome.start',
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
