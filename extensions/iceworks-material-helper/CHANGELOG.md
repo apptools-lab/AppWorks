@@ -1,7 +1,8 @@
 # Change Log
 
 ## 0.3.6
-- chore: update initExtension method
+
+- feat: Add welcome page
 
 ## 0.3.5
 

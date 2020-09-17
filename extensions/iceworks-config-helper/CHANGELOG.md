@@ -2,7 +2,7 @@
 
 ## 0.3.3
 
-- chore: update initExtension method
+- feat: Add welcome page
 
 ## 0.3.2
 

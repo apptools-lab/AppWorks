@@ -3,7 +3,7 @@
 ## 0.1.15
 
 - feat: support generating menu to `menuConfig.js` 
-- chore: update initExtension method
+- feat: Add welcome page
 
 ## 0.1.14
 
