@@ -9,7 +9,7 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { initExtension, registerCommand, getFolderExistsTime } from '@iceworks/common-service';
+import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createComponentsTreeView } from './views/componentsView';
@@ -31,7 +31,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
   // auto set configuration & context
-  initExtension(context);
+  initExtension(context, name);
   autoSetContextByProject();
 
   const projectType = await getProjectType();
@@ -161,7 +161,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // auto start welcome page when the application is new
   const isNotTargetProject = await checkIsNotTarget();
-  if (projectPath && !isNotTargetProject) {
+  // get showWelcomePage configuration from settings.json
+  const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
+  if (projectPath && !isNotTargetProject && isShowWelcomePage) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
       vscode.commands.executeCommand('iceworksApp.welcome.start');

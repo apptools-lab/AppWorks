@@ -27,7 +27,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   const { extensionPath, subscriptions } = context;
 
-  initExtension(context);
+  initExtension(context, name);
 
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 

@@ -34,5 +34,6 @@
   "iceworksApp.command.nodeDependencies.refresh.title": "刷新",
   "iceworksApp.command.nodeDependencies.upgrade.title": "升级依赖",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具",
-  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源"
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
+  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "是否显示欢迎页"
 }

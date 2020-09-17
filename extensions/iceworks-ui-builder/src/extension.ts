@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context);
+  initExtension(context, name);
 
   function activeComponentGeneratorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
@@ -109,4 +109,4 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() {}
+export function deactivate() { }
