@@ -34,13 +34,13 @@
   "web.iceworksApp.Welcome.Header.title": "Welcome to Iceworks",
   "web.iceworksApp.Welcome.Header.desc": "Iceworks is a visual intelligent assistant, to help you quickly develop frontend applications.",
   "web.iceworksApp.Welcome.Information.title": "More Infomation",
-  "web.iceworksApp.Welcome.Information.doc.title": "Help Docs",
-  "web.iceworksApp.Welcome.Information.doc.desc": "Help documents give you a more detailed description",
+  "web.iceworksApp.Welcome.Information.doc.title": "Learn",
+  "web.iceworksApp.Welcome.Information.doc.desc": "Give you more feature detailed description",
   "web.iceworksApp.Welcome.Information.doc.link": "View",
-  "web.iceworksApp.Welcome.Information.dingtalk.title": "Dingtalk",
+  "web.iceworksApp.Welcome.Information.dingtalk.title": "DingTalk",
   "web.iceworksApp.Welcome.Information.dingtalk.desc": "Join us for exchange and study",
   "web.iceworksApp.Welcome.Information.dingtalk.link": "Join",
   "web.iceworksApp.Welcome.Information.updates.title": "Updates",
-  "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks Updates Details",
+  "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks release details",
   "web.iceworksApp.Welcome.Information.updates.link": "View"
 }
