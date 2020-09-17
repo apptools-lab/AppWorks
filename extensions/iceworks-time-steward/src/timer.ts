@@ -10,9 +10,9 @@ const recorder = new Recorder(name, version);
 export class Timer {
   private disposable: vscode.Disposable;
 
-  private lastFile: string = '';
+  private lastFile = '';
 
-  private lastHeartbeat: number = 0;
+  private lastHeartbeat = 0;
 
   private user: { empId: string; account: string };
 

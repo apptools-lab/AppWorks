@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.0
+
+- feat: Add Iceworks Doctor
+
 ## 0.4.10
 
 - docs: update text for find component and generate page

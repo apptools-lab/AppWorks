@@ -9,6 +9,14 @@ const entries = [
     command: 'iceworks-project-creator.start',
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.detail'),
+    command: 'iceworks-doctor.dashboard',
+    async condition() {
+      return !(await checkIsNotTarget());
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-ui-builder.generate-page',

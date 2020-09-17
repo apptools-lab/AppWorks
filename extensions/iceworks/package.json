@@ -3,7 +3,7 @@
   "displayName": "Iceworks",
   "description": "Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -38,7 +38,8 @@
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-style-helper",
     "iceworks-team.iceworks-material-helper",
-    "iceworks-team.iceworks-config-helper"
+    "iceworks-team.iceworks-config-helper",
+    "iceworks-team.iceworks-doctor"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {
