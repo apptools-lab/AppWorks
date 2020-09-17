@@ -112,6 +112,11 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
     command: 'iceworksApp.configHelper.start',
   },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
+    command: 'iceworksApp.welcome.start',
+  },
 ];
 
 export default async function () {

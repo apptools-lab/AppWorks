@@ -27,6 +27,8 @@
   "extension.iceworksApp.showEntriesQuickPick.reinstall.detail": "Reinstall the dependency packages for the application",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label": "Add Dependency",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.detail": "Add a new dependency package for the application",
+  "extension.iceworksApp.showEntriesQuickPick.welcomePage.label": "Welcome",
+  "extension.iceworksApp.showEntriesQuickPick.welcomePage.detail": "Show welcome page",
   "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "for example: lodash react@latest.",
   "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "Please enter the name of the dependency to be addded to <%= depType %>. Multiple dependencies should be spilted by Spaces.",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "Daily",

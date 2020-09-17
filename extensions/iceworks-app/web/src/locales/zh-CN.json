@@ -42,5 +42,6 @@
   "web.iceworksApp.Welcome.Information.dingtalk.link": "扫码加入",
   "web.iceworksApp.Welcome.Information.updates.title": "更新动态",
   "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks 版本发布详情",
-  "web.iceworksApp.Welcome.Information.updates.link": "立即查看"
+  "web.iceworksApp.Welcome.Information.updates.link": "立即查看",
+  "web.iceworksApp.Welcome.showPageOption.title": "显示欢迎页"
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Checkbox } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import callService from '../../../../callService';
 import styles from './index.module.scss';
 
@@ -20,7 +21,7 @@ export default () => {
   }, []);
   return (
     <div className={styles.showPageOption}>
-      <Checkbox onChange={onChange} checked={showWelcomePage}>显示欢迎页</Checkbox>
+      <Checkbox onChange={onChange} checked={showWelcomePage}><FormattedMessage id="web.iceworksApp.Welcome.showPageOption.title" /></Checkbox>
     </div>
   );
 };
