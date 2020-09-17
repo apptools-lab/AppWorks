@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
 import { checkIsAliInternal } from '@iceworks/common-service';
 import i18n from '../i18n';
@@ -13,7 +14,11 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.detail'),
     command: 'iceworks-doctor.dashboard',
     async condition() {
-      return !(await checkIsNotTarget());
+      const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
+      if (doctorExtension) {
+        return !(await checkIsNotTarget());
+      }
+      return false;
     },
   },
   {
