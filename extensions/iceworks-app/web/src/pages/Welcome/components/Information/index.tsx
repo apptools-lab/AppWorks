@@ -3,7 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import InfoCard from '../InfoCard';
 import DingtalkIcon from '../../../../../public/assets/dingtalk.svg';
 import DocIcon from '../../../../../public/assets/doc.svg';
-import ArticleIcon from '../../../../../public/assets/article.svg';
+import UpdatesIcon from '../../../../../public/assets/updates.svg';
 import styles from './index.module.scss';
 
 const Information = () => {
@@ -25,11 +25,11 @@ const Information = () => {
       link: 'https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_360x10000.jpg',
     },
     {
-      image: ArticleIcon,
-      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.article.title' }),
-      description: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.article.desc' }),
-      linkName: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.article.link' }),
-      link: 'https://zhuanlan.zhihu.com/ice-design',
+      image: UpdatesIcon,
+      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.updates.title' }),
+      description: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.updates.desc' }),
+      linkName: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Information.updates.link' }),
+      link: 'https://github.com/ice-lab/iceworks/releases',
     },
   ];
 

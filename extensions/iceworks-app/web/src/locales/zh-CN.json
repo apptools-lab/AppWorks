@@ -40,7 +40,7 @@
   "web.iceworksApp.Welcome.Information.dingtalk.title": "钉钉群",
   "web.iceworksApp.Welcome.Information.dingtalk.desc": "加入官方钉钉群一起交流学习",
   "web.iceworksApp.Welcome.Information.dingtalk.link": "扫码加入",
-  "web.iceworksApp.Welcome.Information.article.title": "文章",
-  "web.iceworksApp.Welcome.Information.article.desc": "Iceworks 相关文章和动态",
-  "web.iceworksApp.Welcome.Information.article.link": "立即查看"
+  "web.iceworksApp.Welcome.Information.updates.title": "更新动态",
+  "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks 版本发布详情",
+  "web.iceworksApp.Welcome.Information.updates.link": "立即查看"
 }

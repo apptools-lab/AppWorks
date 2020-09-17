@@ -40,7 +40,7 @@
   "web.iceworksApp.Welcome.Information.dingtalk.title": "Dingtalk",
   "web.iceworksApp.Welcome.Information.dingtalk.desc": "Join us for exchange and study",
   "web.iceworksApp.Welcome.Information.dingtalk.link": "Join",
-  "web.iceworksApp.Welcome.Information.article.title": "Article",
-  "web.iceworksApp.Welcome.Information.article.desc": "Iceworks related articles and trends",
-  "web.iceworksApp.Welcome.Information.article.link": "View"
+  "web.iceworksApp.Welcome.Information.updates.title": "Updates",
+  "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks Updates Details",
+  "web.iceworksApp.Welcome.Information.updates.link": "View"
 }
