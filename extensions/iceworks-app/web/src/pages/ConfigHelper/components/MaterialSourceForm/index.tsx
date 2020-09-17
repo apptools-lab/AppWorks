@@ -35,7 +35,7 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
             triggerType="hover"
           >
             <a href="https://ice.work/docs/materials/about" target="_blank">
-              <FormattedMessage id="web.iceworksApp.customMaterialSource.help" />
+              <FormattedMessage id="web.iceworksApp.ConfigHelper.customMaterialSource.help" />
             </a>
           </Balloon>
         </div>
@@ -46,38 +46,38 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
     >
       <Form value={value} fullWidth className={styles.form}>
         <Form.Item
-          label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialNameLabel' })}
+          label={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materialNameLabel' })}
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materialName' })}
         >
           <Input
             name="name"
-            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialName' })}
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materialName' })}
           />
         </Form.Item>
         <Form.Item
-          label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURLLabel' })}
+          label={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materiaURLLabel' })}
           required
-          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
+          requiredMessage={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materiaURL' })}
           format="url"
         >
           <Input
             name="source"
-            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materiaURL' })}
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materiaURL' })}
           />
         </Form.Item>
-        <Form.Item label={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescriptionLabel' })}>
+        <Form.Item label={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materialDescriptionLabel' })}>
           <Input.TextArea
             name="description"
-            placeholder={intl.formatMessage({ id: 'web.iceworksApp.MaterialSourceForm.materialDescription' })}
+            placeholder={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.MaterialSourceForm.materialDescription' })}
           />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
           <Form.Submit type="primary" onClick={onFormSubmit} validate>
-            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.confirm" />
+            <FormattedMessage id="web.iceworksApp.ConfigHelper.MaterialSourceForm.confirm" />
           </Form.Submit>
           <Button onClick={onCancel} className={styles.btn}>
-            <FormattedMessage id="web.iceworksApp.MaterialSourceForm.cancel" />
+            <FormattedMessage id="web.iceworksApp.ConfigHelper.MaterialSourceForm.cancel" />
           </Button>
         </Form.Item>
       </Form>

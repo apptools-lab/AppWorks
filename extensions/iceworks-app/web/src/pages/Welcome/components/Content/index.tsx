@@ -1,40 +1,44 @@
 import React, { useState } from 'react';
 import { Divider, Tree } from '@alifd/next';
+import { FormattedMessage, useIntl } from 'react-intl';
 import styles from './index.module.scss';
 
 const TreeNode = Tree.Node;
 
-const videosList = [
-  {
-    title: '1. 创建 Hello World 应用',
-    videoUrl:
-      'https://lark-video.oss-cn-hangzhou.aliyuncs.com/outputs/prod/yuque/2020/371895/mov/1600147884257-e9253ef8-33d8-43e0-96f5-f4c0274fc776.mp4?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1600155163&Signature=QdnNfEXT4qp4Thv1jvhmX75SRzc%3D',
-  },
-  {
-    title: '2. 基于物料进行可视化开发',
-    videoUrl:
-      'https://lark-video.oss-cn-hangzhou.aliyuncs.com/outputs/prod/yuque/2020/371895/mov/1600148332610-e5ece777-aa3b-4f93-a9f7-42f28a5788db.mp4?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1600155763&Signature=jkHWSCSm0nnWEjAn9urDUGoT3i8%3D',
-  },
-  {
-    title: '3. 可视化搭建组件',
-    videoUrl:
-      'https://lark-video.oss-cn-hangzhou.aliyuncs.com/outputs/prod/yuque/2020/371895/mov/1600148288818-03996554-0beb-442e-9cf6-ab9c871db0d6.mp4?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1600155600&Signature=Bdr%2FJ5E5TDVGAN8KK9O6jUh1K5A%3D',
-  },
-  {
-    title: '4. 开发和使用自定义物料',
-    videoUrl:
-      'https://lark-video.oss-cn-hangzhou.aliyuncs.com/outputs/prod/yuque/2020/371895/mov/1600148389645-736283ee-9552-409f-8698-acf27d8160b8.mp4?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1600156299&Signature=OjVEqiK%2BBB7glgCCyo%2B%2BVlBy1Po%3D',
-  },
-];
-
 const Content = () => {
+  const intl = useIntl();
+
+  const videosList = [
+    {
+      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Content.videoTitle.createApplication' }),
+      videoUrl:
+        'https://iceworks.oss-cn-hangzhou.aliyuncs.com/iceworks-video/%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20Hello%20World%20%E5%BA%94%E7%94%A8.mov',
+    },
+    {
+      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Content.videoTitle.visualDevelopment' }),
+      videoUrl:
+        'https://iceworks.oss-cn-hangzhou.aliyuncs.com/iceworks-video/%E5%8F%AF%E8%A7%86%E5%8C%96%E5%BC%80%E5%8F%91.mov',
+    },
+    {
+      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Content.videoTitle.genreateComponent' }),
+      videoUrl:
+        'https://iceworks.oss-cn-hangzhou.aliyuncs.com/iceworks-video/%E5%8F%AF%E8%A7%86%E5%8C%96%E6%90%AD%E5%BB%BA%E7%BB%84%E4%BB%B6.mov',
+    },
+    {
+      title: intl.formatMessage({ id: 'web.iceworksApp.Welcome.Content.videoTitle.customMaterial' }),
+      videoUrl:
+        'https://iceworks.oss-cn-hangzhou.aliyuncs.com/iceworks-video/%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%A9%E6%96%99%E6%BA%90.mov',
+    },
+  ];
+
   const [selectedKeyIndex, setSelectedKeyIndex] = useState<number>(0);
 
   return (
     <div className={styles.content}>
-      <div className={styles.title}>上手教程</div>
-      <div className={styles.desc}>只需 30 分钟的观看时间，后期大大提升工作效率</div>
+      <div className={styles.title}><FormattedMessage id="web.iceworksApp.Welcome.Content.title" /></div>
+      <div className={styles.desc}><FormattedMessage id="web.iceworksApp.Welcome.Content.desc" /></div>
       <div className={styles.videoContainer}>
+        {/* <iframe allowFullScreen src="https://www.zhihu.com/video/1289678738658627584" frameBorder="0" /> */}
         <video src={videosList[selectedKeyIndex].videoUrl} controls />
         <Divider direction="ver" className={styles.divider} />
         <Tree

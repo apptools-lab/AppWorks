@@ -102,7 +102,7 @@ export async function activate(context: vscode.ExtensionContext) {
       welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome', true);
       welcomeWebviewPanel.onDidDispose(
         () => {
-          configWebviewPanel = undefined;
+          welcomeWebviewPanel = undefined;
         },
         null,
         context.subscriptions,

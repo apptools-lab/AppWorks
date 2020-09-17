@@ -1,11 +1,14 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './index.module.scss';
 
 const Header = () => {
   return (
     <div className={styles.header}>
-      <h1>欢迎来到 Iceworks</h1>
-      <div className={styles.desc}>Iceworks 是可视化智能研发助手，帮助你快速开发前端应用</div>
+      <h1><FormattedMessage id="web.iceworksApp.Welcome.Header.title" /></h1>
+      <div className={styles.desc}>
+        <FormattedMessage id="web.iceworksApp.Welcome.Header.desc" />
+      </div>
     </div>
   );
 };

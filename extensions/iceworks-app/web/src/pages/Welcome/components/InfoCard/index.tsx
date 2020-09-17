@@ -2,18 +2,18 @@ import React from 'react';
 import styles from './index.module.scss';
 
 interface IInfoCardProps {
-  imgUrl?: string;
+  image?: string;
   title: string;
   description: string;
   link?: string;
   linkName?: string;
 }
 
-const InfoCard: React.SFC<IInfoCardProps> = ({ title, description, link, linkName, imgUrl }) => {
+const InfoCard: React.SFC<IInfoCardProps> = ({ title, description, link, linkName, image }) => {
   return (
     <div className={styles.infoCard}>
       <div className={styles.img}>
-        <img src={imgUrl} alt="cardImage" />
+        <img src={image} alt="cardImage" />
       </div>
       <div className={styles.content}>
         <div className={styles.title}>{title}</div>
