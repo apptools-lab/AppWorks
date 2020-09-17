@@ -26,5 +26,19 @@
   "web.iceworksUIBuilder.pageGenerater.enterPageNameTitle": "填写页面名称",
   "web.iceworksUIBuilder.pageGenerater.chooseBlock": "选择区块",
   "web.iceworksUIBuilder.pageGenerater.createPage": "生成页面",
-  "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "请从右侧选择区块。"
+  "web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight": "请从右侧选择区块。",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.label": "页面名称",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.requiredMessage": "请输入页面名称",
+  "web.iceworksUIBuilder.RouterDetailForm.pageName.placeholder": "请输入页面名称",
+  "web.iceworksUIBuilder.RouterDetailForm.path.label": "路由路径",
+  "web.iceworksUIBuilder.RouterDetailForm.path.requiredMessage": "请输入路由路径",
+  "web.iceworksUIBuilder.RouterDetailForm.path.placeholder": "请输入路由路径",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.label": "父级路由",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.requiredMessage": "请选择父级路由",
+  "web.iceworksUIBuilder.RouterDetailForm.parent.placeholder": "请选择父级路由",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.label": "菜单类型",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.placeholder": "请选择生成的菜单类型",
+  "web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage": "自动生成菜单至菜单配置中",
+  "web.iceworksUIBuilder.RouterDetailForm.asideMenuConfig.label": "侧边菜单栏",
+  "web.iceworksUIBuilder.RouterDetailForm.headerMenuConfig.label": "顶部菜单栏"
 }
