@@ -1,0 +1,44 @@
+.description {
+  margin: 0;
+  font-size: 12px;
+  line-height: 12px;
+  color: $color-text1-3;
+}
+
+.clone {
+  position: relative;
+  padding: 10px 10px 10px 20px;
+  background-color: $color-fill1-3;
+
+  .title {
+    color: $color-text1-4;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .file {
+    display: block;
+    color: $color-link-3;
+    padding: 10px 0 0;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .tips {
+    margin: 10px 0 0;
+    color: $color-text1-4;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  i {
+    color: $color-data1-2;
+    margin-right: 5px;
+  }
+
+  &:hover {
+    background-color: $color-fill1-1;
+  }
+}

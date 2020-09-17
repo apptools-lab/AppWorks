@@ -1,0 +1,40 @@
+.scores {
+  user-select: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: start;
+}
+
+.scores-affixed {
+  margin: 0 -20px;
+  z-index: 9999;
+  padding: 8px 8px 0;
+  border-bottom: 1px solid $color-line1-1;
+  background-color: $color-fill1-1;
+}
+
+.scoreInfo {
+  padding-bottom: 8px;
+  margin: 0 8px;
+  text-align: center;
+  cursor: pointer;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: $color-transparent;
+
+  p {
+    margin-top: 4px;
+    color: $color-text1-4;
+    font-size: 12px;
+  }
+
+  &:hover {
+    border-bottom-color: $color-data1-2;
+  }
+}
+
+.scoreInfo-active {
+  border-bottom-color: $color-data1-2;
+}

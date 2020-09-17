@@ -1,0 +1,18 @@
+{
+  "publicPath": "./",
+  "outputDir": "../build",
+  "plugins": [
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": "@alifd/theme-dark-pro"
+      }
+    ],
+    [
+      "build-plugin-moment-locales",
+      {
+        "locales": ["zh-cn"]
+      }
+    ]
+  ]
+}

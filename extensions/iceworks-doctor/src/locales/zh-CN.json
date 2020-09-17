@@ -1,0 +1,4 @@
+{
+  "extension.iceworksDoctor.dashboard.error.illegalDirectory": "请使用包含 package.json 的 javascript 工程作为 WorkSpace！",
+  "extension.iceworksDoctor.dashboard.error.twiceOpen": "你已经开启 dashboard ，请关闭后重试！"
+}

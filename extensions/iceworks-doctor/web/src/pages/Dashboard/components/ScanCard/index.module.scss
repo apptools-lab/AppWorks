@@ -1,0 +1,16 @@
+.container {
+  padding: 20px;
+  background-color: $color-fill1-1;
+  word-break: break-all;
+
+  .title {
+    color: $color-text1-4;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
+
+  .displayNone {
+    display: none;
+  }
+}
