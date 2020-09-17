@@ -41,12 +41,6 @@
   "web.iceworksApp.Welcome.Information.dingtalk.desc": "Join us for exchange and study",
   "web.iceworksApp.Welcome.Information.dingtalk.link": "Join",
   "web.iceworksApp.Welcome.Information.updates.title": "Updates",
-<<<<<<< HEAD
-  "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks Updates Details",
-  "web.iceworksApp.Welcome.Information.updates.link": "View",
-  "web.iceworksApp.Welcome.showPageOption.title": "Show Welcome Page"
-=======
   "web.iceworksApp.Welcome.Information.updates.desc": "Iceworks release details",
   "web.iceworksApp.Welcome.Information.updates.link": "View"
->>>>>>> 3f39f8462d5c4992aeeaaae2ebb7264f19b6099f
 }
