@@ -3,7 +3,7 @@
   "displayName": "Iceworks UI Builder",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.11",
+  "version": "0.1.15",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -121,6 +121,7 @@
   },
   "dependencies": {
     "@iceworks/router-service": "^0.1.0",
+    "@iceworks/menu-service": "^0.1.0",
     "@iceworks/block-service": "^0.1.5",
     "@iceworks/common-service": "^0.1.3",
     "@iceworks/component-service": "^0.1.3",

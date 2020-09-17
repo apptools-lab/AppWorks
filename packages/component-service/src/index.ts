@@ -48,7 +48,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
     throw new Error(templateError);
   }
 
-  const fsPath = activeTextEditor.document.uri.fsPath;
+  const { fsPath } = activeTextEditor.document.uri;
   const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
@@ -89,7 +89,7 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   }
 
   const { active } = activeTextEditor.selection;
-  const fsPath = activeTextEditor.document.uri.fsPath;
+  const { fsPath } = activeTextEditor.document.uri;
   const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
@@ -98,10 +98,10 @@ export async function addBaseCode(dataSource: IMaterialBase) {
   const { importStatement, name, source } = dataSource;
   const { npm } = source;
   const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
-    activeTextEditor.document.getText()
+    activeTextEditor.document.getText(),
   );
-  const baseImportDeclaration = importDeclarations.find(({ source }) => {
-    return source.value === npm;
+  const baseImportDeclaration = importDeclarations.find(({ source: { value } }) => {
+    return value === npm;
   });
 
   const insertPosition = new Position(active.line, active.character);
@@ -123,7 +123,7 @@ export async function addBaseCode(dataSource: IMaterialBase) {
 
         editBuilder.insert(
           new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
-          `, ${name}`
+          `, ${name}`,
         );
       }
     }
@@ -139,7 +139,7 @@ export async function generateComponentCode(
   componentsMap: any,
   componentsTree: IContainerNodeItem,
   utils: IUtilItem[],
-  i18n: II18nMap
+  i18n: II18nMap,
 ) {
   let componentName = await vscode.window.showInputBox({
     placeHolder: i18nService.format('package.component-service.index.inputComponentNamePlaceHolder'),
@@ -184,7 +184,7 @@ export async function generateComponentCode(
     i18nService.format('package.component-service.index.createComponentSuccess', {
       componentPath,
     }),
-    openFileAction
+    openFileAction,
   );
 
   if (selectedAction === openFileAction) {

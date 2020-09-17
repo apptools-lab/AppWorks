@@ -1,0 +1,66 @@
+.description {
+  .title {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 12px;
+    color: $color-text1-3;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+
+    .info {
+      margin: 0 5px 0 0;
+      white-space: nowrap;
+      color: $color-text1-4;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    i {
+      color: $color-data1-2;
+      margin-right: 5px;
+    }
+  }
+}
+
+.report {
+  padding: 10px 20px;
+  cursor: pointer;
+
+  .file {
+    display: block;
+    color: $color-link-3;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 10px;
+    background-color: #282c34;
+    padding: 10px 20px;
+    justify-items: center;
+    align-items: center;
+
+    .info {
+      flex: 1;
+      margin: 0 5px 0 0;
+      white-space: nowrap;
+      color: $color-text1-4;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  &:hover {
+    background-color: $color-fill1-1;
+  }
+}

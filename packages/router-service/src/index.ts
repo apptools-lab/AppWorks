@@ -5,6 +5,7 @@ import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
+import * as upperCamelCase from 'uppercamelcase';
 import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
 
 interface IRouter {
@@ -41,8 +42,8 @@ const ROUTE_PROP_WHITELIST = ['component', 'path', 'exact', 'strict', 'sensitive
 const noPathPrefix = false;
 
 export async function create(data) {
-  const { path, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path, component: pageName }], { parent });
+  const { path: setPath, pageName, parent } = data;
+  await bulkCreate(projectPath, [{ path: setPath, component: upperCamelCase(pageName) }], { parent });
 }
 
 export async function getAll() {
@@ -67,11 +68,11 @@ export async function checkConfigPathExists() {
   return pathExists;
 }
 
-export async function bulkCreate(projectPath: string, data: IRouter[], options: IRouterOptions = {}) {
+export async function bulkCreate(targetProjectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
-  const routerConfigAST = await getRouterConfigAST(projectPath);
+  const routerConfigAST = await getRouterConfigAST(targetProjectPath);
   const projectLanguageType = await getProjectLanguageType();
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const routeConfigPath = path.join(targetProjectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const currentData = await getAll();
 
   if (!replacement) {
@@ -94,9 +95,9 @@ export async function bulkCreate(projectPath: string, data: IRouter[], options: 
   setData(data, routerConfigAST, routeConfigPath);
 }
 
-async function getRouterConfigAST(projectPath) {
+async function getRouterConfigAST(targetProjectPath) {
   const projectLanguageType = await getProjectLanguageType();
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const routeConfigPath = path.join(targetProjectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
   const routerConfigAST = getASTByCode(routerConfigString);
   return routerConfigAST;
@@ -150,8 +151,8 @@ function setData(data, routerConfigAST, routeConfigPath) {
     ObjectProperty({ node }) {
       // @ts-ignore
       if (['component'].indexOf(node.key.value) > -1) {
-        const value: any = node.value;
-        node.value = t.identifier(value.value);
+        // @ts-ignore
+        node.value = t.identifier(node.value.value);
       }
     },
   });
@@ -198,8 +199,10 @@ function changeImportDeclarations(routerConfigAST, data) {
   const importDeclarations = [];
   const removeIndex = [];
   // router import page or layout have @
-  let existAtSign = false;
   let existLazy = false;
+  // React.lazy(): the existLazyPrefix is true
+  // lazy(): the existLazyPrefix is false
+  let existLazyPrefix = false;
 
   traverse(routerConfigAST, {
     ImportDeclaration: ({ node, key }) => {
@@ -218,9 +221,6 @@ function changeImportDeclarations(routerConfigAST, data) {
       if (match && match[idx]) {
         const { specifiers } = node;
         const { name } = specifiers[0].local;
-        if (!noPathPrefix) {
-          existAtSign = match[idx - 1] === '@';
-        }
         importDeclarations.push({
           index: key,
           name,
@@ -231,21 +231,23 @@ function changeImportDeclarations(routerConfigAST, data) {
 
     // parse eg. `const Forbidden = React.lazy(() => import('./pages/Exception/Forbidden'));`
     VariableDeclaration: ({ node, key }) => {
-      const code = generate(node.declarations[0]).code;
+      const { code } = generate(node.declarations[0]);
       // parse const declaration to get directory type (layouts or pages)
       // support three path types
-      // 1. const xxx = React.lazy(() => import('pages/xxx'));
-      // 2. const xxx = React.lazy(() => import('./pages/xxx'));
-      // 3. const xxx = React.lazy(() => import('@/pages/xxx'));
-      const noPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
-      const hasPrefixReg = /(\w+)\s=\sReact\.lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
+      // 1. const xxx = (React.)?lazy(() => import('pages/xxx'));
+      // 2. const xxx = (React.)?lazy(() => import('./pages/xxx'));
+      // 3. const xxx = (React.)?lazy(() => import('@/pages/xxx'));
+      const noPrefixReg = /(\w+)\s=\s(React\.)?lazy(.+)import\(['|"]((\w+)\/.+)['|"]\)/;
+      const hasPrefixReg = /(\w+)\s=\s(React\.)?lazy(.+)import\(['|"]((\.|@)\/(\w+)\/.+)['|"]\)/;
       const matchLazyReg = noPathPrefix ? noPrefixReg : hasPrefixReg;
-      const idx = noPathPrefix ? 4 : 5;
+      const idx = noPathPrefix ? 5 : 6;
       const match = code.match(matchLazyReg);
 
       if (match && match.length > idx) {
         existLazy = true;
-        existAtSign = match[idx - 1] === '@';
+        if (match[2]) {
+          existLazyPrefix = true;
+        }
         importDeclarations.push({
           index: key,
           name: match[1],
@@ -350,7 +352,7 @@ function changeImportDeclarations(routerConfigAST, data) {
       importCode += `import ${name} from '${sign}/${type}/${name}';\n`;
     } else {
       // use lazy `const Page = React.lazy(() => import('@/pages/Page'))`
-      lazyCode += `const ${name} = React.lazy(() => import('${sign}/${type}/${name}'));\n`;
+      lazyCode += `const ${name} = ${existLazyPrefix ? 'React.' : ''}lazy(() => import('${sign}/${type}/${name}'));\n`;
     }
   });
 
@@ -397,6 +399,6 @@ function formatCodeFromAST(ast: any): string {
     {
       singleQuote: true,
       trailingComma: 'es5',
-    }
+    },
   );
 }

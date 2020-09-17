@@ -24,8 +24,8 @@ async function provideCompletionItems(document, position): Promise<vscode.Comple
       new Position(
         // Example: <|Text
         currentJsxElement.loc.start.line - 1,
-        currentJsxElement.loc.start.column + 2
-      )
+        currentJsxElement.loc.start.column + 2,
+      ),
     );
 
     definitions.forEach((definition: any) => {

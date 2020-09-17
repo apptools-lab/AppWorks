@@ -6,7 +6,7 @@ export default async function getDefinitions(documentUri: string, position: vsco
   const definitions: [] | undefined = await commands.executeCommand(
     'vscode.executeDefinitionProvider',
     documentUri,
-    position
+    position,
   );
 
   return definitions || [];

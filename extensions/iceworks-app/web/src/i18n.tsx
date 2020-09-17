@@ -29,6 +29,7 @@ const getIntl = (locale: string) => {
   }
   return createIntl({ locale, messages: localeMessage.messages });
 };
+
 export const LocaleProvider = (props) => {
   const [i18n, setI18n] = useState(() => getIntl(DEFAULT_LOCALE));
   const [loading, setLoading] = useState(true);

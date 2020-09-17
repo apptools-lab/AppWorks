@@ -1,0 +1,41 @@
+.content {
+  margin-top: 30px;
+  width: 1100px;
+
+  .title {
+    font-size: 20px;
+  }
+
+  .desc {
+    margin-top: 8px;
+    font-size: 14px;
+    color: $color-text1-3;
+  }
+
+  .videoContainer {
+    display: flex;
+    margin-top: 18px;
+
+    video {
+      width: 800px;
+      height: 500px;
+    }
+
+    .divider {
+      margin-left: 20px;
+      height: 150px;
+    }
+
+    .videoList {
+      :global {
+        .next-tree-node-label {
+          font-size: 16px !important;
+        }
+
+        .next-tree-node-inner.next-selected .next-tree-node-label {
+          color: $color-notice-4;
+        }
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Viewer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -99,6 +99,10 @@
           "light": "assets/light/setting.svg",
           "dark": "assets/dark/setting.svg"
         }
+      },
+      {
+        "command": "iceworksApp.welcome.start",
+        "title": "%iceworksApp.command.welcome.start.title%"
       },
       {
         "command": "iceworksApp.editorMenu.DefPublish",
@@ -440,6 +444,11 @@
             "https://registry.npm.taobao.org"
           ],
           "description": "%iceworksApp.configuration.properties.iceworks.npmRegistry.description%"
+        },
+        "iceworks.showWelcomePage": {
+          "type": "boolean",
+          "default": true,
+          "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
         }
       }
     }

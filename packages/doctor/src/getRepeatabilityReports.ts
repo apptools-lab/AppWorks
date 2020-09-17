@@ -12,7 +12,7 @@ const tempDir = path.join(__dirname, 'tmp/');
 export default async function getRepeatabilityReports(
   directory: string,
   supportExts: string[],
-  ignoreDirs: string[]
+  ignore: string[],
 ): Promise<IRepeatabilityReports> {
   let clones: IClone[] = [];
   let repetitionPercentage = 0;
@@ -23,7 +23,7 @@ export default async function getRepeatabilityReports(
       supportExts.join(','),
       directory,
       '--ignore',
-      `"${ignoreDirs.map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
+      `"${ignore.map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
       '--reporters',
       'json',
       '--output',

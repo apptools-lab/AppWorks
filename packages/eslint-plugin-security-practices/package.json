@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/eslint-plugin-security-practices",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "Iceworks doctor security practices eslint plugin.",
   "files": [
     "docs/",

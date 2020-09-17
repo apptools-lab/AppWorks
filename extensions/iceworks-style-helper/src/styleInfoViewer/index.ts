@@ -20,7 +20,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
     return new vscode.Location(
       vscode.Uri.file(matched.file),
       // The zero-based line and character value.
-      new vscode.Position(matchedPosition.start.line - 1, matchedPosition.start.column - 1)
+      new vscode.Position(matchedPosition.start.line - 1, matchedPosition.start.column - 1),
     );
   }
 }
@@ -87,8 +87,8 @@ export default function styleInfoViewer(context: vscode.ExtensionContext) {
 
         // eslint-disable-next-line
         "'",
-        ' '
-      )
+        ' ',
+      ),
     );
   });
 }

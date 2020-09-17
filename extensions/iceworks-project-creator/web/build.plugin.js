@@ -1,4 +1,4 @@
-module.exports = ({ onGetWebpackConfig, context }) => {
+module.exports = ({ onGetWebpackConfig }) => {
   const defineVariables = {
     'process.env.CLIENT_TOKEN': JSON.stringify(process.env.CLIENT_TOKEN),
   };

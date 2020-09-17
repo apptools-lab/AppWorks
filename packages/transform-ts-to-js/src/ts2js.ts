@@ -29,7 +29,7 @@ function ts2js(fileList: IFileEntity[], option: IBabelOption = {}): IFileEntity[
         ...entity,
         data: code,
       };
-    }
+    },
   );
 
   return jsFiles;

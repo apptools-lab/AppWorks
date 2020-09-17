@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.5.0
+
+- feat: Add Iceworks Doctor
+- feat: Add welcome page
+
+## 0.4.10
+
+- docs: update text for find component and generate page
+
 ## 0.4.9
 
 - feat: add create component to quick entry

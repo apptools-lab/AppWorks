@@ -11,6 +11,13 @@ import callService from '../../callService';
 
 nextComponents.setup();
 
+const tmpComponents = {};
+forIn(nextComponents, (value, key) => {
+  if (key !== 'setup') {
+    tmpComponents[key] = value;
+  }
+});
+
 export default ({
   templateSchema,
   originResetData,
@@ -26,16 +33,8 @@ export default ({
   const [routerConfig, setRouterConfig] = useState([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
   const [templateData, setTemplateData] = useState({});
-  const [components, setComponents] = useState({});
 
   useEffect(() => {
-    const tmpComponents = {};
-    forIn(nextComponents, (value, key) => {
-      if (key !== 'setup') {
-        tmpComponents[key] = value;
-      }
-    });
-    setComponents(tmpComponents);
     setLoading(false);
   }, []);
 
@@ -66,11 +65,11 @@ export default ({
   }
 
   function getTemplateData(userConfig) {
-    const templateData = getDefaultData();
-    forIn(templateData, (val, key) => {
-      templateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
+    const defaultTemplateData = getDefaultData();
+    forIn(defaultTemplateData, (val, key) => {
+      defaultTemplateData[key] = userConfig[key] !== undefined ? userConfig[key] : val;
     });
-    return templateData;
+    return defaultTemplateData;
   }
 
   async function getRouterForm(setting) {
@@ -95,15 +94,18 @@ export default ({
     setIsCreating(true);
     let pageIndexPath = '';
     try {
-      pageIndexPath = await callService('page', 'createPage', {
+      const result = await callService('page', 'createPage', {
         ...selectedPage,
         pageName: values.pageName,
         templateData,
       });
 
+      pageIndexPath = result.pageIndexPath;
+      const { pageName } = result;
+
       if (isConfigurableRouter) {
         try {
-          await callService('router', 'create', values);
+          await callService('router', 'create', { ...values, pageName });
         } catch (error) {
           Notification.error({ content: error.message });
         }
@@ -128,9 +130,9 @@ export default ({
             ? 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath'
             : 'web.iceworksUIBuilder.pageGenerater.successCreatePage',
         },
-        { path: pageIndexPath }
+        { path: pageIndexPath },
       ),
-      pageIndexPath ? openFileAction : []
+      pageIndexPath ? openFileAction : [],
     );
     if (selectedAction === openFileAction) {
       await callService('common', 'showTextDocument', pageIndexPath);
@@ -159,7 +161,7 @@ export default ({
               intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
           </p>
           <SchemaForm
-            components={components}
+            components={tmpComponents}
             schema={templateSchema}
             onSubmit={(setting) => {
               getRouterForm(setting);

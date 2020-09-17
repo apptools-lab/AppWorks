@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
 
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
 
   // auto set configuration
-  initExtension(context);
+  initExtension(context, name);
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 
@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
         {
           enableScripts: true,
           retainContextWhenHidden: true,
-        }
+        },
       );
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.onDidDispose(
@@ -40,16 +40,16 @@ export function activate(context: vscode.ExtensionContext) {
           webviewPanel = undefined;
         },
         null,
-        context.subscriptions
+        context.subscriptions,
       );
       connectService(webviewPanel, context, { services, recorder });
     }
   }
 
   subscriptions.push(
-    registerCommand('iceworks-project-creator.start', function () {
+    registerCommand('iceworks-project-creator.start', () => {
       activeWebview();
-    })
+    }),
   );
 
   const stateKey = 'iceworks.projectCreator.autoActivedWebview';

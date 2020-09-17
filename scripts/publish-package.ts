@@ -17,7 +17,7 @@ function publish(pkg: string, version: string, directory: string): void {
     {
       stdio: 'inherit',
       cwd: directory,
-    }
+    },
   );
 }
 

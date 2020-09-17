@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context);
+  initExtension(context, name);
 
   function activeComponentGeneratorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
       {
         enableScripts: true,
         retainContextWhenHidden: true,
-      }
+      },
     );
 
     const cdnUrl = 'https://g.alicdn.com/ice/iceworks-component-generator/0.1.7';
@@ -47,9 +47,9 @@ export function activate(context: vscode.ExtensionContext) {
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    registerCommand('iceworks-ui-builder.generate-component', function () {
+    registerCommand('iceworks-ui-builder.generate-component', () => {
       activeComponentGeneratorWebview();
-    })
+    }),
   );
 
   function activeComponentCreatorWebview() {
@@ -60,15 +60,15 @@ export function activate(context: vscode.ExtensionContext) {
       {
         enableScripts: true,
         retainContextWhenHidden: true,
-      }
+      },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    registerCommand('iceworks-ui-builder.create-component', function () {
+    registerCommand('iceworks-ui-builder.create-component', () => {
       activeComponentCreatorWebview();
-    })
+    }),
   );
 
   function activePageGeneraterWebview() {
@@ -79,15 +79,15 @@ export function activate(context: vscode.ExtensionContext) {
       {
         enableScripts: true,
         retainContextWhenHidden: true,
-      }
+      },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerater', true);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    registerCommand('iceworks-ui-builder.generate-page', function () {
+    registerCommand('iceworks-ui-builder.generate-page', () => {
       activePageGeneraterWebview();
-    })
+    }),
   );
   function activePageCreatorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
@@ -97,16 +97,16 @@ export function activate(context: vscode.ExtensionContext) {
       {
         enableScripts: true,
         retainContextWhenHidden: true,
-      }
+      },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    registerCommand('iceworks-ui-builder.create-page', function () {
+    registerCommand('iceworks-ui-builder.create-page', () => {
       activePageCreatorWebview();
-    })
+    }),
   );
 }
 
-export function deactivate() {}
+export function deactivate() { }

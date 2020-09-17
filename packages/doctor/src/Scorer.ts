@@ -11,7 +11,7 @@ export default class Scanner {
 
   constructor(options = {} as IScorerOptions) {
     this.highestScore = options.highestScore || 100;
-    this.lowestScore = options.lowestScore || 0;
+    this.lowestScore = options.lowestScore || 30;
     this.digits = options.digits || 2;
 
     this.currentScore = options.start || this.highestScore;
@@ -28,16 +28,21 @@ export default class Scanner {
   }
 
   public getAverage(list: number[]): number {
-    let sum = 0;
+    if (list.length) {
+      let sum = 0;
 
-    // Calculate average without max and min
-    list.sort((a, b) => a - b);
-    list.pop();
-    list.shift();
+      if (list.length > 3) {
+        // Calculate average without max and min
+        list.sort((a, b) => a - b);
+        list.pop();
+        list.shift();
+      }
 
-    list.forEach((num) => (sum += num));
-    this.currentScore = sum / list.length;
-
+      list.forEach((num) => {
+        sum += num;
+      });
+      this.currentScore = sum / list.length;
+    }
     return this.getScore();
   }
 

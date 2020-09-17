@@ -44,8 +44,8 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
       `**Iceworks** \n ${getMarkdownInfo(
         word,
         // Show color preview display
-        `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`
-      )}`
+        `${colorPreviewDisplay(matchedVariable.value)}${matchedVariable.value}`,
+      )}`,
     );
   }
 }
@@ -81,7 +81,7 @@ function processFusionVariables() {
     const rootPath = vscode.workspace.rootPath || '';
     const buildConfig = JSON.parse(fs.readFileSync(path.join(rootPath, 'build.json'), 'utf-8'));
     const fusionConfig = buildConfig.plugins.find(
-      (plugin) => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion'
+      (plugin) => Array.isArray(plugin) && plugin[0] === 'build-plugin-fusion',
     );
     // Get themePackage config from build.json
     if (fusionConfig[1].themePackage) {
@@ -112,7 +112,7 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
       }
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
 
   // Set definitionProvider
@@ -123,7 +123,7 @@ export default function sassVariablesViewer(context: vscode.ExtensionContext): v
     context.subscriptions.push(vscode.languages.registerHoverProvider(language, { provideHover }));
     // Styles auto Complete
     context.subscriptions.push(
-      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems }, '.')
+      vscode.languages.registerCompletionItemProvider(language, { provideCompletionItems }, '.'),
     );
   });
 }

@@ -1,8 +1,27 @@
 # Change Log
 
+## 0.1.15
+
+- feat: support generating menu to `menuConfig.js` 
+- feat: Add welcome page
+
+## 0.1.14
+
+- fix: fail to use lazy to import page component in `routes.js`
+- fix: `import React from 'react';` occurs in Rax page
+- fix: the page component name in `routes.js` has capital error
+
+## 0.1.13
+
+- docs: update text for find component and generate page
+
+## 0.1.12
+
+- fix: fix form style.
+
 ## 0.1.11
 
-- feat: show open file action after create component
+- feat: show open file action after creating component
 - refactor: router logic
 - fix: fail to generate text style in component-generator 
 - fix: fail to preview component attributes in component-generator canvas panel

@@ -72,7 +72,7 @@ const editInJsonFile = (incrementalChange) => {
   // 使用 snippet 移动光标；具体的原理是更新整个 json 文件，并且插入光标占位符
   currentJsonEditer!.insertSnippet(
     new vscode.SnippetString(JSON.stringify(json, undefined, '\t').replace(`"${currentKey}": `, `"${currentKey}": $1`)),
-    new vscode.Range(new vscode.Position(0, 0), new vscode.Position(currentJsonEditer!.document.lineCount + 1, 0))
+    new vscode.Range(new vscode.Position(0, 0), new vscode.Position(currentJsonEditer!.document.lineCount + 1, 0)),
   );
 };
 
@@ -98,7 +98,7 @@ function getEditingJsonFileValue() {
     vscode.window.showWarningMessage(
       i18n.format('extension.iceworksConfigHelper.loadJson.JsonErr', {
         JsonFileName: getEditingFileBaseName(),
-      })
+      }),
     );
   }
 }

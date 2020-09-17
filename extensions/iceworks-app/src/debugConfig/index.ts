@@ -22,7 +22,7 @@ function writeConfigFile(filePath: string, config: IDebugConfig) {
     filePath,
     '// See https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md \n' +
       '// for the documentation about the Iceworks debug \n' +
-      `${JSON.stringify(config, null, '  ')}`
+      `${JSON.stringify(config, null, '  ')}`,
   );
 }
 
