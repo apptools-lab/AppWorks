@@ -4,6 +4,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import {
   getProjectType,
   checkIsPegasusProject,
+  checkIsNotTarget,
   autoSetContext as autoSetContextByProject,
   projectPath,
 } from '@iceworks/project-service';
@@ -159,7 +160,8 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   // auto start welcome page when the application is new
-  if (projectPath && projectType !== 'unknown') {
+  const isNotTargetProject = await checkIsNotTarget();
+  if (projectPath && !isNotTargetProject) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
       vscode.commands.executeCommand('iceworksApp.welcome.start');
