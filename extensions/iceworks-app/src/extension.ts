@@ -158,9 +158,10 @@ export async function activate(context: vscode.ExtensionContext) {
     await createEditorMenuAction();
   }
 
-  if (projectPath) {
+  // auto start welcome page when the application is new
+  if (projectPath && projectType !== 'unknown') {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
-    if (projectExistsTime < curProjectExistsTime) {
+    if (projectExistsTime > curProjectExistsTime) {
       vscode.commands.executeCommand('iceworksApp.welcome.start');
     }
   }

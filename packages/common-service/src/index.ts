@@ -116,12 +116,21 @@ async function autoSetContext() {
 }
 
 async function autoStartWelcomePage(globalState: vscode.Memento) {
-  const globalStateKey = 'iceworks.welcomePageFirstStarted';
-  const welcomePageFirstStarted = globalState.get(globalStateKey);
-  if (!welcomePageFirstStarted) {
-    globalState.update(globalStateKey, true);
+  const globalStateKey = 'iceworks.version';
+  const iceworksVersion = globalState.get(globalStateKey);
+  const iceworksExtensionPackageJSON = vscode.extensions.getExtension('iceworks-team.iceworks');
+  // get current Iceworks version
+  const curIceworksVersion = iceworksExtensionPackageJSON.packageJSON.version;
+  // first install Iceworks, welcome page start
+  if (!iceworksVersion) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
   }
+  // Iceworks extension updated, welcome page also start
+  if (iceworksVersion && iceworksVersion !== curIceworksVersion) {
+    vscode.commands.executeCommand('iceworksApp.welcome.start');
+  }
+  // update the latest Iceworks version in the globalState
+  globalState.update(globalStateKey, curIceworksVersion);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
