@@ -5,14 +5,10 @@ import * as path from 'path';
 import { spawnSync } from 'child_process';
 import uploadExtesions from './upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import sleep from './fn/sleep';
+import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
-
-// Wait for npm module publish and sync.
-function sleep(time) {
-  console.log(`start sleep: ${time} ms`);
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce package
@@ -23,10 +19,12 @@ function publish(extension: string, directory: string, version: string): void {
   });
 }
 
-// Entry
-sleep(30000).then(() => {
-  console.log('[PUBLISH BETA] Start:');
-  getExtensionInfos().then((extensionInfos: IExtensionInfo[]) => {
+async function start() {
+  try {
+    await checkPackagePublished();
+    await sleep(50000);
+    console.log('[PUBLISH BETA] Start:');
+    const extensionInfos: IExtensionInfo[] = await getExtensionInfos();
     const shouldPublishExtensions: IExtensionInfo[] = [];
 
     for (let i = 0; i < extensionInfos.length; i++) {
@@ -58,5 +56,10 @@ sleep(30000).then(() => {
     uploadExtesions(publishedExtensions);
     console.log(`[PUBLISH EXTENSION BETA] Complete (count=${publishedCount}):`);
     console.log(`${publishedExtensions.join('\n')}`);
-  });
-});
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+}
+
+start();
