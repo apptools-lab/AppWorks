@@ -81,7 +81,7 @@ export class Timer {
             const subTime = time - this.lastHeartbeat;
             const { account, empId } = this.user;
             if (this.lastHeartbeat !== 0) {
-              recorder.record({
+              recorder.recordPV({
                 module: 'main',
                 action: 'tracking',
                 data: {
