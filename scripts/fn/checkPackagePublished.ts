@@ -1,9 +1,26 @@
 
-import { getLatestVersion } from 'ice-npm-utils';
+import { getLatestVersion, getNpmInfo } from 'ice-npm-utils';
 import { getPublishedPackages } from '../published-info';
 
+async function getNpmVersion(name: string, isBeta: boolean): Promise<string> {
+  let version = '';
+  try {
+    if (isBeta) {
+      const data = await getNpmInfo(name);
+      if (!data['dist-tags'] || !data['dist-tags'].beta) {
+        version = data['dist-tags'].beta;
+      }
+    } else {
+      version = await getLatestVersion(name);
+    }
+  } catch (e) {
+    // ignore
+  }
+  return version;
+}
+
 // Check published packages can be installed.
-export default function checkPackagePublished() {
+export default function checkPackagePublished(isBeta?: boolean) {
   const publishedPackages: string[] = getPublishedPackages();
 
   const timeout = 10000;
@@ -23,7 +40,7 @@ export default function checkPackagePublished() {
             clearInterval(timer);
             retject(new Error(`${name}@${version} publish failed! Please try again.`));
           } else {
-            getLatestVersion(name)
+            getNpmVersion(name, !!isBeta)
               .then((latestVersion) => {
                 if (version === latestVersion) {
                   // Can be installed.
