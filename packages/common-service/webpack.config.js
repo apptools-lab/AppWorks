@@ -36,9 +36,16 @@ const config = {
       },
     ],
   },
-  plugins: [
-    new RemoveBuildDepsPlugin(),
-  ],
 };
 
-module.exports = config;
+const plugins = [
+  new RemoveBuildDepsPlugin(),
+];
+
+module.exports = () => {
+  if (process.env.CI) {
+    config.plugins = plugins;
+  }
+
+  return config;
+};
