@@ -115,7 +115,7 @@ async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
 }
 
-const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
+export const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
 async function autoStartWelcomePage(globalState: vscode.Memento) {
   const didShowWelcomePage = globalState.get(didShowWelcomePageStateKey);
 
