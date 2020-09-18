@@ -3,6 +3,7 @@
 ## 0.1.16
 
 - fix: show welcome page many times
+- fix: refresh material did not clean cache
 
 ## 0.1.15
 
