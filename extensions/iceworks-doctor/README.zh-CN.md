@@ -2,6 +2,11 @@
 
 # Iceworks Doctor
 
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-doctor.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-doctor)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-doctor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-doctor)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-doctor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-doctor)
+[![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
 Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫描仪 [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) 的设计，Iceworks Doctor 可以在一次扫描中快速检测到应用程序和基础库代码中的各种安全漏洞和质量问题，而无需访问任何远程服务！你可以一键修复所有报告的问题，或者导航到源代码逐条来修复。
 
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)

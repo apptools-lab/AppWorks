@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.12
+
+- fix: refresh material did not clean cache
+
 ## 0.3.11
 
 - feat: Add welcome page
