@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
 
   // auto set configuration
-  initExtension(context);
+  initExtension(context, name);
 
   // set material importer
   let webviewPanel: vscode.WebviewPanel | undefined;
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableScripts: true,
           retainContextWhenHidden: true,
           enableFindWidget: true,
-        }
+        },
       );
       webviewPanel.webview.html = getHtmlForWebview(extensionPath);
       webviewPanel.onDidDispose(
@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
           webviewPanel = undefined;
         },
         null,
-        context.subscriptions
+        context.subscriptions,
       );
 
       vscode.commands.executeCommand('vscode.setEditorLayout', layout);
@@ -61,9 +61,9 @@ export function activate(context: vscode.ExtensionContext) {
     }
   }
   subscriptions.push(
-    registerCommand('iceworks-material-helper.start', function () {
+    registerCommand('iceworks-material-helper.start', () => {
       activeWebview();
-    })
+    }),
   );
 
   // set propsAutoCompleter

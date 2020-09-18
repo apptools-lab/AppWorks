@@ -3,57 +3,13 @@
  */
 import * as path from 'path';
 import { spawnSync } from 'child_process';
-import { getLatestVersion } from 'ice-npm-utils';
 import uploadExtesions from './upload-extensions';
-import { getPublishedPackages } from './published-info';
 import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import sleep from './fn/sleep';
+import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
-// Wait for npm module publish and sync.
-function sleep(time) {
-  console.log(`start sleep: ${time} ms`);
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-// Check published packages can be installed.
-function checkPackagePublished() {
-  const publishedPackages: string[] = getPublishedPackages();
-
-  const timeout = 10000;
-  const maxDetectTimes = 30;
-  return Promise.all(
-    publishedPackages.map((publishedPackage) => {
-      return new Promise((resolve, retject) => {
-        const info = publishedPackage.split(':');
-        // Example: @iceworks/project-service:0.1.8
-        const name = info[0];
-        const version = info[1];
-
-        let times = 0;
-        const timer = setInterval(() => {
-          if (times++ > maxDetectTimes) {
-            // Exit if detect times over maxDetectTimes.
-            clearInterval(timer);
-            retject(new Error(`${name}@${version} publish failed! Please try again.`));
-          } else {
-            getLatestVersion(name)
-              .then((latestVersion) => {
-                if (version === latestVersion) {
-                  // Can be installed.
-                  clearInterval(timer);
-                  resolve();
-                }
-              })
-              .catch(() => {
-                // ignore
-              });
-          }
-        }, timeout);
-      });
-    })
-  );
-}
 
 function packExtension(extension: string, directory: string, version: string) {
   console.log('[VSCE] PACK: ', `${extension}@${version}`);

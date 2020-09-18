@@ -28,7 +28,7 @@ export interface IStyle {
 export function findStyle(
   directory: string,
   className: string,
-  styleDependencies: IStyleDependency[] = []
+  styleDependencies: IStyleDependency[] = [],
 ): IStyle | undefined {
   let matched: IStyle | undefined;
 
@@ -63,12 +63,11 @@ export function findStyle(
       cssContent = flatten(fs.readFileSync(file, 'utf-8'));
     }
 
-    const stylesheet = css.parse(cssContent).stylesheet;
+    const { stylesheet } = css.parse(cssContent);
     matched = stylesheet.rules.find(
-      (rule) =>
-        rule.selectors &&
+      (rule) => rule.selectors &&
         // Selector endWith className. Example: '.bar' can match '.foo .bar'.
-        rule.selectors.find((selector) => selector.endsWith(className))
+        rule.selectors.find((selector) => selector.endsWith(className)),
     );
 
     // Just find one matched stylesheet.

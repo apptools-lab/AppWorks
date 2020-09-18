@@ -22,7 +22,7 @@ import { run } from './fn/shell';
           }
         }
       }
-    })
+    }),
   );
 })().catch((e) => {
   console.trace(e);

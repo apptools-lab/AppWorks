@@ -1,0 +1,27 @@
+.header {
+  padding: 10px 20px;
+  background-color: $color-fill1-4;
+
+  .title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: $color-text1-4;
+    font-weight: bold;
+
+    .number {
+      margin-left: 6px;
+      padding: 0 6px;
+      color: $color-text1-4;
+      line-height: 18px;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+  }
+
+  .description {
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
+    color: $color-text1-3;
+  }
+}

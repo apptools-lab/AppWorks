@@ -41,7 +41,6 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
     ...originParam,
     // eslint-disable-next-line
     record_type: recordType,
-    recordType,
     cache: Math.random(),
   };
 
@@ -209,6 +208,20 @@ export class Recorder {
 
   public record(param: ILogParam) {
     return record({
+      namespace: this.namespace,
+      ...param,
+    });
+  }
+
+  public recordPV(param: ILogParam) {
+    return recordPV({
+      namespace: this.namespace,
+      ...param,
+    });
+  }
+
+  public recordUV(param: ILogParam) {
+    return recordUV({
       namespace: this.namespace,
       ...param,
     });

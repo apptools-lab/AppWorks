@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.extension.json",
+  "compilerOptions": {
+    "outDir": "build",
+    "rootDir": "src",
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src", "schema"],
+  "exclude": ["node_modules", "web"]
+}

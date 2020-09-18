@@ -5,11 +5,12 @@
   "iceworksApp.view.components.name": "Components",
   "iceworksApp.view.nodeDependencies.name": "Node Dependencies",
   "iceworksApp.viewsWelcome.welcome.contents": "To use Iceworks, you need to open or create a application first. \n[Open a Folder](command:vscode.openFolder)\n[Create Application](command:iceworks-project-creator.start)\n[Configuration](command:iceworksApp.configHelper.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks in VS Code.",
-  "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json.",
-  "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found.",
-  "iceworksApp.viewsWelcome.components.contents": "Components could not be found.",
-  "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json.",
+  "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json",
+  "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found",
+  "iceworksApp.viewsWelcome.components.contents": "Components could not be found",
+  "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json",
   "iceworksApp.command.configHelper.start.title": "Iceworks: Settings",
+  "iceworksApp.command.welcome.start.title": "Iceworks: Welcome",
   "iceworksApp.command.DefPublish.title": "Iceworks: Def Publish",
   "iceworksApp.command.quickEntries.start.title": "Start",
   "iceworksApp.command.npmScripts.refresh.title": "Refresh",
@@ -33,5 +34,6 @@
   "iceworksApp.command.nodeDependencies.refresh.title": "Refresh",
   "iceworksApp.command.nodeDependencies.upgrade.title": "Upgrade Dependency",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
-  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry."
+  "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
+  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page"
 }

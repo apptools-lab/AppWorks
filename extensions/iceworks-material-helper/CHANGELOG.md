@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.6
+
+- feat: Add welcome page
+
 ## 0.3.5
 
 - docs: en-US demo

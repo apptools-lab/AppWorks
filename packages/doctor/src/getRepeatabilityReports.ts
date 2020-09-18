@@ -12,7 +12,7 @@ const tempDir = path.join(__dirname, 'tmp/');
 export default async function getRepeatabilityReports(
   directory: string,
   supportExts: string[],
-  ignore: string[]
+  ignore: string[],
 ): Promise<IRepeatabilityReports> {
   let clones: IClone[] = [];
   let repetitionPercentage = 0;

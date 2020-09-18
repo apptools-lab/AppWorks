@@ -18,7 +18,7 @@ export default class I18n {
     this.currentTextMap = this.localesTextMap[locale] || this.localesTextMap[Object.keys(this.localesTextMap)[0]];
   }
 
-  format(contentKey: string, args?: object) {
+  format(contentKey: string, args?: Record<string, unknown>) {
     const i18nformatString = this.currentTextMap[contentKey];
     if (!i18nformatString) {
       return '';

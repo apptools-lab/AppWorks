@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.11
+
+- feat: Add welcome page
+
 ## 0.3.10
 
 - feat: add Rax scaffolds to external

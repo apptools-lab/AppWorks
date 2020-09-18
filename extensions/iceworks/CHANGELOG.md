@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.10.0
+
+- feat: Add Iceworks Doctor
+
 ## 0.9.0
 
 - docs: qrcode size

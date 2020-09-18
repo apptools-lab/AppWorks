@@ -1,0 +1,24 @@
+.container {
+  padding: 20px;
+  background-color: $color-fill1-1;
+  word-break: break-all;
+  position: relative;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  p {
+    margin-bottom: 0;
+    line-height: 20px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}

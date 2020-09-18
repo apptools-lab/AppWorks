@@ -1,0 +1,30 @@
+// 引入默认全局样式
+@import '@alifd/next/reset.scss';
+
+@font-face {
+  font-family: NextIcon;
+  src: url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.eot);
+  src: url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.eot#iefix) format('embedded-opentype'),
+    url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.woff2) format('woff2'),
+    url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.woff) format('woff'),
+    url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.ttf) format('truetype'),
+    url(https://at.alicdn.com/t/font_1978248_1z3a8cf0pkb.svg#NextIcon) format('svg');
+}
+
+body {
+  padding: 0;
+  background-color: #242423;
+  -webkit-font-smoothing: antialiased;
+}
+
+.next-affix {
+  z-index: 9999;
+}
+
+.next-shell-main {
+  background-color: #242423 !important;
+}
+
+* {
+  margin: 0;
+}

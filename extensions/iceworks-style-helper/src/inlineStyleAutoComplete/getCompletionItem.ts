@@ -5,7 +5,7 @@ export default function getCompletionItem(
   description: string,
   documentation = '',
   insertText = '',
-  itemKind = 'Property'
+  itemKind = 'Property',
 ): vscode.CompletionItem {
   const completionItem = new vscode.CompletionItem(text, vscode.CompletionItemKind[itemKind]);
   completionItem.detail = 'Iceworks';

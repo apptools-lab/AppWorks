@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 interface IProjectFormProps {
   value: IProjectField;
   children: React.ReactNode;
-  onChange: (value: object) => void;
+  onChange: (value: Record<string, unknown>) => void;
   onOpenFolderDialog: () => void;
   errorMsg?: string;
   loading: boolean;
