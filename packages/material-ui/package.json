@@ -54,6 +54,6 @@
     "access": "public"
   },
   "license": "MIT",
-  "homepage": "https://registry.npm.taobao.org/@iceworks/material-ui@0.1.11/build/index.html",
+  "homepage": "https://unpkg.com/@iceworks/material-ui@0.1.12/build/index.html",
   "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }
