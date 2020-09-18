@@ -119,6 +119,7 @@ export const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
 async function autoStartWelcomePage(globalState: vscode.Memento) {
   const didShowWelcomePage = globalState.get(didShowWelcomePageStateKey);
 
+  // if didSetMaterialSource means is installed
   const isFirstInstall = !didShowWelcomePage && !globalState.get(didSetMaterialSourceStateKey);
   if (isFirstInstall && !vscode.window.activeTextEditor && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
