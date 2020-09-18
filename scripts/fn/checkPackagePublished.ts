@@ -7,7 +7,7 @@ async function getNpmVersion(name: string, isBeta: boolean): Promise<string> {
   try {
     if (isBeta) {
       const data = await getNpmInfo(name);
-      if (!data['dist-tags'] || !data['dist-tags'].beta) {
+      if (data['dist-tags'] && data['dist-tags'].beta) {
         version = data['dist-tags'].beta;
       }
     } else {
