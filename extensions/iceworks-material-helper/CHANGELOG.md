@@ -2,7 +2,7 @@
 
 ## 0.3.7
 
-- fix: refresh material does not clean cache
+- fix: refresh material did not clean cache
 
 ## 0.3.6
 
