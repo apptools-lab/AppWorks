@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.17
+
+- fix: if there is an active window, then do not show the welcome page
+
 ## 0.1.16
 
 - fix: show welcome page many times

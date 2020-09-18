@@ -163,7 +163,7 @@ export async function activate(context: vscode.ExtensionContext) {
   const isNotTargetProject = await checkIsNotTarget();
   // get showWelcomePage configuration from settings.json
   const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
-  if (projectPath && !isNotTargetProject && isShowWelcomePage) {
+  if (projectPath && !isNotTargetProject && isShowWelcomePage && !vscode.window.activeTextEditor) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
       vscode.commands.executeCommand('iceworksApp.welcome.start');

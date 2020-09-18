@@ -119,7 +119,7 @@ async function autoStartWelcomePage(globalState: vscode.Memento) {
   const globalStateKey = 'iceworks.didShowWelcomePage';
   const didShowWelcomePage = globalState.get(globalStateKey);
   // first install Iceworks and iceworks-app exists, show welcome page
-  if (!didShowWelcomePage && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+  if (!didShowWelcomePage && !vscode.window.activeTextEditor && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
   }
   globalState.update(globalStateKey, true);
