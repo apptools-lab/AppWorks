@@ -21,7 +21,7 @@ function publish(extension: string, directory: string, version: string): void {
 
 async function start() {
   try {
-    await checkPackagePublished();
+    await checkPackagePublished(true);
     await sleep(50000);
     console.log('[PUBLISH BETA] Start:');
     const extensionInfos: IExtensionInfo[] = await getExtensionInfos();
