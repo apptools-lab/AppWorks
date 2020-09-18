@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.16
+
+- fix: refresh material does not clean cache
+
 ## 0.1.15
 
 - feat: support generating menu to `menuConfig.js` 
