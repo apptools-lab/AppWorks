@@ -38,7 +38,6 @@ const Content = () => {
       <div className={styles.title}><FormattedMessage id="web.iceworksApp.Welcome.Content.title" /></div>
       <div className={styles.desc}><FormattedMessage id="web.iceworksApp.Welcome.Content.desc" /></div>
       <div className={styles.videoContainer}>
-        {/* <iframe allowFullScreen src="https://www.zhihu.com/video/1289678738658627584" frameBorder="0" /> */}
         <video src={videosList[selectedKeyIndex].videoUrl} controls />
         <Divider direction="ver" className={styles.divider} />
         <Tree
