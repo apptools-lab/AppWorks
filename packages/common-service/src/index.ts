@@ -106,7 +106,7 @@ export async function initExtension(context: vscode.ExtensionContext, extensionN
 
   await autoSetContext();
 
-  autoStartWelcomePage(globalState, extensionName);
+  autoStartWelcomePage(globalState);
 
   onChangeActiveTextEditor(context);
 }
@@ -115,29 +115,14 @@ async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
 }
 
-async function autoStartWelcomePage(globalState: vscode.Memento, extensionName: string) {
-  let globalStateKey = 'iceworks.version';
-  let iceworksExtensionPackageJSON;
-
-  const iceworksPackPackageJSON = vscode.extensions.getExtension('iceworks-team.iceworks');
-
-  if (iceworksPackPackageJSON) {
-    iceworksExtensionPackageJSON = iceworksPackPackageJSON;
-  } else {
-    // the key of current extension version in globalState
-    globalStateKey = `${extensionName}.version`;
-    iceworksExtensionPackageJSON = vscode.extensions.getExtension(`iceworks-team.${extensionName}`);
-  }
-
-  const iceworksVersion = globalState.get(globalStateKey);
-  // get current Iceworks version
-  const curIceworksVersion = iceworksExtensionPackageJSON.packageJSON.version;
-  // first install Iceworks and iceworks-app exists, welcome page start
-  if (!iceworksVersion && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+async function autoStartWelcomePage(globalState: vscode.Memento) {
+  const globalStateKey = 'iceworks.didShowWelcomePage';
+  const didShowWelcomePage = globalState.get(globalStateKey);
+  // first install Iceworks and iceworks-app exists, show welcome page
+  if (!didShowWelcomePage && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
   }
-  // update the latest Iceworks version in the globalState
-  globalState.update(globalStateKey, curIceworksVersion);
+  globalState.update(globalStateKey, true);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {

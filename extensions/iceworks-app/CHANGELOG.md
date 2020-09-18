@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.1
+
+- fix: show welcome page many times
+
 ## 0.5.0
 
 - feat: Add Iceworks Doctor
