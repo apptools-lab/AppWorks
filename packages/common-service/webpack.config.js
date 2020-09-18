@@ -43,7 +43,7 @@ const plugins = [
 ];
 
 module.exports = () => {
-  if (true) {
+  if (process.env.CI) {
     config.plugins = plugins;
   }
 
