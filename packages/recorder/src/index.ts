@@ -214,6 +214,20 @@ export class Recorder {
     });
   }
 
+  public recordPV(param: ILogParam) {
+    return recordPV({
+      namespace: this.namespace,
+      ...param,
+    });
+  }
+
+  public recordUV(param: ILogParam) {
+    return recordUV({
+      namespace: this.namespace,
+      ...param,
+    });
+  }
+
   public recordActivate() {
     recordActivate({
       extension: this.namespace,
