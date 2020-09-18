@@ -213,6 +213,7 @@ const CreateProject: React.FC = () => {
     return sources;
   }
   async function refreshMaterialSources() {
+    await callService('material', 'cleanCache');
     const sources = await getMaterialSources();
     setMaterialSources(sources);
   }

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { registerCommand } from '@iceworks/common-service';
+import { registerCommand, initExtension } from '@iceworks/common-service';
 import getRecorder from './getRecorder';
 import getScanReport from './getScanReport';
 import setDiagnostics from './setDiagnostics';
@@ -10,10 +10,16 @@ import * as zhCNTextMap from './locales/zh-CN.json';
 import * as enUSTextMap from './locales/en-US.json';
 import { services } from './services';
 
+// eslint-disable-next-line
+const { name } = require('../package.json');
+
 function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
+  
+  // auto set configuration
+  initExtension(context, name);
 
   let reportWebviewPanel: vscode.WebviewPanel | undefined;
 
