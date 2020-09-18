@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.7
+
+- fix: show welcome page many times
+
 ## 0.3.6
 
 - feat: Add welcome page

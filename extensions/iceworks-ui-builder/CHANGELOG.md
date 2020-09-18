@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.16
+
+- fix: show welcome page many times
+
 ## 0.1.15
 
 - feat: support generating menu to `menuConfig.js` 
