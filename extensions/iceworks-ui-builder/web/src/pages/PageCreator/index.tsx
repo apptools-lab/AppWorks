@@ -26,6 +26,7 @@ const Home = () => {
             <Material
               disableLazyLoad
               getSources={getSources}
+              refreshSources={refreshSources}
               onSettingsClick={onSettingsClick}
               getData={getData}
               onPageClick={onSelect}
@@ -73,9 +74,12 @@ const Home = () => {
         content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
       });
     }
-
-    console.log('getSources', sources);
     return sources;
+  }
+
+  async function refreshSources() {
+    await callService('material', 'cleanCache');
+    return await getSources();
   }
 
   async function getData(source: string) {
@@ -87,7 +91,6 @@ const Home = () => {
         content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }),
       });
     }
-    console.log('getData', data);
     return data;
   }
 

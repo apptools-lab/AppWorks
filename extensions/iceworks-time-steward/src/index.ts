@@ -1,11 +1,16 @@
 import * as vscode from 'vscode';
-import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
+import { getUserInfo, checkIsAliInternal, initExtension } from '@iceworks/common-service';
 import { Timer } from './timer';
+
+// eslint-disable-next-line
+const { name } = require('../package.json');
 
 let timer: Timer;
 
-export async function activate() {
-  console.info('start timer');
+export async function activate(context: vscode.ExtensionContext) {
+  // auto set configuration
+  initExtension(context, name);
+
   let user = { empId: vscode.env.machineId, account: 'anonymous' };
 
   const isAliInternal = await checkIsAliInternal();

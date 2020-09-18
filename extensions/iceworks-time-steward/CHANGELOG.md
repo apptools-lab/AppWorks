@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.3
+
+- feat: Add welcome page
+
 ## 0.1.2
 
 - refactor: just record PV
