@@ -115,14 +115,16 @@ async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
 }
 
+export const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
 async function autoStartWelcomePage(globalState: vscode.Memento) {
-  const globalStateKey = 'iceworks.didShowWelcomePage';
-  const didShowWelcomePage = globalState.get(globalStateKey);
-  // first install Iceworks and iceworks-app exists, show welcome page
-  if (!didShowWelcomePage && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+  const didShowWelcomePage = globalState.get(didShowWelcomePageStateKey);
+
+  // if didSetMaterialSource means is installed
+  const isFirstInstall = !didShowWelcomePage && !globalState.get(didSetMaterialSourceStateKey);
+  if (isFirstInstall && !vscode.window.activeTextEditor && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
   }
-  globalState.update(globalStateKey, true);
+  globalState.update(didShowWelcomePageStateKey, true);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
@@ -143,11 +145,9 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
     context.subscriptions
   );
 }
-
+const didSetMaterialSourceStateKey = 'iceworks.materialSourceIsSet';
 async function autoInitMaterialSource(globalState: vscode.Memento) {
-  console.log('autoInitMaterialSource: run');
-  const stateKey = 'iceworks.materialSourceIsSet';
-  const materialSourceIsSet = globalState.get(stateKey);
+  const materialSourceIsSet = globalState.get(didSetMaterialSourceStateKey);
   if (!materialSourceIsSet) {
     console.log('autoInitMaterialSource: do');
     const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
@@ -167,7 +167,7 @@ async function autoInitMaterialSource(globalState: vscode.Memento) {
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
 
-      globalState.update(stateKey, true);
+      globalState.update(didSetMaterialSourceStateKey, true);
     }
   });
 }
