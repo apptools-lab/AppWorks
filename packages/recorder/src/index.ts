@@ -7,7 +7,7 @@ const isElectronProcess = require('is-electron');
 let vscodeEnv;
 try {
   // eslint-disable-next-line
-  const vscode = require('is-electron');
+  const vscode = require('vscode');
   vscodeEnv = vscode.env;
 } catch (error) {
   // ignore
