@@ -14,7 +14,8 @@
     "is-electron": "^2.2.0"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0"
+    "@types/axios": "^0.14.0",
+    "@types/vscode": "^1.45.0"
   },
   "publishConfig": {
     "access": "public"
