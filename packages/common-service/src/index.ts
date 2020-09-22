@@ -19,6 +19,9 @@ import i18n from './i18n';
 // eslint-disable-next-line
 const co = require('co');
 
+// eslint-disable-next-line
+const { name: namespace } = require('../package.json');
+
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
@@ -47,7 +50,7 @@ const { window, Position } = vscode;
 
 function recordExecuteCommand(command: string, args: any[]) {
   return record({
-    namespace: 'common-service',
+    namespace,
     module: 'executeCommand',
     action: command,
     data: args,

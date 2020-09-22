@@ -1,6 +1,7 @@
 /* eslint-disable prefer-template */
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { record } from '@iceworks/recorder';
 
 const { window, ViewColumn } = vscode;
 
@@ -44,11 +45,22 @@ export function connectService(
       if (api) {
         try {
           const extra = args.length > 0 ? { data: args.length === 1 ? args[0] : args } : undefined;
+
+          // record for extension
           recorder.record({
             module: service,
             action: method,
             ...extra,
           });
+
+          // record for service
+          record({
+            namespace: `@iceworks/${service}-service`,
+            module: 'connect',
+            action: method,
+            ...extra
+          });
+          
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
           const newArgs = fillApiArgLength > 0 ? args.concat(Array(fillApiArgLength).fill(undefined)) : args;

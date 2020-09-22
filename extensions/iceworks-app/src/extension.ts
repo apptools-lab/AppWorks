@@ -42,9 +42,8 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
     registerCommand(showExtensionsQuickPickCommandId, async () => {
-      recorder.recordActivate();
-
       await showEntriesQuickPick();
+      recorder.recordActivate();
     }),
   );
 
@@ -80,8 +79,8 @@ export async function activate(context: vscode.ExtensionContext) {
   }
   subscriptions.push(
     registerCommand('iceworksApp.configHelper.start', (focusField: string) => {
-      recorder.recordActivate();
       activeConfigWebview(focusField);
+      recorder.recordActivate();
     }),
   );
   // init welcome webview
@@ -114,6 +113,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworksApp.welcome.start', () => {
       activeWelcomeWebview();
+      recorder.recordActivate();
     }),
   );
 

@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/vscode-webview",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Webview related API for VSCode extension.",
   "files": [
     "lib"
@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "ejs": "^3.1.3",
-    "fs-extra": "^9.0.0"
+    "fs-extra": "^9.0.0",
+    "@iceworks/recorder": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"
