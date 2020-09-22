@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { setSourcesToSettingJSON } from '@iceworks/material-service';
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
@@ -11,11 +12,14 @@ const recorder = new Recorder(name, version);
 
 const { window, ViewColumn } = vscode;
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
 
   // auto set configuration
   initExtension(context, name);
+
+  // set material sources
+  await setSourcesToSettingJSON();
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 

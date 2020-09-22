@@ -1,8 +1,11 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/next';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
-import Card from '@/components/Card';
+import DragableCard from '@/components/DragableCard';
+import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
@@ -26,6 +29,7 @@ const ScaffoldMarket = ({
   children,
   onOpenConfigPanel,
   materialSources,
+  moveCard
 }) => {
   const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
@@ -44,7 +48,7 @@ const ScaffoldMarket = ({
       setMainScaffolds(mainScaffolds);
       setOtherScaffolds(otherScaffolds);
     } catch (err) {
-      // ignore
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -107,33 +111,43 @@ const ScaffoldMarket = ({
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.scaffoldsSource}>
-          <div className={styles.sourcesList}>
-            {materialSources &&
-              materialSources.map((item) => {
-                let iconName = 'app';
-                const projectType = item.type.toLocaleLowerCase();
-                if (item.client) {
-                  iconName = item.client.toLocaleLowerCase();
-                } else if (projectTypes.includes(projectType)) {
-                  iconName = projectType;
-                }
-                return (
-                  <Card
-                    key={item.name}
-                    title={
-                      <div className={styles.cardTitle}>
-                        {<img src={require(`@/assets/${iconName}.svg`)} alt="projectType" width={26} height={26} />}
-                        <div>{item.name}</div>
-                      </div>
-                    }
-                    content={item.description}
-                    selected={selectedSource.name && selectedSource.name === item.name}
-                    style={{ width: 160, height: 120 }}
-                    onClick={() => onMaterialSourceClick(item)}
-                  />
-                );
-              })}
-          </div>
+          <DndProvider backend={HTML5Backend}>
+            <div className={styles.sourcesList}>
+              {materialSources ?
+                materialSources.map((item, index) => {
+                  let iconName = 'app';
+                  const projectType = item.type.toLocaleLowerCase();
+                  if (item.client) {
+                    iconName = item.client.toLocaleLowerCase();
+                  } else if (projectTypes.includes(projectType)) {
+                    iconName = projectType;
+                  }
+                  return (
+                    <DragableCard
+                      index={index}
+                      id={item.name}
+                      key={item.name}
+                      title={
+                        <div className={styles.cardTitle}>
+                          <img
+                            src={require(`@/assets/${iconName}.svg`)}
+                            alt="projectType"
+                            width={26}
+                            height={26}
+                          />
+                          <div>{item.name}</div>
+                        </div>
+                      }
+                      content={item.description}
+                      selected={selectedSource.name && selectedSource.name === item.name}
+                      style={{ width: 160, height: 120 }}
+                      onClick={() => onMaterialSourceClick(item)}
+                      moveCard={moveCard}
+                    />
+                  );
+                }) : null}
+            </div>
+          </DndProvider>
           {isAliInternal ? <PegasusCard onClick={handlePegasusCardClick} selected={pegasusCardSelected} /> : null}
           <div className={styles.addSource}>
             <Button className={styles.btn} onClick={onOpenConfigPanel}>
@@ -148,64 +162,19 @@ const ScaffoldMarket = ({
           ) : pegasusCardSelected ? (
             <PegasusScaffoldContent />
           ) : (
-            <>
-              <div className={styles.mainScaffolds}>
-                {!!mainScaffolds.length ? (
-                  mainScaffolds.map((item) => {
-                    // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
-                    // so the TypeScript and JavaScript logo only display in official scaffolds
-                    const scaffoldType = tsScaffoldsList.includes(item.source.npm)
-                      ? 'ts'
-                      : jsScaffoldsList.includes(item.source.npm)
-                      ? 'js'
-                      : '';
-                    const isWireless = checkIsWireless(selectedSource);
-                    const CardComponent = isWireless ? MobileScaffoldCard : Card;
-                    return (
-                      <CardComponent
-                        key={item.name}
-                        title={
-                          <div className={styles.cardTitle}>
-                            {scaffoldType && (
-                              <img
-                                src={require(`@/assets/${scaffoldType}.svg`)}
-                                alt="languageType"
-                                width={20}
-                                height={20}
-                              />
-                            )}
-                            <div>
-                              {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
-                            </div>
-                          </div>
-                        }
-                        content={item.description}
-                        media={item.screenshot}
-                        selected={curProjectField.scaffold.name === item.name}
-                        onClick={() => onScaffoldClick(item)}
-                      />
-                    );
-                  })
-                ) : (
-                  <NotFound
-                    description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
-                  />
-                )}
-              </div>
-              {!!otherScaffolds.length && (
-                <Collapse className={styles.collapse}>
-                  <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
-                    <div className={styles.collapseScaffolds}>
-                      {otherScaffolds.map((item) => {
+                <>
+                  <div className={styles.mainScaffolds}>
+                    {!!mainScaffolds.length ? (
+                      mainScaffolds.map((item) => {
                         // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
                         // so the TypeScript and JavaScript logo only display in official scaffolds
                         const scaffoldType = tsScaffoldsList.includes(item.source.npm)
                           ? 'ts'
                           : jsScaffoldsList.includes(item.source.npm)
-                          ? 'js'
-                          : '';
+                            ? 'js'
+                            : '';
                         const isWireless = checkIsWireless(selectedSource);
-                        const CardComponent = isWireless ? MobileScaffoldCard : Card;
+                        const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
                         return (
                           <CardComponent
                             key={item.name}
@@ -220,7 +189,7 @@ const ScaffoldMarket = ({
                                   />
                                 )}
                                 <div>
-                                  {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                  {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
                                 </div>
                               </div>
                             }
@@ -230,13 +199,58 @@ const ScaffoldMarket = ({
                             onClick={() => onScaffoldClick(item)}
                           />
                         );
-                      })}
-                    </div>
-                  </Collapse.Panel>
-                </Collapse>
+                      })
+                    ) : (
+                        <NotFound
+                          description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
+                        />
+                      )}
+                  </div>
+                  {!!otherScaffolds.length && (
+                    <Collapse className={styles.collapse}>
+                      <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
+                        <div className={styles.collapseScaffolds}>
+                          {otherScaffolds.map((item) => {
+                            // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                            // so the TypeScript and JavaScript logo only display in official scaffolds
+                            const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                              ? 'ts'
+                              : jsScaffoldsList.includes(item.source.npm)
+                                ? 'js'
+                                : '';
+                            const isWireless = checkIsWireless(selectedSource);
+                            const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
+                            return (
+                              <CardComponent
+                                key={item.name}
+                                title={
+                                  <div className={styles.cardTitle}>
+                                    {scaffoldType && (
+                                      <img
+                                        src={require(`@/assets/${scaffoldType}.svg`)}
+                                        alt="languageType"
+                                        width={20}
+                                        height={20}
+                                      />
+                                    )}
+                                    <div>
+                                      {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                    </div>
+                                  </div>
+                                }
+                                content={item.description}
+                                media={item.screenshot}
+                                selected={curProjectField.scaffold.name === item.name}
+                                onClick={() => onScaffoldClick(item)}
+                              />
+                            );
+                          })}
+                        </div>
+                      </Collapse.Panel>
+                    </Collapse>
+                  )}
+                </>
               )}
-            </>
-          )}
         </div>
       </div>
       {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}

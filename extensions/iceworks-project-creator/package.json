@@ -35,7 +35,22 @@
       "properties": {
         "iceworks.materialSources": {
           "type": "array",
-          "default": [],
+          "default": [
+            {
+              "name": "PC Web",
+              "type": "react",
+              "client": "pc",
+              "source": "https://ice.alicdn.com/assets/materials/react-materials.json",
+              "description": "基于 Fusion 基础组件和 ICE 脚手架的官方物料"
+            },
+            {
+              "name": "无线跨端",
+              "type": "rax",
+              "client": "wireless",
+              "source": "https://ice.alicdn.com/assets/materials/rax-materials.json",
+              "description": "基于 Rax 组件和 Rax 脚手架的官方物料"
+            }
+          ],
           "description": "Iceworks materialSources"
         },
         "iceworks.workspace": {

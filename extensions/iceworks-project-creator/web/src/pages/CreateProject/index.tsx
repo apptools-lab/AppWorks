@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, Form, Button, Notification, Icon, Loading } from '@alifd/next';
 import callService from '@/callService';
+import update from 'immutability-helper';
 import { IProjectField, IDEFProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -26,6 +27,21 @@ const CreateProject: React.FC = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const moveCard = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const dragCard = materialSources[dragIndex];
+      setMaterialSources(
+        update(materialSources, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        }),
+      );
+    },
+    [materialSources],
+  );
+
   const steps = [
     <ScaffoldMarket
       isAliInternal={isAliInternal}
@@ -33,6 +49,7 @@ const CreateProject: React.FC = () => {
       curProjectField={curProjectField}
       onOpenConfigPanel={onOpenConfigPanel}
       materialSources={materialSources}
+      moveCard={moveCard}
     >
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
@@ -208,10 +225,11 @@ const CreateProject: React.FC = () => {
   }
 
   async function getMaterialSources() {
-    const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
-    setMaterialSources(sources);
+    // const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
+    const sources = (await callService('common', 'getDataFromSettingJson', 'materialSources') || []) as IMaterialSource[];
     return sources;
   }
+
   async function refreshMaterialSources() {
     await callService('material', 'cleanCache');
     const sources = await getMaterialSources();
@@ -248,8 +266,14 @@ const CreateProject: React.FC = () => {
       }
     }
     initData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+    async function updateMaterialSourcesToSettingJSON() {
+      await callService('common', 'saveDataToSettingJson', 'materialSources', materialSources);
+    }
+    updateMaterialSourcesToSettingJSON();
+  }, [materialSources]);
   return (
     <div className={styles.container}>
       <Card free>
@@ -278,9 +302,7 @@ const CreateProject: React.FC = () => {
           </div>
           {loading ? (
             <Loading className={styles.loading} visible={loading} />
-          ) : (
-            <div className={styles.content}>{steps[currentStep]}</div>
-          )}
+          ) : (<div className={styles.content}>{steps[currentStep]}</div>)}
         </Card.Content>
       </Card>
     </div>

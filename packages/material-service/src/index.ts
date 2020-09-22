@@ -51,6 +51,7 @@ const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
     description: i18n.format('package.materialService.index.vueDescription'),
   },
 ];
+
 let dataCache: { [source: string]: IMaterialData } = {};
 
 const isIceMaterial = (source: string) => {
@@ -64,7 +65,9 @@ export const getSourcesByProjectType = async function () {
 };
 
 export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
+
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+
 /**
  * Get material sources list
  *
@@ -75,19 +78,40 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     // if the project type is unknown, set the default project type
     specifiedType = 'react';
   }
-  let officalsources: IMaterialSource[] = getOfficalMaterialSources();
-  const isAliInternal = await checkIsAliInternal();
-  if (!isAliInternal) {
-    officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
-  }
-  const userSources: IMaterialSource[] = getUserSources();
-  const sources = officalsources.concat(userSources);
-  return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
+
+  const materialSources = await updateSourcesToSettingJSON();
+
+  return specifiedType ? materialSources.filter(({ type }) => type === specifiedType) : materialSources;
 }
 
-export const cleanCache = function() {
-  dataCache = {};
+/**
+ * update material sources, including internal and external sources
+ */
+export async function updateSourcesToSettingJSON() {
+  // todo: 兼容旧用户的版本
+  const isAliInternal = await checkIsAliInternal();
+  const curMaterialSources = await getDataFromSettingJson('materialSources', []);
+
+  let materialSources = [];
+  if (!isAliInternal) {
+    // push the vue and icejs miniprogram app internal material sources
+    materialSources = curMaterialSources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
+  } else {
+    // remove the vue and icejs miniprogram app internal material sources
+    materialSources = curMaterialSources.filter((item) => {
+      const target = OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL.find(externalSource => item.source === externalSource.source);
+      return target === undefined;
+    });
+  }
+
+  await saveDataToSettingJson('materialSources', materialSources);
+
+  return materialSources;
 }
+
+export const cleanCache = function () {
+  dataCache = {};
+};
 
 /**
  * Get material source data
