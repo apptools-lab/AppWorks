@@ -107,6 +107,11 @@ export function activate(context: vscode.ExtensionContext) {
       activePageCreatorWebview();
     }),
   );
+  subscriptions.push(
+    registerCommand('iceworksUIBuilder.commands.debugMaterials.title', () => {
+
+    }),
+  );
 }
 
 export function deactivate() { }

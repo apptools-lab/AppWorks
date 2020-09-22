@@ -17,7 +17,7 @@ function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
-  
+
   // auto set configuration
   initExtension(context, name);
 
