@@ -122,10 +122,7 @@ export function recordDefinitionProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'definitionProvider',
-    data: {
-      platform: process.platform,
-    },
+    action: 'definitionProvider'
   });
 }
 
@@ -135,10 +132,7 @@ export function recordHoverProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'hoverProvider',
-    data: {
-      platform: process.platform,
-    },
+    action: 'hoverProvider'
   });
 }
 
@@ -148,10 +142,7 @@ export function recordCompletionItemProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'completionItemProvider',
-    data: {
-      platform: process.platform
-    },
+    action: 'completionItemProvider'
   });
 }
 
@@ -161,15 +152,12 @@ export function recordCompletionItemSelect() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'completionItemSelect',
-    data: {
-      platform: process.platform,
-    },
+    action: 'completionItemSelect'
   });
 }
 
 // active a extension
-export function recordActivate(data: { extension: string; version?: string }) {
+function recordActivate(data: { extension: string; version?: string }) {
   return record({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
