@@ -56,7 +56,7 @@ export function connectService(
           // record for service
           record({
             namespace: `@iceworks/${service}-service`,
-            module: 'connect',
+            module: 'callMethod',
             action: method,
             ...extra
           });
