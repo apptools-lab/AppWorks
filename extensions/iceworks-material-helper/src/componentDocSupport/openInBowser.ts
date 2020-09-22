@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import i18n from '../i18n';
+import recorder from '../utils/recorder';
 
 function openInExternalBrowser(url) {
   vscode.env.openExternal(url);
@@ -27,4 +28,12 @@ export default function openInBrowser(url) {
   } else {
     openInExternalBrowser(url);
   }
+
+  recorder.record({
+    module: 'docSupport',
+    action: 'openInBrowser',
+    data: {
+      url,
+    },
+  });
 }
