@@ -125,7 +125,6 @@ export function recordDefinitionProvider() {
     action: 'definitionProvider',
     data: {
       platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
     },
   });
 }
@@ -139,7 +138,6 @@ export function recordHoverProvider() {
     action: 'hoverProvider',
     data: {
       platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
     },
   });
 }
@@ -152,8 +150,7 @@ export function recordCompletionItemProvider() {
     module: RECORD_MODULE_KEY,
     action: 'completionItemProvider',
     data: {
-      platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+      platform: process.platform
     },
   });
 }
@@ -167,7 +164,6 @@ export function recordCompletionItemSelect() {
     action: 'completionItemSelect',
     data: {
       platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
     },
   });
 }
