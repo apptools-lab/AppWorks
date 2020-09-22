@@ -54,7 +54,6 @@ function recordExecuteCommand(command: string, args: any[]) {
   });
 }
 
-
 let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
   if (typeof isAliInternal === 'undefined') {
