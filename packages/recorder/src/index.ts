@@ -172,18 +172,6 @@ export function recordCompletionItemSelect() {
   });
 }
 
-export function recordExecuteCommand(command: string) {
-  console.log('recorder[recordExecuteCommand]');
-  return record({
-    namespace: MAIN_KEY,
-    module: RECORD_MODULE_KEY,
-    action: 'executeCommand',
-    data: {
-      command,
-    },
-  });
-}
-
 // active a extension
 export function recordActivate(data: { extension: string; version?: string }) {
   return record({

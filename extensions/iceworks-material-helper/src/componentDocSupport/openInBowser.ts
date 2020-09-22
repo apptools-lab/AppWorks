@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
 import i18n from '../i18n';
 
 function openInExternalBrowser(url) {
@@ -28,5 +27,4 @@ export default function openInBrowser(url) {
   } else {
     openInExternalBrowser(url);
   }
-  recordDAU();
 }
