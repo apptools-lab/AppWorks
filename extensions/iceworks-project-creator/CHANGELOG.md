@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.3.14
+
+- feat: support drag and sort the material source cards
+
 ## 0.3.13
 
 - fix: if there is an active window, then do not show the welcome page
