@@ -25,6 +25,7 @@ const CreateProject: React.FC = () => {
   const [projectFormErrorMsg, setProjectFormErrorMsg] = useState('');
   const [DEFFormErrorMsg, setDEFFormErrorMsg] = useState('');
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
+  const [updateMaterialSourcesEvent, setUpdateMaterialSourcesEvent] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
 
   const moveCard = useCallback(
@@ -38,6 +39,7 @@ const CreateProject: React.FC = () => {
           ],
         }),
       );
+      setUpdateMaterialSourcesEvent('moveCard');
     },
     [materialSources],
   );
@@ -50,6 +52,7 @@ const CreateProject: React.FC = () => {
       onOpenConfigPanel={onOpenConfigPanel}
       materialSources={materialSources}
       moveCard={moveCard}
+      updateMaterialSourcesEvent={updateMaterialSourcesEvent}
     >
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
@@ -182,10 +185,14 @@ const CreateProject: React.FC = () => {
   }
 
   async function createProject(data: IProjectField) {
-    const projectDir = await callService('project', 'createProject', data);
-    const { projectPath } = data;
-    await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
-    await callService('project', 'openLocalProjectFolder', projectDir);
+    try {
+      const projectDir = await callService('project', 'createProject', data);
+      const { projectPath } = data;
+      await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
+      await callService('project', 'openLocalProjectFolder', projectDir);
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
   }
 
   async function onDEFProjectDetailSubmit(values: any, errors: any) {
@@ -225,7 +232,6 @@ const CreateProject: React.FC = () => {
   }
 
   async function getMaterialSources() {
-    // const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
     const sources = (await callService('common', 'getDataFromSettingJson', 'materialSources') || []) as IMaterialSource[];
     return sources;
   }
@@ -234,6 +240,7 @@ const CreateProject: React.FC = () => {
     await callService('material', 'cleanCache');
     const sources = await getMaterialSources();
     setMaterialSources(sources);
+    setUpdateMaterialSourcesEvent('refresh');
   }
 
   useEffect(() => {
@@ -252,6 +259,7 @@ const CreateProject: React.FC = () => {
     async function initMaterialSources() {
       const sources = await getMaterialSources();
       setMaterialSources(sources);
+      setUpdateMaterialSourcesEvent('init');
     }
     async function initData() {
       try {

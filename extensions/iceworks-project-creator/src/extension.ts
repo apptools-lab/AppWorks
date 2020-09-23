@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { setSourcesToSettingJSON } from '@iceworks/material-service';
+import { updateSourcesToSettingJSON } from '@iceworks/material-service';
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
@@ -19,7 +19,7 @@ export async function activate(context: vscode.ExtensionContext) {
   initExtension(context, name);
 
   // set material sources
-  await setSourcesToSettingJSON();
+  await updateSourcesToSettingJSON();
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 

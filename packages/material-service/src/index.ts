@@ -1,4 +1,5 @@
 import * as kebabCase from 'lodash.kebabcase';
+import * as uniqBy from 'lodash.uniqby';
 import axios from 'axios';
 import {
   checkIsAliInternal,
@@ -64,10 +65,6 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 };
 
-export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
-
-export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-
 /**
  * Get material sources list
  *
@@ -88,9 +85,13 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
  * update material sources, including internal and external sources
  */
 export async function updateSourcesToSettingJSON() {
-  // todo: 兼容旧用户的版本
   const isAliInternal = await checkIsAliInternal();
-  const curMaterialSources = await getDataFromSettingJson('materialSources', []);
+  let curMaterialSources = await getDataFromSettingJson('materialSources', []);
+  // compatible with older versions
+  if (!(curMaterialSources.some(item => item.source === ICE_MATERIAL_SOURCE || item.source === RAX_MATERIAL_SOURCE))) {
+    // remove duplicated material sources
+    curMaterialSources = uniqBy(curMaterialSources.concat(OFFICAL_MATERIAL_SOURCES), 'source');
+  }
 
   let materialSources = [];
   if (!isAliInternal) {
@@ -104,7 +105,7 @@ export async function updateSourcesToSettingJSON() {
     });
   }
 
-  await saveDataToSettingJson('materialSources', materialSources);
+  await saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, materialSources);
 
   return materialSources;
 }

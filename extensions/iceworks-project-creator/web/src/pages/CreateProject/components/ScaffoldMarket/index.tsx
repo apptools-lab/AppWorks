@@ -5,7 +5,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import DragableCard from '@/components/DragableCard';
-import ScaffoldCard from '@/components/ScaffoldCard';
+import ScaffoldCard from '@/components/CustomCard';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
@@ -29,7 +29,8 @@ const ScaffoldMarket = ({
   children,
   onOpenConfigPanel,
   materialSources,
-  moveCard
+  moveCard,
+  updateMaterialSourcesEvent
 }) => {
   const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
@@ -105,7 +106,8 @@ const ScaffoldMarket = ({
   }
 
   useEffect(() => {
-    initData();
+    if (updateMaterialSourcesEvent !== 'moveCard')
+      initData();
   }, [materialSources]);
   return (
     <div className={styles.container}>
@@ -126,6 +128,7 @@ const ScaffoldMarket = ({
                     <DragableCard
                       index={index}
                       id={item.name}
+                      moveCard={moveCard}
                       key={item.name}
                       title={
                         <div className={styles.cardTitle}>
@@ -142,7 +145,6 @@ const ScaffoldMarket = ({
                       selected={selectedSource.name && selectedSource.name === item.name}
                       style={{ width: 160, height: 120 }}
                       onClick={() => onMaterialSourceClick(item)}
-                      moveCard={moveCard}
                     />
                   );
                 }) : null}

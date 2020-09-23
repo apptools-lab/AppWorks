@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
+import { updateSourcesToSettingJSON } from '@iceworks/material-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
@@ -21,6 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   // auto set configuration
   initExtension(context, name);
+
+  // set material sources
+  updateSourcesToSettingJSON();
 
   function activeComponentGeneratorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(

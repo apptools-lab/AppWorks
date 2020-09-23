@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
-import { Card } from '@alifd/next';
-import classnames from 'classnames';
 import { XYCoord } from 'dnd-core';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
-import successIcon from '@/assets/success.svg';
-import styles from './index.module.scss';
+import CustomCard from '../CustomCard';
 
 interface DragItem {
   index: number
@@ -14,11 +11,10 @@ interface DragItem {
 
 interface IDragableCardProps {
   title: string | React.ReactNode;
-  content?: string | React.ReactNode;
+  content: string | React.ReactNode;
   selected: boolean;
-  style?: Record<string, unknown>;
-  onClick?: any;
-  media?: string;
+  style: Record<string, unknown>;
+  onClick: any;
   index: number;
   id: string;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
@@ -29,7 +25,6 @@ const DragableCard: React.FC<IDragableCardProps> = ({
   content,
   selected,
   onClick,
-  media,
   style,
   moveCard,
   index,
@@ -90,21 +85,13 @@ const DragableCard: React.FC<IDragableCardProps> = ({
 
   return (
     <div ref={ref}>
-      <Card
-        free
-        style={{ ...style, opacity }}
-        className={classnames(styles.card, { [styles.active]: selected })}
+      <CustomCard
+        title={title}
+        content={content}
+        selected={selected}
         onClick={onClick}
-      >
-        {selected && <img src={successIcon} className={styles.successIcon} alt="success" />}
-        <Card.Media>
-          {media && <img height={120} src={media} alt="screenshot" style={{ padding: '10px 10px 0' }} />}
-        </Card.Media>
-        <Card.Header title={title} />
-        <Card.Content>
-          <div className={styles.content}>{content}</div>
-        </Card.Content>
-      </Card>
+        style={{ ...style, opacity }}
+      />
     </div>
   );
 };
