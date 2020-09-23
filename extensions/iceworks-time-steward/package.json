@@ -3,7 +3,7 @@
   "displayName": "Iceworks Time Steward(Beta)",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "engines": {
     "vscode": "^1.41.0"
   },

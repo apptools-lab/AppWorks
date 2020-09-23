@@ -97,7 +97,7 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtension(context: vscode.ExtensionContext) {
+export async function initExtension(context: vscode.ExtensionContext, extensionName: string) {
   const { globalState } = context;
 
   await autoInitMaterialSource(globalState);
@@ -106,11 +106,25 @@ export async function initExtension(context: vscode.ExtensionContext) {
 
   await autoSetContext();
 
+  autoStartWelcomePage(globalState);
+
   onChangeActiveTextEditor(context);
 }
 
 async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
+}
+
+export const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
+async function autoStartWelcomePage(globalState: vscode.Memento) {
+  const didShowWelcomePage = globalState.get(didShowWelcomePageStateKey);
+
+  // if didSetMaterialSource means is installed
+  const isFirstInstall = !didShowWelcomePage && !globalState.get(didSetMaterialSourceStateKey);
+  if (isFirstInstall && !vscode.window.activeTextEditor && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+    vscode.commands.executeCommand('iceworksApp.welcome.start');
+  }
+  globalState.update(didShowWelcomePageStateKey, true);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
@@ -131,11 +145,9 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
     context.subscriptions
   );
 }
-
+const didSetMaterialSourceStateKey = 'iceworks.materialSourceIsSet';
 async function autoInitMaterialSource(globalState: vscode.Memento) {
-  console.log('autoInitMaterialSource: run');
-  const stateKey = 'iceworks.materialSourceIsSet';
-  const materialSourceIsSet = globalState.get(stateKey);
+  const materialSourceIsSet = globalState.get(didSetMaterialSourceStateKey);
   if (!materialSourceIsSet) {
     console.log('autoInitMaterialSource: do');
     const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
@@ -155,7 +167,7 @@ async function autoInitMaterialSource(globalState: vscode.Memento) {
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
 
-      globalState.update(stateKey, true);
+      globalState.update(didSetMaterialSourceStateKey, true);
     }
   });
 }
@@ -431,4 +443,12 @@ export function showTextDocument(resource: string) {
 export function findIndexFile(targetPath: string): string {
   const currentSuffix = indexFileSuffix.find((suffix) => fse.pathExistsSync(path.join(targetPath, `index${suffix}`)));
   return currentSuffix ? path.join(targetPath, `index${currentSuffix}`) : undefined;
+}
+
+export function getFolderExistsTime(folderPath: string) {
+  const stat = fse.statSync(folderPath);
+  const { birthtime } = stat;
+  const curTime = new Date();
+  const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000))
+  return existsTime;
 }

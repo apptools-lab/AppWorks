@@ -26,8 +26,12 @@ const MaterialsPane: React.FC<any> = () => {
         content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.extension.getMaterialError' }),
       });
     }
-    console.log('getSources', sources);
     return sources;
+  }
+
+  async function refreshSources() {
+    await callService('material', 'cleanCache');
+    return await getSources();
   }
 
   async function getData(source: string): Promise<IMaterialData> {
@@ -72,6 +76,7 @@ const MaterialsPane: React.FC<any> = () => {
         disableLazyLoad
         onSettingsClick={onSettingsClick}
         getSources={getSources}
+        refreshSources={refreshSources}
         getData={getData}
         onBlockClick={onBlockClick}
         onBaseClick={onBaseClick}

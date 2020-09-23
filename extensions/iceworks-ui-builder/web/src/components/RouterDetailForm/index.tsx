@@ -1,28 +1,9 @@
-import React from 'react';
-import { Dialog, Field, Form, Input, Select } from '@alifd/next';
+import React, { useState } from 'react';
+import { Dialog, Field, Form, Input, Select, Balloon, Icon } from '@alifd/next';
+import callService from '../../callService';
+import { useIntl, FormattedMessage } from 'react-intl';
+import { IMenuType, IPageDetailForm } from '../../types';
 import styles from './index.module.scss';
-
-interface IPageDetail {
-  pageName: string;
-  path?: string;
-  parent?: string;
-}
-
-interface IRouter {
-  path: string;
-  component?: string;
-  layout?: string;
-  children?: IRouter[];
-}
-
-interface IPageDetailForm {
-  isCreating: boolean;
-  visible: boolean;
-  routerConfig: IRouter[];
-  isConfigurableRouter: boolean;
-  onSubmit: (data: IPageDetail) => void;
-  onClose: () => void;
-}
 
 const PageDetailForm: React.FC<IPageDetailForm> = ({
   isCreating,
@@ -32,6 +13,9 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
   onSubmit,
   onClose,
 }) => {
+  const intl = useIntl();
+
+  const [menuTypes, setMenuTypes] = useState<IMenuType[]>([]);
   const field = Field.useField({
     values: {},
   });
@@ -43,6 +27,37 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
     }
 
     onSubmit(field.getValues());
+  };
+
+  const onLayoutChange = async (value: string) => {
+    // find selected layout routers
+    const router = includedChildrenRouterConfig.find(item => item.path === value);
+    if (router) {
+      const layoutName = router.component;
+      if (!layoutName) {
+        return;
+      }
+
+      const { headerMenuConfig, asideMenuConfig } = await callService('menu', 'getAllConfig', layoutName);
+      const layoutMenuTypes: IMenuType[] = [];
+      if (asideMenuConfig) {
+        layoutMenuTypes.push({
+          value: 'asideMenuConfig',
+          label: intl.formatMessage({
+            id: 'web.iceworksUIBuilder.RouterDetailForm.asideMenuConfig.label',
+          }),
+        });
+      }
+      if (headerMenuConfig) {
+        layoutMenuTypes.push({
+          value: 'headerMenuConfig',
+          label: intl.formatMessage({
+            id: 'web.iceworksUIBuilder.RouterDetailForm.headerMenuConfig.label',
+          }),
+        });
+      }
+      setMenuTypes(layoutMenuTypes);
+    }
   };
 
   const includedChildrenRouterConfig = routerConfig.filter((item) => !!item.children);
@@ -59,19 +74,86 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
       cancelProps={{ disabled: isCreating }}
     >
       <Form field={field} fullWidth className={styles.form}>
-        <Form.Item label="页面名称" required requiredMessage="请输入页面名称">
-          <Input name="pageName" placeholder="请输入页面名称" disabled={isCreating} />
+        <Form.Item
+          label={intl.formatMessage({
+            id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.label',
+          })}
+          required
+          requiredMessage={intl.formatMessage({
+            id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.requiredMessage',
+          })}
+        >
+          <Input
+            name="pageName"
+            placeholder={intl.formatMessage({
+              id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.placeholder',
+            })}
+            disabled={isCreating}
+          />
         </Form.Item>
         {isConfigurableRouter && (
-          <Form.Item label="路由路径" required requiredMessage="请输入路由路径">
-            <Input name="path" placeholder="请输入路由路径" disabled={isCreating} />
+          <Form.Item
+            label={intl.formatMessage({
+              id: 'web.iceworksUIBuilder.RouterDetailForm.path.label',
+            })}
+            required
+            requiredMessage={intl.formatMessage({
+              id: 'web.iceworksUIBuilder.RouterDetailForm.path.requiredMessage',
+            })}
+          >
+            <Input
+              name="path"
+              placeholder={intl.formatMessage({
+                id: 'web.iceworksUIBuilder.RouterDetailForm.path.placeholder',
+              })}
+              disabled={isCreating}
+            />
           </Form.Item>
         )}
         {isConfigurableRouter && !!includedChildrenRouterConfig.length && (
-          <Form.Item label="父级路由" required requiredMessage="请选择父级路由">
-            <Select name="parent" placeholder="请选择父级路由" disabled={isCreating}>
+          <Form.Item
+            label={intl.formatMessage({
+              id: 'web.iceworksUIBuilder.RouterDetailForm.parent.label',
+            })}
+            required
+            requiredMessage={intl.formatMessage({
+              id: 'web.iceworksUIBuilder.RouterDetailForm.parent.requiredMessage',
+            })}
+          >
+            <Select
+              name="parent"
+              placeholder={intl.formatMessage({
+                id: 'web.iceworksUIBuilder.RouterDetailForm.parent.placeholder',
+              })}
+              disabled={isCreating}
+              onChange={onLayoutChange}
+            >
               {includedChildrenRouterConfig.map((route) => (
                 <Select.Option value={route.path}>{route.component}</Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
+        {isConfigurableRouter && field.getValue('parent') && !!menuTypes.length && (
+          <Form.Item
+            label={
+              <span>
+                <FormattedMessage id="web.iceworksUIBuilder.RouterDetailForm.menuType.label" />
+                <Balloon type="primary" trigger={<Icon type="help" size="small" className={styles.helpIcon} />} closable={false}>
+                  <FormattedMessage id="web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage" />
+                </Balloon>
+              </span>
+            }
+          >
+            <Select
+              name="menuType"
+              placeholder={intl.formatMessage({
+                id: 'web.iceworksUIBuilder.RouterDetailForm.menuType.placeholder',
+              })}
+              disabled={isCreating}
+            >
+              {menuTypes.map((item: IMenuType) => (
+                <Select.Option value={item.value} key={item.value}>{item.label}</Select.Option>
               ))}
             </Select>
           </Form.Item>

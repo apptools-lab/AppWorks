@@ -11,6 +11,7 @@ import {
 import { MaterialView } from './components/view';
 
 const Index: React.FC<{
+  refreshSources: () => Promise<IMaterialSource[]>;
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
   disableLazyLoad?: boolean;
@@ -23,14 +24,21 @@ const Index: React.FC<{
   onComponentClick?: (component: IMaterialComponent) => void;
   onBaseClick?: (base: IMaterialBase) => void;
   onSettingsClick?: () => void;
-}> = ({ getSources, getData, dataBlackList = [], dataWhiteList = [], onSettingsClick, ...others }) => {
+}> = ({ refreshSources, getSources, getData, dataBlackList = [], dataWhiteList = [], onSettingsClick, ...others }) => {
   const [sources, setSources] = React.useState([]);
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
   const [isLoadingData, setIsLoadingData] = React.useState(false);
   const [isLoadingSources, setIsLoadingSources] = React.useState(false);
 
-  async function refreshSources() {
+  async function onRefreshSources() {
+    setIsLoadingSources(true);
+    const sources = (await refreshSources()) || [];
+    setIsLoadingSources(false);
+    resetSources(sources);
+  }
+
+  async function onGetSources() {
     setIsLoadingSources(true);
     const sources = (await getSources()) || [];
     setIsLoadingSources(false);
@@ -65,7 +73,7 @@ const Index: React.FC<{
   }
 
   React.useEffect(() => {
-    refreshSources();
+    onGetSources();
   }, []);
 
   return (
@@ -81,13 +89,13 @@ const Index: React.FC<{
         extra={
           <div className="extra-wrap">
             {onSettingsClick && <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />}
-            <Icon
+            { refreshSources && <Icon
               type="refresh"
               size="small"
               title="获取最新物料源信息"
-              onClick={refreshSources}
+              onClick={onRefreshSources}
               style={{ marginLeft: 6 }}
-            />
+            />}
           </div>
         }
         {...others}

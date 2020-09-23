@@ -1,0 +1,86 @@
+.header {
+  padding: 10px 20px;
+  background-color: $color-fill1-4;
+
+  .title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: $color-text1-4;
+    font-weight: bold;
+
+    .number {
+      margin-left: 6px;
+      padding: 0 6px;
+      color: $color-text1-4;
+      line-height: 18px;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+  }
+
+  .description {
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
+    color: $color-text1-3;
+  }
+}
+
+.wrap {
+  position: relative;
+
+  .item {
+    .file {
+      display: block;
+      color: $color-link-3;
+      padding: 10px 20px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message {
+      padding: 10px 20px;
+      font-size: 14px;
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+
+      .icon {
+        margin-right: 6px;
+      }
+
+      .detail {
+        margin: 0;
+        display: inline-block;
+        font-size: 14px;
+        color: $color-text1-3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        .positionInfo {
+          color: $color-text1-4;
+          font-weight: bold;
+          margin-right: 6px;
+        }
+      }
+
+      &:hover {
+        background-color: $color-fill1-1;
+      }
+    }
+  }
+}
+
+.tooltip {
+  .ruleId {
+    font-size: 14px;
+    color: $color-text1-4;
+    font-weight: bold;
+  }
+
+  .messageText {
+    font-size: 12px;
+    color: $color-text1-3;
+  }
+}

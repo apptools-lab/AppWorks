@@ -1,5 +1,18 @@
 # Change Log
 
+## 0.3.8
+
+- fix: if there is an active window, then do not show the welcome page
+
+## 0.3.7
+
+- fix: show welcome page many times
+- fix: refresh material did not clean cache
+
+## 0.3.6
+
+- feat: Add welcome page
+
 ## 0.3.5
 
 - docs: en-US demo

@@ -13,6 +13,8 @@
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "通过可视化操作添加组件到应用代码",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "设置",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "设置 Iceworks 提供的相关功能",
+  "extension.iceworksApp.showEntriesQuickPick.openDashboard.label": "查看项目仪表盘",
+  "extension.iceworksApp.showEntriesQuickPick.openDashboard.detail": "查看项目信息及安全漏洞和质量问题",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "查找组件",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "快速搜索组件文档并进行浏览",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.label": "启动调试",
@@ -25,6 +27,8 @@
   "extension.iceworksApp.showEntriesQuickPick.reinstall.detail": "重新安装应用的依赖包",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label": "添加依赖",
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.detail": "为应用添加新的依赖",
+  "extension.iceworksApp.showEntriesQuickPick.welcomePage.label": "欢迎使用",
+  "extension.iceworksApp.showEntriesQuickPick.welcomePage.detail": "启动欢迎页",
   "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "例如: lodash react@latest",
   "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "请输入需要添加到 <%= depType %> 的依赖名称, 支持通过空格添加多个依赖",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "日常环境",
@@ -33,5 +37,6 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "发布到生产环境",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
-  "extension.iceworksApp.extension.title": "设置 - Iceworks"
+  "extension.iceworksApp.configHelper.extension.webviewTitle": "设置 - Iceworks",
+  "extension.iceworksApp.welcome.extension.webviewTitle": "欢迎 - Iceworks"
 }

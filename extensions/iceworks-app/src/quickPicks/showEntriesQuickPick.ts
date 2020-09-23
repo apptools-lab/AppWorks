@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import getQuickEntryOptions from '../getQuickEntryOptions';
+import getQuickEntryOptions from '../utils/getQuickEntryOptions';
 
 const { window, commands } = vscode;
 

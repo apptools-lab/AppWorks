@@ -13,6 +13,7 @@ coverage/
 tmp
 .tmp
 __mocks__
+out
 __tests__
 
 # 忽略文件

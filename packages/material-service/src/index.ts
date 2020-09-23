@@ -51,7 +51,7 @@ const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
     description: i18n.format('package.materialService.index.vueDescription'),
   },
 ];
-const dataCache: { [source: string]: IMaterialData } = {};
+let dataCache: { [source: string]: IMaterialData } = {};
 
 const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
@@ -84,6 +84,10 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   const sources = officalsources.concat(userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
+
+export const cleanCache = function () {
+  dataCache = {};
+};
 
 /**
  * Get material source data

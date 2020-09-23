@@ -25,12 +25,26 @@ export default function getBestPracticesReports(
 
   files.forEach((file) => {
     aliEslintCliEngine.executeOnText(file.source, file.path).results.forEach((result) => {
+      // Remove Parsing error
+      result.messages = (result.messages || []).filter((message) => {
+        if (message.fatal && message.severity === 2 && message.message.startsWith('Parsing error:')) {
+          result.errorCount--;
+          return false;
+        }
+        return true;
+      });
+
       reports.push({
         ...result,
         filePath: file.path,
       });
     });
   });
+
+  if (fix) {
+    // output fixes to disk
+    CLIEngine.outputFixes(aliEslintCliEngine.executeOnFiles(files.map((file) => file.path)));
+  }
 
   reports.forEach((report) => {
     warningScore += report.warningCount * warningWeight;

@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.3.10
+
+- fix: if there is an active window, then do not show the welcome page
+
+## 0.3.9
+
+- feat: Add welcome page
+
 ## 0.3.7
 
 - Fix error: property `title` is mandatory and must be of type `string` or `object`.

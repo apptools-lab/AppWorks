@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.5
+
+- fix: if there is an active window, then do not show the welcome page
+
+## 0.3.4
+
+- fix: show welcome page many times
+
+## 0.3.3
+
+- feat: Add welcome page
+
 ## 0.3.2
 
 - docs: add more badges.

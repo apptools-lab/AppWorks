@@ -1,5 +1,18 @@
 # Change Log
 
+## 0.5.2
+
+- fix: if there is an active window, then do not show the welcome page
+
+## 0.5.1
+
+- fix: show welcome page many times
+
+## 0.5.0
+
+- feat: Add Iceworks Doctor
+- feat: Add welcome page
+
 ## 0.4.10
 
 - docs: update text for find component and generate page
