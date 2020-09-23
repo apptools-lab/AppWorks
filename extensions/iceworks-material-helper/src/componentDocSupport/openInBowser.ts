@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { recordDAU } from '@iceworks/recorder';
 import i18n from '../i18n';
+import recorder from '../utils/recorder';
 
 function openInExternalBrowser(url) {
   vscode.env.openExternal(url);
@@ -28,5 +28,12 @@ export default function openInBrowser(url) {
   } else {
     openInExternalBrowser(url);
   }
-  recordDAU();
+
+  recorder.record({
+    module: 'docSupport',
+    action: 'openInBrowser',
+    data: {
+      url,
+    },
+  });
 }
