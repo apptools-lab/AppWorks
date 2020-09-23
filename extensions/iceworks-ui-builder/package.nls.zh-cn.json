@@ -2,6 +2,8 @@
   "iceworksUIBuilder.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具.",
   "iceworksUIBuilder.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
   "iceworksUIBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。",
+  "iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description": "默认生成至 src/pages 目录",
+  "iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description": "默认生成至 src/components 目录",
   "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: 可视化搭建组件",
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: 下载物料到本地",
   "iceworksUIBuilder.commands.generatePage.title": "Iceworks: 使用区块组装页面",
