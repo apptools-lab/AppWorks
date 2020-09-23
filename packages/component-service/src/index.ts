@@ -29,10 +29,13 @@ import CodeGenerator, {
   IResultDir,
 } from '@iceworks/code-generator';
 import * as upperCamelCase from 'uppercamelcase';
+import { record } from '@iceworks/recorder';
 import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
 import transformTextComponent from './utils/transformTextComponent';
 import i18nService from './i18n';
+
+const { name: namespace } = require('../package.json');
 
 const { window, Position } = vscode;
 
@@ -222,6 +225,12 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
   });
   const result = await moduleBuilder.generateModuleCode(schema);
   writeResultToDisk(result, componentsPath, componentName);
+
+  record({
+    namespace,
+    module: 'componentGenerator',
+    action: 'generateComponentCode',
+  });
 }
 
 function writeResultToDisk(code: IResultDir, outputPath: string, componentName: string) {
