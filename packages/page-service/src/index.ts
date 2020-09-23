@@ -17,7 +17,6 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
-
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -26,6 +25,7 @@ import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
+
 
 /**
  * Generate page code based on blocks

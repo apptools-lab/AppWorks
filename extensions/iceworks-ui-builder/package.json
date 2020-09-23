@@ -102,11 +102,13 @@
         },
         "iceworks.generatePagePath": {
           "type": "string",
-          "default": "src/pages/"
+          "default": "",
+          "description": "默认生成至 src/pages 目录"
         },
         "iceworks.generateComponentPath": {
           "type": "string",
-          "default": "src/components/"
+          "default": "",
+          "description": "默认生成至 src/components 目录"
         }
       }
     }

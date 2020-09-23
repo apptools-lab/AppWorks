@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { getDataFromSettingJson, CONFIGURATION_KEY_GENERATE_PAGE_PATH, CONFIGURATION_KEY_GENERATE_COMPONENT_PATH } from '@iceworks/common-service';
 import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL } from '@iceworks/constant';
 
 const { workspace } = vscode;
@@ -11,8 +12,11 @@ export const COMPONENT_DIR_NAME = 'components';
 export const dependencyDir = 'node_modules';
 export const packageJSONFilename = 'package.json';
 export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
-export const pagesPath = path.join(projectPath, 'src', PAGE_DIRECTORY);
-export const componentsPath = path.join(projectPath, 'src', COMPONENT_DIR_NAME);
+// user set path
+export const generatePagePath = getDataFromSettingJson(CONFIGURATION_KEY_GENERATE_PAGE_PATH);
+export const generateComponentPath = getDataFromSettingJson(CONFIGURATION_KEY_GENERATE_COMPONENT_PATH);
+export const pagesPath = generatePagePath ? path.join(projectPath, generatePagePath) : path.join(projectPath, 'src', PAGE_DIRECTORY);
+export const componentsPath = generateComponentPath ? path.join(projectPath, generateComponentPath) : path.join(projectPath, 'src', COMPONENT_DIR_NAME);
 export const layoutsPath = path.join(projectPath, 'src', LAYOUT_DIRECTORY);
 export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 
