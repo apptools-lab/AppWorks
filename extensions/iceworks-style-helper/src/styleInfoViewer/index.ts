@@ -11,7 +11,7 @@ const SUPPORT_LANGUAGES = ['javascript', 'javascriptreact', 'typescript', 'types
 function provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
   const { line, word, fileName, directory } = getFocusCodeInfo(document, position);
 
-  if (!/style|className/g.test(line.text)) return;
+  if (!/style|className|class/g.test(line.text)) return;
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
@@ -29,7 +29,7 @@ function provideDefinition(document: vscode.TextDocument, position: vscode.Posit
 function provideHover(document: vscode.TextDocument, position: vscode.Position) {
   const { line, word, fileName, directory } = getFocusCodeInfo(document, position);
 
-  if (!/style|className/g.test(line.text)) return;
+  if (!/style|className|class/g.test(line.text)) return;
 
   const matched = findStyle(directory, word, findStyleDependencies(fileName));
   if (matched) {
@@ -42,7 +42,7 @@ function provideHover(document: vscode.TextDocument, position: vscode.Position) 
 // Styles auto Complete
 function provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
   const { line, fileName, directory } = getFocusCodeInfo(document, position);
-  if (!/style|className/g.test(line.text)) return;
+  if (!/style|className|class/g.test(line.text)) return;
 
   // In case of cursor shaking
   const word = line.text.substring(0, position.character);
@@ -53,8 +53,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   }
   for (let i = 0, l = styleDependencies.length; i < l; i++) {
     if (
-      // className=xxx
-      /className=/.test(line.text) ||
+      // className=xxx in vue is class=xxx
+      /className=/.test(line.text) || /class=/.test(line.text) ||
       // style={styles.xxx}
       (styleDependencies[i].identifier && new RegExp(`${styleDependencies[i].identifier}\\.$`).test(word))
     ) {

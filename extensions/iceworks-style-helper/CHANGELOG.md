@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.0
+
+- feat: support completion in vue class='xxx'
+
 ## 0.3.11
 
 - fix: compatible with scenarios without material source
