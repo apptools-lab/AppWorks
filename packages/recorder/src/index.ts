@@ -120,7 +120,7 @@ export function recordDefinitionProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'definitionProvider'
+    action: 'definitionProvider',
   });
 }
 
@@ -129,7 +129,7 @@ export function recordHoverProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'hoverProvider'
+    action: 'hoverProvider',
   });
 }
 
@@ -138,7 +138,7 @@ export function recordCompletionItemProvider() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'completionItemProvider'
+    action: 'completionItemProvider',
   });
 }
 
@@ -147,7 +147,7 @@ export function recordCompletionItemSelect() {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
-    action: 'completionItemSelect'
+    action: 'completionItemSelect',
   });
 }
 
