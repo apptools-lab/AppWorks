@@ -7,5 +7,6 @@ web/**
 **/*.map
 **/*.ts
 
+node_modules/terser
 node_modules/typescript
 node_modules/ts-loader
