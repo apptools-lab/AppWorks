@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.6
+
+- fix: compatible with scenarios without material source
+
 ## 0.3.5
 
 - fix: if there is an active window, then do not show the welcome page
