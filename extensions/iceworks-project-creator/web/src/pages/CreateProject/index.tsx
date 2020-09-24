@@ -5,6 +5,7 @@ import { IProjectField, IDEFProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
+import CustomScaffold from './components/CustomScaffold';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -14,7 +15,7 @@ const { CLIENT_TOKEN } = process.env;
 
 const CreateProject: React.FC = () => {
   const intl = useIntl();
-  const [currentStep, setStep] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
   const [isAliInternal, setIsAliInternal] = useState(false);
@@ -26,7 +27,7 @@ const CreateProject: React.FC = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const steps = [
+  const deafultSteps = [
     <ScaffoldMarket
       isAliInternal={isAliInternal}
       onScaffoldSelect={onScaffoldSelect}
@@ -36,6 +37,9 @@ const CreateProject: React.FC = () => {
     >
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
+      </Button>
+      <Button onClick={onCreateCustomScaffoldClick}>
+        搭建模板
       </Button>
     </ScaffoldMarket>,
     <CreateProjectForm
@@ -69,10 +73,11 @@ const CreateProject: React.FC = () => {
     </CreateProjectForm>,
   ];
 
+  const [steps, setSteps] = useState(deafultSteps);
+
   if (isAliInternal) {
-    steps.splice(
-      2,
-      0,
+    const newSteps = [...steps];
+    newSteps.splice(2, 0,
       <CreateDEFProjectForm
         value={curDEFProjectField}
         onChange={onDEFProjectFormChange}
@@ -92,16 +97,24 @@ const CreateProject: React.FC = () => {
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
-      </CreateDEFProjectForm>,
-    );
+      </CreateDEFProjectForm>);
+    setSteps(newSteps);
   }
 
   function goNext() {
-    setStep(currentStep + 1);
+    setCurrentStep(currentStep + 1);
   }
 
   function goPrev() {
-    setStep(currentStep - 1);
+    setCurrentStep(currentStep - 1);
+  }
+
+  function onCreateCustomScaffoldClick() {
+    const newSteps = [...steps];
+
+    newSteps.splice(1, 0, <CustomScaffold />);
+    setSteps(newSteps);
+    goNext();
   }
 
   function onScaffoldSelect(source, scaffold) {
@@ -278,9 +291,7 @@ const CreateProject: React.FC = () => {
           </div>
           {loading ? (
             <Loading className={styles.loading} visible={loading} />
-          ) : (
-            <div className={styles.content}>{steps[currentStep]}</div>
-          )}
+          ) : (<div className={styles.content}>{steps[currentStep]}</div>)}
         </Card.Content>
       </Card>
     </div>
