@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.18
+
+- feat: add code editor for page template
+
 ## 0.1.17
 
 - fix: if there is an active window, then do not show the welcome page
