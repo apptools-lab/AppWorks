@@ -85,9 +85,9 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
-export const cleanCache = function() {
+export const cleanCache = function () {
   dataCache = {};
-}
+};
 
 /**
  * Get material source data

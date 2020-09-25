@@ -56,6 +56,10 @@
       {
         "command": "iceworks-doctor.dashboard",
         "title": "%iceworksDoctor.commands.dashboard.title%"
+      },
+      {
+        "command": "iceworks-doctor.scan",
+        "title": "%iceworksDoctor.commands.scan.title%"
       }
     ],
     "configuration": {
