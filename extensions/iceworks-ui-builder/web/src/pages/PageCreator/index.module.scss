@@ -46,15 +46,6 @@
   }
 }
 
-.blockIsDraging {
-  z-index: 99999;
-  overflow: hidden;
-  border: 1px solid $color-line1-1;
-
-  img {
-    width: 607px;
-  }
-}
 .btn {
   margin: 10px;
   min-width: 70px;

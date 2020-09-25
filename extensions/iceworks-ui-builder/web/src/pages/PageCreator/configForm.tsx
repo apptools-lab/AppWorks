@@ -8,10 +8,13 @@ import forIn from 'lodash.forin';
 import RouterDetailForm from '@/components/RouterDetailForm';
 import styles from './index.module.scss';
 import callService from '../../callService';
+import Editor from './Editor';
 
 nextComponents.setup();
 
-const tmpComponents = {};
+const tmpComponents = {
+  Editor
+};
 forIn(nextComponents, (value, key) => {
   if (key !== 'setup') {
     tmpComponents[key] = value;
