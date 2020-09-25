@@ -28,6 +28,15 @@ import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
 
+const getCurPagesPath = async () => {
+  const projectType = await getProjectType();
+  if (projectType === 'unknown') {
+    const folderPath = await getFolderPath();
+    return folderPath;
+  } else {
+    return pagesPath;
+  }
+};
 
 /**
  * Generate page code based on blocks
@@ -42,18 +51,10 @@ export const generate = async function ({
   pageName: string;
   blocks: IMaterialBlock[];
 }) {
-  const projectType = await getProjectType();
-
   const pageName = upperCamelCase(name);
-  let pagePath = '';
 
-  if (projectType === 'unknown') {
-    // select folder path
-    const folderPath = await getFolderPath();
-    pagePath = path.join(folderPath, pageName);
-  } else {
-    pagePath = path.join(pagesPath, pageName);
-  }
+  const curPagesPath = await getCurPagesPath();
+  const pagePath = path.join(curPagesPath, pageName);
 
   if (!pagePath) {
     throw new Error('Page path is empty');
