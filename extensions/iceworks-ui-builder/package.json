@@ -103,12 +103,12 @@
         "iceworks.generatePagePath": {
           "type": "string",
           "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description%"
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description.title%"
         },
         "iceworks.generateComponentPath": {
           "type": "string",
           "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description%"
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description.title%"
         }
       }
     }

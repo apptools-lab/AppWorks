@@ -5,6 +5,6 @@
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.label": "更多组件",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "展示所有的组件",
   "extension.iceworksMaterialHelper.getHoverItem.hoverItemLink": "[<%= componentName %> 文档](<%= commandUri %>)",
-  "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "你必须先安装 「vscode-browser-preview 插件」 才能在 vscode 内部浏览器中打开。",
-  "extension.iceworksMaterialHelper.extension.start.errorMessage": "打开添加物料面板失败。请先打开代码文件。"
+  "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "你必须先安装 「Browser Preview」插件 才能在 VS Code 中打开文档。",
+  "extension.iceworksMaterialHelper.extension.start.errorMessage": "打开添加组件面板失败。请先打开代码文件。"
 }
