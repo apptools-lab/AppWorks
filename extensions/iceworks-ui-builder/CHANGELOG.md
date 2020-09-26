@@ -2,6 +2,7 @@
 
 ## 0.1.18
 
+- feat: add code editor for page template
 - fix: no select any blocks prompt message is not correct
 
 ## 0.1.17

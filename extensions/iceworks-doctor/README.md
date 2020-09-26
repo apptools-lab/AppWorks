@@ -25,7 +25,9 @@ The project is tested in 5 dimensions, `best practice`, `safety practice`, `Ali 
 
 ## Detect when file is saved
 
-The `Safety Practice Check` is performed by default when files are saved
+The `Safety Practice Check` is performed by default when files are saved.
+
+![demo](https://img.alicdn.com/tfs/TB1ySXAVHr1gK0jSZFDXXb9yVXa-1780-478.png)
 
 ## Setting
 

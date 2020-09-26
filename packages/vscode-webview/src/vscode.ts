@@ -58,9 +58,9 @@ export function connectService(
             namespace: `@iceworks/${service}-service`,
             module: 'callMethod',
             action: method,
-            ...extra
+            ...extra,
           });
-          
+
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
           const newArgs = fillApiArgLength > 0 ? args.concat(Array(fillApiArgLength).fill(undefined)) : args;

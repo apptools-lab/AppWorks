@@ -12,27 +12,29 @@ labels: 'bug'
   重启 VS Code 将自动升级插件。
 -->
 
-* 插件名：
-* 插件版本：
+插件名/Extension: 
 
-## 您的本地环境信息？
+## 您的本地环境信息/Your local environment information
 
-* 操作系统及其版本：
-* Node 版本：
-* npm 版本：
-
-<!-- 
-查看 Node 版本：`node -v`
-查看 npm 版本：`npm -v`
--->
-
-## 您遇到的问题及复现步骤？
+* 操作系统及其版本/System and Version: 
+* Node version: 
+* npm version: 
 
 <!-- 
-  如果可能的话，提供一个问题的最小演示。
-  请尽可能地提供截图或录屏。
+  Check Node version: `node -v`
+  Check npm version: `npm -v`
 -->
 
-## 您期待的正确结果？
+## 您遇到的问题及复现步骤/What are your problems and how to reproduce them
 
-<!-- 如果您有建议的解决方案，亦可进行说明 -->
+<!-- 
+  如果可能的话，提供一个问题的最小演示/If possible, provide a minimal demonstration of the problem
+  请尽可能地提供截图或录屏/Please provide screenshots or videos as much as possible
+-->
+
+## 您期待的正确结果/The right result you're looking forward to
+
+<!-- 
+  如果您有建议的解决方案，亦可进行说明。
+  If you have a suggested solution, you can also explain it.
+-->

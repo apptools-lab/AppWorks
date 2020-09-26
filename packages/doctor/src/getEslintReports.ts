@@ -27,7 +27,13 @@ export default function getBestPracticesReports(
     aliEslintCliEngine.executeOnText(file.source, file.path).results.forEach((result) => {
       // Remove Parsing error
       result.messages = (result.messages || []).filter((message) => {
-        if (message.fatal && message.severity === 2 && message.message.startsWith('Parsing error:')) {
+        if (
+          message.severity === 2 && (
+            // Ignore Parsing error
+            (message.fatal && message.message.startsWith('Parsing error:')) ||
+            // Ignore no rules error
+            message.message.startsWith('Definition for rule')
+          )) {
           result.errorCount--;
           return false;
         }
