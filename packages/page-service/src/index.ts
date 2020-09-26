@@ -15,9 +15,10 @@ import {
   getProjectLanguageType,
   getProjectFramework,
   projectPath,
+  getProjectType,
+  getFolderPath,
 } from '@iceworks/project-service';
 import { bulkGenerate } from '@iceworks/block-service';
-
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
@@ -26,6 +27,16 @@ import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
+
+const getCurPagesPath = async () => {
+  const projectType = await getProjectType();
+  if (projectType === 'unknown') {
+    const folderPath = await getFolderPath();
+    return folderPath;
+  } else {
+    return pagesPath;
+  }
+};
 
 /**
  * Generate page code based on blocks
@@ -41,8 +52,13 @@ export const generate = async function ({
   blocks: IMaterialBlock[];
 }) {
   const pageName = upperCamelCase(name);
-  const pagePath = path.join(pagesPath, pageName);
 
+  const curPagesPath = await getCurPagesPath();
+  const pagePath = path.join(curPagesPath, pageName);
+
+  if (!pagePath) {
+    throw new Error('Page path is empty');
+  }
   const isPagePathExists = await fse.pathExists(pagePath);
   if (isPagePathExists) {
     throw new Error(i18n.format('package.pageService.index.pagePathExistError', { name }));
@@ -56,16 +72,19 @@ export const generate = async function ({
     const pageIndexPath = path.join(pagePath, fileName);
 
     try {
-      await addBlocks(blocks, pageName);
+      const componentsPath = path.join(pagePath, COMPONENT_DIR_NAME);
+      await fse.ensureDir(componentsPath);
+      await addBlocks(blocks, componentsPath);
 
       // get page ejs template
       let fileStr = '';
-      if (projectFramework === 'icejs') {
-        fileStr = reactPageTemplate;
-      } else if (projectFramework === 'vue') {
+      if (projectFramework === 'vue') {
         fileStr = vuePageTemplate;
       } else if (projectFramework === 'rax-app') {
         fileStr = raxPageTemplate;
+      } else {
+        // projectFramework is react or unknown, use react page template
+        fileStr = reactPageTemplate;
       }
 
       const fileContent = ejs.compile(fileStr)({
@@ -80,6 +99,7 @@ export const generate = async function ({
         className: pageName,
         pageName,
       });
+      console.log('fileContent', fileContent);
       const prettierParserType = isVueProjectFramework ? 'vue' : 'babel';
       const rendered = prettier.format(fileContent, {
         singleQuote: true,
@@ -106,8 +126,8 @@ export const remove = async function (name: string) {
   await fse.remove(path.join(pagesPath, name));
 };
 
-export const addBlocks = async function (blocks: IMaterialBlock[], pageName: string) {
-  return await bulkGenerate(blocks, path.join(pagesPath, pageName, COMPONENT_DIR_NAME));
+export const addBlocks = async function (blocks: IMaterialBlock[], componentPath: string) {
+  return await bulkGenerate(blocks, componentPath);
 };
 
 export const getTemplateSchema = async (selectPage: IMaterialPage) => {

@@ -61,7 +61,12 @@ export function activate(context: vscode.ExtensionContext) {
   }
   subscriptions.push(
     registerCommand('iceworks-material-helper.start', () => {
-      activeWebview();
+      const { visibleTextEditors } = vscode.window;
+      if (visibleTextEditors.length) {
+        activeWebview();
+      } else {
+        vscode.window.showErrorMessage(i18n.format('extension.iceworksMaterialHelper.extension.start.errorMessage'));
+      }
     }),
   );
 
