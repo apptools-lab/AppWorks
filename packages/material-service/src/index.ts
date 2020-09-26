@@ -9,6 +9,10 @@ import {
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 import { getProjectType } from '@iceworks/project-service';
 import i18n from './i18n';
+import originGenerateDebugMaterialJson from './generateDebugMaterialJson';
+
+export const DEBUG_PREFIX = 'DEBUG:';
+export const generateDebugMaterialJson = originGenerateDebugMaterialJson;
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
@@ -101,8 +105,13 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   }
 
   if (!data) {
-    const result = await axios({ url: source });
-    const materialData = result.data;
+    let materialData = {} as IMaterialData;
+    if (source.startsWith(DEBUG_PREFIX)) {
+      materialData = await generateDebugMaterialJson(source.replace(DEBUG_PREFIX, ''));
+    } else {
+      const result = await axios({ url: source });
+      materialData = result.data;
+    }
 
     let bases: IMaterialBase[];
     if (isIceMaterial(source)) {
@@ -144,7 +153,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   return data;
 };
 
-export const addSource = async function (materialSource: IMaterialSource) {
+export const addSource = async function (materialSource: IMaterialSource, debugMaterial = false) {
   const { source, name } = materialSource;
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === source);
@@ -156,7 +165,7 @@ export const addSource = async function (materialSource: IMaterialSource) {
     throw Error(i18n.format('package.materialService.index.materialNameExistError'));
   }
 
-  const { type } = await getData(source);
+  const { type } = debugMaterial ? await getData(source) : materialSource;
   if (!type) {
     throw Error(i18n.format('package.materialService.index.materialDataError'));
   }
