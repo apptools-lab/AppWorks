@@ -52,7 +52,7 @@ const Home = () => {
 
   function validateData({ blocks }) {
     if (!blocks.length) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.enterPageName' });
+      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.selectBlocks' });
     }
     return '';
   }
