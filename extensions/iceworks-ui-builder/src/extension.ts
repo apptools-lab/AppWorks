@@ -4,7 +4,7 @@ import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
-import initDebugMaterials from './debugMaterials';
+import { registerDebugCommand } from './debugMaterials';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -108,11 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
       activePageCreatorWebview();
     }),
   );
-  subscriptions.push(
-    registerCommand('iceworks-ui-builder.debug-materials', () => {
-      initDebugMaterials();
-    }),
-  );
+  registerDebugCommand(subscriptions);
 }
 
 export function deactivate() { }
