@@ -1,16 +1,17 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
 import { addSource, generateDebugMaterialJson, DEBUG_PREFIX } from '@iceworks/material-service';
 import * as vscode from 'vscode';
+import i18n from '../i18n';
 
 const debugQuickPicks : any[] = [
   {
-    label: '添加或更新一个物料源信息',
-    detail: '输入物料项目的路径以新增或更新物料源',
+    label: i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.label'),
+    detail: i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.detail'),
     command: 'iceworks-ui-builder.debug-materials.addMaterial',
   },
   {
-    label: '删除调试物料源',
-    detail: '删除设置中的调试物料项目',
+    label: i18n.format('extension.iceworksUIBuilder.debugMaterial.deleteMaterial.label'),
+    detail: i18n.format('extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail'),
     command: 'iceworks-ui-builder.debug-materials.deleteSource',
   },
 ];
@@ -47,8 +48,8 @@ export async function initDebugMaterials() {
 
 async function showDebugInputBox() {
   const materialPath = await vscode.window.showInputBox({
-    placeHolder: '/path/to/materials',
-    prompt: 'Input Material Folder Path',
+    placeHolder: i18n.format('extension.iceworksUIBuilder.debugInput.placeholder'),
+    prompt: i18n.format('extension.iceworksUIBuilder.debugInput.prompt'),
   });
   if (materialPath) {
     try {
@@ -64,7 +65,7 @@ async function showDebugInputBox() {
       });
       return debugMaterial.name;
     } catch (err) {
-      vscode.window.showErrorMessage(`init Debug Err ${err.message}`);
+      vscode.window.showErrorMessage(i18n.format('extension.iceworksUIBuilder.initDebug.err', { errMessage: err.message }));
     }
   }
 }

@@ -2,5 +2,12 @@
   "extension.iceworksComponentGenerator.extension.webviewTitle": "可视化搭建组件 - Iceworks",
   "extension.iceworksComponentBuilder.extension.webviewTitle": "下载区块物料到本地 - Iceworks",
   "extension.iceworksPageBuilder.extensnion.webViewTitle": "使用区块组装页面 - Iceworks",
-  "extension.iceworksPageCreator.extensnion.webViewTitle": "使用模板生成页面 - Iceworks"
+  "extension.iceworksPageCreator.extensnion.webViewTitle": "使用模板生成页面 - Iceworks",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.label": "添加或更新一个调试物料源信息",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.detail": "输入物料项目的路径以新增或更新物料源",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.label": "删除调试物料源",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail": "删除设置中的调试物料项目",
+  "extension.iceworksUIBuilder.debugInput.placeholder": "/物料/项目/地址",
+  "extension.iceworksUIBuilder.debugInput.prompt": "请输入物料项目地址",
+  "extension.iceworksUIBuilder.initDebug.err": "初始化物料调试失败： <%= errMsaage %>"
 }
