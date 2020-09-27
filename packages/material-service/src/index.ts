@@ -64,7 +64,9 @@ export const getSourcesByProjectType = async function () {
 };
 
 export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
+
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
+
 /**
  * Get material sources list
  *
@@ -75,13 +77,13 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     // if the project type is unknown, set the default project type
     specifiedType = 'react';
   }
-  let officalsources: IMaterialSource[] = getOfficalMaterialSources();
+  let sources: IMaterialSource[] = getOfficalMaterialSources();
   const isAliInternal = await checkIsAliInternal();
   if (!isAliInternal) {
-    officalsources = officalsources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
+    sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = getUserSources();
-  const sources = officalsources.concat(userSources);
+  sources.unshift(...userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
