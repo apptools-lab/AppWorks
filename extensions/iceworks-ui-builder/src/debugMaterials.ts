@@ -1,7 +1,7 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
 import { addSource, generateDebugMaterialJson, DEBUG_PREFIX } from '@iceworks/material-service';
 import * as vscode from 'vscode';
-import i18n from '../i18n';
+import i18n from './i18n';
 
 const debugQuickPicks : any[] = [
   {
