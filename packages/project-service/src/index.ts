@@ -147,7 +147,7 @@ export async function getScaffolds(source: string) {
   return response.data.scaffolds;
 }
 
-export async function getProjectPath(): Promise<string> {
+export async function getFolderPath(): Promise<string> {
   const options: vscode.OpenDialogOptions = {
     canSelectFolders: true,
     canSelectFiles: false,

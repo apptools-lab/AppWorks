@@ -26,6 +26,9 @@ export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
 export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
+export const CONFIGURATION_KEY_GENERATE_PAGE_PATH = 'generatePagePath';
+export const CONFIGURATION_KEY_GENERATE_COMPONENT_PATH = 'generateComponentPath';
+
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
@@ -157,28 +160,30 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
     context.subscriptions
   );
 }
+
+/**
+ * Compatible:
+ * If there is an official material source, remove it. 
+ * The official material source will be added automatically when it is obtained.
+ */
 const didSetMaterialSourceStateKey = 'iceworks.materialSourceIsSet';
 async function autoInitMaterialSource(globalState: vscode.Memento) {
   const materialSourceIsSet = globalState.get(didSetMaterialSourceStateKey);
   if (!materialSourceIsSet) {
-    console.log('autoInitMaterialSource: do');
     const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-    // old materialSources and remove it from the previous users
     const officalMaterialSources = [
       'http://ice.alicdn.com/assets/materials/react-materials.json',
       ALI_FUSION_MATERIAL_URL,
     ];
-    const newSources = materialSources.filter(
+    const newSources = Array.isArray(materialSources) ? materialSources.filter(
       (materialSource) => !officalMaterialSources.includes(materialSource.source)
-    );
+    ) : [];
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_KEY_MATERIAL_SOURCES);
     if (isTrue) {
-      console.log('autoSetPackageManager: did change');
-
       globalState.update(didSetMaterialSourceStateKey, true);
     }
   });

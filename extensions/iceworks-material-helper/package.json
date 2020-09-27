@@ -3,7 +3,7 @@
   "displayName": "React Component Helper",
   "description": "Easily use Component in React/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -65,6 +65,34 @@
           "default": false,
           "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",
           "title": "Open Doc Link Inside VSCode"
+        },
+        "iceworks.materialSources": {
+          "type": "array",
+          "description": "%iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description%",
+          "items": {
+            "type": "object",
+            "description": "Source",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "name"
+              },
+              "type": {
+                "type": "string",
+                "description": "react or rax"
+              },
+              "source": {
+                "type": "string",
+                "description": "URL",
+                "format": "URL"
+              },
+              "description": {
+                "type": "string",
+                "description": "description"
+              }
+            }
+          },
+          "default": []
         }
       }
     }

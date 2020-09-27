@@ -2,5 +2,6 @@
   "iceworksMaterialHelper.commands.start.title": "Iceworks: Import Material",
   "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: Find Component",
   "iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title": "Iceworks: Find Components In Current File",
-  "iceworksMaterialHelper.configuration.openInBrowserDescription": "Whether open doc url inside VSCode, this function relys on 「Browser Preview」 extension，you need to install it manually before you can use this function"
+  "iceworksMaterialHelper.configuration.openInBrowserDescription": "Whether open doc url inside VSCode, this function relys on 「Browser Preview」 extension，you need to install it manually before you can use this function",
+  "iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use."
 }

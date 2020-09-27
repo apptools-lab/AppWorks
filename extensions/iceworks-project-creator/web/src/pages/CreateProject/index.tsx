@@ -133,7 +133,7 @@ const CreateProject: React.FC = () => {
 
   async function onOpenFolderDialog() {
     try {
-      const projectPath = await callService('project', 'getProjectPath');
+      const projectPath = await callService('project', 'getFolderPath');
       setCurProjectField({ ...curProjectField, projectPath });
     } catch (e) {
       // ignore

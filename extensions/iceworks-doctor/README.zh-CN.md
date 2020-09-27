@@ -26,6 +26,8 @@ Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集�
 
 文件保存时默认进行`安全实践检测`。
 
+![demo](https://img.alicdn.com/tfs/TB1ySXAVHr1gK0jSZFDXXb9yVXa-1780-478.png)
+
 ## 设置
 
 1. 点击设置，进入设置页面

@@ -5,7 +5,6 @@ import * as glob from 'glob';
 import { IMaterialBlock } from '@iceworks/material-utils';
 import {
   getProjectLanguageType,
-  pagesPath,
   COMPONENT_DIR_NAME,
   jsxFileExtnames,
   checkIsTemplate,
@@ -101,17 +100,14 @@ export async function addBlockCode(block: IMaterialBlock) {
 
   const { fsPath } = activeTextEditor.document.uri;
 
+  // check the file type if it's js、jsx、tsx、vue
   const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
   }
 
-  const pageName = path.basename(path.dirname(fsPath));
-  const pagePath = path.join(pagesPath, pageName);
-  const isPageFile = await fsExtra.pathExists(pagePath);
-  if (!isPageFile) {
-    throw new Error(i18n.format('package.block-service.notPageFileError', { pagesPath }));
-  }
+  const pagePath = path.dirname(fsPath);
+  const pageName = path.basename(pagePath);
 
   // insert code
   const blockName: string = await generateBlockName(pageName, block.name);
@@ -120,6 +116,8 @@ export async function addBlockCode(block: IMaterialBlock) {
   // download block
   const componentsPath = path.join(pagePath, '.temp');
   const targetPath = path.join(pagePath, COMPONENT_DIR_NAME);
+  await fsExtra.ensureDir(pagePath);
+
   const materialOutputChannel = window.createOutputChannel('material');
   materialOutputChannel.show();
   materialOutputChannel.appendLine(i18n.format('package.block-service.startObtainBlock'));
