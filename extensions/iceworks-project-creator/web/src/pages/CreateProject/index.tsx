@@ -27,7 +27,7 @@ const CreateProject: React.FC = () => {
   const [materialSources, setMaterialSources] = useState<IMaterialSource[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const deafultSteps = [
+  const steps = [
     <ScaffoldMarket
       isAliInternal={isAliInternal}
       onScaffoldSelect={onScaffoldSelect}
@@ -38,10 +38,12 @@ const CreateProject: React.FC = () => {
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
-      <Button onClick={onCreateCustomScaffoldClick}>
-        搭建模板
-      </Button>
     </ScaffoldMarket>,
+    <CustomScaffold>
+      <Button type="primary" onClick={() => { }}>
+        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
+      </Button>
+    </CustomScaffold>,
     <CreateProjectForm
       value={curProjectField}
       onOpenFolderDialog={onOpenFolderDialog}
@@ -73,11 +75,8 @@ const CreateProject: React.FC = () => {
     </CreateProjectForm>,
   ];
 
-  const [steps, setSteps] = useState(deafultSteps);
-
   if (isAliInternal) {
-    const newSteps = [...steps];
-    newSteps.splice(2, 0,
+    steps.splice(2, 0,
       <CreateDEFProjectForm
         value={curDEFProjectField}
         onChange={onDEFProjectFormChange}
@@ -98,7 +97,6 @@ const CreateProject: React.FC = () => {
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
       </CreateDEFProjectForm>);
-    setSteps(newSteps);
   }
 
   function goNext() {
@@ -107,14 +105,6 @@ const CreateProject: React.FC = () => {
 
   function goPrev() {
     setCurrentStep(currentStep - 1);
-  }
-
-  function onCreateCustomScaffoldClick() {
-    const newSteps = [...steps];
-
-    newSteps.splice(1, 0, <CustomScaffold />);
-    setSteps(newSteps);
-    goNext();
   }
 
   function onScaffoldSelect(source, scaffold) {

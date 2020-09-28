@@ -26,7 +26,7 @@
     "react-intl": "^5.3.2"
   },
   "scripts": {
-    "start": "icejs start --disable-reload",
+    "start": "icejs start",
     "build": "icejs build"
   },
   "engines": {
