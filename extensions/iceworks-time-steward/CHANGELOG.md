@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.1.6
+
+- chore: Sets the extension to be flagged as a Preview in the Marketplace
+
+## 0.1.5
+
+- fix: compatible with scenarios without material source
+
 ## 0.1.4
 
 - fix: if there is an active window, then do not show the welcome page

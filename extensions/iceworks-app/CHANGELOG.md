@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.5.4
+
+- chore: sorting of quick entry
+
+## 0.5.3
+
+- fix: compatible with scenarios without material source
+
 ## 0.5.2
 
 - fix: if there is an active window, then do not show the welcome page

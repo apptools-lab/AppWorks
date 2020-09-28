@@ -1,9 +1,9 @@
 {
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.label": "Create Application",
   "extension.iceworksApp.showEntriesQuickPick.projectCreater.detail": "Create a Universal Application(React/Rax/Vue, etc) quickly",
-  "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "Generate Page by assembling",
+  "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "Generate Page by Blocks",
   "extension.iceworksApp.showEntriesQuickPick.generatePage.detail": "Generate pages by block assembly",
-  "extension.iceworksApp.showEntriesQuickPick.createPage.label": "Generate Page by configure",
+  "extension.iceworksApp.showEntriesQuickPick.createPage.label": "Generate Page by Configuration",
   "extension.iceworksApp.showEntriesQuickPick.createPage.detail": "Generate pages by using template configuration",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.label": "Import Component",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "Add Component to the Application in a visual way",

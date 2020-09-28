@@ -56,8 +56,8 @@ function activate(context: vscode.ExtensionContext) {
     context.subscriptions,
   );
 
-  // Code Quality Dashboard
-  registerCommand('iceworks-doctor.dashboard', () => {
+
+  const openWebview = (autoScan?: boolean) => {
     if (!fse.existsSync(path.join(workspace.rootPath || '', 'package.json'))) {
       window.showErrorMessage(
         useEn
@@ -82,7 +82,16 @@ function activate(context: vscode.ExtensionContext) {
       retainContextWhenHidden: true,
     });
 
-    reportWebviewPanel.webview.html = getHtmlForWebview(extensionPath);
+    let extraHtml = '';
+    if (autoScan) {
+      extraHtml = `
+      <script>
+        window.AUTO_SCAN = true;
+      </script>
+      `;
+    }
+
+    reportWebviewPanel.webview.html = getHtmlForWebview(extensionPath, '', false, '', extraHtml);
     reportWebviewPanel.onDidDispose(
       () => {
         reportWebviewPanel = undefined;
@@ -91,8 +100,17 @@ function activate(context: vscode.ExtensionContext) {
       context.subscriptions,
     );
 
-
     connectService(reportWebviewPanel, context, { services, recorder: getRecorder() });
+  };
+
+  // Code Quality Dashboard
+  registerCommand('iceworks-doctor.dashboard', () => {
+    openWebview();
+  });
+
+  // Scan project
+  registerCommand('iceworks-doctor.scan', () => {
+    openWebview(true);
   });
 }
 

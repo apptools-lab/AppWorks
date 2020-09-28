@@ -19,7 +19,7 @@
   "web.iceworksUIBuilder.pageCreator.reset": "重置",
   "web.iceworksUIBuilder.pageCreator.defaultTitle": "页面模板配置",
   "web.iceworksUIBuilder.pageCreator.defaultDescription": "请进行配置以生成个性化页面",
-  "web.iceworksUIBuilder.pageGenerater.enterPageName": "请填写页面名称。",
+  "web.iceworksUIBuilder.pageGenerater.selectBlocks": "请至少选择一个区块",
   "web.iceworksUIBuilder.pageGenerater.successCreatePage": "成功生成页面代码！",
   "web.iceworksUIBuilder.pageGenerater.successCreatePageToPath": "成功生成页面代码到 {path}",
   "web.iceworksUIBuilder.pageGenerater.openFile": "打开文件",
