@@ -13,7 +13,7 @@ Navigate to the source code and remediate the results by interacting with the sc
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
 
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
-2. Enter `Iceworks: Open Dashboard` to activate the extension.
+2. Enter `Iceworks: Open Dashboard` or `Iceworks: Scan Your Project` to activate the extension.
 
 ## Project details
 
@@ -33,6 +33,10 @@ The `Safety Practice Check` is performed by default when files are saved.
 
 1. Click Settings to enter the Settings page
 2. Configure `Check security practices when file saved`
+
+## Security and Privacy
+
+**Your data is private**: We will never share your individually identifiable data with anyone. Iceworks Doctor is an open source plugin, we make it easy to see the data we collect.
 
 ## More
 
