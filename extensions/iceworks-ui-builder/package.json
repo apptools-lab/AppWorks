@@ -103,6 +103,16 @@
             }
           },
           "default": []
+        },
+        "iceworks.generatePagePath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description%"
+        },
+        "iceworks.generateComponentPath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description%"
         }
       }
     }

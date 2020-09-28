@@ -120,7 +120,7 @@ const CreateProject: React.FC = () => {
 
   async function onOpenFolderDialog() {
     try {
-      const projectPath = await callService('project', 'getProjectPath');
+      const projectPath = await callService('project', 'getFolderPath');
       setCurProjectField({ ...curProjectField, projectPath });
     } catch (e) {
       // ignore
@@ -278,9 +278,7 @@ const CreateProject: React.FC = () => {
           </div>
           {loading ? (
             <Loading className={styles.loading} visible={loading} />
-          ) : (
-            <div className={styles.content}>{steps[currentStep]}</div>
-          )}
+          ) : (<div className={styles.content}>{steps[currentStep]}</div>)}
         </Card.Content>
       </Card>
     </div>

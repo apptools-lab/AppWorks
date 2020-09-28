@@ -1,15 +1,14 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
+import recorder from './utils/recorder';
 
-// eslint-disable-next-line
-const { name, version } = require('../package.json');
-const recorder = new Recorder(name, version);
+const { name } = require('../../package.json');
 
 const { window, ViewColumn } = vscode;
 
@@ -62,7 +61,12 @@ export function activate(context: vscode.ExtensionContext) {
   }
   subscriptions.push(
     registerCommand('iceworks-material-helper.start', () => {
-      activeWebview();
+      const { visibleTextEditors } = vscode.window;
+      if (visibleTextEditors.length) {
+        activeWebview();
+      } else {
+        vscode.window.showErrorMessage(i18n.format('extension.iceworksMaterialHelper.extension.start.errorMessage'));
+      }
     }),
   );
 

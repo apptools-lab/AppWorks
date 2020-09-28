@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import callService from '@/callService';
 import WelcomeWrap from './components/WelcomeWrap';
 import ScanningWrap from './components/ScanningWrap';
@@ -36,6 +36,13 @@ const ScanCard = () => {
       console.error(e);
     }
   }
+
+  useEffect(() => {
+    // @ts-ignore
+    if (window.AUTO_SCAN) {
+      getData();
+    }
+  }, []);
 
   const getWrap = () => {
     switch (status) {

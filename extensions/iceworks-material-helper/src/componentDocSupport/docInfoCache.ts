@@ -46,7 +46,6 @@ async function originGetDocInfos() {
 function getDocInfoCommand(url: string) {
   const command = `iceworks:material-helper.openDocUrl:${url}`;
   services.common.registerCommand(command, () => {
-    console.log(command);
     openInBrowser(url);
   });
   return command;

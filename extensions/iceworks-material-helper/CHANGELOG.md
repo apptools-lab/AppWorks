@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.3.10
+
+- feat: add blocks to .js/.jsx/.tsx files anywhere
+
+## 0.3.9
+
+- fix: add materilSource config
+
 ## 0.3.8
 
 - fix: if there is an active window, then do not show the welcome page
