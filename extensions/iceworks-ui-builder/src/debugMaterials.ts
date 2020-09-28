@@ -1,5 +1,6 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
 import { addSource, generateDebugMaterialJson, DEBUG_PREFIX } from '@iceworks/material-service';
+import { getFolderPath } from '@iceworks/project-service';
 import * as vscode from 'vscode';
 import i18n from './i18n';
 
@@ -24,7 +25,7 @@ export function registerDebugCommand(subscriptions) {
   );
   subscriptions.push(
     registerCommand('iceworks-ui-builder.debug-materials.addMaterial', () => {
-      showDebugInputBox();
+      addDebugMaterials();
     }),
   );
   subscriptions.push(
@@ -46,11 +47,8 @@ export async function initDebugMaterials() {
   quickPick.show();
 }
 
-async function showDebugInputBox() {
-  const materialPath = await vscode.window.showInputBox({
-    placeHolder: i18n.format('extension.iceworksUIBuilder.debugInput.placeholder'),
-    prompt: i18n.format('extension.iceworksUIBuilder.debugInput.prompt'),
-  });
+async function addDebugMaterials() {
+  const materialPath = await getFolderPath(i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.openLabel'));
   if (materialPath) {
     try {
       const debugMaterial = await generateDebugMaterialJson(materialPath);

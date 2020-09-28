@@ -147,12 +147,12 @@ export async function getScaffolds(source: string) {
   return response.data.scaffolds;
 }
 
-export async function getFolderPath(): Promise<string> {
+export async function getFolderPath(openLabel = 'Open'): Promise<string> {
   const options: vscode.OpenDialogOptions = {
     canSelectFolders: true,
     canSelectFiles: false,
     canSelectMany: false,
-    openLabel: 'Open',
+    openLabel,
   };
   const selectFolderUri = await vscode.window.showOpenDialog(options);
   const { fsPath } = selectFolderUri[0];
