@@ -8,7 +8,7 @@ import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
 
-const { name } = require('../../package.json');
+const { name } = require('../package.json');
 
 const { window, ViewColumn } = vscode;
 
