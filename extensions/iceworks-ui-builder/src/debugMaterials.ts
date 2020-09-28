@@ -63,7 +63,7 @@ async function showDebugInputBox() {
         description: `DEBUG:${materialPath}`,
         isEditing: false,
       });
-      return debugMaterial.name;
+      vscode.window.showInformationMessage(i18n.format('extension.iceworksUIBuilder.debugInput.addSourceSuccess'));
     } catch (err) {
       vscode.window.showErrorMessage(i18n.format('extension.iceworksUIBuilder.initDebug.err', { errMessage: err.message }));
     }
@@ -74,5 +74,6 @@ export async function deleteAllDebugSources() {
   const materialsSource = await getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
   const adjustedMaterialsSource = materialsSource.filter(item => item.name.startsWith(`$$${DEBUG_PREFIX}`));
   await saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, adjustedMaterialsSource);
+  vscode.window.showInformationMessage(i18n.format('extension.iceworksUIBuilder.debugInput.deleteSourceSuccess'));
 }
 

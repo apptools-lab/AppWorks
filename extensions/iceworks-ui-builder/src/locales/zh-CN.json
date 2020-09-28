@@ -9,5 +9,7 @@
   "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail": "删除设置中的调试物料项目",
   "extension.iceworksUIBuilder.debugInput.placeholder": "/物料/项目/地址",
   "extension.iceworksUIBuilder.debugInput.prompt": "请输入物料项目地址",
-  "extension.iceworksUIBuilder.initDebug.err": "初始化物料调试失败： <%= errMsaage %>"
+  "extension.iceworksUIBuilder.initDebug.err": "初始化物料调试失败： <%= errMsaage %>",
+  "extension.iceworksUIBuilder.debugInput.addSourceSuccess": "添加调试物料项目成功",
+  "extension.iceworksUIBuilder.debugInput.deleteSourceSuccess": "删除调试物料项目成功"
 }

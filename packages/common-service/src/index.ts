@@ -397,7 +397,9 @@ export const bulkDownloadMaterials = async function (
 
       if(material.source.type === 'debug') {
         try {
-          await fse.copy(material.source.path, downloadPath);
+          await fse.copy(material.source.path, downloadPath, {filter: srcPath => {
+            return !srcPath.includes('node_modules');
+          }});
         } catch (err) {
           log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', {errMessage: err.message}))
         }

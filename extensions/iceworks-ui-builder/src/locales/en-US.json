@@ -9,5 +9,7 @@
   "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail": "Delete all debug sources infos in setting",
   "extension.iceworksUIBuilder.debugInput.placeholder": "/path/to/materials",
   "extension.iceworksUIBuilder.debugInput.prompt": "Input Material Folder Path",
-  "extension.iceworksUIBuilder.initDebug.err": "init Debug Err： <%= errMsaage %>"
+  "extension.iceworksUIBuilder.initDebug.err": "init Debug Err： <%= errMsaage %>",
+  "extension.iceworksUIBuilder.debugInput.addSourceSuccess": "Add Debug Material Item Successfully",
+  "extension.iceworksUIBuilder.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully"
 }

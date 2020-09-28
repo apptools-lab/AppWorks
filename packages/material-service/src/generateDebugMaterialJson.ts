@@ -4,6 +4,7 @@ import * as glob from 'glob';
 import * as BluebirdPromise from 'bluebird';
 import { IMaterialData } from '@iceworks/material-utils';
 import { DEBUG_PREFIX } from './index';
+import { getProjectLanguageType } from '@iceworks/project-service';
 
 export default async function generateDebugMaterialJson(materialPath: string): Promise<IMaterialData> {
   const pathExists = await fse.pathExists(materialPath);
@@ -126,7 +127,7 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
 
   let languageType = 'js';
   try {
-    languageType = await getProjectLanguageType(projectPath, pkg);
+    languageType = await getProjectLanguageType();
   } catch (err) {
     // ignore
   }
@@ -163,24 +164,3 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
   return { materialData, materialType };
 }
 
-async function getProjectLanguageType(projectPath: string, pkgData: any) {
-  const hasTsconfig = fse.existsSync(path.join(projectPath, 'tsconfig.json'));
-
-  if (!hasTsconfig) {
-    return 'js';
-  } else {
-    const { dependencies = {}, devDependencies = {} } = pkgData;
-    const isIcejs = devDependencies['ice.js'] || dependencies['ice.js'];
-    const isRaxjs = devDependencies['rax.js'] || dependencies['rax.js'];
-
-    if (isIcejs || isRaxjs) {
-      // icejs&raxjs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
-      const hasAppJs = fse.existsSync(path.join(projectPath, 'src/app.js')) || fse.existsSync(path.join(projectPath, 'src/app.jsx'));
-      if (hasAppJs) {
-        return 'js';
-      }
-    }
-
-    return 'ts';
-  }
-}
