@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
-import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
+import { recordDAU, record } from '@iceworks/recorder';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -19,10 +19,16 @@ import i18n from './i18n';
 // eslint-disable-next-line
 const co = require('co');
 
+// eslint-disable-next-line
+const { name: namespace } = require('../package.json');
+
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
 export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
+export const CONFIGURATION_KEY_GENERATE_PAGE_PATH = 'generatePagePath';
+export const CONFIGURATION_KEY_GENERATE_COMPONENT_PATH = 'generateComponentPath';
+
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
@@ -44,6 +50,15 @@ try {
 let activeTextEditorId: string;
 
 const { window, Position } = vscode;
+
+function recordExecuteCommand(command: string, args: any[]) {
+  return record({
+    namespace,
+    module: 'executeCommand',
+    action: command,
+    data: args,
+  });
+}
 
 let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
@@ -80,7 +95,7 @@ export function registerCommand(command: string, callback: (...args: any[]) => a
     command,
     (...args) => {
       recordDAU();
-      recordExecuteCommand(command);
+      recordExecuteCommand(command, args);
       callback(...args);
     },
     thisArg
@@ -115,14 +130,16 @@ async function autoSetContext() {
   vscode.commands.executeCommand('setContext', 'iceworks:isAliInternal', await checkIsAliInternal());
 }
 
+export const didShowWelcomePageStateKey = 'iceworks.didShowWelcomePage';
 async function autoStartWelcomePage(globalState: vscode.Memento) {
-  const globalStateKey = 'iceworks.didShowWelcomePage';
-  const didShowWelcomePage = globalState.get(globalStateKey);
-  // first install Iceworks and iceworks-app exists, show welcome page
-  if (!didShowWelcomePage && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
+  const didShowWelcomePage = globalState.get(didShowWelcomePageStateKey);
+
+  // if didSetMaterialSource means is installed
+  const isFirstInstall = !didShowWelcomePage && !globalState.get(didSetMaterialSourceStateKey);
+  if (isFirstInstall && !vscode.window.activeTextEditor && vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
   }
-  globalState.update(globalStateKey, true);
+  globalState.update(didShowWelcomePageStateKey, true);
 }
 
 function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
@@ -144,30 +161,30 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   );
 }
 
+/**
+ * Compatible:
+ * If there is an official material source, remove it. 
+ * The official material source will be added automatically when it is obtained.
+ */
+const didSetMaterialSourceStateKey = 'iceworks.materialSourceIsSet';
 async function autoInitMaterialSource(globalState: vscode.Memento) {
-  console.log('autoInitMaterialSource: run');
-  const stateKey = 'iceworks.materialSourceIsSet';
-  const materialSourceIsSet = globalState.get(stateKey);
+  const materialSourceIsSet = globalState.get(didSetMaterialSourceStateKey);
   if (!materialSourceIsSet) {
-    console.log('autoInitMaterialSource: do');
     const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-    // old materialSources and remove it from the previous users
     const officalMaterialSources = [
       'http://ice.alicdn.com/assets/materials/react-materials.json',
       ALI_FUSION_MATERIAL_URL,
     ];
-    const newSources = materialSources.filter(
+    const newSources = Array.isArray(materialSources) ? materialSources.filter(
       (materialSource) => !officalMaterialSources.includes(materialSource.source)
-    );
+    ) : [];
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
     const isTrue = event.affectsConfiguration(CONFIGURATION_KEY_MATERIAL_SOURCES);
     if (isTrue) {
-      console.log('autoSetPackageManager: did change');
-
-      globalState.update(stateKey, true);
+      globalState.update(didSetMaterialSourceStateKey, true);
     }
   });
 }

@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md)
 
-# Iceworks 时间管家(Beta)
+# Iceworks 时间管家
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-steward.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)

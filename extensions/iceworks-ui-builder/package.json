@@ -3,7 +3,7 @@
   "displayName": "Iceworks UI Builder",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.16",
+  "version": "0.1.18",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -99,6 +99,16 @@
             }
           },
           "default": []
+        },
+        "iceworks.generatePagePath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description%"
+        },
+        "iceworks.generateComponentPath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description%"
         }
       }
     }

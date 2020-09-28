@@ -3,7 +3,7 @@
   "displayName": "Iceworks Config Helper",
   "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
-  "version": "0.3.4",
+  "version": "0.3.6",
   "engines": {
     "vscode": "^1.41.0"
   },

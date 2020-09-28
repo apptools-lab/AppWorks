@@ -5,6 +5,7 @@ import openInBrowser from './openInBowser';
 import { getDocInfos } from './docInfoCache';
 import { IComponentDocInfo } from './type';
 import i18n from '../i18n';
+import recorder from '../utils/recorder';
 
 // 这里展示的是框架所能提供的所有物料的文档。
 export async function showComponentDocQuickPicks() {
@@ -18,6 +19,11 @@ export async function showUsedComponentDocQuickPicks(uri: vscode.Uri) {
 }
 
 function showQuickPick(quickPickItems: any[]) {
+  recorder.record({
+    module: 'docSupport',
+    action: 'showQuickPick',
+  });
+
   if (quickPickItems.length === 0) {
     vscode.window.showWarningMessage(i18n.format('extension.iceworksMaterialHelper.getComponentQuickPicks.noMaterial'));
   } else {

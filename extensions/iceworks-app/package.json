@@ -3,7 +3,7 @@
   "displayName": "Iceworks Application Viewer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "engines": {
     "vscode": "^1.41.0"
   },

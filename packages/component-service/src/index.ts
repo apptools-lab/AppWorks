@@ -20,6 +20,8 @@ import {
   getPackageJSON,
   componentsPath,
   getProjectLanguageType,
+  getFolderPath,
+  getProjectType,
 } from '@iceworks/project-service';
 import CodeGenerator, {
   IBasicSchema,
@@ -168,8 +170,17 @@ export async function generateComponentCode(
   componentsMap = transformComponentsMap(JSON.parse(componentsMap));
 
   const schema: IBasicSchema = { version, componentsMap, componentsTree: [componentsTree], i18n, utils };
+
+  const projectType = await getProjectType();
+  let outputPath = componentsPath;
+
+  if (projectType === 'unknown') {
+    // select folder path
+    outputPath = await getFolderPath();
+  }
+
   try {
-    await generateCode(componentName, schema);
+    await generateCode(componentName, outputPath, schema);
   } catch (e) {
     vscode.window.showErrorMessage(e.message);
     throw e;
@@ -178,7 +189,7 @@ export async function generateComponentCode(
   const projectLanguageType = await getProjectLanguageType();
   const fileType = `${projectLanguageType}x`;
 
-  const componentPath = path.join(componentsPath, componentName, `index.${fileType}`);
+  const componentPath = path.join(outputPath, componentName, `index.${fileType}`);
   const openFileAction = i18nService.format('package.component-service.index.openFile');
   const selectedAction = await vscode.window.showInformationMessage(
     i18nService.format('package.component-service.index.createComponentSuccess', {
@@ -192,7 +203,7 @@ export async function generateComponentCode(
   }
 }
 
-async function generateCode(componentName: string, schema: IBasicSchema) {
+async function generateCode(componentName: string, outputPath: string, schema: IBasicSchema) {
   const projectLanguageType = await getProjectLanguageType();
   const fileType = `${projectLanguageType}x`;
   const moduleBuilder = CodeGenerator.createModuleBuilder({
@@ -221,7 +232,8 @@ async function generateCode(componentName: string, schema: IBasicSchema) {
     mainFileName: 'index',
   });
   const result = await moduleBuilder.generateModuleCode(schema);
-  writeResultToDisk(result, componentsPath, componentName);
+
+  writeResultToDisk(result, outputPath, componentName);
 }
 
 function writeResultToDisk(code: IResultDir, outputPath: string, componentName: string) {

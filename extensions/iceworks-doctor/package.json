@@ -3,7 +3,7 @@
   "displayName": "Iceworks Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -45,7 +45,7 @@
     "email": "iceworksteam@163.com"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web && npm run compile",
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run compile && node scripts/minifyNodeModules.js",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./tsconfig.json",
     "build:web": "cd web && npm run build",
@@ -56,6 +56,10 @@
       {
         "command": "iceworks-doctor.dashboard",
         "title": "%iceworksDoctor.commands.dashboard.title%"
+      },
+      {
+        "command": "iceworks-doctor.scan",
+        "title": "%iceworksDoctor.commands.scan.title%"
       }
     ],
     "configuration": {
@@ -84,6 +88,8 @@
     "@types/lodash": "^4.14.158",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
+    "glob": "^7.1.6",
+    "terser": "^5.3.2",
     "typescript": "^3.8.3"
   }
 }

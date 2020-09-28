@@ -20,7 +20,7 @@ import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
 import createEditorMenuAction from './utils/createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoStart from './utils/autoStart';
+import autoStart, { didShowWelcomePageBySidebarStateKey } from './utils/autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -28,7 +28,7 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
-  const { subscriptions, extensionPath } = context;
+  const { subscriptions, extensionPath, globalState } = context;
 
   // auto set configuration & context
   initExtension(context, name);
@@ -42,9 +42,8 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
     registerCommand(showExtensionsQuickPickCommandId, async () => {
-      recorder.recordActivate();
-
       await showEntriesQuickPick();
+      recorder.recordActivate();
     }),
   );
 
@@ -80,8 +79,8 @@ export async function activate(context: vscode.ExtensionContext) {
   }
   subscriptions.push(
     registerCommand('iceworksApp.configHelper.start', (focusField: string) => {
-      recorder.recordActivate();
       activeConfigWebview(focusField);
+      recorder.recordActivate();
     }),
   );
   // init welcome webview
@@ -114,6 +113,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworksApp.welcome.start', () => {
       activeWelcomeWebview();
+      recorder.recordActivate();
     }),
   );
 
@@ -148,7 +148,7 @@ export async function activate(context: vscode.ExtensionContext) {
       if (visible && !didSetViewContext) {
         didSetViewContext = true;
         recordDAU();
-        autoStart();
+        autoStart(context);
       }
     });
   });
@@ -163,10 +163,11 @@ export async function activate(context: vscode.ExtensionContext) {
   const isNotTargetProject = await checkIsNotTarget();
   // get showWelcomePage configuration from settings.json
   const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
-  if (projectPath && !isNotTargetProject && isShowWelcomePage) {
+  if (projectPath && !isNotTargetProject && isShowWelcomePage && !vscode.window.activeTextEditor) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
       vscode.commands.executeCommand('iceworksApp.welcome.start');
+      globalState.update(didShowWelcomePageBySidebarStateKey, true);
     }
   }
 }
