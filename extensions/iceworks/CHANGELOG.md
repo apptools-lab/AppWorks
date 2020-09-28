@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.11.0
+
+- docs: new image for Visual Construction
+
 ## 0.10.0
 
 - feat: Add Iceworks Doctor
