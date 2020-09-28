@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.4
+
+- chore: sorting of quick entry
+
 ## 0.5.3
 
 - fix: compatible with scenarios without material source
