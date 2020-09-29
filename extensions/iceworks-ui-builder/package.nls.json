@@ -6,7 +6,7 @@
   "iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description": "Application components directory. The default directory is `src/components`.",
   "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: Generate Component by visualization",
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: Download Component Materials",
-  "iceworksUIBuilder.commands.generatePage.title": "Iceworks: Generate Page by assembling",
-  "iceworksUIBuilder.commands.createPage.title": "Iceworks: Generate Page by configure",
+  "iceworksUIBuilder.commands.generatePage.title": "Iceworks: Generate Page by Blocks",
+  "iceworksUIBuilder.commands.createPage.title": "Iceworks: Generate Page by Configuration",
   "iceworksUIBuilder.commands.debugMaterials.title": "Iceworks: Debug Materials in Program"
 }

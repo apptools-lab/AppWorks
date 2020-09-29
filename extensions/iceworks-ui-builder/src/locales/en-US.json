@@ -1,8 +1,8 @@
 {
   "extension.iceworksComponentGenerator.extension.webviewTitle": "Generate Component by visualization - Iceworks",
   "extension.iceworksComponentBuilder.extension.webviewTitle": "Download Component Materials - Iceworks",
-  "extension.iceworksPageBuilder.extensnion.webViewTitle": "Generate Page by assembling - Iceworks",
-  "extension.iceworksPageCreator.extensnion.webViewTitle": "Generate Page by configure - Iceworks",
+  "extension.iceworksPageBuilder.extensnion.webViewTitle": "Generate Page by Blocks - Iceworks",
+  "extension.iceworksPageCreator.extensnion.webViewTitle": "Generate Page by Configuration - Iceworks",
   "extension.iceworksUIBuilder.debugMaterial.addMaterial.label": "Add a debug material source",
   "extension.iceworksUIBuilder.debugMaterial.addMaterial.detail": "Choose a material folder",
   "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.label": "Stop Debugging",
@@ -12,3 +12,4 @@
   "extension.iceworksUIBuilder.debugInput.addSourceSuccess": "Add Debug Material Item Successfully",
   "extension.iceworksUIBuilder.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully"
 }
+
