@@ -5,5 +5,6 @@
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.label": "More",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "Display All Components",
   "extension.iceworksMaterialHelper.getHoverItem.hoverItemLink": "[Docs for <%= componentName %> ](<%= commandUri %>)",
-  "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "You must install「vscode-browser-preview Extension」 to open url in  vscode."
+  "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "You must install「Browser Preview」 to open url in vscode.",
+  "extension.iceworksMaterialHelper.extension.start.errorMessage": "Fail to start Import Component Panel, please open a file first."
 }

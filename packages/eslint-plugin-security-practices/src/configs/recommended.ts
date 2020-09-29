@@ -26,7 +26,7 @@ config.rules = {
   'no-unused-vars': 0,
   'react/react-in-jsx-scope': 'off', // For rax
   '@iceworks/security-practices/no-http-url': 'warn',
-  '@iceworks/security-practices/no-internal-url': ['warn', ['taobao.net']],
+  // '@iceworks/security-practices/no-internal-url': ['warn', ['taobao.net']],
   '@iceworks/security-practices/no-secret-info': 'error',
   '@iceworks/security-practices/no-sensitive-word': ['warn', ['fuck']],
   // Ignore these rules when check security practices.

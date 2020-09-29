@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
-import { recordDAU, recordExecuteCommand } from '@iceworks/recorder';
+import { recordDAU, record } from '@iceworks/recorder';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -19,10 +19,16 @@ import i18n from './i18n';
 // eslint-disable-next-line
 const co = require('co');
 
+// eslint-disable-next-line
+const { name: namespace } = require('../package.json');
+
 export const CONFIGURATION_SECTION = 'iceworks';
 export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
 export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
+export const CONFIGURATION_KEY_GENERATE_PAGE_PATH = 'generatePagePath';
+export const CONFIGURATION_KEY_GENERATE_COMPONENT_PATH = 'generateComponentPath';
+
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
@@ -44,6 +50,15 @@ try {
 let activeTextEditorId: string;
 
 const { window, Position } = vscode;
+
+function recordExecuteCommand(command: string, args: any[]) {
+  return record({
+    namespace,
+    module: 'executeCommand',
+    action: command,
+    data: args,
+  });
+}
 
 let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
@@ -80,7 +95,7 @@ export function registerCommand(command: string, callback: (...args: any[]) => a
     command,
     (...args) => {
       recordDAU();
-      recordExecuteCommand(command);
+      recordExecuteCommand(command, args);
       callback(...args);
     },
     thisArg
