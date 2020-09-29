@@ -155,7 +155,7 @@ export async function getFolderPath(): Promise<string> {
     openLabel: 'Open',
   };
   const selectFolderUri = await vscode.window.showOpenDialog(options);
-  if (selectFolderUri) {
+  if (selectFolderUri && selectFolderUri instanceof Array) {
     const { fsPath } = selectFolderUri[0];
     return fsPath;
   }
