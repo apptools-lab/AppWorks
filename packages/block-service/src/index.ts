@@ -35,7 +35,10 @@ export const bulkGenerate = async function (blocks: IMaterialBlock[], localPath:
   await bulkDownloadMaterials(blocks, blocksTempDir);
   const blockIndexPaths = await renderBlocks(blocks, blocksTempDir, localPath);
   await fsExtra.remove(blocksTempDir);
-  await bulkInstallMaterialsDependencies(blocks, projectPath);
+  // don't install deps when in empty workspace
+  if (projectPath) {
+    await bulkInstallMaterialsDependencies(blocks, projectPath);
+  }
   return blockIndexPaths;
 };
 
