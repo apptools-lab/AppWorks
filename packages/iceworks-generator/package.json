@@ -1,0 +1,29 @@
+{
+  "name": "@iceworks/iceworks-generator",
+  "description": "Iceworks extension and package generator.",
+  "version": "0.1.0",
+  "keywords": [
+    "iceworks",
+    "package",
+    "extension",
+    "generator"
+  ],
+  "bin": {
+    "iceworks-generator": "bin/iceworks-generator"
+  },
+  "files": [
+    "bin/",
+    "lib/"
+  ],
+  "main": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "easyfile": "^0.1.1",
+    "ejs": "^2.6.2",
+    "argv-parse": "^1.0.1",
+    "inquirer": "^7.3.3"
+  }
+}
