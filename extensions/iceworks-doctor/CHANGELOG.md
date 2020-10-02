@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.5
+
+- feat: add `Iceworks: Scan Your Project` command.
+
 ## 0.1.3
 
 - fix: compatible with scenarios without material source
