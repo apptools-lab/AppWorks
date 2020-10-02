@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.zh-CN.md)
 
-# Iceworks Time Steward
+# Iceworks Time Master
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-steward.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
