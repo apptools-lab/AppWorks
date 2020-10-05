@@ -3,7 +3,7 @@
   "displayName": "Iceworks UI Builder",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -144,8 +144,7 @@
     "@iceworks/project-service": "^0.1.4",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/router-service": "^0.1.0",
-    "@iceworks/vscode-webview": "^0.1.1",
-    "bluebird": "^3.7.2"
+    "@iceworks/vscode-webview": "^0.1.1"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.md",
   "bugs": {
