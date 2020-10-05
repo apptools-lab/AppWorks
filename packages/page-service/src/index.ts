@@ -8,6 +8,7 @@ import {
   bulkDownloadMaterials,
   bulkInstallMaterialsDependencies,
   getFolderLanguageType,
+  getLanguage,
 } from '@iceworks/common-service';
 import {
   pagesPath,
@@ -22,6 +23,7 @@ import { bulkGenerate } from '@iceworks/block-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';
 import * as transfromTsToJs from 'transform-ts-to-js';
+import * as forIn from 'lodash.forin';
 import reactPageTemplate from './templates/template.react';
 import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
@@ -127,7 +129,7 @@ export const remove = async function (name: string) {
 };
 
 export const addBlocks = async function (blocks: IMaterialBlock[], componentPath: string) {
-  return await bulkGenerate(blocks, componentPath);
+  return bulkGenerate(blocks, componentPath);
 };
 
 export const getTemplateSchema = async (selectPage: IMaterialPage) => {
@@ -137,11 +139,18 @@ export const getTemplateSchema = async (selectPage: IMaterialPage) => {
     const templateSchema = await fse.readJSON(
       path.join(pagesPath, '.template', selectPage.name, 'config', 'settings.json'),
     );
+    if (templateSchema.i18n === true) {
+      const lang = getLanguage();
+      const localePkg = fse.readJSONSync(
+        path.join(pagesPath, '.template', selectPage.name, 'config', 'locale', lang === 'zh-cn' ? 'zh-CN.json' : 'en-US.json'),
+      );
+      i18nSchema(templateSchema.schema, localePkg);
+      delete templateSchema.i18n;
+    }
     await fse.remove(templateTempDir);
     return templateSchema;
-  } catch (err) {
+  } finally {
     await fse.remove(templateTempDir);
-    throw err;
   }
 };
 
@@ -191,3 +200,13 @@ export const renderPage = async (page: IMaterialPage) => {
 
   return findIndexFile(targetPath);
 };
+
+function i18nSchema(obj: object, localePkg: object) {
+  forIn(obj, (prop, key) => {
+    if (typeof prop === 'string') {
+      obj[key] = localePkg[prop] || prop;
+    } else if (typeof prop === 'object') {
+      i18nSchema(obj[key], localePkg);
+    }
+  });
+}
