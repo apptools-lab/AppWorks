@@ -1,11 +1,12 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
-import * as vscode from 'vscode';
 import * as BluebirdPromise from 'bluebird';
 import { IMaterialData } from '@iceworks/material-utils';
 import { DEBUG_PREFIX } from './index';
 import { getProjectLanguageType } from '@iceworks/project-service';
+// import imageToBase64 from 'image-to-base64';
+const imageToBase64 = require('image-to-base64');
 
 export default async function generateDebugMaterialJson(materialPath: string): Promise<IMaterialData> {
   const pathExists = await fse.pathExists(materialPath);
@@ -30,7 +31,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
   const concurrency = Number(process.env.CONCURRENCY) || 30;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let index = 0;
-  let materialsData;
+  let materialsData = [];
 
   try {
     materialsData = await BluebirdPromise.map(
@@ -47,7 +48,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
       },
     );
   } catch (err) {
-    // ignore
+    console.error(err);
   }
 
   const blocksData: any[] = [];
@@ -115,8 +116,8 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
 
   const screenshot = materialItemConfig.screenshot
     || materialItemConfig.snapshot
-    || (fse.existsSync(path.join(projectPath, 'screenshot.png')) && vscode.Uri.file(path.join(projectPath, 'screenshot.png')).with({ scheme: 'vscode-resource' }))
-    || (fse.existsSync(path.join(projectPath, 'screenshot.jpg')) && vscode.Uri.file(path.join(projectPath, 'screenshot.jpg')).with({ scheme: 'vscode-resource' }))
+    || (fse.existsSync(path.join(projectPath, 'screenshot.png')) && `data:image/png;base64,${await imageToBase64(path.join(projectPath, 'screenshot.png'))}`)
+    || (fse.existsSync(path.join(projectPath, 'screenshot.jpg')) && `data:image/png;base64,${await imageToBase64(path.join(projectPath, 'screenshot.jgg'))}`)
     || '';
 
   const screenshots = materialItemConfig.screenshots || (screenshot && [screenshot]);
