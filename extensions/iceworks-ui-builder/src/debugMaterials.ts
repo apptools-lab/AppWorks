@@ -4,7 +4,7 @@ import { getFolderPath } from '@iceworks/project-service';
 import * as vscode from 'vscode';
 import i18n from './i18n';
 
-const debugQuickPicks : any[] = [
+const debugQuickPicks: any[] = [
   {
     label: i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.label'),
     detail: i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.detail'),
@@ -58,7 +58,7 @@ async function addDebugMaterials() {
         source: `${DEBUG_PREFIX}${materialPath}`,
         official: false,
         checked: false,
-        description: `DEBUG:${materialPath}`,
+        description: `${DEBUG_PREFIX}${materialPath}`,
         isEditing: false,
       });
       vscode.window.showInformationMessage(i18n.format('extension.iceworksUIBuilder.debugInput.addSourceSuccess'));

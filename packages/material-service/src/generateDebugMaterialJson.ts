@@ -1,6 +1,7 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
+import * as vscode from 'vscode';
 import * as BluebirdPromise from 'bluebird';
 import { IMaterialData } from '@iceworks/material-utils';
 import { DEBUG_PREFIX } from './index';
@@ -23,7 +24,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
       return globMaterials(materialPath, item);
     }),
   );
-    // @ts-ignore
+  // @ts-ignore
   const allMaterials = [].concat(blocks).concat(components).concat(scaffolds).concat(pages);
 
   const concurrency = Number(process.env.CONCURRENCY) || 30;
@@ -113,10 +114,11 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
   const materialItemConfig = pkg[`${materialType}Config`] || {};
 
   const screenshot = materialItemConfig.screenshot
-        || materialItemConfig.snapshot
-        || (fse.existsSync(path.join(projectPath, 'screenshot.png')) && path.join(projectPath, 'screenshot.png'))
-        || (fse.existsSync(path.join(projectPath, 'screenshot.jpg')) && path.join(projectPath, 'screenshot.jpg'))
-        || '';
+    || materialItemConfig.snapshot
+    || (fse.existsSync(path.join(projectPath, 'screenshot.png')) && vscode.Uri.file(path.join(projectPath, 'screenshot.png')).with({ scheme: 'vscode-resource' }))
+    || (fse.existsSync(path.join(projectPath, 'screenshot.jpg')) && vscode.Uri.file(path.join(projectPath, 'screenshot.jpg')).with({ scheme: 'vscode-resource' }))
+    || '';
+
   const screenshots = materialItemConfig.screenshots || (screenshot && [screenshot]);
 
   const { categories: originCategories, category: originCategory } = materialItemConfig;
