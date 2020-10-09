@@ -374,7 +374,7 @@ export const bulkInstallMaterialsDependencies = async function (
   // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
   Object.keys(pagesDependencies).forEach((packageName) => {
-    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
+    if (projectPackageJSON.dependencies && !projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
       filterDependencies.push({
         [packageName]: pagesDependencies[packageName],
       });
@@ -412,13 +412,15 @@ export const bulkDownloadMaterials = async function (
       const materialName: string = upperCamelCase(material.name);
       const downloadPath = path.join(tmpPath, materialName);
 
-      if(material.source.type === 'debug') {
+      if (material.source.type === 'debug') {
         try {
-          await fse.copy(material.source.path, downloadPath, {filter: srcPath => {
-            return !srcPath.includes('node_modules');
-          }});
+          await fse.copy(material.source.path, downloadPath, {
+            filter: srcPath => {
+              return !srcPath.includes('node_modules');
+            }
+          });
         } catch (err) {
-          log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', {errMessage: err.message}))
+          log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', { errMessage: err.message }))
         }
       } else {
         let tarballURL: string;
