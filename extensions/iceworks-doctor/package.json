@@ -1,9 +1,9 @@
 {
   "name": "iceworks-doctor",
-  "displayName": "Iceworks Doctor",
+  "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -20,7 +20,8 @@
     "quality",
     "repeatability",
     "maintainability",
-    "dashboard"
+    "dashboard",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

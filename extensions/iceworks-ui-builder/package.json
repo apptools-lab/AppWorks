@@ -1,9 +1,9 @@
 {
   "name": "iceworks-ui-builder",
-  "displayName": "Iceworks UI Builder",
+  "displayName": "UI Designer",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -15,8 +15,8 @@
     "Rax",
     "React",
     "Low-code",
-    "lowcode",
-    "visual"
+    "visual",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

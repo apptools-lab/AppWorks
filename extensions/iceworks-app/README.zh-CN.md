@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md)
 
-# Iceworks 应用概览插件
+# 应用资源管理器
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
@@ -13,7 +13,7 @@
 
 ### 侧边栏 - 初始化
 
-当您安装了插件之后，VS Code 的活动栏上会增加 Iceworks 图标，单击此图标进入应用大纲树插件。
+当您安装了插件之后，VS Code 的活动栏上会增加一个图标，单击此图标进入应用资源管理器插件。
 
 如您当前的**工作区为空**或**非 React/Rax 应用**，则会出现初始化侧边栏。
 
@@ -83,7 +83,7 @@
 
 ### 命令面板
 
-您可以通过点击窗口右下角状态栏上的「Iceworks」按钮激活 Iceworks 命令面板。
+您可以通过点击窗口右下角状态栏上的「Iceworks」按钮激活 命令面板。
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
 
@@ -99,4 +99,4 @@
 
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

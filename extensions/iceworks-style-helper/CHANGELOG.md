@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1
+
+- docs: more
+
 ## 0.4.0
 
 - feat: support completion in vue class='xxx'

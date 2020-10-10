@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.7
+
+- chore: change extension name
+
 ## 0.1.6
 
 - fix: [#604](https://github.com/ice-lab/iceworks/issues/604)
