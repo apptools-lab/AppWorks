@@ -18,7 +18,8 @@
     "React",
     "JSX",
     "Component",
-    "Props"
+    "Props",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
