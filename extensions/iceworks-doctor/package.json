@@ -3,7 +3,7 @@
   "displayName": "Iceworks Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "engines": {
     "vscode": "^1.41.0"
   },
