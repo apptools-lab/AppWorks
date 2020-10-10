@@ -1,5 +1,5 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
-import { addSource, generateDebugMaterialJson, DEBUG_PREFIX } from '@iceworks/material-service';
+import { addSource, generateDebugMaterialJson, DEBUG_PREFIX, isDebugSource } from '@iceworks/material-service';
 import { getFolderPath } from '@iceworks/project-service';
 import * as vscode from 'vscode';
 import i18n from './i18n';
@@ -70,8 +70,7 @@ async function addDebugMaterials() {
 
 export async function deleteAllDebugSources() {
   const materialsSource = await getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-  const adjustedMaterialsSource = materialsSource.filter(item => item.name.startsWith(`$$${DEBUG_PREFIX}`));
+  const adjustedMaterialsSource = materialsSource.filter(item => isDebugSource(item.source));
   await saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, adjustedMaterialsSource);
   vscode.window.showInformationMessage(i18n.format('extension.iceworksUIBuilder.debugInput.deleteSourceSuccess'));
 }
-

@@ -93,7 +93,7 @@ Iceworks provides local debugging capabilities for materials.
 
 ### Usage
 
-#### Debug local materials
+#### Debug local material projects
 
 ![debug-local-mateirlas](https://user-images.githubusercontent.com/56879942/95042207-bead5f80-070b-11eb-8828-28d3adc2b137.gif)
 
@@ -101,11 +101,11 @@ Iceworks provides local debugging capabilities for materials.
 2. Select the material project folder to be debugged, and click `Debug Materials`;
 3. Use material functions, such as `Generate Page by Configuration`, select local material source for debugging.
 
-#### Stop Debugging
+#### Clear debug material sources
 
-![stop-debugging](https://user-images.githubusercontent.com/56879942/95042184-afc6ad00-070b-11eb-98be-21c65f292c40.gif)
+![clear-debug-material-sources](https://user-images.githubusercontent.com/56879942/95042184-afc6ad00-070b-11eb-98be-21c65f292c40.gif)
 
-1. Select `Stop Debugging`；
+1. Select `Clear Debug Material Sources`；
 2. All debug material sources will be removed。
 
 ## More

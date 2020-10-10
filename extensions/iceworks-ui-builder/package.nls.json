@@ -8,5 +8,5 @@
   "iceworksUIBuilder.commands.createComponent.title": "Iceworks: Download Component Materials",
   "iceworksUIBuilder.commands.generatePage.title": "Iceworks: Generate Page by Blocks",
   "iceworksUIBuilder.commands.createPage.title": "Iceworks: Generate Page by Configuration",
-  "iceworksUIBuilder.commands.debugMaterials.title": "Iceworks: Debug Materials in Program"
+  "iceworksUIBuilder.commands.debugMaterials.title": "Iceworks: Debug Local Material Project"
 }

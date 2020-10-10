@@ -8,8 +8,8 @@ import { getProjectLanguageType } from '@iceworks/project-service';
 import * as imageToBase64 from 'image-to-base64';
 
 export default async function generateDebugMaterialJson(materialPath: string): Promise<IMaterialData> {
-  const pathExists = await fse.pathExists(materialPath);
-  if (!pathExists) {
+  const isPathExists = await fse.pathExists(materialPath);
+  if (!isPathExists) {
     throw new Error(`${materialPath} does not exists`);
   }
   const materialPkgPath = path.join(materialPath, 'package.json');
@@ -18,7 +18,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
     throw new Error(`${materialPath} is not a material folder!`);
   }
 
-  const pkg = await fse.readJson(path.join(materialPath, 'package.json'));
+  const pkg = await fse.readJson(materialPkgPath);
   const [blocks, components, scaffolds, pages] = await Promise.all(
     ['block', 'component', 'scaffold', 'page'].map((item) => {
       return globMaterials(materialPath, item);

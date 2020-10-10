@@ -108,7 +108,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 
   if (!data) {
     let materialData = {} as IMaterialData;
-    if (source.startsWith(DEBUG_PREFIX)) {
+    if (isDebugSource(source)) {
       materialData = await generateDebugMaterialJson(source.replace(DEBUG_PREFIX, ''));
     } else {
       const result = await axios({ url: source });
@@ -155,7 +155,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   return data;
 };
 
-export const addSource = async function (materialSource: IMaterialSource, debugMaterial = false) {
+export const addSource = async function (materialSource: IMaterialSource) {
   const { source, name } = materialSource;
   const sources: IMaterialSource[] = await getSources();
   const existedSource = sources.some(({ source: defaultSource }) => defaultSource === source);
@@ -167,7 +167,7 @@ export const addSource = async function (materialSource: IMaterialSource, debugM
     throw Error(i18n.format('package.materialService.index.materialNameExistError'));
   }
 
-  const { type } = debugMaterial ? await getData(source) : materialSource;
+  const { type } = await getData(source);
   if (!type) {
     throw Error(i18n.format('package.materialService.index.materialDataError'));
   }
@@ -217,4 +217,8 @@ export async function removeSource(source: string): Promise<IMaterialSource[]> {
   const newSources = materialSources.filter((item) => item.source !== source);
   saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   return newSources;
+}
+
+export function isDebugSource(source: string) {
+  return source.startsWith(DEBUG_PREFIX);
 }

@@ -89,23 +89,23 @@ Iceworks 为物料开发者提供了本地调试的功能。
 ![激活](https://user-images.githubusercontent.com/56879942/95042213-c10fb980-070b-11eb-8e4c-0193e026b8ee.gif)
 
 1. 通过 `⇧⌘P` ( MacOS ) 或 `Ctrl+Shift+p` ( Windows ) 快捷键唤起命令面板；
-2. 输入 `Iceworks: 在项目中进行物料调试` 开启调试。
+2. 输入 `Iceworks: 调试本地物料项目` 开启调试。
 
 ### 使用
 
-#### 调试本地物料源
+#### 调试本地物料项目
 
-![调试本地物料源](https://user-images.githubusercontent.com/56879942/95042215-c2d97d00-070b-11eb-8698-a4ae04136dbf.gif)
+![调试本地物料项目](https://user-images.githubusercontent.com/56879942/95042215-c2d97d00-070b-11eb-8698-a4ae04136dbf.gif)
 
-1. 选择 `添加一个调试物料源信息`；
+1. 选择 `添加一个本地物料项目到调试列表`；
 2. 选择需要调试的物料项目文件夹，点击 `开始调试`；
 3. 使用物料功能，例如：`通过配置模板生成页面`，选择本地物料源进行调试。
 
-#### 停止调试
+#### 清除调试的物料源
 
-![停止调试](https://user-images.githubusercontent.com/56879942/95042192-b7865180-070b-11eb-83de-50ad3af29b4a.gif)
+![清除调试的物料源](https://user-images.githubusercontent.com/56879942/95042192-b7865180-070b-11eb-83de-50ad3af29b4a.gif)
 
-1. 选择 `停止调试`；
+1. 选择 `清除调试的物料源`；
 2. 所有调试物料源均被删除。
 
 ## 更多

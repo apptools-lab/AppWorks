@@ -411,7 +411,7 @@ export const bulkDownloadMaterials = async function (
       await fse.mkdirp(tmpPath);
       const materialName: string = upperCamelCase(material.name);
       const downloadPath = path.join(tmpPath, materialName);
-
+      // debug local material application
       if (material.source.type === 'debug') {
         try {
           await fse.copy(material.source.path, downloadPath, {
