@@ -13,7 +13,7 @@ import Editor from './Editor';
 nextComponents.setup();
 
 const tmpComponents = {
-  Editor
+  Editor,
 };
 forIn(nextComponents, (value, key) => {
   if (key !== 'setup') {

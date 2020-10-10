@@ -1,0 +1,57 @@
+{
+  "name": "<%= projectName %>",
+  "displayName": "",
+  "description": "",
+  "publisher": "",
+  "icon": "",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "<%= projectName %>"
+  ],
+  "activationEvents": [
+    "onCommand:<%= projectName %>.hello"
+  ],
+  "main": "./build/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "preinstall": "cd web && npm install",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "<%= projectName %>.hello",
+        "title": "%commands.hello.title%"
+      }
+    ]
+  },
+  "dependencies": {
+    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/project-service": "^0.1.17",
+    "@iceworks/vscode-webview": "^0.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "typescript": "^3.8.3",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
