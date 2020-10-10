@@ -1,9 +1,10 @@
 {
-  "name": "@iceworks/iceworks-generator",
-  "description": "Iceworks extension and package generator.",
+  "name": "@iceworks/vscode-generator",
+  "description": "Iceworks vscode extension and package generator.",
   "version": "0.1.0",
   "keywords": [
     "iceworks",
+    "vscode",
     "package",
     "extension",
     "generator"

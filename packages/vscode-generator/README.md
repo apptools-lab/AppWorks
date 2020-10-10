@@ -1,11 +1,11 @@
-# @iceworks/iceworks-generator
+# @iceworks/vscode-generator
 
 Iceworks extension and package generator.
 
 ## Install
 
 ```shell
-$npm install @iceworks/iceworks-generator -g
+$npm install @iceworks/vscode-generator -g
 ```
 
 ## Usage
