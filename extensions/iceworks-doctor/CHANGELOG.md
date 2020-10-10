@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.6
+
+- fix: [#604](https://github.com/ice-lab/iceworks/issues/604)
+
 ## 0.1.5
 
 - feat: add `Iceworks: Scan Your Project` command.
