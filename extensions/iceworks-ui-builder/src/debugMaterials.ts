@@ -1,5 +1,5 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
-import { addSource, generateDebugMaterialJson, DEBUG_PREFIX, isDebugSource } from '@iceworks/material-service';
+import { addSource, generateDebugMaterialData, DEBUG_PREFIX, isDebugSource } from '@iceworks/material-service';
 import { getFolderPath } from '@iceworks/project-service';
 import * as vscode from 'vscode';
 import i18n from './i18n';
@@ -51,7 +51,7 @@ async function addDebugMaterials() {
   const materialPath = await getFolderPath(i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.openLabel'));
   if (materialPath) {
     try {
-      const debugMaterial = await generateDebugMaterialJson(materialPath);
+      const debugMaterial = await generateDebugMaterialData(materialPath);
       await addSource({
         name: debugMaterial.name,
         type: debugMaterial.type,

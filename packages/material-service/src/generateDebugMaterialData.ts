@@ -7,7 +7,7 @@ import { DEBUG_PREFIX } from './index';
 import { getProjectLanguageType } from '@iceworks/project-service';
 import * as imageToBase64 from 'image-to-base64';
 
-export default async function generateDebugMaterialJson(materialPath: string): Promise<IMaterialData> {
+export default async function generateDebugMaterialData(materialPath: string): Promise<IMaterialData> {
   const isPathExists = await fse.pathExists(materialPath);
   if (!isPathExists) {
     throw new Error(`${materialPath} does not exists`);
@@ -67,7 +67,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
     }
   });
 
-  const debugMaterialJson = {
+  const debugMaterialData = {
     ...materialConfig,
     name: `%%${DEBUG_PREFIX}${pkg.name}%%`,
     description: pkg.description,
@@ -79,7 +79,7 @@ export default async function generateDebugMaterialJson(materialPath: string): P
     pages: pagesData,
   };
 
-  return debugMaterialJson;
+  return debugMaterialData;
 }
 
 function globMaterials(materialDir: string, materialType: string) {
@@ -111,17 +111,17 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
   const projectPath = path.dirname(pkgPath);
   const pkg = await fse.readJson(pkgPath);
 
-  const materialItemConfig = pkg[`${materialType}Config`] || {};
+  const materialItem = pkg[`${materialType}Config`] || {};
 
-  const screenshot = materialItemConfig.screenshot
-    || materialItemConfig.snapshot
+  const screenshot = materialItem.screenshot
+    || materialItem.snapshot
     || (fse.existsSync(path.join(projectPath, 'screenshot.png')) && `data:image/png;base64,${await imageToBase64(path.join(projectPath, 'screenshot.png'))}`)
     || (fse.existsSync(path.join(projectPath, 'screenshot.jpg')) && `data:image/png;base64,${await imageToBase64(path.join(projectPath, 'screenshot.jgg'))}`)
     || '';
 
-  const screenshots = materialItemConfig.screenshots || (screenshot && [screenshot]);
+  const screenshots = materialItem.screenshots || (screenshot && [screenshot]);
 
-  const { categories: originCategories, category: originCategory } = materialItemConfig;
+  const { categories: originCategories, category: originCategory } = materialItem;
   // categories 字段：即将废弃，但是展示端还依赖该字段，因此短期内不能删除，同时需要兼容新的物料无 categories 字段
   const categories = originCategories || (originCategory ? [originCategory] : []);
   // category 字段：兼容老的物料无 category 字段
@@ -136,9 +136,9 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
 
   const materialData = {
     // 允许（但不推荐）自定义单个物料的数据
-    ...materialItemConfig,
-    name: materialItemConfig.name,
-    title: materialItemConfig.title,
+    ...materialItem,
+    name: materialItem.name,
+    title: materialItem.title,
     description: pkg.description,
     languageType,
     homepage: 'localhost:3333',
@@ -158,7 +158,7 @@ async function generateMaterialData(pkgPath: string, materialType: string) {
     updateTime: new Date('2020/1/1'),
   };
 
-  if (materialItemConfig === 'block') {
+  if (materialItem === 'block') {
     // iceworks 2.x 依赖该字段，下个版本删除
     materialData.source.sourceCodeDirectory = 'src/';
   }
