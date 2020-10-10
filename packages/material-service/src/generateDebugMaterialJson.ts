@@ -5,8 +5,7 @@ import * as BluebirdPromise from 'bluebird';
 import { IMaterialData } from '@iceworks/material-utils';
 import { DEBUG_PREFIX } from './index';
 import { getProjectLanguageType } from '@iceworks/project-service';
-// import imageToBase64 from 'image-to-base64';
-const imageToBase64 = require('image-to-base64');
+import * as imageToBase64 from 'image-to-base64';
 
 export default async function generateDebugMaterialJson(materialPath: string): Promise<IMaterialData> {
   const pathExists = await fse.pathExists(materialPath);
