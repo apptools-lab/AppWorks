@@ -15,6 +15,8 @@ const Home = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [schema, setSchema] = useState({});
+  const [nextBtnDisabled, setNextbtnDisabled] = useState(false);
+
   const pages = [
     <>
       <div className={styles.list}>
@@ -37,7 +39,7 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.opts}>
-        <Button type="primary" loading={downloading} onClick={getConfigPage}>
+        <Button type="primary" loading={downloading} onClick={getConfigPage} disabled={nextBtnDisabled}>
           <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
         </Button>
       </div>
@@ -86,6 +88,12 @@ const Home = () => {
     let data = {};
     try {
       data = await callService('material', 'getData', source);
+      const { pages: materialsPages } = data as any;
+      if (!materialsPages || (materialsPages instanceof Array && materialsPages.length === 0)) {
+        setNextbtnDisabled(true);
+      } else {
+        setNextbtnDisabled(false);
+      }
     } catch (e) {
       Notification.error({
         content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }),

@@ -9,6 +9,10 @@ import {
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
 import { getProjectType } from '@iceworks/project-service';
 import i18n from './i18n';
+import generateDebugMaterialData from './generateDebugMaterialData';
+
+export const DEBUG_PREFIX = 'DEBUG:';
+export { generateDebugMaterialData };
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
@@ -103,8 +107,13 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   }
 
   if (!data) {
-    const result = await axios({ url: source });
-    const materialData = result.data;
+    let materialData = {} as IMaterialData;
+    if (isDebugSource(source)) {
+      materialData = await generateDebugMaterialData(source.replace(DEBUG_PREFIX, ''));
+    } else {
+      const result = await axios({ url: source });
+      materialData = result.data;
+    }
 
     let bases: IMaterialBase[];
     if (isIceMaterial(source)) {
@@ -208,4 +217,8 @@ export async function removeSource(source: string): Promise<IMaterialSource[]> {
   const newSources = materialSources.filter((item) => item.source !== source);
   saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   return newSources;
+}
+
+export function isDebugSource(source: string) {
+  return source.startsWith(DEBUG_PREFIX);
 }

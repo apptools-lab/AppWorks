@@ -374,7 +374,7 @@ export const bulkInstallMaterialsDependencies = async function (
   // filter existing dependencies of project
   const filterDependencies: { [packageName: string]: string }[] = [];
   Object.keys(pagesDependencies).forEach((packageName) => {
-    if (!projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
+    if (projectPackageJSON.dependencies && !projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
       filterDependencies.push({
         [packageName]: pagesDependencies[packageName],
       });
@@ -410,31 +410,43 @@ export const bulkDownloadMaterials = async function (
     materials.map(async (material: any) => {
       await fse.mkdirp(tmpPath);
       const materialName: string = upperCamelCase(material.name);
-
-      let tarballURL: string;
-      try {
-        log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
-        tarballURL = await getTarballURLByMaterielSource(material.source);
-      } catch (error) {
-        error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
-          materialName,
-          tarballURL,
-        });
-        throw error;
-      }
-      log(i18n.format('package.common-service.downloadMaterial.unzipCode'));
       const downloadPath = path.join(tmpPath, materialName);
-      try {
-        await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
-          log(i18n.format('package.common-service.downloadMaterial.process', { percent: (percent * 100).toFixed(2) }));
-        });
-      } catch (error) {
-        error.message = i18n.format('package.common-service.uzipError', { materialName, tarballURL });
-        if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
-          error.message = i18n.format('package.common-service.uzipOutTime', { materialName, tarballURL });
+      // debug local material application
+      if (material.source.type === 'debug') {
+        try {
+          await fse.copy(material.source.path, downloadPath, {
+            filter: srcPath => {
+              return !srcPath.includes('node_modules');
+            }
+          });
+        } catch (err) {
+          log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', { errMessage: err.message }))
         }
-        await fse.remove(tmpPath);
-        throw error;
+      } else {
+        let tarballURL: string;
+        try {
+          log(i18n.format('package.common-service.downloadMaterial.getDownloadUrl'));
+          tarballURL = await getTarballURLByMaterielSource(material.source);
+        } catch (error) {
+          error.message = i18n.format('package.common-service.downloadMaterial.downloadError', {
+            materialName,
+            tarballURL,
+          });
+          throw error;
+        }
+        log(i18n.format('package.common-service.downloadMaterial.unzipCode'));
+        try {
+          await getAndExtractTarball(downloadPath, tarballURL, ({ percent }) => {
+            log(i18n.format('package.common-service.downloadMaterial.process', { percent: (percent * 100).toFixed(2) }));
+          });
+        } catch (error) {
+          error.message = i18n.format('package.common-service.uzipError', { materialName, tarballURL });
+          if (error.code === 'ETIMEDOUT' || error.code === 'ESOCKETTIMEDOUT') {
+            error.message = i18n.format('package.common-service.uzipOutTime', { materialName, tarballURL });
+          }
+          await fse.remove(tmpPath);
+          throw error;
+        }
       }
     })
   );

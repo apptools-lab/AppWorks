@@ -2,5 +2,14 @@
   "extension.iceworksComponentGenerator.extension.webviewTitle": "Generate Component by visualization - Iceworks",
   "extension.iceworksComponentBuilder.extension.webviewTitle": "Download Component Materials - Iceworks",
   "extension.iceworksPageBuilder.extensnion.webViewTitle": "Generate Page by Blocks - Iceworks",
-  "extension.iceworksPageCreator.extensnion.webViewTitle": "Generate Page by Configuration - Iceworks"
+  "extension.iceworksPageCreator.extensnion.webViewTitle": "Generate Page by Configuration - Iceworks",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.label": "Add a local material project to debug list",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.detail": "Select a local material project",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.label": "Clear debug material source",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail": "Delete all local material project in material source list",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.openLabel": "Debug Materials",
+  "extension.iceworksUIBuilder.initDebug.err": "init Debug Err： <%= errMessage %>",
+  "extension.iceworksUIBuilder.debugInput.addSourceSuccess": "Add Debug Material Item Successfully",
+  "extension.iceworksUIBuilder.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully"
 }
+
