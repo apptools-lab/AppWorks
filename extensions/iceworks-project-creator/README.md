@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.zh-CN.md)
 
-# Iceworks Application Creator
+# Application Creator
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
@@ -23,9 +23,9 @@ Create a Universal Application(React/Rax/Vue, etc) quickly.
 ![demo](https://user-images.githubusercontent.com/56879942/88175435-6f9d7580-cc58-11ea-8a88-f74a5ab4f674.gif)
 
 1. Select a scaffold.
-2. Input your application Infomation.
+2. Input your application information.
 3. Create your application and open application automatically.
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

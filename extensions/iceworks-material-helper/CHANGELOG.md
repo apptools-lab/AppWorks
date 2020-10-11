@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.11
+
+- docs: more
+
 ## 0.3.10
 
 - feat: add blocks to .js/.jsx/.tsx files anywhere

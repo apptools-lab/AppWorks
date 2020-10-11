@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.zh-CN.md)
 
-# Iceworks UI Builder
+# UI Designer
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
@@ -65,7 +65,7 @@ Create the page by visual configuration
 
 ## Create Component
 
-Iceworks provides a huge amount of high quality materials for React and [Rax](https://rax.js.org/) apps. You can select materials to create components.
+Provides a huge amount of high quality materials for React and [Rax](https://rax.js.org/) apps. You can select materials to create components.
 
 ### Activate
 
@@ -110,4 +110,4 @@ Iceworks provides local debugging capabilities for materials.
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

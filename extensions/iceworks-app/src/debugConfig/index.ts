@@ -5,7 +5,6 @@ import { parse } from 'comment-json';
 import { checkIsPegasusProject } from '@iceworks/project-service';
 import { getLaunchConfig, getTasksConfig } from './getDefaultConfigs';
 
-// Iceworks debug config
 export const BASE_URL = 'http://localhost:3333';
 export const CONFIG_NAME = 'Iceworks Debug';
 export const CONFIG_START_LABEL = 'Iceworks Start Background Tasks';

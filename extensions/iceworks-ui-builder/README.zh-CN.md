@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.md)
 
-# Iceworks 可视化搭建插件
+# 可视化搭建插件
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
@@ -65,7 +65,7 @@
 
 ## 下载远程物料到本地
 
-Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质量物料，通过选择物料快速创建前端组件。
+为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质量物料，通过选择物料快速创建前端组件。
 
 ### 激活
 
@@ -110,4 +110,4 @@ Iceworks 为物料开发者提供了本地调试的功能。
 
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
