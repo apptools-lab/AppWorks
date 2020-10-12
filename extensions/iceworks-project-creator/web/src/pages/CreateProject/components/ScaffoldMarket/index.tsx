@@ -61,7 +61,7 @@ const ScaffoldMarket = ({
 
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
     try {
-      const scaffolds = (await callService('project', 'getScaffolds', source)) as IMaterialScaffold[];
+      const scaffolds = (await callService('scaffold', 'getScaffolds', source)) as IMaterialScaffold[];
       let main = scaffolds.filter((scaffold) => mainScaffoldsList.includes(scaffold.source.npm));
       let other = scaffolds.filter((scaffold) => !mainScaffoldsList.includes(scaffold.source.npm));
       if (!main.length && other.length) {
@@ -148,62 +148,17 @@ const ScaffoldMarket = ({
           ) : pegasusCardSelected ? (
             <PegasusScaffoldContent />
           ) : (
-            <>
-              <div className={styles.mainScaffolds}>
-                {!!mainScaffolds.length ? (
-                  mainScaffolds.map((item) => {
-                    // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
-                    // so the TypeScript and JavaScript logo only display in official scaffolds
-                    const scaffoldType = tsScaffoldsList.includes(item.source.npm)
-                      ? 'ts'
-                      : jsScaffoldsList.includes(item.source.npm)
-                      ? 'js'
-                      : '';
-                    const isWireless = checkIsWireless(selectedSource);
-                    const CardComponent = isWireless ? MobileScaffoldCard : Card;
-                    return (
-                      <CardComponent
-                        key={item.name}
-                        title={
-                          <div className={styles.cardTitle}>
-                            {scaffoldType && (
-                              <img
-                                src={require(`@/assets/${scaffoldType}.svg`)}
-                                alt="languageType"
-                                width={20}
-                                height={20}
-                              />
-                            )}
-                            <div>
-                              {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
-                            </div>
-                          </div>
-                        }
-                        content={item.description}
-                        media={item.screenshot}
-                        selected={curProjectField.scaffold.name === item.name}
-                        onClick={() => onScaffoldClick(item)}
-                      />
-                    );
-                  })
-                ) : (
-                  <NotFound
-                    description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
-                  />
-                )}
-              </div>
-              {!!otherScaffolds.length && (
-                <Collapse className={styles.collapse}>
-                  <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
-                    <div className={styles.collapseScaffolds}>
-                      {otherScaffolds.map((item) => {
+                <>
+                  <div className={styles.mainScaffolds}>
+                    {!!mainScaffolds.length ? (
+                      mainScaffolds.map((item) => {
                         // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
                         // so the TypeScript and JavaScript logo only display in official scaffolds
                         const scaffoldType = tsScaffoldsList.includes(item.source.npm)
                           ? 'ts'
                           : jsScaffoldsList.includes(item.source.npm)
-                          ? 'js'
-                          : '';
+                            ? 'js'
+                            : '';
                         const isWireless = checkIsWireless(selectedSource);
                         const CardComponent = isWireless ? MobileScaffoldCard : Card;
                         return (
@@ -220,7 +175,7 @@ const ScaffoldMarket = ({
                                   />
                                 )}
                                 <div>
-                                  {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                  {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
                                 </div>
                               </div>
                             }
@@ -230,13 +185,58 @@ const ScaffoldMarket = ({
                             onClick={() => onScaffoldClick(item)}
                           />
                         );
-                      })}
-                    </div>
-                  </Collapse.Panel>
-                </Collapse>
+                      })
+                    ) : (
+                        <NotFound
+                          description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
+                        />
+                      )}
+                  </div>
+                  {!!otherScaffolds.length && (
+                    <Collapse className={styles.collapse}>
+                      <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
+                        <div className={styles.collapseScaffolds}>
+                          {otherScaffolds.map((item) => {
+                            // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                            // so the TypeScript and JavaScript logo only display in official scaffolds
+                            const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                              ? 'ts'
+                              : jsScaffoldsList.includes(item.source.npm)
+                                ? 'js'
+                                : '';
+                            const isWireless = checkIsWireless(selectedSource);
+                            const CardComponent = isWireless ? MobileScaffoldCard : Card;
+                            return (
+                              <CardComponent
+                                key={item.name}
+                                title={
+                                  <div className={styles.cardTitle}>
+                                    {scaffoldType && (
+                                      <img
+                                        src={require(`@/assets/${scaffoldType}.svg`)}
+                                        alt="languageType"
+                                        width={20}
+                                        height={20}
+                                      />
+                                    )}
+                                    <div>
+                                      {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                    </div>
+                                  </div>
+                                }
+                                content={item.description}
+                                media={item.screenshot}
+                                selected={curProjectField.scaffold.name === item.name}
+                                onClick={() => onScaffoldClick(item)}
+                              />
+                            );
+                          })}
+                        </div>
+                      </Collapse.Panel>
+                    </Collapse>
+                  )}
+                </>
               )}
-            </>
-          )}
         </div>
       </div>
       {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
