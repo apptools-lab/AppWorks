@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { getUserInfo, checkIsAliInternal, initExtension } from '@iceworks/common-service';
 import { Timer } from './timer';
+import createTreeView  from './createTreeView';
 
 // eslint-disable-next-line
 const { name } = require('../package.json');
@@ -20,9 +21,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
   timer = new Timer(user);
   timer.initialize();
+
+  createTreeView(context);
 }
 
 export function deactivate() {
   timer.dispose();
-  console.info('timer has been disabled!');
 }

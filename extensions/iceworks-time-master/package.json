@@ -23,6 +23,25 @@
   "activationEvents": [
     "*"
   ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "iceworksApp",
+          "title": "Iceworks",
+          "icon": "assets/sidebar-logo.png"
+        }
+      ]
+    },
+    "views": {
+      "iceworksApp": [
+        {
+          "id": "timeMaster",
+          "name": "Time Master"
+        }
+      ]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
@@ -45,6 +64,7 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.14",
+    "@iceworks/i18n": "^0.1.1",
     "@iceworks/recorder": "^0.1.1"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md",
