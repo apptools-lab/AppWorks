@@ -137,16 +137,6 @@ export function checkIsTemplate(fsPath: string): boolean {
   return jsxFileExtnames.indexOf(fsExtname) !== -1;
 }
 
-// export function getScaffoldResources(): Array<Record<string, unknown>> {
-//   const materialSources = vscode.workspace.getConfiguration('iceworks').get('materialSources', []);
-//   return materialSources;
-// }
-
-// export async function getScaffolds(source: string) {
-//   const response = await axios.get(source);
-//   return response.data.scaffolds;
-// }
-
 export async function getFolderPath(openLabel = 'Open'): Promise<string | undefined> {
   const options: vscode.OpenDialogOptions = {
     canSelectFolders: true,
