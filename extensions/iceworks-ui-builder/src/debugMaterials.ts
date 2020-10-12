@@ -48,7 +48,7 @@ export async function initDebugMaterials() {
 }
 
 async function addDebugMaterials() {
-  const materialPath = await getFolderPath(i18n.format('extension.iceworksUIBuilder.debugMaterial.addMaterial.openLabel'));
+  const materialPath = await getFolderPath();
   if (materialPath) {
     try {
       const debugMaterial = await generateDebugMaterialData(materialPath);
