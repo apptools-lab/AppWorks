@@ -37,7 +37,7 @@
       "iceworksApp": [
         {
           "id": "timeMaster",
-          "name": "Time Master"
+          "name": "%timeMaster.views.iceworksApp.timeMaster.name%"
         }
       ]
     }
