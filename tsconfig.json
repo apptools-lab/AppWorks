@@ -14,6 +14,7 @@
     { "path": "packages/transform-ts-to-js" },
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
+    { "path": "packages/material-engine" },
     { "path": "packages/material-service" },
     { "path": "packages/block-service" },
     { "path": "packages/component-service" },

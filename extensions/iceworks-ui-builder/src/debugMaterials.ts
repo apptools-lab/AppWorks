@@ -1,5 +1,5 @@
 import { CONFIGURATION_KEY_MATERIAL_SOURCES, getDataFromSettingJson, saveDataToSettingJson, registerCommand } from '@iceworks/common-service';
-import { addSource, generateDebugMaterialData, DEBUG_PREFIX, isDebugSource } from '@iceworks/material-service';
+import { addSource, generateDebugMaterialData, DEBUG_PREFIX, isDebugSource } from '@iceworks/material-engine/lib/material';
 import { getFolderPath } from '@iceworks/project-service';
 import * as vscode from 'vscode';
 import i18n from './i18n';

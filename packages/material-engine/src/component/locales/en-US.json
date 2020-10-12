@@ -1,0 +1,7 @@
+{
+  "package.component-service.index.templateError": "You can only add component code to <%= jsxFileExtnames %> files",
+  "package.component-service.index.inputComponentNamePlaceHolder": "Component name must start with [A-Z] and only contains letters and numbers. Special characters are not allowed.",
+  "package.component-service.index.componentNameExistError": "The component name existed, please input it again",
+  "package.component-service.index.createComponentSuccess": "Generate component to <%= componentPath %> successfully",
+  "package.component-service.index.openFile": "Open file"
+}

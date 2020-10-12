@@ -1,0 +1,7 @@
+{
+  "package.block-service.templateError": "You can only add block codes to  <%= jsxFileExtnames %> ",
+  "package.block-service.notPageFileError": "You can only add block codes to files in <%= pagesPath %>",
+  "package.block-service.startObtainBlock": "> Obtain block codes...",
+  "package.block-service.obtainDone": "> The block code has been downloaded to <%= blockDir %>",
+  "package.block-service.targetDirExists": "Path  <%= targetPath%> already exists, Please choose another directory."
+}

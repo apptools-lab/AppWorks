@@ -1,0 +1,3 @@
+{
+  "package.pageService.index.pagePathExistError": "页面文件夹「<%= name %>」已存在，无法覆盖，请输入新的页面名称。"
+}

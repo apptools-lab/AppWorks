@@ -1,0 +1,7 @@
+{
+  "package.component-service.index.templateError": "只能向 <%= jsxFileExtnames %> 文件添加组件代码",
+  "package.component-service.index.inputComponentNamePlaceHolder": "组件名称必须英文字母 A-Z 开头，只包含英文和数字，不允许有特殊字符",
+  "package.component-service.index.componentNameExistError": "组件名已存在，请重新输入",
+  "package.component-service.index.createComponentSuccess": "成功生成组件到 <%= componentPath %> ",
+  "package.component-service.index.openFile": "打开文件"
+}
