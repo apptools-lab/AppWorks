@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.12.0
+
+- feat: add Time Masters
+
 ## 0.11.0
 
 - docs: new image for Visual Construction

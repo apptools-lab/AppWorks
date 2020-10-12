@@ -1,9 +1,9 @@
 {
   "name": "iceworks-time-steward",
-  "displayName": "Iceworks Time Steward",
+  "displayName": "Iceworks Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.0
+
+- chore: rename to Time Master
+
 ## 0.1.6
 
 - chore: Sets the extension to be flagged as a Preview in the Marketplace
