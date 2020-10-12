@@ -2,7 +2,7 @@
 
 ## 0.12.0
 
-- feat: add Time Masters
+- chore: rename extensions
 
 ## 0.11.0
 
