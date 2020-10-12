@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.zh-CN.md)
 
-# Iceworks Application Viewer
+# Application Explorer
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-app.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-app.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-app)
@@ -13,7 +13,7 @@ Preview and manage your application from a framework perspective, including npm 
 
 ### Initialize panel
 
-After you install the Iceworks-APP plugin, an `Iceworks` icon will be added to your activity bar. Click it to enter Iceworks panel.
+After you install the Application Explorer, an icon will be added to your activity bar. Click it to enter Application Explorer panel.
 
 The initialization panel appears if your current workspace is empty or **isn't React/Rax application**.
 
@@ -34,9 +34,9 @@ When you open an empty folder, the initialization panel automatically invokes th
 3. Configure default image source (default: Taobao image)
 4. Set up custom repositories (default: null)
 
-### Iceworks panel
+### Application Explorer Panel
 
-When your workspace is a React or Rax application, the Iceworks panel appears.
+When your workspace is a React or Rax application, the Application Explorer Panel appears.
 
 #### View and execute npm Scripts
 
@@ -55,7 +55,7 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 1. Click items in PAGES and COMPONENTS on the left panel.
 2. Jump into files of selected projects.
 
-#### Activate Generate Page and Create Component(See [Iceworks UI Builder](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
+#### Activate Generate Page and Create Component(See [UI Designer](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder))
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
@@ -70,21 +70,21 @@ When your workspace is a React or Rax application, the Iceworks panel appears.
 
 1. View all  installed dependencies in the project in NODE DEPENDENCIES in the bottom of ICE panel.
 2. Click `⬆` button next to dependency item,  you can update  the dependency to the latest version.
-3. Click `Reinstall Dependencies` button on  NODE DEPENDENCIES header to reinstall all the dependencisce of the project.
+3. Click `Reinstall Dependencies` button on  NODE DEPENDENCIES header to reinstall all the dependencies of the project.
 
 #### Install and reinstall dependencies
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
 
 1. Click the `+` button on the NODE DEPENDENCIES header.
-2. Select Install product Dependency or Debug Devdependency on the command panel that appears.
+2. Select Install product Dependency or Debug DevDependency on the command panel that appears.
 3. Type the npm package name and version information to be installed, such as' `typescript@latest`.
 4. The npm package will be installed automatically.
    NOTE: If the package was installed, it will be reinstalled.
 
-## Iceworks command palette
+## Command Palette
 
-If you install [Iceworks suite](https://marketplace.visualstudio.com/items?ItemName=iceWorks-team.iceWorks), you can activate other extensions in VS Code command palette.
+If you install [Iceworks](https://marketplace.visualstudio.com/items?ItemName=iceworks-team.iceworks), you can activate other extensions in VS Code command palette.
 
 ![demo](https://user-images.githubusercontent.com/56879942/87544740-8d5b5f80-c6d9-11ea-85ff-bc31501911e1.gif)
 
@@ -100,4 +100,4 @@ For more information, please see [Reference Document](https://github.com/ice-lab
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

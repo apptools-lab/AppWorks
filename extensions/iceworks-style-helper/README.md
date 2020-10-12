@@ -81,4 +81,4 @@ Use `cmd + click`  (Windows: `ctrl + click`) jump to the variable identifier und
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

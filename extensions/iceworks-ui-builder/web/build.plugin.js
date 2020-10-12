@@ -6,7 +6,7 @@ module.exports = ({ onGetWebpackConfig }) => {
     config
       .plugin('monaco-editor')
       .use(MonacoWebpackPlugin, [{
-        languages: ['json', 'javascript']
+        languages: ['json', 'javascript'],
       }]);
   });
 };

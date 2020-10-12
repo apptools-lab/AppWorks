@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.15
+
+- chore: change extension name
+
 ## 0.3.14
 
 - feat: custom material sources will be at first in the material sources list

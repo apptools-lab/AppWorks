@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.7
+
+- chore: change extension name
+
 ## 0.3.6
 
 - fix: compatible with scenarios without material source

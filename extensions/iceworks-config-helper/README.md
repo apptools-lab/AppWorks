@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-config-helper/README.zh-CN.md)
 
-# Iceworks Config Helper
+# Config Helper
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-config-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-config-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-config-helper)
@@ -15,7 +15,7 @@ For [icejs](https://ice.work/)(& [rax-app](https://rax.js.org/)) configuration f
 
 Visually edit the configuration file through the palette.
 
-### Activite
+### Activate
 
 #### Active In Side Bar
 
@@ -62,4 +62,4 @@ Quickly locate the source file of panel and open an editor of sourceFile.
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

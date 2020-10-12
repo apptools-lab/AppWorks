@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.md)
 
-# Iceworks 可视化搭建插件
+# 可视化搭建插件
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
@@ -65,7 +65,7 @@
 
 ## 下载远程物料到本地
 
-Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质量物料，通过选择物料快速创建前端组件。
+为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质量物料，通过选择物料快速创建前端组件。
 
 ### 激活
 
@@ -80,6 +80,34 @@ Iceworks 为 React 和 [Rax](https://rax.js.org/) 应用提供了海量的高质
 
 ![下载远程物料到本地](https://img.alicdn.com/tfs/TB1_UQvfiDsXe8jSZR0XXXK6FXa-1440-900.gif)
 
+## 调试物料
+
+Iceworks 为物料开发者提供了本地调试的功能。
+
+### 激活
+
+![激活](https://user-images.githubusercontent.com/56879942/95042213-c10fb980-070b-11eb-8e4c-0193e026b8ee.gif)
+
+1. 通过 `⇧⌘P` ( MacOS ) 或 `Ctrl+Shift+p` ( Windows ) 快捷键唤起命令面板；
+2. 输入 `Iceworks: 调试本地物料项目` 开启调试。
+
+### 使用
+
+#### 调试本地物料项目
+
+![调试本地物料项目](https://user-images.githubusercontent.com/56879942/95042215-c2d97d00-070b-11eb-8698-a4ae04136dbf.gif)
+
+1. 选择 `添加一个本地物料项目到调试列表`；
+2. 选择需要调试的物料项目文件夹，点击 `开始调试`；
+3. 使用物料功能，例如：`通过配置模板生成页面`，选择本地物料源进行调试。
+
+#### 清除调试的物料源
+
+![清除调试的物料源](https://user-images.githubusercontent.com/56879942/95042192-b7865180-070b-11eb-83de-50ad3af29b4a.gif)
+
+1. 选择 `清除调试的物料源`；
+2. 所有调试物料源均被删除。
+
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "build",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noImplicitAny": false
   },
   "include": ["src"],
   "exclude": [".vscode-test", "web"]

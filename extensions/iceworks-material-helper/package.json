@@ -3,7 +3,7 @@
   "displayName": "React Component Helper",
   "description": "Easily use Component in React/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -18,7 +18,8 @@
     "React",
     "JSX",
     "Component",
-    "Props"
+    "Props",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/material-service",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Iceworks material service for VSCode extension.",
   "files": [
     "lib"
@@ -13,7 +13,14 @@
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/project-service": "^0.1.4",
     "axios": "^0.19.2",
+    "bluebird": "^3.7.2",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "image-to-base64": "^2.1.0",
     "lodash.kebabcase": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.41.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-ui-builder/README.zh-CN.md)
 
-# Iceworks UI Builder
+# UI Designer
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-ui-builder.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-ui-builder.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-ui-builder)
@@ -65,7 +65,7 @@ Create the page by visual configuration
 
 ## Create Component
 
-Iceworks provides a huge amount of high quality materials for React and [Rax](https://rax.js.org/) apps. You can select materials to create components.
+Provides a huge amount of high quality materials for React and [Rax](https://rax.js.org/) apps. You can select materials to create components.
 
 ### Activate
 
@@ -80,6 +80,34 @@ Iceworks provides a huge amount of high quality materials for React and [Rax](ht
 
 ![create-component](https://img.alicdn.com/tfs/TB1_UQvfiDsXe8jSZR0XXXK6FXa-1440-900.gif)
 
+## Debug materials
+
+Iceworks provides local debugging capabilities for materials.
+
+### Activate
+
+![activate](https://user-images.githubusercontent.com/56879942/95042198-bb19d880-070b-11eb-95fd-bfc778c55a5f.gif)
+
+1. Open vscode command palette  by `Ctrl+Shift+P` or `⇧⌘P` .
+2. In the command palette, type `Iceworks: Debug Materials in Program` and click on the selected item or press enter on the keyboard to evoke page-builder extension.
+
+### Usage
+
+#### Debug local material projects
+
+![debug-local-mateirlas](https://user-images.githubusercontent.com/56879942/95042207-bead5f80-070b-11eb-8828-28d3adc2b137.gif)
+
+1. Select `Add a debug material source`;
+2. Select the material project folder to be debugged, and click `Debug Materials`;
+3. Use material functions, such as `Generate Page by Configuration`, select local material source for debugging.
+
+#### Clear debug material sources
+
+![clear-debug-material-sources](https://user-images.githubusercontent.com/56879942/95042184-afc6ad00-070b-11eb-98be-21c65f292c40.gif)
+
+1. Select `Clear Debug Material Sources`；
+2. All debug material sources will be removed。
+
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.19
+
+- chore: change extension name
+
 ## 0.1.18
 
 - feat: add code editor for page template

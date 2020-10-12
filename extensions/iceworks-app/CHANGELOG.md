@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.5
+
+- chore: change extension name
+
 ## 0.5.4
 
 - chore: sorting of quick entry
