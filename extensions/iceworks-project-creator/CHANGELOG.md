@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.15
+
+- fix: material sources display duplicated
+- fix: scaffold is empty
+
 ## 0.3.14
 
 - feat: custom material sources will be at first in the material sources list

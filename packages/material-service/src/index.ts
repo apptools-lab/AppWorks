@@ -63,7 +63,7 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 };
 
-export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
+export const getOfficalMaterialSources = () => [].concat(OFFICAL_MATERIAL_SOURCES);
 
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 
