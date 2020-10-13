@@ -3,6 +3,7 @@
 ## 0.3.15
 
 - fix: material sources display duplicated
+- fix: scaffold is empty
 
 ## 0.3.14
 
