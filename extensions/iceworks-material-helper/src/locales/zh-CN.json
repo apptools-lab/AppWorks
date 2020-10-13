@@ -6,5 +6,16 @@
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "展示所有的组件",
   "extension.iceworksMaterialHelper.getHoverItem.hoverItemLink": "[<%= componentName %> 文档](<%= commandUri %>)",
   "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "你必须先安装 「Browser Preview」插件 才能在 VS Code 中打开文档。",
-  "extension.iceworksMaterialHelper.extension.start.errorMessage": "打开添加组件面板失败。请先打开代码文件。"
+  "extension.iceworksMaterialHelper.extension.start.errorMessage": "打开添加组件面板失败。请先打开代码文件。",
+  "extension.iceworksComponentBuilder.extension.webviewTitle": "下载区块物料到本地 - Iceworks",
+  "extension.iceworksPageBuilder.extensnion.webViewTitle": "使用区块组装页面 - Iceworks",
+  "extension.iceworksPageCreator.extensnion.webViewTitle": "使用模板生成页面 - Iceworks",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.label": "添加一个本地物料项目到调试列表",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.detail": "选择本地的物料项目文件夹",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.label": "清除调试物料源",
+  "extension.iceworksUIBuilder.debugMaterial.deleteMaterial.detail": "在物料源列表中清除所有的本地物料项目",
+  "extension.iceworksUIBuilder.debugMaterial.addMaterial.openLabel": "调试物料",
+  "extension.iceworksUIBuilder.initDebug.err": "初始化物料调试失败： <%= errMessage %>",
+  "extension.iceworksUIBuilder.debugInput.addSourceSuccess": "添加调试物料项目成功",
+  "extension.iceworksUIBuilder.debugInput.deleteSourceSuccess": "删除调试物料项目成功"
 }

@@ -1,7 +1,15 @@
 {
-  "iceworksMaterialHelper.commands.start.title": "Iceworks: Import Material",
+  "iceworksMaterialHelper.commands.materialImporter.start.title": "Iceworks: Import Material",
+  "iceworksMaterialHelper.commands.componentCreator.start.title": "Iceworks: Download Component Materials",
+  "iceworksMaterialHelper.commands.pageGenerator.start.title": "Iceworks: Generate Page by Blocks",
+  "iceworksMaterialHelper.commands.pageCreator.start.title": "Iceworks: Generate Page by Configuration",
+  "iceworksMaterialHelper.commands.debugMaterials.start.title": "Iceworks: Debug Local Material Project",
   "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: Find Component",
   "iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title": "Iceworks: Find Components In Current File",
   "iceworksMaterialHelper.configuration.openInBrowserDescription": "Whether open doc url inside VSCode, this function relys on 「Browser Preview」 extension，you need to install it manually before you can use this function",
-  "iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use."
+  "iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use.",
+  "iceworksMaterialHelper.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
+  "iceworksMaterialHelper.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
+  "iceworksMaterialHelper.configuration.properties.iceworks.generatePagePath.description": "Application pages directory. The default directory is `src/pages`.",
+  "iceworksMaterialHelper.configuration.properties.iceworks.generateComponentPath.description": "Application components directory. The default directory is `src/components`."
 }

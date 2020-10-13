@@ -56,7 +56,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.detail'),
-    command: 'iceworks-material-helper.start',
+    command: 'iceworks-material-helper.material-importer.start',
     async condition() {
       return !(await checkIsNotTarget());
     },

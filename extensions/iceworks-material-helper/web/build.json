@@ -2,6 +2,7 @@
   "devServer": {
     "writeToDisk": true
   },
+  "mpa": true,
   "publicPath": "./",
   "outputDir": "../build",
   "plugins": [

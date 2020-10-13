@@ -7,7 +7,7 @@ import { useIntl } from 'react-intl';
 import styles from './index.module.scss';
 import { LocaleProvider } from '../../i18n';
 
-const MaterialsPane: React.FC<any> = () => {
+const Home: React.FC<any> = () => {
   const intl = useIntl();
   async function onSettingsClick() {
     try {
@@ -87,12 +87,12 @@ const MaterialsPane: React.FC<any> = () => {
   );
 };
 
-export const IntlMaterialPane = () => {
+export const IntlHome = () => {
   return (
     <LocaleProvider>
-      <MaterialsPane />
+      <Home />
     </LocaleProvider>
   );
 };
 
-export default IntlMaterialPane;
+export default IntlHome;

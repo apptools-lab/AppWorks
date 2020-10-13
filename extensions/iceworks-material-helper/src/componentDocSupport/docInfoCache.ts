@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import { IMaterialData, IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
-import { getSourcesByProjectType, getData } from '@iceworks/material-service';
+import { getSourcesByProjectType, getData } from '@iceworks/material-engine/lib/material';
 import { window } from 'vscode';
 import { IComponentDocInfo } from './type';
 import openInBrowser from './openInBowser';
@@ -9,6 +9,7 @@ import services from '../services';
 
 let loading = true;
 let docInfoCache: IComponentDocInfo[] = [];
+
 export function getDocInfos(): IComponentDocInfo[] {
   if (!loading) {
     return docInfoCache;

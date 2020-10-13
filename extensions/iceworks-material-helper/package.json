@@ -27,13 +27,32 @@
     "onLanguage:javascriptreact",
     "onLanguage:typescript",
     "onLanguage:typescriptreact",
-    "onCommand:iceworks-material-helper.start"
+    "onCommand:iceworks-material-helper.material-importer.start",
+    "onCommand:iceworks-material-helper.component-creator.start",
+    "onCommand:iceworks-material-helper.page-generator.start",
+    "onCommand:iceworks-material-helper.page-creator.start"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-material-helper.start",
-        "title": "%iceworksMaterialHelper.commands.start.title%"
+        "command": "iceworks-material-helper.material-importer.start",
+        "title": "%iceworksMaterialHelper.commands.materialImporter.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper.component-creator.start",
+        "title": "%iceworksMaterialHelper.commands.componentCreator.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper.page-generator.start",
+        "title": "%iceworksMaterialHelper.commands.pageGenerator.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper.page-creator.start",
+        "title": "%iceworksMaterialHelper.commands.pageCreator.start.title%"
+      },
+      {
+        "command": "iceworks-material-helper.debug-materials.start",
+        "title": "%iceworksMaterialHelper.commands.debugMaterials.start.title%"
       },
       {
         "command": "iceworks-material-helper.showMaterialDocs",
@@ -47,7 +66,7 @@
     "menus": {
       "editor/context": [
         {
-          "command": "iceworks-material-helper.start",
+          "command": "iceworks-material-helper.material-importer.start",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
         },
@@ -94,6 +113,36 @@
             }
           },
           "default": []
+        },
+        "iceworks.packageManager": {
+          "type": "string",
+          "default": "npm",
+          "enum": [
+            "npm",
+            "cnpm",
+            "tnpm",
+            "yarn"
+          ],
+          "description": "%iceworksMaterialHelper.configuration.properties.iceworks.packageManager.description%"
+        },
+        "iceworks.npmRegistry": {
+          "type": "string",
+          "default": "https://registry.npm.taobao.org",
+          "enum": [
+            "https://registry.npmjs.org",
+            "https://registry.npm.taobao.org"
+          ],
+          "description": "%iceworksMaterialHelper.configuration.properties.iceworks.npmRegistry.description%"
+        },
+        "iceworks.generatePagePath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksMaterialHelper.configuration.properties.iceworks.generatePagePath.description%"
+        },
+        "iceworks.generateComponentPath": {
+          "type": "string",
+          "default": "",
+          "description": "%iceworksMaterialHelper.configuration.properties.iceworks.generateComponentPath.description%"
         }
       }
     }

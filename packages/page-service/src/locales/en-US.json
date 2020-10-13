@@ -1,3 +1,0 @@
-{
-  "package.pageService.index.pagePathExistError": "Page folder「<%= name %>」 exists，please enter a new page name。"
-}
