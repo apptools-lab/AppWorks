@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       materialImporterWebviewPanel = window.createWebviewPanel(
         'Iceworks',
-        i18n.format('extension.iceworksMaterialHelper.extension.title'),
+        i18n.format('extension.iceworksMaterialHelper.materailImporter.title'),
         { viewColumn: columnToShowIn, preserveFocus: true },
         {
           enableScripts: true,
@@ -74,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
   function activeComponentCreatorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
       'iceworks',
-      i18n.format('extension.iceworksComponentBuilder.extension.webviewTitle'),
+      i18n.format('extension.iceworksMaterialHelper.componentCreator.webviewTitle'),
       ViewColumn.One,
       {
         enableScripts: true,
@@ -93,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
   function activePageGeneratorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
       'iceworks',
-      i18n.format('extension.iceworksPageBuilder.extensnion.webViewTitle'),
+      i18n.format('extension.iceworksMaterialHelper.pageGenerator.webViewTitle'),
       ViewColumn.One,
       {
         enableScripts: true,
@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
   function activePageCreatorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
       'iceworks',
-      i18n.format('extension.iceworksPageCreator.extensnion.webViewTitle'),
+      i18n.format('extension.iceworksMaterialHelper.pageCreator.webViewTitle'),
       ViewColumn.One,
       {
         enableScripts: true,

@@ -53,7 +53,7 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
       ) : (
         <div className={styles.empty}>
           <img src="https://img.alicdn.com/tfs/TB1yGn2mYZnBKNjSZFrXXaRLFXa-182-149.png" alt="Block" />
-          <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.PageSelect.SelectFromRight" />
+          <FormattedMessage id="web.iceworksMaterialHelper.pageGenerater.PageSelect.SelectFromRight" />
         </div>
       )}
     </div>

@@ -26,7 +26,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getMaterialError' }),
       });
     }
     return sources;
@@ -43,7 +43,7 @@ const Home = () => {
       data = await callService('material', 'getData', source);
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }),
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getDataError' }),
       });
     }
     console.log('getData', data);
@@ -52,10 +52,10 @@ const Home = () => {
 
   function validateData({ block, componentName: name }) {
     if (!name) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.noComponentName' });
+      return intl.formatMessage({ id: 'web.iceworksMaterialHelper.componentCreator.noComponentName' });
     }
     if (!block) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.didNotSeletBlock' });
+      return intl.formatMessage({ id: 'web.iceworksMaterialHelper.componentCreator.didNotSeletBlock' });
     }
     return '';
   }
@@ -101,12 +101,12 @@ const Home = () => {
     setIsCreating(false);
     resetData();
 
-    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.componentCreator.openFile' });
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksMaterialHelper.componentCreator.openFile' });
     const selectedAction = await callService(
       'common',
       'showInformationMessage',
       intl.formatMessage(
-        { id: 'web.iceworksUIBuilder.componentCreator.successCreateToPath' },
+        { id: 'web.iceworksMaterialHelper.componentCreator.successCreateToPath' },
         { path: blockIndexPath },
       ),
       openFileAction,
@@ -120,12 +120,12 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.componentCreator.inputComponentName" />
+            <FormattedMessage id="web.iceworksMaterialHelper.componentCreator.inputComponentName" />
           </div>
           <div className={styles.field}>
             <Input
               placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.inputComponentNamePlaceHolder',
+                id: 'web.iceworksMaterialHelper.inputComponentNamePlaceHolder',
               })}
               className={styles.pageNameInput}
               value={componentName}
@@ -136,7 +136,7 @@ const Home = () => {
         </div>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.componentCreator.selectBlock" />
+            <FormattedMessage id="web.iceworksMaterialHelper.componentCreator.selectBlock" />
           </div>
           <div className={styles.select}>
             <Material
@@ -154,7 +154,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={isCreating} onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.componentCreator.generateComponent" />
+          <FormattedMessage id="web.iceworksMaterialHelper.componentCreator.generateComponent" />
         </Button>
       </div>
     </div>

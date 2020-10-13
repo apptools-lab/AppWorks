@@ -123,15 +123,15 @@ export default ({
     setVisible(false);
     resetData();
 
-    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.openFile' });
     const selectedAction = await callService(
       'common',
       'showInformationMessage',
       intl.formatMessage(
         {
           id: pageIndexPath
-            ? 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath'
-            : 'web.iceworksUIBuilder.pageGenerater.successCreatePage',
+            ? 'web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath'
+            : 'web.iceworksMaterialHelper.pageGenerater.successCreatePage',
         },
         { path: pageIndexPath },
       ),
@@ -157,11 +157,11 @@ export default ({
       ) : (
         <>
           <h3>
-            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultTitle' })}
+            {templateSchema.title || intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageCreator.defaultTitle' })}
           </h3>
           <p>
             {templateSchema.description ||
-              intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.defaultDescription' })}
+                intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageCreator.defaultDescription' })}
           </p>
           <SchemaForm
             components={tmpComponents}
@@ -172,7 +172,7 @@ export default ({
           >
             <div className={styles.opts}>
               <Reset type="primary" className={styles.btn}>
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.reset" />
+                <FormattedMessage id="web.iceworksMaterialHelper.pageCreator.reset" />
               </Reset>
               <Button
                 type="primary"
@@ -181,10 +181,10 @@ export default ({
                 }}
                 className={styles.btn}
               >
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.previous" />
+                <FormattedMessage id="web.iceworksMaterialHelper.pageCreator.previous" />
               </Button>
               <Submit type="primary" className={styles.btn}>
-                <FormattedMessage id="web.iceworksUIBuilder.pageCreator.createPage" />
+                <FormattedMessage id="web.iceworksMaterialHelper.pageCreator.createPage" />
               </Submit>
             </div>
             <RouterDetailForm

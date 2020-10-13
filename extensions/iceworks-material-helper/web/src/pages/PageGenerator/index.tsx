@@ -28,7 +28,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getMaterialError' }),
       });
     }
     return sources;
@@ -44,7 +44,7 @@ const Home = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getDataError' }) });
     }
     console.log('getData', data);
     return data;
@@ -52,7 +52,7 @@ const Home = () => {
 
   function validateData({ blocks }) {
     if (!blocks.length) {
-      return intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.selectBlocks' });
+      return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
     }
     return '';
   }
@@ -160,12 +160,12 @@ const Home = () => {
     setIsCreating(false);
     setVisible(false);
     resetData();
-    const openFileAction = intl.formatMessage({ id: 'web.iceworksUIBuilder.pageGenerater.openFile' });
+    const openFileAction = intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.openFile' });
     const selectedAction = await callService(
       'common',
       'showInformationMessage',
       intl.formatMessage(
-        { id: 'web.iceworksUIBuilder.pageGenerater.successCreatePageToPath' },
+        { id: 'web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath' },
         { path: pageIndexPath },
       ),
       openFileAction,
@@ -178,7 +178,7 @@ const Home = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
-        <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.chooseBlock" />
+        <FormattedMessage id="web.iceworksMaterialHelper.pageGenerater.chooseBlock" />
       </div>
       <div className={styles.field}>
         <Row gutter={24} className={styles.row}>
@@ -212,7 +212,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksUIBuilder.pageGenerater.createPage" />
+          <FormattedMessage id="web.iceworksMaterialHelper.pageGenerater.createPage" />
         </Button>
       </div>
       <RouterDetailForm

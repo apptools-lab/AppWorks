@@ -44,7 +44,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         layoutMenuTypes.push({
           value: 'asideMenuConfig',
           label: intl.formatMessage({
-            id: 'web.iceworksUIBuilder.RouterDetailForm.asideMenuConfig.label',
+            id: 'web.iceworksMaterialHelper.RouterDetailForm.asideMenuConfig.label',
           }),
         });
       }
@@ -52,7 +52,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         layoutMenuTypes.push({
           value: 'headerMenuConfig',
           label: intl.formatMessage({
-            id: 'web.iceworksUIBuilder.RouterDetailForm.headerMenuConfig.label',
+            id: 'web.iceworksMaterialHelper.RouterDetailForm.headerMenuConfig.label',
           }),
         });
       }
@@ -76,17 +76,17 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
       <Form field={field} fullWidth className={styles.form}>
         <Form.Item
           label={intl.formatMessage({
-            id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.label',
+            id: 'web.iceworksMaterialHelper.RouterDetailForm.pageName.label',
           })}
           required
           requiredMessage={intl.formatMessage({
-            id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.requiredMessage',
+            id: 'web.iceworksMaterialHelper.RouterDetailForm.pageName.requiredMessage',
           })}
         >
           <Input
             name="pageName"
             placeholder={intl.formatMessage({
-              id: 'web.iceworksUIBuilder.RouterDetailForm.pageName.placeholder',
+              id: 'web.iceworksMaterialHelper.RouterDetailForm.pageName.placeholder',
             })}
             disabled={isCreating}
           />
@@ -94,17 +94,17 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         {isConfigurableRouter && (
           <Form.Item
             label={intl.formatMessage({
-              id: 'web.iceworksUIBuilder.RouterDetailForm.path.label',
+              id: 'web.iceworksMaterialHelper.RouterDetailForm.path.label',
             })}
             required
             requiredMessage={intl.formatMessage({
-              id: 'web.iceworksUIBuilder.RouterDetailForm.path.requiredMessage',
+              id: 'web.iceworksMaterialHelper.RouterDetailForm.path.requiredMessage',
             })}
           >
             <Input
               name="path"
               placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.RouterDetailForm.path.placeholder',
+                id: 'web.iceworksMaterialHelper.RouterDetailForm.path.placeholder',
               })}
               disabled={isCreating}
             />
@@ -113,17 +113,17 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
         {isConfigurableRouter && !!includedChildrenRouterConfig.length && (
           <Form.Item
             label={intl.formatMessage({
-              id: 'web.iceworksUIBuilder.RouterDetailForm.parent.label',
+              id: 'web.iceworksMaterialHelper.RouterDetailForm.parent.label',
             })}
             required
             requiredMessage={intl.formatMessage({
-              id: 'web.iceworksUIBuilder.RouterDetailForm.parent.requiredMessage',
+              id: 'web.iceworksMaterialHelper.RouterDetailForm.parent.requiredMessage',
             })}
           >
             <Select
               name="parent"
               placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.RouterDetailForm.parent.placeholder',
+                id: 'web.iceworksMaterialHelper.RouterDetailForm.parent.placeholder',
               })}
               disabled={isCreating}
               onChange={onLayoutChange}
@@ -138,9 +138,9 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
           <Form.Item
             label={
               <span>
-                <FormattedMessage id="web.iceworksUIBuilder.RouterDetailForm.menuType.label" />
+                <FormattedMessage id="web.iceworksMaterialHelper.RouterDetailForm.menuType.label" />
                 <Balloon type="primary" trigger={<Icon type="help" size="small" className={styles.helpIcon} />} closable={false}>
-                  <FormattedMessage id="web.iceworksUIBuilder.RouterDetailForm.menuType.helpMessage" />
+                  <FormattedMessage id="web.iceworksMaterialHelper.RouterDetailForm.menuType.helpMessage" />
                 </Balloon>
               </span>
             }
@@ -148,7 +148,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
             <Select
               name="menuType"
               placeholder={intl.formatMessage({
-                id: 'web.iceworksUIBuilder.RouterDetailForm.menuType.placeholder',
+                id: 'web.iceworksMaterialHelper.RouterDetailForm.menuType.placeholder',
               })}
               disabled={isCreating}
             >

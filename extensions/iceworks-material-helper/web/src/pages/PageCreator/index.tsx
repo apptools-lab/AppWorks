@@ -22,7 +22,7 @@ const Home = () => {
       <div className={styles.list}>
         <div className={styles.item}>
           <div className={styles.label}>
-            <FormattedMessage id="web.iceworksUIBuilder.pageCreator.selectPage" />
+            <FormattedMessage id="web.iceworksMaterialHelper.pageCreator.selectPage" />
           </div>
           <div className={styles.select}>
             <Material
@@ -40,7 +40,7 @@ const Home = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" loading={downloading} onClick={getConfigPage} disabled={nextBtnDisabled}>
-          <FormattedMessage id="web.iceworksUIBuilder.pageCreator.next" />
+          <FormattedMessage id="web.iceworksMaterialHelper.pageCreator.next" />
         </Button>
       </div>
     </>,
@@ -73,7 +73,7 @@ const Home = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getMaterialError' }),
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getMaterialError' }),
       });
     }
     return sources;
@@ -96,7 +96,7 @@ const Home = () => {
       }
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksUIBuilder.getDataError' }),
+        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getDataError' }),
       });
     }
     return data;
@@ -115,7 +115,7 @@ const Home = () => {
       };
 
       if (data.page.length < 1) {
-        throw new Error(intl.formatMessage({ id: 'web.iceworksUIBuilder.pageCreator.didNotSeletPage' }));
+        throw new Error(intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageCreator.didNotSeletPage' }));
       }
       const templateConfig = await callService('page', 'getTemplateSchema', selectedPage);
       setSchema(templateConfig.schema);
