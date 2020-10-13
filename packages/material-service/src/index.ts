@@ -87,7 +87,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = getUserSources();
-  sources.unshift(...userSources);
+  sources = [...userSources, ...sources];
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
