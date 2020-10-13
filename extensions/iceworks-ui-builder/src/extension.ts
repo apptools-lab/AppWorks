@@ -4,7 +4,6 @@ import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
-import { registerDebugCommand } from './debugMaterials';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
@@ -52,63 +51,6 @@ export function activate(context: vscode.ExtensionContext) {
       activeComponentGeneratorWebview();
     }),
   );
-
-  function activeComponentCreatorWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
-      'iceworks',
-      i18n.format('extension.iceworksComponentBuilder.extension.webviewTitle'),
-      ViewColumn.One,
-      {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      },
-    );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
-    connectService(webviewPanel, context, { services, recorder });
-  }
-  subscriptions.push(
-    registerCommand('iceworks-ui-builder.create-component', () => {
-      activeComponentCreatorWebview();
-    }),
-  );
-
-  function activePageGeneraterWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
-      'iceworks',
-      i18n.format('extension.iceworksPageBuilder.extensnion.webViewTitle'),
-      ViewColumn.One,
-      {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      },
-    );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerater', true);
-    connectService(webviewPanel, context, { services, recorder });
-  }
-  subscriptions.push(
-    registerCommand('iceworks-ui-builder.generate-page', () => {
-      activePageGeneraterWebview();
-    }),
-  );
-  function activePageCreatorWebview() {
-    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
-      'iceworks',
-      i18n.format('extension.iceworksPageCreator.extensnion.webViewTitle'),
-      ViewColumn.One,
-      {
-        enableScripts: true,
-        retainContextWhenHidden: true,
-      },
-    );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
-    connectService(webviewPanel, context, { services, recorder });
-  }
-  subscriptions.push(
-    registerCommand('iceworks-ui-builder.create-page', () => {
-      activePageCreatorWebview();
-    }),
-  );
-  registerDebugCommand(subscriptions);
 }
 
 export function deactivate() { }
