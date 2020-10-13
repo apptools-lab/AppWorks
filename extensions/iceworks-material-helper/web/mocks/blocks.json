@@ -1,0 +1,62 @@
+[	
+  {	
+    "name": "AdvancedDetailHead",	
+    "title": "AdvancedDetailHead",	
+    "category": "Information",	
+    "views": [	
+      {	
+        "title": "",	
+        "props": {},	
+        "screenshot": "build/views/block_view1.png",	
+        "html": "build/views/block_view1.html"	
+      }	
+    ],	
+    "screenshot": "https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png",	
+    "description": "intro block",	
+    "homepage": "https://unpkg.com/@alifd/fusion-advanced-detail@0.1.9/build/index.html",	
+    "categories": ["Information"],	
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/blocks/AdvancedDetail",	
+    "source": {	
+      "type": "npm",	
+      "npm": "@alifd/fusion-advanced-detail",	
+      "version": "0.1.9",	
+      "registry": "https://registry.npmjs.org"	
+    },	
+    "dependencies": {	
+      "prop-types": "^15.5.8"	
+    },	
+    "screenshots": ["https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png"],	
+    "publishTime": "2019-11-28T11:30:32.213Z",	
+    "updateTime": "2020-03-31T12:36:39.300Z"	
+  },	
+  {	
+    "name": "BasicDetail",	
+    "title": "BasicDetail",	
+    "category": "Information",	
+    "views": [	
+      {	
+        "title": "",	
+        "props": {},	
+        "screenshot": "build/views/block_view1.png",	
+        "html": "build/views/block_view1.html"	
+      }	
+    ],	
+    "screenshot": "https://unpkg.com/@alifd/fusion-basic-detail/screenshot.png",	
+    "description": "intro block",	
+    "homepage": "https://unpkg.com/@alifd/fusion-basic-detail@0.1.7/build/index.html",	
+    "categories": ["Information"],	
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/blocks/BasicDetail",	
+    "source": {	
+      "type": "npm",	
+      "npm": "@alifd/fusion-basic-detail",	
+      "version": "0.1.7",	
+      "registry": "https://registry.npmjs.org"	
+    },	
+    "dependencies": {	
+      "prop-types": "^15.5.8"	
+    },	
+    "screenshots": ["https://unpkg.com/@alifd/fusion-basic-detail/screenshot.png"],	
+    "publishTime": "2019-11-28T11:38:31.720Z",	
+    "updateTime": "2020-03-31T12:52:50.478Z"	
+  }	
+]

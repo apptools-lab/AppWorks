@@ -1,0 +1,510 @@
+{	
+  "schema": {	
+    "type": "object",	
+    "x-component-props": {	
+      "size": "medium",	
+      "labelAlign": "top",	
+      "labelCol": 7,	
+      "wrapperCol": 12	
+    },	
+    "properties": {	
+      "invisible": {	
+        "key": "bb",	
+        "type": "string",	
+        "name": "bb",	
+        "visible": false,	
+        "title": "不可见的属性",	
+        "x-component": "input"	
+      },	
+      "boolean": {	
+        "type": "boolean",	
+        "title": "布尔值"	
+      },	
+      "string": {	
+        "type": "string",	
+        "title": "字符串",	
+        "description": "描述",	
+        "x-component": "Input"	
+      },	
+      "number": {	
+        "type": "number",	
+        "title": "数字"	
+      },	
+      "select": {	
+        "type": "string",	
+        "title": "下拉选择",	
+        "enum": [1, 2, 3, 4]	
+      },	
+      "selectWithValue": {	
+        "key": "aa",	
+        "type": "string",	
+        "enum": [	
+          {	
+            "label": "visible",	
+            "value": true,	
+            "otherInfo": "123"	
+          },	
+          {	
+            "label": "hidden",	
+            "value": false,	
+            "otherInfo": "321"	
+          }	
+        ],	
+        "default": false,	
+        "name": "aa",	
+        "title": "enum",	
+        "x-component": "select"	
+      },	
+      "daterange": {	
+        "type": "daterange",	
+        "title": "日期选择"	
+      },	
+      "time": {	
+        "type": "time",	
+        "title": "时间选择"	
+      },	
+      "object": {	
+        "type": "object",	
+        "title": "对象",	
+        "required": ["name"],	
+        "properties": {	
+          "name": {	
+            "type": "string",	
+            "title": "姓名"	
+          },	
+          "age": {	
+            "type": "number",	
+            "title": "年龄"	
+          }	
+        }	
+      },	
+      "uri": {	
+        "key": "uri",	
+        "x-component": "input",	
+        "type": "string",	
+        "title": "带有提示的输入框",	
+        "x-component-props": {	
+          "placeholder": "place holder",	
+          "addonTextBefore": "",	
+          "addonTextAfter": ""	
+        },	
+        "children": []	
+      },	
+      "formatter": {	
+        "key": "formatter",	
+        "x-component": "input",	
+        "type": "string",	
+        "title": "带有格式化的输入框",	
+        "x-component-props": {	
+          "placeholder": "",	
+          "addonTextBefore": "",	
+          "addonTextAfter": "",	
+          "trim": true,	
+          "hasClear": true	
+        },	
+        "children": []	
+      },	
+      "password": {	
+        "key": "password",	
+        "type": "password",	
+        "name": "password",	
+        "title": "带密码级别的组件",	
+        "x-props": {	
+          "checkStrength": true	
+        }	
+      },	
+      "array": {	
+        "type": "array",	
+        "title": "简单数组",	
+        "x-component": "arraytable",	
+        "items": {	
+          "type": "object",	
+          "properties": {	
+            "string": {	
+              "type": "string",	
+              "title": "字符串"	
+            }	
+          }	
+        }	
+      },	
+      "actionSchema": {	
+        "key": "actionSchema",	
+        "x-component": "arraytable",	
+        "type": "array",	
+        "title": "带有嵌套对象的列表",	
+        "children": [	
+          {	
+            "type": "object",	
+            "properties": {	
+              "buttonText": {	
+                "x-component": "input",	
+                "type": "string",	
+                "title": "按钮文本",	
+                "key": "buttonText",	
+                "x-component-props": {	
+                  "placeholder": "",	
+                  "addonTextBefore": "",	
+                  "addonTextAfter": "",	
+                  "trim": true,	
+                  "hasClear": true	
+                },	
+                "x-rules": []	
+              },	
+              "buttonProps": {	
+                "type": "object",	
+                "key": "buttonProps",	
+                "title": "按钮属性",	
+                "x-component-props": {	
+                  "size": "medium",	
+                  "labelAlign": "left",	
+                  "labelTextAlign": "right",	
+                  "labelCol": 7,	
+                  "wrapperCol": 12	
+                },	
+                "properties": {	
+                  "stringProp": {	
+                    "type": "string"	
+                  },	
+                  "numberProp": {	
+                    "type": "number"	
+                  }	
+                },	
+                "x-rules": []	
+              },	
+              "onClick": {	
+                "x-component": "input",	
+                "type": "string",	
+                "key": "onClick",	
+                "title": "点击动作",	
+                "x-index": 2,	
+                "x-component-props": {	
+                  "placeholder": "",	
+                  "addonTextBefore": "",	
+                  "addonTextAfter": "",	
+                  "trim": true,	
+                  "hasClear": true	
+                },	
+                "x-rules": []	
+              }	
+            }	
+          }	
+        ],	
+        "x-component-props": {	
+          "renderAddition": "添加",	
+          "renderRemove": "删除",	
+          "renderEmpty": "暂无数据"	
+        },	
+        "x-rules": [],	
+        "items": {	
+          "type": "object",	
+          "children": [	
+            {	
+              "x-component": "input",	
+              "type": "string",	
+              "title": "按钮文本",	
+              "key": "buttonText",	
+              "x-component-props": {	
+                "placeholder": "",	
+                "addonTextBefore": "",	
+                "addonTextAfter": "",	
+                "trim": true,	
+                "hasClear": true	
+              },	
+              "x-rules": []	
+            },	
+            {	
+              "type": "object",	
+              "key": "buttonProps",	
+              "title": "按钮属性",	
+              "x-component-props": {	
+                "size": "medium",	
+                "labelAlign": "left",	
+                "labelTextAlign": "right",	
+                "labelCol": 7,	
+                "wrapperCol": 12	
+              },	
+              "properties": {	
+                "stringProp": {	
+                  "type": "string",	
+                  "title": "stringProp"	
+                },	
+                "numberProp": {	
+                  "type": "number",	
+                  "title": "numberProp"	
+                }	
+              },	
+              "x-rules": []	
+            },	
+            {	
+              "x-component": "input",	
+              "type": "string",	
+              "key": "onClick",	
+              "title": "点击动作",	
+              "x-component-props": {	
+                "placeholder": "",	
+                "addonTextBefore": "",	
+                "addonTextAfter": "",	
+                "trim": true,	
+                "hasClear": true	
+              },	
+              "x-rules": []	
+            }	
+          ],	
+          "properties": {	
+            "buttonText": {	
+              "key": "buttonText",	
+              "x-component": "input",	
+              "type": "string",	
+              "title": "按钮文本",	
+              "children": [],	
+              "x-component-props": {	
+                "placeholder": "",	
+                "addonTextBefore": "",	
+                "addonTextAfter": "",	
+                "trim": true,	
+                "hasClear": true	
+              },	
+              "x-rules": []	
+            },	
+            "buttonProps": {	
+              "key": "buttonProps",	
+              "type": "object",	
+              "title": "按钮属性",	
+              "children": [],	
+              "x-component-props": {	
+                "size": "medium",	
+                "labelAlign": "top",	
+                "labelTextAlign": "right",	
+                "labelCol": 7,	
+                "wrapperCol": 12	
+              },	
+              "properties": {	
+                "stringProp": {	
+                  "type": "string",	
+                  "title": "stringProp",	
+                  "x-component-props": {	
+                    "labelAlign": "top"	
+                  }	
+                },	
+                "numberProp": {	
+                  "type": "number",	
+                  "title": "numberProp",	
+                  "x-component-props": {	
+                    "labelAlign": "top"	
+                  }	
+                }	
+              },	
+              "x-rules": []	
+            },	
+            "onClick": {	
+              "key": "onClick",	
+              "x-component": "input",	
+              "type": "string",	
+              "title": "点击动作",	
+              "children": [],	
+              "x-component-props": {	
+                "placeholder": "",	
+                "addonTextBefore": "",	
+                "addonTextAfter": "",	
+                "trim": true,	
+                "hasClear": true	
+              },	
+              "x-rules": []	
+            }	
+          }	
+        }	
+      },	
+      "ManyactionSchema": {	
+        "key": "actionSchema",	
+        "x-component": "arraytable",	
+        "type": "array",	
+        "title": "非常多的属性",	
+        "children": [	
+          {	
+            "type": "object",	
+            "properties": {	
+              "prop1": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop2": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop3": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop4": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop5": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop6": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop7": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop8": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop9": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop10": {	
+                "type": "string",	
+                "key": "prop1"	
+              },	
+              "prop11": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            }	
+          }	
+        ],	
+        "x-component-props": {	
+          "renderAddition": "添加",	
+          "renderRemove": "删除",	
+          "renderEmpty": "暂无数据"	
+        },	
+        "x-rules": [],	
+        "items": {	
+          "type": "object",	
+          "children": [	
+            {	
+              "prop1": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop2": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop3": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop4": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop5": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop6": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop7": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop8": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop9": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop10": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            },	
+            {	
+              "prop11": {	
+                "type": "string",	
+                "key": "prop1"	
+              }	
+            }	
+          ],	
+          "properties": {	
+            "prop1": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop2": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop3": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop4": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop5": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop6": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop7": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop8": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop9": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop10": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            },	
+            "prop11": {	
+              "type": "string",	
+              "key": "prop1",	
+              "title": "props"	
+            }	
+          }	
+        }	
+      }	
+    }	
+  }	
+}
