@@ -63,7 +63,7 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 };
 
-export const getOfficalMaterialSources = () => OFFICAL_MATERIAL_SOURCES;
+export const getOfficalMaterialSources = () => [].concat(OFFICAL_MATERIAL_SOURCES);
 
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 
@@ -83,7 +83,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = getUserSources();
-  sources = [...userSources, ...sources];
+  sources.unshift(...userSources);
   return specifiedType ? sources.filter(({ type }) => type === specifiedType) : sources;
 }
 
