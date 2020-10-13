@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.5
+
+- fix: disable auto show welcome page when the application is new
+
 ## 0.5.4
 
 - chore: sorting of quick entry
