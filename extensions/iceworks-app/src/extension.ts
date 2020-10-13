@@ -20,7 +20,7 @@ import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
 import createEditorMenuAction from './utils/createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoStart, { didShowWelcomePageBySidebarStateKey } from './utils/autoStart';
+import autoStart from './utils/autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -28,7 +28,7 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
-  const { subscriptions, extensionPath, globalState } = context;
+  const { subscriptions, extensionPath } = context;
 
   // auto set configuration & context
   initExtension(context, name);
