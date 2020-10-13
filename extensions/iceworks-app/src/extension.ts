@@ -159,15 +159,14 @@ export async function activate(context: vscode.ExtensionContext) {
     await createEditorMenuAction();
   }
 
-  // auto start welcome page when the application is new
+  // TODO auto start welcome page when the application is new
   const isNotTargetProject = await checkIsNotTarget();
-  // get showWelcomePage configuration from settings.json
   const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
   if (projectPath && !isNotTargetProject && isShowWelcomePage && !vscode.window.activeTextEditor) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
-      vscode.commands.executeCommand('iceworksApp.welcome.start');
-      globalState.update(didShowWelcomePageBySidebarStateKey, true);
+      // vscode.commands.executeCommand('iceworksApp.welcome.start');
+      // globalState.update(didShowWelcomePageBySidebarStateKey, true);
     }
   }
 }
