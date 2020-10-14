@@ -4,3 +4,4 @@ export * from './material';
 export * from './router';
 export * from './page';
 export * from './scaffold';
+export * from './menu';

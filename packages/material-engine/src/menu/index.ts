@@ -15,7 +15,7 @@ const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
  * generate menu to menuConfig.js
  * @param data
  */
-export async function create(data) {
+export async function createMenu(data) {
   const { path: pagePath, pageName, layoutName, menuType } = data;
   const curPageMenuConfig = { path: pagePath, name: pageName };
 
