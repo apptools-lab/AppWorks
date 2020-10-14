@@ -1,7 +1,15 @@
 {
-  "iceworksMaterialHelper.commands.start.title": "Iceworks: 添加组件",
+  "iceworksMaterialHelper.commands.materialImporter.start.title": "Iceworks: 添加组件",
+  "iceworksMaterialHelper.commands.componentCreator.start.title": "Iceworks: 下载物料到本地",
+  "iceworksMaterialHelper.commands.pageGenerator.start.title": "Iceworks: 使用区块组装页面",
+  "iceworksMaterialHelper.commands.pageCreator.start.title": "Iceworks: 使用模板生成页面",
+  "iceworksMaterialHelper.commands.debugMaterials.start.title": "Iceworks: 调试本地物料项目",
   "iceworksMaterialHelper.commands.showAllMaterialQuickPicks.title": "Iceworks: 查找组件",
   "iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title": "Iceworks: 查找当前文件的组件",
   "iceworksMaterialHelper.configuration.openInBrowserDescription": "是否在 VSCode 中打开网页，这个功能的实现依赖于 「Browser Preview」 插件，您需要手动安装此插件后才能使用这个功能。",
-  "iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。"
+  "iceworksMaterialHelper.configuration.properties.iceworks.materialSources.description": "Iceworks 物料源，决定使用哪些物料。",
+  "iceworksMaterialHelper.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具.",
+  "iceworksMaterialHelper.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
+  "iceworksMaterialHelper.configuration.properties.iceworks.generatePagePath.description": "应用页面目录。默认目录是 `src/pages`。",
+  "iceworksMaterialHelper.configuration.properties.iceworks.generateComponentPath.description": "应用组件目录。默认目录是 `src/components`。"  
 }

@@ -1,6 +1,5 @@
-import * as material from '@iceworks/material-service';
 import * as common from '@iceworks/common-service';
-import * as block from '@iceworks/block-service';
-import * as component from '@iceworks/component-service';
+import * as block from './block';
+import { page, component, router, menu, material } from '@iceworks/material-engine';
 
-export default { material, common, block, component };
+export default { material, common, block, component, router, menu, page };
