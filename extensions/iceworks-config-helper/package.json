@@ -1,9 +1,9 @@
 {
   "name": "iceworks-config-helper",
-  "displayName": "Iceworks Config Helper",
+  "displayName": "Config Helper",
   "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -17,7 +17,8 @@
     "config",
     "json",
     "icejs",
-    "rax-app"
+    "rax-app",
+    "iceworks"
   ],
   "icon": "assets/logo.png",
   "activationEvents": [

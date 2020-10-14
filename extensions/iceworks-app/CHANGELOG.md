@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.5.6
+
+- chore: change extension name
+- chore: publish material-engine package 
+
 ## 0.5.5
 
 - fix: disable auto show welcome page when the application is new

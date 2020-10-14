@@ -1,0 +1,54 @@
+import * as vscode from 'vscode';
+import { Recorder } from '@iceworks/recorder';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { registerCommand, initExtension } from '@iceworks/common-service';
+
+import { services } from './services';
+
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
+const recorder = new Recorder(name, version);
+
+function activate(context: vscode.ExtensionContext) {
+  recorder.recordActivate();
+
+  const { window, } = vscode;
+  const { extensionPath } = context;
+
+  // auto set configuration
+  initExtension(context, name);
+
+  let webviewPanel: vscode.WebviewPanel | undefined;
+
+  const openWebview = () => {
+
+    if (webviewPanel) {
+      webviewPanel.reveal();
+      return;
+    }
+
+    webviewPanel = window.createWebviewPanel('iceworks', 'Webview Title', vscode.ViewColumn.Two, {
+      enableScripts: true,
+      retainContextWhenHidden: true,
+    });
+
+    const extraHtml = `
+      <script>
+        window.MESSAGE = 'Hello World';
+      </script>
+    `;
+
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, '', false, '', extraHtml);
+    webviewPanel.onDidDispose(() => {
+      webviewPanel = undefined;
+    }, null, context.subscriptions);
+
+    connectService(webviewPanel, context, { services, recorder });
+  };
+
+  registerCommand('<%= projectName %>.hello', () => {
+    openWebview();
+  });
+}
+
+exports.activate = activate;

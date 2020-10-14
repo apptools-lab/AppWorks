@@ -17,14 +17,14 @@ if (args.version) {
 
 // Show help text
 if (args.help) {
-  console.log('\nUsage : doctor [options]');
+  console.log('\nUsage : iceworks-doctor [options]');
   Object.keys(options).forEach((key) => {
     const option = options[key];
     console.log(
       option.alias ? `  -${option.alias},` : '',
       `  --${key}`,
-      option.type !== 'boolean' ? ' : ' + option.type : '',
-      option.required ? ' *required*' : ''
+      option.type !== 'boolean' ? ` : ${ option.type}` : '',
+      option.required ? ' *required*' : '',
     );
     console.log(`      ${option.desc}`);
   });
@@ -33,32 +33,29 @@ if (args.help) {
 
 // Check project
 if (args.scan) {
-
-  const options = {};
+  const opt = {};
   if (Array.isArray(args.ignore)) {
-    options.ignore = args.ignore;
+    opt.ignore = args.ignore;
   }
 
   if (Array.isArray(args.supportExts)) {
-    options.supportExts = args.supportExts;
+    opt.supportExts = args.supportExts;
   }
 
-  const doctor = new Doctor(options);
+  const doctor = new Doctor(opt);
   doctor.scan(args.scan).then((result) => {
-
     console.log({
       files: {
         count: result.filesInfo.count,
-        lines: result.filesInfo.lines
+        lines: result.filesInfo.lines,
       },
       score: result.score,
       aliEslint: result.aliEslint.score,
       bestPractices: result.bestPractices.score,
       securityPractices: result.securityPractices.score,
       maintainability: result.maintainability.score,
-      repeatability: result.repeatability.score
+      repeatability: result.repeatability.score,
     });
-
   }).catch((err) => {
     console.log('Error!');
     console.error(err);

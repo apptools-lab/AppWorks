@@ -1,6 +1,4 @@
 {
-  "extension.iceworksComponentGenerator.extension.webviewTitle": "Generate Component by visualization - Iceworks",
-  "extension.iceworksComponentBuilder.extension.webviewTitle": "Download Component Materials - Iceworks",
-  "extension.iceworksPageBuilder.extensnion.webViewTitle": "Generate Page by Blocks - Iceworks",
-  "extension.iceworksPageCreator.extensnion.webViewTitle": "Generate Page by Configuration - Iceworks"
+  "extension.iceworksComponentGenerator.extension.webviewTitle": "Generate Component by visualization - Iceworks"
 }
+
