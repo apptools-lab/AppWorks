@@ -257,6 +257,7 @@ const ScaffoldMarket = ({
       </div>
       {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
       <Dialog
+        title="创建自定义模板"
         visible={visible}
         style={{ width: 860 }}
         onCancel={() => closeDialog()}

@@ -1,18 +1,18 @@
 .scaffoldLayout {
-  margin-top: 20px;
   width: 100%;
 
-  .topNavSetting,
-  .asideNavSetting,
-  .footerSetting {
-    margin: 16px 0 0 20px;
+  .setting {
+    margin: 0 0 10px 20px;
 
-    .options {
-      margin: 10px 0 0 20px;
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .tree {
-      margin: 5px 0 0 20px;
+    .content {
+      margin-top: 10px;
     }
   }
 }

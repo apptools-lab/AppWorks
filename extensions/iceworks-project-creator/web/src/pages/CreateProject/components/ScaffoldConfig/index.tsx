@@ -44,25 +44,24 @@ const ScaffoldConfig = () => {
           {
             themesList.map(theme => {
               return (
-                <>
-                  <Radio value={theme.value} key={theme.value}>
-                    <span className={styles.radioContent}>{theme.label}</span>
-                    {
-                      theme.value === 'offical' && (
-                        <Select style={componentStyle} disabled={curThemeType !== theme.value}>
-                          {theme.componentProps.options?.map(item => (
-                            <Select.Option value={item.value}>{item.label}</Select.Option>
-                          ))}
-                        </Select>
-                      )
-                    }
-                    {
-                      theme.value === 'custom' && (
-                        <Input style={componentStyle} disabled={curThemeType !== theme.value} placeholder="请输入自定义主题 npm 包" />
-                      )
-                    }
-                  </Radio>
-                </>
+                <Radio value={theme.value} key={theme.value}>
+                  <span className={styles.radioContent}>{theme.label}</span>
+                  {
+                    theme.value === 'offical' && (
+                      <Select style={componentStyle} disabled={curThemeType !== theme.value}>
+                        {theme.componentProps.options?.map(item => (
+                          <Select.Option value={item.value}>{item.label}</Select.Option>
+                        ))}
+                      </Select>
+                    )
+                  }
+                  {
+                    theme.value === 'custom' && (
+                      <Input style={componentStyle} disabled={curThemeType !== theme.value} placeholder="请输入自定义主题 npm 包" />
+                    )
+                  }
+                </Radio>
+
               );
             })
           }
