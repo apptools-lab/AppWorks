@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.7
+
+- chore: publish material-engine package 
+
 ## 0.5.6
 
 - chore: change extension name
