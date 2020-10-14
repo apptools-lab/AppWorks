@@ -20,7 +20,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-ui-builder.generate-component"
+    "onCommand:iceworks-ui-builder.design-component"
   ],
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-ui-builder.generate-component",
-        "title": "%iceworksUIBuilder.commands.generateComponent.title%"
+        "command": "iceworks-ui-builder.design-component",
+        "title": "%iceworksUIBuilder.commands.designComponent.title%"
       }
     ],
     "configuration": {
@@ -40,7 +40,7 @@
         "iceworks.generateComponentPath": {
           "type": "string",
           "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description%"
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description%"
         }
       }
     }

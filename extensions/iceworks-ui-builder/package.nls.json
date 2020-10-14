@@ -1,12 +1,5 @@
 {
-  "iceworksUIBuilder.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
-  "iceworksUIBuilder.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
-  "iceworksUIBuilder.configuration.properties.iceworks.materialSources.description": "Iceworks material sources, decide which materials to use.",
-  "iceworksUIBuilder.configuration.properties.iceworks.generatePagePath.description": "Application pages directory. The default directory is `src/pages`.",
-  "iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description": "Application components directory. The default directory is `src/components`.",
-  "iceworksUIBuilder.commands.generateComponent.title": "Iceworks: Generate Component by visualization",
-  "iceworksUIBuilder.commands.createComponent.title": "Iceworks: Download Component Materials",
-  "iceworksUIBuilder.commands.generatePage.title": "Iceworks: Generate Page by Blocks",
-  "iceworksUIBuilder.commands.createPage.title": "Iceworks: Generate Page by Configuration",
-  "iceworksUIBuilder.commands.debugMaterials.title": "Iceworks: Debug Local Material Project"
+  
+  "iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description": "Application components directory. The default directory is `src/components`.",
+  "iceworksUIBuilder.commands.designComponent.title": "Iceworks: Design Component"
 }

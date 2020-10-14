@@ -11,14 +11,14 @@ Build UI by visual way.
 
 ## Activate
 
-Activate VS Code command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: Generate Component` to activate the extension.
+Activate VS Code command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: Design Component` to activate the extension.
 
 ## Usage
 
 1. Drag the components in the left to the middle panel.
 2. Press `⌘+S` (MacOS) or `Ctrl+S` (Windows), input the name of the component and then press Enter to generate component.
 
-![generate-component](https://img.alicdn.com/tfs/TB179prilFR4u4jSZFPXXanzFXa-1440-900.gif)
+![design-component](https://img.alicdn.com/tfs/TB179prilFR4u4jSZFPXXanzFXa-1440-900.gif)
 
 ## More
 

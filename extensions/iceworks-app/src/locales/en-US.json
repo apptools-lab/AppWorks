@@ -7,7 +7,7 @@
   "extension.iceworksApp.showEntriesQuickPick.createPage.detail": "Generate pages by using template configuration",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.label": "Import Component",
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "Add Component to the Application in a visual way",
-  "extension.iceworksApp.showEntriesQuickPick.generateComponent.label": "Generate Component by visualization",
+  "extension.iceworksApp.showEntriesQuickPick.generateComponent.label": "Design Component",
   "extension.iceworksApp.showEntriesQuickPick.generateComponent.detail": "Generate components in a completely visual canvas",
   "extension.iceworksApp.showEntriesQuickPick.createComponent.label": "Download Component Materials",
   "extension.iceworksApp.showEntriesQuickPick.createComponent.detail": "Download coomponent materials to local",
