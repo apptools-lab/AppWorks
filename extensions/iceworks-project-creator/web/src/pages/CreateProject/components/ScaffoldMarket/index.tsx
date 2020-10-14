@@ -1,11 +1,13 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/next';
+import { Collapse, Notification, Loading, Button, Icon, Divider, Dialog } from '@alifd/next';
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
+import AddScaffoldCard from '@/components/AddScaffoldCard';
+import CustomScaffold from '../CustomScaffold';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
@@ -33,6 +35,11 @@ const ScaffoldMarket = ({
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [pegasusCardSelected, setPegasusCardSelected] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false);
+
+  function closeDialog() {
+    setVisible(false)
+  }
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     setPegasusCardSelected(false);
@@ -192,6 +199,15 @@ const ScaffoldMarket = ({
                         />
                       )}
                   </div>
+                  {
+                    curProjectField.scaffold && <AddScaffoldCard
+                      onClick={() => {
+                        onScaffoldClick({ name: 'addScaffold' });
+                        setVisible(true);
+                      }}
+                      selected={curProjectField.scaffold.name === 'addScaffold'}
+                    />
+                  }
                   {!!otherScaffolds.length && (
                     <Collapse className={styles.collapse}>
                       <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
@@ -240,6 +256,15 @@ const ScaffoldMarket = ({
         </div>
       </div>
       {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
+      <Dialog
+        visible={visible}
+        style={{ width: 860 }}
+        onCancel={() => closeDialog()}
+        onClose={() => closeDialog()}
+        onOk={() => { }}
+      >
+        <CustomScaffold />
+      </Dialog>
     </div>
   );
 };
