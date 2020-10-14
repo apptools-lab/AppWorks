@@ -14,7 +14,7 @@ const { window, ViewColumn } = vscode;
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
-  console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
+  console.log('Congratulations, your extension "iceworks-ui-builder" is now active!');
 
   // data collection
   recorder.recordActivate();
