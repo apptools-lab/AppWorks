@@ -3,7 +3,7 @@
   "displayName": "UI Designer",
   "description": "Build UI by low-code way",
   "publisher": "iceworks-team",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "engines": {
     "vscode": "^1.41.0"
   },
