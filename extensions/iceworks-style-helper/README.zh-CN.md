@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md)
 
-# Iceworks 样式开发辅助插件
+# React 样式开发辅助插件
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
