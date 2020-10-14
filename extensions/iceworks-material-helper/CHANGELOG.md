@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.3.12
+## 0.4.0
 
 - feat: migrate component-creator, page-creator, page-generator 
 
