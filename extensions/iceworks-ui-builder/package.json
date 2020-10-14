@@ -1,7 +1,7 @@
 {
   "name": "iceworks-ui-builder",
   "displayName": "UI Designer",
-  "description": "Build UI by low-code way",
+  "description": "Build UI by visual way",
   "publisher": "iceworks-team",
   "version": "0.1.20",
   "engines": {
