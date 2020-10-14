@@ -1,4 +1,4 @@
 import * as common from '@iceworks/common-service';
-import * as material from '@iceworks/material-engine/lib/material';
+import { material } from '@iceworks/material-engine';
 
 export default { common, material };

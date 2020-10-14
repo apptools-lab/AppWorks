@@ -139,7 +139,7 @@ const Home = () => {
           if (layout) {
             const layoutName = layout.component;
             if (menuType) {
-              await callService('menu', 'createMenu', {
+              await callService('menu', 'create', {
                 ...values,
                 pageName,
                 layoutName,

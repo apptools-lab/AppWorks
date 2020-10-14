@@ -1,5 +1,7 @@
-import { bulkGenerate as originBulkGenerate, renderBlocks, addBlockCode, insertBlock } from '@iceworks/material-engine/lib/block';
+import { block } from '@iceworks/material-engine';
 import { componentsPath, getFolderPath, getProjectType } from '@iceworks/project-service';
+
+const { bulkGenerate: originBulkGenerate, renderBlocks, addBlockCode, insertBlock } = block;
 
 export const bulkGenerate = async function (blocks: any) {
   const projectType = await getProjectType();

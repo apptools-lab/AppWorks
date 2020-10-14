@@ -14,7 +14,7 @@
   },
   "files": [
     "bin/",
-    "lib/"
+    "src/"
   ],
   "main": "src/index.js",
   "publishConfig": {

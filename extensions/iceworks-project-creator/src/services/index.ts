@@ -1,6 +1,5 @@
 import * as project from '@iceworks/project-service';
-import * as scaffold from '@iceworks/material-engine/lib/scaffold';
-import * as material from '@iceworks/material-engine/lib/material';
+import { material, scaffold } from '@iceworks/material-engine';
 import * as common from '@iceworks/common-service';
 import * as pegasus from '@iceworks/pegasus-service';
 
