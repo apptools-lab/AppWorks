@@ -1,6 +1,6 @@
 English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.zh-CN.md)
 
-# Iceworks Style Helper
+# React Style Helper
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-style-helper.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-style-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-style-helper)
@@ -81,4 +81,4 @@ Use `cmd + click`  (Windows: `ctrl + click`) jump to the variable identifier und
 
 ## More
 
-See the [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.
+This Extension power by [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team), it's part of the Iceworks, see [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to know more features.

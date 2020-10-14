@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.12.0
+
+- chore: rename extensions
+
 ## 0.11.0
 
 - docs: new image for Visual Construction

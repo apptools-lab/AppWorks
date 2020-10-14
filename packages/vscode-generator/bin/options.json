@@ -1,0 +1,12 @@
+{
+  "version": {
+    "alias": "v",
+    "desc": "Print the version.",
+    "type": "boolean"
+  },
+  "help": {
+    "alias": "h",
+    "desc": "Display this help text.",
+    "type": "boolean"
+  }
+}

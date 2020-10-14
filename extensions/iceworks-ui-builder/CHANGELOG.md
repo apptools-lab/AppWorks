@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.0
+
+- refactor: migrate component-creator, page-creator, page-generator to iceworks-material-helper
+- chore: change extension name
+
 ## 0.1.18
 
 - feat: add code editor for page template

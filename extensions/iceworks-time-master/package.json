@@ -1,0 +1,55 @@
+{
+  "name": "iceworks-time-steward",
+  "displayName": "Time Master",
+  "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
+  "publisher": "iceworks-team",
+  "version": "0.2.0",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "Time",
+    "Metrics",
+    "Insights",
+    "Tracker",
+    "Time Tracking",
+    "Timer"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "main": "./build/extension.js",
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "@types/request": "^2.48.5",
+    "ts-loader": "^8.0.3",
+    "typescript": "^3.6.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/recorder": "^0.1.1"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
+}

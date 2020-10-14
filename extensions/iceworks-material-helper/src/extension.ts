@@ -7,6 +7,7 @@ import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
+import { registerDebugCommand } from './utils/debugMaterials';
 
 const { name } = require('../package.json');
 
@@ -21,12 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
   initExtension(context, name);
 
   // set material importer
-  let webviewPanel: vscode.WebviewPanel | undefined;
+  let materialImporterWebviewPanel: vscode.WebviewPanel | undefined;
   function activeWebview() {
     recordDAU();
     recorder.recordActivate();
-    if (webviewPanel) {
-      webviewPanel.reveal();
+    if (materialImporterWebviewPanel) {
+      materialImporterWebviewPanel.reveal();
     } else {
       let columnToShowIn = ViewColumn.One;
       let layout = { orientation: 0, groups: [{}] };
@@ -35,9 +36,9 @@ export function activate(context: vscode.ExtensionContext) {
         layout = { orientation: 0, groups: [{ size: 0.7 }, { size: 0.3 }] };
       }
 
-      webviewPanel = window.createWebviewPanel(
+      materialImporterWebviewPanel = window.createWebviewPanel(
         'Iceworks',
-        i18n.format('extension.iceworksMaterialHelper.extension.title'),
+        i18n.format('extension.iceworksMaterialHelper.materailImporter.title'),
         { viewColumn: columnToShowIn, preserveFocus: true },
         {
           enableScripts: true,
@@ -45,10 +46,10 @@ export function activate(context: vscode.ExtensionContext) {
           enableFindWidget: true,
         },
       );
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-      webviewPanel.onDidDispose(
+      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      materialImporterWebviewPanel.onDidDispose(
         () => {
-          webviewPanel = undefined;
+          materialImporterWebviewPanel = undefined;
         },
         null,
         context.subscriptions,
@@ -56,11 +57,11 @@ export function activate(context: vscode.ExtensionContext) {
 
       vscode.commands.executeCommand('vscode.setEditorLayout', layout);
 
-      connectService(webviewPanel, context, { services, recorder });
+      connectService(materialImporterWebviewPanel, context, { services, recorder });
     }
   }
   subscriptions.push(
-    registerCommand('iceworks-material-helper.start', () => {
+    registerCommand('iceworks-material-helper.material-importer.start', () => {
       const { visibleTextEditors } = vscode.window;
       if (visibleTextEditors.length) {
         activeWebview();
@@ -69,6 +70,65 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }),
   );
+
+  function activeComponentCreatorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksMaterialHelper.componentCreator.webviewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      },
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworks-material-helper.component-creator.start', () => {
+      activeComponentCreatorWebview();
+    }),
+  );
+
+  function activePageGeneratorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksMaterialHelper.pageGenerator.webViewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      },
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworks-material-helper.page-generator.start', () => {
+      activePageGeneratorWebview();
+    }),
+  );
+
+  function activePageCreatorWebview() {
+    const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
+      'iceworks',
+      i18n.format('extension.iceworksMaterialHelper.pageCreator.webViewTitle'),
+      ViewColumn.One,
+      {
+        enableScripts: true,
+        retainContextWhenHidden: true,
+      },
+    );
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
+    connectService(webviewPanel, context, { services, recorder });
+  }
+  subscriptions.push(
+    registerCommand('iceworks-material-helper.page-creator.start', () => {
+      activePageCreatorWebview();
+    }),
+  );
+
+  registerDebugCommand(subscriptions);
 
   // set propsAutoCompleter
   propsAutoComplete();

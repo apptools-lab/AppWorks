@@ -68,7 +68,7 @@ const ScaffoldMarket = ({
 
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
     try {
-      const scaffolds = (await callService('project', 'getScaffolds', source)) as IMaterialScaffold[];
+      const scaffolds = (await callService('scaffold', 'getAll', source)) as IMaterialScaffold[];
       let main = scaffolds.filter((scaffold) => mainScaffoldsList.includes(scaffold.source.npm));
       let other = scaffolds.filter((scaffold) => !mainScaffoldsList.includes(scaffold.source.npm));
       if (!main.length && other.length) {

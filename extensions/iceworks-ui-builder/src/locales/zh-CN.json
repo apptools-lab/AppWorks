@@ -1,6 +1,3 @@
 {
-  "extension.iceworksComponentGenerator.extension.webviewTitle": "可视化搭建组件 - Iceworks",
-  "extension.iceworksComponentBuilder.extension.webviewTitle": "下载区块物料到本地 - Iceworks",
-  "extension.iceworksPageBuilder.extensnion.webViewTitle": "使用区块组装页面 - Iceworks",
-  "extension.iceworksPageCreator.extensnion.webViewTitle": "使用模板生成页面 - Iceworks"
+  "extension.iceworksComponentGenerator.extension.webviewTitle": "可视化搭建组件 - Iceworks"
 }

@@ -1,6 +1,6 @@
 简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.md)
 
-# Iceworks 创建应用插件
+# 应用创建器
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-project-creator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-project-creator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-project-creator)
@@ -28,4 +28,4 @@
 
 ## 更多
 
-访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
+本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

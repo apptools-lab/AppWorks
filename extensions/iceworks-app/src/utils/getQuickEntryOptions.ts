@@ -40,7 +40,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
-    command: 'iceworks-ui-builder.generate-page',
+    command: 'iceworks-material-helper.page-generator.start',
     async condition() {
       return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
     },
@@ -48,7 +48,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
-    command: 'iceworks-ui-builder.create-page',
+    command: 'iceworks-material-helper.page-creator.start',
     async condition() {
       return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
     },
@@ -56,7 +56,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.detail'),
-    command: 'iceworks-material-helper.start',
+    command: 'iceworks-material-helper.material-importer.start',
     async condition() {
       return !(await checkIsNotTarget());
     },
@@ -64,7 +64,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
-    command: 'iceworks-ui-builder.generate-component',
+    command: 'iceworks-ui-builder.design-component',
     async condition() {
       const projectType = await getProjectType();
       return projectType === 'react';
@@ -73,7 +73,7 @@ const entries = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.detail'),
-    command: 'iceworks-ui-builder.create-component',
+    command: 'iceworks-material-helper.component-creator.start',
     async condition() {
       return !(await checkIsNotTarget()) && !(await checkIsPegasusProject());
     },
