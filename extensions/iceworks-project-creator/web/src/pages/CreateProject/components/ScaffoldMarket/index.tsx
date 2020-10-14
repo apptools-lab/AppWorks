@@ -181,7 +181,7 @@ const ScaffoldMarket = ({
                             }
                             content={item.description}
                             media={item.screenshot}
-                            selected={curProjectField.scaffold.name === item.name}
+                            selected={curProjectField.scaffold && curProjectField.scaffold.name === item.name}
                             onClick={() => onScaffoldClick(item)}
                           />
                         );
@@ -226,7 +226,7 @@ const ScaffoldMarket = ({
                                 }
                                 content={item.description}
                                 media={item.screenshot}
-                                selected={curProjectField.scaffold.name === item.name}
+                                selected={curProjectField.scaffold && curProjectField.scaffold.name === item.name}
                                 onClick={() => onScaffoldClick(item)}
                               />
                             );
