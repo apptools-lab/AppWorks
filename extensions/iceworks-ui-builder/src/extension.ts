@@ -14,7 +14,7 @@ const { window, ViewColumn } = vscode;
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
-  console.log('Congratulations, your extension "iceworks-component-builder" is now active!');
+  console.log('Congratulations, your extension "iceworks-ui-builder" is now active!');
 
   // data collection
   recorder.recordActivate();
@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
-    registerCommand('iceworks-ui-builder.generate-component', () => {
+    registerCommand('iceworks-ui-builder.design-component', () => {
       activeComponentGeneratorWebview();
     }),
   );

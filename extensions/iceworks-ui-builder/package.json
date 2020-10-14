@@ -1,9 +1,9 @@
 {
   "name": "iceworks-ui-builder",
   "displayName": "UI Designer",
-  "description": "Build UI by low-code way",
+  "description": "Build UI by visual way",
   "publisher": "iceworks-team",
-  "version": "0.1.20",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -20,7 +20,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-ui-builder.generate-component"
+    "onCommand:iceworks-ui-builder.design-component"
   ],
   "repository": {
     "type": "git",
@@ -30,17 +30,17 @@
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-ui-builder.generate-component",
-        "title": "%iceworksUIBuilder.commands.generateComponent.title%"
+        "command": "iceworks-ui-builder.design-component",
+        "title": "%iceworksUIBuilder.commands.designComponent.title%"
       }
     ],
     "configuration": {
-      "title": "Iceworks UI Builder",
+      "title": "Iceworks UI Designer",
       "properties": {
         "iceworks.generateComponentPath": {
           "type": "string",
           "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.generateComponentPath.description%"
+          "description": "%iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description%"
         }
       }
     }
