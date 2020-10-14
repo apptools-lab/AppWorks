@@ -11,7 +11,7 @@ Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.j
 
 ## Using Material Panel
 
-#### Activate
+### Activate
 
 ![demo](https://user-images.githubusercontent.com/56879942/88197902-b2ba1180-cc75-11ea-8e33-0ce4e7faa368.gif)
 
