@@ -12,7 +12,7 @@ Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集�
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: 打开仪表盘` 激活插件
+2. 输入 `Iceworks: 打开仪表盘` 或 `Iceworks: 扫描代码` 激活插件
 
 ## 项目详情
 
@@ -32,6 +32,10 @@ Iceworks Doctor 是一个免费的安全和质量审核工具。借助基于集�
 
 1. 点击设置，进入设置页面
 2. 配置是否开启保存文件时进行`安全实践检测`
+
+## 安全和隐私
+
+**您的数据是私有的**：我们永远不会与任何人共享您的个人数据。Iceworks Doctor 是开源的，你可以很容易地看到我们收集了什么数据。
 
 ## 更多
 
