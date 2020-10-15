@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1
+
+- fix: ui build error
+
 ## 0.4.0
 
 - feat: migrate component-creator, page-creator, page-generator 

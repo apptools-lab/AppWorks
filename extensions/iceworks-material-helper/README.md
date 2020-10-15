@@ -11,14 +11,14 @@ Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.j
 
 ## Using Material Panel
 
-#### Activate
+### Activate
 
 ![demo](https://user-images.githubusercontent.com/56879942/88197902-b2ba1180-cc75-11ea-8e33-0ce4e7faa368.gif)
 
 1. Open VS Code command palette through `Ctrl+Shift+P` or `⇧⌘P`.
 2. Enter `Iceworks: Import Material` to activate Material Panel.
 
-#### Use in Pages
+### Use in Pages
 
 ![demo](https://user-images.githubusercontent.com/56879942/88197928-b8aff280-cc75-11ea-816d-1c609bc90878.gif)
 
@@ -28,7 +28,7 @@ Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.j
 4. Search the block materials, click the material to be used, and the material code will be automatically added to the corresponding position.
 5. Search for component materials. Click the material to be used, and the material code will be automatically added to the corresponding position.
 
-#### Use in Components
+### Use in Components
 
 ![demo](https://user-images.githubusercontent.com/56879942/87619875-c2a29480-c74f-11ea-945e-788a32e65881.gif)
 
