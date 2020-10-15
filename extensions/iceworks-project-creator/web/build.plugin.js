@@ -6,6 +6,6 @@ module.exports = ({ onGetWebpackConfig }) => {
     config.plugin('DefinePlugin').tap(([args]) => {
       return [{ ...args, ...defineVariables }];
     });
-    config.node.set('fs', 'empty');
+    config.node.set('fs', 'empty').set('net', 'empty').set('tls', 'empty');
   });
 };

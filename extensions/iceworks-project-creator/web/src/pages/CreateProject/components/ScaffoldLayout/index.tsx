@@ -1,27 +1,19 @@
-import React from 'react';
-import { Checkbox, List, Box, Button, Divider } from '@alifd/next';
+import React, { useState } from 'react';
+import { Checkbox, List, Box, Button, Divider, Dialog } from '@alifd/next';
+import PageGenerator from '../PageGenerator';
 import HeaderTitle from '@/components/HeaderTitle';
 import styles from './index.module.scss';
 
 const ScaffoldLayout = () => {
-  // const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   // console.log(visible);
 
   return (
     <div className={styles.scaffoldLayout}>
-      {/* <div className={styles.layoutSelect}>
-        <Row align="center">
-          <Col offset={1} span={4}>布局名称：</Col>
-          <Col span={20}>
-            <Input style={{ width: 200 }} />
-          </Col>
-        </Row>
-      </div> */}
-
       <div className={styles.setting}>
         <div className={styles.title}>
           <HeaderTitle title="侧边菜单栏" />
-          <Button type="primary" onClick={() => { }}>添加</Button>
+          <Button type="primary" onClick={() => setVisible(true)}>添加</Button>
         </div>
         <div className={styles.content}>
           <List size="small">
@@ -45,7 +37,6 @@ const ScaffoldLayout = () => {
                   <Button text type="primary">删除</Button>
                 </Box>
               }
-            // title="两列列表单页面"
             >
               两列列表单页面
             </List.Item>
@@ -56,7 +47,7 @@ const ScaffoldLayout = () => {
       <div className={styles.setting}>
         <div className={styles.title}>
           <HeaderTitle title="顶部菜单栏" />
-          <Button type="primary" onClick={() => { }}>添加</Button>
+          <Button type="primary" onClick={() => setVisible(true)}>添加</Button>
         </div>
         <div className={styles.content}>
           <List size="small">
@@ -92,9 +83,14 @@ const ScaffoldLayout = () => {
         <Button onClick={() => setVisible(true)}>弹窗</Button>
       </div> */}
 
-      {/* <Dialog visible={visible}>
-        ffff
-      </Dialog> */}
+      <Dialog
+        visible={visible}
+        title="搭建页面"
+        onCancel={() => setVisible(false)}
+        onClose={() => setVisible(false)}
+      >
+        <PageGenerator />
+      </Dialog>
     </div>
   );
 };

@@ -31,5 +31,13 @@
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.chooseTargetPrompt": "Please choose at least one target",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "Target(please choose at least one)",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle": "Choose Web App type",
-  "web.iceworksProjectCreator.RaxScaffoldTypeForm.miniAppTitle": "Choose Mini App type"
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.miniAppTitle": "Choose Mini App type",
+  "web.iceworksMaterialHelper.pageGenerater.PageSelect.SelectFromRight": "Please choose block from the right side.",
+  "web.iceworksMaterialHelper.pageGenerater.selectBlocks": "Please select at least one block.",
+  "web.iceworksMaterialHelper.pageGenerater.successCreatePage": "Generate page code successfully!",
+  "web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath": "Successfully generated page code to {path}",
+  "web.iceworksMaterialHelper.pageGenerater.openFile": "Open file",
+  "web.iceworksMaterialHelper.pageGenerater.enterPageNameTitle": "Enter Page Name",
+  "web.iceworksMaterialHelper.pageGenerater.chooseBlock": "Choose Blocks",
+  "web.iceworksMaterialHelper.pageGenerater.createPage": "Generate Page"
 }
