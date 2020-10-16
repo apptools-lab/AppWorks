@@ -17,11 +17,6 @@ interface IConfig {
   services?: any;
 }
 
-interface IConfig {
-  title: string;
-  services?: any;
-}
-
 interface IConnectServiceOptions {
   services: any;
   recorder?: any;
