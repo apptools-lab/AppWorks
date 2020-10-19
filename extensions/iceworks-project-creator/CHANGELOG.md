@@ -1,8 +1,18 @@
 # Change Log
 
-## 0.3.15
+# 0.3.17
+
+- fix: build error 
+
+## 0.3.16
 
 - chore: change extension name
+- chore: publish material-engine package 
+
+## 0.3.15
+
+- fix: material sources display duplicated
+- fix: scaffold is empty
 
 ## 0.3.14
 

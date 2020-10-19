@@ -1,6 +1,6 @@
 {
   "name": "iceworks-time-steward",
-  "displayName": "Iceworks Time Master",
+  "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
   "version": "0.2.0",

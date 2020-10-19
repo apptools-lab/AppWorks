@@ -1,10 +1,21 @@
 {
-  "extension.iceworksMaterialHelper.extension.title": "Import Component - Iceworks",
+  "extension.iceworksMaterialHelper.materailImporter.title": "Import Component - Iceworks",
   "extension.iceworksMaterialHelper.getAllDocsInfo.sourceLoading": "Source Loading... Please try again later。",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.noMaterial": "No material matching this project。",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.label": "More",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "Display All Components",
   "extension.iceworksMaterialHelper.getHoverItem.hoverItemLink": "[Docs for <%= componentName %> ](<%= commandUri %>)",
   "extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview": "You must install「Browser Preview」 to open url in vscode.",
-  "extension.iceworksMaterialHelper.extension.start.errorMessage": "Fail to start Import Component Panel, please open a file first."
+  "extension.iceworksMaterialHelper.extension.start.errorMessage": "Fail to start Import Component Panel, please open a file first.",
+  "extension.iceworksMaterialHelper.componentCreator.webviewTitle": "Download Component Materials - Iceworks",
+  "extension.iceworksMaterialHelper.pageGenerator.webViewTitle": "Generate Page by Blocks - Iceworks",
+  "extension.iceworksMaterialHelper.pageCreator.webViewTitle": "Generate Page by Configuration - Iceworks",
+  "extension.iceworksMaterialHelper.debugMaterial.addMaterial.label": "Add a local material project to debug list",
+  "extension.iceworksMaterialHelper.debugMaterial.addMaterial.detail": "Select a local material project",
+  "extension.iceworksMaterialHelper.debugMaterial.deleteMaterial.label": "Clear debug material source",
+  "extension.iceworksMaterialHelper.debugMaterial.deleteMaterial.detail": "Delete all local material project in material source list",
+  "extension.iceworksMaterialHelper.debugMaterial.addMaterial.openLabel": "Debug Materials",
+  "extension.iceworksMaterialHelper.initDebug.err": "init Debug Err： <%= errMessage %>",
+  "extension.iceworksMaterialHelper.debugInput.addSourceSuccess": "Add Debug Material Item Successfully",
+  "extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully"
 }

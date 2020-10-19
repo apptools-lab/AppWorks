@@ -1,7 +1,8 @@
 # Change Log
 
-## 0.1.19
+## 0.2.0
 
+- refactor: migrate component-creator, page-creator, page-generator to iceworks-material-helper
 - chore: change extension name
 
 ## 0.1.18

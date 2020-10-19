@@ -215,8 +215,8 @@ export const MaterialType: React.FC<{
         ) : null;
       })
     ) : (
-        <div className={styles.empty}>没有数据</div>
-      );
+      <div className={styles.empty}>没有数据</div>
+    );
 
   return (
     <Loading visible={isLoadingData} className={styles.spin}>

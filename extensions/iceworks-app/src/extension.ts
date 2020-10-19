@@ -20,7 +20,7 @@ import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
 import createEditorMenuAction from './utils/createEditorMenuAction';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoStart, { didShowWelcomePageBySidebarStateKey } from './utils/autoStart';
+import autoStart from './utils/autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -28,7 +28,7 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
-  const { subscriptions, extensionPath, globalState } = context;
+  const { subscriptions, extensionPath } = context;
 
   // auto set configuration & context
   initExtension(context, name);
@@ -159,15 +159,14 @@ export async function activate(context: vscode.ExtensionContext) {
     await createEditorMenuAction();
   }
 
-  // auto start welcome page when the application is new
+  // TODO auto start welcome page when the application is new
   const isNotTargetProject = await checkIsNotTarget();
-  // get showWelcomePage configuration from settings.json
   const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
   if (projectPath && !isNotTargetProject && isShowWelcomePage && !vscode.window.activeTextEditor) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
-      vscode.commands.executeCommand('iceworksApp.welcome.start');
-      globalState.update(didShowWelcomePageBySidebarStateKey, true);
+      // vscode.commands.executeCommand('iceworksApp.welcome.start');
+      // globalState.update(didShowWelcomePageBySidebarStateKey, true);
     }
   }
 }
