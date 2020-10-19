@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-time-steward",
+  "name": "iceworks-time-master",
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"
@@ -67,7 +67,7 @@
     "@iceworks/i18n": "^0.1.1",
     "@iceworks/recorder": "^0.1.1"
   },
-  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md",
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
