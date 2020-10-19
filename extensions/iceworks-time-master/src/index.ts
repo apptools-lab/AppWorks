@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { getUserInfo, checkIsAliInternal, initExtension } from '@iceworks/common-service';
 import { Timer } from './timer';
-import createTreeView  from './createTreeView';
+import createTreeView from './createTreeView';
 
 // eslint-disable-next-line
 const { name } = require('../package.json');

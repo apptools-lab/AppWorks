@@ -18,7 +18,7 @@ class TreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
         label: i18n.format('extension.timeMaster.entries.test.label'),
         detail: i18n.format('extension.timeMaster.entries.test.detail'),
         command: 'iceworks-project-creator.start',
-      }
+      },
     ];
     return options.map((option) => {
       const { label, detail, command } = option;
@@ -44,6 +44,6 @@ class TreeItem extends vscode.TreeItem {
 
 export default function createTreeView(context: vscode.ExtensionContext) {
   const treeDataProvider = new TreeDataProvider(context);
-  const treeView = vscode.window.createTreeView('timeMaster', { treeDataProvider: treeDataProvider });
+  const treeView = vscode.window.createTreeView('timeMaster', { treeDataProvider });
   return treeView;
 }
