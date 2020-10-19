@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableFindWidget: true,
         },
       );
-      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter', true);
       materialImporterWebviewPanel.onDidDispose(
         () => {
           materialImporterWebviewPanel = undefined;
