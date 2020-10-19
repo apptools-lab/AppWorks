@@ -17,6 +17,11 @@ interface IConfig {
   services?: any;
 }
 
+interface IConnectServiceOptions {
+  services: any;
+  recorder?: any;
+}
+
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
   const { extensionPath } = context;
   const { title, services } = config;
@@ -32,10 +37,11 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 export function connectService(
   webviewPanel: vscode.WebviewPanel,
   context: vscode.ExtensionContext,
-  { services, recorder },
+  options: IConnectServiceOptions,
 ) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
+  const { services, recorder } = options;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -45,21 +51,22 @@ export function connectService(
       if (api) {
         try {
           const extra = args.length > 0 ? { data: args.length === 1 ? args[0] : args } : undefined;
+          if (recorder) {
+            // record for extension
+            recorder.record({
+              module: service,
+              action: method,
+              ...extra,
+            });
 
-          // record for extension
-          recorder.record({
-            module: service,
-            action: method,
-            ...extra,
-          });
-
-          // record for service
-          record({
-            namespace: `@iceworks/${service}-service`,
-            module: 'callMethod',
-            action: method,
-            ...extra,
-          });
+            // record for service
+            record({
+              namespace: `@iceworks/${service}-service`,
+              module: 'callMethod',
+              action: method,
+              ...extra,
+            });
+          }
 
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
