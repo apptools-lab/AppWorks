@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import HeaderTitle from '@/components/HeaderTitle';
-import { Checkbox, Radio, Input, Select } from '@alifd/next';
+import { Checkbox, Input, Select, Form } from '@alifd/next';
 import styles from './index.module.scss';
 
 const configsList = [
@@ -10,73 +10,59 @@ const configsList = [
   { value: 'store', label: '状态管理示例' },
   { value: 'mock', label: 'Mock 示例' },
 ];
+const CUSTOM_THEME_SELECT_KEY = '自定义主题包';
+const themesList = [
+  '@alifd/theme-design-pro',
+  '橙色 @alifd/theme-1',
+  '蓝色 @alifd/theme-2',
+  '紫色 @alifd/theme-3',
+  '绿色 @alifd/theme-4',
+  CUSTOM_THEME_SELECT_KEY,
+];
 
-const ScaffoldConfig = () => {
-  const themesList = [
-    {
-      label: '官方主题包',
-      value: 'offical',
-      component: Select,
-      componentProps: {
-        options: [
-          { label: '@alifd/theme-design-pro', value: '@alifd/theme-design-pro' },
-          { label: '橙色 @alifd/theme-1', value: '@alifd/theme-1' },
-          { label: '蓝色 @alifd/theme-2', value: '@alifd/theme-2' },
-          { label: '紫色 @alifd/theme-3', value: '@alifd/theme-3' },
-          { label: '绿色 @alifd/theme-4', value: '@alifd/theme-4' },
-        ],
-      },
-    },
-    {
-      label: '自定义主题包',
-      value: 'custom',
-      component: Input,
-      componentProps: {},
-    },
-  ];
-  const componentStyle = { width: '250px' };
-  const [curThemeType, setCurThemeType] = useState(themesList[0].value);
+const ScaffoldConfig = ({ onChange, value }) => {
+  function onFormChange(values) {
+    onChange(values);
+  }
+
+  const fields = { theme: value.theme || themesList[0], config: value.config || [configsList[0].value] };
+  console.log('ScaffoldConfig fields   ===>', fields);
   return (
     <div className={styles.scaffoldConfig}>
-      <HeaderTitle title="主题包" />
-      <div className={styles.content}>
-        <Radio.Group itemDirection="ver" value={curThemeType} onChange={value => setCurThemeType(value)}>
-          {
-            themesList.map(theme => {
-              return (
-                <Radio value={theme.value} key={theme.value}>
-                  <span className={styles.radioContent}>{theme.label}</span>
-                  {
-                    theme.value === 'offical' && (
-                      <Select style={componentStyle} disabled={curThemeType !== theme.value}>
-                        {theme.componentProps.options?.map(item => (
-                          <Select.Option value={item.value}>{item.label}</Select.Option>
-                        ))}
-                      </Select>
-                    )
-                  }
-                  {
-                    theme.value === 'custom' && (
-                      <Input style={componentStyle} disabled={curThemeType !== theme.value} placeholder="请输入自定义主题 npm 包" />
-                    )
-                  }
-                </Radio>
-
-              );
-            })
-          }
-        </Radio.Group>
-      </div>
-      <HeaderTitle title="高级" />
-      <div className={styles.content}>
-        <Checkbox.Group itemDirection="ver" onChange={(value) => console.log(value)}>
-          {
-            configsList.map(config => (
-              <Checkbox value={config.value} key={config.value}>{config.label}</Checkbox>
-            ))
-          }
-        </Checkbox.Group>
-      </div>
+      <Form value={fields} onChange={onFormChange} labelTextAlign="left" size="medium">
+        <Form.Item label={<HeaderTitle title="主题包" />}>
+          <Select
+            name="theme"
+            placeholder="请选择主题包"
+            style={{ width: '100%' }}
+          >
+            {themesList.map((item) => (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        {fields.theme === CUSTOM_THEME_SELECT_KEY && (
+          <Form.Item
+            label=" "
+          >
+            <Input
+              name="customTheme"
+              placeholder=""
+            />
+          </Form.Item>
+        )}
+        <Form.Item label={<HeaderTitle title="高级" />}>
+          <Checkbox.Group name="config" itemDirection="ver">
+            {
+              configsList.map(config => (
+                <Checkbox value={config.value} key={config.value}>{config.label}</Checkbox>
+              ))
+            }
+          </Checkbox.Group>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

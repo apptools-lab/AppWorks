@@ -5,22 +5,21 @@ import Material from '@iceworks/material-ui';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
-import RouterDetailForm from '../RouterDetailForm';
-import { IRouter } from '@/types';
+import PageDetailForm from '../PageDetailForm';
 import PageSelected from '../PageSelected';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const PageGenerator = () => {
+const PageGenerator = ({ onSubmit, value }) => {
+  const { pageName, path } = value;
+
   const intl = useIntl();
-  const [selectedBlocks, setSelectedBlocks] = useState([]);
+  const [selectedBlocks, setSelectedBlocks] = useState(value.blocks);
   const [isSorting, setIsSorting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [routerConfig, setRouterConfig] = useState<IRouter[]>([]);
-  const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
 
   async function getSources() {
     let sources = [];
@@ -28,7 +27,7 @@ const PageGenerator = () => {
       sources = await callService('material', 'getSourcesByProjectType');
     } catch (e) {
       Notification.error({
-        content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getMaterialError' }),
+        content: intl.formatMessage({ id: 'web.iceworksProjectCreator.getMaterialError' }),
       });
     }
     return sources;
@@ -44,7 +43,7 @@ const PageGenerator = () => {
     try {
       data = await callService('material', 'getData', source);
     } catch (e) {
-      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksMaterialHelper.getDataError' }) });
+      Notification.error({ content: intl.formatMessage({ id: 'web.iceworksProjectCreator.getDataError' }) });
     }
     console.log('getData', data);
     return data;
@@ -52,7 +51,7 @@ const PageGenerator = () => {
 
   function validateData({ blocks }) {
     if (!blocks.length) {
-      return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
+      return intl.formatMessage({ id: 'web.iceworksProjectCreator.pageGenerator.selectBlocks' });
     }
     return '';
   }
@@ -91,94 +90,28 @@ const PageGenerator = () => {
     setVisible(false);
   }
 
-  function resetData() {
-    setSelectedBlocks([]);
-    setRouterConfig([]);
-  }
-
   async function handleCreate() {
     const errorMessage = validateData({ blocks: selectedBlocks });
     if (errorMessage) {
       Notification.error({ content: errorMessage });
       return;
     }
-
-    try {
-      const isRouteConfigPathExists = await callService('router', 'checkConfigPathExists');
-      setIsConfigurableRouter(isRouteConfigPathExists);
-      if (isRouteConfigPathExists) {
-        // configurable router
-        const config = await callService('router', 'getAll');
-        setRouterConfig(config);
-      }
-
-      setVisible(true);
-    } catch (e) {
-      // ignore
-    }
+    setVisible(true);
   }
 
   async function handleSubmit(values) {
     setIsCreating(true);
-    const { menuType, parent } = values;
-    let pageIndexPath = '';
-    try {
-      const result = await callService('page', 'generate', {
-        blocks: selectedBlocks,
-        pageName: values.pageName,
-      });
-
-      pageIndexPath = result.pageIndexPath;
-      const { pageName } = result;
-
-      if (isConfigurableRouter) {
-        try {
-          await callService('router', 'create', { ...values, pageName });
-
-          const layout = routerConfig.find((item) => item.path === parent);
-          if (layout) {
-            const layoutName = layout.component;
-            if (menuType) {
-              await callService('menu', 'create', {
-                ...values,
-                pageName,
-                layoutName,
-                menuType,
-              });
-            }
-          }
-        } catch (error) {
-          Notification.error({ content: error.message });
-        }
-      }
-    } catch (error) {
-      Notification.error({ content: error.message });
-      setIsCreating(false);
-      throw error;
-    }
-
+    values.blocks = selectedBlocks;
+    onSubmit(values);
     setIsCreating(false);
     setVisible(false);
-    resetData();
-    const openFileAction = intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.openFile' });
-    const selectedAction = await callService(
-      'common',
-      'showInformationMessage',
-      intl.formatMessage(
-        { id: 'web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath' },
-        { path: pageIndexPath },
-      ),
-      openFileAction,
-    );
-    if (selectedAction === openFileAction) {
-      await callService('common', 'showTextDocument', pageIndexPath);
-    }
   }
 
+  console.log('current selected blocks  ===>', selectedBlocks);
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
-        <FormattedMessage id="web.iceworksMaterialHelper.pageGenerater.chooseBlock" />
+        <FormattedMessage id="web.iceworksProjectCreator.pageGenerator.chooseBlock" />
       </div>
       <div className={styles.field}>
         <Row gutter={24} className={styles.row}>
@@ -212,14 +145,13 @@ const PageGenerator = () => {
       </div>
       <div className={styles.opts}>
         <Button type="primary" size="medium" onClick={handleCreate}>
-          <FormattedMessage id="web.iceworksMaterialHelper.pageGenerater.createPage" />
+          <FormattedMessage id="web.iceworksProjectCreator.pageGenerator.createPage" />
         </Button>
       </div>
-      <RouterDetailForm
+      <PageDetailForm
+        values={{ pageName, path }}
         visible={visible}
         isCreating={isCreating}
-        routerConfig={routerConfig}
-        isConfigurableRouter={isConfigurableRouter}
         onSubmit={handleSubmit}
         onClose={onClose}
       />
@@ -227,10 +159,10 @@ const PageGenerator = () => {
   );
 };
 
-const IntlPageGenerator = () => {
+const IntlPageGenerator = ({ onSubmit, value }) => {
   return (
     <LocaleProvider>
-      <PageGenerator />
+      <PageGenerator onSubmit={onSubmit} value={value} />
     </LocaleProvider>
   );
 };

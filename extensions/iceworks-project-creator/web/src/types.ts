@@ -41,28 +41,6 @@ export interface IScaffoldMarket {
   otherScaffolds: IMaterialScaffold[];
 }
 
-export interface IRouter {
-  /**
-   * URL path
-   */
-  path: string;
-
-  /**
-   * component name
-   */
-  component?: string;
-
-  /**
-   * layout name
-   */
-  layout?: string;
-
-  /**
-   * children routes
-   */
-  children?: IRouter[];
-}
-
 export interface IPageDetail {
   pageName: string;
   path?: string;
@@ -72,10 +50,14 @@ export interface IPageDetail {
 export interface IPageDetailForm {
   isCreating: boolean;
   visible: boolean;
-  routerConfig: IRouter[];
-  isConfigurableRouter: boolean;
   onSubmit: (data: IPageDetail) => void;
   onClose: () => void;
+  values: IPageDetailValue;
+}
+
+interface IPageDetailValue {
+  pageName: string;
+  path: string;
 }
 
 export interface IMenuType {

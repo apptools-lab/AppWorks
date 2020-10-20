@@ -5,7 +5,6 @@ import { IProjectField, IDEFProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
-import CustomScaffold from './components/CustomScaffold';
 import ScaffoldMarket from './components/ScaffoldMarket';
 import CreateProjectForm from './components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
@@ -39,11 +38,6 @@ const CreateProject: React.FC = () => {
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
     </ScaffoldMarket>,
-    <CustomScaffold>
-      <Button type="primary" onClick={() => { }}>
-        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
-      </Button>
-    </CustomScaffold>,
     <CreateProjectForm
       value={curProjectField}
       onOpenFolderDialog={onOpenFolderDialog}

@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
+import * as scaffoldService from '@iceworks/material-engine/lib/scaffold';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
@@ -18,6 +19,7 @@ import {
 import i18n from './i18n';
 import { IDEFProjectField, IProjectField } from './types';
 
+const { generateScaffold } = scaffoldService;
 export * from './constant';
 
 export async function autoSetContext() {
@@ -152,15 +154,113 @@ export async function getFolderPath(openLabel = 'Open'): Promise<string | undefi
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField;
+  // TODO: use customScaffold replace scaffold
+  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField as any;
   const projectDir: string = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
+
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));
   }
-  const { npm, version } = scaffold.source;
-  const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
-  await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
+  if (scaffold.name === 'addScaffold') {
+    const scaffoldJSONPath = path.join(projectDir, '.template', 'scaffold.json');
+    await fsExtra.ensureFile(scaffoldJSONPath);
+
+    const build = {
+      theme: { package: scaffold.theme, version: '^0.x' },
+    };
+    const pkgData = {
+      name: projectName,
+      version: '0.0.1',
+      description: '',
+      scaffoldConfig: {
+        name: projectName,
+        title: projectName,
+      },
+    };
+    const layouts = [
+      {
+        type: 'builtIn',
+        name: 'BasicLayout',
+        menuConfig: true,
+        layoutConfig: {
+          shell: {
+            nav: {
+              name: 'PageNav',
+              type: 'builtIn',
+            },
+            navHoz: [],
+            branding: {
+              name: 'Logo',
+              props: {
+                image: 'https://img.alicdn.com/tfs/TB1.ZBecq67gK0jSZFHXXa9jVXa-904-826.png',
+                text: 'Logo',
+              },
+              type: 'builtIn',
+            },
+            footer: {
+              name: 'Footer',
+              type: 'builtIn',
+            },
+          },
+        },
+      },
+    ];
+    const asideMenu = [];
+    const headerMenu = [];
+    const basicLayoutRouter = { path: '/', component: 'BasicLayout', children: [] };
+    if (scaffold.asideMenu) {
+      scaffold.asideMenu.forEach(item => {
+        asideMenu.push({ name: item.pageName, path: item.path });
+        basicLayoutRouter.children.push({
+          path: item.path,
+          exact: true,
+          page: {
+            name: item.pageName,
+            blocks: {
+              packages: item.blocks.map(block => block.source.npm),
+            },
+          },
+        });
+      });
+    }
+    if (scaffold.headerMenu) {
+      scaffold.headerMenu.forEach(item => {
+        headerMenu.push({ name: item.pageName, path: item.path });
+        basicLayoutRouter.children.push({
+          path: item.path,
+          exact: true,
+          page: {
+            name: item.pageName,
+            blocks: {
+              packages: item.blocks.map(block => block.source.npm),
+            },
+          },
+        });
+      });
+    }
+    const scaffoldConfig = {
+      pkgData,
+      build,
+      layouts,
+      menu: { asideMenu, headerMenu },
+      routers: [basicLayoutRouter],
+
+    };
+    if (scaffold.config && scaffold.config instanceof Array) {
+      scaffold.config.forEach(item => { scaffoldConfig[item] = true; });
+    }
+    fsExtra.writeJsonSync(scaffoldJSONPath, scaffoldConfig, { spaces: 2 });
+    try {
+      await generateScaffold(projectDir);
+    } catch (e) {
+      console.log('eeeee ===> ', e);
+    }
+  } else {
+    const { npm, version } = scaffold.source;
+    const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
+    await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
+  }
   return projectDir;
 }
 

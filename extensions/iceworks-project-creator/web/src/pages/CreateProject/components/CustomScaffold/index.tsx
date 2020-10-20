@@ -6,15 +6,19 @@ import styles from './index.module.scss';
 
 const { Cell } = ResponsiveGrid;
 
-const CustomScaffold = () => {
+const CustomScaffold = ({ onChange, value }) => {
+  function handleScaffoldChange(config) {
+    console.log('config ===>', { ...value, ...config });
+    onChange({ ...value, ...config });
+  }
   return (
     <div className={styles.customScaffold}>
-      <ResponsiveGrid gap={10}>
+      <ResponsiveGrid gap={30}>
         <Cell colSpan={6}>
-          <ScaffoldLayout />
+          <ScaffoldLayout onChange={handleScaffoldChange} value={value} />
         </Cell>
         <Cell colSpan={6}>
-          <ScaffoldConfig />
+          <ScaffoldConfig onChange={handleScaffoldChange} value={value} />
         </Cell>
       </ResponsiveGrid>
     </div>

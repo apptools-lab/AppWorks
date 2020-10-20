@@ -15,6 +15,8 @@ import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 import { useIntl } from 'react-intl';
 
+const ADD_SCAFFOLD_KEY = 'addScaffold';
+
 const projectTypes = ['react', 'rax', 'vue'];
 
 function checkIsWireless(source) {
@@ -36,6 +38,7 @@ const ScaffoldMarket = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [pegasusCardSelected, setPegasusCardSelected] = useState<boolean>(false);
   const [visible, setVisible] = useState(false);
+  const [customScaffold, setCustomScaffold] = useState({});
 
   function closeDialog() {
     setVisible(false)
@@ -64,6 +67,15 @@ const ScaffoldMarket = ({
 
   function onScaffoldClick(scaffold) {
     onScaffoldSelect(selectedSource, scaffold);
+  }
+
+  function handleCustomScaffoldChange(values) {
+    setCustomScaffold(values);
+  }
+
+  function onCustomScaffoldSubmit() {
+    onScaffoldSelect(selectedSource, { name: ADD_SCAFFOLD_KEY, ...customScaffold });
+    setVisible(false);
   }
 
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
@@ -202,10 +214,10 @@ const ScaffoldMarket = ({
                   {
                     curProjectField.scaffold && <AddScaffoldCard
                       onClick={() => {
-                        onScaffoldClick({ name: 'addScaffold' });
+                        onScaffoldClick({ name: ADD_SCAFFOLD_KEY });
                         setVisible(true);
                       }}
-                      selected={curProjectField.scaffold.name === 'addScaffold'}
+                      selected={curProjectField.scaffold.name === ADD_SCAFFOLD_KEY}
                     />
                   }
                   {!!otherScaffolds.length && (
@@ -262,9 +274,9 @@ const ScaffoldMarket = ({
         style={{ width: 860 }}
         onCancel={() => closeDialog()}
         onClose={() => closeDialog()}
-        onOk={() => { }}
+        onOk={onCustomScaffoldSubmit}
       >
-        <CustomScaffold />
+        <CustomScaffold value={customScaffold} onChange={handleCustomScaffoldChange} />
       </Dialog>
     </div>
   );
