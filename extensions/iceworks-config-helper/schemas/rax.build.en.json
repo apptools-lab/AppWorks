@@ -79,16 +79,6 @@
       "default": true,
       "examples": [false]
     },
-    "outputAssetsPath": {
-      "type": "object",
-      "description": "Modify the built css/js file directory.",
-      "default": {},
-      "examples": [{
-        "js": "js",
-        "css": "css"
-      }],
-      "additionalProperties": true
-    },
     "outputDir": {
       "type": "string",
       "description": "Modify the built file directory.",
@@ -285,12 +275,6 @@
         "type": "object"
       },
       "additionalItems": true
-    },
-    "ignoreHtmlTemplate": {
-      "type": "boolean",
-      "description": "After it is turned on, all built-in html-webpack-plugin settings will be removed when the build is built, and html files will no longer be generated.",
-      "default": false,
-      "examples": [false]
     },
     "eslint": {
       "oneOf": [{

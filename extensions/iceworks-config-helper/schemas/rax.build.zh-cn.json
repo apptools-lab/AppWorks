@@ -76,16 +76,6 @@
       "default": true,
       "examples": [false]
     },
-    "outputAssetsPath": {
-      "type": "object",
-      "description": "修改构建后的 css/js 文件目录，默认情况下 css 在 build/css/ 下，js 在 build/js/ 下",
-      "default": {},
-      "examples": [{
-        "js": "js",
-        "css": "css"
-      }],
-      "additionalProperties": true
-    },
     "outputDir": {
       "type": "string",
       "description": "修改构建后的文件目录",
@@ -277,12 +267,6 @@
         "type": "object"
       },
       "additionalItems": true
-    },
-    "ignoreHtmlTemplate": {
-      "type": "boolean",
-      "description": "开启后，在 build 构建时，将移除所有内置 html-webpack-plugin 设置，不再生成 html 文件。",
-      "default": false,
-      "examples": [false]
     },
     "eslint": {
       "oneOf": [{
