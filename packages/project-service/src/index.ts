@@ -102,7 +102,7 @@ export async function getProjectFramework() {
   let framework = 'unknown';
   try {
     const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
-    if (dependencies['rax-app']) {
+    if (dependencies['rax-app'] || devDependencies['rax-app']) {
       framework = 'rax-app';
     }
     if (devDependencies['ice.js'] || dependencies['ice.js']) {
