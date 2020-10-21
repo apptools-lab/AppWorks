@@ -11,11 +11,9 @@
       "type": "object",
       "description": "使用别名简化引入语句。在 icejs 默认配置了 { \"@\": \"./src/\" }。",
       "default": {},
-      "examples": [
-        {
-          "@components": "src/components/"
-        }
-      ]
+      "examples": [{
+        "@components": "src/components/"
+      }]
     },
     "publicPath": {
       "type": "string",
@@ -43,8 +41,7 @@
       "additionalProperties": true
     },
     "hash": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "string",
           "examples": ["contenthash"]
         },
@@ -59,8 +56,7 @@
       "properties": {}
     },
     "injectBabel": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "string"
         },
         {
@@ -70,7 +66,7 @@
           "examples": [false]
         }
       ],
-      "description": "默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 targets 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 runtime。 如果想手动 polyfill，可以将配置设置为 false，工程将不会进行自动的 polyfill。",
+      "description": "默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 browserslist 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 runtime。 如果想手动 polyfill，可以将配置设置为 false，工程将不会进行自动的 polyfill。",
       "default": false,
       "properties": {}
     },
@@ -84,12 +80,10 @@
       "type": "object",
       "description": "修改构建后的 css/js 文件目录，默认情况下 css 在 build/css/ 下，js 在 build/js/ 下",
       "default": {},
-      "examples": [
-        {
-          "js": "js",
-          "css": "css"
-        }
-      ],
+      "examples": [{
+        "js": "js",
+        "css": "css"
+      }],
       "additionalProperties": true
     },
     "outputDir": {
@@ -102,30 +96,26 @@
       "type": "object",
       "description": "配置 webpack 的 devServer.proxy 属性。建议使用 proxy 来设置代理而不要修改 webpack 的 devServer.proxy",
       "default": {},
-      "examples": [
-        {
-          "/**": {
-            "enable": true,
-            "target": "http://127.0.0.1:6001"
-          }
+      "examples": [{
+        "/**": {
+          "enable": true,
+          "target": "http://127.0.0.1:6001"
         }
-      ],
+      }],
       "additionalProperties": true
     },
     "devServer": {
       "type": "object",
       "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。",
       "default": {},
-      "examples": [
-        {
-          "compress": true,
-          "disableHostCheck": true,
-          "clientLogLevel": "error",
-          "hot": true,
-          "quiet": true,
-          "overlay": false
-        }
-      ],
+      "examples": [{
+        "compress": true,
+        "disableHostCheck": true,
+        "clientLogLevel": "error",
+        "hot": true,
+        "quiet": true,
+        "overlay": false
+      }],
       "additionalProperties": true,
       "properties": {
         "compress": {
@@ -161,18 +151,25 @@
         }
       }
     },
-    "targets": {
+    "browserslist": {
       "type": "object",
-      "description": "配置 @babel/preset-env 的 targets，配置浏览器最低版本，新配置的 targets 会覆盖默认值。",
+      "description": "配置 @babel/preset-env 的 browserslist，配置浏览器最低版本，新配置的 browserslist 会覆盖默认值。",
       "default": {},
-      "examples": [
-        {
-          "chrome": 49,
-          "ie": 11
-        }
-      ],
+      "examples": [{
+        "chrome": 49,
+        "ie": 11
+      }],
       "required": [],
       "additionalProperties": true
+    },
+    "targets": {
+      "type": "array",
+      "description": "配置构建小程序平台",
+      "default": [],
+      "examples": [
+        ["miniapp", "wechat-miniprogram"]
+      ],
+      "additionalItems": true
     },
     "vendor": {
       "type": "boolean",
@@ -202,17 +199,17 @@
       "type": "array",
       "description": "默认情况下 babel-loader 会编译相关模块以兼容 IE11。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。",
       "default": [],
-      "examples": [["@alifd/next"]],
+      "examples": [
+        ["@alifd/next"]
+      ],
       "additionalItems": true,
       "items": {
-        "anyOf": [
-          {
-            "type": "string",
-            "description": "Compile module dependencies under node_modules.",
-            "default": "",
-            "examples": ["@alifd/next"]
-          }
-        ]
+        "anyOf": [{
+          "type": "string",
+          "description": "Compile module dependencies under node_modules.",
+          "default": "",
+          "examples": ["@alifd/next"]
+        }]
       }
     },
     "cssLoaderOptions": {
@@ -261,7 +258,9 @@
       "type": "array",
       "description": "为 babel-loader 的配置追加额外的 babel plugin。",
       "default": [],
-      "examples": [[]],
+      "examples": [
+        []
+      ],
       "items": {
         "type": "object"
       },
@@ -271,7 +270,9 @@
       "type": "array",
       "description": "为 babel-loader 的配置追加额外的 babel preset。如果配置 preset 与内置相同，则优先使用 babelPresets 中的配置内容。",
       "default": [],
-      "examples": [[]],
+      "examples": [
+        []
+      ],
       "items": {
         "type": "object"
       },
@@ -284,8 +285,7 @@
       "examples": [false]
     },
     "eslint": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "boolean"
         },
         {
@@ -332,8 +332,7 @@
       ],
       "additionalItems": true,
       "items": {
-        "anyOf": [
-          {
+        "anyOf": [{
             "type": "array",
             "description": "详见 https://ice.work/docs/guide/advance/fusion .",
             "default": [],
@@ -347,8 +346,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "详见 https://ice.work/docs/guide/advance/fusion .",
                   "default": "",
@@ -358,11 +356,9 @@
                   "type": "object",
                   "description": "build-plugin-fusion 插件设置.",
                   "default": {},
-                  "examples": [
-                    {
-                      "themePackage": "@alifd/theme-design-pro"
-                    }
-                  ],
+                  "examples": [{
+                    "themePackage": "@alifd/theme-design-pro"
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "themePackage": {
@@ -392,8 +388,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "详见 https://ice.work/docs/guide/advance/fusion .",
                   "default": "",
@@ -403,24 +398,20 @@
                   "type": "object",
                   "description": "设置 build-plugin-antd 插件.",
                   "default": {},
-                  "examples": [
-                    {
-                      "themeConfig": {
-                        "primary-color": "#1DA57A"
-                      }
+                  "examples": [{
+                    "themeConfig": {
+                      "primary-color": "#1DA57A"
                     }
-                  ],
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "themeConfig": {
                       "type": "string",
                       "description": "自定义主题",
                       "default": "",
-                      "examples": [
-                        {
-                          "primary-color": "#1DA57A"
-                        }
-                      ]
+                      "examples": [{
+                        "primary-color": "#1DA57A"
+                      }]
                     },
                     "importOptions": {
                       "type": "object",
@@ -459,8 +450,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "build-plugin-css-assets-local 提供将 css 中的网络资源本地化能力",
                   "default": "",
@@ -470,12 +460,10 @@
                   "type": "object",
                   "description": "build-plugin-css-assets-local 设置",
                   "default": {},
-                  "examples": [
-                    {
-                      "outputPath": "assets",
-                      "relativeCssPath": "../"
-                    }
-                  ],
+                  "examples": [{
+                    "outputPath": "assets",
+                    "relativeCssPath": "../"
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "outputPath": {
@@ -507,8 +495,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "详见 https://ice.work/docs/guide/develop/plugin-list .",
                   "default": "",
@@ -518,28 +505,26 @@
                   "type": "object",
                   "description": "build-plugin-moment-locales config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "locales": ["zh-cn"]
-                    }
-                  ],
+                  "examples": [{
+                    "locales": ["zh-cn"]
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "locales": {
                       "type": "array",
                       "description": "build-plugin-moment-locales 插件设置 ",
                       "default": [],
-                      "examples": [["zh-cn"]],
+                      "examples": [
+                        ["zh-cn"]
+                      ],
                       "additionalItems": true,
                       "items": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "description": "build-plugin-moment-locales 插件本地化设置",
-                            "default": "",
-                            "examples": ["zh-cn"]
-                          }
-                        ]
+                        "anyOf": [{
+                          "type": "string",
+                          "description": "build-plugin-moment-locales 插件本地化设置",
+                          "default": "",
+                          "examples": ["zh-cn"]
+                        }]
                       }
                     }
                   }
@@ -563,8 +548,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "插件提供自动加载 assts 资源能力",
                   "default": "",
@@ -574,11 +558,9 @@
                   "type": "object",
                   "description": "plugin-load-assets 设置.",
                   "default": {},
-                  "examples": [
-                    {
-                      "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
-                    }
-                  ],
+                  "examples": [{
+                    "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "assets": {
