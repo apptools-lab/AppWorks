@@ -8,17 +8,15 @@ interface IScaffoldCardProps {
   title: string | React.ReactNode;
   content?: string | React.ReactNode;
   selected: boolean;
-  style?: Record<string, unknown>;
   onClick?: any;
   media?: string;
 }
 
-const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media, style }) => {
+const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media }) => {
   return (
     <div>
       <Card
         free
-        style={{ ...style }}
         className={classnames(styles.card, { [styles.active]: selected })}
         onClick={onClick}
       >
