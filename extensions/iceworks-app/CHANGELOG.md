@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.8
+
+- fix: material sources edit form dialog will disappear before error 
+
 ## 0.5.7
 
 - fix: unable to open the quick picks
