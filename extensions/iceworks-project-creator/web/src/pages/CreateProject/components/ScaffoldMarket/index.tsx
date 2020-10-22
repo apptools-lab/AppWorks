@@ -104,8 +104,6 @@ const ScaffoldMarket = ({
   useEffect(() => {
     initData();
   }, [materialSources]);
-
-  console.log('selectedSource', selectedSource);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
