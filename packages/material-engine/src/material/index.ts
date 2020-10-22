@@ -172,7 +172,7 @@ export const addSource = async function (materialSource: IMaterialSource) {
     throw Error(i18n.format('package.materialService.index.materialDataError'));
   }
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-  materialSources.push({ ...materialSource, type });
+  materialSources.unshift({ ...materialSource, type });
   saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, materialSources);
   return materialSources;
 };

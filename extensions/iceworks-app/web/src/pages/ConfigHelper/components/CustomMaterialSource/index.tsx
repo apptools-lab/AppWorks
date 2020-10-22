@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from 'react';
-import { Icon, List, Button, Dialog, Avatar, Balloon } from '@alifd/next';
+import { Icon, List, Button, Dialog, Avatar, Balloon, Notification } from '@alifd/next';
 import { IMaterialSource } from '@iceworks/material-utils';
 import { FormattedMessage, useIntl } from 'react-intl';
 import editIcon from '../../../../../public/assets/edit.svg';
@@ -29,6 +29,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
   addMaterialVisible = false,
 }) => {
   const intl = useIntl();
+  const [loading, setLoading] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(addMaterialVisible);
   const [currentMaterialSource, setCurrentMaterialSource] = useState<IMaterialSource | Record<string, unknown>>({});
   const [operation, setOperation] = useState<Operation.Create | Operation.Edit>();
@@ -37,14 +38,21 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
 
   const onDialogCancel = () => setVisible(false);
 
-  const onFormSubmit = (values: IMaterialSource) => {
-    if (Operation.Create === operation) {
-      onSourceAdd(values);
+  const onFormSubmit = async (values: IMaterialSource) => {
+    setLoading(true);
+    try {
+      if (Operation.Create === operation) {
+        await onSourceAdd(values);
+      }
+      if (Operation.Edit === operation) {
+        await onSourceEdit(values, currentMaterialSource as IMaterialSource);
+      }
+      onDialogCancel();
+    } catch (error) {
+      Notification.error({ content: error.message });
+    } finally {
+      setLoading(false);
     }
-    if (Operation.Edit === operation) {
-      onSourceEdit(values, currentMaterialSource as IMaterialSource);
-    }
-    onDialogCancel();
   };
 
   const onAdd = () => {
@@ -114,6 +122,7 @@ const CustomMaterialSource: React.FC<ICustomMaterialSource> = ({
       </div>
       <Suspense fallback={intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.customMaterialSource.loading' })}>
         <MaterialSourceForm
+          loading={loading}
           value={currentMaterialSource}
           title={dialogTitle}
           visible={visible}
