@@ -91,12 +91,12 @@ const addPageQuickPickItems: any[] = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
-    command: 'iceworks-ui-builder.create-page',
+    command: 'iceworks-material-helper.page-creator.start',
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
-    command: 'iceworks-ui-builder.generate-page',
+    command: 'iceworks-material-helper.page-generator.start',
   },
 ];
 function showAddPageQuickPicks() {

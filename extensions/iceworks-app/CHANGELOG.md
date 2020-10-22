@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.7
+
+- fix: unable to open the quick picks
+
 ## 0.5.6
 
 - chore: change extension name
