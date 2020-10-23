@@ -16,12 +16,7 @@
     "sourceMap": true,
     "rootDir": "src",
     "strict": false,
-    "experimentalDecorators": true,
-    "paths": {
-      "kaitian": [
-        "./node_modules/@ali/kaitian"
-      ]
-    }
+    "experimentalDecorators": true
   },
   "exclude": [
     ".vscode-test"

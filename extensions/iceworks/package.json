@@ -5,7 +5,8 @@
   "publisher": "iceworks-team",
   "version": "0.12.0",
   "engines": {
-    "vscode": "^1.41.0"
+    "vscode": "^1.41.0",
+    "kaitian": "^1.20.0"
   },
   "categories": [
     "Extension Packs",
@@ -98,10 +99,9 @@
   "dependencies": {
     "@ali/ide-extensions-iceworks-project-creator": "^0.3.17",
     "@ali/ide-extensions-iceworks-ui-builder": "^0.2.0",
-    "@ali/kit-runner": "latest"
+    "@ali/kit-runner": "^0.0.2-alpha.4"
   },
   "devDependencies": {
-    "@ali/kaitian": "latest",
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
     "less": "^3.11.3",
