@@ -10,9 +10,10 @@ interface IMaterialSourceForm {
   visible: boolean;
   onSubmit: (value: any) => void;
   onCancel: () => void;
+  loading: boolean;
 }
 
-const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel }) => {
+const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSubmit, visible, onCancel, loading }) => {
   const intl = useIntl();
   const onFormSubmit = (values, errors) => {
     if (errors) {
@@ -73,10 +74,10 @@ const MaterialSourceForm: React.FC<IMaterialSourceForm> = ({ title, value, onSub
           />
         </Form.Item>
         <Form.Item className={styles.formBtns}>
-          <Form.Submit type="primary" onClick={onFormSubmit} validate>
+          <Form.Submit type="primary" onClick={onFormSubmit} validate loading={loading}>
             <FormattedMessage id="web.iceworksApp.ConfigHelper.MaterialSourceForm.confirm" />
           </Form.Submit>
-          <Button onClick={onCancel} className={styles.btn}>
+          <Button onClick={onCancel} className={styles.btn} disabled={loading}>
             <FormattedMessage id="web.iceworksApp.ConfigHelper.MaterialSourceForm.cancel" />
           </Button>
         </Form.Item>
