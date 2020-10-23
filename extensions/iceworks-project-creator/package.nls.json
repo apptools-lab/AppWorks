@@ -1,3 +1,4 @@
 {
-  "iceworksProjectCreator.commands.start.title": "Iceworks: Create Application"
+  "iceworksProjectCreator.create-project.commands.start.title": "Iceworks: Create Application",
+  "iceworksProjectCreator.custom-scaffold.commands.start.title": "Iceworks: Custom Scaffold"
 }

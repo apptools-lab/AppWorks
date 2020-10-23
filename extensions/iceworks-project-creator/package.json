@@ -19,15 +19,20 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:iceworks-project-creator.start",
+    "onCommand:iceworks-project-creator.create-project.start",
+    "onCommand:iceworks-project-creator.custom-scaffold.start",
     "onStartupFinished"
   ],
   "main": "./build/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-project-creator.start",
-        "title": "%iceworksProjectCreator.commands.start.title%"
+        "command": "iceworks-project-creator.create-project.start",
+        "title": "%iceworksProjectCreator.create-project.commands.start.title%"
+      },
+      {
+        "command": "iceworks-project-creator.custom-scaffold.start",
+        "title": "%iceworksProjectCreator.custom-scaffold.commands.start.title%"
       }
     ],
     "configuration": {

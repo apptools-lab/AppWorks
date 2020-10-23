@@ -17,44 +17,79 @@ export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtension(context, name);
 
-  let webviewPanel: vscode.WebviewPanel | undefined;
+  let projectCreatorwebviewPanel: vscode.WebviewPanel | undefined;
 
-  function activeWebview() {
+  function activeProjectCreatorWebview() {
     recorder.recordActivate();
 
-    if (webviewPanel) {
-      webviewPanel.reveal();
+    if (projectCreatorwebviewPanel) {
+      projectCreatorwebviewPanel.reveal();
     } else {
-      webviewPanel = window.createWebviewPanel(
+      projectCreatorwebviewPanel = window.createWebviewPanel(
         'iceworks',
-        i18n.format('extension.iceworksProjectCreator.extension.webViewTitle'),
+        i18n.format('extension.iceworksProjectCreator.createProject.webViewTitle'),
         ViewColumn.One,
         {
           enableScripts: true,
           retainContextWhenHidden: true,
         },
       );
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
-      webviewPanel.onDidDispose(
+      projectCreatorwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject', true);
+      projectCreatorwebviewPanel.onDidDispose(
         () => {
-          webviewPanel = undefined;
+          projectCreatorwebviewPanel = undefined;
         },
         null,
         context.subscriptions,
       );
-      connectService(webviewPanel, context, { services, recorder });
+      connectService(projectCreatorwebviewPanel, context, { services, recorder });
     }
   }
 
   subscriptions.push(
-    registerCommand('iceworks-project-creator.start', () => {
-      activeWebview();
+    registerCommand('iceworks-project-creator.create-project.start', () => {
+      activeProjectCreatorWebview();
+    }),
+  );
+
+  let customScaffoldwebviewPanel: vscode.WebviewPanel | undefined;
+
+  function activeCustomScaffoldWebview() {
+    recorder.recordActivate();
+
+    if (customScaffoldwebviewPanel) {
+      customScaffoldwebviewPanel.reveal();
+    } else {
+      customScaffoldwebviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksProjectCreator.customScaffold.webViewTitle'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        },
+      );
+      customScaffoldwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', true);
+      customScaffoldwebviewPanel.onDidDispose(
+        () => {
+          customScaffoldwebviewPanel = undefined;
+        },
+        null,
+        context.subscriptions,
+      );
+      connectService(customScaffoldwebviewPanel, context, { services, recorder });
+    }
+  }
+
+  subscriptions.push(
+    registerCommand('iceworks-project-creator.custom-scaffold.start', () => {
+      activeCustomScaffoldWebview();
     }),
   );
 
   const stateKey = 'iceworks.projectCreator.autoActivedWebview';
   if (!globalState.get(stateKey)) {
-    activeWebview();
+    activeProjectCreatorWebview();
     globalState.update(stateKey, true);
   }
 }
