@@ -28,5 +28,6 @@
       }
     ],
     "./build.plugin.js"
-  ]
+  ],
+  "mpa": true
 }

@@ -6,8 +6,6 @@ import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
-import AddScaffoldCard from '@/components/AddScaffoldCard';
-import CustomScaffold from '../CustomScaffold';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
 import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
@@ -37,12 +35,6 @@ const ScaffoldMarket = ({
   const [otherScaffolds, setOtherScaffolds] = useState<IMaterialScaffold[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [pegasusCardSelected, setPegasusCardSelected] = useState<boolean>(false);
-  const [visible, setVisible] = useState(false);
-  const [customScaffold, setCustomScaffold] = useState({});
-
-  function closeDialog() {
-    setVisible(false)
-  }
 
   async function onMaterialSourceClick(scaffold: IMaterialSource) {
     setPegasusCardSelected(false);
@@ -67,15 +59,6 @@ const ScaffoldMarket = ({
 
   function onScaffoldClick(scaffold) {
     onScaffoldSelect(selectedSource, scaffold);
-  }
-
-  function handleCustomScaffoldChange(values) {
-    setCustomScaffold(values);
-  }
-
-  function onCustomScaffoldSubmit() {
-    onScaffoldSelect(selectedSource, { name: ADD_SCAFFOLD_KEY, ...customScaffold });
-    setVisible(false);
   }
 
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
@@ -211,15 +194,6 @@ const ScaffoldMarket = ({
                         />
                       )}
                   </div>
-                  {
-                    curProjectField.scaffold && <AddScaffoldCard
-                      onClick={() => {
-                        onScaffoldClick({ name: ADD_SCAFFOLD_KEY });
-                        setVisible(true);
-                      }}
-                      selected={curProjectField.scaffold.name === ADD_SCAFFOLD_KEY}
-                    />
-                  }
                   {!!otherScaffolds.length && (
                     <Collapse className={styles.collapse}>
                       <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
@@ -268,16 +242,6 @@ const ScaffoldMarket = ({
         </div>
       </div>
       {pegasusCardSelected ? null : <div className={styles.action}>{children}</div>}
-      <Dialog
-        title="创建自定义模板"
-        visible={visible}
-        style={{ width: 860 }}
-        onCancel={() => closeDialog()}
-        onClose={() => closeDialog()}
-        onOk={onCustomScaffoldSubmit}
-      >
-        <CustomScaffold value={customScaffold} onChange={handleCustomScaffoldChange} />
-      </Dialog>
     </div>
   );
 };

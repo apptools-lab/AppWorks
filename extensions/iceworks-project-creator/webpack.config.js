@@ -13,6 +13,8 @@ const config = {
   },
   externals: {
     vscode: 'commonjs vscode',
+    prettier: 'commonjs prettier',
+    '@iceworks/project-service': 'commonjs @iceworks/project-service',
   },
   resolve: {
     extensions: ['.ts', '.js'],
