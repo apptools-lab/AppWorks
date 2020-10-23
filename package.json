@@ -84,5 +84,9 @@
     "**/*.{js,jsx,ts,tsx}": "xima exec eslint",
     "**/*.{css,scss,less}": "xima exec stylelint",
     "**/*.md": "npm run docs:check"
+  },
+  "dependencies": {
+    "eslint-config-airbnb": "^18.2.0",
+    "stylelint-config-ali": "^0.3.4"
   }
 }
