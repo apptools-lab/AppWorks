@@ -66,6 +66,7 @@
     "jest": "^25.1.0",
     "jest-extended": "^0.11.5",
     "lerna": "^3.20.2",
+    "lodash.merge": "^4.6.2",
     "lodash.orderby": "^4.6.0",
     "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",

@@ -32,64 +32,6 @@
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
-  "activationEvents": [
-    "*"
-  ],
-  "contributes": {
-    "commands": [
-      {
-        "command": "iceworks-ui-builder.design-component",
-        "title": "%iceworksUIBuilder.commands.designComponent.title%"
-      },
-      {
-        "command": "iceworks-project-creator.start",
-        "title": "%iceworksProjectCreator.commands.start.title%"
-      }
-    ],
-    "configuration": {
-      "title": "Iceworks",
-      "properties": {
-        "iceworks.generateComponentPath": {
-          "type": "string",
-          "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description%"
-        },
-        "iceworks.materialSources": {
-          "type": "array",
-          "default": [],
-          "description": "Iceworks materialSources"
-        },
-        "iceworks.workspace": {
-          "type": "string",
-          "default": "",
-          "description": "Iceworks workspace"
-        },
-        "iceworks.user": {
-          "type": "object",
-          "default": {
-            "empId": "",
-            "account": "",
-            "gitlabToken": ""
-          },
-          "properties": {
-            "empId": {
-              "type": "string",
-              "description": "工号"
-            },
-            "account": {
-              "type": "string",
-              "description": "域账号"
-            },
-            "gitlabToken": {
-              "type": "string",
-              "description": "gitlab 私人 token"
-            }
-          },
-          "description": "Iceworks user information"
-        }
-      }
-    }
-  },
   "icon": "assets/logo.png",
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {
