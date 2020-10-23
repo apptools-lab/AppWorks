@@ -29,5 +29,9 @@
     ],
     "./build.plugin.js"
   ],
-  "mpa": true
+  "mpa": {
+    "template": {
+      "web.html": ["CreateProject", "CustomScaffold"]
+    }
+  }
 }

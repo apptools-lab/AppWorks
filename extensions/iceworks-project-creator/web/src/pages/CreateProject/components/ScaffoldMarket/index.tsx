@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Notification, Loading, Button, Icon, Divider, Dialog } from '@alifd/next';
+import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/next';
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import Card from '@/components/Card';
 import NotFound from '@/components/NotFound';
@@ -12,8 +12,6 @@ import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant'
 import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 import { useIntl } from 'react-intl';
-
-const ADD_SCAFFOLD_KEY = 'addScaffold';
 
 const projectTypes = ['react', 'rax', 'vue'];
 
