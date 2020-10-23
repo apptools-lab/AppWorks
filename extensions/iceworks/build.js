@@ -10,7 +10,7 @@ execSync(`projectRoot=${path.join(__dirname, 'src')} node ./node_modules/.bin/ki
 
 console.log('=======reorganize output files=======');
 // move out kit-buider node entry
-fse.moveSync(path.join(__dirname, './lib/node_modules/@ali/kit-runner/src/node'), path.join(__dirname, './lib/node'), {overwrite: true});
+fse.moveSync(path.join(__dirname, './lib/node_modules/_@ali_kit-runner@0.0.2-alpha.4@@ali/kit-runner/src/node'), path.join(__dirname, './lib/node'), {overwrite: true});
 fse.removeSync(path.join(__dirname, './lib/node_modules'));
 
 // remove recompiled kit code

@@ -98,7 +98,7 @@
   "dependencies": {
     "@ali/ide-extensions-iceworks-project-creator": "^0.3.17",
     "@ali/ide-extensions-iceworks-ui-builder": "^0.2.0",
-    "@ali/kit-runner": "^0.0.2-alpha.4"
+    "@ali/kit-runner": "latest"
   },
   "devDependencies": {
     "@ali/kaitian": "latest",
