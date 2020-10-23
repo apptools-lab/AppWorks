@@ -25,23 +25,15 @@ const ConfigHelper = () => {
   const intl = useIntl();
 
   const onSourceAdd = async (materialSource: IMaterialSource) => {
-    try {
-      const newMaterialSources = await callService('material', 'addSource', materialSource);
-      setMaterialSources(newMaterialSources);
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.addMaterialSuccess' }) });
-    } catch (e) {
-      Notification.error({ content: e.message });
-    }
+    const newMaterialSources = await callService('material', 'addSource', materialSource);
+    setMaterialSources(newMaterialSources);
+    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.addMaterialSuccess' }) });
   };
 
   const onMaterialSourceEdit = async (materialSource: IMaterialSource, originMaterialSource: IMaterialSource) => {
-    try {
-      const newMaterialSources = await callService('material', 'updateSource', materialSource, originMaterialSource);
-      setMaterialSources(newMaterialSources);
-      Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.editMaterialSuccess' }) });
-    } catch (e) {
-      Notification.error({ content: e.message });
-    }
+    const newMaterialSources = await callService('material', 'updateSource', materialSource, originMaterialSource);
+    setMaterialSources(newMaterialSources);
+    Notification.success({ content: intl.formatMessage({ id: 'web.iceworksApp.ConfigHelper.index.editMaterialSuccess' }) });
   };
 
   const onMaterialSourceDelete = async (materialSource: IMaterialSource) => {

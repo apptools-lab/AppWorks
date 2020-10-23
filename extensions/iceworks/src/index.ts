@@ -3,5 +3,4 @@ export default {
     activate: 'activate',
     deactivate: 'deactivate',
   },
-  entry: []
 };

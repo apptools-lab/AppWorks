@@ -1,12 +1,9 @@
 {
-  "name": "@ali/ide-extensions-iceworks-project-creator",
+  "name": "iceworks-project-creator",
   "displayName": "Application Creator",
   "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.3.17",
-  "files": [
-    "build"
-  ],
+  "version": "0.3.18",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -104,8 +101,5 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }

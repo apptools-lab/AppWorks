@@ -1,12 +1,9 @@
 {
-  "name": "@ali/ide-extensions-iceworks-ui-builder",
+  "name": "iceworks-ui-builder",
   "displayName": "UI Designer",
   "description": "Build UI by visual way",
   "publisher": "iceworks-team",
   "version": "0.2.0",
-  "files": [
-    "build"
-  ],
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -72,8 +69,5 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }

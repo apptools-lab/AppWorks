@@ -1,19 +1,80 @@
 {
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
-  "title": "rax-app 的工程配置",
-  "required": ["plugins"],
+  "title": "rax-app build.json",
+  "description": "rax-app 的工程配置",
+  "default": {},
+  "examples": [{}],
+  "required": [],
   "properties": {
+    "alias": {
+      "type": "object",
+      "description": "使用别名简化引入语句。在 rax-app 默认配置了 { \"@\": \"./src/\" }。",
+      "default": {},
+      "examples": [{
+        "@components": "src/components/"
+      }]
+    },
     "publicPath": {
       "type": "string",
       "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 build 命令时生效。",
-      "default": "/"
+      "default": "",
+      "examples": ["/"]
     },
     "devPublicPath": {
       "type": "string",
       "description": "配置 webpack 的 output.publicPath 属性。 仅在运行 start 命令时生效。",
-      "default": "/"
+      "default": "",
+      "examples": ["/"]
+    },
+    "sourceMap": {
+      "type": "boolean",
+      "description": "是否生成 sourceMap",
+      "default": false,
+      "examples": [false]
+    },
+    "externals": {
+      "type": "object",
+      "description": "将某些 import 的包排除在 bundle 之外，在运行时再去外部获取这些依赖。 比如，从 CDN 引入 React 资源，而不是将它打包, 详细配置同 webpack 的 extenerals 请参考 https://webpack.js.org/configuration/externals .",
+      "default": {},
+      "examples": [{}],
+      "additionalProperties": true
+    },
+    "hash": {
+      "oneOf": [{
+          "type": "string",
+          "examples": ["contenthash"]
+        },
+        {
+          "type": "boolean",
+          "default": false,
+          "examples": [false]
+        }
+      ],
+      "description": "如果希望构建后的资源带 hash 版本，可以将 hash 设置为 true，也可以通过设置为 contenthash 的方式：\"hash\": \"contenthash\"",
+      "default": false,
+      "properties": {}
+    },
+    "injectBabel": {
+      "oneOf": [{
+          "type": "string"
+        },
+        {
+          "type": "boolean",
+
+          "default": false,
+          "examples": [false]
+        }
+      ],
+      "description": "默认情况下会注入 core-js/stable 和 regenerator-runtime/runtime，根据 browserslist 配置的兼容浏览器进行 polyfill，实现按需添加。 开发类库项目，可以将配置设置为 runtime。 如果想手动 polyfill，可以将配置设置为 false，工程将不会进行自动的 polyfill。",
+      "default": false,
+      "properties": {}
+    },
+    "minify": {
+      "type": "boolean",
+      "description": "构建后的资源将进行压缩，如果不希望资源被压缩可以修改为 false",
+      "default": true,
+      "examples": [false]
     },
     "outputDir": {
       "type": "string",
@@ -21,25 +82,31 @@
       "default": "",
       "examples": ["build"]
     },
-    "hash": {
-      "type": "boolean",
-      "description": "如果希望构建后的资源带 hash 版本，可以将 hash 设置为 true",
-      "default": false
-    },
-    "alias": {
+    "proxy": {
       "type": "object",
-      "description": "使用别名简化引入语句",
+      "description": "配置 webpack 的 devServer.proxy 属性。建议使用 proxy 来设置代理而不要修改 webpack 的 devServer.proxy",
       "default": {},
-      "examples": [
-        {
-          "@components": "src/components/"
+      "examples": [{
+        "/**": {
+          "enable": true,
+          "target": "http://127.0.0.1:6001"
         }
-      ]
+      }],
+      "additionalProperties": true
     },
     "devServer": {
       "type": "object",
-      "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制",
+      "description": " webpack-dev-server 将采用这个选项下的内容，你可以配置多项属性来进行定制注意，devServer 不支持 port 属性配置，如需改变端口，请通过命令行参数传入。",
       "default": {},
+      "examples": [{
+        "compress": true,
+        "disableHostCheck": true,
+        "clientLogLevel": "error",
+        "hot": true,
+        "quiet": true,
+        "overlay": false
+      }],
+      "additionalProperties": true,
       "properties": {
         "compress": {
           "type": "boolean",
@@ -71,101 +138,238 @@
           "type": "boolean",
           "description": "当出现编译器错误或警告时，在浏览器中显示全屏覆盖。这将只显示编译器错误。",
           "default": false
-        },
-        "port": {
-          "type": "integer",
-          "description": "监听的端口号",
-          "default": 9999
         }
       }
     },
+    "browserslist": {
+      "type": "object",
+      "description": "配置 @babel/preset-env 的 browserslist，配置浏览器最低版本，新配置的 browserslist 会覆盖默认值。",
+      "default": {},
+      "examples": [{
+        "chrome": 49,
+        "ie": 11
+      }],
+      "required": [],
+      "additionalProperties": true
+    },
+    "targets": {
+      "type": "array",
+      "description": "配置构建小程序平台",
+      "default": [],
+      "examples": [
+        ["miniapp", "wechat-miniprogram"]
+      ],
+      "additionalItems": true
+    },
+    "vendor": {
+      "type": "boolean",
+      "description": "配置是否生成 vendor",
+      "default": true,
+      "examples": [true]
+    },
+    "libraryTarget": {
+      "type": "string",
+      "description": "配置 webpack 的 output.libraryTarget 属性。",
+      "default": "",
+      "examples": [""]
+    },
+    "library": {
+      "type": "string",
+      "description": "配置 webpack 的 output.library 属性。",
+      "default": "",
+      "examples": [""]
+    },
+    "libraryExport": {
+      "type": "string",
+      "description": "配置 webpack 的 output.libraryExport 属性。",
+      "default": "",
+      "examples": [""]
+    },
+    "compileDependencies": {
+      "type": "array",
+      "description": "默认情况下 babel-loader 会编译相关模块以兼容 IE11。如果需要 babel 去编译 node_modules 下的指定文件，可以在这个配置快捷添加。",
+      "default": [],
+      "examples": [
+        ["@alifd/next"]
+      ],
+      "additionalItems": true,
+      "items": {
+        "anyOf": [{
+          "type": "string",
+          "description": "Compile module dependencies under node_modules.",
+          "default": "",
+          "examples": ["@alifd/next"]
+        }]
+      }
+    },
+    "cssLoaderOptions": {
+      "type": "object",
+      "description": "为 css-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/css-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "lessLoaderOptions": {
+      "type": "object",
+      "description": "为 less-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/less-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "sassLoaderOptions": {
+      "type": "object",
+      "description": "为 sass-loader 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 https://webpack.js.org/loaders/sass-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "postcssrc": {
+      "type": "boolean",
+      "description": "开启配置项后，工程上将清空内置 postcss 配置，读取 postcss 配置文件 postcssrc.js 或 postcss.config.js 中的配置。",
+      "default": false,
+      "examples": [false]
+    },
+    "terserOptions": {
+      "type": "object",
+      "description": "为 terserPlugin 提供快捷配置，将与默认配置进行浅合并。详细配置可参考 terser options",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "babelPlugins": {
+      "type": "array",
+      "description": "为 babel-loader 的配置追加额外的 babel plugin。",
+      "default": [],
+      "examples": [
+        []
+      ],
+      "items": {
+        "type": "object"
+      },
+      "additionalItems": true
+    },
+    "babelPresets": {
+      "type": "array",
+      "description": "为 babel-loader 的配置追加额外的 babel preset。如果配置 preset 与内置相同，则优先使用 babelPresets 中的配置内容。",
+      "default": [],
+      "examples": [
+        []
+      ],
+      "items": {
+        "type": "object"
+      },
+      "additionalItems": true
+    },
+    "eslint": {
+      "oneOf": [{
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": true
+        }
+      ],
+      "description": "默认关闭 eslint 代码检测，如需开启配置为 true 即可。",
+      "default": false,
+      "examples": [false],
+      "properties": {}
+    },
+    "disableRuntime": {
+      "type": "boolean",
+      "description": "禁用运行时的能力，如需关闭配置为 true 即可。",
+      "default": false,
+      "examples": [false]
+    },
+    "tsChecker": {
+      "type": "boolean",
+      "description": "默认关闭 TypeScript 类型检测，如需开启配置为 true 即可。",
+      "default": false,
+      "examples": [false]
+    },
     "plugins": {
       "type": "array",
-      "description": "编译插件",
-      "additionalItems": true,
+      "description": "Compiler plugins.",
       "default": [],
-      "items": {
-        "anyOf": [
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "string",
-                "description": "编译 Rax App",
-                "enum": ["build-plugin-rax-app"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "targets": {
-                    "type": "array",
-                    "description": "项目运行的平台",
-                    "items": {
-                      "type": "string",
-                      "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
-                    }
-                  }
-                },
-                "required": ["targets"]
-              }
-            ]
-          },
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "string",
-                "description": "Rax PWA 插件",
-                "enum": ["build-plugin-rax-pwa"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "manifest": {
-                    "type": "object",
-                    "description": "浏览器可以将支持 PWA 的网站保存至桌面，获得比原生应用更轻巧的体积和比 Web 应用更强大的功能。它能拥有原生 APP 应用一般的启动闪屏，也能像原生 APP 应用一样全屏展示。",
-                    "default": {},
-                    "additionalProperties": true
-                  },
-                  "snapshot": {
-                    "type": "boolean",
-                    "description": "节点快照可将 HTML 容器填充为用户上一次访问时对应的内容，极速展示页面内容，提升首屏加载速度。",
-                    "default": false
-                  },
-                  "serviceWorker": {
-                    "type": "array",
-                    "default": [],
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "使用 Service Worker 控制缓存，以获得更快的加载速度。"
-                  }
-                }
-              }
-            ],
-            "examples": [
-              [
-                "build-plugin-rax-pwa",
-                {
-                  "snapshot": true
-                }
-              ]
-            ]
-          },
-          {
-            "type": "array"
-          },
-          {
-            "type": "string",
-            "examples": [
-              "build-plugin-rax-compat-react",
-              "build-plugin-rax-ssr",
-              "build-plugin-rax-multi-pages",
-              "build-plugin-rax-component"
-            ]
-          }
-        ]
-      }
+      "examples": [
+        "build-plugin-rax-compat-react",
+        "build-plugin-rax-component"
+      ],
+      "additionalItems": true
+    },
+    "inlineStyle": {
+      "type": "boolean",
+      "description": "强制将样式构建为内联",
+      "default": true,
+      "examples": [true]
+    },
+    "web": {
+      "type": "object",
+      "description": "Target 'web' 配置",
+      "default": {},
+      "examples": [{
+        "mpa": true,
+        "ssr": true,
+        "staticExport": true,
+        "doctype": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">"
+
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "weex": {
+      "type": "object",
+      "description": "Target 'weex' 配置",
+      "default": {},
+      "examples": [{
+        "mpa": true
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "kraken": {
+      "type": "object",
+      "description": "Target 'kraken' 配置",
+      "default": {},
+      "examples": [{
+        "mpa": true
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "miniapp": {
+      "type": "object",
+      "description": "Target 'miniapp' 配置",
+      "default": {},
+      "examples": [{
+        "buildType": "compile",
+        "nativeConfig": {}
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "wechat-miniprogram": {
+      "type": "object",
+      "description": "Target 'miniapp' 配置",
+      "default": {},
+      "examples": [{
+        "buildType": "compile",
+        "nativeConfig": {}
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
     }
   }
 }
