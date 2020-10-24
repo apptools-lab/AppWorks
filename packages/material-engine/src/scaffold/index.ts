@@ -1,4 +1,5 @@
 import axios from 'axios';
+import latestVersion from 'latest-version';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 import * as rimraf from 'rimraf';
@@ -16,9 +17,10 @@ export async function generateScaffold(projectDir: string, projectName: string, 
   await fsExtra.ensureFile(scaffoldJSONPath);
 
   const { theme } = scaffold;
-
+  const themeLatestVersion = await latestVersion(theme);
+  console.log('themeLatestVersion  ===>', themeLatestVersion);
   const build = {
-    theme: { package: theme, version: 'latest' },
+    theme: { package: theme, version: `^${themeLatestVersion}` },
   };
 
   const pkgData = {

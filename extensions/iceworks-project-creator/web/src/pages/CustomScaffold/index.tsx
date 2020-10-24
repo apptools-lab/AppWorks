@@ -6,7 +6,7 @@ import { IProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import CreateProjectForm from '@/components/CreateProjectForm';
 import ScaffoldForm from './components/ScaffoldForm';
-import { SCAFFOLD_TYPE, themesList, configsList, layoutConfigsList } from './constants';
+import { SCAFFOLD_TYPE, themesList, configsList, layoutConfigsList, CUSTOM_THEME_SELECT_VALUE } from './constants';
 import styles from './index.module.scss';
 
 const defaultValue = {
@@ -58,7 +58,10 @@ const CustomScaffold = () => {
     }
     setLoading(true);
     setPrevBtnDisabled(true);
-    const { projectPath, projectName } = values;
+    const { projectPath, projectName, theme, customTheme } = values;
+    if (theme === CUSTOM_THEME_SELECT_VALUE) {
+      value.theme = customTheme;
+    }
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {

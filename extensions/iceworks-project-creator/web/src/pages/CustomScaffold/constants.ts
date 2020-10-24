@@ -8,7 +8,8 @@ export const configsList = [
   { value: 'mock', label: 'Mock 示例' },
 ];
 
-export const CUSTOM_THEME_SELECT_KEY = '自定义主题包';
+export const CUSTOM_THEME_SELECT_VALUE = 'customTheme';
+export const CUSTOM_THEME_SELECT_LABEL = '自定义主题包';
 
 export const themesList = [
   { value: '@alifd/theme-design-pro', label: '@alifd/theme-design-pro' },
@@ -16,7 +17,7 @@ export const themesList = [
   { value: '@alifd/theme-2', label: '蓝色 @alifd/theme-2' },
   { value: '@alifd/theme-3', label: '紫色 @alifd/theme-3' },
   { value: '@alifd/theme-4', label: '绿色 @alifd/theme-4' },
-  { value: '', label: CUSTOM_THEME_SELECT_KEY },
+  { value: CUSTOM_THEME_SELECT_VALUE, label: CUSTOM_THEME_SELECT_LABEL },
 ];
 
 export const layoutConfigsList = [

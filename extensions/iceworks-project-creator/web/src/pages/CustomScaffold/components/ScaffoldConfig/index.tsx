@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderTitle from '@/components/HeaderTitle';
 import { Checkbox, Input, Select, Form } from '@alifd/next';
-import { themesList, configsList, CUSTOM_THEME_SELECT_KEY } from '../../constants';
+import { themesList, configsList, CUSTOM_THEME_SELECT_VALUE } from '../../constants';
 import styles from './index.module.scss';
 
 
@@ -25,13 +25,13 @@ const ScaffoldConfig = ({ onChange, value }) => {
             ))}
           </Select>
         </Form.Item>
-        {value.theme === CUSTOM_THEME_SELECT_KEY && (
+        {value.theme === CUSTOM_THEME_SELECT_VALUE && (
           <Form.Item
             label=" "
           >
             <Input
               name="customTheme"
-              placeholder=""
+              placeholder="请输入自定义 npm 主题包"
             />
           </Form.Item>
         )}
