@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Checkbox, List, Box, Button, Divider, Dialog, Message } from '@alifd/next';
+import React, { useState } from 'react';
+import { Checkbox, List, Box, Button, Divider, Dialog, Notification } from '@alifd/next';
 import PageGenerator from '../PageGenerator';
+import { MenuType } from '../../constants';
 import HeaderTitle from '@/components/HeaderTitle';
 import styles from './index.module.scss';
 
-type MenuType = 'aside' | 'header';
 type OperationType = 'create' | 'edit';
 
 interface MenuItem {
@@ -18,41 +18,58 @@ const defaultMenuItem = {
   path: '',
   blocks: [],
 };
+
 const ScaffoldLayout = ({ onChange, value }) => {
+  const { asideMenu, headerMenu, layouts } = value;
+
   const [visible, setVisible] = useState(false);
-  const [asideMenuList, setAsideMenuList] = useState<MenuItem[]>([]);
-  const [headerMenuList, setHeaderMenuList] = useState<MenuItem[]>([]);
   const [operationType, setOperationType] = useState<OperationType>('create');
   const [menuType, setMenuType] = useState<MenuType>('aside');
   const [pageConfig, setPageConfig] = useState<MenuItem>();
 
-  useEffect(() => {
-    const { asideMenu = [], headerMenu = [] } = value;
-    setAsideMenuList(asideMenu);
-    setHeaderMenuList(headerMenu);
-  }, [value]);
-
-  const onPageGeneratorSubmit = (pageValue) => {
-    try {
-      const currentMenuList = menuType === 'aside' ? [...asideMenuList] : [...headerMenuList];
-
-      if (operationType === 'create') {
-        currentMenuList.push(pageValue);
-      }
-      if (operationType === 'edit') {
-        const { path } = pageValue;
-        const targetIndex = currentMenuList.findIndex(item => item.path === path);
-        currentMenuList[targetIndex] = pageValue;
-      }
-      onChange({ [menuType === 'aside' ? 'asideMenu' : 'headerMenu']: currentMenuList });
-      setVisible(false);
-    } catch (error) {
-      Message.error(error.message);
+  // check if the router path existed
+  const validate = (detail) => {
+    if (asideMenu.concat(headerMenu).some(item => item.path === detail.path)) {
+      const error = `已存在相同路由：${detail.path}`;
+      Notification.error({
+        content: error,
+      });
+      return error;
     }
   };
-  // TODO:
-  const onPageDelete = () => {
 
+  const onPageGeneratorSubmit = (pageDetail) => {
+    const error = validate(pageDetail);
+    if (error) {
+      return error;
+    }
+    const currentMenuList = menuType === 'aside' ? [...asideMenu] : [...headerMenu];
+
+    if (operationType === 'create') {
+      currentMenuList.push(pageDetail);
+    }
+    if (operationType === 'edit') {
+      const targetIndex = currentMenuList.findIndex(item => item.path === pageDetail.path);
+      currentMenuList[targetIndex] = pageDetail;
+    }
+
+    onChange({ [menuType === 'aside' ? 'asideMenu' : 'headerMenu']: currentMenuList });
+    setVisible(false);
+
+    return true;
+  };
+  const handleDeleteConfirmDialog = (type: MenuType, index: number) => {
+    Dialog.confirm({
+      title: 'Confirm',
+      content: '确定删除该页面？',
+      onOk: () => onPageDelete(type, index),
+    });
+  };
+
+  const onPageDelete = (type: MenuType, index: number) => {
+    const currentMenuList = menuType === 'aside' ? [...asideMenu] : [...headerMenu];
+    currentMenuList.splice(index, 1);
+    onChange({ [type === 'aside' ? 'asideMenu' : 'headerMenu']: currentMenuList });
   };
 
   const onPageEdit = (operation: OperationType, type: MenuType, menuItem?: MenuItem) => {
@@ -66,6 +83,10 @@ const ScaffoldLayout = ({ onChange, value }) => {
     }
   };
 
+  const onLayoutConfigChange = (layoutConfigs) => {
+    onChange({ layouts: layoutConfigs });
+  };
+
   return (
     <div className={styles.scaffoldLayout}>
       <div className={styles.setting}>
@@ -76,13 +97,14 @@ const ScaffoldLayout = ({ onChange, value }) => {
         <div className={styles.content}>
           <List size="small">
             {
-              asideMenuList.map(item => (
+              asideMenu.map((item, index) => (
                 <List.Item
+                  key={item.pageName}
                   extra={
                     <Box direction="row" align="center" style={{ whiteSpace: 'nowrap', height: '100%', paddingLeft: 100 }}>
                       <Button text type="primary" onClick={() => onPageEdit('edit', 'aside', item)}>编辑</Button>
                       <Divider direction="ver" />
-                      <Button text type="primary" onClick={() => onPageDelete()}>删除</Button>
+                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('aside', index)}>删除</Button>
                     </Box>
                   }
                 >
@@ -102,13 +124,14 @@ const ScaffoldLayout = ({ onChange, value }) => {
         <div className={styles.content}>
           <List size="small">
             {
-              headerMenuList.map(item => (
+              headerMenu.map((item, index) => (
                 <List.Item
+                  key={item.pageName}
                   extra={
                     <Box direction="row" align="center" style={{ whiteSpace: 'nowrap', height: '100%', paddingLeft: 100 }}>
                       <Button text type="primary" onClick={() => onPageEdit('edit', 'header', item)}>编辑</Button>
                       <Divider direction="ver" />
-                      <Button text type="primary" onClick={() => onPageDelete()}>删除</Button>
+                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('header', index)}>删除</Button>
                     </Box>
                   }
                 >
@@ -121,12 +144,12 @@ const ScaffoldLayout = ({ onChange, value }) => {
       </div>
 
       <div className={styles.setting}>
-        <HeaderTitle title="其他组件" />
+        <HeaderTitle title="Layout 组件" />
         <div className={styles.content}>
-          <Checkbox.Group itemDirection="ver" >
-            <Checkbox value="Logo">Logo 组件</Checkbox>
-            <Checkbox value="avatar">用户头像组件</Checkbox>
-            <Checkbox value="notice">通知组件</Checkbox>
+          <Checkbox.Group value={layouts} itemDirection="ver" onChange={onLayoutConfigChange}>
+            <Checkbox value="branding">Logo 组件</Checkbox>
+            <Checkbox value="headerAvatar">用户头像组件</Checkbox>
+            <Checkbox value="footer">底部组件</Checkbox>
           </Checkbox.Group>
         </div>
       </div>
@@ -136,8 +159,12 @@ const ScaffoldLayout = ({ onChange, value }) => {
         title="搭建页面"
         onCancel={() => setVisible(false)}
         onClose={() => setVisible(false)}
+        footer={false}
       >
-        <PageGenerator onSubmit={onPageGeneratorSubmit} value={pageConfig} />
+        <PageGenerator
+          onSubmit={onPageGeneratorSubmit}
+          value={pageConfig}
+        />
       </Dialog>
     </div >
   );

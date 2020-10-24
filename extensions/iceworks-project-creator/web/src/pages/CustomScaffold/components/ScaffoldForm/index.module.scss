@@ -1,0 +1,11 @@
+.scaffoldScaffold {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 160px);
+
+  .action {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

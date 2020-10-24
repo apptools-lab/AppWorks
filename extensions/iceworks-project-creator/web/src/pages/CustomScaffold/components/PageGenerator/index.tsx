@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@iceworks/material-ui';
-import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialData } from '@iceworks/material-utils';
 import PageDetailForm from '../PageDetailForm';
@@ -16,6 +15,7 @@ const PageGenerator = ({ onSubmit, value }) => {
   const { pageName, path } = value;
 
   const intl = useIntl();
+
   const [selectedBlocks, setSelectedBlocks] = useState(value.blocks);
   const [isSorting, setIsSorting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -102,12 +102,13 @@ const PageGenerator = ({ onSubmit, value }) => {
   async function handleSubmit(values) {
     setIsCreating(true);
     values.blocks = selectedBlocks;
-    onSubmit(values);
+    const error = onSubmit(values);
+    if (!error) {
+      setVisible(false);
+    }
     setIsCreating(false);
-    setVisible(false);
   }
 
-  console.log('current selected blocks  ===>', selectedBlocks);
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
@@ -159,12 +160,4 @@ const PageGenerator = ({ onSubmit, value }) => {
   );
 };
 
-const IntlPageGenerator = ({ onSubmit, value }) => {
-  return (
-    <LocaleProvider>
-      <PageGenerator onSubmit={onSubmit} value={value} />
-    </LocaleProvider>
-  );
-};
-
-export default IntlPageGenerator;
+export default PageGenerator;

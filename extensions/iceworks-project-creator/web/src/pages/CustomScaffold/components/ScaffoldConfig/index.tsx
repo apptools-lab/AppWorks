@@ -1,35 +1,17 @@
 import React from 'react';
 import HeaderTitle from '@/components/HeaderTitle';
 import { Checkbox, Input, Select, Form } from '@alifd/next';
+import { themesList, configsList, CUSTOM_THEME_SELECT_KEY } from '../../constants';
 import styles from './index.module.scss';
 
-const configsList = [
-  { value: 'typescript', label: '使用 TypeScript' },
-  { value: 'i18n', label: '国际化示例' },
-  { value: 'auth', label: '权限管理示例' },
-  { value: 'store', label: '状态管理示例' },
-  { value: 'mock', label: 'Mock 示例' },
-];
-const CUSTOM_THEME_SELECT_KEY = '自定义主题包';
-const themesList = [
-  '@alifd/theme-design-pro',
-  '橙色 @alifd/theme-1',
-  '蓝色 @alifd/theme-2',
-  '紫色 @alifd/theme-3',
-  '绿色 @alifd/theme-4',
-  CUSTOM_THEME_SELECT_KEY,
-];
 
 const ScaffoldConfig = ({ onChange, value }) => {
   function onFormChange(values) {
     onChange(values);
   }
-
-  const fields = { theme: value.theme || themesList[0], config: value.config || [configsList[0].value] };
-  console.log('ScaffoldConfig fields   ===>', fields);
   return (
     <div className={styles.scaffoldConfig}>
-      <Form value={fields} onChange={onFormChange} labelTextAlign="left" size="medium">
+      <Form value={value} onChange={onFormChange} labelTextAlign="left" size="medium">
         <Form.Item label={<HeaderTitle title="主题包" />}>
           <Select
             name="theme"
@@ -37,13 +19,13 @@ const ScaffoldConfig = ({ onChange, value }) => {
             style={{ width: '100%' }}
           >
             {themesList.map((item) => (
-              <Select.Option key={item} value={item}>
-                {item}
+              <Select.Option key={item.value} value={item.value}>
+                {item.label}
               </Select.Option>
             ))}
           </Select>
         </Form.Item>
-        {fields.theme === CUSTOM_THEME_SELECT_KEY && (
+        {value.theme === CUSTOM_THEME_SELECT_KEY && (
           <Form.Item
             label=" "
           >

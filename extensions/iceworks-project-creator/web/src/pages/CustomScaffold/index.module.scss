@@ -1,3 +1,30 @@
-.customScaffold {
+.container {
   width: 100%;
+
+  :global {
+    .next-card-content-container {
+      padding: 0 30px;
+    }
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0 50px;
+
+    .title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: white;
+    }
+  }
+  .content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+.btn {
+  margin-right: 10px;
 }

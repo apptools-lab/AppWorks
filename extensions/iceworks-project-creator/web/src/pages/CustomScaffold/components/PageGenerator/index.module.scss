@@ -24,7 +24,7 @@
           }
         }
 
-        a[rel='noopener noreferrer'] {
+        a[rel="noopener noreferrer"] {
           color: $color-text1-4;
           text-decoration: none;
         }
@@ -33,7 +33,7 @@
   }
 
   .opts {
-    margin-top: 24px;
+    margin-top: 36px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -6,7 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
 import ScaffoldMarket from './components/ScaffoldMarket';
-import CreateProjectForm from './components/CreateProjectForm';
+import CreateProjectForm from '@/components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
 

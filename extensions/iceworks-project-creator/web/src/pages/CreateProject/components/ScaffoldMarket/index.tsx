@@ -8,7 +8,7 @@ import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
+import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '../../constants';
 import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 import { useIntl } from 'react-intl';
