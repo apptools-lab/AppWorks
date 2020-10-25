@@ -12,7 +12,7 @@ const addComponentTypeOptions = [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.detail'),
-    command: 'iceworks-ui-builder.create-component',
+    command: 'iceworks-material-helper.component-creator.start',
   },
 ];
 

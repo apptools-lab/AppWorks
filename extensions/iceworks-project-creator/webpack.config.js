@@ -15,6 +15,7 @@ const config = {
     vscode: 'commonjs vscode',
     prettier: 'commonjs prettier',
     '@iceworks/project-service': 'commonjs @iceworks/project-service',
+    '@iceworks/code-generator': 'commonjs @iceworks/code-generator',
   },
   resolve: {
     extensions: ['.ts', '.js'],
