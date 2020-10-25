@@ -5,9 +5,14 @@ import i18n from '../i18n';
 
 const entries = [
   {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreater.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreater.detail'),
-    command: 'iceworks-project-creator.start',
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
+    command: 'iceworks-project-creator.create-project.start',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
+    command: 'iceworks-project-creator.custom-scaffold.start',
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.label'),

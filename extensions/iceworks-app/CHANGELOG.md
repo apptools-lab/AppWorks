@@ -4,6 +4,7 @@
 
 - fix: material sources edit form dialog will disappear before error 
 - fix: material sources list display order
+- feat: add create custom scaffold entry
 
 ## 0.5.7
 
