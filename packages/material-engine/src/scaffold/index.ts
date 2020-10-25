@@ -18,7 +18,6 @@ export async function generateScaffold(projectDir: string, projectName: string, 
 
   const { theme } = scaffold;
   const themeLatestVersion = await latestVersion(theme);
-  console.log('themeLatestVersion  ===>', themeLatestVersion);
   const build = {
     theme: { package: theme, version: `^${themeLatestVersion}` },
   };

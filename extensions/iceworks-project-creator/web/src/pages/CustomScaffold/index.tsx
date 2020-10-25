@@ -51,7 +51,6 @@ const CustomScaffold = () => {
   }
 
   async function onProjectDetailSubmit(values, errors) {
-    console.log('project detail submit data ==>', values);
     setErrorMsg('');
     if (errors) {
       return;
@@ -85,7 +84,6 @@ const CustomScaffold = () => {
   }
 
   function onFormChange(formValue) {
-    console.log('form change ===> 1', { ...value, ...formValue });
     setValue({ ...value, ...formValue });
   }
 

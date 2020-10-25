@@ -13,7 +13,7 @@
     { "path": "packages/material-utils" },
     { "path": "packages/transform-ts-to-js" },
     { "path": "packages/common-service" },
-    { "path": "packages/project-service" },
-    { "path": "packages/material-engine" }
+    { "path": "packages/material-engine" },
+    { "path": "packages/project-service" }
   ]
 }
