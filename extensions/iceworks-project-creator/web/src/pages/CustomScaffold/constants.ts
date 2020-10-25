@@ -1,5 +1,3 @@
-export const SCAFFOLD_TYPE = 'customScaffold';
-
 export const configsList = [
   { value: 'typescript', label: '使用 TypeScript' },
   { value: 'i18n', label: '国际化示例' },

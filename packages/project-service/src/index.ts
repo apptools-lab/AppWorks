@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
-import * as scaffoldService from '@iceworks/material-engine/lib/scaffold';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
@@ -19,7 +18,6 @@ import {
 import i18n from './i18n';
 import { IDEFProjectField, IProjectField } from './types';
 
-const { generateScaffold } = scaffoldService;
 export * from './constant';
 
 export async function autoSetContext() {
@@ -161,13 +159,11 @@ export async function createProject(projectField: IProjectField): Promise<string
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));
   }
-  if (scaffold.name === 'customScaffold') {
-    await generateScaffold(projectDir, projectName, scaffold);
-  } else {
-    const { npm, version } = scaffold.source;
-    const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
-    await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
-  }
+
+  const { npm, version } = scaffold.source;
+  const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
+  await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
+
   return projectDir;
 }
 

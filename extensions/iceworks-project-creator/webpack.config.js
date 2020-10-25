@@ -14,7 +14,7 @@ const config = {
   externals: {
     vscode: 'commonjs vscode',
     prettier: 'commonjs prettier',
-    '@iceworks/project-service': 'commonjs @iceworks/project-service',
+    '@iceworks/material-engine/lib/scaffold': 'commonjs @iceworks/material-engine/lib/scaffold',
     '@iceworks/code-generator': 'commonjs @iceworks/code-generator',
   },
   resolve: {

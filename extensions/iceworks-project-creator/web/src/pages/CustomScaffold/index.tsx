@@ -6,12 +6,11 @@ import { IProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
 import CreateProjectForm from '@/components/CreateProjectForm';
 import ScaffoldForm from './components/ScaffoldForm';
-import { SCAFFOLD_TYPE, themesList, configsList, layoutConfigsList, CUSTOM_THEME_SELECT_VALUE } from './constants';
+import { themesList, configsList, layoutConfigsList, CUSTOM_THEME_SELECT_VALUE } from './constants';
 import styles from './index.module.scss';
 
 const defaultValue = {
   scaffold: {
-    name: SCAFFOLD_TYPE,
     theme: themesList[0].value,
     config: [configsList[0].value],
     asideMenu: [],
@@ -66,7 +65,7 @@ const CustomScaffold = () => {
       if (isPathExists) {
         throw new Error(intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProject.pathExist' }));
       }
-      await createProject(values);
+      await createScaffold(values);
     } catch (e) {
       Notification.error({ content: e.message });
       setErrorMsg(e.message);
@@ -76,9 +75,10 @@ const CustomScaffold = () => {
     }
   }
 
-  async function createProject(data: IProjectField) {
-    const projectDir = await callService('project', 'createProject', data);
+  async function createScaffold(data: IProjectField) {
     const { projectPath } = data;
+
+    const projectDir = await callService('scaffold', 'generate', data);
     await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
     await callService('project', 'openLocalProjectFolder', projectDir);
   }
