@@ -47,6 +47,7 @@
   "web.iceworksProjectCreator.RouterDetailForm.path.requiredMessage": "请输入路由路径",
   "web.iceworksProjectCreator.RouterDetailForm.path.placeholder": "请输入路由路径",
   "web.iceworksProjectCreator.getMaterialError": "获取物料源信息失败，请稍后再试。",
-  "web.iceworksProjectCreator.getDataError": "获取物料集合信息失败，请稍后再试。"
-
+  "web.iceworksProjectCreator.getDataError": "获取物料集合信息失败，请稍后再试。",
+  "web.iceworksProjectCreator.customScaffold.title": "自定义模板",
+  "web.iceworksProjectCreator.customScaffold.subTitle": "搭配海量物料快速搭建自定义模板。"
 }

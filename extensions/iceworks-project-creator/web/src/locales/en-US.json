@@ -47,5 +47,7 @@
   "web.iceworksProjectCreator.RouterDetailForm.path.requiredMessage": "Please Enter Router Path",
   "web.iceworksProjectCreator.RouterDetailForm.path.placeholder": "Please Enter Router Path",
   "web.iceworksProjectCreator.getMaterialError": "Fail to obtain materials. Please try again later.",
-  "web.iceworksProjectCreator.getDataError": "Fail to get material data. Please try agin later."
+  "web.iceworksProjectCreator.getDataError": "Fail to get material data. Please try agin later.",
+  "web.iceworksProjectCreator.customScaffold.title": "Custom Scaffold",
+  "web.iceworksProjectCreator.customScaffold.subTitle": "Quick build your scaffold with Abundant Materials."
 }

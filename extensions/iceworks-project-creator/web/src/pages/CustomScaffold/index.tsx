@@ -44,8 +44,8 @@ const CustomScaffold = () => {
     try {
       const projectPath = await callService('project', 'getFolderPath');
       setValue({ ...value, projectPath });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -129,14 +129,10 @@ const CustomScaffold = () => {
           <div className={styles.header}>
             <div>
               <div className={styles.title}>
-                {/* TODO: 国际化 */}
-                自定义模板
-                {/* <FormattedMessage id="web.iceworksProjectCreator.CreateProject.createProject" /> */}
+                <FormattedMessage id="web.iceworksProjectCreator.customScaffold.title" />
               </div>
               <div className={styles.subTitle}>
-                {/* TODO: 国际化 */}
-                快速搭建自定义模板
-                {/* <FormattedMessage id="web.iceworksProjectCreator.CreateProject.subTitle" /> */}
+                <FormattedMessage id="web.iceworksProjectCreator.customScaffold.subTitle" />
               </div>
             </div>
           </div>
