@@ -1,3 +1,4 @@
 {
-  "timeMaster.views.iceworksApp.timeMaster.name": "Time Master"
+  "timeMaster.views.iceworksApp.timeMaster.name": "Time Master",
+  "timeMaster.commands.refresh.title": "Refresh"
 }

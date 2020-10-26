@@ -1,3 +1,4 @@
 {
-  "timeMaster.views.iceworksApp.timeMaster.name": "时间管理"
+  "timeMaster.views.iceworksApp.timeMaster.name": "时间管理",
+  "timeMaster.commands.refresh.title": "刷新"
 }

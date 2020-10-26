@@ -1,21 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es6",
-    "outDir": "out",
-    "moduleResolution": "node",
-    "lib": ["es2018"],
+    "target": "es2019",
+    "lib": ["ES2019"],
+    "outDir": "build",
     "sourceMap": true,
-    "rootDir": ".",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "strict": true,
-    "importHelpers": true,
-    "removeComments": true,
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false
+    "rootDir": "src",
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"]
 }
