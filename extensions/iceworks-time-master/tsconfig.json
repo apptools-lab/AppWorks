@@ -7,7 +7,8 @@
     "sourceMap": true,
     "strict": true,
     "rootDir": "src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strictNullChecks": false
   },
   "exclude": ["node_modules"]
 }
