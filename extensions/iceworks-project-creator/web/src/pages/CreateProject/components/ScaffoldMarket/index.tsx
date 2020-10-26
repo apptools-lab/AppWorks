@@ -198,7 +198,6 @@ const ScaffoldMarket = ({
                         })}
                         {selectedSource.name === 'PC Web' && <AddScaffoldCard onClick={onAddScaffoldCardClick} />}
                       </>
-
                     ) : (
                         <NotFound
                           description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}
