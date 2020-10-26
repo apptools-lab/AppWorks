@@ -1,8 +1,9 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/next';
+import MaterialSourceCard from '@/components/MaterialSourceCard';
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
-import Card from '@/components/Card';
+import ScaffoldCard from '@/components/ScaffoldCard';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
@@ -44,7 +45,7 @@ const ScaffoldMarket = ({
       setMainScaffolds(mainScaffolds);
       setOtherScaffolds(otherScaffolds);
     } catch (err) {
-      // ignore
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -118,7 +119,7 @@ const ScaffoldMarket = ({
                   iconName = projectType;
                 }
                 return (
-                  <Card
+                  <MaterialSourceCard
                     key={item.name}
                     title={
                       <div className={styles.cardTitle}>
@@ -126,9 +127,7 @@ const ScaffoldMarket = ({
                         <div>{item.name}</div>
                       </div>
                     }
-                    content={item.description}
                     selected={selectedSource.name && selectedSource.name === item.name}
-                    style={{ width: 160, height: 120 }}
                     onClick={() => onMaterialSourceClick(item)}
                   />
                 );
@@ -143,6 +142,7 @@ const ScaffoldMarket = ({
         </div>
         <Divider direction="ver" style={{ height: '100%' }} />
         <div className={styles.scaffolds}>
+          {selectedSource.description && <div className={styles.materialSourceDescription}>{selectedSource.description}</div>}
           {loading ? (
             <Loading visible={loading} className={styles.loading} />
           ) : pegasusCardSelected ? (
@@ -160,7 +160,7 @@ const ScaffoldMarket = ({
                             ? 'js'
                             : '';
                         const isWireless = checkIsWireless(selectedSource);
-                        const CardComponent = isWireless ? MobileScaffoldCard : Card;
+                        const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
                         return (
                           <CardComponent
                             key={item.name}
@@ -174,7 +174,7 @@ const ScaffoldMarket = ({
                                     height={20}
                                   />
                                 )}
-                                <div>
+                                <div title={item.title}>
                                   {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
                                 </div>
                               </div>
@@ -205,7 +205,7 @@ const ScaffoldMarket = ({
                                 ? 'js'
                                 : '';
                             const isWireless = checkIsWireless(selectedSource);
-                            const CardComponent = isWireless ? MobileScaffoldCard : Card;
+                            const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
                             return (
                               <CardComponent
                                 key={item.name}

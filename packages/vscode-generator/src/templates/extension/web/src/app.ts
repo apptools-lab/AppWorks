@@ -1,30 +1,16 @@
 import { createApp } from 'ice';
 import callService from '@/callService';
-
-declare global {
-  // eslint-disable-next-line
-  interface Window {
-    USE_EN: any;
-  }
-}
+import i18n from '@/i18n';
 
 const appConfig = {
   app: {
     rootId: 'ice-container',
+    getInitialData: async () => {
+      const lang = await callService('common', 'getLanguage');
+      i18n.setLocal(lang);
+      return { lang };
+    },
   },
 };
 
-// Set global variable language
-async function getLanguage() {
-  let lang = 'zh-cn';
-  try {
-    lang = await callService('common', 'getLanguage');
-  } catch (e) {
-    // ignore
-  }
-  window.USE_EN = lang !== 'zh-cn';
-}
-
-getLanguage().then(() => {
-  createApp(appConfig);
-});
+createApp(appConfig);

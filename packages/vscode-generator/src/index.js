@@ -42,8 +42,9 @@ module.exports = function (targetDir, options) {
         console.error(error);
       }
     }
-    // Rename files start with '_' or end with '.ejs'
-    file.name = file.name.replace(/^_/, '.').replace(/\.ejs$/, '');
+    // Rename files start with '_' or end with '.ejs'.  Support Mac and Windows
+    // Example: /web/_eslintignore -> /web/.eslintignore  \web\_eslintignore -> \web\.eslintignore
+    file.name = file.name.replace(/^_/, '.').replace(/\/_/, '/.').replace('\\_', '\\.').replace(/\.ejs$/, '');
     // Write file
     easyfile.write(path.resolve(targetDir, file.name), file.content, { force: true });
   });
