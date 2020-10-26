@@ -49,5 +49,21 @@
   "web.iceworksProjectCreator.getMaterialError": "获取物料源信息失败，请稍后再试。",
   "web.iceworksProjectCreator.getDataError": "获取物料集合信息失败，请稍后再试。",
   "web.iceworksProjectCreator.customScaffold.title": "自定义模板",
-  "web.iceworksProjectCreator.customScaffold.subTitle": "搭配海量物料快速搭建自定义模板。"
+  "web.iceworksProjectCreator.customScaffold.subTitle": "搭配海量物料快速搭建自定义模板。",
+  "web.iceworksProjectCreator.add.title": "添加",
+  "web.iceworksProjectCreator.edit.title": "编辑",
+  "web.iceworksProjectCreator.delete.title": "删除",
+  "web.iceworksProjectCreator.customScaffold.headerMenu.title": "顶部菜单栏",
+  "web.iceworksProjectCreator.customScaffold.asideMenu.title": "侧边菜单栏",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.title": "Layout 组件",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.logoComponent": "Logo 组件",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.headerAvatarComponent": "头像组件",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.footerComponent": "底部组件",
+  "web.iceworksProjectCreator.customScaffold.generatePage.title": "搭建页面",
+  "web.iceworksProjectCreator.customScaffold.deletePage.confirm.content": "确定要删除该页面吗？",
+  "web.iceworksProjectCreator.customScaffold.routerExists.error": "路由路径已存在 {path}。请重试.",
+  "web.iceworksProjectCreator.customScaffold.theme.title": "主题",
+  "web.iceworksProjectCreator.customScaffold.theme.placeHolder.content": "请选择一个主题",
+  "web.iceworksProjectCreator.customScaffold.customTheme.placeholder": "请输入 npm 包",
+  "web.iceworksProjectCreator.customScaffold.advance.title": "高级"
 }

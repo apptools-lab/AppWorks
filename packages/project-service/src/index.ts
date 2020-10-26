@@ -152,18 +152,15 @@ export async function getFolderPath(openLabel = 'Open'): Promise<string | undefi
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField as any;
+  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField;
   const projectDir: string = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
-
   if (isProjectDirExists) {
     throw new Error(i18n.format('package.projectService.index.folderExists', { projectDir }));
   }
-
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
   await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
-
   return projectDir;
 }
 

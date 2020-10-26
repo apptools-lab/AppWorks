@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, List, Box, Button, Divider, Dialog, Notification } from '@alifd/next';
+import { useIntl, FormattedMessage } from 'react-intl';
 import PageGenerator from '../PageGenerator';
 import { MenuType } from '../../constants';
 import HeaderTitle from '@/components/HeaderTitle';
@@ -22,6 +23,8 @@ const defaultMenuItem = {
 const ScaffoldLayout = ({ onChange, value }) => {
   const { asideMenu, headerMenu, layouts } = value;
 
+  const intl = useIntl();
+
   const [visible, setVisible] = useState(false);
   const [operationType, setOperationType] = useState<OperationType>('create');
   const [menuType, setMenuType] = useState<MenuType>('aside');
@@ -30,7 +33,11 @@ const ScaffoldLayout = ({ onChange, value }) => {
   // check if the router path existed
   const validate = (detail) => {
     if (asideMenu.concat(headerMenu).some(item => item.path === detail.path)) {
-      const error = `已存在相同路由：${detail.path}`;
+      const error = intl.formatMessage({
+        id: 'web.iceworksProjectCreator.customScaffold.routerExists.error',
+      }, {
+        path: detail.path,
+      });
       Notification.error({
         content: error,
       });
@@ -61,7 +68,7 @@ const ScaffoldLayout = ({ onChange, value }) => {
   const handleDeleteConfirmDialog = (type: MenuType, index: number) => {
     Dialog.confirm({
       title: 'Confirm',
-      content: '确定删除该页面？',
+      content: intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.deletePage.confirm.content' }),
       onOk: () => onPageDelete(type, index),
     });
   };
@@ -91,8 +98,10 @@ const ScaffoldLayout = ({ onChange, value }) => {
     <div className={styles.scaffoldLayout}>
       <div className={styles.setting}>
         <div className={styles.title}>
-          <HeaderTitle title="侧边菜单栏" />
-          <Button type="primary" onClick={() => onPageEdit('create', 'aside')}>添加</Button>
+          <HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.asideMenu.title' })} />
+          <Button type="primary" onClick={() => onPageEdit('create', 'aside')}>
+            <FormattedMessage id="web.iceworksProjectCreator.add.title" />
+          </Button>
         </div>
         <div className={styles.content}>
           <List size="small">
@@ -102,9 +111,13 @@ const ScaffoldLayout = ({ onChange, value }) => {
                   key={item.pageName}
                   extra={
                     <Box direction="row" align="center" style={{ whiteSpace: 'nowrap', height: '100%', paddingLeft: 100 }}>
-                      <Button text type="primary" onClick={() => onPageEdit('edit', 'aside', item)}>编辑</Button>
+                      <Button text type="primary" onClick={() => onPageEdit('edit', 'aside', item)}>
+                        <FormattedMessage id="web.iceworksProjectCreator.edit.title" />
+                      </Button>
                       <Divider direction="ver" />
-                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('aside', index)}>删除</Button>
+                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('aside', index)}>
+                        <FormattedMessage id="web.iceworksProjectCreator.delete.title" />
+                      </Button>
                     </Box>
                   }
                 >
@@ -118,8 +131,10 @@ const ScaffoldLayout = ({ onChange, value }) => {
 
       <div className={styles.setting}>
         <div className={styles.title}>
-          <HeaderTitle title="顶部菜单栏" />
-          <Button type="primary" onClick={() => onPageEdit('create', 'header')}>添加</Button>
+          <HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.headerMenu.title' })} />
+          <Button type="primary" onClick={() => onPageEdit('create', 'header')}>
+            <FormattedMessage id="web.iceworksProjectCreator.add.title" />
+          </Button>
         </div>
         <div className={styles.content}>
           <List size="small">
@@ -129,9 +144,13 @@ const ScaffoldLayout = ({ onChange, value }) => {
                   key={item.pageName}
                   extra={
                     <Box direction="row" align="center" style={{ whiteSpace: 'nowrap', height: '100%', paddingLeft: 100 }}>
-                      <Button text type="primary" onClick={() => onPageEdit('edit', 'header', item)}>编辑</Button>
+                      <Button text type="primary" onClick={() => onPageEdit('edit', 'header', item)}>
+                        <FormattedMessage id="web.iceworksProjectCreator.edit.title" />
+                      </Button>
                       <Divider direction="ver" />
-                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('header', index)}>删除</Button>
+                      <Button text type="primary" onClick={() => handleDeleteConfirmDialog('header', index)}>
+                        <FormattedMessage id="web.iceworksProjectCreator.delete.title" />
+                      </Button>
                     </Box>
                   }
                 >
@@ -144,19 +163,25 @@ const ScaffoldLayout = ({ onChange, value }) => {
       </div>
 
       <div className={styles.setting}>
-        <HeaderTitle title="Layout 组件" />
+        <HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.layoutComponent.title' })} />
         <div className={styles.content}>
           <Checkbox.Group value={layouts} itemDirection="ver" onChange={onLayoutConfigChange}>
-            <Checkbox value="branding">Logo 组件</Checkbox>
-            <Checkbox value="headerAvatar">用户头像组件</Checkbox>
-            <Checkbox value="footer">底部组件</Checkbox>
+            <Checkbox value="branding">
+              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.logoComponent" />
+            </Checkbox>
+            <Checkbox value="headerAvatar">
+              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.headerAvatarComponent" />
+            </Checkbox>
+            <Checkbox value="footer">
+              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.footerComponent" />
+            </Checkbox>
           </Checkbox.Group>
         </div>
       </div>
       <Dialog
         className={styles.dialog}
         visible={visible}
-        title="搭建页面"
+        title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.generatePage.title' })}
         onCancel={() => setVisible(false)}
         onClose={() => setVisible(false)}
         footer={false}

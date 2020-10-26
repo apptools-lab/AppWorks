@@ -49,5 +49,21 @@
   "web.iceworksProjectCreator.getMaterialError": "Fail to obtain materials. Please try again later.",
   "web.iceworksProjectCreator.getDataError": "Fail to get material data. Please try agin later.",
   "web.iceworksProjectCreator.customScaffold.title": "Custom Scaffold",
-  "web.iceworksProjectCreator.customScaffold.subTitle": "Quick build your scaffold with Abundant Materials."
+  "web.iceworksProjectCreator.customScaffold.subTitle": "Quick build your scaffold with Abundant Materials.",
+  "web.iceworksProjectCreator.add.title": "Add",
+  "web.iceworksProjectCreator.edit.title": "Edit",
+  "web.iceworksProjectCreator.delete.title": "Delete",
+  "web.iceworksProjectCreator.customScaffold.headerMenu.title": "Header Menu",
+  "web.iceworksProjectCreator.customScaffold.asideMenu.title": "Aside Menu",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.title": "Layout Component",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.logoComponent": "Logo Component",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.headerAvatarComponent": "Avatar Component",
+  "web.iceworksProjectCreator.customScaffold.layoutComponent.footerComponent": "Footer Component",
+  "web.iceworksProjectCreator.customScaffold.generatePage.title": "Generate Page",
+  "web.iceworksProjectCreator.customScaffold.deletePage.confirm.content": "Confirm to delete this page?",
+  "web.iceworksProjectCreator.customScaffold.routerExists.error": "Router path existed {path}. Please try again.",
+  "web.iceworksProjectCreator.customScaffold.theme.title": "Theme",
+  "web.iceworksProjectCreator.customScaffold.theme.placeHolder.content": "Please Select a theme",
+  "web.iceworksProjectCreator.customScaffold.customTheme.placeholder": "Please Input npm package",
+  "web.iceworksProjectCreator.customScaffold.advance.title": "Advance"
 }

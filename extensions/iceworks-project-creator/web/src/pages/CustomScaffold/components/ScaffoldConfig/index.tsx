@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl, FormattedMessage } from 'react-intl';
 import HeaderTitle from '@/components/HeaderTitle';
 import { Checkbox, Input, Select, Form } from '@alifd/next';
 import { themesList, configsList, CUSTOM_THEME_SELECT_VALUE } from '../../constants';
@@ -6,16 +7,18 @@ import styles from './index.module.scss';
 
 
 const ScaffoldConfig = ({ onChange, value }) => {
+  const intl = useIntl();
+
   function onFormChange(values) {
     onChange(values);
   }
   return (
     <div className={styles.scaffoldConfig}>
       <Form value={value} onChange={onFormChange} labelTextAlign="left" size="medium">
-        <Form.Item label={<HeaderTitle title="主题包" />}>
+        <Form.Item label={<HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.theme.title' })} />}>
           <Select
             name="theme"
-            placeholder="请选择主题包"
+            placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.theme.placeHolder.content' })}
             style={{ width: '100%' }}
           >
             {themesList.map((item) => (
@@ -31,11 +34,11 @@ const ScaffoldConfig = ({ onChange, value }) => {
           >
             <Input
               name="customTheme"
-              placeholder="请输入自定义 npm 主题包"
+              placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.customTheme.placeholder' })}
             />
           </Form.Item>
         )}
-        <Form.Item label={<HeaderTitle title="高级" />}>
+        <Form.Item label={<HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.advance.title' })} />}>
           <Checkbox.Group name="config" itemDirection="ver">
             {
               configsList.map(config => (

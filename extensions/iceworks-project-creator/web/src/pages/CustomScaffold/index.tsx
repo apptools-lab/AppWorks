@@ -56,9 +56,9 @@ const CustomScaffold = () => {
     }
     setLoading(true);
     setPrevBtnDisabled(true);
-    const { projectPath, projectName, theme, customTheme } = values;
+    const { projectPath, projectName, scaffold: { theme, customTheme } } = values;
     if (theme === CUSTOM_THEME_SELECT_VALUE) {
-      value.theme = customTheme;
+      values.scaffold.theme = customTheme;
     }
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
