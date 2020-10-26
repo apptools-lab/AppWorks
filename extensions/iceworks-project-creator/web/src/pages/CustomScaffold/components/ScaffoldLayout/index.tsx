@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Checkbox, List, Box, Button, Divider, Dialog, Notification } from '@alifd/next';
 import { useIntl, FormattedMessage } from 'react-intl';
 import PageGenerator from '../PageGenerator';
-import { MenuType } from '../../constants';
 import HeaderTitle from '@/components/HeaderTitle';
 import styles from './index.module.scss';
 
+type MenuType = 'aside' | 'header';
 type OperationType = 'create' | 'edit';
 
 interface MenuItem {

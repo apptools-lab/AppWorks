@@ -65,5 +65,15 @@
   "web.iceworksProjectCreator.customScaffold.theme.title": "主题",
   "web.iceworksProjectCreator.customScaffold.theme.placeHolder.content": "请选择一个主题",
   "web.iceworksProjectCreator.customScaffold.customTheme.placeholder": "请输入 npm 包",
-  "web.iceworksProjectCreator.customScaffold.advance.title": "高级"
+  "web.iceworksProjectCreator.customScaffold.advance.title": "高级",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-1.label": "橙色主题 @alifd/theme-1",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-2.label": "蓝色主题 @alifd/theme-2",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-3.label": "紫色主题 @alifd/theme-3",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-4.label": "绿色主题 @alifd/theme-4",
+  "web.iceworksProjectCreator.customScaffold.theme.customTheme.label": "自定义主题",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.typescript.label": "使用 TypeScript",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.i18n.label": "国际化示例",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.auth.label": "权限管理示例",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.store.label": "状态管理示例",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.mock.label": "Mock 示例"
 }

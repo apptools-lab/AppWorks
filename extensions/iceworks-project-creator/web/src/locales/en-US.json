@@ -65,5 +65,15 @@
   "web.iceworksProjectCreator.customScaffold.theme.title": "Theme",
   "web.iceworksProjectCreator.customScaffold.theme.placeHolder.content": "Please Select a theme",
   "web.iceworksProjectCreator.customScaffold.customTheme.placeholder": "Please Input npm package",
-  "web.iceworksProjectCreator.customScaffold.advance.title": "Advance"
+  "web.iceworksProjectCreator.customScaffold.advance.title": "Advance",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-1.label": "Orange Theme @alifd/theme-1",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-2.label": "Blue Theme @alifd/theme-2",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-3.label": "Purple Theme @alifd/theme-3",
+  "web.iceworksProjectCreator.customScaffold.theme.theme-4.label": "Green Theme @alifd/theme-4",
+  "web.iceworksProjectCreator.customScaffold.theme.customTheme.label": "Custom Theme",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.typescript.label": "Use TypeScript",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.i18n.label": "i18n Example",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.auth.label": "Auth Example",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.store.label": "Store Example",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.mock.label": "Mock Example"
 }

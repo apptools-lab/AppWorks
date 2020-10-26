@@ -8,9 +8,11 @@ const { Cell } = ResponsiveGrid;
 
 const Scaffoldform = ({ children, onChange, value }) => {
   const { scaffold } = value;
+
   function handleScaffoldChange(configValue) {
     onChange({ scaffold: { ...scaffold, ...configValue } });
   }
+
   return (
     <div className={styles.scaffoldScaffold}>
       <ResponsiveGrid gap={30}>

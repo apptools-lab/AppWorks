@@ -4,18 +4,18 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '@/callService';
 import { IProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
+import { CUSTOM_THEME_SELECT_VALUE } from './constants';
 import CreateProjectForm from '@/components/CreateProjectForm';
 import ScaffoldForm from './components/ScaffoldForm';
-import { themesList, configsList, layoutConfigsList, CUSTOM_THEME_SELECT_VALUE } from './constants';
 import styles from './index.module.scss';
 
 const defaultValue = {
   scaffold: {
-    theme: themesList[0].value,
-    config: [configsList[0].value],
+    theme: '@alifd/theme-design-pro',
+    config: ['typescript'],
     asideMenu: [],
     headerMenu: [],
-    layouts: layoutConfigsList.map(item => item.value),
+    layouts: ['branding', 'headerAvatar', 'footer'],
   },
 };
 
