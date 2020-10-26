@@ -4,8 +4,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
-import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos } from './getPackageInfos';
+import { setPublishedPackages } from './fn/published-info';
+import { IPackageInfo, getPackageInfos } from './fn/getPackageInfos';
 
 const BETA_REG = /([^-]+)-beta\.(\d+)/; // '1.0.0-beta.1'
 
