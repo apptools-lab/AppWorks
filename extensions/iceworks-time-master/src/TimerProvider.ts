@@ -17,7 +17,7 @@ import { getUserSummary, UserSummary } from './storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
 import { humanizeMinutes } from './utils';
 
-const FORMAT_STR = '0 a';
+const NUMBER_FORMAT = '0 a';
 const SECONDS_PER_MINUTE = 60;
 const resourcePath: string = path.join(__dirname, 'resources');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
@@ -221,7 +221,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
     for (let i = 0; i < len; i++) {
       const fileName = sortedArray[i].name;
       const keystrokes = sortedArray[i].keystrokes || 0;
-      const keystrokesStr = numeral(keystrokes).format(FORMAT_STR);
+      const keystrokesStr = numeral(keystrokes).format(NUMBER_FORMAT);
       const label = `${fileName} | ${keystrokesStr}`;
       const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
         sortedArray[i].fsPath,
@@ -352,10 +352,10 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
 
     // Lines added
     const laValues = [];
-    const currLinesAdded = numeral(linesAdded).format(FORMAT_STR);
+    const currLinesAdded = numeral(linesAdded).format(NUMBER_FORMAT);
     laValues.push({ label: `Today: ${currLinesAdded}`, icon: 'rocket.svg' });
     if (averageDailyLinesAdded) {
-      const userLinesAddedAvg = numeral(averageDailyLinesAdded).format(FORMAT_STR);
+      const userLinesAddedAvg = numeral(averageDailyLinesAdded).format(NUMBER_FORMAT);
       const linesAddedLightningBolt = linesAdded > averageDailyLinesAdded ? 'bolt.svg' : 'bolt-grey.svg';
       laValues.push({
         label: `Your average (${dayStr}): ${userLinesAddedAvg}`,
@@ -363,7 +363,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       });
     }
     if (globalAverageDailyLinesAdded) {
-      const globalLinesAdded = numeral(globalAverageDailyLinesAdded).format(FORMAT_STR);
+      const globalLinesAdded = numeral(globalAverageDailyLinesAdded).format(NUMBER_FORMAT);
       laValues.push({
         label: `Global average (${dayStr}): ${globalLinesAdded}`,
         icon: 'global-grey.svg',
@@ -379,10 +379,10 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
 
     // Lines removed
     const lrValues = [];
-    const currLinesRemoved = numeral(linesRemoved).format(FORMAT_STR);
+    const currLinesRemoved = numeral(linesRemoved).format(NUMBER_FORMAT);
     lrValues.push({ label: `Today: ${currLinesRemoved}`, icon: 'rocket.svg' });
     if (averageDailyLinesRemoved) {
-      const userLinesRemovedAvg = numeral(averageDailyLinesRemoved).format(FORMAT_STR);
+      const userLinesRemovedAvg = numeral(averageDailyLinesRemoved).format(NUMBER_FORMAT);
       const linesRemovedLightningBolt = linesRemoved > averageDailyLinesRemoved ? 'bolt.svg' : 'bolt-grey.svg';
       lrValues.push({
         label: `Your average (${dayStr}): ${userLinesRemovedAvg}`,
@@ -390,7 +390,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       });
     }
     if (globalAverageDailyLinesRemoved) {
-      const globalLinesRemoved = numeral(globalAverageDailyLinesRemoved).format(FORMAT_STR);
+      const globalLinesRemoved = numeral(globalAverageDailyLinesRemoved).format(NUMBER_FORMAT);
       lrValues.push({
         label: `Global average (${dayStr}): ${globalLinesRemoved}`,
         icon: 'global-grey.svg',
@@ -406,10 +406,10 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
 
     // Keystrokes
     const kValues = [];
-    const currKeystrokes = numeral(keystrokes).format(FORMAT_STR);
+    const currKeystrokes = numeral(keystrokes).format(NUMBER_FORMAT);
     kValues.push({ label: `Today: ${currKeystrokes}`, icon: 'rocket.svg' });
     if (averageDailyKeystrokes) {
-      const userKeystrokesAvg = numeral(averageDailyKeystrokes).format(FORMAT_STR);
+      const userKeystrokesAvg = numeral(averageDailyKeystrokes).format(NUMBER_FORMAT);
       const keystrokesLightningBolt = keystrokes > averageDailyKeystrokes ? 'bolt.svg' : 'bolt-grey.svg';
       kValues.push({
         label: `Your average (${dayStr}): ${userKeystrokesAvg}`,
@@ -417,7 +417,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       });
     }
     if (globalAverageDailyKeystrokes) {
-      const globalKeystrokes = numeral(globalAverageDailyKeystrokes).format(FORMAT_STR);
+      const globalKeystrokes = numeral(globalAverageDailyKeystrokes).format(NUMBER_FORMAT);
       kValues.push({
         label: `Global average (${dayStr}): ${globalKeystrokes}`,
         icon: 'global-grey.svg',
@@ -472,7 +472,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
   }
 
   getParent(): undefined {
-    // all playlists are in root
+    return undefined;
   }
 
   getTreeItem(p: TimerItem): TimerTreeItem {
