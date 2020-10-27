@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDir } from '../utils';
+import { getAppDataDir } from '../utils/common';
 
 export interface FileChangeSummary {
   // ==== 文件信息 ====

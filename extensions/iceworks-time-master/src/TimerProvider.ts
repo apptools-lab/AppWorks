@@ -15,7 +15,7 @@ import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from './storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
-import { humanizeMinutes } from './utils';
+import { humanizeMinutes } from './utils/common';
 
 const NUMBER_FORMAT = '0 a';
 const SECONDS_PER_MINUTE = 60;

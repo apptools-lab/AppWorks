@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDir } from '../utils';
+import { getAppDataDir } from '../utils/common';
 
 export class UserSummary {
   editorSeconds = 0; // Editor usage time
