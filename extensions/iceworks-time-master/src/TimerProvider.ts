@@ -19,7 +19,7 @@ import { humanizeMinutes } from './utils/common';
 
 const NUMBER_FORMAT = '0 a';
 const SECONDS_PER_MINUTE = 60;
-const resourcePath: string = path.join(__dirname, 'resources');
+const resourcePath: string = path.join(__dirname, 'assets');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 enum UIInteractionType {

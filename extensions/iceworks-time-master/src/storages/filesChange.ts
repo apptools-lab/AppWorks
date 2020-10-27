@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { getAppDataDir } from '../utils/common';
 
-export interface FileChangeSummary {
+export class FileChangeSummary {
   // ==== 文件信息 ====
   name: string; // 文件名
   fsPath: string; // 文件路径
@@ -11,7 +11,7 @@ export interface FileChangeSummary {
   lines: number; // 文件行数
   syntax: string; // 使用的语法
 
-  // ==== 文件编辑信息 ====
+  // ==== 编辑信息 ====
   kpm: number; // kpm
   keystrokes: number; // 按键数
   editorSeconds: number; // 文件停留时间
@@ -26,7 +26,9 @@ export interface FileChangeSummary {
   linesAdded: number; // 添加了多少行
   linesRemoved: number; // 删除了多少行
   start: number; // 第一次开始更新文件的时间
+  // localStart: number;
   end: number; // 最后一次结束更新文件的时间
+  // localEnd: number;
   durationSeconds: number; // 最后一次更新距离第一次开始更新的时间间隔
 }
 

@@ -25,10 +25,6 @@
   ],
   "contributes": {
     "commands": [
-      {
-        "command": "iceworks-time-master.refresh",
-        "title": "%timeMaster.commands.refresh.title%"
-      }
     ],
     "viewsContainers": {
       "activitybar": [
