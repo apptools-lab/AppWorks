@@ -1,7 +1,8 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { window, workspace, TextDocument, WorkspaceFolder } from 'vscode';
+import { exec } from 'child_process';
+import { window, workspace, TextDocument } from 'vscode';
 import * as moment from 'moment';
 
 export function isLinux() {
@@ -86,36 +87,6 @@ export function isFileActive(file: string): boolean {
   return false;
 }
 
-export function getProjectPathForFile(fileName: string): string {
-  const folder = getProjectFolder(fileName);
-  return folder!.uri!.fsPath;
-}
-
-export function getProjectFolder(fileName: string): WorkspaceFolder {
-  let liveShareFolder = null;
-  if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
-    for (let i = 0; i < workspace.workspaceFolders.length; i++) {
-      const workspaceFolder = workspace.workspaceFolders[i];
-      const folderUri = workspaceFolder.uri;
-      if (folderUri) {
-        const isVslsScheme = folderUri.scheme === 'vsls';
-        if (isVslsScheme) {
-          liveShareFolder = workspaceFolder;
-        } else if (fileName.includes(folderUri.fsPath)) {
-          return workspaceFolder;
-        }
-      }
-    }
-  }
-
-  // wasn't found but if liveShareFolder was found, return that
-  if (liveShareFolder) {
-    return liveShareFolder;
-  }
-  return null;
-}
-
-
 const DAY_FORMAT = 'YYYY-MM-DD';
 const DAY_TIME_FORMAT = 'LLLL';
 export interface NowTimes {
@@ -166,4 +137,27 @@ export function getNowTimes(): NowTimes {
     localDay,
     localDayTime,
   };
+}
+
+export async function wrapExecPromise(cmd: string, projectDir: string) {
+  let result = '';
+  try {
+    result = await execPromise(cmd, { cwd: projectDir });
+  } catch (e) {
+    console.log(e.message);
+  }
+  return result;
+}
+
+function execPromise(command: string, opts: any): Promise<string> {
+  return new Promise(((resolve, reject) => {
+    exec(command, opts, (error, stdout) => {
+      if (error) {
+        reject(error);
+      } else {
+        // @ts-ignore
+        resolve(stdout.trim());
+      }
+    });
+  }));
 }

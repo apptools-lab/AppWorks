@@ -1,18 +1,9 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window } from 'vscode';
-import { isFileActive, getProjectPathForFile, getNowTimes } from '../utils/common';
+import { isFileActive } from '../utils/common';
 import { Project } from '../storages/project';
-import { NO_PROJ_NAME, DEFAULT_DURATION_MILLISECONDS } from '../constants';
+import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
 import { KeystrokeStats } from '../keystrokeStats';
-import { FileChangeSummary } from '../storages/filesChange';
 
-interface FileInfo {
-  fileName: string;
-  languageId: string;
-  length: number;
-  lineCount: number;
-}
-
-const fileInfoCache: {[name: string]: FileInfo} = {};
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
 export class KpmManager {
@@ -50,36 +41,18 @@ export class KpmManager {
     return true;
   }
 
-  private getFileInfo(textDocument: TextDocument, fileName: string): FileInfo {
-    if (fileInfoCache[fileName]) {
-      return fileInfoCache[fileName];
-    }
-
-    const languageId = textDocument.languageId || textDocument.fileName.split('.').slice(-1)[0];
-    const length = textDocument.getText().length;
-    const lineCount = textDocument.lineCount || 0;
-    fileInfoCache[fileName] = {
-      fileName,
-      languageId,
-      length,
-      lineCount,
-    };
-
-    return fileInfoCache[fileName];
-  }
-
   private keystrokeTriggerTimeout: NodeJS.Timeout;
 
   private sendKeystrokeStats() {
   }
 
-  private async createKeystrokeStats(fileName: string, projectPath: string): Promise<KeystrokeStats> {
-    const { nowInSec } = getNowTimes();
+  private async createKeystrokeStats(fileName: string, project: Project): Promise<KeystrokeStats> {
+    const { directory: projectPath } = project;
     let keystrokeStats = keystrokeStatsMap[projectPath];
+
+    // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
-      const project = new Project();
       keystrokeStats = new KeystrokeStats(project);
-      keystrokeStats.start = nowInSec;
 
       // start the minute timer to send the data
       this.keystrokeTriggerTimeout = setTimeout(() => {
@@ -88,11 +61,8 @@ export class KpmManager {
     }
 
     // check if we have this file or not
-    const hasFile = keystrokeStats.files[fileName];
-    if (!hasFile) {
-      const fileChangeSummary = new FileChangeSummary();
-      fileChangeSummary.start = nowInSec;
-      keystrokeStats.files[fileName] = fileChangeSummary;
+    if (!keystrokeStats.hasFile(fileName)) { // no file, add a new file
+      keystrokeStats.addFile(fileName);
     }
     // else if (parseInt(keystrokeStats.source[fileName].end, 10) !== 0) {
     //   // re-initialize it since we ended it before the minute was up
@@ -105,23 +75,8 @@ export class KpmManager {
   }
 
   private endPreviousModifiedFiles(keystrokeStats: KeystrokeStats, fileName: string) {
-    if (keystrokeStats) {
-      const fileKeys = Object.keys(keystrokeStats.files);
-      const nowTimes = getNowTimes();
-      if (fileKeys.length) {
-        // set the end time to now for the other files that don't match this file
-        fileKeys.forEach((key) => {
-          const fileChangeSummary: FileChangeSummary = keystrokeStats.files[key];
-          if (key !== fileName && fileChangeSummary.end === 0) {
-            fileChangeSummary.end = nowTimes.nowInSec;
-          }
-        });
-      }
-    }
-  }
-
-  private updateStaticValues(keyStrokeStats: KeystrokeStats, fileInfo: FileInfo) {
-    console.log(keyStrokeStats, fileInfo);
+    // set the end time to now for the other files that don't match this file
+    keystrokeStats.setFilesEndAsNow([fileName]);
   }
 
   private async onDidOpenTextDocument(textDocument: TextDocument) {
@@ -134,16 +89,28 @@ export class KpmManager {
       return;
     }
 
-    const fileInfo = this.getFileInfo(textDocument, fileName);
-    const projectPath = getProjectPathForFile(fileName) || NO_PROJ_NAME;
+    const projectInfo = await (new Project(fileName)).ready();
 
-    const keyStrokeStats = await this.createKeystrokeStats(fileName, projectPath);
+    const keyStrokeStats = await this.createKeystrokeStats(fileName, projectInfo);
     this.endPreviousModifiedFiles(keyStrokeStats, fileName);
-    this.updateStaticValues(keyStrokeStats, fileInfo);
+
+    const currentFileChangeSummary = keyStrokeStats.getFile(fileName);
+    currentFileChangeSummary.updateTextInfo(textDocument);
+    currentFileChangeSummary.open += 1;
   }
 
   private async onDidCloseTextDocument(textDocument: TextDocument) {
-    console.log(textDocument);
+    if (!window.state.focused) {
+      return;
+    }
+
+    const { fileName } = textDocument;
+    if (!this.isValidatedFile(textDocument, fileName, true)) {
+      return;
+    }
+
+    // TODO
+    console.log('testing');
   }
 
   private async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
