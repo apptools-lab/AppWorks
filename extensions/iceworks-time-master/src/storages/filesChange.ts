@@ -19,7 +19,7 @@ interface FileTextInfo {
   syntax: string;
 }
 
-const textInfoCache: {[name: string]: FileTextInfo} = {};
+let textInfoCache: {[name: string]: FileTextInfo} = {};
 function getTextInfo(textDocument: TextDocument, fileName: string): FileTextInfo {
   if (textInfoCache[fileName]) {
     return textInfoCache[fileName];
@@ -30,8 +30,11 @@ function getTextInfo(textDocument: TextDocument, fileName: string): FileTextInfo
     length: textDocument.getText().length,
     lineCount: textDocument.lineCount || 0,
   };
-
   return textInfoCache[fileName];
+}
+
+export function cleanTextInfoCache() {
+  textInfoCache = {};
 }
 
 export class FileChangeSummary {
@@ -55,18 +58,32 @@ export class FileChangeSummary {
   keystrokes: number = 0; // 按键数
   editorSeconds: number = 0; // 文件停留时间
   sessionSeconds: number = 0; // 文件编辑时间
+
   charsAdded: number = 0; // 添加了多少个字符
   charsDeleted: number = 0; // 删除了多少个字符
   charsPasted: number = 0; // 粘贴的字符数
+
   open: number = 0; // 文件打开次数
   close: number = 0; // 文件关闭次数
   paste: number = 0; // 粘贴次数
-  update: number = 0; // 总共更新了多少次
+  add: number = 0; // 添加次数
+  delete: number = 0; // 删除次数
+
   linesAdded: number = 0; // 添加了多少行
   linesRemoved: number = 0; // 删除了多少行
-  start: number = 0; // 第一次开始更新文件的时间
-  end: number = 0; // 最后一次结束更新文件的时间
-  durationSeconds: number = 0; // 最后一次更新距离第一次开始更新的时间间隔
+
+  /**
+   * 开始更新文件的时间
+   */
+  private start: number = 0;
+  /**
+   * 结束更新文件的时间
+   */
+  private end: number = 0;
+  /**
+   * 更新距离开始更新的时间间隔
+   */
+  private durationSeconds: number = 0;
 
   constructor(fileName: string, project: Project) {
     const baseName = path.basename(fileName);
@@ -75,7 +92,7 @@ export class FileChangeSummary {
     this.name = baseName;
     this.fsPath = fileName;
     this.projectDir = project.directory;
-    this.start = nowInSec;
+    this.setStart(nowInSec);
   }
 
   updateTextInfo(textDocument: TextDocument) {
@@ -83,6 +100,19 @@ export class FileChangeSummary {
     this.syntax = syntax;
     this.length = length;
     this.lineCount = lineCount;
+  }
+
+  setStart(time: number) {
+    this.start = time;
+  }
+
+  setEnd(time: number) {
+    this.end = time;
+    this.durationSeconds = this.end - this.start;
+  }
+
+  getEnd() {
+    return this.end;
   }
 }
 

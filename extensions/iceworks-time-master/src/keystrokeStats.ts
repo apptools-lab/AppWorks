@@ -31,7 +31,11 @@ export class KeystrokeStats {
     const { nowInSec } = getNowTimes();
 
     this.project = project;
-    this.start = nowInSec;
+    this.setStart(nowInSec);
+  }
+
+  hasData(): boolean {
+    return false;
   }
 
   hasFile(fileName: string): boolean {
@@ -48,13 +52,21 @@ export class KeystrokeStats {
   }
 
   setFilesEndAsNow(excludes: string[] = []): void {
-    const nowTimes = getNowTimes();
+    const { nowInSec } = getNowTimes();
     const fileKeys = Object.keys(this.files);
     fileKeys.forEach((key) => {
       const fileChangeSummary = this.files[key];
-      if (fileChangeSummary.end === 0 && !excludes.includes(key)) {
-        fileChangeSummary.end = nowTimes.nowInSec;
+      if (fileChangeSummary.getEnd() === 0 && !excludes.includes(key)) {
+        fileChangeSummary.setEnd(nowInSec);
       }
     });
+  }
+
+  setStart(time: number) {
+    this.start = time;
+  }
+
+  setEnd(time: number) {
+    this.end = time;
   }
 }
