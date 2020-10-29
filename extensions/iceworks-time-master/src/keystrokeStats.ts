@@ -1,7 +1,7 @@
-import * as forIn from 'lodash.forin';
 import { Project } from './storages/project';
 import { FileChange } from './storages/filesChange';
 import { getNowTimes } from './utils/common';
+import forIn = require('lodash.forin');
 
 export interface Editor {
   id: string;
@@ -25,7 +25,7 @@ export class KeystrokeStats {
   public keystrokes: number = 0;
   public start: number;
   public end: number;
-  public files: {[name: string]: FileChange};
+  public files: {[name: string]: FileChange} = {};
   public project: Project;
 
   constructor(project: Project) {
@@ -106,7 +106,7 @@ export class KeystrokeStats {
   getSessionSeconds(): number {
     let sessionSeconds = 0;
     forIn(this.files, (fileChange) => {
-      sessionSeconds += fileChange.sessionSeconds;
+      sessionSeconds += fileChange.durationSeconds;
     });
     return sessionSeconds;
   }

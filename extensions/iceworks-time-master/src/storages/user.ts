@@ -4,30 +4,29 @@ import { getAppDataDir } from '../utils/common';
 
 export class UserSummary {
   /**
-   * 编辑器使用时间
-   */
-  editorSeconds = 0;
-
-  /**
    * 编程时间
    */
-  sessionSeconds = 0;
+  sessionSeconds: number = 0;
+  /**
+   * 编辑器使用时间
+   */
+  editorSeconds?: number = 0;
 
-  keystrokes = 0;
-  linesAdded = 0;
-  linesRemoved = 0;
+  keystrokes: number = 0;
+  linesAdded: number = 0;
+  linesRemoved: number = 0;
 
   // 个人平均数据
-  averageDailySessionSeconds = 0;
-  averageDailyKeystrokes = 0;
-  averageDailyLinesAdded = 0;
-  averageDailyLinesRemoved = 0;
+  averageDailySessionSeconds?: number = 0;
+  averageDailyKeystrokes?: number = 0;
+  averageDailyLinesAdded?: number = 0;
+  averageDailyLinesRemoved?: number = 0;
 
   // 全局数据
-  globalAverageDailySessionSeconds = 0;
-  globalAverageDailyKeystrokes = 0;
-  globalAverageDailyLinesAdded = 0;
-  globalAverageDailyLinesRemoved = 0;
+  globalAverageDailySessionSeconds?: number = 0;
+  globalAverageDailyKeystrokes?: number = 0;
+  globalAverageDailyLinesAdded?: number = 0;
+  globalAverageDailyLinesRemoved?: number = 0;
 }
 
 function coalesceMissingAttributes(data: any): UserSummary {

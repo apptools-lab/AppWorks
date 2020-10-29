@@ -1,6 +1,10 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { wrapExecPromise } from '../utils/common';
+const NodeCache = require('node-cache');
+
+const nodeCache = new NodeCache({ stdTTL: 120 });
+const cacheTimeoutSeconds = 60 * 10;
 
 export function isGitProject(projectDir: string) {
   return fse.existsSync(path.join(projectDir, '.git'));
@@ -14,6 +18,15 @@ export interface Resource {
 
 export async function getResource(projectDir: string): Promise<Resource> {
   if (isGitProject(projectDir)) {
+    const noSpacesProjDir = projectDir.replace(/^\s+/g, '');
+    const cacheId = `resource-info-${noSpacesProjDir}`;
+
+    let resourceInfo = nodeCache.get(cacheId);
+    // return from cache if we have it
+    if (resourceInfo) {
+      return resourceInfo;
+    }
+
     const branch = await wrapExecPromise(
       'git symbolic-ref --short HEAD',
       projectDir,
@@ -26,10 +39,13 @@ export async function getResource(projectDir: string): Promise<Resource> {
       'git describe --all',
       projectDir,
     );
-    return {
+    resourceInfo = {
       branch,
       repository,
       tag,
     };
+
+    nodeCache.set(cacheId, resourceInfo, cacheTimeoutSeconds);
+    return resourceInfo;
   }
 }

@@ -1,5 +1,5 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace, commands } from 'vscode';
-import { isFileActive } from '../utils/common';
+import { isFileActive, logIt } from '../utils/common';
 import { Project } from '../storages/project';
 import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
 import { KeystrokeStats } from '../keystrokeStats';
@@ -59,18 +59,19 @@ export class KpmManager {
     // Go through all keystroke count objects found in the map and send
     // the ones that have data (data is greater than 1), then clear the map
     //
-    if (Object.keys(keystrokeStatsMap).length) {
-      const keys = Object.keys(keystrokeStatsMap);
-      // use a normal for loop since we have an await within the loop
-      for (const key of keys) {
-        const keystrokeStats = keystrokeStatsMap[key];
+    const keys = Object.keys(keystrokeStatsMap);
+    logIt('sendKeystrokeStats-keys', keys);
+    // use a normal for loop since we have an await within the loop
+    for (const key of keys) {
+      const keystrokeStats = keystrokeStatsMap[key];
 
-        // check if we have keystroke data
-        if (keystrokeStats.hasData()) {
-          // post the payload offline until the batch interval sends it out
-          keystrokeStats.setEnd();
-          processPayload(keystrokeStats);
-        }
+      // check if we have keystroke data
+      const isHasData = keystrokeStats.hasData();
+      logIt('sendKeystrokeStats-isHasData', key, ':', isHasData);
+      if (isHasData) {
+        // post the payload offline until the batch interval sends it out
+        keystrokeStats.setEnd();
+        processPayload(keystrokeStats);
       }
     }
 
@@ -113,7 +114,7 @@ export class KpmManager {
     keystrokeStats.setFilesEndAsNow([fsPath]);
   }
 
-  private async onDidOpenTextDocument(textDocument: TextDocument) {
+  public async onDidOpenTextDocument(textDocument: TextDocument) {
     if (!window.state.focused) {
       return;
     }
@@ -133,7 +134,7 @@ export class KpmManager {
     currentFileChange.open += 1;
   }
 
-  private async onDidCloseTextDocument(textDocument: TextDocument) {
+  public async onDidCloseTextDocument(textDocument: TextDocument) {
     if (!window.state.focused) {
       return;
     }
@@ -144,7 +145,7 @@ export class KpmManager {
     }
 
     // TODO
-    console.log('TODO');
+    logIt('TODO');
   }
 
   private getTextChangeInfo(contentChange: TextDocumentContentChangeEvent) {
@@ -197,16 +198,19 @@ export class KpmManager {
     };
   }
 
-  private async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
-    // console.log(textDocumentChangeEvent);
-    if (!window.state.focused) {
+  public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
+    const windowIsFocused = window.state.focused;
+    logIt('[onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
+    if (!windowIsFocused) {
       return;
     }
 
     const { document } = textDocumentChangeEvent;
     const { fileName: fsPath } = document;
 
-    if (!this.isValidatedFile(document, fsPath)) {
+    const isValidatedFile = this.isValidatedFile(document, fsPath);
+    logIt('[onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
+    if (!isValidatedFile) {
       return;
     }
 
@@ -220,6 +224,7 @@ export class KpmManager {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
+    logIt('[onDidChangeTextDocument][contentChanges]', contentChanges);
     // each changeset is triggered by a single keystroke
     if (contentChanges.length > 0) {
       currentFileChange.keystrokes += 1;
@@ -232,7 +237,7 @@ export class KpmManager {
         // it's a copy and paste event
         currentFileChange.paste += 1;
         currentFileChange.charsPasted += textChangeInfo.textChangeLen;
-        console.log('Copy+Paste Incremented');
+        logIt('Copy+Paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
         // update the overall count
@@ -240,17 +245,17 @@ export class KpmManager {
         // update the data for this fileInfo keys count
         currentFileChange.add += 1;
         // update the overall count
-        console.log('charsAdded incremented');
-        console.log('addEvents incremented');
+        logIt('charsAdded incremented');
+        logIt('addEvents incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        console.log(`Removed ${textChangeInfo.linesDeleted} lines`);
+        logIt(`Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        console.log(`Added ${textChangeInfo.linesAdded} lines`);
+        logIt(`Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -258,9 +263,10 @@ export class KpmManager {
     currentFileChange.setEnd();
   }
 
-  private async onDidChangeWindowState(windowState: WindowState) {
+  public async onDidChangeWindowState(windowState: WindowState) {
+    logIt('onDidChangeWindowState[focused]', windowState.focused);
     if (!windowState.focused) {
-      commands.executeCommand('iceworks.processKeystrokeStats');
+      commands.executeCommand('iceworks-time-master.processKeystrokeStats');
     }
   }
 

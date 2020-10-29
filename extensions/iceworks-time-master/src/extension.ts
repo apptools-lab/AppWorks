@@ -1,24 +1,31 @@
-import * as vscode from 'vscode';
-import { registerCommand } from '@iceworks/common-service';
+import { workspace, window, ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView } from './timerProvider';
 import { openFileInEditor } from './utils/common';
-import { createInstance as createKpmInstance } from './managers/kpm';
+import { createInstance as createKpmInstance, KpmManager } from './managers/kpm';
 
 // eslint-disable-next-line
 const { name } = require('../package.json');
 
-export async function activate(context: vscode.ExtensionContext) {
-  const { subscriptions } = context;
+function startListeningKpm(kpmInstance: KpmManager) {
+  workspace.onDidOpenTextDocument(kpmInstance.onDidOpenTextDocument, kpmInstance);
+  workspace.onDidCloseTextDocument(kpmInstance.onDidCloseTextDocument, kpmInstance);
+  workspace.onDidChangeTextDocument(kpmInstance.onDidChangeTextDocument, kpmInstance);
+  window.onDidChangeWindowState(kpmInstance.onDidChangeWindowState, kpmInstance);
+}
 
-  const kpmInstance = createKpmInstance();
+export async function activate(context: ExtensionContext) {
+  const { subscriptions } = context;
 
   createTimerTreeView();
 
+  const kpmInstance = createKpmInstance();
+  startListeningKpm(kpmInstance);
+
   subscriptions.push(
-    registerCommand('iceworks-time-master.openFileInEditor', (file: string) => {
+    commands.registerCommand('iceworks-time-master.openFileInEditor', (file: string) => {
       openFileInEditor(file);
     }),
-    registerCommand('iceworks-time-master.processKeystrokeStats', () => {
+    commands.registerCommand('iceworks-time-master.processKeystrokeStats', () => {
       kpmInstance.processKeystrokeStats();
     }),
   );

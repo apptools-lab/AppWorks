@@ -19,7 +19,7 @@ import { humanizeMinutes } from './utils/common';
 
 const NUMBER_FORMAT = '0 a';
 const SECONDS_PER_MINUTE = 60;
-const resourcePath: string = path.join(__dirname, 'assets');
+const resourcePath: string = path.join(__dirname, '..', 'assets');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 enum UIInteractionType {
@@ -242,14 +242,13 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       return null;
     }
     const sortedArray = filesChangeSummary.sort(
-      (a: FileChangeSummary, b: FileChangeSummary) => b.durationSeconds - a.durationSeconds,
+      (a: FileChangeSummary, b: FileChangeSummary) => b.sessionSeconds - a.sessionSeconds,
     );
     const longestCodeTimeChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
       const fileName = sortedArray[i].name;
-      const minutes = sortedArray[i].durationSeconds || 0;
-      const durationMinutes = minutes > 0 ? minutes / SECONDS_PER_MINUTE : 0;
+      const durationMinutes = sortedArray[i].sessionSeconds / SECONDS_PER_MINUTE;
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;
       const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
@@ -520,7 +519,7 @@ function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) 
       select: false,
     });
   } catch (err) {
-    console.log(`Unable to deselect track: ${err.message}`);
+    console.error(`Unable to deselect track: ${err.message}`);
   }
 }
 
@@ -531,6 +530,10 @@ export function createTimerTreeView() {
     showCollapseAll: false,
   });
   Disposable.from(
+    commands.registerCommand(
+      'iceworks-time-master.refreshTimerTree',
+      () => timerProvider.refresh(),
+    ),
     treeView.onDidCollapseElement(async e => {
       const item: TimerItem = e.element;
       timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Collapsed;

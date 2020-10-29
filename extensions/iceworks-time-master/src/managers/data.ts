@@ -1,21 +1,23 @@
+import { commands } from 'vscode';
 import { KeystrokeStats } from '../keystrokeStats';
 import { FileChange, getFilesChangeSummary, saveFilesChangeSummary } from '../storages/filesChange';
-import { getProjectsSummary, saveProjectsSummary } from '../storages/project';
-import { getUserSummary, saveUserSummary } from '../storages/user';
+import { getProjectsSummary, Project, saveProjectsSummary } from '../storages/project';
+import { getUserSummary, saveUserSummary, UserSummary } from '../storages/user';
+import { logIt } from '../utils/common';
 import forIn = require('lodash.forin');
 
 export async function processPayload(keystrokeStats: KeystrokeStats) {
   const sessionSeconds = keystrokeStats.getSessionSeconds();
   saveDataToDisk(keystrokeStats, sessionSeconds);
+
+  commands.executeCommand('iceworks-time-master.refreshTimerTree');
 }
 
-export async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
-  const { files, project } = keystrokeStats;
+function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
+  const { files } = keystrokeStats;
   let linesAdded = 0;
   let linesRemoved = 0;
   let keystrokes = 0;
-
-  // update filesChangeSummary
   const filesChangeSummary = getFilesChangeSummary();
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
@@ -46,10 +48,17 @@ export async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeco
     linesRemoved += fileChangeSummary.linesRemoved;
     keystrokes += fileChangeSummary.keystrokes;
     filesChangeSummary[fsPath] = fileChangeSummary;
+    logIt(`[dataManager]fileChangeSummary[${fsPath}]`, fileChangeSummary);
   });
   saveFilesChangeSummary(filesChangeSummary);
+  return {
+    linesAdded,
+    linesRemoved,
+    keystrokes,
+  };
+}
 
-  // update projectSummary
+function updateProjectSummary(project: Project, sessionSeconds: number) {
   const projectsSummary = getProjectsSummary();
   const { directory } = project;
   let projectSummary = projectsSummary[directory];
@@ -70,14 +79,26 @@ export async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeco
       projectSummary.sessionSeconds,
     );
   }
+  logIt('[dataManager]projectSummary', projectSummary);
   saveProjectsSummary(projectsSummary);
+}
 
-  // update userSummary
+function updateUserSummary(user: UserSummary) {
+  const { linesAdded, linesRemoved, keystrokes, sessionSeconds } = user;
   const userSummary = getUserSummary();
+  userSummary.sessionSeconds += sessionSeconds;
   userSummary.linesAdded += linesAdded;
   userSummary.linesRemoved += linesRemoved;
   userSummary.keystrokes += keystrokes;
+  logIt('[dataManager]userSummary', userSummary);
   saveUserSummary(userSummary);
+}
+
+export async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
+  const { project } = keystrokeStats;
+  const newData = updateFilesChangeSummary(keystrokeStats);
+  updateProjectSummary(project, sessionSeconds);
+  updateUserSummary({ ...newData, sessionSeconds });
 }
 
 export async function sendDataToServer() {

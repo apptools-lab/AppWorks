@@ -69,6 +69,7 @@
     "fs-extra": "^9.0.1",
     "lodash.forin": "^4.4.0",
     "moment": "^2.29.1",
+    "node-cache": "^5.1.2",
     "numeral": "^2.0.6"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.md",

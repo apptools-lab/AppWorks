@@ -144,7 +144,7 @@ export async function wrapExecPromise(cmd: string, projectDir: string) {
   try {
     result = await execPromise(cmd, { cwd: projectDir });
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
   }
   return result;
 }
@@ -160,4 +160,10 @@ function execPromise(command: string, opts: any): Promise<string> {
       }
     });
   }));
+}
+
+// TODO
+export function logIt(...args: any) {
+  args[0] = 'TimeMaster: ' + args[0];
+  console.log.apply(null, args);
 }
