@@ -51,8 +51,8 @@ export class Project {
 
   static async createInstance(fsPath: string) {
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
-    const directory = workspaceFolder!.uri!.fsPath || UNTITLED;
-    const name = workspaceFolder!.name || NO_PROJ_NAME;
+    const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
+    const name = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
     const resource = await getResource(directory);
     const project = new Project({ name, directory, resource });
     return project;
@@ -90,4 +90,8 @@ export function getProjectsSummary(): ProjectsSummary {
 export function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
   fse.writeJsonSync(file, values, { spaces: 4 });
+}
+
+export function clearProjectsSummary() {
+  saveProjectsSummary({});
 }

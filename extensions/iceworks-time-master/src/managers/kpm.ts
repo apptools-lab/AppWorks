@@ -45,7 +45,7 @@ export class KpmManager {
 
   private keystrokeTriggerTimeout: NodeJS.Timeout;
 
-  public startListening() {
+  public activate() {
     // document listener handlers
     workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
     workspace.onDidCloseTextDocument(this.onDidCloseTextDocument, this);
@@ -54,20 +54,24 @@ export class KpmManager {
     window.onDidChangeWindowState(this.onDidChangeWindowState, this);
   }
 
+  public deactivate() {
+    // TODOs
+  }
+
   private sendKeystrokeStats() {
     //
     // Go through all keystroke count objects found in the map and send
     // the ones that have data (data is greater than 1), then clear the map
     //
     const keys = Object.keys(keystrokeStatsMap);
-    logIt('sendKeystrokeStats-keys', keys);
+    logIt('[kpmManager][sendKeystrokeStats]keys', keys);
     // use a normal for loop since we have an await within the loop
     for (const key of keys) {
       const keystrokeStats = keystrokeStatsMap[key];
 
       // check if we have keystroke data
       const isHasData = keystrokeStats.hasData();
-      logIt('sendKeystrokeStats-isHasData', key, ':', isHasData);
+      logIt('[kpmManager][sendKeystrokeStats]isHasData', key, '|', isHasData);
       if (isHasData) {
         // post the payload offline until the batch interval sends it out
         keystrokeStats.setEnd();
@@ -92,12 +96,13 @@ export class KpmManager {
 
       // start the minute timer to send the data
       this.keystrokeTriggerTimeout = setTimeout(() => {
+        logIt('[createKeystrokeStats][keystrokeTriggerTimeout] run');
         this.sendKeystrokeStats();
       }, DEFAULT_DURATION_MILLISECONDS);
     }
 
     // check if we have this file or not
-    if (!keystrokeStats.hasFile(fsPath)) { // no file, add a new file
+    if (!keystrokeStats.hasFile(fsPath)) {
       keystrokeStats.addFile(fsPath);
     }
     // else if (keystrokeStats.getFile(fsPath).end !== 0) {
@@ -224,7 +229,7 @@ export class KpmManager {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logIt('[onDidChangeTextDocument][contentChanges]', contentChanges);
+    logIt('[onDidChangeTextDocument]contentChanges', contentChanges);
     // each changeset is triggered by a single keystroke
     if (contentChanges.length > 0) {
       currentFileChange.keystrokes += 1;
@@ -237,7 +242,7 @@ export class KpmManager {
         // it's a copy and paste event
         currentFileChange.paste += 1;
         currentFileChange.charsPasted += textChangeInfo.textChangeLen;
-        logIt('Copy+Paste Incremented');
+        logIt('[onDidChangeTextDocument]Copy+Paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
         // update the overall count
@@ -245,17 +250,16 @@ export class KpmManager {
         // update the data for this fileInfo keys count
         currentFileChange.add += 1;
         // update the overall count
-        logIt('charsAdded incremented');
-        logIt('addEvents incremented');
+        logIt('[onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logIt(`Removed ${textChangeInfo.linesDeleted} lines`);
+        logIt(`[onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logIt(`Added ${textChangeInfo.linesAdded} lines`);
+        logIt(`[onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -264,7 +268,7 @@ export class KpmManager {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logIt('onDidChangeWindowState[focused]', windowState.focused);
+    logIt('[onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
       commands.executeCommand('iceworks-time-master.processKeystrokeStats');
     }

@@ -48,3 +48,8 @@ export function saveUserSummary(userSummary: UserSummary) {
   const file = getUserFile();
   fse.writeJsonSync(file, userSummary, { spaces: 4 });
 }
+
+export function clearUserSummary() {
+  const userSummary = new UserSummary();
+  saveUserSummary(userSummary);
+}

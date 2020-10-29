@@ -4,9 +4,11 @@ import { FileChange, getFilesChangeSummary, saveFilesChangeSummary } from '../st
 import { getProjectsSummary, Project, saveProjectsSummary } from '../storages/project';
 import { getUserSummary, saveUserSummary, UserSummary } from '../storages/user';
 import { logIt } from '../utils/common';
+import { checkMidnight } from './walkClock';
 import forIn = require('lodash.forin');
 
 export async function processPayload(keystrokeStats: KeystrokeStats) {
+  checkMidnight();
   const sessionSeconds = keystrokeStats.getSessionSeconds();
   saveDataToDisk(keystrokeStats, sessionSeconds);
 
@@ -79,6 +81,7 @@ function updateProjectSummary(project: Project, sessionSeconds: number) {
       projectSummary.sessionSeconds,
     );
   }
+  projectsSummary[directory] = projectSummary;
   logIt('[dataManager]projectSummary', projectSummary);
   saveProjectsSummary(projectsSummary);
 }

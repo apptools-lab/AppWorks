@@ -1,4 +1,4 @@
-import { env } from 'vscode';
+import * as vscode from 'vscode';
 import I18nService from '@iceworks/i18n';
 import * as zhCNTextMap from './locales/zh-CN.json';
 import * as enUSTextMap from './locales/en-US.json';
@@ -9,6 +9,6 @@ i18n.registry('zh-cn', zhCNTextMap);
 i18n.registry('en', enUSTextMap);
 
 // 设置使用的语言
-i18n.setLocal(env.language);
+i18n.setLocal(vscode.env.language);
 
 export default i18n;

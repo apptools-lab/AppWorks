@@ -220,3 +220,7 @@ export function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
   const file = getFilesChangeFile();
   fse.writeJsonSync(file, filesChangeSummary, { spaces: 4 });
 }
+
+export function cleanFilesChangeSummary() {
+  saveFilesChangeSummary({});
+}
