@@ -14,7 +14,7 @@ import * as path from 'path';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from './storages/user';
-import { getFilesChange, FileChange } from './storages/filesChange';
+import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
 import { humanizeMinutes } from './utils/common';
 
 const NUMBER_FORMAT = '0 a';
@@ -166,7 +166,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
     return item;
   }
 
-  private buildFileChangedItem(fileChange: FileChange[]): TimerItem {
+  private buildFileChangedItem(filesChangeSummary: FileChangeSummary[]): TimerItem {
     const parentItem = this.buildMessageItem(
       'Files changed',
       'Files changed today',
@@ -176,17 +176,17 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       null,
       'ct_top_files_by_kpm_toggle_node',
     );
-    const childItem = this.buildMessageItem(`Today: ${fileChange.length}`);
+    const childItem = this.buildMessageItem(`Today: ${filesChangeSummary.length}`);
     parentItem.children = [childItem];
     return parentItem;
   }
 
-  private buildHighestKpmFileItem(fileChange: FileChange[]): TimerItem {
-    if (!fileChange || fileChange.length === 0) {
+  private buildHighestKpmFileItem(filesChangeSummary: FileChangeSummary[]): TimerItem {
+    if (!filesChangeSummary || filesChangeSummary.length === 0) {
       return null;
     }
-    const sortedArray = fileChange.sort(
-      (a: FileChange, b: FileChange) => b.kpm - a.kpm,
+    const sortedArray = filesChangeSummary.sort(
+      (a: FileChangeSummary, b: FileChangeSummary) => b.kpm - a.kpm,
     );
     const highKpmChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
@@ -209,12 +209,12 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
     return highKpmParent;
   }
 
-  private buildMostEditedFileItem(fileChange: FileChange[]): TimerItem {
-    if (!fileChange || fileChange.length === 0) {
+  private buildMostEditedFileItem(filesChangeSummary: FileChangeSummary[]): TimerItem {
+    if (!filesChangeSummary || filesChangeSummary.length === 0) {
       return null;
     }
-    const sortedArray = fileChange.sort(
-      (a: FileChange, b: FileChange) => b.keystrokes - a.keystrokes,
+    const sortedArray = filesChangeSummary.sort(
+      (a: FileChangeSummary, b: FileChangeSummary) => b.keystrokes - a.keystrokes,
     );
     const mostEditedChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
@@ -237,12 +237,12 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
     return mostEditedParent;
   }
 
-  private buildLongestFileCodeTimeItem(fileChangeInfos: FileChange[]): TimerItem {
-    if (!fileChangeInfos || fileChangeInfos.length === 0) {
+  private buildLongestFileCodeTimeItem(filesChangeSummary: FileChangeSummary[]): TimerItem {
+    if (!filesChangeSummary || filesChangeSummary.length === 0) {
       return null;
     }
-    const sortedArray = fileChangeInfos.sort(
-      (a: FileChange, b: FileChange) => b.durationSeconds - a.durationSeconds,
+    const sortedArray = filesChangeSummary.sort(
+      (a: FileChangeSummary, b: FileChangeSummary) => b.durationSeconds - a.durationSeconds,
     );
     const longestCodeTimeChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
@@ -444,25 +444,25 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
     treeItems.push(...userSummaryItems);
 
     // show the files changed metric
-    const fileChange = getFilesChange();
-    const filesChanged = fileChange ? Object.keys(fileChange).length : 0;
+    const originFilesChangeSummary = getFilesChangeSummary();
+    const filesChanged = originFilesChangeSummary ? Object.keys(originFilesChangeSummary).length : 0;
     if (filesChanged > 0) {
-      const fileChangeInfos = Object.keys(fileChange).map((key) => fileChange[key]);
+      const filesChangeSummary = Object.keys(originFilesChangeSummary).map((key) => originFilesChangeSummary[key]);
 
-      const fileChangedParent = this.buildFileChangedItem(fileChangeInfos);
+      const fileChangedParent = this.buildFileChangedItem(filesChangeSummary);
       treeItems.push(fileChangedParent);
 
-      const highKpmParent = this.buildHighestKpmFileItem(fileChangeInfos);
+      const highKpmParent = this.buildHighestKpmFileItem(filesChangeSummary);
       if (highKpmParent) {
         treeItems.push(highKpmParent);
       }
 
-      const mostEditedFileParent = this.buildMostEditedFileItem(fileChangeInfos);
+      const mostEditedFileParent = this.buildMostEditedFileItem(filesChangeSummary);
       if (mostEditedFileParent) {
         treeItems.push(mostEditedFileParent);
       }
 
-      const longestCodeTimeParent = this.buildLongestFileCodeTimeItem(fileChangeInfos);
+      const longestCodeTimeParent = this.buildLongestFileCodeTimeItem(filesChangeSummary);
       if (longestCodeTimeParent) {
         treeItems.push(longestCodeTimeParent);
       }

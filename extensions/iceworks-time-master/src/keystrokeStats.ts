@@ -17,16 +17,16 @@ export interface User {
 }
 
 export class KeystrokeStats {
-  public os: string;
-  public hostname: string;
-  public timezone: string;
+  // public os: string;
+  // public hostname: string;
+  // public timezone: string;
+  // public editor: Editor;
+  // public user: User;
   public keystrokes: number = 0;
   public start: number;
   public end: number;
-  public editor: Editor;
-  public user: User;
-  private files: {[name: string]: FileChange};
-  private project: Project;
+  public files: {[name: string]: FileChange};
+  public project: Project;
 
   constructor(project: Project) {
     this.project = project;
@@ -106,7 +106,7 @@ export class KeystrokeStats {
   getSessionSeconds(): number {
     let sessionSeconds = 0;
     forIn(this.files, (fileChange) => {
-      sessionSeconds += fileChange.durationSeconds;
+      sessionSeconds += fileChange.sessionSeconds;
     });
     return sessionSeconds;
   }

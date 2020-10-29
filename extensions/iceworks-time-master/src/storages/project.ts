@@ -36,17 +36,17 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
 }
 
 export class Project {
-  public id: string = '';
+  // public id: string = '';
   public name: string = '';
   public directory: string = '';
   public resource: ProjectResource;
-  public editorSeconds: number = 0;
-  public sessionSeconds: number = 0;
 
-  constructor(values: ProjectSummary) {
-    const { resource, directory } = values;
-    this.id = resource!.repository || directory;
-    Object.assign(this, values);
+  constructor(values?: any) {
+    // const { resource, directory } = values;
+    // this.id = resource!.repository || directory;
+    if (values) {
+      Object.assign(this, values);
+    }
   }
 
   static async createInstance(fsPath: string) {
@@ -60,30 +60,34 @@ export class Project {
 }
 
 export interface ProjectSummary {
+  // id?: string;
   name: string;
   directory: string;
-  id?: string;
+  editorSeconds: number;
+  sessionSeconds: number;
   resource?: ProjectResource;
-  editorSeconds?: number;
-  sessionSeconds?: number;
 }
 
-export function getProjectFile() {
-  return path.join(getAppDataDir(), 'project.json');
+export interface ProjectsSummary {
+  [path: string]: ProjectSummary;
 }
 
-export function getProjectSummary(): Project {
-  const file = getProjectFile();
-  let projectSummary;
+export function getProjectsFile() {
+  return path.join(getAppDataDir(), 'projects.json');
+}
+
+export function getProjectsSummary(): ProjectsSummary {
+  const file = getProjectsFile();
+  let projectsSummary = {};
   try {
-    projectSummary = fse.readJsonSync(file);
+    projectsSummary = fse.readJsonSync(file);
   } catch (e) {
     // ignore errors
   }
-  return new Project(projectSummary);
+  return projectsSummary;
 }
 
-export function saveProjectSummary(values: ProjectSummary) {
-  const file = getProjectFile();
+export function saveProjectsSummary(values: ProjectsSummary) {
+  const file = getProjectsFile();
   fse.writeJsonSync(file, values, { spaces: 4 });
 }

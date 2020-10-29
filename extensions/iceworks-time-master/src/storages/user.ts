@@ -3,32 +3,30 @@ import * as fse from 'fs-extra';
 import { getAppDataDir } from '../utils/common';
 
 export class UserSummary {
-  editorSeconds = 0; // Editor usage time
+  /**
+   * 编辑器使用时间
+   */
+  editorSeconds = 0;
 
-  sessionSeconds = 0; // Active programming time
+  /**
+   * 编程时间
+   */
+  sessionSeconds = 0;
 
   keystrokes = 0;
-
   linesAdded = 0;
-
   linesRemoved = 0;
 
   // 个人平均数据
   averageDailySessionSeconds = 0;
-
   averageDailyKeystrokes = 0;
-
   averageDailyLinesAdded = 0;
-
   averageDailyLinesRemoved = 0;
 
   // 全局数据
   globalAverageDailySessionSeconds = 0;
-
   globalAverageDailyKeystrokes = 0;
-
   globalAverageDailyLinesAdded = 0;
-
   globalAverageDailyLinesRemoved = 0;
 }
 

@@ -3,7 +3,6 @@ import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
 import { getAppDataDir, getNowTimes } from '../utils/common';
 import { Project } from './project';
-import forIn = require('lodash.forin');
 
 interface FileTextInfo {
   /**
@@ -51,8 +50,17 @@ export interface FileChangeSummary {
    * 文件所属的项目文件夹
    */
   projectDir: string;
+  /**
+   * 文件的文本长度
+   */
   length: number;
+  /**
+   * 文件的行数
+   */
   lineCount: number;
+  /**
+   * 文件使用的语法
+   */
   syntax: string;
 
   /**
@@ -66,7 +74,7 @@ export interface FileChangeSummary {
   /**
    * 文件停留时间
    */
-  editorSeconds: number;
+  editorSeconds?: number;
   /**
    * 文件编辑时间
    */
@@ -127,10 +135,6 @@ export interface FileChangeSummary {
    * 结束更新文件的时间
    */
   end: number;
-  /**
-   * 更新距离开始更新的时间间隔
-   */
-  durationSeconds: number;
 }
 
 export class FileChange {
@@ -142,8 +146,6 @@ export class FileChange {
   public syntax: string;
   public kpm: number = 0;
   public keystrokes: number = 0;
-  public editorSeconds: number = 0;
-  public sessionSeconds: number = 0;
   public charsAdded: number = 0;
   public charsDeleted: number = 0;
   public charsPasted: number = 0;
@@ -157,11 +159,17 @@ export class FileChange {
   public linesRemoved: number = 0;
   public start: number = 0;
   public end: number = 0;
+
+  /**
+   * 更新结束距离更新开始的时间间隔
+   */
   public durationSeconds: number = 0;
 
-  constructor(values: any) {
+  constructor(values?: any) {
     this.setStart();
-    Object.assign(this, values);
+    if (values) {
+      Object.assign(this, values);
+    }
   }
 
   updateTextInfo(textDocument: TextDocument) {
@@ -189,31 +197,26 @@ export class FileChange {
   }
 }
 
-export interface FilesChange {
-  [name: string]: FileChange;
+export interface FilesChangeSummary {
+  [name: string]: FileChangeSummary;
 }
 
-export function getFileChangeFile() {
+export function getFilesChangeFile() {
   return path.join(getAppDataDir(), 'filesChange.json');
 }
 
-export function getFilesChange(): FilesChange {
-  const file = getFileChangeFile();
+export function getFilesChangeSummary(): FilesChangeSummary {
+  const file = getFilesChangeFile();
   let filesChangeSummary = {};
   try {
     filesChangeSummary = fse.readJsonSync(file);
   } catch (e) {
     // ignore error
   }
-
-  const filesChange: FilesChange = {};
-  forIn(filesChangeSummary, (value, key) => {
-    filesChange[key] = new FileChange(value);
-  });
-  return filesChange;
+  return filesChangeSummary;
 }
 
-export function saveFilesChange(filesChange: FilesChange) {
-  const file = getFileChangeFile();
-  fse.writeJsonSync(file, filesChange, { spaces: 4 });
+export function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
+  const file = getFilesChangeFile();
+  fse.writeJsonSync(file, filesChangeSummary, { spaces: 4 });
 }
