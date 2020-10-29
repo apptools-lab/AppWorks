@@ -1,6 +1,7 @@
+import * as forIn from 'lodash.forin';
 import { Project } from './storages/project';
-import { FileChangeSummary } from './storages/filesChange';
-import { getNowTimes } from '../utils/common';
+import { FileChange } from './storages/filesChange';
+import { getNowTimes } from './utils/common';
 
 export interface Editor {
   id: string;
@@ -24,49 +25,89 @@ export class KeystrokeStats {
   public end: number;
   public editor: Editor;
   public user: User;
-  private files: {[name: string]: FileChangeSummary};
+  private files: {[name: string]: FileChange};
   private project: Project;
 
   constructor(project: Project) {
-    const { nowInSec } = getNowTimes();
-
     this.project = project;
-    this.setStart(nowInSec);
+    this.setStart();
   }
 
   hasData(): boolean {
-    return false;
+    const keys = Object.keys(this.files);
+    if (keys.length === 0) {
+      return false;
+    }
+
+    // delete files that don't have any kpm data
+    let foundKpmData = false;
+    if (this.keystrokes > 0) {
+      foundKpmData = true;
+    }
+
+    // Now remove files that don't have any keystrokes
+    // that only have an open or close associated with them.
+    // If they have open and close then it's ok, keep it.
+    let keystrokesTally = 0;
+    keys.forEach((key) => {
+      const fileChange: FileChange = this.files[key];
+      const hasOpen = fileChange.open > 0;
+      const hasClose = fileChange.close > 0;
+      const hasKeystrokes = fileChange.keystrokes > 0;
+      keystrokesTally += fileChange.keystrokes;
+      if ((hasOpen && !hasClose && !hasKeystrokes) || (hasClose && !hasOpen && !hasKeystrokes)) {
+        // delete it, no keystrokes and only an open
+        delete this.files[key];
+      } else if (!foundKpmData && hasOpen && hasClose) {
+        foundKpmData = true;
+      }
+    });
+
+    if (keystrokesTally > 0 && keystrokesTally !== this.keystrokes) {
+      // use the keystrokes tally
+      foundKpmData = true;
+      this.keystrokes = keystrokesTally;
+    }
+    return foundKpmData;
   }
 
-  hasFile(fileName: string): boolean {
-    return !!this.files[fileName];
+  hasFile(fsPath: string): boolean {
+    return !!this.files[fsPath];
   }
 
-  addFile(fileName: string): void {
-    const fileChangeSummary = new FileChangeSummary(fileName, this.project);
-    this.files[fileName] = fileChangeSummary;
+  addFile(fsPath: string): void {
+    const fileChange = FileChange.createInstance(fsPath, this.project);
+    this.files[fsPath] = fileChange;
   }
 
-  getFile(fileName: string): FileChangeSummary {
-    return this.files[fileName];
+  getFile(fsPath: string): FileChange {
+    return this.files[fsPath];
   }
 
   setFilesEndAsNow(excludes: string[] = []): void {
     const { nowInSec } = getNowTimes();
     const fileKeys = Object.keys(this.files);
     fileKeys.forEach((key) => {
-      const fileChangeSummary = this.files[key];
-      if (fileChangeSummary.getEnd() === 0 && !excludes.includes(key)) {
-        fileChangeSummary.setEnd(nowInSec);
+      const fileChange = this.files[key];
+      if (fileChange.end === 0 && !excludes.includes(key)) {
+        fileChange.setEnd(nowInSec);
       }
     });
   }
 
-  setStart(time: number) {
-    this.start = time;
+  setStart(time?: number) {
+    this.start = time || getNowTimes().nowInSec;
   }
 
-  setEnd(time: number) {
-    this.end = time;
+  setEnd(time?: number) {
+    this.end = time || getNowTimes().nowInSec;
+  }
+
+  getSessionSeconds(): number {
+    let sessionSeconds = 0;
+    forIn(this.files, (fileChange) => {
+      sessionSeconds += fileChange.durationSeconds;
+    });
+    return sessionSeconds;
   }
 }

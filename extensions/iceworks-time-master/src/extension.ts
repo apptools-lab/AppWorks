@@ -10,13 +10,16 @@ const { name } = require('../package.json');
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions } = context;
 
-  createKpmInstance();
+  const kpmInstance = createKpmInstance();
 
   createTimerTreeView();
 
   subscriptions.push(
     registerCommand('iceworks-time-master.openFileInEditor', (file: string) => {
       openFileInEditor(file);
+    }),
+    registerCommand('iceworks-time-master.processKeystrokeStats', () => {
+      kpmInstance.processKeystrokeStats();
     }),
   );
 }

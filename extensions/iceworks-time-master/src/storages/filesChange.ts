@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
 import { getAppDataDir, getNowTimes } from '../utils/common';
 import { Project } from './project';
+import forIn = require('lodash.forin');
 
 interface FileTextInfo {
   /**
@@ -37,62 +38,130 @@ export function cleanTextInfoCache() {
   textInfoCache = {};
 }
 
-export class FileChangeSummary {
+export interface FileChangeSummary {
   /**
    * 文件名
    */
-  private name: string;
+  name: string;
   /**
    * 文件路径
    */
-  private fsPath: string;
+  fsPath: string;
   /**
    * 文件所属的项目文件夹
    */
-  private projectDir: string;
-  private length: number;
-  private lineCount: number;
-  private syntax: string;
+  projectDir: string;
+  length: number;
+  lineCount: number;
+  syntax: string;
 
-  kpm: number = 0; // kpm
-  keystrokes: number = 0; // 按键数
-  editorSeconds: number = 0; // 文件停留时间
-  sessionSeconds: number = 0; // 文件编辑时间
+  /**
+   * kpm
+   */
+  kpm: number;
+  /**
+   * 按键数
+   */
+  keystrokes: number;
+  /**
+   * 文件停留时间
+   */
+  editorSeconds: number;
+  /**
+   * 文件编辑时间
+   */
+  sessionSeconds: number;
 
-  charsAdded: number = 0; // 添加了多少个字符
-  charsDeleted: number = 0; // 删除了多少个字符
-  charsPasted: number = 0; // 粘贴的字符数
+  /**
+   * 添加了多少个字符
+   */
+  charsAdded: number;
+  /**
+   * 删除了多少个字符
+   */
+  charsDeleted: number;
+  /**
+   * 粘贴的字符数
+   */
+  charsPasted: number;
 
-  open: number = 0; // 文件打开次数
-  close: number = 0; // 文件关闭次数
-  paste: number = 0; // 粘贴次数
-  add: number = 0; // 添加次数
-  delete: number = 0; // 删除次数
+  /**
+   * 文件打开次数
+   */
+  open: number;
+  /**
+   * 文件关闭次数
+   */
+  close: number;
+  /**
+   * 粘贴次数
+   */
+  paste: number;
+  /**
+   * 添加次数
+   */
+  add: number;
+  /**
+   * 删除次数
+   */
+  delete: number;
+  /**
+   * 更新次数
+   */
+  update: number;
 
-  linesAdded: number = 0; // 添加了多少行
-  linesRemoved: number = 0; // 删除了多少行
+  /**
+   * 添加了多少行
+   */
+  linesAdded: number;
+  /**
+   * 删除了多少行
+   */
+  linesRemoved: number;
 
   /**
    * 开始更新文件的时间
    */
-  private start: number = 0;
+  start: number;
   /**
    * 结束更新文件的时间
    */
-  private end: number = 0;
+  end: number;
   /**
    * 更新距离开始更新的时间间隔
    */
-  private durationSeconds: number = 0;
+  durationSeconds: number;
+}
 
-  constructor(fileName: string, project: Project) {
-    const baseName = path.basename(fileName);
-    const { nowInSec } = getNowTimes();
+export class FileChange {
+  public name: string;
+  public fsPath: string;
+  public projectDir: string;
+  public length: number;
+  public lineCount: number;
+  public syntax: string;
+  public kpm: number = 0;
+  public keystrokes: number = 0;
+  public editorSeconds: number = 0;
+  public sessionSeconds: number = 0;
+  public charsAdded: number = 0;
+  public charsDeleted: number = 0;
+  public charsPasted: number = 0;
+  public open: number = 0;
+  public close: number = 0;
+  public paste: number = 0;
+  public add: number = 0;
+  public delete: number = 0;
+  public update: number = 0;
+  public linesAdded: number = 0;
+  public linesRemoved: number = 0;
+  public start: number = 0;
+  public end: number = 0;
+  public durationSeconds: number = 0;
 
-    this.name = baseName;
-    this.fsPath = fileName;
-    this.projectDir = project.directory;
-    this.setStart(nowInSec);
+  constructor(values: any) {
+    this.setStart();
+    Object.assign(this, values);
   }
 
   updateTextInfo(textDocument: TextDocument) {
@@ -102,35 +171,49 @@ export class FileChangeSummary {
     this.lineCount = lineCount;
   }
 
-  setStart(time: number) {
-    this.start = time;
+  setStart(time?: number) {
+    this.start = time || getNowTimes().nowInSec;
   }
 
-  setEnd(time: number) {
-    this.end = time;
+  setEnd(time?: number) {
+    this.end = time || getNowTimes().nowInSec;
     this.durationSeconds = this.end - this.start;
   }
 
-  getEnd() {
-    return this.end;
+  static createInstance(fsPath: string, project: Project) {
+    const baseName = path.basename(fsPath);
+    const name = baseName;
+    const projectDir = project.directory;
+    const fileChange = new FileChange({ name, projectDir });
+    return fileChange;
   }
 }
 
-export interface FilesChangeSummary {
-  [name: string]: FileChangeSummary;
+export interface FilesChange {
+  [name: string]: FileChange;
 }
 
 export function getFileChangeFile() {
   return path.join(getAppDataDir(), 'filesChange.json');
 }
 
-export function getFilesChangeSummary(): FilesChangeSummary {
+export function getFilesChange(): FilesChange {
   const file = getFileChangeFile();
-  const filesChangeSummary = fse.readJsonSync(file);
-  return filesChangeSummary;
+  let filesChangeSummary = {};
+  try {
+    filesChangeSummary = fse.readJsonSync(file);
+  } catch (e) {
+    // ignore error
+  }
+
+  const filesChange: FilesChange = {};
+  forIn(filesChangeSummary, (value, key) => {
+    filesChange[key] = new FileChange(value);
+  });
+  return filesChange;
 }
 
-export function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
+export function saveFilesChange(filesChange: FilesChange) {
   const file = getFileChangeFile();
-  fse.writeJsonSync(file, filesChangeSummary, { spaces: 4 });
+  fse.writeJsonSync(file, filesChange, { spaces: 4 });
 }

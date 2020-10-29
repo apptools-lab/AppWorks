@@ -1,5 +1,8 @@
 import { workspace, WorkspaceFolder } from 'vscode';
+import * as fse from 'fs-extra';
+import * as path from 'path';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
+import { getAppDataDir } from '../utils/common';
 import { getResource } from '../utils/git';
 
 export interface ProjectResource {
@@ -8,12 +11,7 @@ export interface ProjectResource {
   tag?: string;
 }
 
-export function getProjectPathForFile(fileName: string): string {
-  const folder = getProjectFolder(fileName);
-  return folder!.uri!.fsPath;
-}
-
-export function getProjectFolder(fileName: string): WorkspaceFolder {
+export function getProjectFolder(fsPath: string): WorkspaceFolder {
   let liveShareFolder = null;
   if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
     for (let i = 0; i < workspace.workspaceFolders.length; i++) {
@@ -23,7 +21,7 @@ export function getProjectFolder(fileName: string): WorkspaceFolder {
         const isVslsScheme = folderUri.scheme === 'vsls';
         if (isVslsScheme) {
           liveShareFolder = workspaceFolder;
-        } else if (fileName.includes(folderUri.fsPath)) {
+        } else if (fsPath.includes(folderUri.fsPath)) {
           return workspaceFolder;
         }
       }
@@ -42,21 +40,50 @@ export class Project {
   public name: string = '';
   public directory: string = '';
   public resource: ProjectResource;
+  public editorSeconds: number = 0;
+  public sessionSeconds: number = 0;
 
-  constructor(fileName: string) {
-    const workspaceFolder: WorkspaceFolder = getProjectFolder(fileName);
-    this.directory = workspaceFolder!.uri!.fsPath || UNTITLED;
-    this.name = workspaceFolder!.name || NO_PROJ_NAME;
+  constructor(values: ProjectSummary) {
+    const { resource, directory } = values;
+    this.id = resource!.repository || directory;
+    Object.assign(this, values);
   }
 
-  async ready() {
-    this.resource = await getResource(this.directory);
-    this.id = this.resource!.repository || this.directory;
-    return this;
+  static async createInstance(fsPath: string) {
+    const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
+    const directory = workspaceFolder!.uri!.fsPath || UNTITLED;
+    const name = workspaceFolder!.name || NO_PROJ_NAME;
+    const resource = await getResource(directory);
+    const project = new Project({ name, directory, resource });
+    return project;
   }
 }
 
-export class ProjectSummary extends Project {
-  public editorSeconds: number = 0;
-  public sessionSeconds: number = 0;
+export interface ProjectSummary {
+  name: string;
+  directory: string;
+  id?: string;
+  resource?: ProjectResource;
+  editorSeconds?: number;
+  sessionSeconds?: number;
+}
+
+export function getProjectFile() {
+  return path.join(getAppDataDir(), 'project.json');
+}
+
+export function getProjectSummary(): Project {
+  const file = getProjectFile();
+  let projectSummary;
+  try {
+    projectSummary = fse.readJsonSync(file);
+  } catch (e) {
+    // ignore errors
+  }
+  return new Project(projectSummary);
+}
+
+export function saveProjectSummary(values: ProjectSummary) {
+  const file = getProjectFile();
+  fse.writeJsonSync(file, values, { spaces: 4 });
 }

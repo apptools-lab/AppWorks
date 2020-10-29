@@ -24,8 +24,7 @@
     "*"
   ],
   "contributes": {
-    "commands": [
-    ],
+    "commands": [],
     "viewsContainers": {
       "activitybar": [
         {
@@ -56,6 +55,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",
+    "@types/lodash.forin": "^4.4.6",
     "@types/node": "^12.11.7",
     "@types/numeral": "0.0.28",
     "@types/vscode": "^1.41.0",
@@ -67,6 +67,7 @@
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "fs-extra": "^9.0.1",
+    "lodash.forin": "^4.4.0",
     "moment": "^2.29.1",
     "numeral": "^2.0.6"
   },
