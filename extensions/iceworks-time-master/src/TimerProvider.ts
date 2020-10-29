@@ -6,7 +6,6 @@ import {
   TreeItemCollapsibleState,
   EventEmitter,
   Event,
-  Disposable,
   TreeView,
   window,
 } from 'vscode';
@@ -125,7 +124,7 @@ function createTimerTreeItem(p: TimerItem, state: TreeItemCollapsibleState): Tim
   return new TimerTreeItem(p, state);
 }
 
-class TimerProvider implements TreeDataProvider<TimerItem> {
+export class TimerProvider implements TreeDataProvider<TimerItem> {
   private _onDidChangeTreeData: EventEmitter<TimerItem | undefined> = new EventEmitter<TimerItem | undefined>();
 
   readonly onDidChangeTreeData: Event<TimerItem | undefined> = this._onDidChangeTreeData.event;
@@ -523,32 +522,25 @@ function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) 
   }
 }
 
-export function createTimerTreeView() {
-  const timerProvider = new TimerProvider();
+export function createTimerTreeView(timerProvider: TimerProvider) {
   const treeView = window.createTreeView('timeMaster', {
     treeDataProvider: timerProvider,
     showCollapseAll: false,
   });
-  Disposable.from(
-    commands.registerCommand(
-      'iceworks-time-master.refreshTimerTree',
-      () => timerProvider.refresh(),
-    ),
-    treeView.onDidCollapseElement(async e => {
-      const item: TimerItem = e.element;
-      timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Collapsed;
-    }),
-    treeView.onDidExpandElement(async e => {
-      const item: TimerItem = e.element;
-      timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Expanded;
-    }),
-    treeView.onDidChangeSelection(async e => {
-      if (!e.selection || e.selection.length === 0) {
-        return;
-      }
-      const item: TimerItem = e.selection[0];
-      handleTimerChangeSelection(treeView, item);
-    }),
-  );
+  treeView.onDidCollapseElement(async e => {
+    const item: TimerItem = e.element;
+    timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Collapsed;
+  });
+  treeView.onDidExpandElement(async e => {
+    const item: TimerItem = e.element;
+    timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Expanded;
+  });
+  treeView.onDidChangeSelection(async e => {
+    if (!e.selection || e.selection.length === 0) {
+      return;
+    }
+    const item: TimerItem = e.selection[0];
+    handleTimerChangeSelection(treeView, item);
+  });
   return treeView;
 }

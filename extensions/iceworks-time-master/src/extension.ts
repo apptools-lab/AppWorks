@@ -1,5 +1,5 @@
 import { ExtensionContext, commands } from 'vscode';
-import { createTimerTreeView } from './timerProvider';
+import { createTimerTreeView, TimerProvider } from './timerProvider';
 import { openFileInEditor } from './utils/common';
 import { createInstance as createKpmInstance } from './managers/kpm';
 import { activate as activateWalkClock } from './managers/walkClock';
@@ -10,7 +10,8 @@ const { name } = require('../package.json');
 export async function activate(context: ExtensionContext) {
   const { subscriptions } = context;
 
-  createTimerTreeView();
+  const timerProvider = new TimerProvider();
+  createTimerTreeView(timerProvider);
 
   activateWalkClock();
 
@@ -23,6 +24,9 @@ export async function activate(context: ExtensionContext) {
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStats', () => {
       kpmInstance.sendKeystrokeStats();
+    }),
+    commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
+      timerProvider.refresh();
     }),
   );
 }
