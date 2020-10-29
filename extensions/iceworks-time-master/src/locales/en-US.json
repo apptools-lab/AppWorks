@@ -1,4 +1,21 @@
 {
-  "extension.timeMaster.entries.test.label": "Test",
-  "extension.timeMaster.entries.test.detail": "Data for Test"
+  "extension.timeMaster.tree.item.acCode.label": "Active code time",
+  "extension.timeMaster.tree.item.acCode.detail": "Total time you have been typing in the editor",
+  "extension.timeMaster.tree.item.linesAdded.label": "Lines added",
+  "extension.timeMaster.tree.item.linesAdded.detail": "Total lines you have been added to the editor",
+  "extension.timeMaster.tree.item.linesRemoved.label": "Line Removed",
+  "extension.timeMaster.tree.item.linesRemoved.detail": "Total lines you have been removed to the editor",
+  "extension.timeMaster.tree.item.keystrokes.label": "Keystrokes",
+  "extension.timeMaster.tree.item.keystrokes.detail": "Total keystrokes you have been typing in the editor",
+  "extension.timeMaster.tree.item.filesChanged.label": "Files changed",
+  "extension.timeMaster.tree.item.filesChanged.detail": "Total files you have been changed in the editor ",
+  "extension.timeMaster.tree.item.topFilesByKPM.label": "Top files by KPM",
+  "extension.timeMaster.tree.item.topFilesByKPM.detail": "Top files by KPM (keystrokes per minute)",
+  "extension.timeMaster.tree.item.topFilesByKey.label": "Top files by keystrokes",
+  "extension.timeMaster.tree.item.topFilesByKey.detail": "",
+  "extension.timeMaster.tree.item.topFilesByCT.label": "Top files by code time",
+  "extension.timeMaster.tree.item.topFilesByCT.detail": "",
+  "extension.timeMaster.tree.item.average": "Your average (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.global": "Global average (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.today": "Today:  <%=value%>"
 }

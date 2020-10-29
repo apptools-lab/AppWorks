@@ -15,6 +15,7 @@ import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from './storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
 import { humanizeMinutes } from './utils/common';
+import i18n from './i18n';
 
 const NUMBER_FORMAT = '0 a';
 const SECONDS_PER_MINUTE = 60;
@@ -167,15 +168,15 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private buildFileChangedItem(filesChangeSummary: FileChangeSummary[]): TimerItem {
     const parentItem = this.buildMessageItem(
-      'Files changed',
-      'Files changed today',
+      i18n.format('extension.timeMaster.tree.item.filesChanged.label'),
+      i18n.format('extension.timeMaster.tree.item.filesChanged.detail'),
       null,
       null,
       null,
       null,
       'ct_top_files_by_kpm_toggle_node',
     );
-    const childItem = this.buildMessageItem(`Today: ${filesChangeSummary.length}`);
+    const childItem = this.buildMessageItem(i18n.format('extension.timeMaster.tree.item.today', { value: filesChangeSummary.length }));
     parentItem.children = [childItem];
     return parentItem;
   }
@@ -200,8 +201,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       highKpmChildren.push(messageItem);
     }
     const highKpmParent = this.buildParentItem(
-      'Top files by KPM',
-      'Top files by KPM (keystrokes per minute)',
+      i18n.format('extension.timeMaster.tree.item.topFilesByKPM.label'),
+      i18n.format('extension.timeMaster.tree.item.topFilesByKPM.detail'),
       highKpmChildren,
       'ct_top_files_by_kpm_toggle_node',
     );
@@ -228,8 +229,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       mostEditedChildren.push(messageItem);
     }
     const mostEditedParent = this.buildParentItem(
-      'Top files by keystrokes',
-      '',
+      i18n.format('extension.timeMaster.tree.item.topFilesByKey.label'),
+      i18n.format('extension.timeMaster.tree.item.topFilesByKey.detail'),
       mostEditedChildren,
       'ct_top_files_by_keystrokes_toggle_node',
     );
@@ -256,8 +257,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       longestCodeTimeChildren.push(messageItem);
     }
     const longestCodeTimeParent = this.buildParentItem(
-      'Top files by code time',
-      '',
+      i18n.format('extension.timeMaster.tree.item.topFilesByCT.label'),
+      i18n.format('extension.timeMaster.tree.item.topFilesByCT.detail'),
       longestCodeTimeChildren,
       'ct_top_files_by_codetime_toggle_node',
     );
@@ -321,27 +322,27 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const actValues = [];
     const sessionMinutes = sessionSeconds / SECONDS_PER_MINUTE;
     const sessionMinutesStr = humanizeMinutes(sessionMinutes);
-    actValues.push({ label: `Today: ${sessionMinutesStr}`, icon: 'rocket.svg' });
+    actValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: sessionMinutesStr }), icon: 'rocket.svg' });
     if (averageDailySessionSeconds) {
       const averageDailySessionMinutes = averageDailySessionSeconds / SECONDS_PER_MINUTE;
-      const avgMin = humanizeMinutes(averageDailySessionMinutes);
+      const avgMinStr = humanizeMinutes(averageDailySessionMinutes);
       const activityLightningBolt = sessionMinutes > averageDailySessionMinutes ? 'bolt.svg' : 'bolt-grey.svg';
       actValues.push({
-        label: `Your average (${dayStr}): ${avgMin}`,
+        label: i18n.format('extension.timeMaster.tree.item.average', { day: dayStr, value: avgMinStr }),
         icon: activityLightningBolt,
       });
     }
     if (globalAverageDailySessionSeconds) {
       const globalMinutesStr = humanizeMinutes(globalAverageDailySessionSeconds / SECONDS_PER_MINUTE);
       actValues.push({
-        label: `Global average (${dayStr}): ${globalMinutesStr}`,
+        label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalMinutesStr }),
         icon: 'global-grey.svg',
       });
     }
     items.push(
       this.buildUserSummaryItem(
-        'Active code time',
-        'Active code time: total time you have been typing in your editor today.',
+        i18n.format('extension.timeMaster.tree.item.acCode.label'),
+        i18n.format('extension.timeMaster.tree.item.acCode.detail'),
         actValues,
         TreeItemCollapsibleState.Expanded,
         'ct_active_codetime_toggle_node',
@@ -351,25 +352,25 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     // Lines added
     const laValues = [];
     const currLinesAdded = numeral(linesAdded).format(NUMBER_FORMAT);
-    laValues.push({ label: `Today: ${currLinesAdded}`, icon: 'rocket.svg' });
+    laValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: currLinesAdded }), icon: 'rocket.svg' });
     if (averageDailyLinesAdded) {
       const userLinesAddedAvg = numeral(averageDailyLinesAdded).format(NUMBER_FORMAT);
       const linesAddedLightningBolt = linesAdded > averageDailyLinesAdded ? 'bolt.svg' : 'bolt-grey.svg';
       laValues.push({
-        label: `Your average (${dayStr}): ${userLinesAddedAvg}`,
+        label: i18n.format('extension.timeMaster.tree.item.average', { day: dayStr, value: userLinesAddedAvg }),
         icon: linesAddedLightningBolt,
       });
     }
     if (globalAverageDailyLinesAdded) {
       const globalLinesAdded = numeral(globalAverageDailyLinesAdded).format(NUMBER_FORMAT);
       laValues.push({
-        label: `Global average (${dayStr}): ${globalLinesAdded}`,
+        label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalLinesAdded }),
         icon: 'global-grey.svg',
       });
     }
     items.push(this.buildUserSummaryItem(
-      'Lines added',
-      '',
+      i18n.format('extension.timeMaster.tree.item.linesAdded.label'),
+      i18n.format('extension.timeMaster.tree.item.linesAdded.detail'),
       laValues,
       TreeItemCollapsibleState.Collapsed,
       'ct_lines_added_toggle_node',
@@ -378,25 +379,25 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     // Lines removed
     const lrValues = [];
     const currLinesRemoved = numeral(linesRemoved).format(NUMBER_FORMAT);
-    lrValues.push({ label: `Today: ${currLinesRemoved}`, icon: 'rocket.svg' });
+    lrValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: currLinesRemoved }), icon: 'rocket.svg' });
     if (averageDailyLinesRemoved) {
       const userLinesRemovedAvg = numeral(averageDailyLinesRemoved).format(NUMBER_FORMAT);
       const linesRemovedLightningBolt = linesRemoved > averageDailyLinesRemoved ? 'bolt.svg' : 'bolt-grey.svg';
       lrValues.push({
-        label: `Your average (${dayStr}): ${userLinesRemovedAvg}`,
+        label: i18n.format('extension.timeMaster.tree.item.average', { day: dayStr, value: userLinesRemovedAvg }),
         icon: linesRemovedLightningBolt,
       });
     }
     if (globalAverageDailyLinesRemoved) {
       const globalLinesRemoved = numeral(globalAverageDailyLinesRemoved).format(NUMBER_FORMAT);
       lrValues.push({
-        label: `Global average (${dayStr}): ${globalLinesRemoved}`,
+        label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalLinesRemoved }),
         icon: 'global-grey.svg',
       });
     }
     items.push(this.buildUserSummaryItem(
-      'Lines removed',
-      '',
+      i18n.format('extension.timeMaster.tree.item.linesRemoved.label'),
+      i18n.format('extension.timeMaster.tree.item.linesRemoved.detail'),
       lrValues,
       TreeItemCollapsibleState.Collapsed,
       'ct_lines_removed_toggle_node',
@@ -405,25 +406,25 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     // Keystrokes
     const kValues = [];
     const currKeystrokes = numeral(keystrokes).format(NUMBER_FORMAT);
-    kValues.push({ label: `Today: ${currKeystrokes}`, icon: 'rocket.svg' });
+    kValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: currKeystrokes }), icon: 'rocket.svg' });
     if (averageDailyKeystrokes) {
       const userKeystrokesAvg = numeral(averageDailyKeystrokes).format(NUMBER_FORMAT);
       const keystrokesLightningBolt = keystrokes > averageDailyKeystrokes ? 'bolt.svg' : 'bolt-grey.svg';
       kValues.push({
-        label: `Your average (${dayStr}): ${userKeystrokesAvg}`,
+        label: i18n.format('extension.timeMaster.tree.item.average', { day: dayStr, value: userKeystrokesAvg }),
         icon: keystrokesLightningBolt,
       });
     }
     if (globalAverageDailyKeystrokes) {
       const globalKeystrokes = numeral(globalAverageDailyKeystrokes).format(NUMBER_FORMAT);
       kValues.push({
-        label: `Global average (${dayStr}): ${globalKeystrokes}`,
+        label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalKeystrokes }),
         icon: 'global-grey.svg',
       });
     }
     items.push(this.buildUserSummaryItem(
-      'Keystrokes',
-      '',
+      i18n.format('extension.timeMaster.tree.item.keystrokes.label'),
+      i18n.format('extension.timeMaster.tree.item.keystrokes.detail'),
       kValues,
       TreeItemCollapsibleState.Collapsed,
       'ct_keystrokes_toggle_node',

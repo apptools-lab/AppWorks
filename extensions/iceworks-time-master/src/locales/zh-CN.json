@@ -1,4 +1,21 @@
 {
-  "extension.timeMaster.entries.test.label": "测试的标题2222",
-  "extension.timeMaster.entries.test.detail": "测试的描述"
+  "extension.timeMaster.tree.item.acCode.label": "活跃编程时间",
+  "extension.timeMaster.tree.item.acCode.detail": "您今天在编辑器中键入的总时间",
+  "extension.timeMaster.tree.item.linesAdded.label": "添加的行数",
+  "extension.timeMaster.tree.item.linesAdded.detail": "您在编辑器中添加了多少行文本",
+  "extension.timeMaster.tree.item.linesRemoved.label": "删除的行数",
+  "extension.timeMaster.tree.item.linesRemoved.detail": "您在编辑器中删除了多少行文本",
+  "extension.timeMaster.tree.item.keystrokes.label": "按键数",
+  "extension.timeMaster.tree.item.keystrokes.detail": "您在编辑器中键入了多少次",
+  "extension.timeMaster.tree.item.filesChanged.label": "文件变更数",
+  "extension.timeMaster.tree.item.filesChanged.detail": "您在编辑器中更新了几个文件",
+  "extension.timeMaster.tree.item.topFilesByKPM.label": "键入频率最高的文件",
+  "extension.timeMaster.tree.item.topFilesByKPM.detail": "每分钟键入数最高的文件",
+  "extension.timeMaster.tree.item.topFilesByKey.label": "总输入最多的文件",
+  "extension.timeMaster.tree.item.topFilesByKey.detail": "在文件中键入数最高的文件",
+  "extension.timeMaster.tree.item.topFilesByCT.label": "花费时间最多的文件",
+  "extension.timeMaster.tree.item.topFilesByCT.detail": "按照编程时间的文件排序",
+  "extension.timeMaster.tree.item.average": "您的平均值 (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.global": "全网平均值 (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.today": "今天:  <%=value%>"
 }
