@@ -41,6 +41,56 @@ export class KpmManager {
     return true;
   }
 
+  private getTextChangeInfo(contentChange: TextDocumentContentChangeEvent) {
+    const { rangeLength, text, range } = contentChange;
+
+    let textChangeLen = text?.length;
+    const linesChanged = range.end.line - range.start.line;
+    const newLineMatches = text?.match(/[\n\r]/g);
+
+    let linesAdded = 0;
+    let linesDeleted = 0;
+    let isCharDelete = false;
+    if (linesChanged) {
+      // update removed lines
+      linesDeleted = linesChanged;
+    } else if (newLineMatches && textChangeLen) {
+      // this means there are new lines added
+      linesAdded = newLineMatches.length;
+    } else if (rangeLength && !text) {
+      // this may be a character delete
+      isCharDelete = true;
+    }
+
+    // check if its a character deletion
+    if (!textChangeLen && rangeLength) {
+      // NO content text but has a range change length, set the textChangeLen
+      // to the inverse of the rangeLength to show the chars deleted
+      textChangeLen = rangeLength / -1;
+    }
+
+    let hasNonNewLine = false;
+    if (textChangeLen && !linesAdded && !linesDeleted) {
+      // flag to state we have chars deleted but no new lines
+      hasNonNewLine = true;
+    }
+
+    let hasChanges = false;
+    if (linesAdded || linesDeleted || textChangeLen || isCharDelete) {
+      // there are changes
+      hasChanges = true;
+    }
+
+    return {
+      linesAdded,
+      linesDeleted,
+      textChangeLen,
+      isCharDelete,
+      hasNonNewLine,
+      hasChanges,
+    };
+  }
+
   public activate() {
     // document listener handlers
     workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
@@ -121,58 +171,14 @@ export class KpmManager {
       return;
     }
 
-    // TODO
-    logIt('TODO');
-  }
-
-  private getTextChangeInfo(contentChange: TextDocumentContentChangeEvent) {
-    const { rangeLength, text, range } = contentChange;
-
-    let textChangeLen = text?.length;
-    const linesChanged = range.end.line - range.start.line;
-    const newLineMatches = text?.match(/[\n\r]/g);
-
-    let linesAdded = 0;
-    let linesDeleted = 0;
-    let isCharDelete = false;
-    if (linesChanged) {
-      // update removed lines
-      linesDeleted = linesChanged;
-    } else if (newLineMatches && textChangeLen) {
-      // this means there are new lines added
-      linesAdded = newLineMatches.length;
-    } else if (rangeLength && !text) {
-      // this may be a character delete
-      isCharDelete = true;
+    const projectInfo = await Project.createInstance(fsPath);
+    const keyStrokeStats = keystrokeStatsMap[projectInfo.directory];
+    if (keyStrokeStats) {
+      const currentFileChange = keyStrokeStats.files[fsPath];
+      if (currentFileChange) {
+        currentFileChange.close += 1;
+      }
     }
-
-    // check if its a character deletion
-    if (!textChangeLen && rangeLength) {
-      // NO content text but has a range change length, set the textChangeLen
-      // to the inverse of the rangeLength to show the chars deleted
-      textChangeLen = rangeLength / -1;
-    }
-
-    let hasNonNewLine = false;
-    if (textChangeLen && !linesAdded && !linesDeleted) {
-      // flag to state we have chars deleted but no new lines
-      hasNonNewLine = true;
-    }
-
-    let hasChanges = false;
-    if (linesAdded || linesDeleted || textChangeLen || isCharDelete) {
-      // there are changes
-      hasChanges = true;
-    }
-
-    return {
-      linesAdded,
-      linesDeleted,
-      textChangeLen,
-      isCharDelete,
-      hasNonNewLine,
-      hasChanges,
-    };
   }
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {

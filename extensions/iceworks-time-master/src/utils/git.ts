@@ -4,7 +4,7 @@ import { wrapExecPromise } from '../utils/common';
 const NodeCache = require('node-cache');
 
 const nodeCache = new NodeCache({ stdTTL: 120 });
-const cacheTimeoutSeconds = 60 * 10;
+const cacheTimeoutSeconds = 60 * 30;
 
 export function isGitProject(projectDir: string) {
   return fse.existsSync(path.join(projectDir, '.git'));

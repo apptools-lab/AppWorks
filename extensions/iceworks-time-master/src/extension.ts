@@ -1,6 +1,6 @@
 import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './timerProvider';
-import { openFileInEditor } from './utils/common';
+import { logIt, openFileInEditor } from './utils/common';
 import { createInstance as createKpmInstance } from './managers/kpm';
 import { activate as activateWalkClock } from './managers/walkClock';
 
@@ -8,6 +8,7 @@ import { activate as activateWalkClock } from './managers/walkClock';
 const { name } = require('../package.json');
 
 export async function activate(context: ExtensionContext) {
+  logIt('[extension] activate!');
   const { subscriptions } = context;
 
   const timerProvider = new TimerProvider();
@@ -32,4 +33,5 @@ export async function activate(context: ExtensionContext) {
 }
 
 export function deactivate() {
+  logIt('[extension] deactivate!');
 }
