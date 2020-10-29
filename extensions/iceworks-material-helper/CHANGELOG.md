@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.4.1
+## 0.4.2
 
 - fix: fail to clear material sources
 - fix: fail to debug material sources in some cases
