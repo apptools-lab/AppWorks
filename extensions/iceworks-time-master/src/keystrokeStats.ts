@@ -1,6 +1,8 @@
 import { Project } from './storages/project';
 import { FileChange } from './storages/filesChange';
-import { getNowTimes } from './utils/common';
+import { getNowTimes, logIt } from './utils/common';
+import { DEFAULT_DURATION_MILLISECONDS } from './constants';
+import { processPayload } from './managers/data';
 import forIn = require('lodash.forin');
 
 export interface Editor {
@@ -53,12 +55,8 @@ export class KeystrokeStats {
       const fileChange: FileChange = this.files[key];
       const hasOpen = fileChange.open > 0;
       const hasClose = fileChange.close > 0;
-      const hasKeystrokes = fileChange.keystrokes > 0;
       keystrokesTally += fileChange.keystrokes;
-      if ((hasOpen && !hasClose && !hasKeystrokes) || (hasClose && !hasOpen && !hasKeystrokes)) {
-        // delete it, no keystrokes and only an open
-        delete this.files[key];
-      } else if (!foundKpmData && hasOpen && hasClose) {
+      if (hasOpen && hasClose) {
         foundKpmData = true;
       }
     });
@@ -78,10 +76,6 @@ export class KeystrokeStats {
   addFile(fsPath: string): void {
     const fileChange = FileChange.createInstance(fsPath, this.project);
     this.files[fsPath] = fileChange;
-  }
-
-  getFile(fsPath: string): FileChange {
-    return this.files[fsPath];
   }
 
   setFilesEndAsNow(excludes: string[] = []): void {
@@ -109,5 +103,32 @@ export class KeystrokeStats {
       sessionSeconds += fileChange.durationSeconds;
     });
     return sessionSeconds;
+  }
+
+  private keystrokeTriggerTimeout: NodeJS.Timeout;
+
+  sendData() {
+    const isHasData = this.hasData();
+    logIt('[KeystrokeStats][sendData]isHasData', isHasData);
+    if (isHasData) {
+      this.setEnd();
+      processPayload(this);
+    }
+  }
+
+  activate() {
+    this.deactivate();
+
+    // start the minute timer to send the data
+    this.keystrokeTriggerTimeout = setTimeout(() => {
+      logIt('[KeystrokeStats][keystrokeTriggerTimeout] run');
+      this.sendData();
+    }, DEFAULT_DURATION_MILLISECONDS);
+  }
+
+  deactivate() {
+    if (this.keystrokeTriggerTimeout) {
+      clearTimeout(this.keystrokeTriggerTimeout);
+    }
   }
 }

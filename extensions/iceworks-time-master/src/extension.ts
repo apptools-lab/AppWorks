@@ -21,8 +21,8 @@ export async function activate(context: ExtensionContext) {
     commands.registerCommand('iceworks-time-master.openFileInEditor', (file: string) => {
       openFileInEditor(file);
     }),
-    commands.registerCommand('iceworks-time-master.processKeystrokeStats', () => {
-      kpmInstance.processKeystrokeStats();
+    commands.registerCommand('iceworks-time-master.sendKeystrokeStats', () => {
+      kpmInstance.sendKeystrokeStats();
     }),
   );
 }

@@ -1,10 +1,8 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace, commands } from 'vscode';
 import { isFileActive, logIt } from '../utils/common';
 import { Project } from '../storages/project';
-import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
 import { KeystrokeStats } from '../keystrokeStats';
 import { cleanTextInfoCache } from '../storages/filesChange';
-import { processPayload } from '../managers/data';
 
 let keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
@@ -55,28 +53,14 @@ export class KpmManager {
   }
 
   public deactivate() {
-    // TODOs
+    // TODO
   }
 
-  private sendKeystrokeStats() {
-    //
-    // Go through all keystroke count objects found in the map and send
-    // the ones that have data (data is greater than 1), then clear the map
-    //
-    const keys = Object.keys(keystrokeStatsMap);
-    logIt('[kpmManager][sendKeystrokeStats]keys', keys);
-    // use a normal for loop since we have an await within the loop
-    for (const key of keys) {
-      const keystrokeStats = keystrokeStatsMap[key];
-
-      // check if we have keystroke data
-      const isHasData = keystrokeStats.hasData();
-      logIt('[kpmManager][sendKeystrokeStats]isHasData', key, '|', isHasData);
-      if (isHasData) {
-        // post the payload offline until the batch interval sends it out
-        keystrokeStats.setEnd();
-        processPayload(keystrokeStats);
-      }
+  public sendKeystrokeStats() {
+    for (const projectPath in keystrokeStatsMap) {
+      const keystrokeStats = keystrokeStatsMap[projectPath];
+      keystrokeStats.deactivate();
+      keystrokeStats.sendData();
     }
 
     // clear out the keystroke map
@@ -93,21 +77,16 @@ export class KpmManager {
     // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
       keystrokeStats = new KeystrokeStats(project);
-
-      // start the minute timer to send the data
-      this.keystrokeTriggerTimeout = setTimeout(() => {
-        logIt('[createKeystrokeStats][keystrokeTriggerTimeout] run');
-        this.sendKeystrokeStats();
-      }, DEFAULT_DURATION_MILLISECONDS);
+      keystrokeStats.activate();
     }
 
     // check if we have this file or not
     if (!keystrokeStats.hasFile(fsPath)) {
       keystrokeStats.addFile(fsPath);
     }
-    // else if (keystrokeStats.getFile(fsPath).end !== 0) {
+    // else if (keystrokeStats.files[fsPath].end !== 0) {
     //   // re-initialize it since we ended it before the minute was up
-    //   keystrokeStats.getFile(fsPath).setEnd(0);
+    //   keystrokeStats.files[fsPath].setEnd(0);
     // }
 
     keystrokeStatsMap[projectPath] = keystrokeStats;
@@ -134,7 +113,7 @@ export class KpmManager {
     const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
     // this.endPreviousModifiedFiles(keyStrokeStats, fsPath);
 
-    const currentFileChange = keyStrokeStats.getFile(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
     currentFileChange.updateTextInfo(textDocument);
     currentFileChange.open += 1;
   }
@@ -222,7 +201,7 @@ export class KpmManager {
     const projectInfo = await Project.createInstance(fsPath);
     const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
 
-    const currentFileChange = keyStrokeStats.getFile(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
     currentFileChange.updateTextInfo(document);
 
     // find the contentChange with a range in the contentChanges array
@@ -270,15 +249,8 @@ export class KpmManager {
   public async onDidChangeWindowState(windowState: WindowState) {
     logIt('[onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
-      commands.executeCommand('iceworks-time-master.processKeystrokeStats');
+      commands.executeCommand('iceworks-time-master.sendKeystrokeStats');
     }
-  }
-
-  public processKeystrokeStats() {
-    if (this.keystrokeTriggerTimeout) {
-      clearTimeout(this.keystrokeTriggerTimeout);
-    }
-    this.sendKeystrokeStats();
   }
 }
 
