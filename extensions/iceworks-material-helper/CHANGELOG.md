@@ -2,6 +2,11 @@
 
 ## 0.4.1
 
+- fix: fail to clear material sources
+- fix: fail to debug material sources in some cases
+
+## 0.4.1
+
 - fix: ui build error
 
 ## 0.4.0
