@@ -192,7 +192,7 @@ export class FileChange {
     const baseName = path.basename(fsPath);
     const name = baseName;
     const projectDir = project.directory;
-    const fileChange = new FileChange({ name, projectDir });
+    const fileChange = new FileChange({ name, projectDir, fsPath });
     return fileChange;
   }
 }

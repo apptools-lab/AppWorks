@@ -20,8 +20,9 @@ export async function activate(context: ExtensionContext) {
   kpmInstance.activate();
 
   subscriptions.push(
-    commands.registerCommand('iceworks-time-master.openFileInEditor', (file: string) => {
-      openFileInEditor(file);
+    commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
+      logIt('[extension][openFileInEditor] file', fsPath);
+      openFileInEditor(fsPath);
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStats', () => {
       kpmInstance.sendKeystrokeStats();
