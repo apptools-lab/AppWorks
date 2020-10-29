@@ -109,7 +109,7 @@ export const generate = async function ({
 
       await fse.writeFile(pageIndexPath, rendered, 'utf-8');
     } catch (error) {
-      remove(pageName);
+      remove(curPagesPath, pageName);
       throw error;
     }
 
@@ -122,8 +122,8 @@ export const generate = async function ({
  *
  * @param name {string} Page folder name
  */
-export const remove = async function (name: string) {
-  await fse.remove(path.join(pagesPath, name));
+export const remove = async function (curPagesPath: string, name: string) {
+  await fse.remove(path.join(curPagesPath, name));
 };
 
 export const addBlocks = async function (blocks: IMaterialBlock[], componentPath: string) {

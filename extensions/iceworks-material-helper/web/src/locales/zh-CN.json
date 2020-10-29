@@ -36,7 +36,6 @@
   "web.iceworksMaterialHelper.RouterDetailForm.path.requiredMessage": "请输入路由路径",
   "web.iceworksMaterialHelper.RouterDetailForm.path.placeholder": "请输入路由路径",
   "web.iceworksMaterialHelper.RouterDetailForm.parent.label": "父级路由",
-  "web.iceworksMaterialHelper.RouterDetailForm.parent.requiredMessage": "请选择父级路由",
   "web.iceworksMaterialHelper.RouterDetailForm.parent.placeholder": "请选择父级路由",
   "web.iceworksMaterialHelper.RouterDetailForm.menuType.label": "菜单类型",
   "web.iceworksMaterialHelper.RouterDetailForm.menuType.placeholder": "请选择生成的菜单类型",
