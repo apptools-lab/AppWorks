@@ -41,8 +41,6 @@ export class KpmManager {
     return true;
   }
 
-  private keystrokeTriggerTimeout: NodeJS.Timeout;
-
   public activate() {
     // document listener handlers
     workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
@@ -91,11 +89,6 @@ export class KpmManager {
 
     keystrokeStatsMap[projectPath] = keystrokeStats;
     return keystrokeStats;
-  }
-
-  private endPreviousModifiedFiles(keystrokeStats: KeystrokeStats, fsPath: string) {
-    // set the end time to now for the other files that don't match this file
-    keystrokeStats.setFilesEndAsNow([fsPath]);
   }
 
   public async onDidOpenTextDocument(textDocument: TextDocument) {
