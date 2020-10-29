@@ -7,14 +7,6 @@ import { logIt } from '../utils/common';
 import { checkMidnight } from './walkClock';
 import forIn = require('lodash.forin');
 
-export async function processPayload(keystrokeStats: KeystrokeStats) {
-  checkMidnight();
-  const sessionSeconds = keystrokeStats.getSessionSeconds();
-  saveDataToDisk(keystrokeStats, sessionSeconds);
-
-  commands.executeCommand('iceworks-time-master.refreshTimerTree');
-}
-
 function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   const { files } = keystrokeStats;
   let linesAdded = 0;
@@ -102,13 +94,22 @@ function updateUserSummary(user: UserSummary) {
   saveUserSummary(userSummary);
 }
 
-export async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
+async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
   const { project } = keystrokeStats;
   const newData = updateFilesChangeSummary(keystrokeStats);
   updateProjectSummary(project, sessionSeconds);
   updateUserSummary({ ...newData, sessionSeconds });
+
+  commands.executeCommand('iceworks-time-master.refreshTimerTree');
 }
 
-export async function sendDataToServer() {
+async function sendDataToServer() {
   // TODO
+}
+
+export async function processPayload(keystrokeStats: KeystrokeStats) {
+  checkMidnight();
+  const sessionSeconds = keystrokeStats.getSessionSeconds();
+  saveDataToDisk(keystrokeStats, sessionSeconds);
+  sendDataToServer();
 }
