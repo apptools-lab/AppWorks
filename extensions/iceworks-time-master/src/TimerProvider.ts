@@ -286,7 +286,7 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private getUserSummaryItems(userSummary: UserSummary): TimerItem[] {
     const {
-      editorSeconds,
+      // editorSeconds,
       sessionSeconds,
       averageDailySessionSeconds,
       globalAverageDailySessionSeconds,
@@ -301,20 +301,20 @@ class TimerProvider implements TreeDataProvider<TimerItem> {
       globalAverageDailyKeystrokes,
     } = userSummary;
     const items: TimerItem[] = [];
-    const ctValues = [];
 
     // Code Time
-    const editorMinutesStr = humanizeMinutes(editorSeconds / SECONDS_PER_MINUTE);
-    ctValues.push({ label: `Today: ${editorMinutesStr}`, icon: 'rocket.svg' });
-    items.push(
-      this.buildUserSummaryItem(
-        'Code time',
-        'Code time: total time you have spent in your editor today.',
-        ctValues,
-        TreeItemCollapsibleState.Expanded,
-        'ct_codetime_toggle_node',
-      ),
-    );
+    // const ctValues = [];
+    // const editorMinutesStr = humanizeMinutes(editorSeconds / SECONDS_PER_MINUTE);
+    // ctValues.push({ label: `Today: ${editorMinutesStr}`, icon: 'rocket.svg' });
+    // items.push(
+    //   this.buildUserSummaryItem(
+    //     'Code time',
+    //     'Code time: total time you have spent in your editor today.',
+    //     ctValues,
+    //     TreeItemCollapsibleState.Expanded,
+    //     'ct_codetime_toggle_node',
+    //   ),
+    // );
 
     const dayStr = moment().format('ddd');
 

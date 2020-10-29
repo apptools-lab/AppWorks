@@ -29,33 +29,18 @@ export class UserSummary {
   globalAverageDailyLinesRemoved?: number = 0;
 }
 
-function coalesceMissingAttributes(data: any): UserSummary {
-  // ensure all attributes are defined
-  const template: UserSummary = new UserSummary();
-  Object.keys(template).forEach((key) => {
-    if (!data[key]) {
-      data[key] = 0;
-    }
-  });
-  return data;
-}
-
-function getOriginUserSummary(): UserSummary {
-  const file = getUserFile();
-  let userSummary = fse.readJsonSync(file);
-  if (!userSummary) {
-    userSummary = new UserSummary();
-    saveUserSummary(userSummary);
-  }
-  return userSummary;
-}
-
 export function getUserFile() {
   return path.join(getAppDataDir(), 'user.json');
 }
 
 export function getUserSummary(): UserSummary {
-  const userSummary = coalesceMissingAttributes(getOriginUserSummary());
+  const file = getUserFile();
+  let userSummary = new UserSummary();
+  try {
+    userSummary = fse.readJsonSync(file);
+  } catch (e) {
+    // ignore
+  }
   return userSummary;
 }
 

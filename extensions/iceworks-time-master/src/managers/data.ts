@@ -84,9 +84,14 @@ function updateProjectSummary(project: Project, sessionSeconds: number) {
 }
 
 function updateUserSummary(user: UserSummary) {
-  const { linesAdded, linesRemoved, keystrokes, sessionSeconds } = user;
+  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = user;
   const userSummary = getUserSummary();
   userSummary.sessionSeconds += sessionSeconds;
+  userSummary.editorSeconds += editorSeconds;
+  userSummary.editorSeconds = Math.max(
+    userSummary.editorSeconds,
+    userSummary.sessionSeconds,
+  );
   userSummary.linesAdded += linesAdded;
   userSummary.linesRemoved += linesRemoved;
   userSummary.keystrokes += keystrokes;
