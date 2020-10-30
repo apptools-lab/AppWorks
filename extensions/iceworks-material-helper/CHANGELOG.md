@@ -4,6 +4,7 @@
 
 - fix: fail to clear material sources
 - fix: fail to debug material sources in some cases
+- feat: layout path is not the necessary option in page-generator extension
 
 ## 0.4.1
 
