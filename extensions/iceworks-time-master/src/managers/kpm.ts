@@ -125,7 +125,7 @@ export class KpmManager {
     }
   }
 
-  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout};
+  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
 
   private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
     const { directory: projectPath } = project;
