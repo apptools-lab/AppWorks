@@ -39,6 +39,12 @@ export async function activate(context: ExtensionContext) {
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
       // TODO
     }),
+    commands.registerCommand('iceworks-time-master.generateProjectSummary', () => {
+      // TODO
+    }),
+    commands.registerCommand('iceworks-time-master.generateUserSummary', () => {
+      // TODO
+    }),
   );
 }
 

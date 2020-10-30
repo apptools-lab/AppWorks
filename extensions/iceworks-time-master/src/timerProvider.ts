@@ -64,8 +64,6 @@ class TimerItem {
 
   interactionType: UIInteractionType = UIInteractionType.Click;
 
-  interactionIcon = '';
-
   hideCTAInTracker = false;
 }
 
@@ -433,6 +431,59 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return items;
   }
 
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    command: string,
+    icon: string = '',
+    eventDescription: string = '',
+    color: string = '',
+    location: string = 'ct_metrics_tree',
+  ): TimerItem {
+    const item = new TimerItem();
+    item.tooltip = tooltip;
+    item.label = label;
+    item.id = label;
+    item.command = command;
+    item.icon = icon;
+    item.contextValue = 'action_button';
+    item.eventDescription = eventDescription;
+    item.color = color;
+    item.location = location;
+    return item;
+  }
+
+  private buildDividerItem() {
+    const item = this.buildActionItem('', '', '', 'blue-line-96.png');
+    return item;
+  }
+
+  private buildViewProjectSummaryItem() {
+    const item = this.buildActionItem(
+      'View project summary',
+      '',
+      'iceworks-time-master.generateProjectSummary',
+      'folder.svg',
+      '',
+      'red',
+    );
+    item.name = 'ct_project_summary_btn';
+    return item;
+  }
+
+  private buildViewUserSummaryItem() {
+    const item = this.buildActionItem(
+      'View summary',
+      'View your latest coding metrics right here in your editor',
+      'iceworks-time-master.generateUserSummary',
+      'dashboard.svg',
+      'TreeViewLaunchDashboard',
+      'purple',
+    );
+    item.name = 'ct_summary_btn';
+    return item;
+  }
+
   private async getTreeParents(): Promise<TimerItem[]> {
     const treeItems: TimerItem[] = [];
     const userSummary: UserSummary = getUserSummary();
@@ -496,7 +547,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       timerItems = element.children;
     } else {
       // return the parent elements
-      timerItems = await this.getTreeParents();
+      timerItems = [
+        this.buildViewUserSummaryItem(),
+        this.buildViewProjectSummaryItem(),
+        this.buildDividerItem(),
+        ...await this.getTreeParents(),
+      ];
     }
     return timerItems;
   }
