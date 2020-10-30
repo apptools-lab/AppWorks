@@ -25,7 +25,7 @@ export async function activate(context: ExtensionContext) {
       openFileInEditor(fsPath);
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStats', () => {
-      kpmInstance.sendKeystrokeStats();
+      kpmInstance.sendKeystrokeStatsMap();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();
