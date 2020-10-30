@@ -151,8 +151,9 @@
     "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "watch": "npm run watch:extension & npm run watch:web",
+    "compile:extension": "webpack --mode development",
     "watch:extension": "webpack --mode development --watch",
+    "watch": "npm run watch:extension & npm run watch:web",
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
