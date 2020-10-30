@@ -209,10 +209,8 @@ export class KpmManager {
     const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
 
     const currentFileChange = keyStrokeStats.files[fsPath];
+    currentFileChange.activate();
     currentFileChange.updateTextInfo(document);
-    if (!currentFileChange.start) {
-      currentFileChange.setStart();
-    }
 
     // find the contentChange with a range in the contentChanges array
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.

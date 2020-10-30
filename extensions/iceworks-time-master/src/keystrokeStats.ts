@@ -77,17 +77,6 @@ export class KeystrokeStats {
     this.files[fsPath] = fileChange;
   }
 
-  setFilesEndAsNow(excludes: string[] = []): void {
-    const { nowInSec } = getNowTimes();
-    const fileKeys = Object.keys(this.files);
-    fileKeys.forEach((key) => {
-      const fileChange = this.files[key];
-      if (fileChange.end === 0 && !excludes.includes(key)) {
-        fileChange.setEnd(nowInSec);
-      }
-    });
-  }
-
   setStart(time?: number) {
     this.start = time || getNowTimes().nowInSec;
   }
@@ -108,24 +97,32 @@ export class KeystrokeStats {
     const isHasData = this.hasData();
     logIt('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
-      this.setEnd();
+      this.deactivate();
       processPayload(this);
     }
   }
 
-  private sendTimeout: NodeJS.Timeout;
+  private timeout: NodeJS.Timeout;
+
+  clearTimeout() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
 
   activate() {
-    this.deactivate();
-    this.sendTimeout = setTimeout(() => {
-      logIt('[KeystrokeStats][sendTimeout] run');
+    this.clearTimeout();
+    this.timeout = setTimeout(() => {
+      logIt('[KeystrokeStats][timeout] run');
       this.sendData();
     }, DEFAULT_DURATION_MILLISECONDS);
   }
 
   deactivate() {
-    if (this.sendTimeout) {
-      clearTimeout(this.sendTimeout);
-    }
+    this.clearTimeout();
+    this.setEnd();
+    forIn(this.files, (fileChange: FileChange) => {
+      fileChange.deactivate();
+    });
   }
 }

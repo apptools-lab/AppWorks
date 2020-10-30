@@ -178,6 +178,18 @@ export class FileChange {
     this.lineCount = lineCount;
   }
 
+  activate() {
+    if (!this.start) {
+      this.setStart();
+    }
+  }
+
+  deactivate() {
+    this.update = 1;
+    this.kpm = this.keystrokes;
+    this.durationSeconds = this.end - this.start;
+  }
+
   setStart(time?: number) {
     this.start = time || getNowTimes().nowInSec;
   }
