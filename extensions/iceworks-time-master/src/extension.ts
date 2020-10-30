@@ -24,7 +24,7 @@ export async function activate(context: ExtensionContext) {
       logIt('[extension][openFileInEditor] file', fsPath);
       openFileInEditor(fsPath);
     }),
-    commands.registerCommand('iceworks-time-master.sendKeystrokeStats', () => {
+    commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
       kpmInstance.sendKeystrokeStatsMap();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
