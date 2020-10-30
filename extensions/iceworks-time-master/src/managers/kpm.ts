@@ -1,10 +1,11 @@
-import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace, commands } from 'vscode';
+import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
 import { isFileActive, logIt } from '../utils/common';
+import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
 import { Project } from '../storages/project';
 import { KeystrokeStats } from '../keystrokeStats';
 import { cleanTextInfoCache } from '../storages/filesChange';
 
-let keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
+const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
 export class KpmManager {
   /**
@@ -104,19 +105,27 @@ export class KpmManager {
     // TODO
   }
 
-  public sendKeystrokeStats() {
+  public sendKeystrokeStatsMap() {
     for (const projectPath in keystrokeStatsMap) {
-      const keystrokeStats = keystrokeStatsMap[projectPath];
-      keystrokeStats.deactivate();
-      keystrokeStats.sendData();
+      if (this.keystrokeStatsTimeouts[projectPath]) {
+        clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
+      }
+      this.sendKeystrokeStats(projectPath);
     }
-
-    // clear out the keystroke map
-    keystrokeStatsMap = {};
 
     // clear out the static info map
     cleanTextInfoCache();
   }
+
+  private sendKeystrokeStats(projectPath: string) {
+    const keystrokeStats = keystrokeStatsMap[projectPath];
+    if (keystrokeStats) {
+      keystrokeStats.sendData();
+      delete keystrokeStatsMap[projectPath];
+    }
+  }
+
+  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout};
 
   private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
     const { directory: projectPath } = project;
@@ -125,17 +134,15 @@ export class KpmManager {
     // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
       keystrokeStats = new KeystrokeStats(project);
-      keystrokeStats.activate();
+      this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
+        logIt('[KpmManager][createKeystrokeStats][keystrokeStatsTimeouts] run');
+        this.sendKeystrokeStats(projectPath);
+      }, DEFAULT_DURATION_MILLISECONDS);
     }
 
-    // check if we have this file or not
     if (!keystrokeStats.hasFile(fsPath)) {
       keystrokeStats.addFile(fsPath);
     }
-    // else if (keystrokeStats.files[fsPath].end !== 0) {
-    //   // re-initialize it since we ended it before the minute was up
-    //   keystrokeStats.files[fsPath].setEnd(0);
-    // }
 
     keystrokeStatsMap[projectPath] = keystrokeStats;
     return keystrokeStats;
@@ -183,7 +190,7 @@ export class KpmManager {
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
     const windowIsFocused = window.state.focused;
-    logIt('[onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
+    logIt('[KpmManager][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
     if (!windowIsFocused) {
       return;
     }
@@ -192,7 +199,7 @@ export class KpmManager {
     const { fileName: fsPath } = document;
 
     const isValidatedFile = this.isValidatedFile(document, fsPath);
-    logIt('[onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
+    logIt('[KpmManager][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
     if (!isValidatedFile) {
       return;
     }
@@ -207,7 +214,7 @@ export class KpmManager {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logIt('[onDidChangeTextDocument]contentChanges', contentChanges);
+    logIt('[KpmManager][onDidChangeTextDocument]contentChanges', contentChanges);
     // each changeset is triggered by a single keystroke
     if (contentChanges.length > 0) {
       currentFileChange.keystrokes += 1;
@@ -220,7 +227,7 @@ export class KpmManager {
         // it's a copy and paste event
         currentFileChange.paste += 1;
         currentFileChange.charsPasted += textChangeInfo.textChangeLen;
-        logIt('[onDidChangeTextDocument]Copy+Paste Incremented');
+        logIt('[KpmManager][onDidChangeTextDocument]Copy+Paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
         // update the overall count
@@ -228,16 +235,16 @@ export class KpmManager {
         // update the data for this fileInfo keys count
         currentFileChange.add += 1;
         // update the overall count
-        logIt('[onDidChangeTextDocument]add incremented');
+        logIt('[KpmManager][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logIt(`[onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
+        logIt(`[KpmManager][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logIt(`[onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
+        logIt(`[KpmManager][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -246,9 +253,9 @@ export class KpmManager {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logIt('[onDidChangeWindowState][focused]', windowState.focused);
+    logIt('[KpmManager][onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
-      commands.executeCommand('iceworks-time-master.sendKeystrokeStats');
+      this.sendKeystrokeStatsMap();
     }
   }
 }

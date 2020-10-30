@@ -105,8 +105,6 @@ export class KeystrokeStats {
     return sessionSeconds;
   }
 
-  private keystrokeTriggerTimeout: NodeJS.Timeout;
-
   sendData() {
     const isHasData = this.hasData();
     logIt('[KeystrokeStats][sendData]isHasData', isHasData);
@@ -116,19 +114,19 @@ export class KeystrokeStats {
     }
   }
 
+  private sendTimeout: NodeJS.Timeout;
+
   activate() {
     this.deactivate();
-
-    // start the minute timer to send the data
-    this.keystrokeTriggerTimeout = setTimeout(() => {
-      logIt('[KeystrokeStats][keystrokeTriggerTimeout] run');
+    this.sendTimeout = setTimeout(() => {
+      logIt('[KeystrokeStats][sendTimeout] run');
       this.sendData();
     }, DEFAULT_DURATION_MILLISECONDS);
   }
 
   deactivate() {
-    if (this.keystrokeTriggerTimeout) {
-      clearTimeout(this.keystrokeTriggerTimeout);
+    if (this.sendTimeout) {
+      clearTimeout(this.sendTimeout);
     }
   }
 }
