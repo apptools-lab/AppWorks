@@ -2,7 +2,7 @@ import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumen
 import { isFileActive, logIt } from '../utils/common';
 import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
 import { Project } from '../storages/project';
-import { KeystrokeStats } from '../keystrokeStats';
+import { KeystrokeStats } from './keystrokeStats';
 import { cleanTextInfoCache } from '../storages/filesChange';
 
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};

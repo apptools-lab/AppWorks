@@ -1,7 +1,7 @@
-import { Project } from './storages/project';
-import { FileChange } from './storages/filesChange';
-import { getNowTimes, logIt } from './utils/common';
-import { processPayload } from './managers/data';
+import { Project } from '../storages/project';
+import { FileChange } from '../storages/filesChange';
+import { getNowTimes, logIt } from '../utils/common';
+import { processPayload } from './data';
 import forIn = require('lodash.forin');
 
 export interface Editor {

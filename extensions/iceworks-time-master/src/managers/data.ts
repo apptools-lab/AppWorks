@@ -1,5 +1,5 @@
 import { commands } from 'vscode';
-import { KeystrokeStats } from '../keystrokeStats';
+import { KeystrokeStats } from './keystrokeStats';
 import { FileChange, getFilesChangeSummary, saveFilesChangeSummary } from '../storages/filesChange';
 import { getProjectsSummary, Project, saveProjectsSummary } from '../storages/project';
 import { getUserSummary, saveUserSummary, UserSummary } from '../storages/user';
