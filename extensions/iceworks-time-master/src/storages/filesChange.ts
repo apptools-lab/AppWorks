@@ -166,7 +166,6 @@ export class FileChange {
   public durationSeconds: number = 0;
 
   constructor(values?: any) {
-    this.setStart();
     if (values) {
       Object.assign(this, values);
     }
@@ -185,7 +184,6 @@ export class FileChange {
 
   setEnd(time?: number) {
     this.end = time || getNowTimes().nowInSec;
-    this.durationSeconds = this.end - this.start;
   }
 
   static createInstance(fsPath: string, project: Project) {

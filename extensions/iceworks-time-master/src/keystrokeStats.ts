@@ -32,7 +32,6 @@ export class KeystrokeStats {
 
   constructor(project: Project) {
     this.project = project;
-    this.setStart();
   }
 
   hasData(): boolean {

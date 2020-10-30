@@ -134,6 +134,7 @@ export class KpmManager {
     // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
       keystrokeStats = new KeystrokeStats(project);
+      keystrokeStats.setStart();
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logIt('[KpmManager][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath);
@@ -209,6 +210,9 @@ export class KpmManager {
 
     const currentFileChange = keyStrokeStats.files[fsPath];
     currentFileChange.updateTextInfo(document);
+    if (!currentFileChange.start) {
+      currentFileChange.setStart();
+    }
 
     // find the contentChange with a range in the contentChanges array
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.

@@ -15,6 +15,7 @@ function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   const filesChangeSummary = getFilesChangeSummary();
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
+    fileChange.durationSeconds = fileChange.end - fileChange.start;
     if (!fileChangeSummary) {
       fileChange.update = 1;
       fileChange.kpm = fileChange.keystrokes;
@@ -36,6 +37,7 @@ function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
       // non aggregates, just set
       fileChangeSummary.lineCount = fileChange.lineCount;
       fileChangeSummary.length = fileChange.length;
+      fileChangeSummary.end = fileChange.end;
     }
 
     linesAdded += fileChangeSummary.linesAdded;
