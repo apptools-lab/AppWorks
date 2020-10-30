@@ -100,6 +100,7 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: nu
   updateUserSummary({ ...newData, sessionSeconds });
 
   commands.executeCommand('iceworks-time-master.refreshTimerTree');
+  commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }
 
 async function sendDataToServer() {

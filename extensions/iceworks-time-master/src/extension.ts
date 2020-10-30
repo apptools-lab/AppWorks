@@ -2,6 +2,7 @@ import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './timerProvider';
 import { logIt, openFileInEditor } from './utils/common';
 import { createInstance as createKpmInstance } from './managers/kpm';
+import { createTimerStatusBar } from './timerStatusBar';
 import { activate as activateWalkClock } from './managers/walkClock';
 
 // eslint-disable-next-line
@@ -19,9 +20,11 @@ export async function activate(context: ExtensionContext) {
   const kpmInstance = createKpmInstance();
   kpmInstance.activate();
 
+  const timerStatusBar = createTimerStatusBar();
+  timerStatusBar.show();
+
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
-      logIt('[extension][openFileInEditor] file', fsPath);
       openFileInEditor(fsPath);
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
@@ -29,6 +32,12 @@ export async function activate(context: ExtensionContext) {
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();
+    }),
+    commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
+      timerStatusBar.refresh();
+    }),
+    commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
+      // TODO
     }),
   );
 }

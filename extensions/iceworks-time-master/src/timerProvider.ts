@@ -16,9 +16,9 @@ import { getUserSummary, UserSummary } from './storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
 import { humanizeMinutes } from './utils/common';
 import i18n from './i18n';
+import { SECONDS_PER_MINUTE } from './constants';
 
 const NUMBER_FORMAT = '0 a';
-const SECONDS_PER_MINUTE = 60;
 const resourcePath: string = path.join(__dirname, '..', 'assets');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
