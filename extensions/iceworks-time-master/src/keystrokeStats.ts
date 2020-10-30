@@ -1,7 +1,6 @@
 import { Project } from './storages/project';
 import { FileChange } from './storages/filesChange';
 import { getNowTimes, logIt } from './utils/common';
-import { DEFAULT_DURATION_MILLISECONDS } from './constants';
 import { processPayload } from './managers/data';
 import forIn = require('lodash.forin');
 
@@ -74,6 +73,7 @@ export class KeystrokeStats {
 
   addFile(fsPath: string): void {
     const fileChange = FileChange.createInstance(fsPath, this.project);
+    fileChange.activate();
     this.files[fsPath] = fileChange;
   }
 
@@ -102,24 +102,11 @@ export class KeystrokeStats {
     }
   }
 
-  private timeout: NodeJS.Timeout;
-
-  clearTimeout() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-  }
-
   activate() {
-    this.clearTimeout();
-    this.timeout = setTimeout(() => {
-      logIt('[KeystrokeStats][timeout] run');
-      this.sendData();
-    }, DEFAULT_DURATION_MILLISECONDS);
+    this.setStart();
   }
 
   deactivate() {
-    this.clearTimeout();
     this.setEnd();
     forIn(this.files, (fileChange: FileChange) => {
       fileChange.deactivate();

@@ -179,9 +179,7 @@ export class FileChange {
   }
 
   activate() {
-    if (!this.start) {
-      this.setStart();
-    }
+    // TODO
   }
 
   deactivate() {
