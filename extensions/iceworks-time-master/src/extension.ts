@@ -4,6 +4,7 @@ import { logIt, openFileInEditor } from './utils/common';
 import { createInstance as createKpmInstance } from './managers/kpm';
 import { createTimerStatusBar } from './timerStatusBar';
 import { activate as activateWalkClock } from './managers/walkClock';
+import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
 
 // eslint-disable-next-line
 const { name } = require('../package.json');
@@ -13,7 +14,8 @@ export async function activate(context: ExtensionContext) {
   const { subscriptions } = context;
 
   const timerProvider = new TimerProvider();
-  createTimerTreeView(timerProvider);
+  const timerTreeView = createTimerTreeView(timerProvider);
+  timerProvider.bindView(timerTreeView);
 
   activateWalkClock();
 
@@ -37,13 +39,13 @@ export async function activate(context: ExtensionContext) {
       timerStatusBar.refresh();
     }),
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
-      // TODO
+      timerProvider.revealTreeView();
     }),
-    commands.registerCommand('iceworks-time-master.generateProjectSummary', () => {
-      // TODO
+    commands.registerCommand('iceworks-time-master.generateProjectSummaryDashboard', () => {
+      generateProjectSummaryDashboard();
     }),
-    commands.registerCommand('iceworks-time-master.generateUserSummary', () => {
-      // TODO
+    commands.registerCommand('iceworks-time-master.generateUserSummaryDashboard', () => {
+      generateUserSummaryDashboard();
     }),
   );
 }

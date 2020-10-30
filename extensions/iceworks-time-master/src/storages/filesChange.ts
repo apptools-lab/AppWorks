@@ -3,6 +3,8 @@ import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
 import { getAppDataDir, getNowTimes } from '../utils/common';
 import { Project } from './project';
+import { KeystrokeStats } from '../managers/keystrokeStats';
+import forIn = require('lodash.forin');
 
 interface FileTextInfo {
   /**
@@ -231,4 +233,47 @@ export function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
 
 export function cleanFilesChangeSummary() {
   saveFilesChangeSummary({});
+}
+
+export function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
+  const { files } = keystrokeStats;
+  let linesAdded = 0;
+  let linesRemoved = 0;
+  let keystrokes = 0;
+  const filesChangeSummary = getFilesChangeSummary();
+  forIn(files, (fileChange: FileChange, fsPath: string) => {
+    let fileChangeSummary = filesChangeSummary[fsPath];
+    if (!fileChangeSummary) {
+      fileChangeSummary = { ...fileChange, sessionSeconds: fileChange.durationSeconds };
+    } else {
+      // aggregate
+      fileChangeSummary.update += 1;
+      fileChangeSummary.keystrokes += fileChange.keystrokes;
+      fileChangeSummary.kpm = fileChangeSummary.keystrokes / fileChangeSummary.update;
+      fileChangeSummary.add += fileChange.add;
+      fileChangeSummary.close += fileChange.close;
+      fileChangeSummary.delete += fileChange.delete;
+      fileChangeSummary.keystrokes += fileChange.keystrokes;
+      fileChangeSummary.linesAdded += fileChange.linesAdded;
+      fileChangeSummary.linesRemoved += fileChange.linesRemoved;
+      fileChangeSummary.open += fileChange.open;
+      fileChangeSummary.paste += fileChange.paste;
+      fileChangeSummary.sessionSeconds += fileChange.durationSeconds;
+      // non aggregates, just set
+      fileChangeSummary.lineCount = fileChange.lineCount;
+      fileChangeSummary.length = fileChange.length;
+      fileChangeSummary.end = fileChange.end;
+    }
+
+    linesAdded += fileChangeSummary.linesAdded;
+    linesRemoved += fileChangeSummary.linesRemoved;
+    keystrokes += fileChangeSummary.keystrokes;
+    filesChangeSummary[fsPath] = fileChangeSummary;
+  });
+  saveFilesChangeSummary(filesChangeSummary);
+  return {
+    linesAdded,
+    linesRemoved,
+    keystrokes,
+  };
 }

@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
+import * as moment from 'moment';
 import { getAppDataDir } from '../utils/common';
 
 export class UserSummary {
@@ -52,4 +53,31 @@ export function saveUserSummary(userSummary: UserSummary) {
 export function clearUserSummary() {
   const userSummary = new UserSummary();
   saveUserSummary(userSummary);
+}
+
+export function updateUserSummary(user: UserSummary) {
+  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = user;
+  const userSummary = getUserSummary();
+  userSummary.sessionSeconds += sessionSeconds;
+  userSummary.editorSeconds += editorSeconds;
+  userSummary.editorSeconds = Math.max(
+    userSummary.editorSeconds,
+    userSummary.sessionSeconds,
+  );
+  userSummary.linesAdded += linesAdded;
+  userSummary.linesRemoved += linesRemoved;
+  userSummary.keystrokes += keystrokes;
+  saveUserSummary(userSummary);
+}
+
+export function getUserDashboardFile() {
+  return path.join(getAppDataDir(), 'UserSummaryDashboard.txt');
+}
+
+export async function generateUserDashboard() {
+  const formattedDate = moment().format('ddd, MMM Do h:mma');
+  const dashboardContent = `TIME MASTER - User Summary (Last updated on ${formattedDate})`;
+  const dashboardFile = getUserDashboardFile();
+  await fse.writeFile(dashboardFile, dashboardContent, 'utf8');
+  return dashboardFile;
 }

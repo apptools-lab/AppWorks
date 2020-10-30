@@ -128,12 +128,32 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   readonly onDidChangeTreeData: Event<TimerItem | undefined> = this._onDidChangeTreeData.event;
 
+  private view: TreeView<TimerItem>;
+
   public refresh(): void {
     this._onDidChangeTreeData.fire(null);
   }
 
   public refreshParent(parent: TimerItem) {
     this._onDidChangeTreeData.fire(parent);
+  }
+
+  public async revealTreeView() {
+    if (this.view) {
+      const item = this.buildViewUserSummaryItem();
+      try {
+        this.view.reveal(item, {
+          focus: true,
+          select: false,
+        });
+      } catch (err) {
+        console.error(`Unable to select tree item: ${err.message}`);
+      }
+    }
+  }
+
+  public bindView(treeView: TreeView<TimerItem>): void {
+    this.view = treeView;
   }
 
   private buildParentItem(label: string, tooltip: string, children: TimerItem[], name = '', location = 'ct_metrics_tree') {
@@ -462,7 +482,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const item = this.buildActionItem(
       'View project summary',
       '',
-      'iceworks-time-master.generateProjectSummary',
+      'iceworks-time-master.generateProjectSummaryDashboard',
       'folder.svg',
       '',
       'red',
@@ -475,7 +495,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const item = this.buildActionItem(
       'View summary',
       'View your latest coding metrics right here in your editor',
-      'iceworks-time-master.generateUserSummary',
+      'iceworks-time-master.generateUserSummaryDashboard',
       'dashboard.svg',
       'TreeViewLaunchDashboard',
       'purple',

@@ -1,6 +1,7 @@
 import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
+import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
 import { getAppDataDir } from '../utils/common';
 import { getResource } from '../utils/git';
@@ -94,4 +95,41 @@ export function saveProjectsSummary(values: ProjectsSummary) {
 
 export function clearProjectsSummary() {
   saveProjectsSummary({});
+}
+
+export function updateProjectSummary(project: Project, sessionSeconds: number) {
+  const projectsSummary = getProjectsSummary();
+  const { directory } = project;
+  let projectSummary = projectsSummary[directory];
+  if (!projectSummary) {
+    projectSummary = {
+      ...project,
+      sessionSeconds,
+      editorSeconds: sessionSeconds,
+    };
+  } else {
+    Object.assign(
+      projectSummary,
+      project,
+    );
+    projectSummary.sessionSeconds += sessionSeconds;
+    projectSummary.editorSeconds = Math.max(
+      projectSummary.editorSeconds,
+      projectSummary.sessionSeconds,
+    );
+  }
+  projectsSummary[directory] = projectSummary;
+  saveProjectsSummary(projectsSummary);
+}
+
+export function getProjectDashboardFile() {
+  return path.join(getAppDataDir(), 'ProjectSummaryDashboard.txt');
+}
+
+export async function generateProjectDashboard() {
+  const formattedDate = moment().format('ddd, MMM Do h:mma');
+  const dashboardContent = `TIME MASTER - Project Summary (Last updated on ${formattedDate})`;
+  const dashboardFile = getProjectDashboardFile();
+  await fse.writeFile(dashboardFile, dashboardContent, 'utf8');
+  return dashboardFile;
 }

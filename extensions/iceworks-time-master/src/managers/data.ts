@@ -1,97 +1,10 @@
-import { commands } from 'vscode';
+import { commands, window, ProgressLocation, workspace, ViewColumn } from 'vscode';
 import { KeystrokeStats } from './keystrokeStats';
-import { FileChange, getFilesChangeSummary, saveFilesChangeSummary } from '../storages/filesChange';
-import { getProjectsSummary, Project, saveProjectsSummary } from '../storages/project';
-import { getUserSummary, saveUserSummary, UserSummary } from '../storages/user';
-import { logIt } from '../utils/common';
+import { updateFilesChangeSummary } from '../storages/filesChange';
+import { updateProjectSummary, generateProjectDashboard } from '../storages/project';
+import { updateUserSummary, generateUserDashboard } from '../storages/user';
 import { checkMidnight } from './walkClock';
-import forIn = require('lodash.forin');
-
-function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
-  const { files } = keystrokeStats;
-  let linesAdded = 0;
-  let linesRemoved = 0;
-  let keystrokes = 0;
-  const filesChangeSummary = getFilesChangeSummary();
-  forIn(files, (fileChange: FileChange, fsPath: string) => {
-    let fileChangeSummary = filesChangeSummary[fsPath];
-    if (!fileChangeSummary) {
-      fileChangeSummary = { ...fileChange, sessionSeconds: fileChange.durationSeconds };
-    } else {
-      // aggregate
-      fileChangeSummary.update += 1;
-      fileChangeSummary.keystrokes += fileChange.keystrokes;
-      fileChangeSummary.kpm = fileChangeSummary.keystrokes / fileChangeSummary.update;
-      fileChangeSummary.add += fileChange.add;
-      fileChangeSummary.close += fileChange.close;
-      fileChangeSummary.delete += fileChange.delete;
-      fileChangeSummary.keystrokes += fileChange.keystrokes;
-      fileChangeSummary.linesAdded += fileChange.linesAdded;
-      fileChangeSummary.linesRemoved += fileChange.linesRemoved;
-      fileChangeSummary.open += fileChange.open;
-      fileChangeSummary.paste += fileChange.paste;
-      fileChangeSummary.sessionSeconds += fileChange.durationSeconds;
-      // non aggregates, just set
-      fileChangeSummary.lineCount = fileChange.lineCount;
-      fileChangeSummary.length = fileChange.length;
-      fileChangeSummary.end = fileChange.end;
-    }
-
-    linesAdded += fileChangeSummary.linesAdded;
-    linesRemoved += fileChangeSummary.linesRemoved;
-    keystrokes += fileChangeSummary.keystrokes;
-    filesChangeSummary[fsPath] = fileChangeSummary;
-    logIt(`[dataManager]fileChangeSummary[${fsPath}]`, fileChangeSummary);
-  });
-  saveFilesChangeSummary(filesChangeSummary);
-  return {
-    linesAdded,
-    linesRemoved,
-    keystrokes,
-  };
-}
-
-function updateProjectSummary(project: Project, sessionSeconds: number) {
-  const projectsSummary = getProjectsSummary();
-  const { directory } = project;
-  let projectSummary = projectsSummary[directory];
-  if (!projectSummary) {
-    projectSummary = {
-      ...project,
-      sessionSeconds,
-      editorSeconds: sessionSeconds,
-    };
-  } else {
-    Object.assign(
-      projectSummary,
-      project,
-    );
-    projectSummary.sessionSeconds += sessionSeconds;
-    projectSummary.editorSeconds = Math.max(
-      projectSummary.editorSeconds,
-      projectSummary.sessionSeconds,
-    );
-  }
-  projectsSummary[directory] = projectSummary;
-  logIt('[dataManager]projectSummary', projectSummary);
-  saveProjectsSummary(projectsSummary);
-}
-
-function updateUserSummary(user: UserSummary) {
-  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = user;
-  const userSummary = getUserSummary();
-  userSummary.sessionSeconds += sessionSeconds;
-  userSummary.editorSeconds += editorSeconds;
-  userSummary.editorSeconds = Math.max(
-    userSummary.editorSeconds,
-    userSummary.sessionSeconds,
-  );
-  userSummary.linesAdded += linesAdded;
-  userSummary.linesRemoved += linesRemoved;
-  userSummary.keystrokes += keystrokes;
-  logIt('[dataManager]userSummary', userSummary);
-  saveUserSummary(userSummary);
-}
+import { Progress } from '../utils/progress';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
   const { project } = keystrokeStats;
@@ -112,4 +25,30 @@ export async function processPayload(keystrokeStats: KeystrokeStats) {
   const sessionSeconds = keystrokeStats.getSessionSeconds();
   saveDataToDisk(keystrokeStats, sessionSeconds);
   sendDataToServer();
+}
+
+function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
+  window.withProgress(
+    {
+      location: ProgressLocation.Notification,
+      title,
+      cancellable: false,
+    },
+    async (progress) => {
+      const progressMgr = new Progress(progress);
+      progressMgr.start();
+      const filePath = await generateFn();
+      const doc = await workspace.openTextDocument(filePath);
+      await window.showTextDocument(doc, ViewColumn.One, false);
+      progressMgr.done();
+    },
+  );
+}
+
+export function generateProjectSummaryDashboard() {
+  setProgressToGenerateSummaryDashboard('Loading project summary...', generateProjectDashboard);
+}
+
+export function generateUserSummaryDashboard() {
+  setProgressToGenerateSummaryDashboard('Loading summary...', generateUserDashboard);
 }
