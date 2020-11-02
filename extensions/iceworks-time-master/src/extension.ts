@@ -6,9 +6,6 @@ import { createTimerStatusBar } from './timerStatusBar';
 import { activate as activateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
 
-// eslint-disable-next-line
-const { name } = require('../package.json');
-
 export async function activate(context: ExtensionContext) {
   logIt('[extension] activate!');
   const { subscriptions } = context;

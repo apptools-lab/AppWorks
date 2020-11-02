@@ -1,9 +1,27 @@
 import * as os from 'os';
+import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
 import * as moment from 'moment';
+
+// eslint-disable-next-line
+const { name, version } = require('../package.json');
+
+export function getEditorInfo() {
+  return {
+    name: vscode.env.appName,
+    version: vscode.version,
+  };
+}
+
+export function getExtensionInfo() {
+  return {
+    name,
+    version,
+  };
+}
 
 export function isLinux() {
   return !(isWindows() || isMac());
@@ -168,4 +186,64 @@ function execPromise(command: string, opts: any): Promise<string> {
 export function logIt(...args: any) {
   args[0] = 'TimeMaster: ' + args[0];
   console.log.apply(null, args);
+}
+
+function getOS() {
+  const parts = [];
+  const osType = os.type();
+  if (osType) {
+    parts.push(osType);
+  }
+  const osRelease = os.release();
+  if (osRelease) {
+    parts.push(osRelease);
+  }
+  const platform = os.platform();
+  if (platform) {
+    parts.push(platform);
+  }
+  return parts.join('_');
+}
+
+async function getHostname() {
+  const hostname = await getCommandResultLine('hostname');
+  return hostname;
+}
+
+function getTimezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
+export async function getSystemInfo() {
+  const osStr = getOS();
+  const hostname = getHostname();
+  const timezone = getTimezone();
+  return { os: osStr, hostname, timezone };
+}
+
+export async function getCommandResultLine(cmd: string, projectDir: string = '') {
+  const resultList = await getCommandResultList(cmd, projectDir);
+  let resultLine = '';
+  if (resultList && resultList.length) {
+    for (let i = 0; i < resultList.length; i++) {
+      const line = resultList[i];
+      if (line && line.trim().length > 0) {
+        resultLine = line.trim();
+        break;
+      }
+    }
+  }
+  return resultLine;
+}
+
+export async function getCommandResultList(cmd: string, projectDir: string = '') {
+  const result = await wrapExecPromise(`${cmd}`, projectDir);
+  if (!result) {
+    return [];
+  }
+  const contentList = result
+    .replace(/\r\n/g, '\r')
+    .replace(/\n/g, '\r')
+    .split(/\r/);
+  return contentList;
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
-import { getAppDataDir } from '../utils/common';
+import { getAppDataDir, getEditorInfo, getExtensionInfo, getSystemInfo } from '../utils/common';
 import forIn = require('lodash.forin');
 
 const SESSION_TIME_RECORD = 'session_time';
@@ -33,6 +33,13 @@ export interface SessionTimeRecord {
   gitRepository: string;
   gitBranch: string;
   gitTag: string;
+  editorName: string;
+  editorVersion: string;
+  extensionName: string;
+  extensionVersion: string;
+  os: string;
+  hostname: string;
+  timezone: string;
 }
 
 export interface EditorTimeRecord {
@@ -44,6 +51,13 @@ export interface EditorTimeRecord {
   gitRepository: string;
   gitBranch: string;
   gitTag: string;
+  editorName: string;
+  editorVersion: string;
+  extensionName: string;
+  extensionVersion: string;
+  os: string;
+  hostname: string;
+  timezone: string;
 }
 
 function transformKeyStrokeStatsToRecord(keystrokeStats: KeystrokeStats): SessionTimeRecord[] {
@@ -63,6 +77,13 @@ function transformKeyStrokeStatsToRecord(keystrokeStats: KeystrokeStats): Sessio
 
       // placeholder
       userId: '',
+      editorName: '',
+      editorVersion: '',
+      extensionName: '',
+      extensionVersion: '',
+      os: '',
+      hostname: '',
+      timezone: '',
     });
   });
   return records;
@@ -123,10 +144,20 @@ async function send(api: string, originParam: any) {
 async function sendRecordsData(type: string) {
   const { empId } = await getUserInfo();
   const records = getRecordsData(type);
+  const { name: editorName, version: editorVersion } = getEditorInfo();
+  const { name: extensionName, version: extensionVersion } = getExtensionInfo();
+  const { os, hostname, timezone } = await getSystemInfo();
   await Promise.all(records.map(async (record: any) => {
     await send(`iceteam.iceworks.time_master_${type}`, {
       ...record,
       userId: empId,
+      editorName,
+      editorVersion,
+      extensionName,
+      extensionVersion,
+      os,
+      hostname,
+      timezone,
     });
   }));
   clearRecordsData(type);
