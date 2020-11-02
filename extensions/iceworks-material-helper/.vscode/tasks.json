@@ -12,8 +12,8 @@
       ],
       "isBackground": true,
       "presentation": {
-				"reveal": "never"
-			},
+        "reveal": "never"
+      },
       "group": {
         "kind": "build",
         "isDefault": true

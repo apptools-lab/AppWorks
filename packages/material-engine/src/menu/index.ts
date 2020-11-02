@@ -52,7 +52,6 @@ export async function getAllConfig(layoutName: string) {
 
   let headerMenuConfig;
   let asideMenuConfig;
-  // @ts-ignore
   traverse(menuConfigAST, {
     VariableDeclarator: ({ node }) => {
       // find headerMenuConfig
@@ -138,7 +137,6 @@ function generateCode(
 
 function formatCodeFromAST(ast: t.Node) {
   return prettier.format(
-    // @ts-ignore
     generate(ast, {
       retainLines: true,
     }).code,
