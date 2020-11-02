@@ -2,7 +2,7 @@
  * O2 is a Ali internal editor,
  * This script is for compatible with O2 by modifying extensions at build time.
  */
-import { spawnSync } from 'child_process';
+// import { spawnSync } from 'child_process';
 import { readJson, writeJson } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import { join } from 'path';
@@ -31,7 +31,7 @@ async function mergePackPackageJSON(values) {
   const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
   const extensionPackageJSON = await readJson(extensionPackagePath);
   merge(extensionPackageJSON, values);
-  await writeJson(extensionPackagePath, extensionPackageJSON);
+  await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 4 });
 }
 
 async function publishExtensionsToNpm(extensionPack: string[]) {
@@ -47,14 +47,14 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
         // compatible package.json
         extensionPackageJSON.name = `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}`;
         Object.assign(extensionPackageJSON, valuesAppendToExtensionPackageJSON);
-        await writeJson(extensionPackagePath, extensionPackageJSON);
+        await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 4 });
 
         // publish extension
-        spawnSync(
-          'npm',
-          ['publish'],
-          { stdio: 'inherit', cwd: extensionFolderPath },
-        );
+        // spawnSync(
+        //   'npm',
+        //   ['publish'],
+        //   { stdio: 'inherit', cwd: extensionFolderPath },
+        // );
 
         publishedExtensions.push(extensionName);
       }
