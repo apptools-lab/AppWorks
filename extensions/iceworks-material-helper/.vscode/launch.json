@@ -7,7 +7,10 @@
    "compounds": [
     {
       "name": "Debug Extension",
-      "configurations": ["Launch Extension", "Watch Extension", "Watch Webview"],
+      "configurations": [
+        "Watch And Launch Extension",
+        "Watch Webview"
+      ],
       "presentation": {
         "order": 0
       }
@@ -15,25 +18,19 @@
   ],
   "configurations": [
     {
-      "name": "Watch Extension",
-      "request": "attach",
-      "type": "node",
-      "preLaunchTask": "npm: watch:extension"
-    },
-    {
       "name": "Watch Webview",
       "request": "attach",
       "type": "node",
       "preLaunchTask": "npm: watch:web"
     },
     {
-      "name": "Launch Extension",
+      "name": "Watch And Launch Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
       "outFiles": ["${workspaceFolder}/build/*.js"],
-      "preLaunchTask": "npm: compile:extension",
+      "preLaunchTask": "npm: watch:extension"
     }
   ]
 }

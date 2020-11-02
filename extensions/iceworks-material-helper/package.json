@@ -152,8 +152,7 @@
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
     "compile:extension": "webpack --mode development",
-    "watch:extension": "webpack --mode development --watch",
-    "watch": "npm run watch:extension & npm run watch:web",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
