@@ -85,15 +85,15 @@ export interface FileChangeSummary {
   /**
    * 添加了多少个字符
    */
-  charsAdded: number;
+  charsAdded?: number;
   /**
    * 删除了多少个字符
    */
-  charsDeleted: number;
+  charsDeleted?: number;
   /**
    * 粘贴的字符数
    */
-  charsPasted: number;
+  charsPasted?: number;
 
   /**
    * 文件打开次数

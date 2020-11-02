@@ -105,22 +105,21 @@ export class KpmManager {
     // TODO
   }
 
-  public sendKeystrokeStatsMap() {
-    for (const projectPath in keystrokeStatsMap) {
+  public async sendKeystrokeStatsMap() {
+    await Promise.all(Object.keys(keystrokeStatsMap).map(async (projectPath) => {
       if (this.keystrokeStatsTimeouts[projectPath]) {
         clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
       }
       this.sendKeystrokeStats(projectPath);
-    }
+    }));
 
-    // clear out the static info map
     cleanTextInfoCache();
   }
 
-  private sendKeystrokeStats(projectPath: string) {
+  private async sendKeystrokeStats(projectPath: string) {
     const keystrokeStats = keystrokeStatsMap[projectPath];
     if (keystrokeStats) {
-      keystrokeStats.sendData();
+      await keystrokeStats.sendData();
       delete keystrokeStatsMap[projectPath];
     }
   }
@@ -137,7 +136,7 @@ export class KpmManager {
       keystrokeStats.activate();
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logIt('[KpmManager][createKeystrokeStats][keystrokeStatsTimeouts] run');
-        this.sendKeystrokeStats(projectPath);
+        this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
       }, DEFAULT_DURATION_MILLISECONDS);
     }
 
@@ -259,7 +258,7 @@ export class KpmManager {
   public async onDidChangeWindowState(windowState: WindowState) {
     logIt('[KpmManager][onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
-      this.sendKeystrokeStatsMap();
+      await this.sendKeystrokeStatsMap();
     }
   }
 }

@@ -5,6 +5,7 @@ import { updateProjectSummary, generateProjectDashboard } from '../storages/proj
 import { updateUserSummary, generateUserDashboard } from '../storages/user';
 import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
+import { recordSessionTime } from '../utils/recorder';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
   const { project } = keystrokeStats;
@@ -16,15 +17,11 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: nu
   commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }
 
-async function sendDataToServer() {
-  // TODO
-}
-
-export async function processPayload(keystrokeStats: KeystrokeStats) {
-  checkMidnight();
+export async function processData(keystrokeStats: KeystrokeStats) {
   const sessionSeconds = keystrokeStats.getSessionSeconds();
-  saveDataToDisk(keystrokeStats, sessionSeconds);
-  sendDataToServer();
+  await checkMidnight();
+  await saveDataToDisk(keystrokeStats, sessionSeconds);
+  await recordSessionTime(keystrokeStats);
 }
 
 function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {

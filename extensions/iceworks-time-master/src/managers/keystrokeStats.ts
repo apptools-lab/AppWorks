@@ -1,7 +1,7 @@
 import { Project } from '../storages/project';
 import { FileChange } from '../storages/filesChange';
 import { getNowTimes, logIt } from '../utils/common';
-import { processPayload } from './data';
+import { processData } from './data';
 import forIn = require('lodash.forin');
 
 export interface Editor {
@@ -18,11 +18,6 @@ export interface User {
 }
 
 export class KeystrokeStats {
-  // public os: string;
-  // public hostname: string;
-  // public timezone: string;
-  // public editor: Editor;
-  // public user: User;
   public keystrokes: number = 0;
   public start: number;
   public end: number;
@@ -93,12 +88,12 @@ export class KeystrokeStats {
     return sessionSeconds;
   }
 
-  sendData() {
+  async sendData() {
     const isHasData = this.hasData();
     logIt('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
-      processPayload(this);
+      await processData(this);
     }
   }
 

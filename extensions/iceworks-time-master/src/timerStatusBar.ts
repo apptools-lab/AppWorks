@@ -1,6 +1,6 @@
 import { window, StatusBarAlignment, StatusBarItem } from 'vscode';
 import { getUserSummary } from './storages/user';
-import { SECONDS_PER_MINUTE } from './constants';
+import { ONE_MIN_SECONDS } from './constants';
 import { humanizeMinutes } from './utils/common';
 
 interface TimerStatusBar extends StatusBarItem {
@@ -24,7 +24,7 @@ export function createTimerStatusBar() {
 function getStatusBarText() {
   const { sessionSeconds, averageDailySessionSeconds } = getUserSummary();
   const inFlowIcon = averageDailySessionSeconds && sessionSeconds > averageDailySessionSeconds ? '$(rocket)' : '$(clock)';
-  const minutesStr = humanizeMinutes(sessionSeconds / SECONDS_PER_MINUTE);
+  const minutesStr = humanizeMinutes(sessionSeconds / ONE_MIN_SECONDS);
   const text = `${inFlowIcon} ${minutesStr}`;
   return text;
 }

@@ -66,9 +66,9 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       logtype: '2',
     };
 
-    console.log('recorder[type]', recordType);
-    console.log('recorder[url]:', url);
-    console.log('recorder[param]:', JSON.stringify(param));
+    // console.log('recorder[type]', recordType);
+    // console.log('recorder[url]:', url);
+    // console.log('recorder[param]:', JSON.stringify(param));
 
     await axios({
       method: 'post',

@@ -3,7 +3,8 @@ import { cleanFilesChangeSummary } from '../storages/filesChange';
 import { clearProjectsSummary } from '../storages/project';
 import { clearUserSummary } from '../storages/user';
 import { getNowTimes } from '../utils/common';
-import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
+import { DEFAULT_DURATION_MILLISECONDS, ONE_MIN_MILLISECONDS } from '../constants';
+import { sendRecordData } from '../utils/recorder';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 
@@ -13,8 +14,9 @@ export function isNewDay(): boolean {
   return currentDay !== day;
 }
 
-export function checkMidnight() {
+export async function checkMidnight() {
   if (isNewDay()) {
+    await sendRecordData();
     clearUserSummary();
     clearProjectsSummary();
     cleanFilesChangeSummary();
@@ -24,17 +26,25 @@ export function checkMidnight() {
 }
 
 let dayCheckTimer: NodeJS.Timeout;
+let sendDataTimer: NodeJS.Timeout;
 
-export function activate() {
+export async function activate() {
   dayCheckTimer = setInterval(() => {
-    checkMidnight();
+    checkMidnight().catch(() => { /* ignore error */ });
   }, DEFAULT_DURATION_MILLISECONDS * 2);
 
-  checkMidnight();
+  sendDataTimer = setInterval(() => {
+    sendRecordData().catch(() => { /* ignore error */ });
+  }, ONE_MIN_MILLISECONDS * 15);
+
+  await checkMidnight();
 }
 
 export function deactivate() {
   if (dayCheckTimer) {
     clearInterval(dayCheckTimer);
+  }
+  if (sendDataTimer) {
+    clearInterval(sendDataTimer);
   }
 }
