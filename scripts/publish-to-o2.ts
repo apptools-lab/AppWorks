@@ -31,7 +31,7 @@ async function mergePackPackageJSON(values) {
   const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
   const extensionPackageJSON = await readJson(extensionPackagePath);
   merge(extensionPackageJSON, values);
-  await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 4 });
+  await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 }
 
 async function publishExtensionsToNpm(extensionPack: string[]) {
@@ -47,7 +47,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
         // compatible package.json
         extensionPackageJSON.name = `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}`;
         Object.assign(extensionPackageJSON, valuesAppendToExtensionPackageJSON);
-        await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 4 });
+        await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
         // spawnSync(
