@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { getPublishedPackages } from '../published-info';
+import { getPublishedPackages } from './published-info';
 
 export default function updateExtensionDependencies(extension: string, directory: string) {
   try {

@@ -174,7 +174,7 @@ const ScaffoldMarket = ({
                                     height={20}
                                   />
                                 )}
-                                <div>
+                                <div title={item.title}>
                                   {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
                                 </div>
                               </div>

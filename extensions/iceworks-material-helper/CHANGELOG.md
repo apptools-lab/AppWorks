@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.2
+
+- fix: fail to clear material sources
+- fix: fail to debug material sources in some cases
+- feat: layout path is not the necessary option in page-generator extension
+
 ## 0.4.1
 
 - fix: ui build error
