@@ -1,8 +1,8 @@
 import { ExtensionContext, commands } from 'vscode';
-import { createTimerTreeView, TimerProvider } from './timerProvider';
+import { createTimerTreeView, TimerProvider } from './views/timerProvider';
 import { logIt, openFileInEditor } from './utils/common';
 import { createInstance as createKpmInstance } from './managers/kpm';
-import { createTimerStatusBar } from './timerStatusBar';
+import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
 

@@ -1,7 +1,7 @@
 import { window, StatusBarAlignment, StatusBarItem } from 'vscode';
-import { getUserSummary } from './storages/user';
-import { ONE_MIN_SECONDS } from './constants';
-import { humanizeMinutes } from './utils/common';
+import { getUserSummary } from '../storages/user';
+import { ONE_MIN_SECONDS } from '../constants';
+import { humanizeMinutes } from '../utils/common';
 
 interface TimerStatusBar extends StatusBarItem {
   refresh(): void;

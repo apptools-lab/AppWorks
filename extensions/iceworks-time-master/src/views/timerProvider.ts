@@ -12,11 +12,11 @@ import {
 import * as path from 'path';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
-import { getUserSummary, UserSummary } from './storages/user';
-import { getFilesChangeSummary, FileChangeSummary } from './storages/filesChange';
-import { humanizeMinutes } from './utils/common';
-import i18n from './i18n';
-import { ONE_MIN_SECONDS } from './constants';
+import { getUserSummary, UserSummary } from '../storages/user';
+import { getFilesChangeSummary, FileChangeSummary } from '../storages/filesChange';
+import { humanizeMinutes } from '../utils/common';
+import i18n from '../i18n';
+import { ONE_MIN_SECONDS } from '../constants';
 
 const NUMBER_FORMAT = '0 a';
 const resourcePath: string = path.join(__dirname, '..', 'assets');

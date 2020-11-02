@@ -1,4 +1,4 @@
-import { getUserInfo } from '@iceworks/common-service';
+import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
@@ -102,6 +102,9 @@ export async function recordEditorTime() {
 }
 
 export async function sendRecords() {
+  if (!await checkIsAliInternal()) {
+    return;
+  }
   await sendRecordsData(SESSION_TIME_RECORD);
   await sendRecordsData(EDITOR_TIME_RECORD);
 }

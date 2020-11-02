@@ -7,7 +7,7 @@ import { window, workspace, TextDocument } from 'vscode';
 import * as moment from 'moment';
 
 // eslint-disable-next-line
-const { name, version } = require('../package.json');
+const { name, version } = require('../../package.json');
 
 export function getEditorInfo() {
   return {

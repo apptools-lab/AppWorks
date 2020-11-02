@@ -3,7 +3,7 @@ import { cleanFilesChangeSummary } from '../storages/filesChange';
 import { clearProjectsSummary } from '../storages/project';
 import { clearUserSummary } from '../storages/user';
 import { getNowTimes } from '../utils/common';
-import { DEFAULT_DURATION_MILLISECONDS, ONE_MIN_MILLISECONDS } from '../constants';
+import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendRecords } from '../utils/recorder';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
@@ -31,7 +31,7 @@ let sendDataTimer: NodeJS.Timeout;
 export async function activate() {
   dayCheckTimer = setInterval(() => {
     checkMidnight().catch(() => { /* ignore error */ });
-  }, DEFAULT_DURATION_MILLISECONDS * 2);
+  }, ONE_MIN_MILLISECONDS * 5);
 
   sendDataTimer = setInterval(() => {
     sendRecords().catch(() => { /* ignore error */ });
