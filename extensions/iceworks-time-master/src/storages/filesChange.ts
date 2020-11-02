@@ -264,10 +264,9 @@ export function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
       fileChangeSummary.length = fileChange.length;
       fileChangeSummary.end = fileChange.end;
     }
-
-    linesAdded += fileChangeSummary.linesAdded;
-    linesRemoved += fileChangeSummary.linesRemoved;
-    keystrokes += fileChangeSummary.keystrokes;
+    keystrokes += fileChange.keystrokes;
+    linesAdded += fileChange.linesAdded;
+    linesRemoved += fileChange.linesRemoved;
     filesChangeSummary[fsPath] = fileChangeSummary;
   });
   saveFilesChangeSummary(filesChangeSummary);
