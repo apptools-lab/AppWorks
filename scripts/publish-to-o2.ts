@@ -20,6 +20,38 @@ const valuesAppendToExtensionPackageJSON = {
 };
 const EXTENSION_PACK = 'iceworks';
 const PACKAGE_JSON_NAME = 'package.json';
+const valuesAppendToPackPackageJSON = {
+  engines: {
+    kaitian: '^1.20.0',
+  },
+  contributes: {
+    configuration: {
+      title: 'Iceworks',
+    },
+  },
+  dependencies: {
+    '@ali/kit-runner': '^0.1.0',
+  },
+  devDependencies: {
+    'css-loader': '^3.6.0',
+    'file-loader': '^6.0.0',
+    less: '^3.11.3',
+    'less-loader': '^5.0.0',
+    'style-loader': '^1.2.1',
+    'ts-loader': '^8.0.6',
+    typescript: '^3.4.5',
+    'url-loader': '^4.1.0',
+    vscode: '^1.1.28',
+    webpack: '^4.43.0',
+  },
+  scripts: {
+    prepublishOnly: 'npm run compile',
+    compile: 'kit-builder compile',
+  },
+  kaitianContributes: {
+    nodeMain: './out/node/index.js',
+  },
+};
 
 async function getExtensionPack() {
   const { extensionPack } = await readJson(join(EXTENSIONS_DIRECTORY, EXTENSION_PACK, PACKAGE_JSON_NAME));
@@ -31,7 +63,7 @@ async function mergePackPackageJSON(values) {
   const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
   const extensionPackageJSON = await readJson(extensionPackagePath);
   merge(extensionPackageJSON, values);
-  extensionPackageJSON.contributes.configuration.title = 'Iceworks';
+  merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
   await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 }
 
@@ -47,7 +79,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
         extensionPackageJSON.name = `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}`;
-        Object.assign(extensionPackageJSON, valuesAppendToExtensionPackageJSON);
+        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON);
         // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
