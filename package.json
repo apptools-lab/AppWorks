@@ -49,11 +49,11 @@
   "homepage": "https://github.com/ice-lab/iceworks#readme",
   "devDependencies": {
     "@types/execa": "^2.0.0",
+    "@types/fs-extra": "^9.0.2",
     "@types/jest": "^25.1.3",
     "@types/mkdirp": "^1.0.0",
     "@types/node": "^12.11.7",
     "@types/tar": "^4.0.3",
-    "@types/fs-extra": "^9.0.2",
     "adm-zip": "^0.4.14",
     "ali-oss": "^6.9.0",
     "axios": "^0.18.0",
@@ -71,12 +71,14 @@
     "lerna": "^3.20.2",
     "lodash.merge": "^4.6.2",
     "lodash.orderby": "^4.6.0",
+    "lodash.unionby": "^4.8.0",
     "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",
     "pify": "^5.0.0",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2",
+    "union": "^0.5.0",
     "xima": "^0.2.15"
   },
   "husky": {

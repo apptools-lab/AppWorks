@@ -5,6 +5,7 @@
 // import { spawnSync } from 'child_process';
 import { readJson, writeJson } from 'fs-extra';
 import * as merge from 'lodash.merge';
+import * as unionBy from 'lodash.unionby';
 import { join } from 'path';
 import scanDirectory from './fn/scanDirectory';
 
@@ -61,9 +62,8 @@ async function getExtensionPack() {
 async function mergePackPackageJSON(values) {
   const extensionFolderPath = join(EXTENSIONS_DIRECTORY, EXTENSION_PACK);
   const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
-  const extensionPackageJSON = await readJson(extensionPackagePath);
-  merge(extensionPackageJSON, values);
-  merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
+  let extensionPackageJSON = await readJson(extensionPackagePath);
+  extensionPackageJSON = merge({}, extensionPackageJSON, values, valuesAppendToPackPackageJSON);
   await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 }
 
@@ -74,12 +74,11 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
     extensionNames.map(async (extensionName) => {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
-      const extensionPackageJSON = await readJson(extensionPackagePath);
+      let extensionPackageJSON = await readJson(extensionPackagePath);
 
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
-        extensionPackageJSON.name = `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}`;
-        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON);
+        extensionPackageJSON = merge({}, extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}` });
         // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
@@ -108,19 +107,30 @@ async function mergeExtensionsToPack(extensions: string[]) {
 
   // }
 
-  const extensionsManifest = {};
+  let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
   await Promise.all(extensions.map(async (extensionName) => {
     const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
 
     // general extensionsManifest
     const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
     const extensionPackageJSON = await readJson(extensionPackagePath);
-    const { contributes, activationEvents, name, version } = extensionPackageJSON;
-    merge(
+    const {
+      contributes = {}, activationEvents,
+      // name, version
+    } = extensionPackageJSON;
+    const { commands = [] } = contributes;
+    extensionsManifest = merge(
+      {},
       extensionsManifest,
-      { contributes, activationEvents, dependencies: { [name]: version } },
+      {
+        contributes: {
+          ...merge({}, extensionsManifest.contributes, contributes),
+          commands: unionBy(extensionsManifest.contributes.commands.concat(commands), 'command'),
+        },
+        activationEvents: unionBy(extensionsManifest.activationEvents.concat(activationEvents)),
+        // dependencies: { [name]: version }
+      },
     );
-
     // general package.nls.json
   }));
 
