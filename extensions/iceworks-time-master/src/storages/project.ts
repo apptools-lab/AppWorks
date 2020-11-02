@@ -126,6 +126,9 @@ export function getProjectDashboardFile() {
   return path.join(getAppDataDir(), 'ProjectSummaryDashboard.txt');
 }
 
+/**
+ * TODO
+ */
 export async function generateProjectDashboard() {
   const formattedDate = moment().format('ddd, MMM Do h:mma');
   const dashboardContent = `TIME MASTER - Project Summary (Last updated on ${formattedDate})`;

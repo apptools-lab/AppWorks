@@ -102,7 +102,7 @@ export class KpmManager {
   }
 
   public deactivate() {
-    // TODO
+    // placeholder
   }
 
   public async sendKeystrokeStatsMap() {

@@ -162,7 +162,9 @@ function execPromise(command: string, opts: any): Promise<string> {
   }));
 }
 
-// TODO
+/**
+ * TODO Replace with community pack
+ */
 export function logIt(...args: any) {
   args[0] = 'TimeMaster: ' + args[0];
   console.log.apply(null, args);

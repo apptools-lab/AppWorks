@@ -70,8 +70,11 @@ export async function recordSessionTime(keystrokeStats: KeystrokeStats) {
   await appendRecordsData(SESSION_TIME_RECORD, records);
 }
 
+/**
+ * TODO
+ */
 export async function recordEditorTime() {
-  // TODO
+  // hold
 }
 
 export async function sendRecordData() {
@@ -86,7 +89,7 @@ export async function sendRecordData() {
     });
   }));
 
-
+  // TODO batch send to server
   const editorTimeRecords: EditorTimeRecord[] = getRecordsData(EDITOR_TIME_RECORD);
   await Promise.all(editorTimeRecords.map(async (data) => {
     await send('iceteam.iceworks.time_master_editor_time', {

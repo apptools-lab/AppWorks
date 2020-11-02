@@ -74,6 +74,9 @@ export function getUserDashboardFile() {
   return path.join(getAppDataDir(), 'UserSummaryDashboard.txt');
 }
 
+/**
+ * TODO
+ */
 export async function generateUserDashboard() {
   const formattedDate = moment().format('ddd, MMM Do h:mma');
   const dashboardContent = `TIME MASTER - User Summary (Last updated on ${formattedDate})`;

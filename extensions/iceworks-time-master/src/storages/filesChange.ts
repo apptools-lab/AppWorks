@@ -181,7 +181,7 @@ export class FileChange {
   }
 
   activate() {
-    // TODO
+    // placeholder
   }
 
   deactivate() {
