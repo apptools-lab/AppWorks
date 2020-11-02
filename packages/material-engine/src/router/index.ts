@@ -49,6 +49,7 @@ export async function create(data) {
 export async function getAll() {
   const routerConfigAST = await getRouterConfigAST(projectPath);
   let config = [];
+
   traverse(routerConfigAST, {
     VariableDeclarator: ({ node }) => {
       if (t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE }) && t.isArrayExpression(node.init)) {
