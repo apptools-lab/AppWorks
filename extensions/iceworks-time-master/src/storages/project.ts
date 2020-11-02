@@ -40,7 +40,7 @@ export class Project {
   // public id: string = '';
   public name: string = '';
   public directory: string = '';
-  public resource: ProjectResource;
+  public resource: ProjectResource = { repository: '', branch: '' };
 
   constructor(values?: any) {
     // const { resource, directory } = values;

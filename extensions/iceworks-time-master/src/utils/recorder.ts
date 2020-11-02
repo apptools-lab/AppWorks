@@ -7,6 +7,9 @@ import { FileChange } from '../storages/filesChange';
 import { getAppDataDir } from '../utils/common';
 import forIn = require('lodash.forin');
 
+const SESSION_TIME_RECORD = 'session_time';
+const EDITOR_TIME_RECORD = 'editor_time';
+
 export interface SessionTimeRecord {
   fileName: string;
   fsPath: string;
@@ -77,26 +80,9 @@ export async function recordEditorTime() {
   // hold
 }
 
-export async function sendRecordData() {
-  const { empId } = await getUserInfo();
-  const sessionTimeRecords: SessionTimeRecord[] = getRecordsData(SESSION_TIME_RECORD);
-
-  // TODO batch send to server
-  await Promise.all(sessionTimeRecords.map(async (data) => {
-    await send('iceteam.iceworks.time_master_session_time', {
-      ...data,
-      userId: empId,
-    });
-  }));
-
-  // TODO batch send to server
-  const editorTimeRecords: EditorTimeRecord[] = getRecordsData(EDITOR_TIME_RECORD);
-  await Promise.all(editorTimeRecords.map(async (data) => {
-    await send('iceteam.iceworks.time_master_editor_time', {
-      ...data,
-      userId: empId,
-    });
-  }));
+export async function sendRecords() {
+  await sendRecordsData(SESSION_TIME_RECORD);
+  await sendRecordsData(EDITOR_TIME_RECORD);
 }
 
 async function send(api: string, originParam: any) {
@@ -131,6 +117,21 @@ async function send(api: string, originParam: any) {
   }
 }
 
+/**
+ * TODO batch send to server
+ */
+async function sendRecordsData(type: string) {
+  const { empId } = await getUserInfo();
+  const records = getRecordsData(type);
+  await Promise.all(records.map(async (record: any) => {
+    await send(`iceteam.iceworks.time_master_${type}`, {
+      ...record,
+      userId: empId,
+    });
+  }));
+  clearRecordsData(type);
+}
+
 function getRecordsData(type: string) {
   const file = getRecordsFile(type);
   let records = [];
@@ -140,6 +141,10 @@ function getRecordsData(type: string) {
     // ignore error
   }
   return records;
+}
+
+function clearRecordsData(type: string) {
+  saveRecordsData(type, []);
 }
 
 function saveRecordsData(type: string, records: EditorTimeRecord[]|SessionTimeRecord[]) {
@@ -154,8 +159,5 @@ function appendRecordsData(type: string, data: EditorTimeRecord[]|SessionTimeRec
 }
 
 function getRecordsFile(type: string) {
-  return path.join(getAppDataDir(), `${type}.json`);
+  return path.join(getAppDataDir(), `${type}_records.json`);
 }
-
-const SESSION_TIME_RECORD = 'sessionTimeRecords';
-const EDITOR_TIME_RECORD = 'editorTimeRecords';

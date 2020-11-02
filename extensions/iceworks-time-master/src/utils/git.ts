@@ -47,5 +47,11 @@ export async function getResource(projectDir: string): Promise<Resource> {
 
     nodeCache.set(cacheId, resourceInfo, cacheTimeoutSeconds);
     return resourceInfo;
+  } else {
+    return {
+      repository: '',
+      branch: '',
+      tag: '',
+    };
   }
 }

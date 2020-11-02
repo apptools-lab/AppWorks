@@ -4,7 +4,7 @@ import { clearProjectsSummary } from '../storages/project';
 import { clearUserSummary } from '../storages/user';
 import { getNowTimes } from '../utils/common';
 import { DEFAULT_DURATION_MILLISECONDS, ONE_MIN_MILLISECONDS } from '../constants';
-import { sendRecordData } from '../utils/recorder';
+import { sendRecords } from '../utils/recorder';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 
@@ -16,7 +16,7 @@ export function isNewDay(): boolean {
 
 export async function checkMidnight() {
   if (isNewDay()) {
-    await sendRecordData();
+    await sendRecords();
     clearUserSummary();
     clearProjectsSummary();
     cleanFilesChangeSummary();
@@ -34,7 +34,7 @@ export async function activate() {
   }, DEFAULT_DURATION_MILLISECONDS * 2);
 
   sendDataTimer = setInterval(() => {
-    sendRecordData().catch(() => { /* ignore error */ });
+    sendRecords().catch(() => { /* ignore error */ });
   }, ONE_MIN_MILLISECONDS * 15);
 
   await checkMidnight();
