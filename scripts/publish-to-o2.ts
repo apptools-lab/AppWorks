@@ -2,11 +2,12 @@
  * O2 is a Ali internal editor,
  * This script is for compatible with O2 by modifying extensions at build time.
  */
-// import { spawnSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { readJson, writeJson, copy, readdir } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import { join } from 'path';
+// import * as ejs from 'ejs';
 import scanDirectory from './fn/scanDirectory';
 
 const isBeta = true;
@@ -19,6 +20,7 @@ const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-ui-builder',
   'iceworks-team.iceworks-project-creator',
   'iceworks-team.iceworks-app',
+  'iceworks-team.iceworks-config-helper',
 ];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'o2-template');
@@ -83,6 +85,10 @@ function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
+async function renderPackNodeEntry() {
+  // TODO
+}
+
 async function publishExtensionsToNpm(extensionPack: string[]) {
   const publishedExtensions = [];
   const extensionNames = await scanDirectory(EXTENSIONS_DIRECTORY);
@@ -95,14 +101,13 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
         merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionNpmName(extensionPackageJSON.name) });
-        // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
+        await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
-        // publish extension
-        // spawnSync(
-        //   !isBeta ? 'npm' : 'tnpm',
-        //   ['publish'],
-        //   { stdio: 'inherit', cwd: extensionFolderPath },
-        // );
+        spawnSync(
+          !isBeta ? 'npm' : 'tnpm',
+          ['publish'],
+          { stdio: 'inherit', cwd: extensionFolderPath },
+        );
 
         publishedExtensions.push(extensionName);
       }
@@ -161,6 +166,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
   await mergeExtensionsToPack(publishedExtensions);
   await customPackPackageJSON();
   await generalPackSource();
+  await renderPackNodeEntry();
 })().catch((error) => {
   console.error(error);
 });
