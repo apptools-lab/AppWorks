@@ -10,6 +10,7 @@ import { join } from 'path';
 // import * as ejs from 'ejs';
 import scanDirectory from './fn/scanDirectory';
 
+const isPublish2Npm = false;
 const isBeta = true;
 const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
 const PACK_NAME = 'iceworks';
@@ -38,55 +39,12 @@ const valuesAppendToExtensionPackageJSON = {
   ],
 };
 
-async function getPackExtensions() {
-  // const { extensionPack } = await readJson(PACK_PACKAGE_JSON_PATH);
-  return PACK_EXTENSIONS; // extensionPack;
-}
-
-async function mergeExtensionsPackageJSON2Pack(values) {
-  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
-  merge(extensionPackageJSON, values);
-  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
-}
-
-async function mergeExtensionsNlsJSON2Pack(values) {
-  for (let index = 0; index < values.length; index++) {
-    const { fileName, content } = values[index];
-    const nlsPath = join(PACK_DIR, fileName);
-    let nlsJSON = {};
-    try {
-      nlsJSON = await readJson(nlsPath);
-    } catch (e) {
-      // ignore error
-    }
-    merge(nlsJSON, content);
-    await writeJson(nlsPath, nlsJSON, { spaces: 2 });
-  }
-}
-
-async function customPackPackageJSON() {
-  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
-  const valuesAppendToPackPackageJSON = await readJson(join(TEMPLATE_DIR, 'package.json'));
-  merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
-  delete extensionPackageJSON.extensionPack;
-  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
-
-  // copy
-  const tsconfigJsonName = 'tsconfig.json';
-  await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(PACK_DIR, tsconfigJsonName));
-}
-
-async function generalPackSource() {
-  const sourceName = 'src';
-  await copy(join(TEMPLATE_DIR, sourceName), join(PACK_DIR, sourceName));
-}
-
 function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
-async function renderPackNodeEntry() {
-  // TODO
+async function getPackExtensions() {
+  return PACK_EXTENSIONS;
 }
 
 async function publishExtensionsToNpm(extensionPack: string[]) {
@@ -103,11 +61,13 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
         merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionNpmName(extensionPackageJSON.name) });
         await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
-        spawnSync(
-          !isBeta ? 'npm' : 'tnpm',
-          ['publish'],
-          { stdio: 'inherit', cwd: extensionFolderPath },
-        );
+        if (isPublish2Npm) {
+          spawnSync(
+            !isBeta ? 'npm' : 'tnpm',
+            ['publish'],
+            { stdio: 'inherit', cwd: extensionFolderPath },
+          );
+        }
 
         publishedExtensions.push(extensionName);
       }
@@ -117,6 +77,32 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 }
 
 async function mergeExtensionsToPack(extensions: string[]) {
+  async function mergeExtensionsPackageJSON2Pack(values) {
+    const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
+    merge(extensionPackageJSON, values);
+    await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
+  }
+  async function mergeExtensionsNlsJSON2Pack(values) {
+    for (let index = 0; index < values.length; index++) {
+      const { fileName, content } = values[index];
+      const nlsPath = join(PACK_DIR, fileName);
+      let nlsJSON = {};
+      try {
+        nlsJSON = await readJson(nlsPath);
+      } catch (e) {
+        // ignore error
+      }
+      merge(nlsJSON, content);
+      await writeJson(nlsPath, nlsJSON, { spaces: 2 });
+    }
+  }
+  async function copyExtensionAssets2Pack() {
+    // TODO
+  }
+  async function copyExtensionWebviewFiles2Pack() {
+    // TODO
+  }
+
   let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
   let nlsContents = [];
   await Promise.all(extensions.map(async (extensionName) => {
@@ -139,7 +125,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
           commands: unionBy(extensionsManifest.contributes.commands.concat(commands), 'command'),
         },
         activationEvents: unionBy(extensionsManifest.activationEvents.concat(activationEvents)),
-        dependencies: { [getExtensionNpmName(name)]: !isBeta ? version : '*' },
+        dependencies: { [name]: !isBeta ? version : '*' },
       },
     );
 
@@ -158,15 +144,58 @@ async function mergeExtensionsToPack(extensions: string[]) {
 
   await mergeExtensionsPackageJSON2Pack(extensionsManifest);
   await mergeExtensionsNlsJSON2Pack(nlsContents);
+  await copyExtensionAssets2Pack();
+  await copyExtensionWebviewFiles2Pack();
 }
 
-(async function () {
+async function customPackPackageJSON() {
+  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
+  const valuesAppendToPackPackageJSON = await readJson(join(TEMPLATE_DIR, 'package.json'));
+  merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
+  delete extensionPackageJSON.extensionPack;
+  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
+
+  // copy
+  const tsconfigJsonName = 'tsconfig.json';
+  await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(PACK_DIR, tsconfigJsonName));
+}
+
+async function generalPackSource() {
+  const sourceName = 'src';
+  await copy(join(TEMPLATE_DIR, sourceName), join(PACK_DIR, sourceName));
+
+  // TODO using .ejs template to set node/index.ts
+}
+
+async function installPackDeps() {
+  // TODO
+}
+
+async function compilePack() {
+  // TODO
+}
+
+async function packagePack() {
+  // TODO
+}
+
+async function generalPack() {
   const extensionPack = await getPackExtensions();
   const publishedExtensions = await publishExtensionsToNpm(extensionPack);
   await mergeExtensionsToPack(publishedExtensions);
   await customPackPackageJSON();
   await generalPackSource();
-  await renderPackNodeEntry();
+}
+
+async function buildPack() {
+  await installPackDeps();
+  await compilePack();
+  await packagePack();
+}
+
+(async function () {
+  await generalPack();
+  await buildPack();
 })().catch((error) => {
   console.error(error);
 });
