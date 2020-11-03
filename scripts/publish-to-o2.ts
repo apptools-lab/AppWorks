@@ -11,6 +11,10 @@ import scanDirectory from './fn/scanDirectory';
 
 const EXTENSION_NPM_NAME_PREFIX = '@iceworks/extension';
 const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
+const EXTENSIONS_PACK = [
+  'iceworks-team.iceworks-ui-builder',
+  'iceworks-team.iceworks-project-creator',
+];
 const valuesAppendToExtensionPackageJSON = {
   publishConfig: {
     access: 'public',
@@ -55,8 +59,8 @@ const valuesAppendToPackPackageJSON = {
 };
 
 async function getExtensionPack() {
-  const { extensionPack } = await readJson(join(EXTENSIONS_DIRECTORY, EXTENSION_PACK, PACKAGE_JSON_NAME));
-  return extensionPack;
+  // const { extensionPack } = await readJson(join(EXTENSIONS_DIRECTORY, EXTENSION_PACK, PACKAGE_JSON_NAME));
+  return EXTENSIONS_PACK; // extensionPack;
 }
 
 async function mergePackPackageJSON(values) {
@@ -64,6 +68,7 @@ async function mergePackPackageJSON(values) {
   const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
   let extensionPackageJSON = await readJson(extensionPackagePath);
   extensionPackageJSON = merge({}, extensionPackageJSON, values, valuesAppendToPackPackageJSON);
+  delete extensionPackageJSON.extensionPack;
   await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 }
 
