@@ -108,7 +108,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
   // }
 
   let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
-  let nlsFiles = [];
+  let nlsContents = [];
   await Promise.all(extensions.map(async (extensionName) => {
     const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
 
@@ -134,19 +134,20 @@ async function mergeExtensionsToPack(extensions: string[]) {
     );
 
     // general package.nls.json
-    const extensionNlsFiles = await Promise.all((await readdir(extensionFolderPath)).filter((fileName) => {
-      return 'package.nls'.indexOf(fileName) === 0;
-    }).map(async (fileName) => {
+    const extensionNlsFiles = (await readdir(extensionFolderPath)).filter((fileName) => {
+      return fileName.indexOf('package.nls') === 0;
+    });
+    const extensionNlsContent = await Promise.all(extensionNlsFiles.map(async (fileName) => {
       return {
         fileName,
         content: await readJson(join(extensionFolderPath, fileName)),
       };
     }));
-    nlsFiles = nlsFiles.concat(extensionNlsFiles);
+    nlsContents = nlsContents.concat(extensionNlsContent);
   }));
 
   await mergeExtensionsPackageJSON2Pack(extensionsManifest);
-  await mergeExtensionsNlsJSON2Pack(nlsFiles);
+  await mergeExtensionsNlsJSON2Pack(nlsContents);
 }
 
 (async function () {
