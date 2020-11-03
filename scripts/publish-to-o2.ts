@@ -3,7 +3,7 @@
  * This script is for compatible with O2 by modifying extensions at build time.
  */
 // import { spawnSync } from 'child_process';
-import { readJson, writeJson, copy } from 'fs-extra';
+import { readJson, writeJson, copy, readdir } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import { join } from 'path';
@@ -38,6 +38,20 @@ async function mergeExtensionsPackageJSON2Pack(values) {
   const extensionPackageJSON = await readJson(EXTENSION_PACK_JSON_PATH);
   merge(extensionPackageJSON, values);
   await writeJson(EXTENSION_PACK_JSON_PATH, extensionPackageJSON, { spaces: 2 });
+}
+
+async function mergeExtensionsNlsJSON2Pack(values) {
+  await Promise.all(values.map(async ({ fileName, content }) => {
+    const nlsPath = join(EXTENSION_PACK_DIR, fileName);
+    let nlsJSON = {};
+    try {
+      nlsJSON = await readJson(nlsPath);
+    } catch (e) {
+      // ignore error
+    }
+    merge(nlsJSON, content);
+    await writeJson(nlsPath, nlsJSON);
+  }));
 }
 
 async function customPackPackageJSON() {
@@ -93,11 +107,8 @@ async function mergeExtensionsToPack(extensions: string[]) {
 
   // }
 
-  // async function processingBuildLogic() {
-
-  // }
-
   let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
+  let nlsFiles = [];
   await Promise.all(extensions.map(async (extensionName) => {
     const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
 
@@ -121,10 +132,21 @@ async function mergeExtensionsToPack(extensions: string[]) {
         // dependencies: { [name]: version }
       },
     );
+
     // general package.nls.json
+    const extensionNlsFiles = await Promise.all((await readdir(extensionFolderPath)).filter((fileName) => {
+      return 'package.nls'.indexOf(fileName) === 0;
+    }).map(async (fileName) => {
+      return {
+        fileName,
+        content: await readJson(join(extensionFolderPath, fileName)),
+      };
+    }));
+    nlsFiles = nlsFiles.concat(extensionNlsFiles);
   }));
 
   await mergeExtensionsPackageJSON2Pack(extensionsManifest);
+  await mergeExtensionsNlsJSON2Pack(nlsFiles);
 }
 
 (async function () {
