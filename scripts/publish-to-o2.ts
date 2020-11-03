@@ -10,43 +10,46 @@ import { join } from 'path';
 import scanDirectory from './fn/scanDirectory';
 
 const isBeta = true;
-const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
-const EXTENSION_PACK_NAME = 'iceworks';
+const PACK_NAME = 'iceworks';
 const PACKAGE_JSON_NAME = 'package.json';
-const EXTENSION_PACK_DIR = join(EXTENSIONS_DIRECTORY, EXTENSION_PACK_NAME);
-const EXTENSION_PACK_JSON_PATH = join(EXTENSION_PACK_DIR, PACKAGE_JSON_NAME);
-const EXTENSIONS_PACK = [
+const PACK_DIR = join(EXTENSIONS_DIRECTORY, PACK_NAME);
+const PACK_PACKAGE_JSON_PATH = join(PACK_DIR, PACKAGE_JSON_NAME);
+const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-ui-builder',
   'iceworks-team.iceworks-project-creator',
   'iceworks-team.iceworks-app',
 ];
+const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
+const TEMPLATE_DIR = join(__dirname, 'o2-template');
+
 const valuesAppendToExtensionPackageJSON = {
-  publishConfig: !isBeta ? {
-    access: 'public',
-  } : {
-    registry: 'https://registry.npm.alibaba-inc.com',
-  },
+  publishConfig: !isBeta ?
+    {
+      access: 'public',
+    } :
+    {
+      registry: 'https://registry.npm.alibaba-inc.com',
+    },
   files: [
     'build',
   ],
 };
-const TEMPLATE_DIR = join(__dirname, 'o2-template');
 
-async function getExtensionPack() {
-  // const { extensionPack } = await readJson(EXTENSION_PACK_JSON_PATH);
-  return EXTENSIONS_PACK; // extensionPack;
+async function getPackExtensions() {
+  // const { extensionPack } = await readJson(PACK_PACKAGE_JSON_PATH);
+  return PACK_EXTENSIONS; // extensionPack;
 }
 
 async function mergeExtensionsPackageJSON2Pack(values) {
-  const extensionPackageJSON = await readJson(EXTENSION_PACK_JSON_PATH);
+  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
   merge(extensionPackageJSON, values);
-  await writeJson(EXTENSION_PACK_JSON_PATH, extensionPackageJSON, { spaces: 2 });
+  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 }
 
 async function mergeExtensionsNlsJSON2Pack(values) {
   await Promise.all(values.map(async ({ fileName, content }) => {
-    const nlsPath = join(EXTENSION_PACK_DIR, fileName);
+    const nlsPath = join(PACK_DIR, fileName);
     let nlsJSON = {};
     try {
       nlsJSON = await readJson(nlsPath);
@@ -59,23 +62,23 @@ async function mergeExtensionsNlsJSON2Pack(values) {
 }
 
 async function customPackPackageJSON() {
-  const extensionPackageJSON = await readJson(EXTENSION_PACK_JSON_PATH);
+  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
   const valuesAppendToPackPackageJSON = await readJson(join(TEMPLATE_DIR, 'package.json'));
   merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
   delete extensionPackageJSON.extensionPack;
-  await writeJson(EXTENSION_PACK_JSON_PATH, extensionPackageJSON, { spaces: 2 });
+  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 
   // copy
   const tsconfigJsonName = 'tsconfig.json';
-  await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(EXTENSION_PACK_DIR, tsconfigJsonName));
+  await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(PACK_DIR, tsconfigJsonName));
 }
 
 async function generalPackSource() {
   const sourceName = 'src';
-  await copy(join(TEMPLATE_DIR, sourceName), join(EXTENSION_PACK_DIR, sourceName));
+  await copy(join(TEMPLATE_DIR, sourceName), join(PACK_DIR, sourceName));
 }
 
-function getExtensionPackageName(name) {
+function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
@@ -90,7 +93,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
-        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionPackageName(extensionPackageJSON.name) });
+        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionNpmName(extensionPackageJSON.name) });
         // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
@@ -108,13 +111,6 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 }
 
 async function mergeExtensionsToPack(extensions: string[]) {
-  /**
-   * General /src for O2
-   */
-  // async function generalSrcFiles() {
-
-  // }
-
   let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
   let nlsContents = [];
   await Promise.all(extensions.map(async (extensionName) => {
@@ -137,7 +133,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
           commands: unionBy(extensionsManifest.contributes.commands.concat(commands), 'command'),
         },
         activationEvents: unionBy(extensionsManifest.activationEvents.concat(activationEvents)),
-        dependencies: { [getExtensionPackageName(name)]: !isBeta ? version : '*' },
+        dependencies: { [getExtensionNpmName(name)]: !isBeta ? version : '*' },
       },
     );
 
@@ -159,7 +155,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
 }
 
 (async function () {
-  const extensionPack = await getExtensionPack();
+  const extensionPack = await getPackExtensions();
   const publishedExtensions = await publishExtensionsToNpm(extensionPack);
   await mergeExtensionsToPack(publishedExtensions);
   await customPackPackageJSON();
