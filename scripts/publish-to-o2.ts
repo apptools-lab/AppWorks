@@ -9,7 +9,8 @@ import * as unionBy from 'lodash.unionby';
 import { join } from 'path';
 import scanDirectory from './fn/scanDirectory';
 
-const EXTENSION_NPM_NAME_PREFIX = '@iceworks/extension'; // @ali/ide-extensions
+const isBeta = true;
+const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
 const EXTENSION_PACK_NAME = 'iceworks';
 const PACKAGE_JSON_NAME = 'package.json';
@@ -18,10 +19,13 @@ const EXTENSION_PACK_JSON_PATH = join(EXTENSION_PACK_DIR, PACKAGE_JSON_NAME);
 const EXTENSIONS_PACK = [
   'iceworks-team.iceworks-ui-builder',
   'iceworks-team.iceworks-project-creator',
+  'iceworks-team.iceworks-app',
 ];
 const valuesAppendToExtensionPackageJSON = {
-  publishConfig: {
+  publishConfig: !isBeta ? {
     access: 'public',
+  } : {
+    registry: 'https://registry.npm.alibaba-inc.com',
   },
   files: [
     'build',
@@ -71,6 +75,10 @@ async function generalPackSource() {
   await copy(join(TEMPLATE_DIR, sourceName), join(EXTENSION_PACK_DIR, sourceName));
 }
 
+function getExtensionPackageName(name) {
+  return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
+}
+
 async function publishExtensionsToNpm(extensionPack: string[]) {
   const publishedExtensions = [];
   const extensionNames = await scanDirectory(EXTENSIONS_DIRECTORY);
@@ -82,12 +90,12 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
-        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}` });
+        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionPackageName(extensionPackageJSON.name) });
         // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
         // spawnSync(
-        //   'npm',
+        //   !isBeta ? 'npm' : 'tnpm',
         //   ['publish'],
         //   { stdio: 'inherit', cwd: extensionFolderPath },
         // );
@@ -117,7 +125,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
     const extensionPackageJSON = await readJson(extensionPackagePath);
     const {
       contributes = {}, activationEvents,
-      // name, version
+      name, version,
     } = extensionPackageJSON;
     const { commands = [] } = contributes;
     extensionsManifest = merge(
@@ -129,7 +137,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
           commands: unionBy(extensionsManifest.contributes.commands.concat(commands), 'command'),
         },
         activationEvents: unionBy(extensionsManifest.activationEvents.concat(activationEvents)),
-        // dependencies: { [name]: version }
+        dependencies: { [getExtensionPackageName(name)]: !isBeta ? version : '*' },
       },
     );
 
