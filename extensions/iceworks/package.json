@@ -45,21 +45,5 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  },
-  "dependencies": {
-    "@ali/ide-extensions-iceworks-project-creator": "^0.3.17",
-    "@ali/ide-extensions-iceworks-ui-builder": "^0.2.0"
-  },
-  "devDependencies": {
-    "css-loader": "^3.6.0",
-    "file-loader": "^6.0.0",
-    "less": "^3.11.3",
-    "less-loader": "^5.0.0",
-    "style-loader": "^1.2.1",
-    "ts-loader": "^8.0.6",
-    "typescript": "^3.4.5",
-    "url-loader": "^4.1.0",
-    "vscode": "^1.1.28",
-    "webpack": "^4.43.0"
   }
 }

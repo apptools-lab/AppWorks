@@ -3,13 +3,13 @@
  * This script is for compatible with O2 by modifying extensions at build time.
  */
 // import { spawnSync } from 'child_process';
-import { readJson, writeJson } from 'fs-extra';
+import { readJson, writeJson, readJSONSync } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import { join } from 'path';
 import scanDirectory from './fn/scanDirectory';
 
-const EXTENSION_NPM_NAME_PREFIX = '@iceworks/extension';
+const EXTENSION_NPM_NAME_PREFIX = '@iceworks/extension'; // @ali/ide-extensions
 const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
 const EXTENSIONS_PACK = [
   'iceworks-team.iceworks-ui-builder',
@@ -25,38 +25,7 @@ const valuesAppendToExtensionPackageJSON = {
 };
 const EXTENSION_PACK = 'iceworks';
 const PACKAGE_JSON_NAME = 'package.json';
-const valuesAppendToPackPackageJSON = {
-  engines: {
-    kaitian: '^1.20.0',
-  },
-  contributes: {
-    configuration: {
-      title: 'Iceworks',
-    },
-  },
-  dependencies: {
-    '@ali/kit-runner': '^0.1.0',
-  },
-  devDependencies: {
-    'css-loader': '^3.6.0',
-    'file-loader': '^6.0.0',
-    less: '^3.11.3',
-    'less-loader': '^5.0.0',
-    'style-loader': '^1.2.1',
-    'ts-loader': '^8.0.6',
-    typescript: '^3.4.5',
-    'url-loader': '^4.1.0',
-    vscode: '^1.1.28',
-    webpack: '^4.43.0',
-  },
-  scripts: {
-    prepublishOnly: 'npm run compile',
-    compile: 'kit-builder compile',
-  },
-  kaitianContributes: {
-    nodeMain: './out/node/index.js',
-  },
-};
+const valuesAppendToPackPackageJSON = readJSONSync(join(__dirname, 'o2-template', 'package.json'));
 
 async function getExtensionPack() {
   // const { extensionPack } = await readJson(join(EXTENSIONS_DIRECTORY, EXTENSION_PACK, PACKAGE_JSON_NAME));
