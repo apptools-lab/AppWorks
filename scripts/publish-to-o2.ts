@@ -48,7 +48,8 @@ async function mergeExtensionsPackageJSON2Pack(values) {
 }
 
 async function mergeExtensionsNlsJSON2Pack(values) {
-  await Promise.all(values.map(async ({ fileName, content }) => {
+  for (let index = 0; index < values.length; index++) {
+    const { fileName, content } = values[index];
     const nlsPath = join(PACK_DIR, fileName);
     let nlsJSON = {};
     try {
@@ -57,8 +58,8 @@ async function mergeExtensionsNlsJSON2Pack(values) {
       // ignore error
     }
     merge(nlsJSON, content);
-    await writeJson(nlsPath, nlsJSON);
-  }));
+    await writeJson(nlsPath, nlsJSON, { spaces: 2 });
+  }
 }
 
 async function customPackPackageJSON() {
