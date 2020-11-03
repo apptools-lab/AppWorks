@@ -64,11 +64,11 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
     extensionNames.map(async (extensionName) => {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
-      let extensionPackageJSON = await readJson(extensionPackagePath);
+      const extensionPackageJSON = await readJson(extensionPackagePath);
 
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
         // compatible package.json
-        extensionPackageJSON = merge({}, extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}` });
+        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: `${EXTENSION_NPM_NAME_PREFIX}-${extensionPackageJSON.name}` });
         // await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
         // publish extension
@@ -124,7 +124,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
     // general package.nls.json
   }));
 
-  mergeExtensionsPackageJSON2Pack(extensionsManifest);
+  await mergeExtensionsPackageJSON2Pack(extensionsManifest);
 }
 
 (async function () {
