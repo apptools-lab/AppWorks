@@ -20,8 +20,8 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: nu
 export async function processData(keystrokeStats: KeystrokeStats) {
   const sessionSeconds = keystrokeStats.getSessionSeconds();
   await checkMidnight();
-  await saveDataToDisk(keystrokeStats, sessionSeconds);
-  await recordSessionTime(keystrokeStats);
+  saveDataToDisk(keystrokeStats, sessionSeconds);
+  recordSessionTime(keystrokeStats);
 }
 
 function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {

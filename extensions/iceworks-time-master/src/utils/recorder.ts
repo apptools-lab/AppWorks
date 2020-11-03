@@ -90,6 +90,9 @@ function transformKeyStrokeStatsToRecord(keystrokeStats: KeystrokeStats): Sessio
 }
 
 export async function recordSessionTime(keystrokeStats: KeystrokeStats) {
+  if (!await checkIsAliInternal()) {
+    return;
+  }
   const records = transformKeyStrokeStatsToRecord(keystrokeStats);
   await appendRecordsData(SESSION_TIME_RECORD, records);
 }
@@ -102,11 +105,8 @@ export async function recordEditorTime() {
 }
 
 export async function sendRecords() {
-  if (!await checkIsAliInternal()) {
-    return;
-  }
-  await sendRecordsData(SESSION_TIME_RECORD);
-  await sendRecordsData(EDITOR_TIME_RECORD);
+  sendRecordsData(SESSION_TIME_RECORD);
+  sendRecordsData(EDITOR_TIME_RECORD);
 }
 
 async function send(api: string, originParam: any) {
