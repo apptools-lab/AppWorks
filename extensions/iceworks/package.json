@@ -5,8 +5,7 @@
   "publisher": "iceworks-team",
   "version": "0.13.0",
   "engines": {
-    "vscode": "^1.41.0",
-    "kaitian": "^1.20.0"
+    "vscode": "^1.41.0"
   },
   "categories": [
     "Extension Packs",
@@ -33,91 +32,18 @@
     "url": "https://github.com/ice-lab/iceworks.git"
   },
   "icon": "assets/logo.png",
+  "extensionPack": [
+    "iceworks-team.iceworks-app",
+    "iceworks-team.iceworks-ui-builder",
+    "iceworks-team.iceworks-project-creator",
+    "iceworks-team.iceworks-style-helper",
+    "iceworks-team.iceworks-material-helper",
+    "iceworks-team.iceworks-config-helper",
+    "iceworks-team.iceworks-doctor"
+  ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  },
-  "contributes": {
-    "commands": [
-      {
-        "command": "iceworks-project-creator.start",
-        "title": "%iceworksProjectCreator.commands.start.title%"
-      },
-      {
-        "command": "iceworks-ui-builder.design-component",
-        "title": "%iceworksUIBuilder.commands.designComponent.title%"
-      }
-    ],
-    "configuration": {
-      "title": "Iceworks",
-      "properties": {
-        "iceworks.materialSources": {
-          "type": "array",
-          "default": [],
-          "description": "Iceworks materialSources"
-        },
-        "iceworks.workspace": {
-          "type": "string",
-          "default": "",
-          "description": "Iceworks workspace"
-        },
-        "iceworks.user": {
-          "type": "object",
-          "default": {
-            "empId": "",
-            "account": "",
-            "gitlabToken": ""
-          },
-          "properties": {
-            "empId": {
-              "type": "string",
-              "description": "工号"
-            },
-            "account": {
-              "type": "string",
-              "description": "域账号"
-            },
-            "gitlabToken": {
-              "type": "string",
-              "description": "gitlab 私人 token"
-            }
-          },
-          "description": "Iceworks user information"
-        },
-        "iceworks.generateComponentPath": {
-          "type": "string",
-          "default": "",
-          "description": "%iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description%"
-        }
-      }
-    }
-  },
-  "activationEvents": [
-    "onCommand:iceworks-project-creator.start",
-    "onStartupFinished",
-    "onCommand:iceworks-ui-builder.design-component"
-  ],
-  "dependencies": {
-    "@ali/kit-runner": "^0.1.0"
-  },
-  "devDependencies": {
-    "css-loader": "^3.6.0",
-    "file-loader": "^6.0.0",
-    "less": "^3.11.3",
-    "less-loader": "^5.0.0",
-    "style-loader": "^1.2.1",
-    "ts-loader": "^8.0.6",
-    "typescript": "^3.4.5",
-    "url-loader": "^4.1.0",
-    "vscode": "^1.1.28",
-    "webpack": "^4.43.0"
-  },
-  "scripts": {
-    "prepublishOnly": "npm run compile",
-    "compile": "kit-builder compile"
-  },
-  "kaitianContributes": {
-    "nodeMain": "./out/node/index.js"
   }
 }
