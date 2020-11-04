@@ -1,7 +1,3 @@
-/**
- * O2 is a Ali internal editor,
- * This script is for compatible with O2 by modifying extensions at build time.
- */
 import { spawnSync } from 'child_process';
 import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp } from 'fs-extra';
 import * as merge from 'lodash.merge';
@@ -10,13 +6,13 @@ import * as camelCase from 'lodash.camelcase';
 import * as util from 'util';
 import { join } from 'path';
 import * as ejs from 'ejs';
-import scanDirectory from './fn/scanDirectory';
+import scanDirectory from '../fn/scanDirectory';
 
 const renderFile = util.promisify(ejs.renderFile);
 
 const isPublish2Npm = false;
 const isBeta = true;
-const EXTENSIONS_DIRECTORY = join(__dirname, '../extensions');
+const EXTENSIONS_DIRECTORY = join(__dirname, '..', '..', 'extensions');
 const PACK_NAME = 'iceworks';
 const PACKAGE_JSON_NAME = 'package.json';
 const PACK_DIR = join(EXTENSIONS_DIRECTORY, PACK_NAME);
@@ -31,7 +27,7 @@ const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-ui-builder',
 ];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
-const TEMPLATE_DIR = join(__dirname, 'o2-template');
+const TEMPLATE_DIR = join(__dirname, 'template');
 
 const valuesAppendToExtensionPackageJSON = {
   publishConfig: !isBeta ?
@@ -222,18 +218,6 @@ async function generalPackSource(extensions) {
   await writeFile(join(nodeEntryDir, nodeEntryFileName), nodeEntryContent);
 }
 
-async function installPackDeps() {
-  // TODO
-}
-
-async function compilePack() {
-  // TODO
-}
-
-async function packagePack() {
-  // TODO
-}
-
 async function generalPack() {
   const extensionPack = await getPackExtensions();
   const publishedExtensions = await publishExtensionsToNpm(extensionPack);
@@ -242,15 +226,6 @@ async function generalPack() {
   await generalPackSource(publishedExtensions);
 }
 
-async function buildPack() {
-  await installPackDeps();
-  await compilePack();
-  await packagePack();
-}
-
-(async function () {
-  await generalPack();
-  await buildPack();
-})().catch((error) => {
-  console.error(error);
+generalPack().catch((e) => {
+  console.error(e);
 });
