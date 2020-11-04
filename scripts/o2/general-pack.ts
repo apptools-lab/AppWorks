@@ -20,7 +20,7 @@ const PACK_PACKAGE_JSON_PATH = join(PACK_DIR, PACKAGE_JSON_NAME);
 const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-app',
   'iceworks-team.iceworks-config-helper',
-  // 'iceworks-team.iceworks-doctor',
+  'iceworks-team.iceworks-doctor',
   'iceworks-team.iceworks-material-helper',
   'iceworks-team.iceworks-project-creator',
   'iceworks-team.iceworks-style-helper',

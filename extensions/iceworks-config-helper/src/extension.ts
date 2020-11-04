@@ -23,7 +23,6 @@ function setPanelActiveContext(value) {
 
 export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
-  recorder.recordActivate();
 
   const { extensionPath, subscriptions } = context;
 
@@ -32,6 +31,7 @@ export async function activate(context: vscode.ExtensionContext) {
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeConfigWebview(jsonFileUri: vscode.Uri) {
+    recorder.recordActivate();
     if (!canEditInPanel(jsonFileUri)) {
       vscode.window.showWarningMessage(
         i18n.format('extension.iceworksConfigHelper.loadJson.cannotEditInPanel', {
