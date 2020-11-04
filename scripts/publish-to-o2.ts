@@ -3,7 +3,7 @@
  * This script is for compatible with O2 by modifying extensions at build time.
  */
 import { spawnSync } from 'child_process';
-import { readJson, writeJson, copy, readdir } from 'fs-extra';
+import { readJson, writeJson, copy, readdir, pathExists } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
@@ -104,52 +104,66 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function copyExtensionAssets2Pack() {
-    // TODO
+    const assetsFolderName = 'assets';
+    await Promise.all(extensions.map(async ({ extensionName }) => {
+      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
+      const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
+      const assetsPathIsExists = await pathExists(assetsFolderPath);
+      if (assetsPathIsExists) {
+        await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName));
+      }
+    }));
   }
   async function copyExtensionWebviewFiles2Pack() {
     // TODO
   }
+  async function getExtensionsRelatedInfo() {
+    let manifests: any = { contributes: { commands: [] }, activationEvents: [] };
+    let nlsContents = [];
+    await Promise.all(extensions.map(async ({ extensionName }) => {
+      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
 
-  let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
-  let nlsContents = [];
-  await Promise.all(extensions.map(async ({ extensionName }) => {
-    const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
-
-    // general extensionsManifest
-    const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
-    const extensionPackageJSON = await readJson(extensionPackagePath);
-    const {
-      contributes = {}, activationEvents,
-      name, version,
-    } = extensionPackageJSON;
-    const { commands = [] } = contributes;
-    extensionsManifest = merge(
-      {},
-      extensionsManifest,
-      {
-        contributes: {
-          ...merge({}, extensionsManifest.contributes, contributes),
-          commands: unionBy(extensionsManifest.contributes.commands.concat(commands), 'command'),
+      // general manifests
+      const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
+      const extensionPackageJSON = await readJson(extensionPackagePath);
+      const {
+        contributes = {}, activationEvents,
+        name, version,
+      } = extensionPackageJSON;
+      const { commands = [] } = contributes;
+      manifests = merge(
+        {},
+        manifests,
+        {
+          contributes: {
+            ...merge({}, manifests.contributes, contributes),
+            commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
+          },
+          activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
+          dependencies: { [name]: !isBeta ? version : '*' },
         },
-        activationEvents: unionBy(extensionsManifest.activationEvents.concat(activationEvents)),
-        dependencies: { [name]: !isBeta ? version : '*' },
-      },
-    );
+      );
 
-    // general package.nls.json
-    const extensionNlsFiles = (await readdir(extensionFolderPath)).filter((fileName) => {
-      return fileName.indexOf('package.nls') === 0;
-    });
-    const extensionNlsContent = await Promise.all(extensionNlsFiles.map(async (fileName) => {
-      return {
-        fileName,
-        content: await readJson(join(extensionFolderPath, fileName)),
-      };
+      // general package.nls.json
+      const extensionNlsFiles = (await readdir(extensionFolderPath)).filter((fileName) => {
+        return fileName.indexOf('package.nls') === 0;
+      });
+      const extensionNlsContent = await Promise.all(extensionNlsFiles.map(async (fileName) => {
+        return {
+          fileName,
+          content: await readJson(join(extensionFolderPath, fileName)),
+        };
+      }));
+      nlsContents = nlsContents.concat(extensionNlsContent);
     }));
-    nlsContents = nlsContents.concat(extensionNlsContent);
-  }));
+    return {
+      manifests,
+      nlsContents,
+    };
+  }
 
-  await mergeExtensionsPackageJSON2Pack(extensionsManifest);
+  const { manifests, nlsContents } = await getExtensionsRelatedInfo();
+  await mergeExtensionsPackageJSON2Pack(manifests);
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
@@ -162,7 +176,7 @@ async function customPackPackageJSON() {
   delete extensionPackageJSON.extensionPack;
   await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 
-  // copy
+  // copy tsconfig
   const tsconfigJsonName = 'tsconfig.json';
   await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(PACK_DIR, tsconfigJsonName));
 }
