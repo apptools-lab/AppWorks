@@ -4,6 +4,14 @@ const path = require('path');
 const glob = require('glob');
 const { minify } = require('terser');
 
+function unlinkSync(file) {
+  try {
+    fs.unlinkSync(file);
+  } catch (e) {
+    // ignore error
+  }
+}
+
 // ESLint has its own loader specification and cannot use webpack to build the entire package.
 // Keep the npm package in node_modules so that ESLint can find the corresponding configs and plugins.
 //
@@ -20,13 +28,13 @@ glob(`${path.join(__dirname, '../node_modules')}/**/*.+(${['js', 'ts', 'md', 'ma
 
       // Delete .md, .ts and .map file after build
       if (/\.(md|ts|map)$/.test(file)) {
-        fs.unlinkSync(file);
+        unlinkSync(file);
         continue;
       }
 
       // Delete */test/*  file after build
       if (/^(?:\/(.*))\/test(?:\/(.*))[\/#\?]?$/i.test(file)) {
-        fs.unlinkSync(file);
+        unlinkSync(file);
         continue;
       }
 
@@ -53,7 +61,7 @@ glob(`${path.join(__dirname, '../node_modules')}/**/*.+(${['js', 'ts', 'md', 'ma
 glob(`${path.join(__dirname, '../node_modules')}/**/license`, { nodir: true }, async (error, files) => {
   if (!error) {
     (files || []).forEach(file => {
-      fs.unlinkSync(file);
+      unlinkSync(file);
     });
   }
 });

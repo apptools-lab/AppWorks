@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.2
+
+- chore: internal optimization
+
 ## 0.4.1
 
 - docs: more
