@@ -134,3 +134,5 @@ export function activate(context: vscode.ExtensionContext) {
   propsAutoComplete();
   registerComponentDocSupport();
 }
+
+export function deactivate() { }

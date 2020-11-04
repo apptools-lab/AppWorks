@@ -1,14 +1,17 @@
-<% packages.forEach(function({ funcName, packageName }){-%>
-import { activate as <%=funcName%> } from '<%=packageName%> ';
+<% packages.forEach(function({ activateFunc, deactivateFunc, packageName }){-%>
+import { activate as <%=activateFunc%>, deactivate as <%=deactivateFunc%> } from '<%=packageName%>';
 <%}) -%>
 
 export default class KitNode {
   activate(context) {
-  <% packages.forEach(function({ funcName }){-%>
-    <%=funcName%>(context);
+  <% packages.forEach(function({ activateFunc }){-%>
+    <%=activateFunc%>(context);
   <%}) -%>
   }
 
   deactivate() {
+  <% packages.forEach(function({ deactivateFunc }){-%>
+    <%=deactivateFunc%>();
+  <%}) -%>
   }
 }

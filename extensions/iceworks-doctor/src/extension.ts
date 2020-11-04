@@ -13,7 +13,7 @@ import { services } from './services';
 // eslint-disable-next-line
 const { name } = require('../package.json');
 
-function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
@@ -114,4 +114,4 @@ function activate(context: vscode.ExtensionContext) {
   });
 }
 
-exports.activate = activate;
+export function deactivate() { }

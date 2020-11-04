@@ -149,6 +149,8 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
+export function deactivate() { }
+
 async function setJsonValidationUrl() {
   try {
     const projectFrameworkFragment = await getFrameWorkFragement();

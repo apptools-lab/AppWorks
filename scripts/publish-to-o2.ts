@@ -204,9 +204,11 @@ async function generalPackSource(extensions) {
   const templateNodeEntryFileName = 'index.ts.ejs';
   const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
   const packages = extensions.map(({ packageName }) => {
+    const func = camelCase(packageName);
     return {
       packageName,
-      funcName: camelCase(packageName),
+      activateFunc: `${func}Active`,
+      deactivateFunc: `${func}Deactivate`,
     };
   });
   // @ts-ignore
