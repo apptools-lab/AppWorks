@@ -107,14 +107,17 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function copyExtensionAssets2Pack() {
-    const assetsFolderName = 'assets';
-    for (let index = 0; index < extensions.length; index++) {
-      const { extensionName } = extensions[index];
-      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
-      const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
-      const assetsPathIsExists = await pathExists(assetsFolderPath);
-      if (assetsPathIsExists) {
-        await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName), { overwrite: true });
+    const folders = ['assets', 'schemas'];
+    for (let i = 0; i < folders.length; i++) {
+      const assetsFolderName = folders[i];
+      for (let index = 0; index < extensions.length; index++) {
+        const { extensionName } = extensions[index];
+        const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
+        const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
+        const assetsPathIsExists = await pathExists(assetsFolderPath);
+        if (assetsPathIsExists) {
+          await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName), { overwrite: true });
+        }
       }
     }
   }
