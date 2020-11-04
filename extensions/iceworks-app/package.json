@@ -19,7 +19,13 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "*"
+    "*",
+    "onView:nodeDependencies",
+    "onView:scripts",
+    "onView:pages",
+    "onView:components",
+    "onCommand:iceworksApp.configHelper.start",
+    "onCommand:iceworksApp.welcome.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
