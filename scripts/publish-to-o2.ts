@@ -105,14 +105,15 @@ async function mergeExtensionsToPack(extensions) {
   }
   async function copyExtensionAssets2Pack() {
     const assetsFolderName = 'assets';
-    await Promise.all(extensions.map(async ({ extensionName }) => {
+    for (let index = 0; index < extensions.length; index++) {
+      const { extensionName } = extensions[index];
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
       const assetsPathIsExists = await pathExists(assetsFolderPath);
       if (assetsPathIsExists) {
-        await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName));
+        await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName), { overwrite: true });
       }
-    }));
+    }
   }
   async function copyExtensionWebviewFiles2Pack() {
     // TODO
