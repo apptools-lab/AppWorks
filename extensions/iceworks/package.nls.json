@@ -1,5 +1,0 @@
-{
-  "iceworksUIBuilder.configuration.properties.iceworks.designComponentPath.description": "Application components directory. The default directory is `src/components`.",
-  "iceworksUIBuilder.commands.designComponent.title": "Iceworks: Design Component",
-  "iceworksProjectCreator.commands.start.title": "Iceworks: Create Application"
-}

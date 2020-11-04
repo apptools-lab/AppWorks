@@ -1,0 +1,5 @@
+# only for o2 pack
+src/
+tsconfig.json
+package.nls*
+assets/

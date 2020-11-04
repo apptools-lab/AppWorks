@@ -1,5 +1,7 @@
 import { createApp } from 'ice';
 import callService from '@/callService';
+import BasicLayout from '@/layouts/index';
+import Dashboard from './index';
 
 declare global {
   // eslint-disable-next-line
@@ -7,12 +9,6 @@ declare global {
     USE_EN: any;
   }
 }
-
-const appConfig = {
-  app: {
-    rootId: 'ice-container',
-  },
-};
 
 // Set global variable language
 async function getLanguage() {
@@ -26,5 +22,24 @@ async function getLanguage() {
 }
 
 getLanguage().then(() => {
-  createApp(appConfig);
+  createApp({
+    app: {
+      rootId: 'ice-container',
+    },
+    router: {
+      routes: [
+        {
+          path: '/',
+          component: BasicLayout,
+          children: [
+            {
+              path: '/',
+              exact: true,
+              component: Dashboard,
+            },
+          ],
+        },
+      ],
+    },
+  });
 });

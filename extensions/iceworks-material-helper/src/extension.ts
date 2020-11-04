@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableFindWidget: true,
         },
       );
-      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter', true);
+      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter');
       materialImporterWebviewPanel.onDidDispose(
         () => {
           materialImporterWebviewPanel = undefined;
@@ -81,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -100,7 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -119,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(

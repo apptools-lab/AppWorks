@@ -59,7 +59,7 @@ export async function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'jsonform');
       configWebviewPanel.onDidDispose(
         () => {
           configWebviewPanel = undefined;

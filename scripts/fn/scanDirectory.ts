@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as junk from 'junk';
-import orderBy from 'lodash.orderby';
+import * as orderBy from 'lodash.orderby';
 
 export default async (directoryPath: string): Promise<string[]> => {
   const isExist = await fse.pathExists(directoryPath);
@@ -15,7 +15,7 @@ export default async (directoryPath: string): Promise<string[]> => {
     const targetPath = path.join(directoryPath, filename);
     let stats;
     try {
-      stats = await fse.lstatAsync(targetPath);
+      stats = await fse.lstat(targetPath);
     } catch (err) {
       console.warn('lstatAsync got error:', err);
     }
@@ -26,7 +26,7 @@ export default async (directoryPath: string): Promise<string[]> => {
       filename.indexOf('.') !== 0;
     if (isDirectory) {
       try {
-        await fse.accessAsync(targetPath, fse.constants.R_OK);
+        await fse.access(targetPath, fse.constants.R_OK);
         targetFiles.push(filename);
       } catch (error) {
         console.warn('accessAsync got error:', error);
