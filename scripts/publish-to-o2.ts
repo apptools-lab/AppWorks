@@ -3,7 +3,7 @@
  * This script is for compatible with O2 by modifying extensions at build time.
  */
 import { spawnSync } from 'child_process';
-import { readJson, writeJson, copy, readdir, pathExists } from 'fs-extra';
+import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
@@ -196,9 +196,13 @@ async function customPackPackageJSON() {
 
 async function generalPackSource(extensions) {
   const sourceName = 'src';
-  await copy(join(TEMPLATE_DIR, sourceName), join(PACK_DIR, sourceName));
+  const templateSourcePath = join(TEMPLATE_DIR, sourceName);
+  const targetPath = join(PACK_DIR, sourceName);
+  await copy(templateSourcePath, targetPath);
 
-  const nodeEntryPath = join(join(TEMPLATE_DIR, 'index.ts.ejs'));
+  // general node entry
+  const templateNodeEntryFileName = 'index.ts.ejs';
+  const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
   const packages = extensions.map(({ packageName }) => {
     return {
       packageName,
@@ -206,7 +210,11 @@ async function generalPackSource(extensions) {
     };
   });
   // @ts-ignore
-  await renderFile(nodeEntryPath, { packages });
+  const nodeEntryContent = await renderFile(templateNodeEntryPath, { packages });
+  const nodeEntryFileName = templateNodeEntryFileName.replace(/\.ejs$/, '');
+  const nodeEntryDir = join(targetPath, 'node');
+  await mkdirp(nodeEntryDir);
+  await writeFile(join(nodeEntryDir, nodeEntryFileName), nodeEntryContent);
 }
 
 async function installPackDeps() {
