@@ -6,9 +6,13 @@ import { spawnSync } from 'child_process';
 import { readJson, writeJson, copy, readdir } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
+import * as camelCase from 'lodash.camelcase';
+import * as util from 'util';
 import { join } from 'path';
-// import * as ejs from 'ejs';
+import * as ejs from 'ejs';
 import scanDirectory from './fn/scanDirectory';
+
+const renderFile = util.promisify(ejs.renderFile);
 
 const isPublish2Npm = false;
 const isBeta = true;
@@ -55,13 +59,13 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
-
       if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
-        // compatible package.json
-        merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: getExtensionNpmName(extensionPackageJSON.name) });
-        await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
-
+        const newPackageName = getExtensionNpmName(extensionPackageJSON.name);
         if (isPublish2Npm) {
+          // compatible package.json
+          merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: newPackageName });
+          await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
+
           spawnSync(
             !isBeta ? 'npm' : 'tnpm',
             ['publish'],
@@ -69,14 +73,17 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
           );
         }
 
-        publishedExtensions.push(extensionName);
+        publishedExtensions.push({
+          extensionName,
+          packageName: newPackageName,
+        });
       }
     }),
   );
   return publishedExtensions;
 }
 
-async function mergeExtensionsToPack(extensions: string[]) {
+async function mergeExtensionsToPack(extensions) {
   async function mergeExtensionsPackageJSON2Pack(values) {
     const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
     merge(extensionPackageJSON, values);
@@ -105,7 +112,7 @@ async function mergeExtensionsToPack(extensions: string[]) {
 
   let extensionsManifest: any = { contributes: { commands: [] }, activationEvents: [] };
   let nlsContents = [];
-  await Promise.all(extensions.map(async (extensionName) => {
+  await Promise.all(extensions.map(async ({ extensionName }) => {
     const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
 
     // general extensionsManifest
@@ -160,11 +167,19 @@ async function customPackPackageJSON() {
   await copy(join(TEMPLATE_DIR, tsconfigJsonName), join(PACK_DIR, tsconfigJsonName));
 }
 
-async function generalPackSource() {
+async function generalPackSource(extensions) {
   const sourceName = 'src';
   await copy(join(TEMPLATE_DIR, sourceName), join(PACK_DIR, sourceName));
 
-  // TODO using .ejs template to set node/index.ts
+  const nodeEntryPath = join(join(TEMPLATE_DIR, 'index.ts.ejs'));
+  const packages = extensions.map(({ packageName }) => {
+    return {
+      packageName,
+      funcName: camelCase(packageName),
+    };
+  });
+  // @ts-ignore
+  await renderFile(nodeEntryPath, { packages });
 }
 
 async function installPackDeps() {
@@ -184,7 +199,7 @@ async function generalPack() {
   const publishedExtensions = await publishExtensionsToNpm(extensionPack);
   await mergeExtensionsToPack(publishedExtensions);
   await customPackPackageJSON();
-  await generalPackSource();
+  await generalPackSource(publishedExtensions);
 }
 
 async function buildPack() {

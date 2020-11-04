@@ -1,0 +1,14 @@
+<% packages.forEach(function({ funcName, packageName }){-%>
+import { activate as <%=funcName%> } from '<%=packageName%> ';
+<%}) -%>
+
+export default class KitNode {
+  activate(context) {
+  <% packages.forEach(function({ funcName }){-%>
+    <%=funcName%>(context);
+  <%}) -%>
+  }
+
+  deactivate() {
+  }
+}
