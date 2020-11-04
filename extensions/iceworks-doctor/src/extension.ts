@@ -91,7 +91,7 @@ function activate(context: vscode.ExtensionContext) {
       `;
     }
 
-    reportWebviewPanel.webview.html = getHtmlForWebview(extensionPath, '', false, '', extraHtml);
+    reportWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'dashboard', false, '', extraHtml);
     reportWebviewPanel.onDidDispose(
       () => {
         reportWebviewPanel = undefined;

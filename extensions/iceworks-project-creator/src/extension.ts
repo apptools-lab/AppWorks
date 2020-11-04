@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject');
       webviewPanel.onDidDispose(
         () => {
           webviewPanel = undefined;

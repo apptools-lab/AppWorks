@@ -22,10 +22,13 @@ const PACKAGE_JSON_NAME = 'package.json';
 const PACK_DIR = join(EXTENSIONS_DIRECTORY, PACK_NAME);
 const PACK_PACKAGE_JSON_PATH = join(PACK_DIR, PACKAGE_JSON_NAME);
 const PACK_EXTENSIONS = [
-  'iceworks-team.iceworks-ui-builder',
-  'iceworks-team.iceworks-project-creator',
   'iceworks-team.iceworks-app',
   'iceworks-team.iceworks-config-helper',
+  // 'iceworks-team.iceworks-doctor',
+  'iceworks-team.iceworks-material-helper',
+  'iceworks-team.iceworks-project-creator',
+  'iceworks-team.iceworks-style-helper',
+  'iceworks-team.iceworks-ui-builder',
 ];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'o2-template');
@@ -116,7 +119,16 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function copyExtensionWebviewFiles2Pack() {
-    // TODO
+    const buildFolderName = 'build';
+    for (let index = 0; index < extensions.length; index++) {
+      const { extensionName } = extensions[index];
+      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
+      const assetsFolderPath = join(extensionFolderPath, buildFolderName);
+      const assetsPathIsExists = await pathExists(assetsFolderPath);
+      if (assetsPathIsExists) {
+        await copy(assetsFolderPath, join(PACK_DIR, buildFolderName), { overwrite: true });
+      }
+    }
   }
   async function getExtensionsRelatedInfo() {
     let manifests: any = { contributes: { commands: [] }, activationEvents: [] };
@@ -141,7 +153,7 @@ async function mergeExtensionsToPack(extensions) {
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
-          dependencies: { [name]: !isBeta ? version : '*' },
+          dependencies: { [getExtensionNpmName(name)]: !isBeta ? version : '*' },
         },
       );
 
