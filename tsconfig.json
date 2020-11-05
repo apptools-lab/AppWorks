@@ -12,7 +12,6 @@
     { "path": "packages/vscode-webview" },
     { "path": "packages/material-utils" },
     { "path": "packages/project-utils" },
-    { "path": "packages/transform-ts-to-js" },
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
     { "path": "packages/material-engine" }
