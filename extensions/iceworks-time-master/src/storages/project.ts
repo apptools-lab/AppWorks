@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
-import { getAppDataDir } from '../utils/common';
+import { getAppDataDir, getAppDataDayDir } from '../utils/common';
 import { getResource } from '../utils/git';
 
 export interface ProjectResource {
@@ -38,8 +38,10 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
 
 export class Project {
   // public id: string = '';
-  public name: string = '';
-  public directory: string = '';
+  public name = '';
+
+  public directory = '';
+
   public resource: ProjectResource = { repository: '', branch: '' };
 
   constructor(values?: any) {
@@ -74,7 +76,7 @@ export interface ProjectsSummary {
 }
 
 export function getProjectsFile() {
-  return path.join(getAppDataDir(), 'projects.json');
+  return path.join(getAppDataDayDir(), 'projects.json');
 }
 
 export function getProjectsSummary(): ProjectsSummary {

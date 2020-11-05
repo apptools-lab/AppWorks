@@ -4,6 +4,7 @@ type OriginProgress = VSCodeProgress<{ message?: string; increment?: number }>;
 
 export class Progress {
   public doneWriting: boolean;
+
   private progress: OriginProgress;
 
   constructor(progress: OriginProgress) {

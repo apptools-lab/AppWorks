@@ -105,8 +105,9 @@ export async function recordEditorTime() {
 }
 
 export async function sendRecords() {
-  sendRecordsData(SESSION_TIME_RECORD);
-  sendRecordsData(EDITOR_TIME_RECORD);
+  await Promise.all([SESSION_TIME_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+    await sendRecordsData(TYPE);
+  }));
 }
 
 async function send(api: string, originParam: any) {

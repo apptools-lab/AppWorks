@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDir, getNowTimes } from '../utils/common';
+import { getAppDataDayDir, getNowTimes } from '../utils/common';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import forIn = require('lodash.forin');
@@ -141,31 +141,51 @@ export interface FileChangeSummary {
 
 export class FileChange {
   public name: string;
+
   public fsPath: string;
+
   public projectDir: string;
+
   public length: number;
+
   public lineCount: number;
+
   public syntax: string;
-  public kpm: number = 0;
-  public keystrokes: number = 0;
-  public charsAdded: number = 0;
-  public charsDeleted: number = 0;
-  public charsPasted: number = 0;
-  public open: number = 0;
-  public close: number = 0;
-  public paste: number = 0;
-  public add: number = 0;
-  public delete: number = 0;
-  public update: number = 0;
-  public linesAdded: number = 0;
-  public linesRemoved: number = 0;
-  public start: number = 0;
-  public end: number = 0;
+
+  public kpm = 0;
+
+  public keystrokes = 0;
+
+  public charsAdded = 0;
+
+  public charsDeleted = 0;
+
+  public charsPasted = 0;
+
+  public open = 0;
+
+  public close = 0;
+
+  public paste = 0;
+
+  public add = 0;
+
+  public delete = 0;
+
+  public update = 0;
+
+  public linesAdded = 0;
+
+  public linesRemoved = 0;
+
+  public start = 0;
+
+  public end = 0;
 
   /**
    * 更新结束距离更新开始的时间间隔
    */
-  public durationSeconds: number = 0;
+  public durationSeconds = 0;
 
   constructor(values?: any) {
     if (values) {
@@ -212,7 +232,7 @@ export interface FilesChangeSummary {
 }
 
 export function getFilesChangeFile() {
-  return path.join(getAppDataDir(), 'filesChange.json');
+  return path.join(getAppDataDayDir(), 'filesChange.json');
 }
 
 export function getFilesChangeSummary(): FilesChangeSummary {

@@ -1,37 +1,46 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as moment from 'moment';
-import { getAppDataDir } from '../utils/common';
+import { getAppDataDir, getAppDataDayDir } from '../utils/common';
 
 export class UserSummary {
   /**
    * 编程时间
    */
-  sessionSeconds: number = 0;
+  sessionSeconds = 0;
+
   /**
    * 编辑器使用时间
    */
   editorSeconds?: number = 0;
 
-  keystrokes: number = 0;
-  linesAdded: number = 0;
-  linesRemoved: number = 0;
+  keystrokes = 0;
+
+  linesAdded = 0;
+
+  linesRemoved = 0;
 
   // 个人平均数据
   averageDailySessionSeconds?: number = 0;
+
   averageDailyKeystrokes?: number = 0;
+
   averageDailyLinesAdded?: number = 0;
+
   averageDailyLinesRemoved?: number = 0;
 
   // 全局数据
   globalAverageDailySessionSeconds?: number = 0;
+
   globalAverageDailyKeystrokes?: number = 0;
+
   globalAverageDailyLinesAdded?: number = 0;
+
   globalAverageDailyLinesRemoved?: number = 0;
 }
 
 export function getUserFile() {
-  return path.join(getAppDataDir(), 'user.json');
+  return path.join(getAppDataDayDir(), 'user.json');
 }
 
 export function getUserSummary(): UserSummary {

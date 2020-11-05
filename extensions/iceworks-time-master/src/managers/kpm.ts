@@ -18,7 +18,7 @@ export class KpmManager {
       return false;
     }
 
-    const scheme = textDocument.uri.scheme;
+    const { scheme } = textDocument.uri;
 
     // we'll get 'git' as a scheme, but these are the schemes that match to open files in the editor
     const isDocEventScheme = scheme === 'file' || scheme === 'untitled' || scheme === 'vscode-remote';

@@ -5,9 +5,27 @@ import * as fse from 'fs-extra';
 import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
 import * as moment from 'moment';
+import storage from '@iceworks/storage';
 
 // eslint-disable-next-line
 const { name, version } = require('../../package.json');
+
+const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
+export function getNowDay() {
+  const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  return currentDay;
+}
+
+export function setNowDay() {
+  const { day } = getNowTimes();
+  storage.set(CURRENT_DAY_STORAGE_KEY, day);
+}
+
+export function isNewDay() {
+  const { day } = getNowTimes();
+  const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  return currentDay !== day;
+}
 
 export function getEditorInfo() {
   return {
@@ -35,13 +53,22 @@ export function isMac() {
   return process.platform.indexOf('darwin') !== -1;
 }
 
-export function getAppDataDir(autoCreate = true) {
+export function getAppDataDir() {
   const homedir = os.homedir();
   const appDataDir = path.join(homedir, '.iceworks', 'TimeMaster');
-  if (autoCreate && !fse.existsSync(appDataDir)) {
+  if (!fse.existsSync(appDataDir)) {
     fse.mkdirSync(appDataDir);
   }
   return appDataDir;
+}
+
+export function getAppDataDayDir() {
+  const appDataDir = getAppDataDir();
+  const appDataDayDir = path.join(appDataDir, getNowDay());
+  if (!fse.existsSync(appDataDayDir)) {
+    fse.mkdirSync(appDataDayDir);
+  }
+  return appDataDayDir;
 }
 
 /**
@@ -184,7 +211,7 @@ function execPromise(command: string, opts: any): Promise<string> {
  * TODO Replace with community pack
  */
 export function logIt(...args: any) {
-  args[0] = 'TimeMaster: ' + args[0];
+  args[0] = `TimeMaster: ${ args[0]}`;
   console.log.apply(null, args);
 }
 
@@ -221,7 +248,7 @@ export async function getSystemInfo() {
   return { os: osStr, hostname, timezone };
 }
 
-export async function getCommandResultLine(cmd: string, projectDir: string = '') {
+export async function getCommandResultLine(cmd: string, projectDir = '') {
   const resultList = await getCommandResultList(cmd, projectDir);
   let resultLine = '';
   if (resultList && resultList.length) {
@@ -236,7 +263,7 @@ export async function getCommandResultLine(cmd: string, projectDir: string = '')
   return resultLine;
 }
 
-export async function getCommandResultList(cmd: string, projectDir: string = '') {
+export async function getCommandResultList(cmd: string, projectDir = '') {
   const result = await wrapExecPromise(`${cmd}`, projectDir);
   if (!result) {
     return [];

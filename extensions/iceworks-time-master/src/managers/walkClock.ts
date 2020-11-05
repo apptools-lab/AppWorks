@@ -1,27 +1,11 @@
-import storage from '@iceworks/storage';
-import { cleanFilesChangeSummary } from '../storages/filesChange';
-import { clearProjectsSummary } from '../storages/project';
-import { clearUserSummary } from '../storages/user';
-import { getNowTimes } from '../utils/common';
+import { setNowDay, isNewDay } from '../utils/common';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendRecords } from '../utils/recorder';
-
-const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
-
-export function isNewDay(): boolean {
-  const { day } = getNowTimes();
-  const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
-  return currentDay !== day;
-}
 
 export async function checkMidnight() {
   if (isNewDay()) {
     await sendRecords();
-    clearUserSummary();
-    clearProjectsSummary();
-    cleanFilesChangeSummary();
-    const { day } = getNowTimes();
-    storage.set(CURRENT_DAY_STORAGE_KEY, day);
+    setNowDay();
   }
 }
 

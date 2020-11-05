@@ -455,10 +455,10 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     label: string,
     tooltip: string,
     command: string,
-    icon: string = '',
-    eventDescription: string = '',
-    color: string = '',
-    location: string = 'ct_metrics_tree',
+    icon = '',
+    eventDescription = '',
+    color = '',
+    location = 'ct_metrics_tree',
   ): TimerItem {
     const item = new TimerItem();
     item.tooltip = tooltip;

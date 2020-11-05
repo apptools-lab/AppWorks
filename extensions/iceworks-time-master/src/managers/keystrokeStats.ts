@@ -18,10 +18,14 @@ export interface User {
 }
 
 export class KeystrokeStats {
-  public keystrokes: number = 0;
+  public keystrokes = 0;
+
   public start: number;
+
   public end: number;
+
   public files: {[name: string]: FileChange} = {};
+
   public project: Project;
 
   constructor(project: Project) {
