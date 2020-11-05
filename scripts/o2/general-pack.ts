@@ -9,12 +9,11 @@ import { join } from 'path';
 import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
-import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH } from './constant';
+import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
+import { isBeta, isPublish2Npm } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
 
-const isPublish2Npm = true;
-const isBeta = true;
 
 const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-app',
@@ -77,7 +76,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
           spawnSync(
-            !isBeta ? 'npm' : 'tnpm',
+            PACKAGE_MANAGER,
             ['publish'],
             { stdio: 'inherit', cwd: extensionFolderPath },
           );

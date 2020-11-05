@@ -1,5 +1,8 @@
+/**
+ * TODO upload O2 pack to OSS
+ */
 async function uploadPack() {
-  // TODO
+  console.log('TODO...');
 }
 
 uploadPack().catch((e) => {
