@@ -24,8 +24,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "compile": "kit-builder compile",
-    "package": "kaitian package --yarn"
+    "compile": "kit-builder compile"
   },
   "kaitianContributes": {
     "nodeMain": "./out/node/index.js"

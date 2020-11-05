@@ -9,16 +9,13 @@ import { join } from 'path';
 import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
+import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH } from './constant';
 
 const renderFile = util.promisify(ejs.renderFile);
 
 const isPublish2Npm = true;
 const isBeta = true;
-const EXTENSIONS_DIRECTORY = join(__dirname, '..', '..', 'extensions');
-const PACK_NAME = 'iceworks';
-const PACKAGE_JSON_NAME = 'package.json';
-const PACK_DIR = join(EXTENSIONS_DIRECTORY, PACK_NAME);
-const PACK_PACKAGE_JSON_PATH = join(PACK_DIR, PACKAGE_JSON_NAME);
+
 const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-app',
   'iceworks-team.iceworks-config-helper',
