@@ -40,7 +40,7 @@ export async function checkIsNotTarget() {
     isNotTarget = true;
   } else {
     try {
-      isNotTarget = !await checkIsTargetProject();
+      isNotTarget = !await checkIsTargetProject(projectPath);
     } catch (e) {
       isNotTarget = true;
     }
