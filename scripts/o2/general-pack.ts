@@ -1,8 +1,9 @@
 import { spawnSync } from 'child_process';
-import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp } from 'fs-extra';
+import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp, remove } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
+import * as padStart from 'lodash.padstart';
 import * as util from 'util';
 import { join } from 'path';
 import { getLatestVersion } from 'ice-npm-utils';
@@ -11,7 +12,7 @@ import scanDirectory from '../fn/scanDirectory';
 
 const renderFile = util.promisify(ejs.renderFile);
 
-const isPublish2Npm = false;
+const isPublish2Npm = true;
 const isBeta = true;
 const EXTENSIONS_DIRECTORY = join(__dirname, '..', '..', 'extensions');
 const PACK_NAME = 'iceworks';
@@ -30,13 +31,15 @@ const PACK_EXTENSIONS = [
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
 
+const aliRegistry = 'https://registry.npm.alibaba-inc.com';
+
 const valuesAppendToExtensionPackageJSON = {
   publishConfig: !isBeta ?
     {
       access: 'public',
     } :
     {
-      registry: 'https://registry.npm.alibaba-inc.com',
+      registry: aliRegistry,
     },
   files: [
     'build',
@@ -64,11 +67,12 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
         const newPackageName = getExtensionNpmName(name);
         if (isPublish2Npm) {
           // compatible package.json
-          const latestVersion = await getLatestVersion(newPackageName);
+          const latestVersion = await getLatestVersion(newPackageName, aliRegistry);
+          const nextVersion = padStart(String(parseInt(latestVersion.split('.').join('')) + 1), 3, '0').split('').join('.');
           merge(
             extensionPackageJSON,
             valuesAppendToExtensionPackageJSON,
-            { name: newPackageName, version: parseInt(latestVersion.split('.').join('')) + 1 },
+            { name: newPackageName, version: nextVersion },
           );
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
@@ -113,26 +117,35 @@ async function mergeExtensionsToPack(extensions) {
     const folders = ['assets', 'schemas'];
     for (let i = 0; i < folders.length; i++) {
       const assetsFolderName = folders[i];
+      const packAssetsFolderPath = join(PACK_DIR, assetsFolderName);
+      try {
+        await remove(packAssetsFolderPath);
+      } catch (e) {
+        // ignore error
+      }
+
       for (let index = 0; index < extensions.length; index++) {
         const { extensionName } = extensions[index];
         const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
         const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
         const assetsPathIsExists = await pathExists(assetsFolderPath);
         if (assetsPathIsExists) {
-          await copy(assetsFolderPath, join(PACK_DIR, assetsFolderName), { overwrite: true });
+          await copy(assetsFolderPath, packAssetsFolderPath, { overwrite: true });
         }
       }
     }
   }
   async function copyExtensionWebviewFiles2Pack() {
     const buildFolderName = 'build';
+    const packBuildFolderPath = join(PACK_DIR, buildFolderName);
+    await remove(packBuildFolderPath);
     for (let index = 0; index < extensions.length; index++) {
       const { extensionName } = extensions[index];
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const assetsFolderPath = join(extensionFolderPath, buildFolderName);
       const assetsPathIsExists = await pathExists(assetsFolderPath);
       if (assetsPathIsExists) {
-        await copy(assetsFolderPath, join(PACK_DIR, buildFolderName), { overwrite: true });
+        await copy(assetsFolderPath, packBuildFolderPath, { overwrite: true });
       }
     }
   }
@@ -203,8 +216,9 @@ async function customPackPackageJSON() {
 async function generalPackSource(extensions) {
   const sourceName = 'src';
   const templateSourcePath = join(TEMPLATE_DIR, sourceName);
-  const targetPath = join(PACK_DIR, sourceName);
-  await copy(templateSourcePath, targetPath);
+  const packSourcePath = join(PACK_DIR, sourceName);
+  await remove(packSourcePath);
+  await copy(templateSourcePath, packSourcePath);
 
   // general node entry
   const templateNodeEntryFileName = 'index.ts.ejs';
@@ -220,7 +234,7 @@ async function generalPackSource(extensions) {
   // @ts-ignore
   const nodeEntryContent = await renderFile(templateNodeEntryPath, { packages });
   const nodeEntryFileName = templateNodeEntryFileName.replace(/\.ejs$/, '');
-  const nodeEntryDir = join(targetPath, 'node');
+  const nodeEntryDir = join(packSourcePath, 'node');
   await mkdirp(nodeEntryDir);
   await writeFile(join(nodeEntryDir, nodeEntryFileName), nodeEntryContent);
 }
