@@ -58,11 +58,16 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
-      if (extensionPack.includes(`${extensionPackageJSON.publisher}.${extensionPackageJSON.name}`)) {
-        const newPackageName = getExtensionNpmName(extensionPackageJSON.name);
+      const { name, publisher, version } = extensionPackageJSON;
+      if (extensionPack.includes(`${publisher}.${name}`)) {
+        const newPackageName = getExtensionNpmName(name);
         if (isPublish2Npm) {
           // compatible package.json
-          merge(extensionPackageJSON, valuesAppendToExtensionPackageJSON, { name: newPackageName });
+          merge(
+            extensionPackageJSON,
+            valuesAppendToExtensionPackageJSON,
+            { name: newPackageName, version: parseInt(version.split('.').join('')) + 1 },
+          );
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
           spawnSync(
