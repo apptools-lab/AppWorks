@@ -175,7 +175,7 @@ async function mergeExtensionsToPack(extensions) {
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
-          dependencies: { [getExtensionNpmName(name)]: !isBeta ? version : '*' },
+          dependencies: { [ isPublish2Npm ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
         },
       );
 
