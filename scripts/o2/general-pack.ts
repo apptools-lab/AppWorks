@@ -5,6 +5,7 @@ import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
 import * as util from 'util';
 import { join } from 'path';
+import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
 
@@ -58,15 +59,16 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
-      const { name, publisher, version } = extensionPackageJSON;
+      const { name, publisher } = extensionPackageJSON;
       if (extensionPack.includes(`${publisher}.${name}`)) {
         const newPackageName = getExtensionNpmName(name);
         if (isPublish2Npm) {
           // compatible package.json
+          const latestVersion = await getLatestVersion(newPackageName);
           merge(
             extensionPackageJSON,
             valuesAppendToExtensionPackageJSON,
-            { name: newPackageName, version: parseInt(version.split('.').join('')) + 1 },
+            { name: newPackageName, version: parseInt(latestVersion.split('.').join('')) + 1 },
           );
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
