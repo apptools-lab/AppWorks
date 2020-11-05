@@ -34,6 +34,9 @@ const TEMPLATE_DIR = join(__dirname, 'template');
 const aliRegistry = 'https://registry.npm.alibaba-inc.com';
 
 const valuesAppendToExtensionPackageJSON = {
+  scripts: {
+    prepublishOnly: 'npm run vscode:prepublish',
+  },
   publishConfig: !isBeta ?
     {
       access: 'public',
