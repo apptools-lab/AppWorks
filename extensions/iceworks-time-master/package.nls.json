@@ -1,4 +1,5 @@
 {
   "timeMaster.views.iceworksApp.timeMaster.name": "Time Master",
-  "timeMaster.commands.refresh.title": "Refresh"
+  "timeMaster.configuration.properties.iceworks.timeLimit.title": "Days limit for statistical time",
+  "timeMaster.configuration.properties.iceworks.timeLimit.description": "The longer the time, the more local disk capacity"
 }

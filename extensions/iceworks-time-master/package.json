@@ -41,6 +41,17 @@
           "name": "%timeMaster.views.iceworksApp.timeMaster.name%"
         }
       ]
+    },
+    "configuration": {
+      "title": "Iceworks Time Master",
+      "properties": {
+        "iceworks.timeLimit": {
+          "type": "number",
+          "default": 7,
+          "title": "timeMaster.configuration.properties.iceworks.timeLimit.title",
+          "description": "%timeMaster.configuration.properties.iceworks.timeLimit.description%"
+        }
+      }
     }
   },
   "repository": {
@@ -56,6 +67,7 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",
     "@types/lodash.forin": "^4.4.6",
+    "@types/lodash.orderby": "^4.6.6",
     "@types/node": "^12.11.7",
     "@types/numeral": "0.0.28",
     "@types/vscode": "^1.41.0",
@@ -70,6 +82,7 @@
     "axios": "^0.21.0",
     "fs-extra": "^9.0.1",
     "lodash.forin": "^4.4.0",
+    "lodash.orderby": "^4.6.0",
     "moment": "^2.29.1",
     "node-cache": "^5.1.2",
     "numeral": "^2.0.6"

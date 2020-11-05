@@ -19,24 +19,6 @@ export class UserSummary {
   linesAdded = 0;
 
   linesRemoved = 0;
-
-  // 个人平均数据
-  averageDailySessionSeconds?: number = 0;
-
-  averageDailyKeystrokes?: number = 0;
-
-  averageDailyLinesAdded?: number = 0;
-
-  averageDailyLinesRemoved?: number = 0;
-
-  // 全局数据
-  globalAverageDailySessionSeconds?: number = 0;
-
-  globalAverageDailyKeystrokes?: number = 0;
-
-  globalAverageDailyLinesAdded?: number = 0;
-
-  globalAverageDailyLinesRemoved?: number = 0;
 }
 
 export function getUserFile() {

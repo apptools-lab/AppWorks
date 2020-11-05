@@ -1,4 +1,5 @@
 {
   "timeMaster.views.iceworksApp.timeMaster.name": "时间管理",
-  "timeMaster.commands.refresh.title": "刷新"
+  "timeMaster.configuration.properties.iceworks.timeLimit.title": "统计时间的天数限制",
+  "timeMaster.configuration.properties.iceworks.timeLimit.description": "时间越长，占用本地磁盘容量越多"
 }

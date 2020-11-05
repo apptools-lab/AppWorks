@@ -17,6 +17,8 @@ import { getFilesChangeSummary, FileChangeSummary } from '../storages/filesChang
 import { humanizeMinutes } from '../utils/common';
 import i18n from '../i18n';
 import { ONE_MIN_SECONDS } from '../constants';
+import { getGlobalSummary, GlobalSummary } from '../storages/global';
+import { AverageSummary, getAverageSummary } from '../storages/average';
 
 const NUMBER_FORMAT = '0 a';
 const resourcePath: string = path.join(__dirname, '..', 'assets');
@@ -302,22 +304,26 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return parent;
   }
 
-  private getUserSummaryItems(userSummary: UserSummary): TimerItem[] {
+  private getUserSummaryItems(userSummary: UserSummary, globalSummary: GlobalSummary, averageSummary: AverageSummary): TimerItem[] {
     const {
       // editorSeconds,
       sessionSeconds,
-      averageDailySessionSeconds,
-      globalAverageDailySessionSeconds,
       linesAdded,
-      averageDailyLinesAdded,
-      globalAverageDailyLinesAdded,
       linesRemoved,
-      averageDailyLinesRemoved,
-      globalAverageDailyLinesRemoved,
       keystrokes,
-      averageDailyKeystrokes,
-      globalAverageDailyKeystrokes,
     } = userSummary;
+    const {
+      dailySessionSeconds: globalDailySessionSeconds,
+      dailyKeystrokes: globalDailyLinesAdded,
+      dailyLinesAdded: globalDailyLinesRemoved,
+      dailyLinesRemoved: globalDailyKeystrokes,
+    } = globalSummary;
+    const {
+      dailySessionSeconds: averageDailySessionSeconds,
+      dailyKeystrokes: averageDailyLinesAdded,
+      dailyLinesAdded: averageDailyLinesRemoved,
+      dailyLinesRemoved: averageDailyKeystrokes,
+    } = averageSummary;
     const items: TimerItem[] = [];
 
     // Code Time
@@ -350,8 +356,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         icon: activityLightningBolt,
       });
     }
-    if (globalAverageDailySessionSeconds) {
-      const globalMinutesStr = humanizeMinutes(globalAverageDailySessionSeconds / ONE_MIN_SECONDS);
+    if (globalDailySessionSeconds) {
+      const globalMinutesStr = humanizeMinutes(globalDailySessionSeconds / ONE_MIN_SECONDS);
       actValues.push({
         label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalMinutesStr }),
         icon: 'global-grey.svg',
@@ -379,8 +385,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         icon: linesAddedLightningBolt,
       });
     }
-    if (globalAverageDailyLinesAdded) {
-      const globalLinesAdded = numeral(globalAverageDailyLinesAdded).format(NUMBER_FORMAT);
+    if (globalDailyLinesAdded) {
+      const globalLinesAdded = numeral(globalDailyLinesAdded).format(NUMBER_FORMAT);
       laValues.push({
         label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalLinesAdded }),
         icon: 'global-grey.svg',
@@ -406,8 +412,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         icon: linesRemovedLightningBolt,
       });
     }
-    if (globalAverageDailyLinesRemoved) {
-      const globalLinesRemoved = numeral(globalAverageDailyLinesRemoved).format(NUMBER_FORMAT);
+    if (globalDailyLinesRemoved) {
+      const globalLinesRemoved = numeral(globalDailyLinesRemoved).format(NUMBER_FORMAT);
       lrValues.push({
         label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalLinesRemoved }),
         icon: 'global-grey.svg',
@@ -433,8 +439,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         icon: keystrokesLightningBolt,
       });
     }
-    if (globalAverageDailyKeystrokes) {
-      const globalKeystrokes = numeral(globalAverageDailyKeystrokes).format(NUMBER_FORMAT);
+    if (globalDailyKeystrokes) {
+      const globalKeystrokes = numeral(globalDailyKeystrokes).format(NUMBER_FORMAT);
       kValues.push({
         label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalKeystrokes }),
         icon: 'global-grey.svg',
@@ -507,8 +513,10 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   private async getTreeParents(): Promise<TimerItem[]> {
     const treeItems: TimerItem[] = [];
     const userSummary: UserSummary = getUserSummary();
+    const globalSummary: GlobalSummary = getGlobalSummary();
+    const averageSummary: AverageSummary = getAverageSummary();
 
-    const userSummaryItems: TimerItem[] = this.getUserSummaryItems(userSummary);
+    const userSummaryItems: TimerItem[] = this.getUserSummaryItems(userSummary, globalSummary, averageSummary);
 
     // show the metrics per line
     treeItems.push(...userSummaryItems);
