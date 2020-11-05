@@ -148,10 +148,10 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "compile:extension": "webpack --mode development",
+    "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
     "compile": "tsc -p ./tsconfig.json"
   },
