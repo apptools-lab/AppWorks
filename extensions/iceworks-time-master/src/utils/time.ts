@@ -1,5 +1,6 @@
 import storage from '@iceworks/storage';
 import * as moment from 'moment';
+import { ONE_MIN_SECONDS } from '../constants';
 import { roundUp } from './common';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
@@ -90,4 +91,8 @@ export function humanizeMinutes(min: number) {
     str = `${min.toFixed(0) } min`;
   }
   return str;
+}
+
+export function seconds2minutes(value: number) {
+  return value / ONE_MIN_SECONDS;
 }

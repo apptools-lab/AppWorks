@@ -14,9 +14,8 @@ import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from '../storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from '../storages/filesChange';
-import { humanizeMinutes } from '../utils/time';
+import { humanizeMinutes, seconds2minutes } from '../utils/time';
 import i18n from '../i18n';
-import { ONE_MIN_SECONDS } from '../constants';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 
@@ -268,7 +267,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
       const fileName = sortedArray[i].name;
-      const durationMinutes = sortedArray[i].sessionSeconds / ONE_MIN_SECONDS;
+      const durationMinutes = seconds2minutes(sortedArray[i].sessionSeconds);
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;
       const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
@@ -325,30 +324,15 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       dailyLinesRemoved: averageDailyKeystrokes,
     } = averageSummary;
     const items: TimerItem[] = [];
-
-    // Code Time
-    // const ctValues = [];
-    // const editorMinutesStr = humanizeMinutes(editorSeconds / ONE_MIN_SECONDS);
-    // ctValues.push({ label: `Today: ${editorMinutesStr}`, icon: 'rocket.svg' });
-    // items.push(
-    //   this.buildUserSummaryItem(
-    //     'Code time',
-    //     'Code time: total time you have spent in your editor today.',
-    //     ctValues,
-    //     TreeItemCollapsibleState.Expanded,
-    //     'ct_codetime_toggle_node',
-    //   ),
-    // );
-
     const dayStr = moment().format('ddd');
 
     // Active code time
     const actValues = [];
-    const sessionMinutes = sessionSeconds / ONE_MIN_SECONDS;
+    const sessionMinutes = seconds2minutes(sessionSeconds);
     const sessionMinutesStr = humanizeMinutes(sessionMinutes);
     actValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: sessionMinutesStr }), icon: 'rocket.svg' });
     if (averageDailySessionSeconds) {
-      const averageDailySessionMinutes = averageDailySessionSeconds / ONE_MIN_SECONDS;
+      const averageDailySessionMinutes = seconds2minutes(averageDailySessionSeconds);
       const avgMinStr = humanizeMinutes(averageDailySessionMinutes);
       const activityLightningBolt = sessionMinutes > averageDailySessionMinutes ? 'bolt.svg' : 'bolt-grey.svg';
       actValues.push({
@@ -357,7 +341,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       });
     }
     if (globalDailySessionSeconds) {
-      const globalMinutesStr = humanizeMinutes(globalDailySessionSeconds / ONE_MIN_SECONDS);
+      const globalDailySessionMinutes = seconds2minutes(globalDailySessionSeconds);
+      const globalMinutesStr = humanizeMinutes(globalDailySessionMinutes);
       actValues.push({
         label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalMinutesStr }),
         icon: 'global-grey.svg',

@@ -3,6 +3,7 @@ import * as fse from 'fs-extra';
 import * as moment from 'moment';
 import { getAppDataDir, getAppDataDayDir } from '../utils/common';
 import { getDashboardRow, getRangeDashboard, getDashboardHr } from '../utils/dashboard';
+import { humanizeMinutes, seconds2minutes } from '../utils/time';
 
 export class UserSummary {
   /**
@@ -73,15 +74,18 @@ export async function generateUserDashboard() {
   let dashboardContent = `User Summary (Last updated on ${formattedDate})\n`;
   dashboardContent += lineBreakStr;
 
+  const { sessionSeconds } = getUserSummary();
+  const todySessionStr = humanizeMinutes(seconds2minutes(sessionSeconds));
+
   const formattedToday = moment().format('ddd, MMM Do');
   let todyStr = `🐻 Today (${formattedToday})\n`;
   todyStr += hrStr;
   todyStr += getDashboardRow(
     'Active code time',
-    '1 min',
+    todySessionStr,
   );
   todyStr += getDashboardRow(
-    '90-day avg',
+    'Average',
     '5.2 hrs',
   );
   dashboardContent += todyStr;
