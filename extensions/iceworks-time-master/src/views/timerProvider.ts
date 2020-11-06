@@ -497,9 +497,10 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private async getTreeParents(): Promise<TimerItem[]> {
     const treeItems: TimerItem[] = [];
-    const userSummary: UserSummary = getUserSummary();
-    const globalSummary: GlobalSummary = getGlobalSummary();
-    const averageSummary: AverageSummary = getAverageSummary();
+    const userSummary: UserSummary = await getUserSummary();
+    const globalSummary: GlobalSummary = await getGlobalSummary();
+    const averageSummary: AverageSummary = await getAverageSummary();
+    const originFilesChangeSummary = await getFilesChangeSummary();
 
     const userSummaryItems: TimerItem[] = this.getUserSummaryItems(userSummary, globalSummary, averageSummary);
 
@@ -507,7 +508,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     treeItems.push(...userSummaryItems);
 
     // show the files changed metric
-    const originFilesChangeSummary = getFilesChangeSummary();
     const filesChanged = originFilesChangeSummary ? Object.keys(originFilesChangeSummary).length : 0;
     if (filesChanged > 0) {
       const filesChangeSummary = Object.keys(originFilesChangeSummary).map((key) => originFilesChangeSummary[key]);

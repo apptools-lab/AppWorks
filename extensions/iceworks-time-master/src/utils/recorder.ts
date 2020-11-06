@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
-import { getAppDataDir } from '../utils/common';
+import { getAppDataDir } from '../utils/storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo } from '../utils/env';
 import forIn = require('lodash.forin');
 

@@ -1,27 +1,5 @@
-import * as os from 'os';
-import * as path from 'path';
-import * as fse from 'fs-extra';
 import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
-import { getNowDay } from './time';
-
-export function getAppDataDir() {
-  const homedir = os.homedir();
-  const appDataDir = path.join(homedir, '.iceworks', 'TimeMaster');
-  if (!fse.existsSync(appDataDir)) {
-    fse.mkdirSync(appDataDir);
-  }
-  return appDataDir;
-}
-
-export function getAppDataDayDir() {
-  const appDataDir = getAppDataDir();
-  const appDataDayDir = path.join(appDataDir, getNowDay());
-  if (!fse.existsSync(appDataDayDir)) {
-    fse.mkdirSync(appDataDayDir);
-  }
-  return appDataDayDir;
-}
 
 /**
  * @param num {number} The number to round

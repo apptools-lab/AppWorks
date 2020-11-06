@@ -1,31 +1,31 @@
 import { window, StatusBarAlignment, StatusBarItem } from 'vscode';
 import { getUserSummary } from '../storages/user';
-import { seconds2minutes } from '../utils/time';
+import { humanizeMinutes, seconds2minutes } from '../utils/time';
 import { getAverageSummary } from '../storages/average';
 
 interface TimerStatusBar extends StatusBarItem {
-  refresh(): void;
+  refresh(): Promise<void>;
 }
 
-export function createTimerStatusBar() {
+export async function createTimerStatusBar() {
   const statusBar = window.createStatusBarItem(
     StatusBarAlignment.Right,
     10,
   ) as TimerStatusBar;
   statusBar.tooltip = 'Active code time today. Click to see more from Iceworks';
-  statusBar.text = getStatusBarText();
+  statusBar.text = await getStatusBarText();
   statusBar.command = 'iceworks-time-master.displayTimerTree';
-  statusBar.refresh = function () {
-    this.text = getStatusBarText();
+  statusBar.refresh = async function () {
+    this.text = await getStatusBarText();
   };
   return statusBar;
 }
 
-function getStatusBarText() {
-  const { sessionSeconds } = getUserSummary();
-  const { dailySessionSeconds } = getAverageSummary();
+async function getStatusBarText() {
+  const { sessionSeconds } = await getUserSummary();
+  const { dailySessionSeconds } = await getAverageSummary();
   const inFlowIcon = dailySessionSeconds && sessionSeconds > dailySessionSeconds ? '$(rocket)' : '$(clock)';
-  const minutesStr = seconds2minutes(sessionSeconds);
-  const text = `${inFlowIcon} ${minutesStr}`;
+  const sessionMinutes = seconds2minutes(sessionSeconds);
+  const text = `${inFlowIcon} ${humanizeMinutes(sessionMinutes)}`;
   return text;
 }

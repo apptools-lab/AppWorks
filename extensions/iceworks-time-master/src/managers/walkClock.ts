@@ -1,40 +1,8 @@
-import * as fse from 'fs-extra';
-import * as path from 'path';
-import { getDataFromSettingJson } from '@iceworks/common-service';
-import { getAppDataDir, logIt } from '../utils/common';
+import { logIt } from '../utils/common';
 import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendRecords } from '../utils/recorder';
-import orderBy = require('lodash.orderby');
-
-const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
-const DEFAULT_TIME_STORAGE_LIMIT = 7;
-
-async function getStorageDirPaths() {
-  const appDataDir = getAppDataDir();
-  const fileNames = await fse.readdir(appDataDir);
-  const dayDirPaths = orderBy((await Promise.all(fileNames.map(async (fileName) => {
-    const filePath = path.join(appDataDir, fileName);
-    const fileStat = await fse.stat(filePath);
-
-    // TODO more rigorous
-    return fileStat.isDirectory() ? filePath : undefined;
-  }))).filter((isDirectory) => isDirectory));
-  return dayDirPaths;
-}
-
-async function checkStorageIsLimited() {
-  const timeStorageLimit = getDataFromSettingJson(CONFIGURATION_KEY_TIME_STORAGE_LIMIT) || DEFAULT_TIME_STORAGE_LIMIT;
-  const storageDirPaths = await getStorageDirPaths();
-  const excess = storageDirPaths.length - timeStorageLimit;
-
-  // over the limit, delete the earlier storage
-  if (excess) {
-    await Promise.all(storageDirPaths.splice(0, excess).map(async (storageDirPath) => {
-      await fse.remove(storageDirPath);
-    }));
-  }
-}
+import { checkStorageIsLimited } from '../utils/storage';
 
 export async function checkMidnight() {
   if (isNewDay()) {

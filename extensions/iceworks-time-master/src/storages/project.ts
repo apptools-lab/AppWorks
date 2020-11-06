@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
-import { getAppDataDir, getAppDataDayDir } from '../utils/common';
+import { getAppDataDir, getAppDataDayDir } from '../utils/storage';
 import { getResource } from '../utils/git';
 
 export interface ProjectResource {
@@ -79,28 +79,28 @@ export function getProjectsFile() {
   return path.join(getAppDataDayDir(), 'projects.json');
 }
 
-export function getProjectsSummary(): ProjectsSummary {
+export async function getProjectsSummary(): Promise<ProjectsSummary> {
   const file = getProjectsFile();
   let projectsSummary = {};
   try {
-    projectsSummary = fse.readJsonSync(file);
+    projectsSummary = await fse.readJson(file);
   } catch (e) {
     // ignore errors
   }
   return projectsSummary;
 }
 
-export function saveProjectsSummary(values: ProjectsSummary) {
+export async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
-  fse.writeJsonSync(file, values, { spaces: 4 });
+  await fse.writeJson(file, values, { spaces: 4 });
 }
 
-export function clearProjectsSummary() {
-  saveProjectsSummary({});
+export async function clearProjectsSummary() {
+  await saveProjectsSummary({});
 }
 
-export function updateProjectSummary(project: Project, sessionSeconds: number) {
-  const projectsSummary = getProjectsSummary();
+export async function updateProjectSummary(project: Project, sessionSeconds: number) {
+  const projectsSummary = await getProjectsSummary();
   const { directory } = project;
   let projectSummary = projectsSummary[directory];
   if (!projectSummary) {
@@ -121,7 +121,7 @@ export function updateProjectSummary(project: Project, sessionSeconds: number) {
     );
   }
   projectsSummary[directory] = projectSummary;
-  saveProjectsSummary(projectsSummary);
+  await saveProjectsSummary(projectsSummary);
 }
 
 export function getProjectDashboardFile() {

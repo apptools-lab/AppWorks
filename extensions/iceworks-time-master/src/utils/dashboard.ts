@@ -43,7 +43,7 @@ export function getRangeDashboard(title: string) {
   const hrStr = getDashboardHr();
   str += hrStr;
   str += getDashboardRow(
-    'Code time',
+    'Active code time',
     '7 min',
   );
   str += getDashboardRow(
@@ -55,24 +55,24 @@ export function getRangeDashboard(title: string) {
     '292',
   );
   str += getDashboardRow(
-    'Characters added',
-    '15,397',
-  );
-  str += getDashboardRow(
-    'Characters deleted',
-    '12,095',
-  );
-  str += getDashboardRow(
     'Total keystrokes',
     '3,049',
   );
-  str += getDashboardRow(
-    'KPM',
-    '10',
-  );
-  str += getDashboardRow(
-    'Top language',
-    'typescript',
-  );
+  // str += getDashboardRow(
+  //   'Characters added',
+  //   '15,397',
+  // );
+  // str += getDashboardRow(
+  //   'Characters deleted',
+  //   '12,095',
+  // );
+  // str += getDashboardRow(
+  //   'KPM',
+  //   '10',
+  // );
+  // str += getDashboardRow(
+  //   'Top language',
+  //   'typescript',
+  // );
   return str;
 }

@@ -9,9 +9,9 @@ import { recordSessionTime } from '../utils/recorder';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
   const { project } = keystrokeStats;
-  const newData = updateFilesChangeSummary(keystrokeStats);
-  updateProjectSummary(project, sessionSeconds);
-  updateUserSummary({ ...newData, sessionSeconds });
+  const newData = await updateFilesChangeSummary(keystrokeStats);
+  await updateProjectSummary(project, sessionSeconds);
+  await updateUserSummary({ ...newData, sessionSeconds });
 
   commands.executeCommand('iceworks-time-master.refreshTimerTree');
   commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');

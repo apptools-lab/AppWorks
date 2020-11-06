@@ -20,6 +20,10 @@ export function isNewDay() {
   return currentDay !== day;
 }
 
+export function getDay(m?: moment.Moment) {
+  const time = m || moment.utc();
+  return time.format(DAY_FORMAT);
+}
 
 const DAY_FORMAT = 'YYYY-MM-DD';
 const DAY_TIME_FORMAT = 'LLLL';
@@ -54,12 +58,12 @@ export interface NowTimes {
   localDayTime: string;
 }
 export function getNowTimes(): NowTimes {
+  const offsetInSec = moment().utcOffset() * 60;
   const now = moment.utc();
   const nowInSec = now.unix();
-  const offsetInSec = moment().utcOffset() * 60;
-  const day = now.format(DAY_FORMAT);
+  const day = getDay(now);
   const localNowInSec = nowInSec + offsetInSec;
-  const localDay = moment().format(DAY_FORMAT);
+  const localDay = getDay(moment());
   const localDayTime = moment().format(DAY_TIME_FORMAT);
 
   return {

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDayDir } from '../utils/common';
+import { getAppDataDayDir } from '../utils/storage';
 import { getNowTimes } from '../utils/time';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
@@ -236,32 +236,32 @@ export function getFilesChangeFile() {
   return path.join(getAppDataDayDir(), 'filesChange.json');
 }
 
-export function getFilesChangeSummary(): FilesChangeSummary {
+export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
   const file = getFilesChangeFile();
   let filesChangeSummary = {};
   try {
-    filesChangeSummary = fse.readJsonSync(file);
+    filesChangeSummary = await fse.readJson(file);
   } catch (e) {
     // ignore error
   }
   return filesChangeSummary;
 }
 
-export function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
+export async function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
   const file = getFilesChangeFile();
-  fse.writeJsonSync(file, filesChangeSummary, { spaces: 4 });
+  await fse.writeJson(file, filesChangeSummary, { spaces: 4 });
 }
 
-export function cleanFilesChangeSummary() {
-  saveFilesChangeSummary({});
+export async function cleanFilesChangeSummary() {
+  await saveFilesChangeSummary({});
 }
 
-export function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
+export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   const { files } = keystrokeStats;
   let linesAdded = 0;
   let linesRemoved = 0;
   let keystrokes = 0;
-  const filesChangeSummary = getFilesChangeSummary();
+  const filesChangeSummary = await getFilesChangeSummary();
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
     if (!fileChangeSummary) {
@@ -290,7 +290,7 @@ export function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
     linesRemoved += fileChange.linesRemoved;
     filesChangeSummary[fsPath] = fileChangeSummary;
   });
-  saveFilesChangeSummary(filesChangeSummary);
+  await saveFilesChangeSummary(filesChangeSummary);
   return {
     linesAdded,
     linesRemoved,

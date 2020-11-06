@@ -1,9 +1,10 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as moment from 'moment';
-import { getAppDataDir, getAppDataDayDir } from '../utils/common';
+import { getAppDataDir, getAppDataDayDir } from '../utils/storage';
 import { getDashboardRow, getRangeDashboard, getDashboardHr } from '../utils/dashboard';
 import { humanizeMinutes, seconds2minutes } from '../utils/time';
+import { updateAverageSummary } from './average';
 
 export class UserSummary {
   /**
@@ -23,34 +24,36 @@ export class UserSummary {
   linesRemoved = 0;
 }
 
-export function getUserFile() {
-  return path.join(getAppDataDayDir(), 'user.json');
+export const userFileName = 'user.json';
+
+export function getUserFile(day?: string) {
+  return path.join(getAppDataDayDir(day), userFileName);
 }
 
-export function getUserSummary(): UserSummary {
-  const file = getUserFile();
+export async function getUserSummary(day?: string): Promise<UserSummary> {
+  const file = getUserFile(day);
   let userSummary = new UserSummary();
   try {
-    userSummary = fse.readJsonSync(file);
+    userSummary = await fse.readJson(file);
   } catch (e) {
     // ignore
   }
   return userSummary;
 }
 
-export function saveUserSummary(userSummary: UserSummary) {
+export async function saveUserSummary(userSummary: UserSummary) {
   const file = getUserFile();
-  fse.writeJsonSync(file, userSummary, { spaces: 4 });
+  await fse.writeJson(file, userSummary, { spaces: 4 });
 }
 
-export function clearUserSummary() {
+export async function clearUserSummary() {
   const userSummary = new UserSummary();
-  saveUserSummary(userSummary);
+  await saveUserSummary(userSummary);
 }
 
-export function updateUserSummary(user: UserSummary) {
+export async function updateUserSummary(user: UserSummary) {
   const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = user;
-  const userSummary = getUserSummary();
+  const userSummary = await getUserSummary();
   userSummary.sessionSeconds += sessionSeconds;
   userSummary.editorSeconds += editorSeconds;
   userSummary.editorSeconds = Math.max(
@@ -60,7 +63,7 @@ export function updateUserSummary(user: UserSummary) {
   userSummary.linesAdded += linesAdded;
   userSummary.linesRemoved += linesRemoved;
   userSummary.keystrokes += keystrokes;
-  saveUserSummary(userSummary);
+  await saveUserSummary(userSummary);
 }
 
 export function getUserDashboardFile() {
@@ -74,8 +77,11 @@ export async function generateUserDashboard() {
   let dashboardContent = `User Summary (Last updated on ${formattedDate})\n`;
   dashboardContent += lineBreakStr;
 
-  const { sessionSeconds } = getUserSummary();
+  const { sessionSeconds } = await getUserSummary();
   const todySessionStr = humanizeMinutes(seconds2minutes(sessionSeconds));
+
+  const { dailySessionSeconds } = await updateAverageSummary();
+  const averageSessionStr = humanizeMinutes(seconds2minutes(dailySessionSeconds));
 
   const formattedToday = moment().format('ddd, MMM Do');
   let todyStr = `🐻 Today (${formattedToday})\n`;
@@ -86,12 +92,13 @@ export async function generateUserDashboard() {
   );
   todyStr += getDashboardRow(
     'Average',
-    '5.2 hrs',
+    averageSessionStr,
   );
   dashboardContent += todyStr;
   dashboardContent += lineBreakStr;
 
-  const formattedYesterday = moment().format('ddd, MMM Do');
+  const yesterdayMoment = moment().subtract(1, 'days');
+  const formattedYesterday = yesterdayMoment.format('ddd, MMM Do');
   const yesterdayStr = getRangeDashboard(`🦁 Yesterday (${formattedYesterday})`);
   dashboardContent += yesterdayStr;
   dashboardContent += lineBreakStr;

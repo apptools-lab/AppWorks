@@ -19,7 +19,7 @@ export async function activate(context: ExtensionContext) {
   const kpmInstance = createKpmInstance();
   kpmInstance.activate();
 
-  const timerStatusBar = createTimerStatusBar();
+  const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
 
   subscriptions.push(
@@ -33,7 +33,7 @@ export async function activate(context: ExtensionContext) {
       timerProvider.refresh();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
-      timerStatusBar.refresh();
+      timerStatusBar.refresh().catch(() => { /* ignore error */ });
     }),
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
       timerProvider.revealTreeView();
