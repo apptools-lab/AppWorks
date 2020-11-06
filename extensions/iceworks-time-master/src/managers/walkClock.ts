@@ -1,7 +1,8 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { getDataFromSettingJson } from '@iceworks/common-service';
-import { setNowDay, isNewDay, getAppDataDir, logIt } from '../utils/common';
+import { getAppDataDir, logIt } from '../utils/common';
+import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendRecords } from '../utils/recorder';
 import orderBy = require('lodash.orderby');

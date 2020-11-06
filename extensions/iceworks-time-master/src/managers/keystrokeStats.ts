@@ -1,6 +1,7 @@
 import { Project } from '../storages/project';
 import { FileChange } from '../storages/filesChange';
-import { getNowTimes, logIt } from '../utils/common';
+import { logIt } from '../utils/common';
+import { getNowTimes } from '../utils/time';
 import { processData } from './data';
 import forIn = require('lodash.forin');
 

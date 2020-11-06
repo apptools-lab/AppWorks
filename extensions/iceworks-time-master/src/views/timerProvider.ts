@@ -14,7 +14,7 @@ import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from '../storages/user';
 import { getFilesChangeSummary, FileChangeSummary } from '../storages/filesChange';
-import { humanizeMinutes } from '../utils/common';
+import { humanizeMinutes } from '../utils/time';
 import i18n from '../i18n';
 import { ONE_MIN_SECONDS } from '../constants';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';

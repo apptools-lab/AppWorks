@@ -1,7 +1,8 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDayDir, getNowTimes } from '../utils/common';
+import { getAppDataDayDir } from '../utils/common';
+import { getNowTimes } from '../utils/time';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import forIn = require('lodash.forin');
