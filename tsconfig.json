@@ -11,6 +11,7 @@
     { "path": "packages/config" },
     { "path": "packages/vscode-webview" },
     { "path": "packages/material-utils" },
+    { "path": "packages/project-utils" },
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
     { "path": "packages/material-engine" }

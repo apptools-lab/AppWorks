@@ -1,0 +1,32 @@
+{
+  "engines": {
+    "kaitian": "^1.20.0"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "Iceworks"
+    }
+  },
+  "dependencies": {
+    "@ali/kit-runner": "^0.1.0"
+  },
+  "devDependencies": {
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
+    "less": "^3.11.3",
+    "less-loader": "^5.0.0",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.6",
+    "typescript": "^3.4.5",
+    "url-loader": "^4.1.0",
+    "vscode": "^1.1.28",
+    "webpack": "^4.43.0"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run compile",
+    "compile": "kit-builder compile"
+  },
+  "kaitianContributes": {
+    "nodeMain": "./out/node/index.js"
+  }
+}

@@ -3,7 +3,7 @@
   "displayName": "Application Explorer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.5.8",
+  "version": "0.6.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -19,7 +19,13 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "*"
+    "*",
+    "onView:nodeDependencies",
+    "onView:scripts",
+    "onView:pages",
+    "onView:components",
+    "onCommand:iceworksApp.configHelper.start",
+    "onCommand:iceworksApp.welcome.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -476,11 +482,11 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.1.13",
+    "@iceworks/common-service": "^0.1.25",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-engine": "^0.1.0",
     "@iceworks/project-service": "^0.1.6",
-    "@iceworks/recorder": "^0.1.0",
+    "@iceworks/recorder": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.2",
     "comment-json": "^3.0.2",
     "ejs": "^3.1.3",

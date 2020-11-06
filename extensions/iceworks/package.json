@@ -31,7 +31,7 @@
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
-  "icon": "assets/logo.png",
+  "icon": "public/logo.png",
   "extensionPack": [
     "iceworks-team.iceworks-app",
     "iceworks-team.iceworks-ui-builder",
