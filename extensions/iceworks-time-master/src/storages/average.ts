@@ -42,7 +42,9 @@ export async function updateAverageSummary(): Promise<AverageSummary> {
   const storageDirs = await getStorageDirs();
 
   // Don't add today to the average
-  storageDirs.splice(storageDirs.length - 1);
+  if (storageDirs.length > 0) {
+    storageDirs.splice(storageDirs.length - 1);
+  }
 
   const { average } = await getCountAndAverage4UserSummary(storageDirs);
   const { sessionSeconds, keystrokes, linesAdded, linesRemoved } = average;

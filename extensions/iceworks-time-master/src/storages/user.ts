@@ -142,7 +142,7 @@ export async function generateUserDashboard() {
 
   const yesterdayMoment = moment().subtract(1, 'days');
   const formattedYesterday = yesterdayMoment.format('ddd, MMM Do');
-  const yesterdayUserSummary = await getUserSummary();
+  const yesterdayUserSummary = await getUserSummary(getDay(yesterdayMoment));
   const yesterdayStr = getRangeDashboard(`🦁 Yesterday (${formattedYesterday})`, yesterdayUserSummary);
   dashboardContent += yesterdayStr;
   dashboardContent += lineBreakStr;
@@ -150,14 +150,20 @@ export async function generateUserDashboard() {
   const lastWeekDays = getLastWeekDays();
   const lastWeekMonday = lastWeekDays[0];
   const lastWeekFriday = lastWeekDays[4];
-  const formattedLastWeek = `${lastWeekMonday} - ${lastWeekFriday}`;
+  const formattedLastWeek = `${getDay(lastWeekMonday)} - ${getDay(lastWeekFriday)}`;
   const lastWeekUserSummary = await getUserSummaryByDays(lastWeekDays);
   const lastWeekStr = getRangeDashboard(`🐯 Last week (${formattedLastWeek})`, lastWeekUserSummary);
   dashboardContent += lastWeekStr;
   dashboardContent += lineBreakStr;
 
-  const averageSummary = await updateAverageSummary() as UserSummary;
-  const avgStr = getRangeDashboard('🐲 Average', averageSummary);
+  const averageSummary = await updateAverageSummary();
+  const { dailyKeystrokes, dailyLinesAdded, dailyLinesRemoved, dailySessionSeconds } = averageSummary;
+  const avgStr = getRangeDashboard('🐲 Average', {
+    sessionSeconds: dailySessionSeconds,
+    keystrokes: dailyKeystrokes,
+    linesAdded: dailyLinesAdded,
+    linesRemoved: dailyLinesRemoved,
+  });
   dashboardContent += avgStr;
   dashboardContent += lineBreakStr;
 

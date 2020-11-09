@@ -20,7 +20,7 @@ import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 
 const NUMBER_FORMAT = '0 a';
-const resourcePath: string = path.join(__dirname, '..', 'assets');
+const resourcePath: string = path.join(__dirname, '..', '..', 'assets');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 enum UIInteractionType {
