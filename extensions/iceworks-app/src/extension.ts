@@ -66,7 +66,7 @@ export async function activate(context: vscode.ExtensionContext) {
         window.iceworksAutoFocusField = "${focusField}";
       </script>
       `;
-      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'confighelper', true, undefined, extraHtml);
+      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'confighelper', false, undefined, extraHtml);
       configWebviewPanel.onDidDispose(
         () => {
           configWebviewPanel = undefined;
@@ -99,7 +99,7 @@ export async function activate(context: vscode.ExtensionContext) {
         },
       );
 
-      welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome', true);
+      welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome');
       welcomeWebviewPanel.onDidDispose(
         () => {
           welcomeWebviewPanel = undefined;
@@ -170,3 +170,5 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   }
 }
+
+export function deactivate() { }

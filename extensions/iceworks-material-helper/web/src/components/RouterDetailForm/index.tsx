@@ -115,10 +115,6 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
             label={intl.formatMessage({
               id: 'web.iceworksMaterialHelper.RouterDetailForm.parent.label',
             })}
-            required
-            requiredMessage={intl.formatMessage({
-              id: 'web.iceworksMaterialHelper.RouterDetailForm.parent.requiredMessage',
-            })}
           >
             <Select
               name="parent"
@@ -129,7 +125,7 @@ const PageDetailForm: React.FC<IPageDetailForm> = ({
               onChange={onLayoutChange}
             >
               {includedChildrenRouterConfig.map((route) => (
-                <Select.Option value={route.path}>{route.component}</Select.Option>
+                <Select.Option value={route.path} key={route.path}>{route.component}</Select.Option>
               ))}
             </Select>
           </Form.Item>

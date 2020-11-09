@@ -72,7 +72,7 @@ async function addDebugMaterials() {
 
 export async function deleteAllDebugSources() {
   const materialsSource = await getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
-  const adjustedMaterialsSource = materialsSource.filter(item => isDebugSource(item.source));
+  const adjustedMaterialsSource = materialsSource.filter(item => !isDebugSource(item.source));
   await saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, adjustedMaterialsSource);
   vscode.window.showInformationMessage(i18n.format('extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess'));
 }

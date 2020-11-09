@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@iceworks/project-service';
-import { checkIsAliInternal } from '@iceworks/common-service';
+import { checkIsAliInternal, checkIsO2 } from '@iceworks/common-service';
 import i18n from '../i18n';
 
 const entries = [
@@ -15,10 +15,9 @@ const entries = [
     command: 'iceworks-doctor.dashboard',
     async condition() {
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
-      if (doctorExtension) {
-        return !(await checkIsNotTarget());
-      }
-      return false;
+      const isTargetProject = !(await checkIsNotTarget());
+      const isO2 = checkIsO2();
+      return isO2 ? isTargetProject : doctorExtension && isTargetProject;
     },
   },
   {

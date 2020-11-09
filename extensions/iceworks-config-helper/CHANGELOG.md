@@ -1,6 +1,11 @@
 # Change Log
 
+# 0.5.0
+
+- refactor: internal optimization
+
 ## 0.4.0
+
 - feat: support rax-app@3.0 build.json config
 - feat: support ice.js@1.0 build.json config
 

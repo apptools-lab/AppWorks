@@ -2,8 +2,13 @@ import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
 import storage, { recordKey } from '@iceworks/storage';
 
+function checkIsO2() {
+  const variable = process.env.XPC_SERVICE_NAME;
+  return typeof variable === 'string' && variable.includes('com.taobao.o2');
+}
+
 // eslint-disable-next-line
-const isElectronProcess = require('is-electron');
+const checkIsElectron = require('is-electron');
 let vscodeEnv;
 try {
   // eslint-disable-next-line
@@ -13,8 +18,16 @@ try {
   // ignore
 }
 
-const isElectron = isElectronProcess();
-const logCode = isElectron ? 'pack_app' : 'pack_web';
+const isElectron = checkIsElectron();
+const isO2 = checkIsO2();
+let logCode = '';
+if (isO2) {
+  logCode = 'pack_o2';
+} else if (isElectron) {
+  logCode = 'pack_app';
+} else {
+  logCode = 'pack_web';
+}
 const outside = '_outside';
 let isAlibaba: boolean;
 
@@ -66,9 +79,9 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       logtype: '2',
     };
 
-    // console.log('recorder[type]', recordType);
-    // console.log('recorder[url]:', url);
-    // console.log('recorder[param]:', JSON.stringify(param));
+    console.log('recorder[type]', recordType);
+    console.log('recorder[url]:', url);
+    // console.log('recorder[param]:', param);
 
     await axios({
       method: 'post',

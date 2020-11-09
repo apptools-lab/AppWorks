@@ -10,7 +10,7 @@ import sassVariablesViewer from './sassVariablesViewer';
 const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
-function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtension(context, name);
 
@@ -26,4 +26,4 @@ function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 }
 
-exports.activate = activate;
+export function deactivate() { }

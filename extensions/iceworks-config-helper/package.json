@@ -3,7 +3,7 @@
   "displayName": "Config Helper",
   "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -104,11 +104,11 @@
     "email": "iceworksteam@163.com"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
-    "webpack": "webpack --mode development",
-    "webpack-dev": "webpack --mode development --watch",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
@@ -124,6 +124,7 @@
     "@iceworks/common-service": "^0.1.14",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/project-service": "^0.1.15",
+    "@iceworks/recorder": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.5",
     "generate-schema": "^2.6.0",
     "lodash.forin": "^4.4.0",
