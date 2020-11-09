@@ -2,6 +2,7 @@ import storage from '@iceworks/storage';
 import * as moment from 'moment';
 import { ONE_MIN_SECONDS } from '../constants';
 import { roundUp } from './common';
+import i18n from '../i18n';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 export function getNowDay() {
@@ -98,17 +99,17 @@ export function humanizeMinutes(min: number) {
   min = parseInt(min, 0) || 0;
   let str = '';
   if (min === 60) {
-    str = '1 hr';
+    str = `1 ${i18n.format('extension.timeMaster.time.hour')}`;
   } else if (min > 60) {
     // @ts-ignore
     const hrs = parseFloat(min) / 60;
     const roundedTime = roundUp(hrs, 1);
-    str = `${roundedTime.toFixed(1) } hrs`;
+    str = `${roundedTime.toFixed(1) } ${i18n.format('extension.timeMaster.time.hours')}`;
   } else if (min === 1) {
-    str = '1 min';
+    str = `1 ${i18n.format('extension.timeMaster.time.min')}`;
   } else {
     // less than 60 seconds
-    str = `${min.toFixed(0) } min`;
+    str = `${min.toFixed(0) } ${i18n.format('extension.timeMaster.time.min')}`;
   }
   return str;
 }

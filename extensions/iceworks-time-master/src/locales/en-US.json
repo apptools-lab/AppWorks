@@ -17,5 +17,13 @@
   "extension.timeMaster.tree.item.topFilesByCT.detail": "",
   "extension.timeMaster.tree.item.average": "Your average: <%=value%>",
   "extension.timeMaster.tree.item.global": "Global average (<%=day%>): <%=value%>",
-  "extension.timeMaster.tree.item.today": "Today:  <%=value%>"
+  "extension.timeMaster.tree.item.today": "Today:  <%=value%>",
+  "extension.timeMaster.util.time.hour": "hr",
+  "extension.timeMaster.util.time.hours": "hrs",
+  "extension.timeMaster.util.time.min": "min",
+  "extension.timeMaster.acCode": "Active code time",
+  "extension.timeMaster.linesAdded": "Lines of code added",
+  "extension.timeMaster.linesRemoved": "Lines of code deleted",
+  "extension.timeMaster.keystrokes": "Total keystrokes",
+  "extension.timeMaster.separator": " : "
 }

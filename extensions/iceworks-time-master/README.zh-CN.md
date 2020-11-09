@@ -7,7 +7,7 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-自动生成你的编程时间统计和效率度量，提供优化建议。
+时间管理大师是一个用于自动编程度量和时间跟踪的开源插件。
 
 ## 安全和隐私
 

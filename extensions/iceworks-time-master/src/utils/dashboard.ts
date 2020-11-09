@@ -1,9 +1,11 @@
+import * as vscode from 'vscode';
 import { UserSummary } from '../storages/user';
 import { humanizeMinutes, seconds2minutes } from './time';
+import i18n from '../i18n';
 
 const DASHBOARD_LABEL_WIDTH = 28;
 const DASHBOARD_VALUE_WIDTH = 36;
-const DASHBOARD_SEPARATOR = ' :';
+const DASHBOARD_SEPARATOR = i18n.format('extension.timeMaster.separator');
 function getSpaces(spacesRequired: number) {
   let spaces = '';
   if (spacesRequired > 0) {
@@ -11,12 +13,12 @@ function getSpaces(spacesRequired: number) {
       spaces += ' ';
     }
   }
-  return spaces;
+  return vscode.env.language.indexOf('en') > -1 ? spaces : '';
 }
 function getDashboardValue(value: string) {
   const spacesRequired = DASHBOARD_VALUE_WIDTH - value.length - 2;
   const spaces = getSpaces(spacesRequired);
-  return `  ${spaces}${value}`;
+  return `${spaces}${value}`;
 }
 function getDashboardLabel(label: string) {
   const spacesRequired = DASHBOARD_LABEL_WIDTH - label.length;
@@ -49,19 +51,19 @@ export function getRangeDashboard(userSummary: UserSummary, title?: string) {
     str += getDashboardHr();
   }
   str += getDashboardRow(
-    'Active code time',
+    i18n.format('extension.timeMaster.acCode'),
     humanizeMinutes(seconds2minutes(sessionSeconds)),
   );
   str += getDashboardRow(
-    'Lines of code added',
+    i18n.format('extension.timeMaster.linesAdded'),
     Number(linesAdded).toLocaleString(),
   );
   str += getDashboardRow(
-    'Lines of code deleted',
+    i18n.format('extension.timeMaster.linesRemoved'),
     Number(linesRemoved).toLocaleString(),
   );
   str += getDashboardRow(
-    'Total keystrokes',
+    i18n.format('extension.timeMaster.keystrokes'),
     Number(keystrokes).toLocaleString(),
   );
   // str += getDashboardRow(
