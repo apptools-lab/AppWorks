@@ -15,7 +15,7 @@
   "extension.timeMaster.tree.item.topFilesByKey.detail": "在文件中键入数最高的文件",
   "extension.timeMaster.tree.item.topFilesByCT.label": "花费时间最多的文件",
   "extension.timeMaster.tree.item.topFilesByCT.detail": "按照编程时间的文件排序",
-  "extension.timeMaster.tree.item.average": "您的平均值 (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.average": "您的平均值: <%=value%>",
   "extension.timeMaster.tree.item.global": "全网平均值 (<%=day%>): <%=value%>",
   "extension.timeMaster.tree.item.today": "今天:  <%=value%>"
 }

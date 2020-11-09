@@ -41,26 +41,28 @@ export function getDashboardRow(label: string, value: string) {
   return content;
 }
 
-export function getRangeDashboard(title: string, userSummary: UserSummary) {
-  const { sessionSeconds, linesAdded, linesRemoved, keystrokes } = userSummary;
-  let str = `${title}\n`;
-  const hrStr = getDashboardHr();
-  str += hrStr;
+export function getRangeDashboard(userSummary: UserSummary, title?: string) {
+  const { sessionSeconds = 0, linesAdded = 0, linesRemoved = 0, keystrokes = 0 } = userSummary;
+  let str = '';
+  if (title) {
+    str += `${title}\n`;
+    str += getDashboardHr();
+  }
   str += getDashboardRow(
     'Active code time',
     humanizeMinutes(seconds2minutes(sessionSeconds)),
   );
   str += getDashboardRow(
     'Lines of code added',
-    linesAdded.toLocaleString(),
+    Number(linesAdded).toLocaleString(),
   );
   str += getDashboardRow(
     'Lines of code deleted',
-    linesRemoved.toLocaleString(),
+    Number(linesRemoved).toLocaleString(),
   );
   str += getDashboardRow(
     'Total keystrokes',
-    keystrokes.toLocaleString(),
+    Number(keystrokes).toLocaleString(),
   );
   // str += getDashboardRow(
   //   'Characters added',

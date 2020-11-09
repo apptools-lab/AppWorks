@@ -85,14 +85,6 @@ export class KeystrokeStats {
     this.end = time || getNowTimes().nowInSec;
   }
 
-  getSessionSeconds(): number {
-    let sessionSeconds = 0;
-    forIn(this.files, (fileChange) => {
-      sessionSeconds += fileChange.durationSeconds;
-    });
-    return sessionSeconds;
-  }
-
   async sendData() {
     const isHasData = this.hasData();
     logIt('[KeystrokeStats][sendData]isHasData', isHasData);

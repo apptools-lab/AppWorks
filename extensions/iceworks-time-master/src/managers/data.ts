@@ -7,20 +7,19 @@ import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
 import { recordSessionTime } from '../utils/recorder';
 
-async function saveDataToDisk(keystrokeStats: KeystrokeStats, sessionSeconds: number) {
+async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
-  const newData = await updateFilesChangeSummary(keystrokeStats);
-  await updateProjectSummary(project, sessionSeconds);
-  await updateUserSummary({ ...newData, sessionSeconds });
+  const increment = await updateFilesChangeSummary(keystrokeStats);
+  await updateProjectSummary(project, increment);
+  await updateUserSummary(increment);
 
   commands.executeCommand('iceworks-time-master.refreshTimerTree');
   commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }
 
 export async function processData(keystrokeStats: KeystrokeStats) {
-  const sessionSeconds = keystrokeStats.getSessionSeconds();
   await checkMidnight();
-  saveDataToDisk(keystrokeStats, sessionSeconds);
+  saveDataToDisk(keystrokeStats);
   recordSessionTime(keystrokeStats);
 }
 

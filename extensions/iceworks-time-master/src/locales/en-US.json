@@ -15,7 +15,7 @@
   "extension.timeMaster.tree.item.topFilesByKey.detail": "",
   "extension.timeMaster.tree.item.topFilesByCT.label": "Top files by code time",
   "extension.timeMaster.tree.item.topFilesByCT.detail": "",
-  "extension.timeMaster.tree.item.average": "Your average (<%=day%>): <%=value%>",
+  "extension.timeMaster.tree.item.average": "Your average: <%=value%>",
   "extension.timeMaster.tree.item.global": "Global average (<%=day%>): <%=value%>",
   "extension.timeMaster.tree.item.today": "Today:  <%=value%>"
 }

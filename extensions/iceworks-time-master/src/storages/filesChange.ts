@@ -261,6 +261,7 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   let linesAdded = 0;
   let linesRemoved = 0;
   let keystrokes = 0;
+  let sessionSeconds = 0;
   const filesChangeSummary = await getFilesChangeSummary();
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
@@ -288,6 +289,7 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
     keystrokes += fileChange.keystrokes;
     linesAdded += fileChange.linesAdded;
     linesRemoved += fileChange.linesRemoved;
+    sessionSeconds += fileChange.durationSeconds;
     filesChangeSummary[fsPath] = fileChangeSummary;
   });
   await saveFilesChangeSummary(filesChangeSummary);
@@ -295,5 +297,6 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
     linesAdded,
     linesRemoved,
     keystrokes,
+    sessionSeconds,
   };
 }

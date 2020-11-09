@@ -51,8 +51,8 @@ export async function clearUserSummary() {
   await saveUserSummary(userSummary);
 }
 
-export async function updateUserSummary(user: UserSummary) {
-  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = user;
+export async function updateUserSummary(increment: UserSummary) {
+  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = increment;
   const userSummary = await getUserSummary();
   userSummary.sessionSeconds += sessionSeconds;
   userSummary.editorSeconds += editorSeconds;
@@ -70,9 +70,6 @@ export function getUserDashboardFile() {
   return path.join(getAppDataDirPath(), 'UserSummaryDashboard.txt');
 }
 
-/**
- * TODO
- */
 export async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise<UserSummary> {
   const { count } = await getCountAndAverage4UserSummary(dayMoments.map((dayMoment => getDay(dayMoment))));
   return count;
@@ -136,14 +133,14 @@ export async function generateUserDashboard() {
 
   const formattedToday = moment().format('ddd, MMM Do');
   const todayUserSummary = await getUserSummary();
-  const todyStr = getRangeDashboard(`🐻 Today (${formattedToday})`, todayUserSummary);
+  const todyStr = getRangeDashboard(todayUserSummary, `🐻 Today (${formattedToday})`);
   dashboardContent += todyStr;
   dashboardContent += lineBreakStr;
 
   const yesterdayMoment = moment().subtract(1, 'days');
   const formattedYesterday = yesterdayMoment.format('ddd, MMM Do');
   const yesterdayUserSummary = await getUserSummary(getDay(yesterdayMoment));
-  const yesterdayStr = getRangeDashboard(`🦁 Yesterday (${formattedYesterday})`, yesterdayUserSummary);
+  const yesterdayStr = getRangeDashboard(yesterdayUserSummary, `🦁 Yesterday (${formattedYesterday})`);
   dashboardContent += yesterdayStr;
   dashboardContent += lineBreakStr;
 
@@ -152,18 +149,18 @@ export async function generateUserDashboard() {
   const lastWeekFriday = lastWeekDays[4];
   const formattedLastWeek = `${getDay(lastWeekMonday)} - ${getDay(lastWeekFriday)}`;
   const lastWeekUserSummary = await getUserSummaryByDays(lastWeekDays);
-  const lastWeekStr = getRangeDashboard(`🐯 Last week (${formattedLastWeek})`, lastWeekUserSummary);
+  const lastWeekStr = getRangeDashboard(lastWeekUserSummary, `🐯 Last week (${formattedLastWeek})`);
   dashboardContent += lastWeekStr;
   dashboardContent += lineBreakStr;
 
   const averageSummary = await updateAverageSummary();
   const { dailyKeystrokes, dailyLinesAdded, dailyLinesRemoved, dailySessionSeconds } = averageSummary;
-  const avgStr = getRangeDashboard('🐲 Average', {
+  const avgStr = getRangeDashboard({
     sessionSeconds: dailySessionSeconds,
     keystrokes: dailyKeystrokes,
     linesAdded: dailyLinesAdded,
     linesRemoved: dailyLinesRemoved,
-  });
+  }, '🐲 Average');
   dashboardContent += avgStr;
   dashboardContent += lineBreakStr;
 
