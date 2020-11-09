@@ -1,10 +1,12 @@
 import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './views/timerProvider';
 import { logIt, openFileInEditor } from './utils/common';
-import { createInstance as createKpmInstance } from './managers/kpm';
+import { KpmManager } from './managers/kpm';
 import { createTimerStatusBar } from './views/timerStatusBar';
-import { activate as activateWalkClock } from './managers/walkClock';
+import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
+
+let kpmInstance: KpmManager;
 
 export async function activate(context: ExtensionContext) {
   logIt('[extension] activate!');
@@ -14,13 +16,13 @@ export async function activate(context: ExtensionContext) {
   const timerTreeView = createTimerTreeView(timerProvider);
   timerProvider.bindView(timerTreeView);
 
-  activateWalkClock();
-
-  const kpmInstance = createKpmInstance();
-  kpmInstance.activate();
-
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
+
+  activateWalkClock();
+
+  kpmInstance = new KpmManager();
+  kpmInstance.activate();
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
@@ -49,4 +51,8 @@ export async function activate(context: ExtensionContext) {
 
 export function deactivate() {
   logIt('[extension] deactivate!');
+
+  kpmInstance.deactivate();
+
+  deactivateWalkClock();
 }

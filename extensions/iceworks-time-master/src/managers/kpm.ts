@@ -1,6 +1,6 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
 import { isFileActive, logIt } from '../utils/common';
-import { DEFAULT_DURATION_MILLISECONDS } from '../constants';
+import { ONE_MIN_MILLISECONDS } from '../constants';
 import { Project } from '../storages/project';
 import { KeystrokeStats } from './keystrokeStats';
 import { cleanTextInfoCache } from '../storages/filesChange';
@@ -137,7 +137,7 @@ export class KpmManager {
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logIt('[KpmManager][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
-      }, DEFAULT_DURATION_MILLISECONDS);
+      }, ONE_MIN_MILLISECONDS);
     }
 
     if (!keystrokeStats.hasFile(fsPath)) {
@@ -261,15 +261,4 @@ export class KpmManager {
       await this.sendKeystrokeStatsMap();
     }
   }
-}
-
-let instance: KpmManager;
-
-export function getInstance(): KpmManager {
-  return instance || createInstance();
-}
-
-export function createInstance() {
-  instance = new KpmManager();
-  return instance;
 }
