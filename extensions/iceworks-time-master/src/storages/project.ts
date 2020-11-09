@@ -181,7 +181,6 @@ export async function generateProjectDashboard() {
   forIn(projectsSummary, (projectSummary) => {
     const { name } = projectSummary;
     dashboardContent += getDashboardRow(name, 'Total');
-    console.log('projectSummary', projectSummary);
     dashboardContent += getRangeDashboard(projectSummary);
     dashboardContent += getDashboardHr();
     dashboardContent += '\n';
