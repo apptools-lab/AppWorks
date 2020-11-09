@@ -1,7 +1,7 @@
 import { Project } from '../storages/project';
 import { FileChange } from '../storages/filesChange';
 import { logIt } from '../utils/common';
-import { getNowTimes } from '../utils/time';
+import { getNowUTCSec } from '../utils/time';
 import { processData } from './data';
 import forIn = require('lodash.forin');
 
@@ -78,11 +78,11 @@ export class KeystrokeStats {
   }
 
   setStart(time?: number) {
-    this.start = time || getNowTimes().nowInSec;
+    this.start = time || getNowUTCSec();
   }
 
   setEnd(time?: number) {
-    this.end = time || getNowTimes().nowInSec;
+    this.end = time || getNowUTCSec();
   }
 
   async sendData() {

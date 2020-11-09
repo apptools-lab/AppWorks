@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
 import { getAppDataDayDirPath } from '../utils/storage';
-import { getNowTimes } from '../utils/time';
+import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import { JSON_SPACES } from '../constants';
@@ -216,11 +216,11 @@ export class FileChange {
   }
 
   setStart(time?: number) {
-    this.start = time || getNowTimes().nowInSec;
+    this.start = time || getNowUTCSec();
   }
 
   setEnd(time?: number) {
-    this.end = time || getNowTimes().nowInSec;
+    this.end = time || getNowUTCSec();
   }
 
   static createInstance(fsPath: string, project: Project) {

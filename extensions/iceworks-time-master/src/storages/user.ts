@@ -127,18 +127,19 @@ export async function getCountAndAverage4UserSummary(days: string[]): Promise<{c
 }
 
 export async function generateUserDashboard() {
-  const formattedDate = moment().format('ddd, MMM Do h:mma');
+  const nowMoment = moment();
+  const formattedDate = nowMoment.format('ddd, MMM Do h:mma');
   const lineBreakStr = '\n';
   let dashboardContent = `User Summary (Last updated on ${formattedDate})\n`;
   dashboardContent += lineBreakStr;
 
-  const formattedToday = moment().format('ddd, MMM Do');
+  const formattedToday = nowMoment.format('ddd, MMM Do');
   const todayUserSummary = await getUserSummary();
   const todyStr = getRangeDashboard(todayUserSummary, `🐻 Today (${formattedToday})`);
   dashboardContent += todyStr;
   dashboardContent += lineBreakStr;
 
-  const yesterdayMoment = moment().subtract(1, 'days');
+  const yesterdayMoment = nowMoment.clone().subtract(1, 'days');
   const formattedYesterday = yesterdayMoment.format('ddd, MMM Do');
   const yesterdayUserSummary = await getUserSummary(getDay(yesterdayMoment));
   const yesterdayStr = getRangeDashboard(yesterdayUserSummary, `🦁 Yesterday (${formattedYesterday})`);
