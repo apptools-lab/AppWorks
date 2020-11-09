@@ -5,6 +5,7 @@ import { getAppDataDayDirPath } from '../utils/storage';
 import { getNowTimes } from '../utils/time';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
+import { JSON_SPACES } from '../constants';
 import forIn = require('lodash.forin');
 
 interface FileTextInfo {
@@ -249,7 +250,7 @@ export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
 
 export async function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
   const file = getFilesChangeFile();
-  await fse.writeJson(file, filesChangeSummary, { spaces: 4 });
+  await fse.writeJson(file, filesChangeSummary, { spaces: JSON_SPACES });
 }
 
 export async function cleanFilesChangeSummary() {

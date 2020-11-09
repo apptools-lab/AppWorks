@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import { getAppDataDirPath, getStorageDirs } from '../utils/storage';
 import { getCountAndAverage4UserSummary } from './user';
+import { JSON_SPACES } from '../constants';
 
 export class AverageSummary {
   dailySessionSeconds?: number = 0;
@@ -30,7 +31,7 @@ export async function getAverageSummary(): Promise<AverageSummary> {
 
 export async function saveAverageSummary(averageSummary: AverageSummary) {
   const file = getAverageFile();
-  await fse.writeJson(file, averageSummary, { spaces: 4 });
+  await fse.writeJson(file, averageSummary, { spaces: JSON_SPACES });
 }
 
 export async function clearAverageSummary() {

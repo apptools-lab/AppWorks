@@ -2,7 +2,7 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
-import { UNTITLED, NO_PROJ_NAME } from '../constants';
+import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
 import { getAppDataDirPath, getAppDataDayDirPath, getStorageDirs } from '../utils/storage';
 import { getResource } from '../utils/git';
 import { getDashboardHr, getDashboardRow, getRangeDashboard } from '../utils/dashboard';
@@ -103,7 +103,7 @@ export async function getProjectsSummary(day?: string): Promise<ProjectsSummary>
 
 export async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
-  await fse.writeJson(file, values, { spaces: 4 });
+  await fse.writeJson(file, values, { spaces: JSON_SPACES });
 }
 
 export async function clearProjectsSummary() {
