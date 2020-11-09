@@ -7,11 +7,17 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-Metrics, insights, and time tracking automatically generated from your programming activity.
+Metrics, insights, and time tracking automatically generated from your programming activity. Time Master is an Open Source project, completely independent of network environment, safe and lightweight.
 
 ## Usage
 
-TODO
+### Check your Code Activity
+
+![Check Code Activity](https://img.alicdn.com/tfs/TB1fbiz1UY1gK0jSZFMXXaWcVXa-1048-915.png)
+
+### Generate your Code Time Summary
+
+![Generate Code Time Summary](https://img.alicdn.com/tfs/TB1AOKRmJTfau8jSZFwXXX1mVXa-1117-817.png)
 
 ## Security and Privacy
 
