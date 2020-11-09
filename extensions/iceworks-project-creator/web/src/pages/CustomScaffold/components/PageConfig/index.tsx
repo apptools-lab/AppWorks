@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, List, Box, Button, Divider, Dialog, Notification } from '@alifd/next';
+import { List, Box, Button, Divider, Dialog, Notification } from '@alifd/next';
 import { useIntl, FormattedMessage } from 'react-intl';
 import PageGenerator from '../PageGenerator';
 import HeaderTitle from '@/components/HeaderTitle';
@@ -20,8 +20,8 @@ const defaultMenuItem = {
   blocks: [],
 };
 
-const ScaffoldLayout = ({ onChange, value }) => {
-  const { asideMenu, headerMenu, layouts } = value;
+const PageConfig = ({ onChange, value }) => {
+  const { asideMenu, headerMenu } = value;
 
   const intl = useIntl();
 
@@ -161,23 +161,6 @@ const ScaffoldLayout = ({ onChange, value }) => {
           </List>
         </div>
       </div>
-
-      <div className={styles.setting}>
-        <HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.layoutComponent.title' })} />
-        <div className={styles.content}>
-          <Checkbox.Group value={layouts} itemDirection="ver" onChange={onLayoutConfigChange}>
-            <Checkbox value="branding">
-              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.logoComponent" />
-            </Checkbox>
-            <Checkbox value="headerAvatar">
-              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.headerAvatarComponent" />
-            </Checkbox>
-            <Checkbox value="footer">
-              <FormattedMessage id="web.iceworksProjectCreator.customScaffold.layoutComponent.footerComponent" />
-            </Checkbox>
-          </Checkbox.Group>
-        </div>
-      </div>
       <Dialog
         className={styles.dialog}
         visible={visible}
@@ -195,4 +178,4 @@ const ScaffoldLayout = ({ onChange, value }) => {
   );
 };
 
-export default ScaffoldLayout;
+export default PageConfig;

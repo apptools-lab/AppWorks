@@ -10,7 +10,12 @@
       {
         "themePackage": [
           {
-            "name": "@alifd/theme-iceworks-dark"
+            "name": "@alifd/theme-iceworks-dark",
+ "default": true
+          },
+          {
+            "name": "@alifd/theme-design-pro",
+            "default": true
           }
         ]
       }
@@ -29,9 +34,6 @@
     ],
     "./build.plugin.js"
   ],
-  "mpa": {
-    "template": {
-      "web.html": ["CreateProject", "CustomScaffold"]
-    }
-  }
+  "mpa": true,
+  "vendor": false
 }

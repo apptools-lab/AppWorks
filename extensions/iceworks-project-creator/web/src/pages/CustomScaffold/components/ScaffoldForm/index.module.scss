@@ -3,6 +3,15 @@
   width: 100%;
   height: calc(100vh - 160px);
 
+  .grid {
+    height: calc(100vh - 200px);
+
+    .scaffoldTemplateIframe {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
   .action {
     position: absolute;
     bottom: 0;

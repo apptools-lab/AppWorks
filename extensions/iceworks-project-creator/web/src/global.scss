@@ -1,8 +1,7 @@
 body {
-  height: 100vh;
-  background-color: $color-brand1-1;
-  color: $color-text1-4;
   padding: 0;
+  margin: 0;
+
   // the `mask-background` css variables can't be parsed
   // so update modal component overlay background
   .next-overlay-wrapper {

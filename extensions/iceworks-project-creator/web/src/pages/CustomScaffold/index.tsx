@@ -84,11 +84,15 @@ const CustomScaffold = () => {
   }
 
   function onFormChange(formValue) {
+    // scaffold
     setValue({ ...value, ...formValue });
   }
 
+  function onScaffoldFormChange(formValue) {
+    setValue({ ...value, scaffold: { ...value.scaffold, ...formValue } })
+  }
   const steps = [
-    <ScaffoldForm onChange={onFormChange} value={value}>
+    <ScaffoldForm onChange={onScaffoldFormChange} value={value.scaffold}>
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>

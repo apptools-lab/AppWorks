@@ -72,8 +72,8 @@
   "web.iceworksProjectCreator.customScaffold.theme.theme-4.label": "Green Theme @alifd/theme-4",
   "web.iceworksProjectCreator.customScaffold.theme.customTheme.label": "Custom Theme",
   "web.iceworksProjectCreator.customScaffold.advanceConfig.typescript.label": "Use TypeScript",
-  "web.iceworksProjectCreator.customScaffold.advanceConfig.i18n.label": "i18n Example",
-  "web.iceworksProjectCreator.customScaffold.advanceConfig.auth.label": "Auth Example",
-  "web.iceworksProjectCreator.customScaffold.advanceConfig.store.label": "Store Example",
-  "web.iceworksProjectCreator.customScaffold.advanceConfig.mock.label": "Mock Example"
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.i18n.label": "i18n",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.auth.label": "Auth",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.store.label": "Store",
+  "web.iceworksProjectCreator.customScaffold.advanceConfig.mock.label": "Mock"
 }

@@ -1,7 +1,7 @@
 import { createApp } from 'ice';
 import Home from './index';
 
-window.__changeTheme__('@alifd/theme-iceworks-dark');
+window.__changeTheme__('@alifd/theme-design-pro');
 
 const appConfig = {
   router: {

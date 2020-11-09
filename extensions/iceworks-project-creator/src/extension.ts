@@ -52,15 +52,15 @@ export function activate(context: vscode.ExtensionContext) {
     }),
   );
 
-  let customScaffoldwebviewPanel: vscode.WebviewPanel | undefined;
+  let customScaffoldWebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeCustomScaffoldWebview() {
     recorder.recordActivate();
 
-    if (customScaffoldwebviewPanel) {
-      customScaffoldwebviewPanel.reveal();
+    if (customScaffoldWebviewPanel) {
+      customScaffoldWebviewPanel.reveal();
     } else {
-      customScaffoldwebviewPanel = window.createWebviewPanel(
+      customScaffoldWebviewPanel = window.createWebviewPanel(
         'iceworks',
         i18n.format('extension.iceworksProjectCreator.customScaffold.webViewTitle'),
         ViewColumn.One,
@@ -69,15 +69,15 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      customScaffoldwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', true);
-      customScaffoldwebviewPanel.onDidDispose(
+      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', true, undefined, '', 'scaffoldtemplate');
+      customScaffoldWebviewPanel.onDidDispose(
         () => {
-          customScaffoldwebviewPanel = undefined;
+          customScaffoldWebviewPanel = undefined;
         },
         null,
         context.subscriptions,
       );
-      connectService(customScaffoldwebviewPanel, context, { services, recorder });
+      connectService(customScaffoldWebviewPanel, context, { services, recorder });
     }
   }
 
