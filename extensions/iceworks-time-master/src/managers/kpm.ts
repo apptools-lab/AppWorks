@@ -233,11 +233,8 @@ export class KpmManager {
         logIt('[KpmManager][onDidChangeTextDocument]Copy+Paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
-        // update the overall count
       } else if (textChangeInfo.hasNonNewLine) {
-        // update the data for this fileInfo keys count
         currentFileChange.add += 1;
-        // update the overall count
         logIt('[KpmManager][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1

@@ -9,12 +9,12 @@ import { JSON_SPACES } from '../constants';
 
 export class UserSummary {
   /**
-   * 编程时间w
+   * Active code time
    */
   sessionSeconds = 0;
 
   /**
-   * 编辑器使用时间
+   * Editor usage time
    */
   editorSeconds?: number = 0;
 

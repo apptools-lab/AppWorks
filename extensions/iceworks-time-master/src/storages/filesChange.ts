@@ -10,15 +10,15 @@ import forIn = require('lodash.forin');
 
 interface FileTextInfo {
   /**
-   * 文件字符长度
+   * The character length of the file
    */
   length: number;
   /**
-   * 文件行数
+   * The number of lines in the file
    */
   lineCount: number;
   /**
-   * 文件使用的语法
+   * Syntax used by the file
    */
   syntax: string;
 }
@@ -43,100 +43,101 @@ export function cleanTextInfoCache() {
 
 export interface FileChangeSummary {
   /**
-   * 文件名
+   * Filename
    */
   name: string;
   /**
-   * 文件路径
+   * The path where the file is located
    */
   fsPath: string;
   /**
-   * 文件所属的项目文件夹
+   * The folder of the project to which the file belongs
    */
   projectDir: string;
   /**
-   * 文件的文本长度
+   * The character length of the file
    */
   length: number;
   /**
-   * 文件的行数
+   * The number of lines in the file
    */
   lineCount: number;
   /**
-   * 文件使用的语法
+   * Syntax used by the file
    */
   syntax: string;
 
   /**
-   * kpm
+   * Keystrokes per minute
    */
   kpm: number;
   /**
-   * 按键数
+   * Number of keystrokes
    */
   keystrokes: number;
   /**
-   * 文件停留时间
+   * File editor usage time
    */
   editorSeconds?: number;
   /**
-   * 文件编辑时间
+   * Time used to edit files
    */
   sessionSeconds: number;
 
   /**
-   * 添加了多少个字符
+   * How many characters have been added
    */
   charsAdded?: number;
   /**
-   * 删除了多少个字符
+   * How many characters were deleted
    */
   charsDeleted?: number;
   /**
-   * 粘贴的字符数
+   * Number of characters pasted
    */
   charsPasted?: number;
 
   /**
-   * 文件打开次数
+   * File open times
    */
   open: number;
   /**
-   * 文件关闭次数
+   * File close times
    */
   close: number;
   /**
-   * 粘贴次数
-   */
-  paste: number;
-  /**
-   * 添加次数
-   */
-  add: number;
-  /**
-   * 删除次数
-   */
-  delete: number;
-  /**
-   * 更新次数
+   * File update times
    */
   update: number;
 
   /**
-   * 添加了多少行
+   * Paste times
+   */
+  paste: number;
+  /**
+   * Add times
+   */
+  add: number;
+  /**
+   * Delete times
+   */
+  delete: number;
+
+  /**
+   * How many lines have been added
    */
   linesAdded: number;
   /**
-   * 删除了多少行
+   * How many lines have been deleted
    */
   linesRemoved: number;
 
   /**
-   * 开始更新文件的时间
+   * Time to start updating files
    */
   start: number;
   /**
-   * 结束更新文件的时间
+   * End time to update file
    */
   end: number;
 }
@@ -185,7 +186,9 @@ export class FileChange {
   public end = 0;
 
   /**
-   * 更新结束距离更新开始的时间间隔
+   * Interval between
+   * the end of the update and
+   * the beginning of the update
    */
   public durationSeconds = 0;
 
