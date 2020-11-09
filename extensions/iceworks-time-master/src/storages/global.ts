@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDir } from '../utils/storage';
+import { getAppDataDirPath } from '../utils/storage';
 
 export class GlobalSummary {
   dailySessionSeconds?: number = 0;
@@ -13,7 +13,7 @@ export class GlobalSummary {
 }
 
 export function getGlobalFile() {
-  return path.join(getAppDataDir(), 'global.json');
+  return path.join(getAppDataDirPath(), 'global.json');
 }
 
 export async function getGlobalSummary(): Promise<GlobalSummary> {

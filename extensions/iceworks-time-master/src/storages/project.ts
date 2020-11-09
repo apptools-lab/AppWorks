@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
-import { getAppDataDir, getAppDataDayDir } from '../utils/storage';
+import { getAppDataDirPath, getAppDataDayDirPath } from '../utils/storage';
 import { getResource } from '../utils/git';
 
 export interface ProjectResource {
@@ -76,7 +76,7 @@ export interface ProjectsSummary {
 }
 
 export function getProjectsFile() {
-  return path.join(getAppDataDayDir(), 'projects.json');
+  return path.join(getAppDataDayDirPath(), 'projects.json');
 }
 
 export async function getProjectsSummary(): Promise<ProjectsSummary> {
@@ -125,7 +125,7 @@ export async function updateProjectSummary(project: Project, sessionSeconds: num
 }
 
 export function getProjectDashboardFile() {
-  return path.join(getAppDataDir(), 'ProjectSummaryDashboard.txt');
+  return path.join(getAppDataDirPath(), 'ProjectSummaryDashboard.txt');
 }
 
 /**

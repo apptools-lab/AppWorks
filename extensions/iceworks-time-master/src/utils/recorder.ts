@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
-import { getAppDataDir } from '../utils/storage';
+import { getAppDataDirPath } from '../utils/storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo } from '../utils/env';
 import forIn = require('lodash.forin');
 
@@ -195,5 +195,5 @@ function appendRecordsData(type: string, data: EditorTimeRecord[]|SessionTimeRec
 }
 
 function getRecordsFile(type: string) {
-  return path.join(getAppDataDir(), `${type}_records.json`);
+  return path.join(getAppDataDirPath(), `${type}_records.json`);
 }

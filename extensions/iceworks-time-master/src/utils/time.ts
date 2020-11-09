@@ -25,6 +25,22 @@ export function getDay(m?: moment.Moment) {
   return time.format(DAY_FORMAT);
 }
 
+export function getLastWeekDays(m?: moment.Moment): moment.Moment[] {
+  const lastWeekSameDay = (m || moment()).subtract(1, 'w');
+  const weekday = lastWeekSameDay.weekday();
+  const preDays = [];
+  const nextDays = [];
+  for (let monday = 1, preDay = weekday - 1, nowDay = lastWeekSameDay.clone(); preDay >= monday; preDay--) {
+    nowDay.subtract(1, 'd');
+    preDays.push(nowDay);
+  }
+  for (let friday = 5, nextDay = weekday + 1, nowDay = lastWeekSameDay.clone(); friday >= nextDay; nextDay++) {
+    nowDay.add(1, 'd');
+    nextDays.push(nowDay);
+  }
+  return [...preDays, lastWeekSameDay, ...nextDays];
+}
+
 const DAY_FORMAT = 'YYYY-MM-DD';
 const DAY_TIME_FORMAT = 'LLLL';
 export interface NowTimes {

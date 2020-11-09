@@ -1,3 +1,6 @@
+import { UserSummary } from '../storages/user';
+import { humanizeMinutes, seconds2minutes } from './time';
+
 const DASHBOARD_LABEL_WIDTH = 28;
 const DASHBOARD_VALUE_WIDTH = 36;
 const DASHBOARD_SEPARATOR = ' :';
@@ -38,25 +41,26 @@ export function getDashboardRow(label: string, value: string) {
   return content;
 }
 
-export function getRangeDashboard(title: string) {
+export function getRangeDashboard(title: string, userSummary: UserSummary) {
+  const { sessionSeconds, linesAdded, linesRemoved, keystrokes } = userSummary;
   let str = `${title}\n`;
   const hrStr = getDashboardHr();
   str += hrStr;
   str += getDashboardRow(
     'Active code time',
-    '7 min',
+    humanizeMinutes(seconds2minutes(sessionSeconds)),
   );
   str += getDashboardRow(
     'Lines of code added',
-    '405',
+    linesAdded.toLocaleString(),
   );
   str += getDashboardRow(
     'Lines of code deleted',
-    '292',
+    linesRemoved.toLocaleString(),
   );
   str += getDashboardRow(
     'Total keystrokes',
-    '3,049',
+    keystrokes.toLocaleString(),
   );
   // str += getDashboardRow(
   //   'Characters added',

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDayDir } from '../utils/storage';
+import { getAppDataDayDirPath } from '../utils/storage';
 import { getNowTimes } from '../utils/time';
 import { Project } from './project';
 import { KeystrokeStats } from '../managers/keystrokeStats';
@@ -233,7 +233,7 @@ export interface FilesChangeSummary {
 }
 
 export function getFilesChangeFile() {
-  return path.join(getAppDataDayDir(), 'filesChange.json');
+  return path.join(getAppDataDayDirPath(), 'filesChange.json');
 }
 
 export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {

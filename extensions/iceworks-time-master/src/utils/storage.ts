@@ -9,7 +9,7 @@ import orderBy = require('lodash.orderby');
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
-export function getAppDataDir() {
+export function getAppDataDirPath() {
   const homedir = os.homedir();
   const appDataDir = path.join(homedir, '.iceworks', 'TimeMaster');
   if (!fse.existsSync(appDataDir)) {
@@ -18,8 +18,8 @@ export function getAppDataDir() {
   return appDataDir;
 }
 
-export function getAppDataDayDir(day?: string) {
-  const appDataDir = getAppDataDir();
+export function getAppDataDayDirPath(day?: string) {
+  const appDataDir = getAppDataDirPath();
   const appDataDayDir = path.join(appDataDir, day || getNowDay());
   if (!fse.existsSync(appDataDayDir)) {
     fse.mkdirSync(appDataDayDir);
@@ -27,28 +27,29 @@ export function getAppDataDayDir(day?: string) {
   return appDataDayDir;
 }
 
-export async function getStorageDirPaths() {
-  const appDataDir = getAppDataDir();
+export async function getStorageDirs() {
+  const appDataDir = getAppDataDirPath();
   const fileNames = await fse.readdir(appDataDir);
   const dayDirPaths = orderBy((await Promise.all(fileNames.map(async (fileName) => {
     const filePath = path.join(appDataDir, fileName);
     const fileStat = await fse.stat(filePath);
 
     // TODO more rigorous
-    return fileStat.isDirectory() ? filePath : undefined;
+    return fileStat.isDirectory() ? fileName : undefined;
   }))).filter((isDirectory) => isDirectory));
   return dayDirPaths;
 }
 
 export async function checkStorageIsLimited() {
   const timeStorageLimit = getDataFromSettingJson(CONFIGURATION_KEY_TIME_STORAGE_LIMIT) || DEFAULT_TIME_STORAGE_LIMIT;
-  const storageDirPaths = await getStorageDirPaths();
-  const excess = storageDirPaths.length - timeStorageLimit;
+  const storageDirs = await getStorageDirs();
+  const excess = storageDirs.length - timeStorageLimit;
 
   // over the limit, delete the earlier storage
   if (excess) {
-    await Promise.all(storageDirPaths.splice(0, excess).map(async (storageDirPath) => {
-      await fse.remove(storageDirPath);
+    const appDataDir = getAppDataDirPath();
+    await Promise.all(storageDirs.splice(0, excess).map(async (storageDir) => {
+      await fse.remove(path.join(appDataDir, storageDir));
     }));
   }
 }

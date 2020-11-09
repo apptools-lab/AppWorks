@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDir, getStorageDirPaths } from '../utils/storage';
-import { getUserSummary } from './user';
+import { getAppDataDirPath, getStorageDirs } from '../utils/storage';
+import { getCountAndAverage4UserSummary } from './user';
 
 export class AverageSummary {
   dailySessionSeconds?: number = 0;
@@ -14,7 +14,7 @@ export class AverageSummary {
 }
 
 export function getAverageFile() {
-  return path.join(getAppDataDir(), 'average.json');
+  return path.join(getAppDataDirPath(), 'average.json');
 }
 
 export async function getAverageSummary(): Promise<AverageSummary> {
@@ -39,47 +39,18 @@ export async function clearAverageSummary() {
 }
 
 export async function updateAverageSummary(): Promise<AverageSummary> {
-  const storageDirPaths = await getStorageDirPaths();
+  const storageDirs = await getStorageDirs();
 
   // Don't add today to the average
-  storageDirPaths.splice(storageDirPaths.length - 1);
+  storageDirs.splice(storageDirs.length - 1);
 
-  let countSessionSeconds = 0;
-  let countKeystrokes = 0;
-  let countLinesAdded = 0;
-  let countLinesRemoved = 0;
-  let sessionSecondsDays = 0;
-  let keystrokesDays = 0;
-  let linesAddedDays = 0;
-  let linesRemovedDays = 0;
-  await Promise.all(storageDirPaths.map(async (storageDirPath) => {
-    const { sessionSeconds, keystrokes, linesAdded, linesRemoved } = await getUserSummary(path.basename(storageDirPath));
-    if (sessionSeconds) {
-      countSessionSeconds += sessionSeconds;
-      sessionSecondsDays++;
-    }
-    if (keystrokes) {
-      countKeystrokes += keystrokes;
-      keystrokesDays++;
-    }
-    if (linesAdded) {
-      countLinesAdded += linesAdded;
-      linesAddedDays++;
-    }
-    if (linesRemoved) {
-      countLinesRemoved += linesRemoved;
-      linesRemovedDays++;
-    }
-  }));
-  const dailySessionSeconds = countSessionSeconds / sessionSecondsDays;
-  const dailyKeystrokes = countKeystrokes / keystrokesDays;
-  const dailyLinesAdded = countLinesAdded / linesAddedDays;
-  const dailyLinesRemoved = countLinesRemoved / linesRemovedDays;
+  const { average } = await getCountAndAverage4UserSummary(storageDirs);
+  const { sessionSeconds, keystrokes, linesAdded, linesRemoved } = average;
   const averageSummary = {
-    dailySessionSeconds,
-    dailyKeystrokes,
-    dailyLinesAdded,
-    dailyLinesRemoved,
+    dailySessionSeconds: sessionSeconds,
+    dailyKeystrokes: keystrokes,
+    dailyLinesAdded: linesAdded,
+    dailyLinesRemoved: linesRemoved,
   };
   await saveAverageSummary(averageSummary);
   return averageSummary;
