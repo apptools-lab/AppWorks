@@ -17,8 +17,7 @@ jobs:
       - run: |
           npm i
           npm i -g vsce
-          npm run setup
-          tsc -v
+          npm run ci:setup
           npm run publish-beta
         env:
           VSCE_TOKEN: ${{secrets.VSCE_TOKEN}}

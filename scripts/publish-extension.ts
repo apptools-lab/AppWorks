@@ -10,7 +10,6 @@ import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
-
 function packExtension(extension: string, directory: string, version: string) {
   console.log('[VSCE] PACK: ', `${extension}@${version}`);
   spawnSync('vsce', ['package'], {

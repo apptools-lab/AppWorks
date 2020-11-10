@@ -40,7 +40,7 @@ export default function uploadExtesions(extensions: string[], production?: boole
     const version = info[1];
 
     const extensionFile = `${name}-${version}.vsix`;
-    const extensionFilePath = path.join(__dirname, '../extensions', name, extensionFile);
+    const extensionFilePath = path.join(__dirname, '../../extensions', name, extensionFile);
 
     // Upload extension
     upload(`vscode-extensions/${production ? 'release' : 'beta'}/${extensionFile}`, extensionFilePath);
