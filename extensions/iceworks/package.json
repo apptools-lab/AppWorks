@@ -291,6 +291,38 @@
       {
         "command": "iceworks-ui-builder.design-component",
         "title": "%iceworksUIBuilder.commands.designComponent.title%"
+      },
+      {
+        "command": "core.def.createIterate.open",
+        "title": "打开新建迭代面板"
+      },
+      {
+        "command": "core.def.createIterate.close",
+        "title": "关闭新建迭代面板"
+      },
+      {
+        "command": "core.def.switch.iteration",
+        "title": "快速切换迭代"
+      },
+      {
+        "command": "core.def.localConfig.get",
+        "title": "def local config"
+      },
+      {
+        "command": "core.def.refresh.information",
+        "title": "刷新应用信息",
+        "icon": {
+          "dark": "icons/dark/refresh.svg",
+          "light": "icons/light/refresh.svg"
+        }
+      },
+      {
+        "command": "core.def.forceRefresh.information",
+        "title": "选择远程数据请求地址"
+      },
+      {
+        "command": "core.def.view.application",
+        "title": "查看应用详细信息"
       }
     ],
     "jsonValidation": [
@@ -434,6 +466,19 @@
           "command": "iceworksApp.nodeDependencies.refresh",
           "when": "view == nodeDependencies",
           "group": "navigation@99"
+        },
+        {
+          "command": "core.def.refresh.information",
+          "when": "view == PubInfo",
+          "group": "navigation"
+        },
+        {
+          "command": "core.def.view.application",
+          "when": "view == PubInfo"
+        },
+        {
+          "command": "core.def.forceRefresh.information",
+          "when": "view == PubInfo"
         }
       ],
       "view/item/context": [
@@ -687,7 +732,7 @@
     "@ali/ide-extensions-iceworks-project-creator": "*",
     "@ali/ide-extensions-iceworks-style-helper": "*",
     "@ali/ide-extensions-iceworks-ui-builder": "*",
-    "@ali/kit-runner": "^0.1.0",
+    "@ali/kit-runner": "^0.1.2",
     "@ali/publish-visual": "^0.2.24"
   },
   "devDependencies": {
@@ -696,10 +741,39 @@
   },
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "compile": "kit-builder compile"
+    "compile": "NODE_ENV=development kit-builder compile",
+    "watch": "NODE_ENV=development kit-builder watch"
   },
   "kaitianContributes": {
     "nodeMain": "./out/node/index.js",
-    "browserMain": "./out/browser/index.js"
+    "browserMain": "./out/browser/index.js",
+    "viewsProxies": [
+      "PubInfo",
+      "CreateIteration"
+    ],
+    "browserViews": {
+      "right": {
+        "type": "add",
+        "view": [
+          {
+            "id": "PubInfo",
+            "iconPath": "icons/logo.svg",
+            "title": "基础信息"
+          }
+        ]
+      },
+      "editor": {
+        "type": "add",
+        "view": [
+          {
+            "id": "CreateIteration",
+            "scheme": "def-create-iteration",
+            "tabTitle": "创建迭代",
+            "tabIconPath": "icons/iteration.svg",
+            "renderMode": 1
+          }
+        ]
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 # only for o2 pack
-src/
-tsconfig.json
+# FIXME: 打包脚本暂无考虑到外部引入插件的场景，先注释掉
+# src/
 package.nls*
 assets/
 schemas/

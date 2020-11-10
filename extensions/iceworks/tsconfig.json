@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "CommonJS",
+    "target": "es6",
+    "jsx": "react",
+    "outDir": "out",
+    "skipLibCheck": true,
+    "lib": [
+      "es6",
+      "DOM"
+    ],
+    "paths": {
+      "kaitian": [
+        "./node_modules/@ali/kaitian"
+      ],
+      "kaitian-browser":[
+        "./node_modules/@ali/kaitian"
+      ]
+    },
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "sourceMap": true,
+    "rootDir": "src",
+    "strict": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    ".vscode-test"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}
