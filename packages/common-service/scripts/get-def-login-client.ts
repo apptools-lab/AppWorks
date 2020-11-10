@@ -30,4 +30,7 @@ if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
       })
       .catch((e) => console.error(e));
   })();
+} else {
+  console.error('Please set ACCESS_KEY_ID && ACCESS_KEY_SECRET');
+  process.exit(1);
 }

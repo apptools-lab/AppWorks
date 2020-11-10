@@ -1,10 +1,9 @@
 const path = require('path');
 
 const tsConfigPath = path.join(__dirname, 'tsconfig.json');
-
 const config = {
   target: 'node',
-  entry: './src/index.ts',
+  entry: './src/extension.ts',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'extension.js',

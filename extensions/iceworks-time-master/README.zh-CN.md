@@ -1,17 +1,23 @@
-简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md)
+简体中文 | [English](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.md)
 
 # 时间管理大师
 
-[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-steward.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-自动生成你的编程时间统计和效率度量，提供优化建议。
+时间管理大师是通过自动跟踪您的编程活动从而度量您的编程效率的插件，它完全不依赖于网络环境，安全且轻量，代码开源。
 
-## 如何查看数据
+## 功能
 
-插件当前仍在内测阶段，数据查看需联系作者。
+### 了解您的编程活动
+
+![了解编程活动](https://img.alicdn.com/tfs/TB1fbiz1UY1gK0jSZFMXXaWcVXa-1048-915.png)
+
+### 生成您的编程报告
+
+![生成编程报告](https://img.alicdn.com/tfs/TB1AOKRmJTfau8jSZFwXXX1mVXa-1117-817.png)
 
 ## 安全和隐私
 
