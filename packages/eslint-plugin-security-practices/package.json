@@ -19,7 +19,9 @@
     "access": "public"
   },
   "scripts": {
-    "test": "mocha tests --recursive"
+    "test": "mocha tests --recursive",
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
   },
   "dependencies": {
     "@ice/spec": "^1.0.1",

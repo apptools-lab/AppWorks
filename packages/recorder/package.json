@@ -17,6 +17,10 @@
     "@types/axios": "^0.14.0",
     "@types/vscode": "^1.45.0"
   },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "publishConfig": {
     "access": "public"
   }
