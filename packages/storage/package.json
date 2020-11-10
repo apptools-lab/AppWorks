@@ -12,6 +12,10 @@
     "mkdirp": "^1.0.4",
     "user-home": "^2.0.0"
   },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "publishConfig": {
     "access": "public"
   }

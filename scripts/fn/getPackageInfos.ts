@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { getLatestVersion } from 'ice-npm-utils';
 
-const TARGET_DIRECTORY = join(__dirname, '../packages');
+const TARGET_DIRECTORY = join(__dirname, '../../packages');
 
 export interface IPackageInfo {
   name: string;

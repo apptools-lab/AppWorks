@@ -38,5 +38,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }

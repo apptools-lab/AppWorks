@@ -10,6 +10,10 @@
   "dependencies": {
     "jsonfile": "^6.0.1"
   },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "publishConfig": {
     "access": "public"
   }
