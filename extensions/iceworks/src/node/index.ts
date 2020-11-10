@@ -39,15 +39,21 @@ export default class KitNode implements IDEKit.IKitNodeBase {
   }
 
   async defPublish() {
-    this.toolbarHandles['iceworks.def.publish'].setState('publishing', '发布中');
     const env = await kaitian.window.showQuickPick([
       {label: 'daily', description: '发布到日常环境'},
       {label: 'prod', description: '发布到线上环境'},
     ]);
     if (env) {
+      const pubInfoPanel = kaitian.layout.getExtensionTabbarHandler('PubInfo');
+      try {
+        pubInfoPanel.activate();
+      } catch(e) {
+        console.error(e);
+      }
+      // this.toolbarHandles['iceworks.def.publish'].setState('publishing', '发布中');
       // TODO: 底层插件应该暴露一个promise给套件
       await kaitian.commands.executeCommand('core.def.publish', env.label);
-      this.toolbarHandles['iceworks.def.publish'].setState('default', 'DEF发布');
+      // this.toolbarHandles['iceworks.def.publish'].setState('default', '发布中');
     }
   }
 }

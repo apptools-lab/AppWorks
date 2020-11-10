@@ -15,6 +15,7 @@ export default {
         publishing: {
           title: '发布中',
           background: 'var(--button-hoverBackground)',
+          color: 'var(--button-foreground)',
           // TODO: 抹平
           showTitle: true,
           btnTitleStyle: 'horizontal',
