@@ -33,15 +33,6 @@
     "url": "https://github.com/ice-lab/iceworks.git"
   },
   "icon": "public/logo.png",
-  "extensionPack": [
-    "iceworks-team.iceworks-app",
-    "iceworks-team.iceworks-ui-builder",
-    "iceworks-team.iceworks-project-creator",
-    "iceworks-team.iceworks-style-helper",
-    "iceworks-team.iceworks-material-helper",
-    "iceworks-team.iceworks-config-helper",
-    "iceworks-team.iceworks-doctor"
-  ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
@@ -49,6 +40,22 @@
   },
   "contributes": {
     "commands": [
+      {
+        "command": "iceworks-ui-builder.design-component",
+        "title": "%iceworksUIBuilder.commands.designComponent.title%",
+        "icon": {
+          "light": "./icons/preview-right-light.svg",
+          "dark": "./icons/preview-right-dark.svg"
+        }
+      },
+      {
+        "command": "iceworksApp.recorder.recordCompletionItemSelect",
+        "title": "recordCompletionItemSelect",
+        "icon": {
+          "light": "./icons/file-search-light.svg",
+          "dark": "./icons/file-search-dark.svg"
+        }
+      },
       {
         "command": "iceworks-config-helper.configPanel.start",
         "title": "%iceworksConfigHelper.commands.start.configHelperPanel.title%",
@@ -69,8 +76,8 @@
         "command": "iceworks-project-creator.start",
         "title": "%iceworksProjectCreator.commands.start.title%",
         "icon": {
-          "light": "assets/light/publish.svg",
-          "dark": "assets/dark/publish.svg"
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
         }
       },
       {
@@ -85,8 +92,8 @@
         "command": "iceworksApp.welcome.start",
         "title": "%iceworksApp.command.welcome.start.title%",
         "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
+          "light": "assets/light/run.svg",
+          "dark": "assets/dark/run.svg"
         }
       },
       {
@@ -165,8 +172,8 @@
         "command": "iceworksApp.pages.openFile",
         "title": "%iceworksApp.command.pages.openFile.title%",
         "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
         }
       },
       {
@@ -205,8 +212,8 @@
         "command": "iceworksApp.components.openFile",
         "title": "%iceworksApp.command.components.openFile.title%",
         "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
+          "light": "assets/light/install.svg",
+          "dark": "assets/dark/install.svg"
         }
       },
       {
@@ -234,8 +241,8 @@
         }
       },
       {
-        "command": "iceworksApp.nodeDependencies.dependencies.add",
         "title": "%iceworksApp.command.nodeDependencies.dependencies.add.title%",
+        "command": "iceworksApp.nodeDependencies.dependencies.add",
         "icon": {
           "light": "assets/light/add.svg",
           "dark": "assets/dark/add.svg"
@@ -250,20 +257,12 @@
         }
       },
       {
-        "title": "%iceworksApp.command.nodeDependencies.upgrade.title%",
         "command": "iceworksApp.nodeDependencies.upgrade",
+        "title": "%iceworksApp.command.nodeDependencies.upgrade.title%",
         "icon": {
           "light": "assets/light/upgrade.svg",
           "dark": "assets/dark/upgrade.svg"
         }
-      },
-      {
-        "command": "iceworksApp.recorder.recordCompletionItemSelect",
-        "title": "recordCompletionItemSelect"
-      },
-      {
-        "command": "iceworks-ui-builder.design-component",
-        "title": "%iceworksUIBuilder.commands.designComponent.title%"
       },
       {
         "command": "iceworks-material-helper.material-importer.start",
@@ -347,7 +346,7 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "iceworksApp.recorder.recordCompletionItemSelect",
+          "command": "iceworksApp.npmScripts.refresh",
           "when": "false"
         },
         {
@@ -712,11 +711,7 @@
     }
   },
   "activationEvents": [
-    "onCommand:iceworks-config-helper.configPanel.start",
-    "onLanguage:json",
-    "onCommand:iceworks-project-creator.start",
-    "onStartupFinished",
-    "*",
+    "onCommand:iceworks-ui-builder.design-component",
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
     "onLanguage:typescript",
@@ -725,13 +720,21 @@
     "onLanguage:less",
     "onLanguage:sass",
     "onLanguage:scss",
-    "onCommand:iceworks-ui-builder.design-component",
+    "onCommand:iceworks-config-helper.configPanel.start",
+    "onLanguage:json",
+    "onCommand:iceworks-project-creator.start",
+    "onStartupFinished",
+    "*",
+    "onView:nodeDependencies",
+    "onView:scripts",
+    "onView:pages",
+    "onView:components",
+    "onCommand:iceworksApp.configHelper.start",
+    "onCommand:iceworksApp.welcome.start",
     "onCommand:iceworks-material-helper.material-importer.start",
     "onCommand:iceworks-material-helper.component-creator.start",
     "onCommand:iceworks-material-helper.page-generator.start",
-    "onCommand:iceworks-material-helper.page-creator.start",
-    "onCommand:iceworks-doctor.scan",
-    "onCommand:iceworks-doctor.dashboard"
+    "onCommand:iceworks-material-helper.page-creator.start"
   ],
   "dependencies": {
     "@ali/ide-extensions-iceworks-app": "*",

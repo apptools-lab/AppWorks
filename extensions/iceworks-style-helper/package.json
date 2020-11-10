@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-style-helper",
+  "name": "@ali/ide-extensions-iceworks-style-helper",
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -44,7 +44,8 @@
     "vscode:prepublish": "rm -rf build && webpack --mode production",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run vscode:prepublish"
   },
   "contributes": {
     "commands": [
@@ -86,5 +87,11 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "files": [
+    "build"
+  ]
 }

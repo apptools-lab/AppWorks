@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-project-creator",
+  "name": "@ali/ide-extensions-iceworks-project-creator",
   "displayName": "Application Creator",
   "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -79,7 +79,8 @@
     "watch:web": "cd web && npm run start",
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run vscode:prepublish"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
@@ -101,5 +102,11 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "files": [
+    "build"
+  ]
 }
