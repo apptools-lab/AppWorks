@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { IScannerOptions, IScanOptions, IFileInfo, IScannerReports } from './types/Scanner';
 import getCustomESLintConfig from './getCustomESLintConfig';
-import getESLintReports from './getESLintReports';
+import getEslintReports from './getEslintReports';
 import getMaintainabilityReports from './getMaintainabilityReports';
 import getRepeatabilityReports from './getRepeatabilityReports';
 import getFiles from './getFiles';
@@ -37,7 +37,7 @@ export default class Scanner {
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${this.options.framework}${this.options.languageType === 'ts' ? '-ts' : ''}`;
-      reports.ESLint = getESLintReports(files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
+      reports.ESLint = getEslintReports(files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
     }
 
     // Calculate maintainability
