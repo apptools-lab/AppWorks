@@ -1,5 +1,5 @@
 {
   "timeMaster.views.iceworksApp.timeMaster.name": "Time Master",
-  "timeMaster.configuration.properties.iceworks.timeLimit.title": "Days limit for statistical time",
+  "timeMaster.configuration.properties.iceworks.timeLimit.title": "How long (days) the statistics are saved",
   "timeMaster.configuration.properties.iceworks.timeLimit.description": "The longer the time, the more local disk capacity"
 }
