@@ -33,10 +33,14 @@ function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
     async (progress) => {
       const progressMgr = new Progress(progress);
       progressMgr.start();
-      const filePath = await generateFn();
-      const doc = await workspace.openTextDocument(filePath);
-      await window.showTextDocument(doc, ViewColumn.One, false);
-      progressMgr.done();
+      try {
+        const filePath = await generateFn();
+        const doc = await workspace.openTextDocument(filePath);
+        await window.showTextDocument(doc, ViewColumn.One, false);
+        progressMgr.done();
+      } catch (e) {
+        window.showErrorMessage('Generate dashborad got error:', e);
+      }
     },
   );
 }

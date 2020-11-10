@@ -27,7 +27,7 @@ export function getDay(m?: moment.Moment) {
 }
 
 export function getLastWeekDays(m?: moment.Moment): moment.Moment[] {
-  const lastWeekSameDay = (m.clone() || moment()).subtract(1, 'w');
+  const lastWeekSameDay = (m ? m.clone() : moment()).subtract(1, 'w');
   const weekday = lastWeekSameDay.weekday();
   const preDays = [];
   const nextDays = [];
