@@ -12,7 +12,7 @@ export async function activate(context: ExtensionContext) {
   logIt('[extension] activate!');
   const { subscriptions } = context;
 
-  const timerProvider = new TimerProvider();
+  const timerProvider = new TimerProvider(context);
   const timerTreeView = createTimerTreeView(timerProvider);
   timerProvider.bindView(timerTreeView);
 

@@ -8,8 +8,9 @@ import {
   Event,
   TreeView,
   window,
+  Uri,
+  ExtensionContext,
 } from 'vscode';
-import * as path from 'path';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
 import { getUserSummary, UserSummary } from '../storages/user';
@@ -20,7 +21,6 @@ import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 
 const NUMBER_FORMAT = '0 a';
-const resourcePath = path.join(__dirname, '..', 'assets');
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 enum UIInteractionType {
@@ -72,6 +72,7 @@ class TimerTreeItem extends TreeItem {
   constructor(
     private readonly treeItem: TimerItem,
     public readonly collapsibleState: TreeItemCollapsibleState,
+    public readonly extensionContext: ExtensionContext,
     public readonly command?: Command,
   ) {
     super(treeItem.label, collapsibleState);
@@ -103,9 +104,13 @@ class TimerTreeItem extends TreeItem {
   getTreeItemIcon(treeItem: TimerItem): any {
     const iconName = treeItem.icon;
     const lightPath =
-      iconName ? path.join(resourcePath, 'light', iconName) : null;
+      iconName ?
+        Uri.file(this.extensionContext.asAbsolutePath(`assets/light/${iconName}`)) :
+        null;
     const darkPath =
-      iconName ? path.join(resourcePath, 'dark', iconName) : null;
+      iconName ?
+        Uri.file(this.extensionContext.asAbsolutePath(`assets/dark/${iconName}`)) :
+        null;
     return { lightPath, darkPath };
   }
 
@@ -120,8 +125,8 @@ class TimerTreeItem extends TreeItem {
   }
 }
 
-function createTimerTreeItem(p: TimerItem, state: TreeItemCollapsibleState): TimerTreeItem {
-  return new TimerTreeItem(p, state);
+function createTimerTreeItem(p: TimerItem, state: TreeItemCollapsibleState, extensionContext: ExtensionContext): TimerTreeItem {
+  return new TimerTreeItem(p, state, extensionContext);
 }
 
 export class TimerProvider implements TreeDataProvider<TimerItem> {
@@ -130,6 +135,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   readonly onDidChangeTreeData: Event<TimerItem | undefined> = this._onDidChangeTreeData.event;
 
   private view: TreeView<TimerItem>;
+
+  private readonly extensionContext: ExtensionContext;
+
+  constructor(extensionContext: ExtensionContext) {
+    this.extensionContext = extensionContext;
+  }
 
   public refresh(): void {
     this._onDidChangeTreeData.fire(null);
@@ -538,17 +549,17 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return undefined;
   }
 
-  getTreeItem(p: TimerItem): TimerTreeItem {
-    let treeItem: TimerTreeItem = null;
+  getTreeItem(p: TimerItem) {
+    let treeItem = null;
     if (p.children.length) {
       const collapsedState = timerCollapsedStateMap[p.label];
       if (!collapsedState) {
-        treeItem = createTimerTreeItem(p, p.initialCollapsibleState);
+        treeItem = createTimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
       } else {
-        treeItem = createTimerTreeItem(p, collapsedState);
+        treeItem = createTimerTreeItem(p, collapsedState, this.extensionContext);
       }
     } else {
-      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None);
+      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
     }
     return treeItem;
   }
