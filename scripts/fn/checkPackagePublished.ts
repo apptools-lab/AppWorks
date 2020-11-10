@@ -1,6 +1,6 @@
 
 import { getLatestVersion, getNpmInfo } from 'ice-npm-utils';
-import { getPublishedPackages } from '../published-info';
+import { getPublishedPackages } from './published-info';
 
 async function getNpmVersion(name: string, isBeta: boolean): Promise<string> {
   let version = '';

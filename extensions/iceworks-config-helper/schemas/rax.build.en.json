@@ -1,45 +1,115 @@
 {
-  "definitions": {},
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "title": "rax-app build.json",
-  "required": ["plugins"],
+  "description": "Engineering configuration for rax-app.",
+  "default": {},
+  "examples": [{}],
+  "required": [],
   "properties": {
-    "publicPath": {
-      "type": "string",
-      "description": "The public URL of the output directory.",
-      "default": "/"
-    },
-    "devPublicPath": {
-      "type": "string",
-      "description": "The public URL of the dev server output directory.",
-      "default": "/"
-    },
-    "outputDir": {
-      "type": "string",
-      "description": "The build file directory",
-      "default": "",
-      "examples": ["build"]
-    },
-    "hash": {
-      "type": "boolean",
-      "description": "Whether each webpack build generates a unique hash",
-      "default": false
-    },
     "alias": {
       "type": "object",
       "description": "Create aliases to import or require certain modules more easily.",
       "default": {},
-      "examples": [
+      "examples": [{
+        "@components": "src/components/"
+      }]
+    },
+    "publicPath": {
+      "type": "string",
+      "description": "The public URL of the output directory.",
+      "default": "",
+      "examples": ["/"]
+    },
+    "devPublicPath": {
+      "type": "string",
+      "description": "The public URL of the dev server output directory.",
+      "default": "",
+      "examples": ["/"]
+    },
+    "sourceMap": {
+      "type": "boolean",
+      "description": "Whether to generate sourceMap",
+      "default": false,
+      "examples": [false]
+    },
+    "externals": {
+      "type": "object",
+      "description": "This feature is typically most useful to library developers, see https://webpack.js.org/configuration/externals .",
+      "default": {},
+      "examples": [{}],
+      "additionalProperties": true
+    },
+    "hash": {
+      "oneOf": [{
+          "type": "string",
+          "description": "If you want the hashed version of the built resource, you can set hash to true.",
+          "examples": ["contenthash"]
+        },
         {
-          "@components": "src/components/"
+          "type": "boolean",
+
+          "default": false,
+          "examples": [false]
         }
-      ]
+      ],
+      "description": "If you want the hashed version of the built resource, you can set hash to true. you can also switch hash type by string ",
+      "default": false,
+      "properties": {}
+    },
+    "injectBabel": {
+      "oneOf": [{
+          "type": "string",
+          "description": "Whether to inject core-js/stable and regenerator-runtime/runtime."
+        },
+        {
+          "type": "boolean",
+
+          "default": false,
+          "examples": [false]
+        }
+      ],
+      "description": "Whether to inject core-js/stable and regenerator-runtime/runtime.",
+      "default": false,
+      "properties": {}
+    },
+    "minify": {
+      "type": "boolean",
+      "description": "The resources after construction will be compressed.",
+      "default": true,
+      "examples": [false]
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Modify the built file directory.",
+      "default": "",
+      "examples": ["build"]
+    },
+    "proxy": {
+      "type": "object",
+      "description": "Configure webpack's devServer.proxy attribute.",
+      "default": {},
+      "examples": [{
+        "/**": {
+          "enable": true,
+          "target": "http://127.0.0.1:6001"
+        }
+      }],
+      "additionalProperties": true
     },
     "devServer": {
       "type": "object",
       "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
       "default": {},
+      "examples": [{
+        "compress": true,
+        "disableHostCheck": true,
+        "clientLogLevel": "error",
+        "hot": true,
+        "quiet": true,
+        "overlay": false
+      }],
+      "additionalProperties": true,
       "properties": {
         "compress": {
           "type": "boolean",
@@ -79,93 +149,236 @@
         }
       }
     },
+    "browserslist": {
+      "type": "object",
+      "description": "Config browserslist of @babel/preset-env ，the latest version of browser，Newly configured browserslist overrides the default value",
+      "default": {},
+      "examples": [{
+        "chrome": 49,
+        "ie": 11
+      }],
+      "required": [],
+      "additionalProperties": true
+    },
+    "targets": {
+      "type": "array",
+      "description": "Platform targets",
+      "default": [],
+      "examples": [
+        ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
+      ],
+      "additionalItems": true
+    },
+    "vendor": {
+      "type": "boolean",
+      "description": "Configure whether to generate vendor.",
+      "default": true,
+      "examples": [true]
+    },
+    "libraryTarget": {
+      "type": "string",
+      "description": "Configure webpack's output.libraryTarget attribute.",
+      "default": "",
+      "examples": [""]
+    },
+    "library": {
+      "type": "string",
+      "description": "Configure webpack's output.library attribute.",
+      "default": "",
+      "examples": [""]
+    },
+    "libraryExport": {
+      "type": "string",
+      "description": "Configure webpack's output.libraryExport attribute.",
+      "default": "",
+      "examples": [""]
+    },
+    "compileDependencies": {
+      "type": "array",
+      "description": "By default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
+      "default": [],
+      "examples": [
+        ["@alifd/next"]
+      ],
+      "additionalItems": true,
+      "items": {
+        "anyOf": [{
+          "type": "string",
+          "description": "Compile module dependencies under node_modules.",
+          "default": "",
+          "examples": ["@alifd/next"]
+        }]
+      }
+    },
+    "cssLoaderOptions": {
+      "type": "object",
+      "description": "css-loader params, see https://webpack.js.org/loaders/css-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "lessLoaderOptions": {
+      "type": "object",
+      "description": "less-loader params, see https://webpack.js.org/loaders/less-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "sassLoaderOptions": {
+      "type": "object",
+      "description": "sass-loader params, see https://webpack.js.org/loaders/sass-loader/#options .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "postcssrc": {
+      "type": "boolean",
+      "description": "After opening the configuration item, the project will clear the built-in postcss configuration and read the configuration in the postcss configuration file postcssrc.js or postcss.config.js",
+      "default": false,
+      "examples": [false]
+    },
+    "terserOptions": {
+      "type": "object",
+      "description": "terserPlugin params, see https://webpack.js.org/plugins/terser-webpack-plugin/ .",
+      "default": {},
+      "examples": [{}],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "babelPlugins": {
+      "type": "array",
+      "description": "Add an additional babel plugin to the babel-loader configuration.",
+      "default": [],
+      "examples": [
+        []
+      ],
+      "items": {
+        "type": "object"
+      },
+      "additionalItems": true
+    },
+    "babelPresets": {
+      "type": "array",
+      "description": "Add an additional babel preset to the configuration of babel-loader. If the preset is the same as the built-in preset, the configuration content in babelPresets will be used first.",
+      "default": [],
+      "examples": [
+        []
+      ],
+      "items": {
+        "type": "object"
+      },
+      "additionalItems": true
+    },
+    "eslint": {
+      "oneOf": [{
+          "type": "boolean",
+          "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
+        },
+        {
+          "type": "object",
+          "additionalProperties": true
+        }
+      ],
+      "description": "Configure eslint related options see https://github.com/webpack-contrib/eslint-loader .",
+      "default": false,
+      "examples": [false],
+      "properties": {}
+    },
+    "disableRuntime": {
+      "type": "boolean",
+      "description": "Disable the ability to run time, if you need to close the configuration to true.",
+      "default": false,
+      "examples": [false]
+    },
+    "tsChecker": {
+      "type": "boolean",
+      "description": "TypeScript type detection is turned off by default. If you need to enable it, set it to true.",
+      "default": false,
+      "examples": [false]
+    },
     "plugins": {
       "type": "array",
-      "description": "Compiler plugins",
-      "additionalItems": true,
+      "description": "Compiler plugins.",
       "default": [],
-      "items": {
-        "anyOf": [
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "string",
-                "description": "Build Rax App",
-                "enum": ["build-plugin-rax-app"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "targets": {
-                    "type": "array",
-                    "description": "Platform targets",
-                    "items": {
-                      "type": "string",
-                      "enum": ["web", "weex", "miniapp", "wechat-miniprogram", "kraken"]
-                    }
-                  }
-                },
-                "required": ["targets"]
-              }
-            ]
-          },
-          {
-            "type": "array",
-            "items": [
-              {
-                "type": "string",
-                "description": "Rax PWA plugin",
-                "enum": ["build-plugin-rax-pwa"]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "manifest": {
-                    "type": "object",
-                    "description": "Browsers can save PWA-enabled websites to the desktop for a smaller size and more powerful functionality than native apps. It can have a splash screen like a native APP, or a full screen display like a native APP.",
-                    "default": {},
-                    "additionalProperties": true
-                  },
-                  "snapshot": {
-                    "type": "boolean",
-                    "description": "The snapshot can fill the HTML container with the content corresponding to the last time the user visited it. It makes displaying page content in a high speed, and improves the loading speed of the first screen.",
-                    "default": false
-                  },
-                  "serviceWorker": {
-                    "type": "array",
-                    "default": [],
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Use the Service Worker to control the cache for faster loading times."
-                  }
-                }
-              }
-            ],
-            "examples": [
-              [
-                "build-plugin-rax-pwa",
-                {
-                  "snapshot": true
-                }
-              ]
-            ]
-          },
-          {
-            "type": "array"
-          },
-          {
-            "type": "string",
-            "examples": [
-              "build-plugin-rax-compat-react",
-              "build-plugin-rax-ssr",
-              "build-plugin-rax-multi-pages",
-              "build-plugin-rax-component"
-            ]
-          }
-        ]
-      }
+      "examples": [
+        "build-plugin-rax-compat-react",
+        "build-plugin-rax-component"
+      ],
+      "additionalItems": true
+    },
+    "inlineStyle": {
+      "type": "boolean",
+      "description": "Force the style to be inline.",
+      "default": true,
+      "examples": [true]
+    },
+    "web": {
+      "type": "object",
+      "description": "Config for target 'web'",
+      "default": {},
+      "examples": [{
+        "mpa": true,
+        "ssr": true,
+        "staticExport": true,
+        "doctype": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">"
+
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "weex": {
+      "type": "object",
+      "description": "Config for target 'weex'",
+      "default": {},
+      "examples": [{
+        "mpa": true
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "kraken": {
+      "type": "object",
+      "description": "Config for target 'kraken'",
+      "default": {},
+      "examples": [{
+        "mpa": true
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "miniapp": {
+      "type": "object",
+      "description": "Config for target 'miniapp'",
+      "default": {},
+      "examples": [{
+        "buildType": "compile",
+        "nativeConfig": {}
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
+    },
+    "wechat-miniprogram": {
+      "type": "object",
+      "description": "Config for target 'miniapp'",
+      "default": {},
+      "examples": [{
+        "buildType": "compile",
+        "nativeConfig": {}
+      }],
+      "required": [],
+      "additionalProperties": true,
+      "properties": {}
     }
   }
 }

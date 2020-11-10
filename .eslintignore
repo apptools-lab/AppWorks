@@ -19,3 +19,6 @@ __tests__
 # 忽略文件
 **/*-min.js
 **/*.min.js
+
+# 特殊文件
+packages/material-ui

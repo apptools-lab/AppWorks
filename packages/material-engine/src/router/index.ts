@@ -49,7 +49,7 @@ export async function create(data) {
 export async function getAll() {
   const routerConfigAST = await getRouterConfigAST(projectPath);
   let config = [];
-
+  // @ts-ignore
   traverse(routerConfigAST, {
     VariableDeclarator: ({ node }) => {
       if (t.isIdentifier(node.id, { name: ROUTER_CONFIG_VARIABLE }) && t.isArrayExpression(node.init)) {
@@ -147,6 +147,7 @@ function setData(data, routerConfigAST, routeConfigPath) {
    *          transform to
    * { path: '/a', component: Page }
    */
+  // @ts-ignore
   traverse(dataAST, {
     ObjectProperty({ node }) {
       // @ts-ignore

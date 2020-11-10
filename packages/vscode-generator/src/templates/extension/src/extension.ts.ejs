@@ -1,16 +1,13 @@
 import * as vscode from 'vscode';
-import { Recorder } from '@iceworks/recorder';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { registerCommand, initExtension } from '@iceworks/common-service';
 
 import { services } from './services';
 
 // eslint-disable-next-line
-const { name, version } = require('../package.json');
-const recorder = new Recorder(name, version);
+const { name } = require('../package.json');
 
 function activate(context: vscode.ExtensionContext) {
-  recorder.recordActivate();
 
   const { window, } = vscode;
   const { extensionPath } = context;
@@ -43,7 +40,7 @@ function activate(context: vscode.ExtensionContext) {
       webviewPanel = undefined;
     }, null, context.subscriptions);
 
-    connectService(webviewPanel, context, { services, recorder });
+    connectService(webviewPanel, context, { services });
   };
 
   registerCommand('<%= projectName %>.hello', () => {

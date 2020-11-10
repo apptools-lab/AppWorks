@@ -11,11 +11,9 @@
       "type": "object",
       "description": "Create aliases to import or require certain modules more easily.",
       "default": {},
-      "examples": [
-        {
-          "@components": "src/components/"
-        }
-      ]
+      "examples": [{
+        "@components": "src/components/"
+      }]
     },
     "publicPath": {
       "type": "string",
@@ -43,8 +41,7 @@
       "additionalProperties": true
     },
     "hash": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "string",
           "description": "If you want the hashed version of the built resource, you can set hash to true.",
           "examples": ["contenthash"]
@@ -61,8 +58,7 @@
       "properties": {}
     },
     "injectBabel": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "string",
           "description": "Whether to inject core-js/stable and regenerator-runtime/runtime."
         },
@@ -87,12 +83,10 @@
       "type": "object",
       "description": "Modify the built css/js file directory.",
       "default": {},
-      "examples": [
-        {
-          "js": "js",
-          "css": "css"
-        }
-      ],
+      "examples": [{
+        "js": "js",
+        "css": "css"
+      }],
       "additionalProperties": true
     },
     "outputDir": {
@@ -105,30 +99,26 @@
       "type": "object",
       "description": "Configure webpack's devServer.proxy attribute.",
       "default": {},
-      "examples": [
-        {
-          "/**": {
-            "enable": true,
-            "target": "http://127.0.0.1:6001"
-          }
+      "examples": [{
+        "/**": {
+          "enable": true,
+          "target": "http://127.0.0.1:6001"
         }
-      ],
+      }],
       "additionalProperties": true
     },
     "devServer": {
       "type": "object",
       "description": "This set of options is picked up by webpack-dev-server and can be used to change its behavior in various ways.",
       "default": {},
-      "examples": [
-        {
-          "compress": true,
-          "disableHostCheck": true,
-          "clientLogLevel": "error",
-          "hot": true,
-          "quiet": true,
-          "overlay": false
-        }
-      ],
+      "examples": [{
+        "compress": true,
+        "disableHostCheck": true,
+        "clientLogLevel": "error",
+        "hot": true,
+        "quiet": true,
+        "overlay": false
+      }],
       "additionalProperties": true,
       "properties": {
         "compress": {
@@ -169,18 +159,25 @@
         }
       }
     },
-    "targets": {
+    "browserslist": {
       "type": "object",
-      "description": "Config targets of @babel/preset-env ，the latest version of browser，Newly configured Targets overrides the default value",
+      "description": "Config browserslist of @babel/preset-env ，the latest version of browser，Newly configured browserslist overrides the default value",
       "default": {},
-      "examples": [
-        {
-          "chrome": 49,
-          "ie": 11
-        }
-      ],
+      "examples": [{
+        "chrome": 49,
+        "ie": 11
+      }],
       "required": [],
       "additionalProperties": true
+    },
+    "targets": {
+      "type": "array",
+      "description": "Platform targets",
+      "default": [],
+      "examples": [
+        ["miniapp", "wechat-miniprogram"]
+      ],
+      "additionalItems": true
     },
     "vendor": {
       "type": "boolean",
@@ -210,17 +207,17 @@
       "type": "array",
       "description": "By default, babel-loader will compile relevant modules to be compatible with IE11. If you need babel to compile the specified file under node_modules, you can quickly add it in this configuration.",
       "default": [],
-      "examples": [["@alifd/next"]],
+      "examples": [
+        ["@alifd/next"]
+      ],
       "additionalItems": true,
       "items": {
-        "anyOf": [
-          {
-            "type": "string",
-            "description": "Compile module dependencies under node_modules.",
-            "default": "",
-            "examples": ["@alifd/next"]
-          }
-        ]
+        "anyOf": [{
+          "type": "string",
+          "description": "Compile module dependencies under node_modules.",
+          "default": "",
+          "examples": ["@alifd/next"]
+        }]
       }
     },
     "cssLoaderOptions": {
@@ -269,7 +266,9 @@
       "type": "array",
       "description": "Add an additional babel plugin to the babel-loader configuration.",
       "default": [],
-      "examples": [[]],
+      "examples": [
+        []
+      ],
       "items": {
         "type": "object"
       },
@@ -279,7 +278,9 @@
       "type": "array",
       "description": "Add an additional babel preset to the configuration of babel-loader. If the preset is the same as the built-in preset, the configuration content in babelPresets will be used first.",
       "default": [],
-      "examples": [[]],
+      "examples": [
+        []
+      ],
       "items": {
         "type": "object"
       },
@@ -292,8 +293,7 @@
       "examples": [false]
     },
     "eslint": {
-      "oneOf": [
-        {
+      "oneOf": [{
           "type": "boolean",
           "description": "The eslint code detection is disabled by default. If you need to enable it, set it to true."
         },
@@ -341,8 +341,7 @@
       ],
       "additionalItems": true,
       "items": {
-        "anyOf": [
-          {
+        "anyOf": [{
             "type": "array",
             "description": "See https://ice.work/docs/guide/advance/fusion .",
             "default": [],
@@ -356,8 +355,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "See https://ice.work/docs/guide/advance/fusion .",
                   "default": "",
@@ -367,11 +365,9 @@
                   "type": "object",
                   "description": "build-plugin-fusion config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "themePackage": "@alifd/theme-design-pro"
-                    }
-                  ],
+                  "examples": [{
+                    "themePackage": "@alifd/theme-design-pro"
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "themePackage": {
@@ -401,8 +397,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "See https://ice.work/docs/guide/advance/fusion .",
                   "default": "",
@@ -412,24 +407,20 @@
                   "type": "object",
                   "description": "build-plugin-antd config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "themeConfig": {
-                        "primary-color": "#1DA57A"
-                      }
+                  "examples": [{
+                    "themeConfig": {
+                      "primary-color": "#1DA57A"
                     }
-                  ],
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "themeConfig": {
                       "type": "string",
                       "description": "customize themeConfig",
                       "default": "",
-                      "examples": [
-                        {
-                          "primary-color": "#1DA57A"
-                        }
-                      ]
+                      "examples": [{
+                        "primary-color": "#1DA57A"
+                      }]
                     },
                     "importOptions": {
                       "type": "object",
@@ -468,8 +459,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "Provides the ability to localize network resources in CSS..",
                   "default": "",
@@ -479,12 +469,10 @@
                   "type": "object",
                   "description": "build-plugin-css-assets-local config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "outputPath": "assets",
-                      "relativeCssPath": "../"
-                    }
-                  ],
+                  "examples": [{
+                    "outputPath": "assets",
+                    "relativeCssPath": "../"
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "outputPath": {
@@ -516,8 +504,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "See https://ice.work/docs/guide/develop/plugin-list .",
                   "default": "",
@@ -527,28 +514,26 @@
                   "type": "object",
                   "description": "build-plugin-moment-locales config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "locales": ["zh-cn"]
-                    }
-                  ],
+                  "examples": [{
+                    "locales": ["zh-cn"]
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "locales": {
                       "type": "array",
                       "description": "build-plugin-moment-locales config locales.",
                       "default": [],
-                      "examples": [["zh-cn"]],
+                      "examples": [
+                        ["zh-cn"]
+                      ],
                       "additionalItems": true,
                       "items": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "description": "build-plugin-moment-locales config locales.",
-                            "default": "",
-                            "examples": ["zh-cn"]
-                          }
-                        ]
+                        "anyOf": [{
+                          "type": "string",
+                          "description": "build-plugin-moment-locales config locales.",
+                          "default": "",
+                          "examples": ["zh-cn"]
+                        }]
                       }
                     }
                   }
@@ -572,8 +557,7 @@
             ],
             "additionalItems": true,
             "items": {
-              "anyOf": [
-                {
+              "anyOf": [{
                   "type": "string",
                   "description": "Provide the ability to automatically load assets.",
                   "default": "",
@@ -583,11 +567,9 @@
                   "type": "object",
                   "description": "plugin-load-assets config.",
                   "default": {},
-                  "examples": [
-                    {
-                      "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
-                    }
-                  ],
+                  "examples": [{
+                    "assets": ["https://unpkg.com/lodash@4.17.11/index.js", "https://url/global.css"]
+                  }],
                   "additionalProperties": true,
                   "properties": {
                     "assets": {

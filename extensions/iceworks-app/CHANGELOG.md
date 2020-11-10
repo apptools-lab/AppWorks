@@ -1,5 +1,14 @@
 # Change Log
 
+# 0.6.0
+
+- refactor: internal optimization
+
+## 0.5.8
+
+- fix: material sources edit form dialog will disappear before error 
+- fix: material sources list display order
+
 ## 0.5.7
 
 - fix: unable to open the quick picks

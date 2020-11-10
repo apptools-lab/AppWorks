@@ -69,7 +69,7 @@ export default async function generateDebugMaterialData(materialPath: string): P
 
   const debugMaterialData = {
     ...materialConfig,
-    name: `%%${DEBUG_PREFIX}${pkg.name}%%`,
+    name: `${DEBUG_PREFIX}${pkg.name}`,
     description: pkg.description,
     homepage: pkg.homepage || 'debugPage',
     author: pkg.author,

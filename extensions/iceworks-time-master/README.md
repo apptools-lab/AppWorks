@@ -1,17 +1,23 @@
-English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.zh-CN.md)
+English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.zh-CN.md)
 
 # Time Master
 
-[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-steward.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
-[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-steward.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-steward)
+[![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
+[![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-Metrics, insights, and time tracking automatically generated from your programming activity.
+Metrics, insights, and time tracking automatically generated from your programming activity. Time Master is an Open Source project, completely independent of network environment, safe and lightweight.
 
-## Check Data
+## Usage
 
-This plugin is still in the internal testing stage, please contact the author to check the data.
+### Check your Code Activity
+
+![Check Code Activity](https://img.alicdn.com/tfs/TB1fbiz1UY1gK0jSZFMXXaWcVXa-1048-915.png)
+
+### Generate your Code Time Summary
+
+![Generate Code Time Summary](https://img.alicdn.com/tfs/TB1AOKRmJTfau8jSZFwXXX1mVXa-1117-817.png)
 
 ## Security and Privacy
 

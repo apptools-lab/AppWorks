@@ -3,13 +3,12 @@
  */
 import * as path from 'path';
 import { spawnSync } from 'child_process';
-import uploadExtesions from './upload-extensions';
-import { IExtensionInfo, getExtensionInfos } from './getExtensionInfos';
+import uploadExtesions from './fn/upload-extensions';
+import { IExtensionInfo, getExtensionInfos } from './fn/getExtensionInfos';
 import sleep from './fn/sleep';
 import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
-
 
 function packExtension(extension: string, directory: string, version: string) {
   console.log('[VSCE] PACK: ', `${extension}@${version}`);

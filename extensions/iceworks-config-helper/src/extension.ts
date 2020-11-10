@@ -23,7 +23,6 @@ function setPanelActiveContext(value) {
 
 export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
-  recorder.recordActivate();
 
   const { extensionPath, subscriptions } = context;
 
@@ -32,6 +31,7 @@ export async function activate(context: vscode.ExtensionContext) {
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeConfigWebview(jsonFileUri: vscode.Uri) {
+    recorder.recordActivate();
     if (!canEditInPanel(jsonFileUri)) {
       vscode.window.showWarningMessage(
         i18n.format('extension.iceworksConfigHelper.loadJson.cannotEditInPanel', {
@@ -59,7 +59,7 @@ export async function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath);
+      configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'jsonform');
       configWebviewPanel.onDidDispose(
         () => {
           configWebviewPanel = undefined;
@@ -148,6 +148,8 @@ export async function activate(context: vscode.ExtensionContext) {
     }),
   );
 }
+
+export function deactivate() { }
 
 async function setJsonValidationUrl() {
   try {

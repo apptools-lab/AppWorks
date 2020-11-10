@@ -3,7 +3,7 @@
   "displayName": "Iceworks",
   "description": "Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -31,7 +31,7 @@
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
-  "icon": "assets/logo.png",
+  "icon": "public/logo.png",
   "extensionPack": [
     "iceworks-team.iceworks-app",
     "iceworks-team.iceworks-ui-builder",

@@ -17,6 +17,11 @@ interface IConfig {
   services?: any;
 }
 
+interface IConnectServiceOptions {
+  services: any;
+  recorder?: any;
+}
+
 export function active(context: vscode.ExtensionContext, config?: IConfig) {
   const { extensionPath } = context;
   const { title, services } = config;
@@ -32,10 +37,11 @@ export function active(context: vscode.ExtensionContext, config?: IConfig) {
 export function connectService(
   webviewPanel: vscode.WebviewPanel,
   context: vscode.ExtensionContext,
-  { services, recorder },
+  options: IConnectServiceOptions,
 ) {
   const { subscriptions } = context;
   const { webview } = webviewPanel;
+  const { services, recorder } = options;
   webview.onDidReceiveMessage(
     async (message: IMessage) => {
       const { service, method, eventId, args } = message;
@@ -45,21 +51,22 @@ export function connectService(
       if (api) {
         try {
           const extra = args.length > 0 ? { data: args.length === 1 ? args[0] : args } : undefined;
+          if (recorder) {
+            // record for extension
+            recorder.record({
+              module: service,
+              action: method,
+              ...extra,
+            });
 
-          // record for extension
-          recorder.record({
-            module: service,
-            action: method,
-            ...extra,
-          });
-
-          // record for service
-          record({
-            namespace: `@iceworks/${service}-service`,
-            module: 'callMethod',
-            action: method,
-            ...extra,
-          });
+            // record for service
+            record({
+              namespace: `@iceworks/${service}-service`,
+              module: 'callMethod',
+              action: method,
+              ...extra,
+            });
+          }
 
           // set the optional param to undefined
           const fillApiArgLength = api.length - args.length;
@@ -96,17 +103,22 @@ export function getHtmlForWebview(
 ): string {
   entryName = entryName || DEFAULT_ENTRY;
   const localBasePath = path.join(extensionPath, 'build');
-  const scriptPath = path.join(cdnBasePath || localBasePath, `js/${entryName}.js`);
-  const scriptUri = cdnBasePath ? scriptPath : vscode.Uri.file(scriptPath).with({ scheme: 'vscode-resource' });
-  const stylePath = path.join(cdnBasePath || localBasePath, `css/${entryName}.css`);
-  const styleUri = cdnBasePath ? stylePath : vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
+  const rootPath = cdnBasePath || localBasePath;
+  const scriptPath = path.join(rootPath, `js/${entryName}.js`);
+  const scriptUri = cdnBasePath ?
+    scriptPath :
+    vscode.Uri.file(scriptPath).with({ scheme: 'vscode-resource' });
+  const stylePath = path.join(rootPath, `css/${entryName}.css`);
+  const styleUri = cdnBasePath ?
+    stylePath :
+    vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
 
   // vendor for MPA
-  const vendorStylePath = path.join(cdnBasePath || localBasePath, 'css/vendor.css');
+  const vendorStylePath = path.join(rootPath, 'css/vendor.css');
   const vendorStyleUri = cdnBasePath
     ? vendorStylePath
     : vscode.Uri.file(vendorStylePath).with({ scheme: 'vscode-resource' });
-  const vendorScriptPath = path.join(cdnBasePath || localBasePath, 'js/vendor.js');
+  const vendorScriptPath = path.join(rootPath, 'js/vendor.js');
   const vendorScriptUri = cdnBasePath
     ? vendorScriptPath
     : vscode.Uri.file(path.join(localBasePath, 'js/vendor.js')).with({ scheme: 'vscode-resource' });

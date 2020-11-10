@@ -1,0 +1,20 @@
+{
+  "name": "@iceworks/project-utils",
+  "version": "0.1.0",
+  "description": "General tool library for Iceworks Project.",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "dependencies": {
+    "jsonfile": "^6.0.1"
+  },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -2,8 +2,8 @@
  * Scripts to check unpublished version and run publish
  */
 import { spawnSync } from 'child_process';
-import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos } from './getPackageInfos';
+import { setPublishedPackages } from './fn/published-info';
+import { IPackageInfo, getPackageInfos } from './fn/getPackageInfos';
 
 function publish(pkg: string, version: string, directory: string): void {
   console.log('[PUBLISH]', `${pkg}@${version}`);

@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
+import { checkIsTargetProject, getProjectType as originGetProjectType } from '@iceworks/project-utils';
 import { readPackageJSON } from 'ice-npm-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
@@ -39,7 +40,7 @@ export async function checkIsNotTarget() {
     isNotTarget = true;
   } else {
     try {
-      isNotTarget = (await getProjectType()) === 'unknown';
+      isNotTarget = !await checkIsTargetProject(projectPath);
     } catch (e) {
       isNotTarget = true;
     }
@@ -66,23 +67,7 @@ export async function getProjectLanguageType() {
 }
 
 export async function getProjectType() {
-  let type = 'unknown';
-  try {
-    const { dependencies = {} } = await readPackageJSON(projectPath);
-    if (dependencies.rax) {
-      type = 'rax';
-    }
-    if (dependencies.react) {
-      type = 'react';
-    }
-    if (dependencies.vue) {
-      type = 'vue';
-    }
-  } catch (error) {
-    // ignore error
-  }
-
-  return type;
+  return await originGetProjectType(projectPath);
 }
 
 export async function checkIsPegasusProject() {
@@ -102,7 +87,7 @@ export async function getProjectFramework() {
   let framework = 'unknown';
   try {
     const { dependencies = {}, devDependencies = {} } = await readPackageJSON(projectPath);
-    if (dependencies['rax-app']) {
+    if (devDependencies['rax-app'] || dependencies['rax-app']) {
       framework = 'rax-app';
     }
     if (devDependencies['ice.js'] || dependencies['ice.js']) {

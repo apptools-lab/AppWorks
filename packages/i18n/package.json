@@ -4,7 +4,8 @@
   "description": "I18nService for iceworks",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
   },
   "keywords": [
     "i18n"

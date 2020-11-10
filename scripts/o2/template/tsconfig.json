@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "CommonJS",
+    "target": "es6",
+    "jsx": "react",
+    "outDir": "out",
+    "skipLibCheck": true,
+    "lib": [
+      "es6",
+      "DOM"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "sourceMap": true,
+    "rootDir": "src",
+    "strict": false,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    ".vscode-test"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}
