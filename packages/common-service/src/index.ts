@@ -328,7 +328,9 @@ export async function getUserInfo() {
   } else {
     try {
       const { account, empid: empId } = await fn();
-      return { account, empId, gitlabToken };
+      const result = { account, empId, gitlabToken };
+      saveDataToSettingJson('user', result);
+      return result;
     } catch (e) {
       throw new Error(e.message);
     }
