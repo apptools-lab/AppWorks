@@ -6,13 +6,17 @@ import i18n from '../i18n';
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 export function getNowDay() {
-  const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  let currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  if (!currentDay) {
+    currentDay = setNowDay();
+  }
   return currentDay;
 }
 
 export function setNowDay() {
   const day = getNowUCTDay();
   storage.set(CURRENT_DAY_STORAGE_KEY, day);
+  return day;
 }
 
 export function isNewDay() {
