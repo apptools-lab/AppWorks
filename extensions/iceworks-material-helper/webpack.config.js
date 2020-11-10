@@ -14,6 +14,7 @@ const config = {
   externals: {
     vscode: 'commonjs vscode',
     prettier: 'commonjs prettier',
+    'transform-ts-to-js': 'commonjs transform-ts-to-js',
     '@iceworks/code-generator': 'commonjs @iceworks/code-generator',
   },
   resolve: {
