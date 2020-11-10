@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-config-helper",
+  "name": "@ali/ide-extensions-iceworks-config-helper",
   "displayName": "Config Helper",
   "description": "Easily write Config files in icejs(& rax-app)",
   "publisher": "iceworks-team",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -109,7 +109,8 @@
     "watch:web": "cd web && npm run start",
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run vscode:prepublish"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",
@@ -129,5 +130,11 @@
     "generate-schema": "^2.6.0",
     "lodash.forin": "^4.4.0",
     "lodash.isequal": "^4.5.0"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "files": [
+    "build"
+  ]
 }

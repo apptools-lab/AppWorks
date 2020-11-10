@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-ui-builder",
+  "name": "@ali/ide-extensions-iceworks-ui-builder",
   "displayName": "UI Designer",
   "description": "Build UI by visual way",
   "publisher": "iceworks-team",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -49,7 +49,8 @@
     "vscode:prepublish": "rm -rf build && webpack --mode production",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run vscode:prepublish"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.160",
@@ -69,5 +70,11 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "files": [
+    "build"
+  ]
 }

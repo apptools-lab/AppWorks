@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-material-helper",
+  "name": "@ali/ide-extensions-iceworks-material-helper",
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -153,7 +153,8 @@
     "watch:web": "cd web && npm run start",
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run vscode:prepublish"
   },
   "devDependencies": {
     "@types/babel-traverse": "^6.25.5",
@@ -182,5 +183,11 @@
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  },
+  "files": [
+    "build"
+  ]
 }
