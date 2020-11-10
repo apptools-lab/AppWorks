@@ -14,6 +14,11 @@ export default {
       states: {
         publishing: {
           title: '发布中',
+          background: 'var(--button-hoverBackground)',
+          // TODO: 抹平
+          showTitle: true,
+          btnTitleStyle: 'horizontal',
+          btnStyle: 'button',
         }
       },
     }
