@@ -16,7 +16,7 @@ export async function createTimerStatusBar() {
   statusBar.text = await getStatusBarText();
   statusBar.command = 'iceworks-time-master.displayTimerTree';
   statusBar.refresh = async function () {
-    this.text = await getStatusBarText();
+    statusBar.text = await getStatusBarText();
   };
   return statusBar;
 }
