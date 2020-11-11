@@ -36,6 +36,8 @@ $ iceworks-doctor -s ./
 
 * ignore, string[] Ignore directories, example ['mock'] .
 * supportExts, string[] Support file exts, example ['css'] .
+* framework, string target project framework, default is `react` .
+* languageType, 'js'|'ts' target project languageType, default is `js` .
 
 ## CLI
 
