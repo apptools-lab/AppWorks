@@ -8,7 +8,7 @@ export default class Scanner {
   protected digits: number;
 
   protected currentScore: number;
-
+  
   constructor(options = {} as IScorerOptions) {
     this.highestScore = options.highestScore || 100;
     this.lowestScore = options.lowestScore || 30;
