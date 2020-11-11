@@ -1,5 +1,5 @@
 import { commands, window, ProgressLocation, workspace, ViewColumn } from 'vscode';
-import { KeystrokeStats } from './keystrokeStats';
+import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { updateFilesChangeSummary } from '../storages/filesChange';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';

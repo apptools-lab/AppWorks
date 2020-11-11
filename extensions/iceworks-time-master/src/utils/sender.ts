@@ -2,7 +2,7 @@ import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
-import { KeystrokeStats } from '../managers/keystrokeStats';
+import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
 import { getAppDataDirPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo } from './env';

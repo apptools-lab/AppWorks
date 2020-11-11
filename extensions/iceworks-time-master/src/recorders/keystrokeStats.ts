@@ -2,12 +2,102 @@ import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumen
 import { isFileActive, logIt } from '../utils/common';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { Project } from '../storages/project';
-import { KeystrokeStats } from './keystrokeStats';
-import { cleanTextInfoCache } from '../storages/filesChange';
+import { cleanTextInfoCache, FileChange } from '../storages/filesChange';
+import { getNowUTCSec } from '../utils/time';
+import { processData } from '../managers/data';
+import forIn = require('lodash.forin');
+
+export class KeystrokeStats {
+  public keystrokes = 0;
+
+  public start: number;
+
+  public end: number;
+
+  public files: {[name: string]: FileChange} = {};
+
+  public project: Project;
+
+  constructor(project: Project) {
+    this.project = project;
+  }
+
+  hasData(): boolean {
+    const keys = Object.keys(this.files);
+    if (keys.length === 0) {
+      return false;
+    }
+
+    // delete files that don't have any kpm data
+    let foundKpmData = false;
+    if (this.keystrokes > 0) {
+      foundKpmData = true;
+    }
+
+    // Now remove files that don't have any keystrokes
+    // that only have an open or close associated with them.
+    // If they have open and close then it's ok, keep it.
+    let keystrokesTally = 0;
+    keys.forEach((key) => {
+      const fileChange: FileChange = this.files[key];
+      const hasOpen = fileChange.open > 0;
+      const hasClose = fileChange.close > 0;
+      keystrokesTally += fileChange.keystrokes;
+      if (hasOpen && hasClose) {
+        foundKpmData = true;
+      }
+    });
+
+    if (keystrokesTally > 0 && keystrokesTally !== this.keystrokes) {
+      // use the keystrokes tally
+      foundKpmData = true;
+      this.keystrokes = keystrokesTally;
+    }
+    return foundKpmData;
+  }
+
+  hasFile(fsPath: string): boolean {
+    return !!this.files[fsPath];
+  }
+
+  addFile(fsPath: string): void {
+    const fileChange = FileChange.createInstance(fsPath, this.project);
+    fileChange.activate();
+    this.files[fsPath] = fileChange;
+  }
+
+  setStart(time?: number) {
+    this.start = time || getNowUTCSec();
+  }
+
+  setEnd(time?: number) {
+    this.end = time || getNowUTCSec();
+  }
+
+  async sendData() {
+    const isHasData = this.hasData();
+    logIt('[KeystrokeStats][sendData]isHasData', isHasData);
+    if (isHasData) {
+      this.deactivate();
+      await processData(this);
+    }
+  }
+
+  activate() {
+    this.setStart();
+  }
+
+  deactivate() {
+    this.setEnd();
+    forIn(this.files, (fileChange: FileChange) => {
+      fileChange.deactivate();
+    });
+  }
+}
 
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
-export class KpmManager {
+export class KeystrokeStatsRecorder {
   /**
   * This will return true if it's a validated file.
   * we don't want to send events for .git or
@@ -135,7 +225,7 @@ export class KpmManager {
       keystrokeStats = new KeystrokeStats(project);
       keystrokeStats.activate();
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
-        logIt('[KpmManager][createKeystrokeStats][keystrokeStatsTimeouts] run');
+        logIt('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
       }, ONE_MIN_MILLISECONDS);
     }
@@ -190,7 +280,7 @@ export class KpmManager {
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
     const windowIsFocused = window.state.focused;
-    logIt('[KpmManager][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
+    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
     if (!windowIsFocused) {
       return;
     }
@@ -199,7 +289,7 @@ export class KpmManager {
     const { fileName: fsPath } = document;
 
     const isValidatedFile = this.isValidatedFile(document, fsPath);
-    logIt('[KpmManager][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
+    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
     if (!isValidatedFile) {
       return;
     }
@@ -217,7 +307,7 @@ export class KpmManager {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logIt('[KpmManager][onDidChangeTextDocument]contentChanges', contentChanges);
+    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
     // each changeset is triggered by a single keystroke
     if (contentChanges.length > 0) {
       currentFileChange.keystrokes += 1;
@@ -230,21 +320,21 @@ export class KpmManager {
         // it's a copy and paste event
         currentFileChange.paste += 1;
         currentFileChange.charsPasted += textChangeInfo.textChangeLen;
-        logIt('[KpmManager][onDidChangeTextDocument]Copy+Paste Incremented');
+        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]Copy+Paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
       } else if (textChangeInfo.hasNonNewLine) {
         currentFileChange.add += 1;
-        logIt('[KpmManager][onDidChangeTextDocument]add incremented');
+        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logIt(`[KpmManager][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
+        logIt(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logIt(`[KpmManager][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
+        logIt(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -253,7 +343,7 @@ export class KpmManager {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logIt('[KpmManager][onDidChangeWindowState][focused]', windowState.focused);
+    logIt('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
       await this.sendKeystrokeStatsMap();
     }

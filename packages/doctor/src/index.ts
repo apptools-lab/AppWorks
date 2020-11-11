@@ -18,7 +18,7 @@ class Doctor {
       ignore: defaultignore.concat(this.options.ignore || []),
       supportExts: defaultSupportExts.concat(this.options.supportExts || []),
       framework: options.framework || 'react',
-      languageType: options.languageType || 'js'
+      languageType: options.languageType || 'js',
     });
   }
 

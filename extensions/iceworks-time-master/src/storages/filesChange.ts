@@ -4,7 +4,7 @@ import { TextDocument } from 'vscode';
 import { getAppDataDayDirPath } from '../utils/storage';
 import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
-import { KeystrokeStats } from '../managers/keystrokeStats';
+import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { JSON_SPACES } from '../constants';
 import forIn = require('lodash.forin');
 

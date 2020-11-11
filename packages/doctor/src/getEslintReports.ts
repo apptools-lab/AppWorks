@@ -10,7 +10,7 @@ const ERROR_WEIGHT = 3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default function getBestPracticesReports(files: IFileInfo[], ruleKey: string, customConfig?, fix?: boolean,): IEslintReports {
+export default function getBestPracticesReports(files: IFileInfo[], ruleKey: string, customConfig?, fix?: boolean): IEslintReports {
   let warningScore = 0;
   let errorScore = 0;
 
