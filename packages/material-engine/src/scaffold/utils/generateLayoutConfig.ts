@@ -1,11 +1,8 @@
 import { ILayoutConfig } from '../types';
 
-const actionsList = ['headerAvatar', 'notice', 'solutionLink'];
-
+const shellActionsList = ['headerAvatar', 'notice', 'solutionLink'];
 const shellAttribute = ['type', 'fixedHeader'];
-
 const shellComponent = ['branding', 'footer', 'headerAvatar'];
-
 const defaultLayoutConfig = {
   branding: {
     name: 'Logo',
@@ -45,9 +42,11 @@ export default (layoutConfigs: ILayoutConfig) => {
 
   Object.keys(layoutConfigs).forEach(configName => {
     if (shellAttribute.includes(configName)) {
+      // add Shell component props
       basicLayoutConfig.layoutConfig[configName] = layoutConfigs[configName];
     } else if (shellComponent.includes(configName)) {
-      if (actionsList.includes(configName)) {
+      // add Shell Children component props
+      if (shellActionsList.includes(configName)) {
         basicLayoutConfig.layoutConfig.shell.action.push(defaultLayoutConfig[configName]);
       } else {
         basicLayoutConfig.layoutConfig.shell[configName] = defaultLayoutConfig[configName];

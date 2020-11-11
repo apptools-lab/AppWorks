@@ -40,10 +40,10 @@ export default (menu) => {
   }
 
   return {
-    menu: {
+    menuConfig: {
       asideMenu,
       headerMenu,
     },
-    routers: [layoutRouter],
+    routersConfig: [layoutRouter],
   };
 };

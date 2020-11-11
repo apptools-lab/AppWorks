@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, List, Button } from '@alifd/next';
+import { List, Button } from '@alifd/next';
 import { useIntl, FormattedMessage } from 'react-intl';
 import HeaderTitle from '@/components/HeaderTitle';
+import CustomSwitch from '@/components/CustomSwitch';
 import styles from './index.module.scss';
 
 const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
@@ -9,9 +10,7 @@ const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
 
   const intl = useIntl();
 
-  const SwitchComponent = ({ checked, onChange }) => <Switch checked={checked} onChange={onChange} />;
-
-  const handleChange = (key: string, configValue: any) => {
+  const handleChange = (key: string, configValue: boolean | string) => {
     layout[key] = configValue;
     onScaffoldConfigChange({ layout: { ...layout } });
   };
@@ -41,7 +40,7 @@ const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
           <List.Item
             key={item.name}
             extra={
-              <SwitchComponent
+              <CustomSwitch
                 checked={layout[item.name]}
                 onChange={(checked: boolean) => handleChange(item.name, checked)}
               />
