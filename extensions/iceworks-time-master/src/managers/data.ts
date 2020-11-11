@@ -5,7 +5,7 @@ import { updateProjectSummary, generateProjectReport } from '../storages/project
 import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
-import { recordSessionTime } from '../utils/recorder';
+import { appendSessionTimePayload } from '../utils/sender';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
@@ -20,7 +20,7 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
 export async function processData(keystrokeStats: KeystrokeStats) {
   await checkMidnight();
   saveDataToDisk(keystrokeStats);
-  recordSessionTime(keystrokeStats);
+  appendSessionTimePayload(keystrokeStats);
 }
 
 function setProgressToGenerateSummaryReport(title: string, generateFn: any) {

@@ -4,14 +4,14 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../managers/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
-import { getAppDataDirPath } from '../utils/storage';
-import { getEditorInfo, getExtensionInfo, getSystemInfo } from '../utils/env';
+import { getAppDataDirPath } from './storage';
+import { getEditorInfo, getExtensionInfo, getSystemInfo } from './env';
 import forIn = require('lodash.forin');
 
 const SESSION_TIME_RECORD = 'session_time';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-export interface SessionTimeRecord {
+export interface SessionTimePayload {
   fileName: string;
   fsPath: string;
   syntax: string;
@@ -43,7 +43,7 @@ export interface SessionTimeRecord {
   timezone: string;
 }
 
-export interface EditorTimeRecord {
+export interface EditorTimePayload {
   durationSeconds: number;
   userId: string;
   // projectId: string;
@@ -61,13 +61,13 @@ export interface EditorTimeRecord {
   timezone: string;
 }
 
-function transformKeyStrokeStatsToRecord(keystrokeStats: KeystrokeStats): SessionTimeRecord[] {
-  const records: SessionTimeRecord[] = [];
+function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeStats): SessionTimePayload[] {
+  const data: SessionTimePayload[] = [];
   const { files, project } = keystrokeStats;
   const { name: projectName, directory: projectDirectory, resource } = project;
   const { repository: gitRepository, branch: gitBranch, tag: gitTag } = resource;
   forIn(files, (fileChange: FileChange) => {
-    records.push({
+    data.push({
       ...fileChange,
       fileName: fileChange.name,
       projectName,
@@ -87,27 +87,27 @@ function transformKeyStrokeStatsToRecord(keystrokeStats: KeystrokeStats): Sessio
       timezone: '',
     });
   });
-  return records;
+  return data;
 }
 
-export async function recordSessionTime(keystrokeStats: KeystrokeStats) {
+export async function appendSessionTimePayload(keystrokeStats: KeystrokeStats) {
   if (!await checkIsAliInternal()) {
     return;
   }
-  const records = transformKeyStrokeStatsToRecord(keystrokeStats);
-  await appendRecordsData(SESSION_TIME_RECORD, records);
+  const records = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
+  await appendPayloadData(SESSION_TIME_RECORD, records);
 }
 
 /**
  * TODO
  */
-export async function recordEditorTime() {
+export async function appendEditorTimePayload() {
   // hold
 }
 
-export async function sendRecords() {
+export async function sendPayload() {
   await Promise.all([SESSION_TIME_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
-    await sendRecordsData(TYPE);
+    await sendPayloadData(TYPE);
   }));
 }
 
@@ -146,9 +146,9 @@ async function send(api: string, originParam: any) {
 /**
  * TODO batch send to server
  */
-async function sendRecordsData(type: string) {
+async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
-  const records = getRecordsData(type);
+  const records = getPayloadData(type);
   const { name: editorName, version: editorVersion } = getEditorInfo();
   const { name: extensionName, version: extensionVersion } = getExtensionInfo();
   const { os, hostname, timezone } = await getSystemInfo();
@@ -165,11 +165,11 @@ async function sendRecordsData(type: string) {
       timezone,
     });
   }));
-  clearRecordsData(type);
+  clearPayloadData(type);
 }
 
-function getRecordsData(type: string) {
-  const file = getRecordsFile(type);
+function getPayloadData(type: string) {
+  const file = getPayloadFile(type);
   let records = [];
   try {
     records = fse.readJSONSync(file);
@@ -179,21 +179,21 @@ function getRecordsData(type: string) {
   return records;
 }
 
-function clearRecordsData(type: string) {
-  saveRecordsData(type, []);
+function clearPayloadData(type: string) {
+  savePayloadData(type, []);
 }
 
-function saveRecordsData(type: string, records: EditorTimeRecord[]|SessionTimeRecord[]) {
-  const file = getRecordsFile(type);
+function savePayloadData(type: string, records: EditorTimePayload[]|SessionTimePayload[]) {
+  const file = getPayloadFile(type);
   fse.writeJSONSync(file, records);
 }
 
-function appendRecordsData(type: string, data: EditorTimeRecord[]|SessionTimeRecord[]) {
-  const records = getRecordsData(type);
+function appendPayloadData(type: string, data: EditorTimePayload[]|SessionTimePayload[]) {
+  const records = getPayloadData(type);
   const nextData = records.concat(data);
-  saveRecordsData(type, nextData);
+  savePayloadData(type, nextData);
 }
 
-function getRecordsFile(type: string) {
+function getPayloadFile(type: string) {
   return path.join(getAppDataDirPath(), `${type}_records.json`);
 }
