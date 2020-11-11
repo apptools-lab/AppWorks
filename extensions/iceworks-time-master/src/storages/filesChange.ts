@@ -23,7 +23,7 @@ interface FileTextInfo {
   syntax: string;
 }
 
-let textInfoCache: {[name: string]: FileTextInfo} = {};
+let textInfoCache: {[fileName: string]: FileTextInfo} = {};
 function getTextInfo(textDocument: TextDocument, fileName: string): FileTextInfo {
   if (textInfoCache[fileName]) {
     return textInfoCache[fileName];
@@ -41,27 +41,15 @@ export function cleanTextInfoCache() {
   textInfoCache = {};
 }
 
-export interface FileInfo {
+export interface FileInfo extends FileTextInfo {
   /**
    * Filename
    */
-  name: string;
+  fileName: string;
   /**
    * The path where the file is located
    */
   fsPath: string;
-  /**
-   * The character length of the file
-   */
-  length: number;
-  /**
-   * The number of lines in the file
-   */
-  lineCount: number;
-  /**
-   * Syntax used by the file
-   */
-  syntax: string;
 }
 
 export interface FileChangeEvent {
@@ -159,7 +147,7 @@ export interface FileChangeSummary extends FileInfo, KeystrokeStatsInfo, FileCha
 }
 
 export class FileChange implements FileChangeInfo {
-  public name: string;
+  public fileName: string;
 
   public fsPath: string;
 
@@ -210,7 +198,7 @@ export class FileChange implements FileChangeInfo {
   }
 
   updateTextInfo(textDocument: TextDocument) {
-    const { syntax, length, lineCount } = getTextInfo(textDocument, this.name);
+    const { syntax, length, lineCount } = getTextInfo(textDocument, this.fileName);
     this.syntax = syntax;
     this.length = length;
     this.lineCount = lineCount;
@@ -236,15 +224,15 @@ export class FileChange implements FileChangeInfo {
 
   static createInstance(fsPath: string, project: Project) {
     const baseName = path.basename(fsPath);
-    const name = baseName;
+    const fileName = baseName;
     const projectDir = project.directory;
-    const fileChange = new FileChange({ name, projectDir, fsPath });
+    const fileChange = new FileChange({ fileName, projectDir, fsPath });
     return fileChange;
   }
 }
 
 export interface FilesChangeSummary {
-  [name: string]: FileChangeSummary;
+  [filePath: string]: FileChangeSummary;
 }
 
 export function getFilesChangeFile() {

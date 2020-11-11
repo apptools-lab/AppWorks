@@ -14,7 +14,7 @@ export class KeystrokeStats {
 
   public end: number;
 
-  public files: {[name: string]: FileChange} = {};
+  public files: {[filePath: string]: FileChange} = {};
 
   public project: Project;
 

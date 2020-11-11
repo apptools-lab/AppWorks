@@ -57,9 +57,9 @@ export class Project {
   static async createInstance(fsPath: string) {
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
-    const name = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
+    const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
     const resource = await getResource(directory);
-    const project = new Project({ name, directory, resource });
+    const project = new Project({ name: workspaceFolderName, directory, resource });
     return project;
   }
 }
@@ -153,9 +153,9 @@ export async function generateProjectReport() {
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {
-      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name } = dayProjectSummary;
-      if (!projectsSummary[name]) {
-        projectsSummary[name] = {
+      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
+      if (!projectsSummary[projectName]) {
+        projectsSummary[projectName] = {
           ...dayProjectSummary,
           sessionSeconds,
           keystrokes,
@@ -164,23 +164,23 @@ export async function generateProjectReport() {
         };
       } else {
         if (sessionSeconds) {
-          projectsSummary[name].sessionSeconds += sessionSeconds;
+          projectsSummary[projectName].sessionSeconds += sessionSeconds;
         }
         if (keystrokes) {
-          projectsSummary[name].keystrokes += keystrokes;
+          projectsSummary[projectName].keystrokes += keystrokes;
         }
         if (linesAdded) {
-          projectsSummary[name].linesAdded += linesAdded;
+          projectsSummary[projectName].linesAdded += linesAdded;
         }
         if (linesRemoved) {
-          projectsSummary[name].linesRemoved += linesRemoved;
+          projectsSummary[projectName].linesRemoved += linesRemoved;
         }
       }
     });
   }));
   forIn(projectsSummary, (projectSummary) => {
-    const { name } = projectSummary;
-    reportContent += getReportRow(name, 'Total');
+    const { name: projectName } = projectSummary;
+    reportContent += getReportRow(projectName, 'Total');
     reportContent += getRangeReport(projectSummary);
     reportContent += getReportHr();
     reportContent += '\n';
