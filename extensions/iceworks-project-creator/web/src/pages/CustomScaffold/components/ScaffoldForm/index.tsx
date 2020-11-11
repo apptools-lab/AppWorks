@@ -80,7 +80,7 @@ const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
         <Drawer
           visible={drawerVisible}
           placement="right"
-          width={400}
+          width={360}
           onClose={onDrawerClose}
         >
           <LayoutConfig value={scaffoldValue} onChange={onChange} />
