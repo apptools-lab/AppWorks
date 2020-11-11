@@ -1,8 +1,8 @@
 import { commands, window, ProgressLocation, workspace, ViewColumn } from 'vscode';
 import { KeystrokeStats } from './keystrokeStats';
 import { updateFilesChangeSummary } from '../storages/filesChange';
-import { updateProjectSummary, generateProjectDashboard } from '../storages/project';
-import { updateUserSummary, generateUserDashboard } from '../storages/user';
+import { updateProjectSummary, generateProjectReport } from '../storages/project';
+import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
 import { recordSessionTime } from '../utils/recorder';
@@ -23,7 +23,7 @@ export async function processData(keystrokeStats: KeystrokeStats) {
   recordSessionTime(keystrokeStats);
 }
 
-function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
+function setProgressToGenerateSummaryReport(title: string, generateFn: any) {
   window.withProgress(
     {
       location: ProgressLocation.Notification,
@@ -45,10 +45,10 @@ function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
   );
 }
 
-export function generateProjectSummaryDashboard() {
-  setProgressToGenerateSummaryDashboard('Loading project summary...', generateProjectDashboard);
+export function generateProjectSummaryReport() {
+  setProgressToGenerateSummaryReport('Loading project summary...', generateProjectReport);
 }
 
-export function generateUserSummaryDashboard() {
-  setProgressToGenerateSummaryDashboard('Loading summary...', generateUserDashboard);
+export function generateUserSummaryReport() {
+  setProgressToGenerateSummaryReport('Loading summary...', generateUserReport);
 }

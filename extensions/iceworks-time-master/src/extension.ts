@@ -4,7 +4,7 @@ import { logIt, openFileInEditor } from './utils/common';
 import { KpmManager } from './managers/kpm';
 import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
-import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
+import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 
 let kpmInstance: KpmManager;
 
@@ -40,11 +40,11 @@ export async function activate(context: ExtensionContext) {
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
       timerProvider.revealTreeView();
     }),
-    commands.registerCommand('iceworks-time-master.generateProjectSummaryDashboard', () => {
-      generateProjectSummaryDashboard();
+    commands.registerCommand('iceworks-time-master.generateProjectSummaryReport', () => {
+      generateProjectSummaryReport();
     }),
-    commands.registerCommand('iceworks-time-master.generateUserSummaryDashboard', () => {
-      generateUserSummaryDashboard();
+    commands.registerCommand('iceworks-time-master.generateUserSummaryReport', () => {
+      generateUserSummaryReport();
     }),
   );
 }

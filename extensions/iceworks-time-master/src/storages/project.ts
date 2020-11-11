@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
 import { getAppDataDirPath, getAppDataDayDirPath, getStorageDirs } from '../utils/storage';
 import { getResource } from '../utils/git';
-import { getDashboardHr, getDashboardRow, getRangeDashboard } from '../utils/dashboard';
+import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
 import forIn = require('lodash.forin');
 
 export interface ProjectResource {
@@ -139,15 +139,15 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
   await saveProjectsSummary(projectsSummary);
 }
 
-export function getProjectDashboardFile() {
-  return path.join(getAppDataDirPath(), 'ProjectSummaryDashboard.txt');
+export function getProjectReportFile() {
+  return path.join(getAppDataDirPath(), 'ProjectSummaryReport.txt');
 }
 
-export async function generateProjectDashboard() {
+export async function generateProjectReport() {
   const formattedDate = moment().format('ddd, MMM Do h:mma');
-  let dashboardContent = `Project Summary (Last updated on ${formattedDate})\n`;
-  dashboardContent += '\n';
-  const dashboardFile = getProjectDashboardFile();
+  let reportContent = `Project Summary (Last updated on ${formattedDate})\n`;
+  reportContent += '\n';
+  const reportFile = getProjectReportFile();
   const projectsSummary: ProjectsSummary = {};
   const storageDirs = await getStorageDirs();
   await Promise.all(storageDirs.map(async (storageDir) => {
@@ -180,11 +180,11 @@ export async function generateProjectDashboard() {
   }));
   forIn(projectsSummary, (projectSummary) => {
     const { name } = projectSummary;
-    dashboardContent += getDashboardRow(name, 'Total');
-    dashboardContent += getRangeDashboard(projectSummary);
-    dashboardContent += getDashboardHr();
-    dashboardContent += '\n';
+    reportContent += getReportRow(name, 'Total');
+    reportContent += getRangeReport(projectSummary);
+    reportContent += getReportHr();
+    reportContent += '\n';
   });
-  await fse.writeFile(dashboardFile, dashboardContent, 'utf8');
-  return dashboardFile;
+  await fse.writeFile(reportFile, reportContent, 'utf8');
+  return reportFile;
 }

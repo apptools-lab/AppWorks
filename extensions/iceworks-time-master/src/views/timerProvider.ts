@@ -484,7 +484,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const item = this.buildActionItem(
       'View project summary',
       '',
-      'iceworks-time-master.generateProjectSummaryDashboard',
+      'iceworks-time-master.generateProjectSummaryReport',
       'folder.svg',
       '',
       'red',
@@ -497,9 +497,9 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const item = this.buildActionItem(
       'View summary',
       'View your latest coding metrics right here in your editor',
-      'iceworks-time-master.generateUserSummaryDashboard',
-      'dashboard.svg',
-      'TreeViewLaunchDashboard',
+      'iceworks-time-master.generateUserSummaryReport',
+      'report.svg',
+      'TreeViewLaunchReport',
       'purple',
     );
     item.name = 'ct_summary_btn';
