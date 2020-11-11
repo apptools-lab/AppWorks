@@ -12,14 +12,14 @@ export async function activate(context: ExtensionContext) {
   logIt('[extension] activate!');
   const { subscriptions } = context;
 
+  activateWalkClock();
+
   const timerProvider = new TimerProvider(context);
   const timerTreeView = createTimerTreeView(timerProvider);
   timerProvider.bindView(timerTreeView);
 
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
-
-  activateWalkClock();
 
   kpmInstance = new KpmManager();
   kpmInstance.activate();
