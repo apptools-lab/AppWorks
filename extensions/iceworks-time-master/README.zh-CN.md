@@ -7,7 +7,9 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-时间管理大师是通过自动跟踪您的编程活动从而度量您的编程效率的插件，它完全不依赖于网络环境，安全且轻量，代码开源。
+时间管理大师是通过自动跟踪您编程活动从而度量您编程效率的插件，它能够帮助您回顾您的编程活动，生成您的编程效率报告并提供相关建议。
+
+时间管理大师插件完全不依赖于网络环境，安全且轻量，代码开源。
 
 ## 功能
 
@@ -21,7 +23,7 @@
 
 ## 安全和隐私
 
-**我们从不访问您的代码**：我们不处理、发送或存储您的代码，我们只提供有关编程的度量。时间管理大师是开源的，你可以很容易地看到我们收集了什么数据。
+**我们从不访问您的代码**：我们不处理、发送或存储您的代码，事实上，时间管理大师是完全本地化的，从不访问网络。插件代码是开源的，您可以很容易地看到数据处理逻辑。
 
 **您的数据是私有的**：我们永远不会与任何人共享您的个人数据。
 

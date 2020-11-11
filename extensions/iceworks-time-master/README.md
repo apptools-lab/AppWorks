@@ -21,7 +21,7 @@ Metrics, insights, and time tracking automatically generated from your programmi
 
 ## Security and Privacy
 
-**We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Master is an open source plugin, we make it easy to see the data we collect.
+**We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Master is an open source extension, we make it easy to see the data we collect.
 
 **Your data is private**: We will never share your individually identifiable data with anyone.
 
