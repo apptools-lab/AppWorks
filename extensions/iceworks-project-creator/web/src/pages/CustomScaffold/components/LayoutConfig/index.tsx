@@ -55,6 +55,7 @@ const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
         {
           layoutStyleDataSource.map(item => (
             <Button
+              key={item.name}
               type={layout.type === item.name ? 'primary' : 'normal'}
               onClick={() => handleChange('type', item.name)}
             >

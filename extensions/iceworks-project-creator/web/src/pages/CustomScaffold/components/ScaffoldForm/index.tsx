@@ -1,15 +1,25 @@
-import React, { useEffect, useRef } from 'react';
-import { ResponsiveGrid } from '@alifd/next';
+import React, { useEffect, useRef, useState } from 'react';
+import { Drawer, Icon } from '@alifd/next';
 import LayoutConfig from '../LayoutConfig';
 import styles from './index.module.scss';
 
-const { Cell } = ResponsiveGrid;
-
 const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
   const iframeRef = useRef(null);
-  const iframe = document.getElementById('scaffoldTemplate');
 
-  console.log('window.frames', iframe);
+  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
+
+  const onDrawerOpen = () => {
+    setDrawerVisible(true);
+  };
+
+  const onDrawerClose = () => {
+    setDrawerVisible(false);
+  };
+
+  const sendMessage = (content: string) => {
+    iframeRef.current.contentWindow.postMessage(content, '/');
+  };
+
   const injectIframeContent = () => {
     iframeRef.current.contentWindow.document.open();
     iframeRef.current.contentWindow.document.write(`
@@ -55,37 +65,27 @@ const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
     iframeRef.current.contentWindow.document.close();
   };
 
-  function handleMessageReceive(e: Event) {
-    console.log('CustomScaffold Page receive message', e);
-  }
-
-  const sendMessage = (content: string) => {
-    iframeRef.current.contentWindow.postMessage(content, '/');
-  };
+  useEffect(() => {
+    injectIframeContent();
+  }, []);
 
   useEffect(() => {
     sendMessage(JSON.stringify(scaffoldValue));
   }, [scaffoldValue]);
-
-  useEffect(() => {
-    sendMessage(JSON.stringify(scaffoldValue));
-    injectIframeContent();
-    window.addEventListener('message', handleMessageReceive, true);
-
-    return () => {
-      window.removeEventListener('message', handleMessageReceive, true);
-    };
-  }, []);
   return (
     <div className={styles.scaffoldScaffold}>
-      <ResponsiveGrid gap={30} className={styles.grid}>
-        <Cell colSpan={9}>
-          <iframe ref={iframeRef} className={styles.scaffoldTemplateIframe} frameBorder="0" name="scaffoldTemplate" />
-        </Cell>
-        <Cell colSpan={3}>
+      <div className={styles.content}>
+        <iframe ref={iframeRef} className={styles.scaffoldTemplateIframe} frameBorder="0" name="scaffoldTemplate" />
+        <div onClick={() => onDrawerOpen()} className={styles.drawerBtn}><Icon type="set" size="large" /></div>
+        <Drawer
+          visible={drawerVisible}
+          placement="right"
+          width={400}
+          onClose={onDrawerClose}
+        >
           <LayoutConfig value={scaffoldValue} onChange={onChange} />
-        </Cell>
-      </ResponsiveGrid>
+        </Drawer>
+      </div>
       <div className={styles.action}>{children}</div>
     </div>
   );

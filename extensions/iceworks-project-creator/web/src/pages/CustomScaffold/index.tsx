@@ -14,7 +14,7 @@ const defaultScaffoldValue = {
     branding: true,
     footer: true,
     type: 'brand',
-    fixedHeader: true,
+    fixedHeader: false,
   },
   build: {
     theme: '@alifd/theme-design-pro',
@@ -42,13 +42,6 @@ const defaultScaffoldValue = {
 
 const defaultValue = {
   scaffold: { ...defaultScaffoldValue },
-  // scaffold: {
-  //   theme: '@alifd/theme-design-pro',
-  //   config: ['typescript'],
-  //   asideMenu: [],
-  //   headerMenu: [],
-  //   layout: ['branding', 'headerAvatar', 'footer'],
-  // },
 };
 
 const CustomScaffold = () => {

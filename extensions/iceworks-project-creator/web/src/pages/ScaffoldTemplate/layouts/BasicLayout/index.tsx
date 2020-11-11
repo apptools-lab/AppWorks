@@ -36,7 +36,7 @@ interface IGetDevice {
 const defaultValue: IScaffoldConfig = {
   layout: {
     branding: true,
-    fixedHeader: true,
+    fixedHeader: false,
     headerAvatar: true,
     type: 'brand',
     footer: true,
