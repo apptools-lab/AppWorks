@@ -3,62 +3,32 @@ import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
-import { FileChange } from '../storages/filesChange';
+import { FileChange, FileChangeInfo } from '../storages/filesChange';
 import { getAppDataDirPath } from './storage';
-import { getEditorInfo, getExtensionInfo, getSystemInfo } from './env';
+import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import forIn = require('lodash.forin');
 
 const SESSION_TIME_RECORD = 'session_time';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-export interface SessionTimePayload {
-  fileName: string;
-  fsPath: string;
-  syntax: string;
-  keystrokes: number;
-  linesAdded: number;
-  linesRemoved: number;
-  start: number;
-  end: number;
-  durationSeconds: number;
-  open: number;
-  close: number;
-  paste: number;
-  update: number;
-  add: number;
-  delete: number;
-  userId: string;
+interface ProjectInfo {
   // projectId: string;
   projectName: string;
   projectDirectory: string;
   gitRepository: string;
   gitBranch: string;
   gitTag: string;
-  editorName: string;
-  editorVersion: string;
-  extensionName: string;
-  extensionVersion: string;
-  os: string;
-  hostname: string;
-  timezone: string;
 }
 
-export interface EditorTimePayload {
-  durationSeconds: number;
+interface UserInfo {
   userId: string;
-  // projectId: string;
-  projectName: string;
-  projectDirectory: string;
-  gitRepository: string;
-  gitBranch: string;
-  gitTag: string;
-  editorName: string;
-  editorVersion: string;
-  extensionName: string;
-  extensionVersion: string;
-  os: string;
-  hostname: string;
-  timezone: string;
+}
+
+export interface SessionTimePayload extends ProjectInfo, EditorInfo, ExtensionInfo, SystemInfo, UserInfo, FileChangeInfo {
+}
+
+export interface EditorTimePayload extends ProjectInfo, EditorInfo, ExtensionInfo, SystemInfo, UserInfo {
+  durationSeconds: number;
 }
 
 /**
@@ -76,7 +46,6 @@ function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeSt
   forIn(files, (fileChange: FileChange) => {
     data.push({
       ...fileChange,
-      fileName: fileChange.name,
       projectName,
       projectDirectory,
       gitRepository,
@@ -156,8 +125,8 @@ async function send(api: string, originParam: any) {
 async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
   const playload = getPayloadData(type);
-  const { name: editorName, version: editorVersion } = getEditorInfo();
-  const { name: extensionName, version: extensionVersion } = getExtensionInfo();
+  const { editorName, editorVersion } = getEditorInfo();
+  const { extensionName, extensionVersion } = getExtensionInfo();
   const { os, hostname, timezone } = await getSystemInfo();
   await Promise.all(playload.map(async (record: any) => {
     await send(`iceteam.iceworks.time_master_${type}`, {

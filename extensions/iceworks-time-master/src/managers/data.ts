@@ -6,13 +6,18 @@ import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
 import { appendSessionTimePayload } from '../utils/sender';
+import { logIt } from '../utils/common';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
   const increment = await updateFilesChangeSummary(keystrokeStats);
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
+  refreshViews();
+}
 
+function refreshViews() {
+  logIt('[dataManager][refreshViews] run');
   commands.executeCommand('iceworks-time-master.refreshTimerTree');
   commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }

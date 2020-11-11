@@ -41,7 +41,7 @@ export function cleanTextInfoCache() {
   textInfoCache = {};
 }
 
-export interface FileChangeSummary {
+export interface FileInfo {
   /**
    * Filename
    */
@@ -50,10 +50,6 @@ export interface FileChangeSummary {
    * The path where the file is located
    */
   fsPath: string;
-  /**
-   * The folder of the project to which the file belongs
-   */
-  projectDir: string;
   /**
    * The character length of the file
    */
@@ -66,50 +62,24 @@ export interface FileChangeSummary {
    * Syntax used by the file
    */
   syntax: string;
+}
 
+export interface FileChangeEvent {
   /**
-   * Keystrokes per minute
-   */
-  kpm: number;
-  /**
-   * Number of keystrokes
-   */
-  keystrokes: number;
-  /**
-   * File editor usage time
-   */
-  editorSeconds?: number;
-  /**
-   * Time used to edit files
-   */
-  sessionSeconds: number;
-
-  /**
-   * How many characters have been added
-   */
-  charsAdded?: number;
-  /**
-   * How many characters were deleted
-   */
-  charsDeleted?: number;
-  /**
-   * Number of characters pasted
-   */
-  charsPasted?: number;
-
-  /**
-   * File open times
+   * Open times
    */
   open: number;
   /**
-   * File close times
+   * Close times
    */
   close: number;
   /**
-   * File update times
+   * Update times
    */
   update: number;
+}
 
+export interface ContentChangeEvent {
   /**
    * Paste times
    */
@@ -122,7 +92,9 @@ export interface FileChangeSummary {
    * Delete times
    */
   delete: number;
+}
 
+export interface ContentChangeInfo {
   /**
    * How many lines have been added
    */
@@ -131,18 +103,62 @@ export interface FileChangeSummary {
    * How many lines have been deleted
    */
   linesRemoved: number;
-
   /**
-   * Time to start updating files
+   * How many characters have been added
+   */
+  charsAdded?: number;
+  /**
+   * How many characters were deleted
+   */
+  charsDeleted?: number;
+  /**
+   * Number of characters pasted
+   */
+  charsPasted?: number;
+}
+
+export interface KeystrokeStatsInfo {
+  /**
+   * Time to start keystroke
    */
   start: number;
   /**
-   * End time to update file
+   * Time to end keystroke
    */
   end: number;
+  /**
+   * Number of keystrokes
+   */
+  keystrokes: number;
+  /**
+   * Interval between the end of the update and the start of the update
+   */
+  durationSeconds: number;
 }
 
-export class FileChange {
+export interface FileChangeInfo extends FileInfo, KeystrokeStatsInfo, FileChangeEvent, ContentChangeInfo, ContentChangeEvent {
+}
+
+export interface FileChangeSummary extends FileInfo, KeystrokeStatsInfo, FileChangeEvent, ContentChangeInfo, ContentChangeEvent {
+  /**
+   * The folder of the project to which the file belongs
+   */
+  projectDir: string;
+  /**
+   * Keystrokes per minute
+   */
+  kpm: number;
+  /**
+   * File editor usage time
+   */
+  editorSeconds?: number;
+  /**
+   * Time used to edit files
+   */
+  sessionSeconds: number;
+}
+
+export class FileChange implements FileChangeInfo {
   public name: string;
 
   public fsPath: string;
@@ -185,11 +201,6 @@ export class FileChange {
 
   public end = 0;
 
-  /**
-   * Interval between
-   * the end of the update and
-   * the beginning of the update
-   */
   public durationSeconds = 0;
 
   constructor(values?: any) {
