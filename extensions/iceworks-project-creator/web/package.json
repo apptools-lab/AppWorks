@@ -1,6 +1,6 @@
 {
   "name": "web-for-iceworks-project-creator",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "web for Iceworks project creator",
   "private": true,
   "devDependencies": {

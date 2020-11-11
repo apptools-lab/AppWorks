@@ -30,18 +30,16 @@
 
 ### 激活
 
-![activate](https://user-images.githubusercontent.com/44047106/97136662-b5556700-178e-11eb-87f3-cfbf7ba3c130.gif)
-
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
 2. 输入 `Iceworks: Custom Scaffold` 激活插件
 
 ### 使用
 
-![usage](https://user-images.githubusercontent.com/44047106/97138346-fbacc500-1792-11eb-9f28-6a97ba5fb084.gif)
-
-1. 使用区块搭建页面，并选择主题、组件和高级配置
+1. 点击右侧配置按钮，选择布局配置、布局风格等配置，支持在页面中查看效果
 2. 输入应用信息
 3. 创建应用并自动打开应用
+
+![usage](https://user-images.githubusercontent.com/44047106/98786993-de862080-2439-11eb-8c93-cb69afda78dd.gif)
 
 ## 更多
 

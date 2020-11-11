@@ -30,14 +30,14 @@ Create a Universal Application(React/Rax/Vue, etc) quickly.
 
 ### Activate Extension
 
-![activate](https://user-images.githubusercontent.com/44047106/97136662-b5556700-178e-11eb-87f3-cfbf7ba3c130.gif)
-
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
 2. Enter `Iceworks: Custom Scaffold` to activate the extension.
 
-![usage](https://user-images.githubusercontent.com/44047106/97138346-fbacc500-1792-11eb-9f28-6a97ba5fb084.gif)
+### Usage
 
-1. Build your pages by blocks and  select themes, components and advance configuration.
+![usage](https://user-images.githubusercontent.com/44047106/98786993-de862080-2439-11eb-8c93-cb69afda78dd.gif)
+
+1. Click the configuration button on the right to select the layout configuration, layout style and other configurations, and you can preview it in the page.
 2. Input your application information.
 3. Create your application and open application automatically.
 
