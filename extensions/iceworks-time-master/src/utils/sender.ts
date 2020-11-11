@@ -100,8 +100,8 @@ function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeSt
 export async function appendSessionTimePayload(keystrokeStats: KeystrokeStats) {
   const isSendable = checkIsSendable();
   if (isSendable) {
-    const records = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
-    await appendPayloadData(SESSION_TIME_RECORD, records);
+    const playload = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
+    await appendPayloadData(SESSION_TIME_RECORD, playload);
   }
 }
 
@@ -155,11 +155,11 @@ async function send(api: string, originParam: any) {
  */
 async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
-  const records = getPayloadData(type);
+  const playload = getPayloadData(type);
   const { name: editorName, version: editorVersion } = getEditorInfo();
   const { name: extensionName, version: extensionVersion } = getExtensionInfo();
   const { os, hostname, timezone } = await getSystemInfo();
-  await Promise.all(records.map(async (record: any) => {
+  await Promise.all(playload.map(async (record: any) => {
     await send(`iceteam.iceworks.time_master_${type}`, {
       ...record,
       userId: empId,
@@ -177,27 +177,27 @@ async function sendPayloadData(type: string) {
 
 function getPayloadData(type: string) {
   const file = getPayloadFile(type);
-  let records = [];
+  let playload = [];
   try {
-    records = fse.readJSONSync(file);
+    playload = fse.readJSONSync(file);
   } catch (e) {
     // ignore error
   }
-  return records;
+  return playload;
 }
 
 function clearPayloadData(type: string) {
   savePayloadData(type, []);
 }
 
-function savePayloadData(type: string, records: EditorTimePayload[]|SessionTimePayload[]) {
+function savePayloadData(type: string, playload: EditorTimePayload[]|SessionTimePayload[]) {
   const file = getPayloadFile(type);
-  fse.writeJSONSync(file, records);
+  fse.writeJSONSync(file, playload);
 }
 
 function appendPayloadData(type: string, data: EditorTimePayload[]|SessionTimePayload[]) {
-  const records = getPayloadData(type);
-  const nextData = records.concat(data);
+  const playload = getPayloadData(type);
+  const nextData = playload.concat(data);
   savePayloadData(type, nextData);
 }
 
