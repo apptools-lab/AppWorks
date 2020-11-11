@@ -36,7 +36,7 @@ export default class Scanner {
     // Calculate ESLint
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
-      const ruleKey = `${this.options.framework}${this.options.languageType === 'ts' ? '-ts' : ''}`;
+      const ruleKey = `${options.framework || 'react'}${options.languageType === 'ts' ? '-ts' : ''}`;
       reports.ESLint = getEslintReports(files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
     }
 
@@ -47,7 +47,7 @@ export default class Scanner {
 
     // Calculate repeatability
     if (!options || options.disableRepeatability !== true) {
-      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore);
+      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore, options.tempFileDir);
     }
 
     // Calculate total score

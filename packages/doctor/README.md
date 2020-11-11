@@ -51,10 +51,20 @@ iceworks-doctor -s ./ --ignore types mock --supportExts css json
 
 ## Options
 
-* ignore, string[] Ignore directories, example ['mock'] .
-* supportExts, string[] Support file exts, example ['css'] .
-* framework, string target project framework, default is `react` .
-* languageType, 'js'|'ts' target project languageType, default is `js` .
+### new Doctor(options?);
+
+* ignore?: string[], Ignore directories, example ['mock'] .
+* supportExts?: string[], Support file exts, example ['css'] .
+
+### scan('/yourProjectPath', options?);
+
+* fix?: boolean, whether fix ESLint fixable problems.
+* framework?: string, target project framework, default is `react`.
+* languageType?: 'js'|'ts', target project languageType, default is `js`.
+* tempFileDir?: string, set temp reporters file directory, default is `node_modules/@iceworks/doctor/tmp/`.
+* disableESLint?: boolean, whether disable ESLint part reports.
+* disableMaintainability?: boolean, whether disable maintainability part reports.
+* disableRepeatability?: boolean, whether disable repeatability part reports.
 
 ## Result
 
@@ -82,3 +92,5 @@ Use [typhonjs-escomplex](https://www.npmjs.com/package/typhonjs-escomplex) calcu
 ### repeatability
 
 Use [jscpd](https://www.npmjs.com/package/jscpd) calculate repeatability reports.
+
+Enjoy!
