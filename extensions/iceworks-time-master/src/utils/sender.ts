@@ -61,6 +61,13 @@ export interface EditorTimePayload {
   timezone: string;
 }
 
+/**
+ * ONLY SEND DATA IN ALIBABA INTERNAL!!!
+ */
+async function checkIsSendable() {
+  return await checkIsAliInternal();
+}
+
 function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeStats): SessionTimePayload[] {
   const data: SessionTimePayload[] = [];
   const { files, project } = keystrokeStats;
@@ -91,11 +98,11 @@ function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeSt
 }
 
 export async function appendSessionTimePayload(keystrokeStats: KeystrokeStats) {
-  if (!await checkIsAliInternal()) {
-    return;
+  const isSendable = checkIsSendable();
+  if (isSendable) {
+    const records = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
+    await appendPayloadData(SESSION_TIME_RECORD, records);
   }
-  const records = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
-  await appendPayloadData(SESSION_TIME_RECORD, records);
 }
 
 /**
