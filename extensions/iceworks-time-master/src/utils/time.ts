@@ -14,19 +14,19 @@ export function getNowDay() {
 }
 
 export function setNowDay() {
-  const day = getNowUCTDay();
+  const day = getDay();
   storage.set(CURRENT_DAY_STORAGE_KEY, day);
   return day;
 }
 
 export function isNewDay() {
-  const day = getNowUCTDay();
+  const day = getDay();
   const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
   return currentDay !== day;
 }
 
 export function getDay(m?: moment.Moment) {
-  const time = m || moment.utc();
+  const time = m || moment();
   return time.format(DAY_FORMAT);
 }
 
@@ -58,13 +58,6 @@ export function getNowUTCSec() {
   const utc = getNowUTCMoment();
   const nowInSec = utc.unix();
   return nowInSec;
-}
-
-
-export function getNowUCTDay() {
-  const utc = getNowUTCMoment();
-  const day = getDay(utc);
-  return day;
 }
 
 export interface NowTimes {

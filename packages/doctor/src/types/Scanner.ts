@@ -3,13 +3,13 @@ import { IClone } from '@jscpd/core';
 export interface IScannerOptions {
   ignore: string[];
   supportExts: string[];
+  framework: string;
+  languageType: 'js' | 'ts';
 }
 
 export interface IScanOptions {
   fix?: boolean;
-  disableAliEslint?: boolean;
-  disableBestPractices?: boolean;
-  disableSecurityPractices?: boolean;
+  disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
 }
@@ -59,9 +59,7 @@ export interface IScannerReports {
     lines: number;
   };
   score?: number;
-  aliEslint?: IEslintReports;
-  bestPractices?: IEslintReports;
-  securityPractices?: IEslintReports;
+  ESLint?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
 }
