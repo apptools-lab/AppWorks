@@ -4,7 +4,7 @@ import { Checkbox } from '@alifd/next';
 import HeaderTitle from '@/components/HeaderTitle';
 import styles from './index.module.scss';
 
-const AdvanceConfig = ({ value, onChange }) => {
+const AdvanceConfig = () => {
   const intl = useIntl();
 
   const advanceConfigsList = [
@@ -28,7 +28,7 @@ const AdvanceConfig = ({ value, onChange }) => {
         </Checkbox.Group>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AdvanceConfig;

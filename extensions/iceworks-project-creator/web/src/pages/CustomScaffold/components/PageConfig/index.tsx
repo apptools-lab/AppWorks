@@ -90,10 +90,6 @@ const PageConfig = ({ onChange, value }) => {
     }
   };
 
-  const onLayoutConfigChange = (layoutConfigs) => {
-    onChange({ layouts: layoutConfigs });
-  };
-
   return (
     <div className={styles.scaffoldLayout}>
       <div className={styles.setting}>

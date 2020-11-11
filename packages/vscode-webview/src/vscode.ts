@@ -100,7 +100,7 @@ export function getHtmlForWebview(
   needVendor?: boolean,
   cdnBasePath?: string,
   extraHtml?: string | Function,
-  iframeName?: string
+  iframeName?: string,
 ): string {
   entryName = entryName || DEFAULT_ENTRY;
   const localBasePath = path.join(extensionPath, 'build');
@@ -137,10 +137,10 @@ export function getHtmlForWebview(
     styleUri,
     vendorStyleUri,
     vendorScriptUri,
-  }
+  };
   let extraHtmlContent = extraHtml || '';
   if (typeof extraHtml === 'function') {
-    extraHtmlContent = extraHtml(vscodeResource)
+    extraHtmlContent = extraHtml(vscodeResource);
   }
 
   const fileContent =

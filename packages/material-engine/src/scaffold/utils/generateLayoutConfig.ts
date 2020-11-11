@@ -1,4 +1,10 @@
+import { ILayoutConfig } from '../types';
+
 const actionsList = ['headerAvatar', 'notice', 'solutionLink'];
+
+const shellAttribute = ['type', 'fixedHeader'];
+
+const shellComponent = ['branding', 'footer', 'headerAvatar'];
 
 const defaultLayoutConfig = {
   branding: {
@@ -19,7 +25,7 @@ const defaultLayoutConfig = {
   },
 };
 
-export default (layoutConfigs: string[]) => {
+export default (layoutConfigs: ILayoutConfig) => {
   const layouts = [];
   const basicLayoutConfig = {
     type: 'builtIn',
@@ -37,11 +43,15 @@ export default (layoutConfigs: string[]) => {
     },
   };
 
-  layoutConfigs.forEach(configName => {
-    if (actionsList.includes(configName)) {
-      basicLayoutConfig.layoutConfig.shell.action.push(defaultLayoutConfig[configName]);
-    } else {
-      basicLayoutConfig.layoutConfig.shell[configName] = defaultLayoutConfig[configName];
+  Object.keys(layoutConfigs).forEach(configName => {
+    if (shellAttribute.includes(configName)) {
+      basicLayoutConfig.layoutConfig[configName] = layoutConfigs[configName];
+    } else if (shellComponent.includes(configName)) {
+      if (actionsList.includes(configName)) {
+        basicLayoutConfig.layoutConfig.shell.action.push(defaultLayoutConfig[configName]);
+      } else {
+        basicLayoutConfig.layoutConfig.shell[configName] = defaultLayoutConfig[configName];
+      }
     }
   });
 

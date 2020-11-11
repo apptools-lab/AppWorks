@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shell, ConfigProvider } from '@alifd/next';
 import PageNav from './components/PageNav';
 import Logo from './components/Logo';
+import HeaderAvatar from './components/HeaderAvatar';
 import Footer from './components/Footer';
 
 (function () {
@@ -31,6 +32,29 @@ import Footer from './components/Footer';
 interface IGetDevice {
   (width: number): 'phone' | 'tablet' | 'desktop';
 }
+
+const defaultValue: IScaffoldConfig = {
+  layout: {
+    branding: true,
+    fixedHeader: true,
+    headerAvatar: true,
+    type: 'brand',
+    footer: true,
+  },
+};
+
+interface IScaffoldConfig {
+  layout: ILayoutConfig
+}
+
+interface ILayoutConfig {
+  branding: boolean;
+  fixedHeader: boolean;
+  headerAvatar: boolean;
+  type: 'brand' | 'light' | 'dark';
+  footer: boolean;
+}
+
 export default function BasicLayout({
   children,
 }: {
@@ -51,6 +75,7 @@ export default function BasicLayout({
     }
   };
 
+  const [value, setValue] = useState<IScaffoldConfig>(defaultValue);
   const [device, setDevice] = useState(getDevice(NaN));
 
   if (typeof window !== 'undefined') {
@@ -61,20 +86,41 @@ export default function BasicLayout({
     });
   }
 
+  function handleMessageReceiver(e) {
+    if (typeof e.data === 'string') {
+      const data = JSON.parse(e.data);
+      setValue(data);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('message', handleMessageReceiver, true);
+
+    return () => {
+      window.removeEventListener('message', handleMessageReceiver, true);
+    };
+  }, []);
+
+  const { layout } = value;
   return (
     <ConfigProvider device={device}>
       <Shell
-        type="brand"
         style={{
           minHeight: '100vh',
         }}
+        type={layout.type}
+        fixedHeader={layout.fixedHeader}
       >
-        <Shell.Branding>
-          <Logo
-            image="https://img.alicdn.com/tfs/TB1.ZBecq67gK0jSZFHXXa9jVXa-904-826.png"
-            text="Logo"
-          />
-        </Shell.Branding>
+        {
+          layout.branding && (
+            <Shell.Branding>
+              <Logo
+                image="https://img.alicdn.com/tfs/TB1.ZBecq67gK0jSZFHXXa9jVXa-904-826.png"
+                text="Logo"
+              />
+            </Shell.Branding>
+          )
+        }
         <Shell.Navigation
           direction="hoz"
           style={{
@@ -85,11 +131,19 @@ export default function BasicLayout({
         <Shell.Navigation>
           <PageNav />
         </Shell.Navigation>
-
+        <Shell.Action>
+          {
+            layout.headerAvatar && <HeaderAvatar />
+          }
+        </Shell.Action>
         <Shell.Content>{children}</Shell.Content>
-        <Shell.Footer>
-          <Footer />
-        </Shell.Footer>
+        {
+          layout.footer && (
+          <Shell.Footer>
+            <Footer />
+          </Shell.Footer>
+          )
+        }
       </Shell>
     </ConfigProvider>
   );

@@ -4,7 +4,7 @@ import { Link, withRouter } from 'ice';
 import { Nav } from '@alifd/next';
 import { asideMenuConfig } from '../../menuConfig';
 
-const SubNav = Nav.SubNav;
+const { SubNav } = Nav;
 const NavItem = Nav.Item;
 
 export interface IMenuItem {

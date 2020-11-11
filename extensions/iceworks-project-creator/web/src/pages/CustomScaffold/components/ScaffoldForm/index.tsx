@@ -5,11 +5,12 @@ import styles from './index.module.scss';
 
 const { Cell } = ResponsiveGrid;
 
-const Scaffoldform = ({ children, onChange, value }) => {
+const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
   const iframeRef = useRef(null);
+  const iframe = document.getElementById('scaffoldTemplate');
 
+  console.log('window.frames', iframe);
   const injectIframeContent = () => {
-    console.log(iframeRef.current)
     iframeRef.current.contentWindow.document.open();
     iframeRef.current.contentWindow.document.write(`
     <!DOCTYPE html>
@@ -50,22 +51,39 @@ const Scaffoldform = ({ children, onChange, value }) => {
     </body>
 
     </html>
-    `
-    );
+    `);
     iframeRef.current.contentWindow.document.close();
   };
 
+  function handleMessageReceive(e: Event) {
+    console.log('CustomScaffold Page receive message', e);
+  }
+
+  const sendMessage = (content: string) => {
+    iframeRef.current.contentWindow.postMessage(content, '/');
+  };
+
   useEffect(() => {
+    sendMessage(JSON.stringify(scaffoldValue));
+  }, [scaffoldValue]);
+
+  useEffect(() => {
+    sendMessage(JSON.stringify(scaffoldValue));
     injectIframeContent();
+    window.addEventListener('message', handleMessageReceive, true);
+
+    return () => {
+      window.removeEventListener('message', handleMessageReceive, true);
+    };
   }, []);
   return (
     <div className={styles.scaffoldScaffold}>
       <ResponsiveGrid gap={30} className={styles.grid}>
         <Cell colSpan={9}>
-          <iframe ref={iframeRef} className={styles.scaffoldTemplateIframe} frameBorder="0"></iframe>
+          <iframe ref={iframeRef} className={styles.scaffoldTemplateIframe} frameBorder="0" name="scaffoldTemplate" />
         </Cell>
         <Cell colSpan={3}>
-          <LayoutConfig value={value.layouts} onChange={onChange} />
+          <LayoutConfig value={scaffoldValue} onChange={onChange} />
         </Cell>
       </ResponsiveGrid>
       <div className={styles.action}>{children}</div>

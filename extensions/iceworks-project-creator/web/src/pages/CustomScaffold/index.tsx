@@ -4,19 +4,51 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '@/callService';
 import { IProjectField } from '@/types';
 import { LocaleProvider } from '@/i18n';
-import { CUSTOM_THEME_SELECT_VALUE } from './constants';
 import CreateProjectForm from '@/components/CreateProjectForm';
 import ScaffoldForm from './components/ScaffoldForm';
 import styles from './index.module.scss';
 
-const defaultValue = {
-  scaffold: {
-    theme: '@alifd/theme-design-pro',
-    config: ['typescript'],
-    asideMenu: [],
-    headerMenu: [],
-    layouts: ['branding', 'headerAvatar', 'footer'],
+const defaultScaffoldValue = {
+  layout: {
+    headerAvatar: true,
+    branding: true,
+    footer: true,
+    type: 'brand',
+    fixedHeader: true,
   },
+  build: {
+    theme: '@alifd/theme-design-pro',
+  },
+  advance: {
+    typescript: true,
+  },
+  menu: {
+    asideMenu: [
+      {
+        pageName: 'Dashboard',
+        path: '/',
+        blocks: [
+          {
+            name: 'Guide',
+            type: 'builtIn',
+            source: './src/components/Guide',
+          },
+        ],
+      },
+    ],
+    headerMenu: [],
+  },
+};
+
+const defaultValue = {
+  scaffold: { ...defaultScaffoldValue },
+  // scaffold: {
+  //   theme: '@alifd/theme-design-pro',
+  //   config: ['typescript'],
+  //   asideMenu: [],
+  //   headerMenu: [],
+  //   layout: ['branding', 'headerAvatar', 'footer'],
+  // },
 };
 
 const CustomScaffold = () => {
@@ -56,10 +88,9 @@ const CustomScaffold = () => {
     }
     setLoading(true);
     setPrevBtnDisabled(true);
-    const { projectPath, projectName, scaffold: { theme, customTheme } } = values;
-    if (theme === CUSTOM_THEME_SELECT_VALUE) {
-      values.scaffold.theme = customTheme;
-    }
+    const { projectPath, projectName, scaffold } = values;
+    values.scaffold = scaffold;
+    console.log('CustomScaffold value.scaffold ===>', values.scaffold);
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
@@ -84,15 +115,14 @@ const CustomScaffold = () => {
   }
 
   function onFormChange(formValue) {
-    // scaffold
     setValue({ ...value, ...formValue });
   }
 
   function onScaffoldFormChange(formValue) {
-    setValue({ ...value, scaffold: { ...value.scaffold, ...formValue } })
+    setValue({ ...value, scaffold: { ...value.scaffold, ...formValue } });
   }
   const steps = [
-    <ScaffoldForm onChange={onScaffoldFormChange} value={value.scaffold}>
+    <ScaffoldForm onChange={onScaffoldFormChange} scaffoldValue={value.scaffold}>
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>

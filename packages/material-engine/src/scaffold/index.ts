@@ -1,8 +1,9 @@
 import axios from 'axios';
-import latestVersion from 'latest-version';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
+import generateBuildConfig from './utils/generateBuildConfig';
 import generateLayoutConfig from './utils/generateLayoutConfig';
+import generateMenuConfig from './utils/generateMenuConfig';
 
 const Generator = require('ice-scaffold-generator');
 
@@ -13,19 +14,15 @@ export async function getAll(source: string) {
 
 export async function generate(scaffoldField) {
   const { projectPath, projectName, scaffold } = scaffoldField;
-
   const projectDir = path.join(projectPath, projectName);
-
   const scaffoldJSONPath = path.join(projectDir, '.template', 'scaffold.json');
   await fsExtra.ensureFile(scaffoldJSONPath);
 
-  const { theme } = scaffold;
-  const themeVersion = await latestVersion(theme);
+  console.log('scaffold ==>', scaffold);
 
-  // const themeVersion = '0.x';
-  const build = {
-    theme: { package: theme, version: `^${themeVersion}` },
-  };
+  const buildConfig = await generateBuildConfig(scaffold.build || {});
+  const layoutsConfig = generateLayoutConfig(scaffold.layout);
+  const { menu, routers } = generateMenuConfig(scaffold.menu);
 
   const pkgData = {
     name: projectName,
@@ -37,54 +34,23 @@ export async function generate(scaffoldField) {
     },
   };
 
-  const layouts = generateLayoutConfig(scaffold.layouts);
-
-  const asideMenu = [];
-  const headerMenu = [];
-  const basicLayoutRouter = { path: '/', component: 'BasicLayout', children: [] };
-  if (scaffold.asideMenu) {
-    scaffold.asideMenu.forEach(item => {
-      asideMenu.push({ name: item.pageName, path: item.path });
-      basicLayoutRouter.children.push({
-        path: item.path,
-        exact: true,
-        page: {
-          name: item.pageName,
-          blocks: {
-            packages: item.blocks.map(block => block.source.npm),
-          },
-        },
-      });
-    });
-  }
-  if (scaffold.headerMenu) {
-    scaffold.headerMenu.forEach(item => {
-      headerMenu.push({ name: item.pageName, path: item.path });
-      basicLayoutRouter.children.push({
-        path: item.path,
-        exact: true,
-        page: {
-          name: item.pageName,
-          blocks: {
-            packages: item.blocks.map(block => block.source.npm),
-          },
-        },
-      });
-    });
-  }
   const scaffoldConfig = {
     pkgData,
-    build,
-    layouts,
-    menu: { asideMenu, headerMenu },
-    routers: [basicLayoutRouter],
-
+    build: buildConfig,
+    layouts: layoutsConfig,
+    menu,
+    routers,
   };
-  if (scaffold.config && scaffold.config instanceof Array) {
-    scaffold.config.forEach(item => { scaffoldConfig[item] = true; });
-  }
-  fsExtra.writeJsonSync(scaffoldJSONPath, scaffoldConfig, { spaces: 2 });
 
+  // generate advance config
+  const { advance } = scaffold;
+  if (advance) {
+    Object.keys(advance).forEach(item => {
+      scaffoldConfig[item] = advance[item];
+    });
+  }
+
+  fsExtra.writeJsonSync(scaffoldJSONPath, scaffoldConfig, { spaces: 2 });
   // .template 目录的路径
   const templatePath = path.join(projectDir, '.template');
 
