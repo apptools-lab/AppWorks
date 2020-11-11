@@ -15,6 +15,10 @@
     "fs-extra": "^9.0.0",
     "@iceworks/recorder": "^0.1.0"
   },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "publishConfig": {
     "access": "public"
   }

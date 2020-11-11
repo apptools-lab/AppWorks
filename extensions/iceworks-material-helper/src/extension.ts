@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
-import { recordDAU } from '@iceworks/recorder';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
@@ -23,8 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // set material importer
   let materialImporterWebviewPanel: vscode.WebviewPanel | undefined;
-  function activeWebview() {
-    recordDAU();
+  function activeMaterialImporterWebview() {
     recorder.recordActivate();
     if (materialImporterWebviewPanel) {
       materialImporterWebviewPanel.reveal();
@@ -46,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
           enableFindWidget: true,
         },
       );
-      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter', true);
+      materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter');
       materialImporterWebviewPanel.onDidDispose(
         () => {
           materialImporterWebviewPanel = undefined;
@@ -64,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
     registerCommand('iceworks-material-helper.material-importer.start', () => {
       const { visibleTextEditors } = vscode.window;
       if (visibleTextEditors.length) {
-        activeWebview();
+        activeMaterialImporterWebview();
       } else {
         vscode.window.showErrorMessage(i18n.format('extension.iceworksMaterialHelper.extension.start.errorMessage'));
       }
@@ -81,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -100,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -119,7 +117,7 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true,
       },
     );
-    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator', true);
+    webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator');
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -134,3 +132,5 @@ export function activate(context: vscode.ExtensionContext) {
   propsAutoComplete();
   registerComponentDocSupport();
 }
+
+export function deactivate() { }

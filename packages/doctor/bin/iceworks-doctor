@@ -23,7 +23,7 @@ if (args.help) {
     console.log(
       option.alias ? `  -${option.alias},` : '',
       `  --${key}`,
-      option.type !== 'boolean' ? ` : ${ option.type}` : '',
+      option.type !== 'boolean' ? ` : ${option.type}` : '',
       option.required ? ' *required*' : '',
     );
     console.log(`      ${option.desc}`);
@@ -33,16 +33,7 @@ if (args.help) {
 
 // Check project
 if (args.scan) {
-  const opt = {};
-  if (Array.isArray(args.ignore)) {
-    opt.ignore = args.ignore;
-  }
-
-  if (Array.isArray(args.supportExts)) {
-    opt.supportExts = args.supportExts;
-  }
-
-  const doctor = new Doctor(opt);
+  const doctor = new Doctor(args);
   doctor.scan(args.scan).then((result) => {
     console.log({
       files: {
@@ -50,9 +41,7 @@ if (args.scan) {
         lines: result.filesInfo.lines,
       },
       score: result.score,
-      aliEslint: result.aliEslint.score,
-      bestPractices: result.bestPractices.score,
-      securityPractices: result.securityPractices.score,
+      ESLint: result.ESLint.score,
       maintainability: result.maintainability.score,
       repeatability: result.repeatability.score,
     });

@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.6.0
+
+- refactor: internal optimization
+
 ## 0.5.8
 
 - fix: material sources edit form dialog will disappear before error 

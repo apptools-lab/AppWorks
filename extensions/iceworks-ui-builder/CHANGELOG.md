@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- chore: internal optimization
+
 ## 0.2.0
 
 - refactor: migrate component-creator, page-creator, page-generator to iceworks-material-helper

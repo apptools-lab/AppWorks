@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.23",
+  "version": "0.1.25",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -36,7 +36,8 @@
   },
   "scripts": {
     "build": "rm -rf lib && webpack --mode production",
-    "prebuild": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts"
+    "getDEF": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts",
+    "prepublishOnly": "npm run getDEF && npm run build"
   },
   "publishConfig": {
     "access": "public"

@@ -20,7 +20,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {},
   "dependencies": {
     "easyfile": "^0.1.1",
     "ejs": "^2.6.2",

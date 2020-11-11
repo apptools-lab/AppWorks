@@ -2,8 +2,6 @@
   "files": [],
   "references": [
     { "path": "packages/doctor" },
-    { "path": "packages/eslint-plugin-best-practices" },
-    { "path": "packages/eslint-plugin-security-practices" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
     { "path": "packages/storage" },
@@ -11,7 +9,7 @@
     { "path": "packages/config" },
     { "path": "packages/vscode-webview" },
     { "path": "packages/material-utils" },
-    { "path": "packages/transform-ts-to-js" },
+    { "path": "packages/project-utils" },
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
     { "path": "packages/material-engine" }

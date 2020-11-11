@@ -17,6 +17,7 @@ tmp/
 
 packages/*/lib/
 extensions/*/out
+extensions/*/lib
 .vscode-test
 
 **/.ice/

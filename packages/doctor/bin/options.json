@@ -21,5 +21,13 @@
   "supportExts": {
     "desc": "Support file ext list. (example: jsx css html ...)",
     "type": "array"
+  },
+  "framework": {
+    "desc": "Target project framework, default is `react`",
+    "type": "string"
+  },
+  "languageType": {
+    "desc": "Target project languageType(js or ts), default is `js`",
+    "type": "string"
   }
 }

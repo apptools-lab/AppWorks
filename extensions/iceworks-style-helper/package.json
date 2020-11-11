@@ -3,7 +3,7 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -65,21 +65,22 @@
   "devDependencies": {
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@babel/parser": "^7.10.3",
     "@babel/traverse": "^7.10.3",
     "@iceworks/common-service": "^0.1.14",
-    "@iceworks/recorder": "^0.1.1",
+    "@iceworks/recorder": "^0.1.6",
     "css": "^2.2.4",
     "css-flatten": "^1.0.1",
     "datauri": "^2.0.0",
     "line-column": "^1.0.2",
     "tinycolor2": "^1.4.1",
-    "vscode-web-custom-data": "^0.1.4",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "vscode-web-custom-data": "^0.1.4"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-style-helper/README.md",
   "bugs": {

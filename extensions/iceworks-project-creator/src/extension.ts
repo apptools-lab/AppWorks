@@ -93,3 +93,5 @@ export function activate(context: vscode.ExtensionContext) {
     globalState.update(stateKey, true);
   }
 }
+
+export function deactivate() { }

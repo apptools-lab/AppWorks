@@ -17,6 +17,8 @@ class Doctor {
     this.scanner = new Scanner({
       ignore: defaultignore.concat(this.options.ignore || []),
       supportExts: defaultSupportExts.concat(this.options.supportExts || []),
+      framework: options.framework || 'react',
+      languageType: options.languageType || 'js',
     });
   }
 

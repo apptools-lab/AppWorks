@@ -1,9 +1,9 @@
 {
-  "name": "iceworks-time-steward",
+  "name": "iceworks-time-master",
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"
@@ -23,31 +23,73 @@
   "activationEvents": [
     "*"
   ],
+  "contributes": {
+    "commands": [],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "iceworksApp",
+          "title": "Iceworks",
+          "icon": "assets/sidebar-logo.png"
+        }
+      ]
+    },
+    "views": {
+      "iceworksApp": [
+        {
+          "id": "timeMaster",
+          "name": "%timeMaster.views.iceworksApp.timeMaster.name%"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Iceworks Time Master",
+      "properties": {
+        "iceworks.timeLimit": {
+          "type": "number",
+          "default": 7,
+          "title": "timeMaster.configuration.properties.iceworks.timeLimit.title",
+          "description": "%timeMaster.configuration.properties.iceworks.timeLimit.description%"
+        }
+      }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
   },
   "main": "./build/extension.js",
   "scripts": {
-    "vscode:prepublish": "rm -rf build && webpack --mode production",
-    "webpack": "webpack --mode development",
-    "webpack-dev": "webpack --mode development --watch",
-    "compile": "tsc -p ./tsconfig.json"
+    "vscode:prepublish": "rm -rf build && npm run build",
+    "build": "rm -rf build && webpack --mode production",
+    "watch": "webpack --mode development --watch --info-verbosity verbose"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.2",
+    "@types/lodash.forin": "^4.4.6",
+    "@types/lodash.orderby": "^4.6.6",
     "@types/node": "^12.11.7",
+    "@types/numeral": "0.0.28",
     "@types/vscode": "^1.41.0",
-    "@types/request": "^2.48.5",
     "ts-loader": "^8.0.3",
-    "typescript": "^3.6.4",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "typescript": "^4.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.1.14",
-    "@iceworks/recorder": "^0.1.1"
+    "@iceworks/common-service": "^0.1.0",
+    "@iceworks/i18n": "^0.1.0",
+    "@iceworks/recorder": "^0.1.0",
+    "@iceworks/storage": "^0.1.0",
+    "axios": "^0.21.0",
+    "fs-extra": "^9.0.1",
+    "lodash.forin": "^4.4.0",
+    "lodash.orderby": "^4.6.0",
+    "moment": "^2.29.1",
+    "node-cache": "^5.1.2",
+    "numeral": "^2.0.6"
   },
-  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-steward/README.md",
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.md",
   "bugs": {
     "url": "https://github.com/ice-lab/iceworks/issues",
     "email": "iceworksteam@163.com"

@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/material-engine",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Iceworks Material Engine for VSCode extension.",
   "files": [
     "lib"
@@ -30,7 +30,7 @@
     "latest-version": "^5.1.0",
     "lodash.kebabcase": "^4.1.1",
     "prettier": "^2.1.2",
-    "transform-ts-to-js": "^0.1.0",
+    "transform-ts-to-js": "0.1.0",
     "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0"
   },
@@ -39,6 +39,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
   },
   "gitHead": "fc5b35f95ab4cc24898845916acf598c2f34d576"
 }

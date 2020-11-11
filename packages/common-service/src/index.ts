@@ -60,6 +60,11 @@ function recordExecuteCommand(command: string, args: any[]) {
   });
 }
 
+export function checkIsO2() {
+  const variable = process.env.XPC_SERVICE_NAME;
+  return typeof variable === 'string' && variable.includes('com.taobao.o2');
+}
+
 let isAliInternal;
 export async function checkIsAliInternal(): Promise<boolean> {
   if (typeof isAliInternal === 'undefined') {
@@ -323,7 +328,9 @@ export async function getUserInfo() {
   } else {
     try {
       const { account, empid: empId } = await fn();
-      return { account, empId, gitlabToken };
+      const result = { account, empId, gitlabToken };
+      saveDataToSettingJson('user', result);
+      return result;
     } catch (e) {
       throw new Error(e.message);
     }

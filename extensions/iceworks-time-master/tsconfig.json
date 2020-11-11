@@ -1,21 +1,12 @@
 {
+  "extends": "../../tsconfig.extension.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "outDir": "out",
-    "moduleResolution": "node",
-    "lib": ["es2018"],
-    "sourceMap": true,
-    "rootDir": ".",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
-    "importHelpers": true,
-    "removeComments": true,
+    "outDir": "build",
+    "rootDir": "./",
     "noImplicitAny": false,
-    "strictPropertyInitialization": false
+    "resolveJsonModule": true,
+    "strictNullChecks": false
   },
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": [".vscode-test"]
 }

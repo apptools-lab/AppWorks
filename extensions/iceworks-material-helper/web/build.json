@@ -3,6 +3,7 @@
     "writeToDisk": true
   },
   "mpa": true,
+  "vendor": false,
   "publicPath": "./",
   "outputDir": "../build",
   "plugins": [
