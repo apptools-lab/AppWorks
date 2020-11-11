@@ -149,7 +149,7 @@ export async function generateUserDashboard() {
   const lastWeekDays = getLastWeekDays();
   const lastWeekMonday = lastWeekDays[0];
   const lastWeekFriday = lastWeekDays[4];
-  const formattedLastWeek = `${getDay(lastWeekMonday)} - ${getDay(lastWeekFriday)}`;
+  const formattedLastWeek = `${getDay(lastWeekMonday)} to ${getDay(lastWeekFriday)}`;
   const lastWeekUserSummary = await getUserSummaryByDays(lastWeekDays);
   const lastWeekStr = getRangeDashboard(lastWeekUserSummary, `🐯 Last week (${formattedLastWeek})`);
   dashboardContent += lastWeekStr;
@@ -162,7 +162,7 @@ export async function generateUserDashboard() {
     keystrokes: dailyKeystrokes,
     linesAdded: dailyLinesAdded,
     linesRemoved: dailyLinesRemoved,
-  }, '🐲 Average');
+  }, '🐲 Average of Day');
   dashboardContent += avgStr;
   dashboardContent += lineBreakStr;
 
