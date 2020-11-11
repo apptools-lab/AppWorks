@@ -13,6 +13,7 @@ export default async function getRepeatabilityReports(
   directory: string,
   supportExts: string[],
   ignore: string[],
+  tempFileDir?: string,
 ): Promise<IRepeatabilityReports> {
   let clones: IClone[] = [];
   let repetitionPercentage = 0;
@@ -27,11 +28,11 @@ export default async function getRepeatabilityReports(
       '--reporters',
       'json',
       '--output',
-      tempDir,
+      tempFileDir || tempDir,
       '--silent',
     ]);
 
-    const repeatabilityResultFile = path.join(tempDir, 'jscpd-report.json');
+    const repeatabilityResultFile = path.join(tempFileDir || tempDir, 'jscpd-report.json');
     if (fs.existsSync(repeatabilityResultFile)) {
       const repeatabilityResult = fs.readJSONSync(repeatabilityResultFile);
       repetitionPercentage = repeatabilityResult.statistics.total.percentage;
