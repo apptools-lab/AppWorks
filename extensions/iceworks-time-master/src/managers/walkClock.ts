@@ -1,3 +1,4 @@
+import { commands, window, WindowState } from 'vscode';
 import { logIt } from '../utils/common';
 import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
@@ -9,7 +10,7 @@ export async function checkMidnight() {
     await sendPayload();
     setNowDay();
     checkStorageIsLimited().catch((e) => {
-      logIt('check storage limited got error:', e);
+      logIt('[walkClock]check storage limited got error:', e);
     });
   }
 }
@@ -26,6 +27,12 @@ export async function activate() {
     sendPayload().catch(() => { /* ignore error */ });
   }, ONE_MIN_MILLISECONDS * 15);
 
+  window.onDidChangeWindowState((windowState: WindowState) => {
+    if (windowState.focused) {
+      refreshViews();
+    }
+  });
+
   await checkMidnight();
 }
 
@@ -36,4 +43,10 @@ export function deactivate() {
   if (sendDataTimer) {
     clearInterval(sendDataTimer);
   }
+}
+
+export function refreshViews() {
+  logIt('[walkClock][refreshViews] run');
+  commands.executeCommand('iceworks-time-master.refreshTimerTree');
+  commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }
