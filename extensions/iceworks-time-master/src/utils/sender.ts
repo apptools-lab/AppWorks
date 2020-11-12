@@ -79,12 +79,12 @@ export async function appendEditorTimePayload() {
 }
 
 export async function sendPayload() {
+  const isSendable = await checkIsSendable();
   await Promise.all([SESSION_TIME_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
-    const isSendable = await checkIsSendable();
     if (isSendable) {
       await sendPayloadData(TYPE);
     } else {
-      clearPayloadData(TYPE);
+      await clearPayloadData(TYPE);
     }
   }));
 }
@@ -126,7 +126,7 @@ async function send(api: string, originParam: any) {
  */
 async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
-  const playload = getPayloadData(type);
+  const playload = await getPayloadData(type);
   const { editorName, editorVersion } = getEditorInfo();
   const { extensionName, extensionVersion } = getExtensionInfo();
   const { os, hostname, timezone } = await getSystemInfo();
@@ -143,33 +143,33 @@ async function sendPayloadData(type: string) {
       timezone,
     });
   }));
-  clearPayloadData(type);
+  await clearPayloadData(type);
 }
 
-function getPayloadData(type: string) {
+async function getPayloadData(type: string) {
   const file = getPayloadFile(type);
   let playload = [];
   try {
-    playload = fse.readJSONSync(file);
+    playload = await fse.readJson(file);
   } catch (e) {
     // ignore error
   }
   return playload;
 }
 
-function clearPayloadData(type: string) {
-  savePayloadData(type, []);
+async function clearPayloadData(type: string) {
+  await savePayloadData(type, []);
 }
 
-function savePayloadData(type: string, playload: EditorTimePayload[]|SessionTimePayload[]) {
+async function savePayloadData(type: string, playload: EditorTimePayload[]|SessionTimePayload[]) {
   const file = getPayloadFile(type);
-  fse.writeJSONSync(file, playload);
+  await fse.writeJson(file, playload);
 }
 
-function appendPayloadData(type: string, data: EditorTimePayload[]|SessionTimePayload[]) {
-  const playload = getPayloadData(type);
+async function appendPayloadData(type: string, data: EditorTimePayload[]|SessionTimePayload[]) {
+  const playload = await getPayloadData(type);
   const nextData = playload.concat(data);
-  savePayloadData(type, nextData);
+  await savePayloadData(type, nextData);
 }
 
 function getPayloadFile(type: string) {
