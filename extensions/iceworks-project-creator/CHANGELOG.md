@@ -2,7 +2,7 @@
 
 # 0.4.1
 
-- chore: remove mini-program material
+- chore: remove mini-program materials
 
 # 0.4.0
 
