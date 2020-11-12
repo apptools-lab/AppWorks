@@ -67,11 +67,8 @@ function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeSt
 }
 
 export async function appendSessionTimePayload(keystrokeStats: KeystrokeStats) {
-  const isSendable = checkIsSendable();
-  if (isSendable) {
-    const playload = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
-    await appendPayloadData(SESSION_TIME_RECORD, playload);
-  }
+  const playload = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
+  await appendPayloadData(SESSION_TIME_RECORD, playload);
 }
 
 /**
@@ -83,7 +80,12 @@ export async function appendEditorTimePayload() {
 
 export async function sendPayload() {
   await Promise.all([SESSION_TIME_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
-    await sendPayloadData(TYPE);
+    const isSendable = await checkIsSendable();
+    if (isSendable) {
+      await sendPayloadData(TYPE);
+    } else {
+      clearPayloadData(TYPE);
+    }
   }));
 }
 
