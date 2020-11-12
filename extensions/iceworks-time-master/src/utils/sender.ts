@@ -3,13 +3,13 @@ import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
-import { FileChange, FileChangeInfo } from '../storages/filesChange';
+import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChange';
 import { getAppDataDirPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
 import forIn = require('lodash.forin');
 
-const SESSION_TIME_RECORD = 'session_time';
+const KEYSTROKES_RECORD = 'keystrokes';
 const EDITOR_TIME_RECORD = 'editor_time';
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
@@ -21,7 +21,13 @@ interface UserInfo {
   userId: string;
 }
 
-export interface SessionTimePayload extends ProjectParams, EditorInfo, ExtensionInfo, SystemInfo, UserInfo, FileChangeInfo {
+export interface KeystrokesPayload extends
+  ProjectParams,
+  EditorInfo,
+  ExtensionInfo,
+  SystemInfo,
+  UserInfo,
+  Omit<FileChangeInfo, keyof FileEventInfo> {
 }
 
 export interface EditorTimePayload extends ProjectParams, EditorInfo, ExtensionInfo, SystemInfo, UserInfo {
@@ -35,8 +41,8 @@ async function checkIsSendable() {
   return await checkIsAliInternal();
 }
 
-function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeStats): SessionTimePayload[] {
-  const data: SessionTimePayload[] = [];
+function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeStats): KeystrokesPayload[] {
+  const data: KeystrokesPayload[] = [];
   const { files, project } = keystrokeStats;
   const { name: projectName, directory: projectDirectory, gitRepository, gitBranch, gitTag } = project;
   forIn(files, (fileChange: FileChange) => {
@@ -62,9 +68,9 @@ function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeSt
   return data;
 }
 
-export async function appendSessionTimePayload(keystrokeStats: KeystrokeStats) {
-  const playload = transformKeyStrokeStatsToSessionTimePayload(keystrokeStats);
-  await appendPayloadData(SESSION_TIME_RECORD, playload);
+export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
+  const playload = transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats);
+  await appendPayloadData(KEYSTROKES_RECORD, playload);
 }
 
 /**
@@ -76,7 +82,7 @@ export async function appendEditorTimePayload() {
 
 export async function sendPayload() {
   const isSendable = await checkIsSendable();
-  await Promise.all([SESSION_TIME_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+  await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
     if (isSendable) {
       await sendPayloadData(TYPE);
     } else {
@@ -157,12 +163,12 @@ async function clearPayloadData(type: string) {
   await savePayloadData(type, []);
 }
 
-async function savePayloadData(type: string, playload: EditorTimePayload[]|SessionTimePayload[]) {
+async function savePayloadData(type: string, playload: EditorTimePayload[]|KeystrokesPayload[]) {
   const file = getPayloadFile(type);
   await fse.writeJson(file, playload);
 }
 
-async function appendPayloadData(type: string, data: EditorTimePayload[]|SessionTimePayload[]) {
+async function appendPayloadData(type: string, data: EditorTimePayload[]|KeystrokesPayload[]) {
   const playload = await getPayloadData(type);
   const nextData = playload.concat(data);
   await savePayloadData(type, nextData);

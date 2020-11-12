@@ -4,8 +4,8 @@ import { TextDocument } from 'vscode';
 import { getAppDataDayDirPath } from '../utils/storage';
 import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
-import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { JSON_SPACES } from '../constants';
+import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
 import forIn = require('lodash.forin');
 
 let textInfoCache: {[fileName: string]: FileTextInfo} = {};
@@ -105,37 +105,26 @@ export interface ContentChangeInfo {
   charsPasted?: number;
 }
 
-export interface KeystrokeStatsInfo {
-  /**
-   * Time to start keystroke
-   */
-  start: number;
-  /**
-   * Time to end keystroke
-   */
-  end: number;
-  /**
-   * Number of keystrokes
-   */
-  keystrokes: number;
-  /**
-   * Interval between the end of the update and the start of the update
-   */
-  durationSeconds: number;
-}
-
-export interface FileChangeInfo extends FileInfo, KeystrokeStatsInfo, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
+export interface FileChangeInfo
+  extends
+  // TODO Remove it
+  FileEventInfo,
+  FileInfo,
+  KeystrokeStatsInfo,
+  ContentChangeInfo,
+  ContentChangeEventInfo
+{
   /**
    * The folder of the project to which the file belongs
    */
-  projectDir: string;
+  projectDirectory: string;
 }
 
 export interface FileChangeSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'durationSeconds'>, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
   /**
    * The folder of the project to which the file belongs
    */
-  projectDir: string;
+  projectDirectory: string;
   /**
    * Keystrokes per minute
    */
@@ -155,7 +144,7 @@ export class FileChange implements FileChangeInfo {
 
   public fsPath: string;
 
-  public projectDir: string;
+  public projectDirectory: string;
 
   public length: number;
 
@@ -226,8 +215,8 @@ export class FileChange implements FileChangeInfo {
   static createInstance(fsPath: string, project: Project) {
     const baseName = path.basename(fsPath);
     const fileName = baseName;
-    const projectDir = project.directory;
-    const fileChange = new FileChange({ fileName, projectDir, fsPath });
+    const projectDirectory = project.directory;
+    const fileChange = new FileChange({ fileName, projectDirectory, fsPath });
     return fileChange;
   }
 }
