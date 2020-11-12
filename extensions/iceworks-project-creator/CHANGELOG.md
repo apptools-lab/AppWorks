@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.4.1
+
+- chore: remove mini-program materials
+
 # 0.4.0
 
 - refactor: internal optimization
