@@ -107,13 +107,15 @@ async function send(api: string, data: any) {
   return await axios({
     method: 'post',
     url: `${url}${api}`,
-    data,
+    data: {
+      data,
+    },
   });
 }
+export function isResponseOk(response) {
+  return response.status === 200 && response.data && response.data.success;
+}
 
-/**
- * TODO batch send to server
- */
 async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
@@ -130,7 +132,7 @@ async function sendPayloadData(type: string) {
     if (playloadLength > 10) {
       logIt('[sender][sendPayloadData]_bulkCreate run', playloadLength);
       try {
-        const bulkCreateResult = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
+        const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
           ...record,
           ...editorInfo,
           ...extensionInfo,
@@ -138,12 +140,9 @@ async function sendPayloadData(type: string) {
           userId: empId,
         })));
 
-        logIt('[sender][sendPayloadData]_bulkCreate result', bulkCreateResult);
-
-        if (bulkCreateResult.status === 200 && bulkCreateResult.data && bulkCreateResult.data.success) {
-          return bulkCreateResult.data.data;
-        } else {
-          throw new Error(bulkCreateResult.data.message);
+        logIt('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
+        if (!isResponseOk(bulkCreateRespose)) {
+          throw new Error(bulkCreateRespose.data.message);
         }
       } catch (e) {
 
@@ -153,16 +152,19 @@ async function sendPayloadData(type: string) {
       }
     } else {
       logIt('[sender][sendPayloadData]_create run:', playloadLength);
-      const result = await Promise.all(playload.map(async (record: any) => {
+      const failRecords = await Promise.all(playload.map(async (record: any) => {
         try {
-          const createResult = await send(`/${type}/_create`, {
+          const createResponse = await send(`/${type}/_create`, {
             ...record,
             ...editorInfo,
             ...extensionInfo,
             ...systemInfo,
             userId: empId,
           });
-          logIt('[sender][sendPayloadData]_create result', createResult);
+          logIt('[sender][sendPayloadData]_create response', createResponse);
+          if (!isResponseOk(createResponse)) {
+            throw new Error(createResponse.data.message);
+          }
         } catch (e) {
           console.error('[sender][sendPayloadData]_create error', e);
           return record;
@@ -170,7 +172,7 @@ async function sendPayloadData(type: string) {
       }));
 
       // if got error, write back the data and resend it in the next cycle
-      const failPayload = result.filter((failRecord) => failRecord);
+      const failPayload = failRecords.filter((failRecord) => failRecord);
       await appendPayloadData(type, failPayload);
     }
   }

@@ -6,6 +6,7 @@ import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
 import { appendKeystrokesPayload } from '../utils/sender';
+import { logIt } from '../utils/common';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
@@ -16,6 +17,7 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
 }
 
 export async function processData(keystrokeStats: KeystrokeStats) {
+  logIt('[data][processData] run');
   checkMidnight();
   saveDataToDisk(keystrokeStats);
   appendKeystrokesPayload(keystrokeStats);
