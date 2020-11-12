@@ -16,7 +16,7 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
 }
 
 export async function processData(keystrokeStats: KeystrokeStats) {
-  await checkMidnight();
+  checkMidnight();
   saveDataToDisk(keystrokeStats);
   appendKeystrokesPayload(keystrokeStats);
 }

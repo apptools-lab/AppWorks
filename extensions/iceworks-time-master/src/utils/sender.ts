@@ -7,10 +7,14 @@ import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChan
 import { getAppDataDirPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
+import { logIt } from './common';
+import { window } from 'vscode';
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
 const EDITOR_TIME_RECORD = 'editor_time';
+
+const domain = 'http://30.10.92.175:3333/api';
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
@@ -39,6 +43,10 @@ export interface EditorTimePayload extends ProjectParams, EditorInfo, ExtensionI
  */
 async function checkIsSendable() {
   return await checkIsAliInternal();
+}
+
+function checkIsSendNow(): boolean {
+  return window.state.focused;
 }
 
 function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeStats): KeystrokesPayload[] {
@@ -82,45 +90,24 @@ export async function appendEditorTimePayload() {
 
 export async function sendPayload() {
   const isSendable = await checkIsSendable();
+  const isSendNow = checkIsSendNow();
   await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
     if (isSendable) {
-      await sendPayloadData(TYPE);
+      if (isSendNow) {
+        await sendPayloadData(TYPE);
+      }
     } else {
       await clearPayloadData(TYPE);
     }
   }));
 }
 
-async function send(api: string, originParam: any) {
-  const param = {
-    ...originParam,
-    cache: Math.random(),
-  };
-
-  try {
-    const dataKeyArray = Object.keys(param);
-    const gokey = dataKeyArray.reduce((finalStr, currentKey, index) => {
-      const currentData = typeof param[currentKey] === 'string' ? param[currentKey] : JSON.stringify(param[currentKey]);
-      return `${finalStr}${currentKey}=${currentData}${dataKeyArray.length - 1 === index ? '' : '&'}`;
-    }, '');
-
-    await axios({
-      method: 'post',
-      url: `http://gm.mmstat.com/${api}`,
-      headers: {
-        'content-type': 'text/plain;charset=UTF-8',
-        origin: 'https://www.taobao.com',
-        referer: 'https://www.taobao.com/',
-      },
-      data: {
-        gmkey: 'CLK',
-        gokey: encodeURIComponent(gokey),
-        logtype: '2',
-      },
-    });
-  } catch (error) {
-    console.error(error);
-  }
+async function send(api: string, data: any) {
+  return await axios({
+    method: 'post',
+    url: `${domain}${api}`,
+    data,
+  });
 }
 
 /**
@@ -129,23 +116,64 @@ async function send(api: string, originParam: any) {
 async function sendPayloadData(type: string) {
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
-  const { editorName, editorVersion } = getEditorInfo();
-  const { extensionName, extensionVersion } = getExtensionInfo();
-  const { os, hostname, timezone } = await getSystemInfo();
-  await Promise.all(playload.map(async (record: any) => {
-    await send(`iceteam.iceworks.time_master_${type}`, {
-      ...record,
-      userId: empId,
-      editorName,
-      editorVersion,
-      extensionName,
-      extensionVersion,
-      os,
-      hostname,
-      timezone,
-    });
-  }));
-  await clearPayloadData(type);
+  const playloadLength = playload.length;
+
+  if (Array.isArray(playload) && playloadLength) {
+    // clear first to prevent duplicate sending when concurrent
+    await clearPayloadData(type);
+
+    const editorInfo = getEditorInfo();
+    const extensionInfo = getExtensionInfo();
+    const systemInfo = await getSystemInfo();
+
+    // too large data can not be post
+    if (10 > playloadLength) {
+      logIt('[sender][sendPayloadData]_bulkCreate run', playloadLength);
+      try {
+        const bulkCreateResult = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
+          ...record,
+          ...editorInfo,
+          ...extensionInfo,
+          ...systemInfo,
+          userId: empId,
+        })));
+
+        logIt('[sender][sendPayloadData]_bulkCreate result', bulkCreateResult);
+
+        if (bulkCreateResult.status === 200 && bulkCreateResult.data && bulkCreateResult.data.success) {
+          return bulkCreateResult.data.data;
+        } else {
+          throw new Error(bulkCreateResult.data.message);
+        }
+      } catch (e) {
+
+        // if got error, write back the data and resend it in the next cycle
+        await appendPayloadData(type, playload);
+        throw e;
+      }
+    } else {
+      logIt('[sender][sendPayloadData]_create run:', playloadLength);
+      const result = await Promise.all(playload.map(async (record: any) => {
+        try {
+          const createResult = await send(`/${type}/_create`, {
+            ...record,
+            ...editorInfo,
+            ...ExtensionInfo,
+            ...SystemInfo,
+            userId: empId,
+          });
+          logIt('[sender][sendPayloadData]_create result', createResult);
+        } catch (e) {
+          console.error('[sender][sendPayloadData]_create error', e);
+          return record;
+        }
+      }));
+
+      // if got error, write back the data and resend it in the next cycle
+      const failPayload = result.filter((failRecord) => failRecord);
+      await appendPayloadData(type, failPayload);
+    }
+  }
 }
 
 async function getPayloadData(type: string) {
@@ -175,5 +203,5 @@ async function appendPayloadData(type: string, data: EditorTimePayload[]|Keystro
 }
 
 function getPayloadFile(type: string) {
-  return path.join(getAppDataDirPath(), `${type}_records.json`);
+  return path.join(getAppDataDirPath(), `${type}_payload.json`);
 }

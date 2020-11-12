@@ -105,11 +105,10 @@ export interface ContentChangeInfo {
   charsPasted?: number;
 }
 
-export interface FileChangeInfo
-  extends
+export interface FileChangeInfo extends
+  FileInfo,
   // TODO Remove it
   FileEventInfo,
-  FileInfo,
   KeystrokeStatsInfo,
   ContentChangeInfo,
   ContentChangeEventInfo

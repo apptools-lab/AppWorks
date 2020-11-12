@@ -5,12 +5,14 @@ import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendPayload } from '../utils/sender';
 import { checkStorageIsLimited } from '../utils/storage';
 
-export async function checkMidnight() {
+export function checkMidnight() {
   if (isNewDay()) {
-    await sendPayload();
     setNowDay();
     checkStorageIsLimited().catch((e) => {
-      logIt('[walkClock]check storage limited got error:', e);
+      logIt('[walkClock][checkMidnight]checkStorageIsLimited got error:', e);
+    });
+    sendPayload().catch((e) => {
+      logIt('[walkClock][checkMidnight]sendPayload got error:', e);
     });
   }
 }
@@ -18,13 +20,15 @@ export async function checkMidnight() {
 let dayCheckTimer: NodeJS.Timeout;
 let sendDataTimer: NodeJS.Timeout;
 
-export async function activate() {
+export function activate() {
   dayCheckTimer = setInterval(() => {
-    checkMidnight().catch(() => { /* ignore error */ });
+    checkMidnight();
   }, ONE_MIN_MILLISECONDS * 5);
 
   sendDataTimer = setInterval(() => {
-    sendPayload().catch(() => { /* ignore error */ });
+    sendPayload().catch((e) => {
+      logIt('[walkClock][activate][setInterval]sendPayload got error:', e);
+    });
   }, ONE_MIN_MILLISECONDS * 15);
 
   window.onDidChangeWindowState((windowState: WindowState) => {
@@ -33,7 +37,10 @@ export async function activate() {
     }
   });
 
-  await checkMidnight();
+  checkMidnight();
+  sendPayload().catch((e) => {
+    logIt('[walkClock][activate]sendPayload got error:', e);
+  });
 }
 
 export function deactivate() {
