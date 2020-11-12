@@ -2,6 +2,7 @@ import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
+import { ALI_DIP_DAILY } from '@iceworks/constant';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChange';
 import { getAppDataDirPath } from './storage';
@@ -14,7 +15,7 @@ import forIn = require('lodash.forin');
 const KEYSTROKES_RECORD = 'keystrokes';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-const domain = 'http://30.10.92.175:3333/api';
+const url = `${ALI_DIP_DAILY}/api`;
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
@@ -105,7 +106,7 @@ export async function sendPayload() {
 async function send(api: string, data: any) {
   return await axios({
     method: 'post',
-    url: `${domain}${api}`,
+    url: `${url}${api}`,
     data,
   });
 }
@@ -126,8 +127,7 @@ async function sendPayloadData(type: string) {
     const extensionInfo = getExtensionInfo();
     const systemInfo = await getSystemInfo();
 
-    // too large data can not be post
-    if (10 > playloadLength) {
+    if (playloadLength > 10) {
       logIt('[sender][sendPayloadData]_bulkCreate run', playloadLength);
       try {
         const bulkCreateResult = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
@@ -158,8 +158,8 @@ async function sendPayloadData(type: string) {
           const createResult = await send(`/${type}/_create`, {
             ...record,
             ...editorInfo,
-            ...ExtensionInfo,
-            ...SystemInfo,
+            ...extensionInfo,
+            ...systemInfo,
             userId: empId,
           });
           logIt('[sender][sendPayloadData]_create result', createResult);

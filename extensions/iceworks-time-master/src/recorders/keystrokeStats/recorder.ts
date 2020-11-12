@@ -226,13 +226,13 @@ export class KeystrokeStatsRecorder {
     for (const contentChange of contentChanges) {
       const textChangeInfo = this.getTextChangeInfo(contentChange);
       if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
-        currentFileChange.paste += 1;
+        currentFileChange.pasteTimes += 1;
         logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
-        currentFileChange.delete += 1;
+        currentFileChange.deleteTimes += 1;
         logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
       } else if (textChangeInfo.hasNonNewLine) {
-        currentFileChange.add += 1;
+        currentFileChange.addTimes += 1;
         logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1

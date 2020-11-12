@@ -71,15 +71,15 @@ export interface ContentChangeEventInfo {
   /**
    * Paste times
    */
-  paste: number;
+  pasteTimes: number;
   /**
    * Add times
    */
-  add: number;
+  addTimes: number;
   /**
    * Delete times
    */
-  delete: number;
+  deleteTimes: number;
 }
 
 export interface ContentChangeInfo {
@@ -163,11 +163,11 @@ export class FileChange implements FileChangeInfo {
 
   public close = 0;
 
-  public paste = 0;
+  public pasteTimes = 0;
 
-  public add = 0;
+  public addTimes = 0;
 
-  public delete = 0;
+  public deleteTimes = 0;
 
   public update = 0;
 
@@ -266,16 +266,16 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
     } else {
       // aggregate
       fileChangeSummary.update += 1;
+      fileChangeSummary.open += fileChange.open;
+      fileChangeSummary.close += fileChange.close;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.kpm = fileChangeSummary.keystrokes / fileChangeSummary.update;
-      fileChangeSummary.add += fileChange.add;
-      fileChangeSummary.delete += fileChange.delete;
+      fileChangeSummary.addTimes += fileChange.addTimes;
+      fileChangeSummary.deleteTimes += fileChange.deleteTimes;
+      fileChangeSummary.pasteTimes += fileChange.pasteTimes;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.linesAdded += fileChange.linesAdded;
       fileChangeSummary.linesRemoved += fileChange.linesRemoved;
-      fileChangeSummary.open += fileChange.open;
-      fileChangeSummary.close += fileChange.close;
-      fileChangeSummary.paste += fileChange.paste;
       fileChangeSummary.sessionSeconds += fileChange.durationSeconds;
       // non aggregates, just set
       fileChangeSummary.lineCount = fileChange.lineCount;
