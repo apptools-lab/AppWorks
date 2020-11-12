@@ -21,7 +21,7 @@ export async function processData(keystrokeStats: KeystrokeStats) {
   appendSessionTimePayload(keystrokeStats);
 }
 
-function setProgressToGenerateSummaryReport(title: string, generateFn: any) {
+function setProgressToGenerateSummaryReport(title: string, generateFn: typeof generateProjectReport | typeof generateUserReport) {
   window.withProgress(
     {
       location: ProgressLocation.Notification,

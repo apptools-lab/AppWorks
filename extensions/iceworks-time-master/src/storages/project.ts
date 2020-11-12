@@ -4,14 +4,19 @@ import * as path from 'path';
 import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
 import { getAppDataDirPath, getAppDataDayDirPath, getStorageDirs } from '../utils/storage';
-import { getResource } from '../utils/git';
+import { getResource, Resource } from '../utils/git';
 import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
 import forIn = require('lodash.forin');
 
-export interface ProjectResource {
-  repository: string;
-  branch: string;
-  tag?: string;
+interface ProjectResource {
+  gitRepository: PropType<Resource, 'repository'>;
+  gitBranch: PropType<Resource, 'branch'>;
+  gitTag?: PropType<Resource, 'tag'>;
+}
+
+export interface ProjectInfo extends ProjectResource {
+  name: string;
+  directory: string;
 }
 
 export function getProjectFolder(fsPath: string): WorkspaceFolder {
@@ -38,17 +43,14 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
   return null;
 }
 
-export class Project {
-  // public id: string = '';
+export class Project implements ProjectInfo {
   public name = '';
-
   public directory = '';
+  public gitRepository = '';
+  public gitBranch = '';
+  public gitTag = '';
 
-  public resource: ProjectResource = { repository: '', branch: '' };
-
-  constructor(values?: any) {
-    // const { resource, directory } = values;
-    // this.id = resource!.repository || directory;
+  constructor(values?: Partial<ProjectInfo>) {
     if (values) {
       Object.assign(this, values);
     }
@@ -58,17 +60,16 @@ export class Project {
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
     const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
-    const resource = await getResource(directory);
-    const project = new Project({ name: workspaceFolderName, directory, resource });
+    const { branch, tag, repository } = await getResource(directory);
+    const project = new Project({
+      name: workspaceFolderName,
+      directory,
+      gitBranch: branch,
+      gitTag: tag,
+      gitRepository: repository,
+    });
     return project;
   }
-}
-
-interface ProjectInfo {
-  // id?: string;
-  name: string;
-  directory: string;
-  resource?: ProjectResource;
 }
 
 interface ProjectData {

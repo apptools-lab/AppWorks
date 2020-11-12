@@ -84,8 +84,8 @@ class TimerTreeItem extends TreeItem {
     }
 
     if (lightPath && darkPath) {
-      this.iconPath.light = lightPath;
-      this.iconPath.dark = darkPath;
+      this.iconPath.light = lightPath.toString();
+      this.iconPath.dark = darkPath.toString();
     } else {
       // no matching tag, remove the tree item icon path
       delete this.iconPath;
@@ -101,7 +101,7 @@ class TimerTreeItem extends TreeItem {
 
   contextValue = 'treeItem';
 
-  getTreeItemIcon(treeItem: TimerItem): any {
+  getTreeItemIcon(treeItem: TimerItem) {
     const iconName = treeItem.icon;
     const lightPath =
       iconName ?

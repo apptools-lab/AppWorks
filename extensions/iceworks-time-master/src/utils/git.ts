@@ -7,19 +7,19 @@ const NodeCache = require('node-cache');
 const nodeCache = new NodeCache({ stdTTL: 120 });
 const cacheTimeoutSeconds = 60 * 30;
 
-export function isGitProject(projectDir: string) {
-  return fse.existsSync(path.join(projectDir, '.git'));
+export function isGitProject(dirPath: string) {
+  return fse.existsSync(path.join(dirPath, '.git'));
 }
 
 export interface Resource {
   branch: string;
   repository: string;
-  tag: string;
+  tag?: string;
 }
 
-export async function getResource(projectDir: string): Promise<Resource> {
-  if (isGitProject(projectDir)) {
-    const noSpacesProjDir = projectDir.replace(/^\s+/g, '');
+export async function getResource(dirPath: string): Promise<Resource> {
+  if (isGitProject(dirPath)) {
+    const noSpacesProjDir = dirPath.replace(/^\s+/g, '');
     const cacheId = `resource-info-${noSpacesProjDir}`;
 
     let resourceInfo = nodeCache.get(cacheId);
@@ -30,15 +30,15 @@ export async function getResource(projectDir: string): Promise<Resource> {
 
     const branch = await wrapExecPromise(
       'git symbolic-ref --short HEAD',
-      projectDir,
+      dirPath,
     );
     const repository = await wrapExecPromise(
       'git config --get remote.origin.url',
-      projectDir,
+      dirPath,
     );
     const tag = await wrapExecPromise(
       'git describe --all',
-      projectDir,
+      dirPath,
     );
     resourceInfo = {
       branch,

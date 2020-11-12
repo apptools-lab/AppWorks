@@ -8,21 +8,6 @@ import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { JSON_SPACES } from '../constants';
 import forIn = require('lodash.forin');
 
-interface FileTextInfo {
-  /**
-   * The character length of the file
-   */
-  length: number;
-  /**
-   * The number of lines in the file
-   */
-  lineCount: number;
-  /**
-   * Syntax used by the file
-   */
-  syntax: string;
-}
-
 let textInfoCache: {[fileName: string]: FileTextInfo} = {};
 function getTextInfo(textDocument: TextDocument, fileName: string): FileTextInfo {
   if (textInfoCache[fileName]) {
@@ -41,6 +26,21 @@ export function cleanTextInfoCache() {
   textInfoCache = {};
 }
 
+interface FileTextInfo {
+  /**
+   * The character length of the file
+   */
+  length: number;
+  /**
+   * The number of lines in the file
+   */
+  lineCount: number;
+  /**
+   * Syntax used by the file
+   */
+  syntax: string;
+}
+
 export interface FileInfo extends FileTextInfo {
   /**
    * Filename
@@ -52,7 +52,7 @@ export interface FileInfo extends FileTextInfo {
   fsPath: string;
 }
 
-export interface FileChangeEvent {
+export interface FileEventInfo {
   /**
    * Open times
    */
@@ -67,7 +67,7 @@ export interface FileChangeEvent {
   update: number;
 }
 
-export interface ContentChangeEvent {
+export interface ContentChangeEventInfo {
   /**
    * Paste times
    */
@@ -124,10 +124,14 @@ export interface KeystrokeStatsInfo {
   durationSeconds: number;
 }
 
-export interface FileChangeInfo extends FileInfo, KeystrokeStatsInfo, FileChangeEvent, ContentChangeInfo, ContentChangeEvent {
+export interface FileChangeInfo extends FileInfo, KeystrokeStatsInfo, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
+  /**
+   * The folder of the project to which the file belongs
+   */
+  projectDir: string;
 }
 
-export interface FileChangeSummary extends FileInfo, KeystrokeStatsInfo, FileChangeEvent, ContentChangeInfo, ContentChangeEvent {
+export interface FileChangeSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'durationSeconds'>, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
   /**
    * The folder of the project to which the file belongs
    */
@@ -137,13 +141,13 @@ export interface FileChangeSummary extends FileInfo, KeystrokeStatsInfo, FileCha
    */
   kpm: number;
   /**
-   * File editor usage time
-   */
-  editorSeconds?: number;
-  /**
    * Time used to edit files
    */
   sessionSeconds: number;
+  /**
+   * File editor usage time
+   */
+  editorSeconds?: number;
 }
 
 export class FileChange implements FileChangeInfo {
@@ -158,8 +162,6 @@ export class FileChange implements FileChangeInfo {
   public lineCount: number;
 
   public syntax: string;
-
-  public kpm = 0;
 
   public keystrokes = 0;
 
@@ -191,7 +193,7 @@ export class FileChange implements FileChangeInfo {
 
   public durationSeconds = 0;
 
-  constructor(values?: any) {
+  constructor(values?: Partial<FileChangeInfo>) {
     if (values) {
       Object.assign(this, values);
     }
@@ -210,7 +212,6 @@ export class FileChange implements FileChangeInfo {
 
   deactivate() {
     this.update = 1;
-    this.kpm = this.keystrokes;
     this.durationSeconds = this.end - this.start;
   }
 
@@ -269,19 +270,23 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
     if (!fileChangeSummary) {
-      fileChangeSummary = { ...fileChange, sessionSeconds: fileChange.durationSeconds };
+      fileChangeSummary = {
+        ...fileChange,
+        sessionSeconds: fileChange.durationSeconds,
+        kpm: fileChange.keystrokes,
+      };
     } else {
       // aggregate
       fileChangeSummary.update += 1;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.kpm = fileChangeSummary.keystrokes / fileChangeSummary.update;
       fileChangeSummary.add += fileChange.add;
-      fileChangeSummary.close += fileChange.close;
       fileChangeSummary.delete += fileChange.delete;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.linesAdded += fileChange.linesAdded;
       fileChangeSummary.linesRemoved += fileChange.linesRemoved;
       fileChangeSummary.open += fileChange.open;
+      fileChangeSummary.close += fileChange.close;
       fileChangeSummary.paste += fileChange.paste;
       fileChangeSummary.sessionSeconds += fileChange.durationSeconds;
       // non aggregates, just set

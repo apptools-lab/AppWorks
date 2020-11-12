@@ -34,9 +34,6 @@ export class KeystrokeStats {
       foundKpmData = true;
     }
 
-    // Now remove files that don't have any keystrokes
-    // that only have an open or close associated with them.
-    // If they have open and close then it's ok, keep it.
     let keystrokesTally = 0;
     keys.forEach((key) => {
       const fileChange: FileChange = this.files[key];
@@ -315,14 +312,12 @@ export class KeystrokeStatsRecorder {
 
     for (const contentChange of contentChanges) {
       const textChangeInfo = this.getTextChangeInfo(contentChange);
-      if (textChangeInfo.textChangeLen > 4) {
-        // 4 is the threshold here due to typical tab size of 4 spaces
-        // it's a copy and paste event
+      if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
         currentFileChange.paste += 1;
-        currentFileChange.charsPasted += textChangeInfo.textChangeLen;
-        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]Copy+Paste Incremented');
+        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.delete += 1;
+        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
       } else if (textChangeInfo.hasNonNewLine) {
         currentFileChange.add += 1;
         logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');

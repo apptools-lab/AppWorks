@@ -6,28 +6,25 @@ import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange, FileChangeInfo } from '../storages/filesChange';
 import { getAppDataDirPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
+import { ProjectInfo } from '../storages/project';
 import forIn = require('lodash.forin');
 
 const SESSION_TIME_RECORD = 'session_time';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-interface ProjectInfo {
-  // projectId: string;
-  projectName: string;
-  projectDirectory: string;
-  gitRepository: string;
-  gitBranch: string;
-  gitTag: string;
+interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
+  projectName: PropType<ProjectInfo, 'name'>;
+  projectDirectory: PropType<ProjectInfo, 'directory'>;
 }
 
 interface UserInfo {
   userId: string;
 }
 
-export interface SessionTimePayload extends ProjectInfo, EditorInfo, ExtensionInfo, SystemInfo, UserInfo, FileChangeInfo {
+export interface SessionTimePayload extends ProjectParams, EditorInfo, ExtensionInfo, SystemInfo, UserInfo, FileChangeInfo {
 }
 
-export interface EditorTimePayload extends ProjectInfo, EditorInfo, ExtensionInfo, SystemInfo, UserInfo {
+export interface EditorTimePayload extends ProjectParams, EditorInfo, ExtensionInfo, SystemInfo, UserInfo {
   durationSeconds: number;
 }
 
@@ -41,8 +38,7 @@ async function checkIsSendable() {
 function transformKeyStrokeStatsToSessionTimePayload(keystrokeStats: KeystrokeStats): SessionTimePayload[] {
   const data: SessionTimePayload[] = [];
   const { files, project } = keystrokeStats;
-  const { name: projectName, directory: projectDirectory, resource } = project;
-  const { repository: gitRepository, branch: gitBranch, tag: gitTag } = resource;
+  const { name: projectName, directory: projectDirectory, gitRepository, gitBranch, gitTag } = project;
   forIn(files, (fileChange: FileChange) => {
     data.push({
       ...fileChange,

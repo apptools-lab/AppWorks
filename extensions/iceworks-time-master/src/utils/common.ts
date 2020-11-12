@@ -42,10 +42,10 @@ export function isFileActive(file: string): boolean {
   return false;
 }
 
-export async function wrapExecPromise(cmd: string, projectDir: string) {
+export async function wrapExecPromise(cmd: string, cwd: string) {
   let result = '';
   try {
-    result = await execPromise(cmd, { cwd: projectDir });
+    result = await execPromise(cmd, { cwd });
   } catch (e) {
     console.error(e.message);
   }
@@ -74,8 +74,8 @@ export function logIt(...args: any) {
 }
 
 
-export async function getCommandResultLine(cmd: string, projectDir = '') {
-  const resultList = await getCommandResultList(cmd, projectDir);
+export async function getCommandResultLine(cmd: string, cwd = '') {
+  const resultList = await getCommandResultList(cmd, cwd);
   let resultLine = '';
   if (resultList && resultList.length) {
     for (let i = 0; i < resultList.length; i++) {
@@ -89,8 +89,8 @@ export async function getCommandResultLine(cmd: string, projectDir = '') {
   return resultLine;
 }
 
-async function getCommandResultList(cmd: string, projectDir = '') {
-  const result = await wrapExecPromise(`${cmd}`, projectDir);
+async function getCommandResultList(cmd: string, cwd = '') {
+  const result = await wrapExecPromise(`${cmd}`, cwd);
   if (!result) {
     return [];
   }
