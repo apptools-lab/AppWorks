@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDirPath, getStorageDirs } from '../utils/storage';
+import { getStoragePath, getStorageDaysDirs } from '../utils/storage';
 import { getCountAndAverage4UserSummary } from './user';
 import { JSON_SPACES } from '../constants';
 
@@ -15,7 +15,7 @@ export class AverageSummary {
 }
 
 export function getAverageFile() {
-  return path.join(getAppDataDirPath(), 'average.json');
+  return path.join(getStoragePath(), 'average.json');
 }
 
 export async function getAverageSummary(): Promise<AverageSummary> {
@@ -40,7 +40,7 @@ export async function clearAverageSummary() {
 }
 
 export async function updateAverageSummary(): Promise<AverageSummary> {
-  const storageDirs = await getStorageDirs();
+  const storageDirs = await getStorageDaysDirs();
 
   // Don't add today to the average
   if (storageDirs.length > 0) {

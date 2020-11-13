@@ -5,7 +5,7 @@ import * as fse from 'fs-extra';
 import { ALI_DIP_DAILY } from '@iceworks/constant';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChange';
-import { getAppDataDirPath } from './storage';
+import { getStoragePayloadsPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
 import { logIt } from './common';
@@ -205,5 +205,5 @@ async function appendPayloadData(type: string, data: EditorTimePayload[]|Keystro
 }
 
 function getPayloadFile(type: string) {
-  return path.join(getAppDataDirPath(), `${type}_payload.json`);
+  return path.join(getStoragePayloadsPath(), `${type}.json`);
 }

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDayDirPath } from '../utils/storage';
+import { getStorageDayPath } from '../utils/storage';
 import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
 import { JSON_SPACES } from '../constants';
@@ -225,7 +225,7 @@ export interface FilesChangeSummary {
 }
 
 export function getFilesChangeFile() {
-  return path.join(getAppDataDayDirPath(), 'filesChange.json');
+  return path.join(getStorageDayPath(), 'filesChange.json');
 }
 
 export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {

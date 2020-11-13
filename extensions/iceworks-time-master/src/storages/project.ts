@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
 import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
-import { getAppDataDirPath, getAppDataDayDirPath, getStorageDirs } from '../utils/storage';
+import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
 import { getResource, Resource } from '../utils/git';
 import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
 import forIn = require('lodash.forin');
@@ -88,7 +88,7 @@ export interface ProjectsSummary {
 }
 
 export function getProjectsFile(day?: string) {
-  return path.join(getAppDataDayDirPath(day), 'projects.json');
+  return path.join(getStorageDayPath(day), 'projects.json');
 }
 
 export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
@@ -141,7 +141,7 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
 }
 
 export function getProjectReportFile() {
-  return path.join(getAppDataDirPath(), 'ProjectSummaryReport.txt');
+  return path.join(getStorageReportsPath(), 'ProjectSummary.txt');
 }
 
 export async function generateProjectReport() {
@@ -150,7 +150,7 @@ export async function generateProjectReport() {
   reportContent += '\n';
   const reportFile = getProjectReportFile();
   const projectsSummary: ProjectsSummary = {};
-  const storageDirs = await getStorageDirs();
+  const storageDirs = await getStorageDaysDirs();
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {

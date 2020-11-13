@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDirPath } from '../utils/storage';
+import { getStoragePath } from '../utils/storage';
 import { JSON_SPACES } from '../constants';
 
 export class GlobalSummary {
@@ -14,7 +14,7 @@ export class GlobalSummary {
 }
 
 export function getGlobalFile() {
-  return path.join(getAppDataDirPath(), 'global.json');
+  return path.join(getStoragePath(), 'global.json');
 }
 
 export async function getGlobalSummary(): Promise<GlobalSummary> {

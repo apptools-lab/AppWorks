@@ -3,13 +3,13 @@ import { logIt } from '../utils/common';
 import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendPayload } from '../utils/sender';
-import { checkStorageIsLimited } from '../utils/storage';
+import { checkStorageDaysIsLimited } from '../utils/storage';
 
 export function checkMidnight() {
   if (isNewDay()) {
     setNowDay();
-    checkStorageIsLimited().catch((e) => {
-      logIt('[walkClock][checkMidnight]checkStorageIsLimited got error:', e);
+    checkStorageDaysIsLimited().catch((e) => {
+      logIt('[walkClock][checkMidnight]checkStorageDaysIsLimited got error:', e);
     });
     sendPayload().catch((e) => {
       logIt('[walkClock][checkMidnight]sendPayload got error:', e);

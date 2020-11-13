@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as moment from 'moment';
-import { getAppDataDirPath, getAppDataDayDirPath } from '../utils/storage';
+import { getStorageReportsPath, getStorageDayPath } from '../utils/storage';
 import { getRangeReport } from '../utils/report';
 import { getDay, getLastWeekDays } from '../utils/time';
 import { updateAverageSummary } from './average';
@@ -28,7 +28,7 @@ export class UserSummary {
 export const userFileName = 'user.json';
 
 export function getUserFile(day?: string) {
-  return path.join(getAppDataDayDirPath(day), userFileName);
+  return path.join(getStorageDayPath(day), userFileName);
 }
 
 export async function getUserSummary(day?: string): Promise<UserSummary> {
@@ -68,7 +68,7 @@ export async function updateUserSummary(increment: UserSummary) {
 }
 
 export function getUserReportFile() {
-  return path.join(getAppDataDirPath(), 'UserSummaryReport.txt');
+  return path.join(getStorageReportsPath(), 'UserSummary.txt');
 }
 
 export async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise<UserSummary> {
