@@ -64,7 +64,7 @@ function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeSta
       gitBranch,
       gitTag,
 
-      // placeholder
+      // placeholder, will fill it before send
       userId: '',
       editorName: '',
       editorVersion: '',
@@ -113,6 +113,7 @@ async function send(api: string, data: any) {
     },
   });
 }
+
 export function isResponseOk(response) {
   return response.status === 200 && response.data && response.data.success;
 }
@@ -126,9 +127,8 @@ export async function checkPayloadIsLimited() {
     const file = getPayloadFile(TYPE);
     const { size } = await fse.stat(file);
     if (size > playloadLimit) {
-      await fse.remove(file);
-
-      // TODO report error
+      await clearPayloadData(TYPE);
+      logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
     }
   }));
 }
@@ -145,16 +145,19 @@ async function sendPayloadData(type: string) {
     const editorInfo = getEditorInfo();
     const extensionInfo = getExtensionInfo();
     const systemInfo = await getSystemInfo();
+    const extra = {
+      ...editorInfo,
+      ...extensionInfo,
+      ...systemInfo,
+      userId: empId,
+    };
 
     if (playloadLength > 10) {
       logger.debug('[sender][sendPayloadData]_bulkCreate run', playloadLength);
       try {
         const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
           ...record,
-          ...editorInfo,
-          ...extensionInfo,
-          ...systemInfo,
-          userId: empId,
+          ...extra,
         })));
 
         logger.debug('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
@@ -174,10 +177,7 @@ async function sendPayloadData(type: string) {
         try {
           const createResponse = await send(`/${type}/_create`, {
             ...record,
-            ...editorInfo,
-            ...extensionInfo,
-            ...systemInfo,
-            userId: empId,
+            ...extra,
           });
           logger.debug('[sender][sendPayloadData]_create response', createResponse);
           if (!isResponseOk(createResponse)) {
@@ -208,7 +208,7 @@ async function getPayloadData(type: string) {
 }
 
 async function clearPayloadData(type: string) {
-  await savePayloadData(type, []);
+  await fse.remove(getPayloadFile(type));
 }
 
 async function savePayloadData(type: string, playload: EditorTimePayload[]|KeystrokesPayload[]) {
