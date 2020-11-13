@@ -1,9 +1,9 @@
 import { commands, window, WindowState } from 'vscode';
 import { setNowDay, isNewDay } from '../utils/time';
-import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
 import logger, { reloadLogger } from '../utils/logger';
+import { checkMidnightDurationMins, snedPayloadDurationMins } from '../config';
 
 export async function checkMidnight() {
   if (isNewDay()) {
@@ -31,13 +31,13 @@ let sendDataTimer: NodeJS.Timeout;
 export async function activate() {
   dayCheckTimer = setInterval(() => {
     checkMidnight();
-  }, ONE_MIN_MILLISECONDS * 5);
+  }, checkMidnightDurationMins);
 
   sendDataTimer = setInterval(() => {
     sendPayload().catch((e) => {
       logger.debug('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
-  }, ONE_MIN_MILLISECONDS * 15);
+  }, snedPayloadDurationMins);
 
   window.onDidChangeWindowState((windowState: WindowState) => {
     if (windowState.focused) {

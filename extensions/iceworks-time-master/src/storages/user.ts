@@ -5,7 +5,7 @@ import { getStorageReportsPath, getStorageDayPath } from '../utils/storage';
 import { getRangeReport } from '../utils/report';
 import { getDay, getLastWeekDays } from '../utils/time';
 import { updateAverageSummary } from './average';
-import { JSON_SPACES } from '../constants';
+import { jsonSpaces } from '../config';
 
 export class UserSummary {
   /**
@@ -44,7 +44,7 @@ export async function getUserSummary(day?: string): Promise<UserSummary> {
 
 export async function saveUserSummary(userSummary: UserSummary) {
   const file = getUserFile();
-  await fse.writeJson(file, userSummary, { spaces: JSON_SPACES });
+  await fse.writeJson(file, userSummary, { spaces: jsonSpaces });
 }
 
 export async function clearUserSummary() {

@@ -5,6 +5,7 @@ import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/filesChange';
 import { KeystrokeStats } from './keystrokeStats';
 import logger from '../../utils/logger';
+import { recordKeystrokeDurationMins } from '../../config';
 
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
@@ -138,7 +139,7 @@ export class KeystrokeStatsRecorder {
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
-      }, ONE_MIN_MILLISECONDS);
+      }, ONE_MIN_MILLISECONDS * recordKeystrokeDurationMins);
     }
 
     if (!keystrokeStats.hasFile(fsPath)) {

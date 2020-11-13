@@ -2,7 +2,8 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
-import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
+import { UNTITLED, NO_PROJ_NAME } from '../constants';
+import { jsonSpaces } from '../config';
 import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
 import { getResource, Resource } from '../utils/git';
 import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
@@ -104,7 +105,7 @@ export async function getProjectsSummary(day?: string): Promise<ProjectsSummary>
 
 export async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
-  await fse.writeJson(file, values, { spaces: JSON_SPACES });
+  await fse.writeJson(file, values, { spaces: jsonSpaces });
 }
 
 export async function clearProjectsSummary() {

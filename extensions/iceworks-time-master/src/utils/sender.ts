@@ -10,6 +10,7 @@ import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo,
 import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
+import { sendPayloadDuration } from '../config';
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
@@ -152,7 +153,7 @@ async function sendPayloadData(type: string) {
       userId: empId,
     };
 
-    if (playloadLength > 10) {
+    if (playloadLength > sendPayloadDuration) {
       logger.debug('[sender][sendPayloadData]_bulkCreate run', playloadLength);
       try {
         const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({

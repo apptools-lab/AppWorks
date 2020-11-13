@@ -4,7 +4,7 @@ import { TextDocument } from 'vscode';
 import { getStorageDayPath } from '../utils/storage';
 import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
-import { JSON_SPACES } from '../constants';
+import { jsonSpaces } from '../config';
 import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
 import forIn = require('lodash.forin');
 
@@ -241,7 +241,7 @@ export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
 
 export async function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
   const file = getFilesChangeFile();
-  await fse.writeJson(file, filesChangeSummary, { spaces: JSON_SPACES });
+  await fse.writeJson(file, filesChangeSummary, { spaces: jsonSpaces });
 }
 
 export async function cleanFilesChangeSummary() {
