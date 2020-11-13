@@ -1,5 +1,6 @@
 import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
+import logger from './logger';
 
 /**
  * @param num {number} The number to round
@@ -25,7 +26,7 @@ export async function openFileInEditor(file: string) {
     ) {
       window.showErrorMessage(`Cannot open ${file}. File not found.`);
     } else {
-      console.error(error);
+      logger.error('[utils][common][openFileInEditor] got error:', error);
     }
   }
 }
@@ -47,7 +48,7 @@ export async function wrapExecPromise(cmd: string, cwd: string) {
   try {
     result = await execPromise(cmd, { cwd });
   } catch (e) {
-    console.error(e.message);
+    logger.error('[utils][common][wrapExecPromise] got error:', e.message);
   }
   return result;
 }
@@ -64,15 +65,6 @@ function execPromise(command: string, opts: any): Promise<string> {
     });
   }));
 }
-
-/**
- * TODO Replace with community pack
- */
-export function logIt(...args: any) {
-  args[0] = `TimeMaster: ${ args[0]}`;
-  console.log.apply(null, args);
-}
-
 
 export async function getCommandResultLine(cmd: string, cwd = '') {
   const resultList = await getCommandResultList(cmd, cwd);

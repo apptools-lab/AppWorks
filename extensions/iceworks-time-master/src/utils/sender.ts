@@ -8,8 +8,8 @@ import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChan
 import { getStoragePayloadsPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
-import { logIt } from './common';
 import { window } from 'vscode';
+import logger from './logger';
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
@@ -118,7 +118,7 @@ export function isResponseOk(response) {
 }
 
 /**
- * If payload is too large, there may be a large number of requests errors
+ * If payload is too large, may be a large number of requests errors
  */
 export async function checkPayloadIsLimited() {
   const playloadLimit = 1024 * 1024 * 10; // mb
@@ -127,6 +127,8 @@ export async function checkPayloadIsLimited() {
     const { size } = await fse.stat(file);
     if (size > playloadLimit) {
       await fse.remove(file);
+
+      // TODO report error
     }
   }));
 }
@@ -145,7 +147,7 @@ async function sendPayloadData(type: string) {
     const systemInfo = await getSystemInfo();
 
     if (playloadLength > 10) {
-      logIt('[sender][sendPayloadData]_bulkCreate run', playloadLength);
+      logger.debug('[sender][sendPayloadData]_bulkCreate run', playloadLength);
       try {
         const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
           ...record,
@@ -155,7 +157,7 @@ async function sendPayloadData(type: string) {
           userId: empId,
         })));
 
-        logIt('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
+        logger.debug('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
         if (!isResponseOk(bulkCreateRespose)) {
           throw new Error(bulkCreateRespose.data.message);
         }
@@ -163,10 +165,11 @@ async function sendPayloadData(type: string) {
 
         // if got error, write back the data and resend it in the next cycle
         await appendPayloadData(type, playload);
+        logger.error('[sender][sendPayloadData]_bulkCreate got error:', e);
         throw e;
       }
     } else {
-      logIt('[sender][sendPayloadData]_create run:', playloadLength);
+      logger.debug('[sender][sendPayloadData]_create run:', playloadLength);
       const failRecords = await Promise.all(playload.map(async (record: any) => {
         try {
           const createResponse = await send(`/${type}/_create`, {
@@ -176,12 +179,12 @@ async function sendPayloadData(type: string) {
             ...systemInfo,
             userId: empId,
           });
-          logIt('[sender][sendPayloadData]_create response', createResponse);
+          logger.debug('[sender][sendPayloadData]_create response', createResponse);
           if (!isResponseOk(createResponse)) {
             throw new Error(createResponse.data.message);
           }
         } catch (e) {
-          console.error('[sender][sendPayloadData]_create error', e);
+          logger.error('[sender][sendPayloadData]_create got error:', e);
           return record;
         }
       }));

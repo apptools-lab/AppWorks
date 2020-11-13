@@ -1,15 +1,16 @@
 import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './views/timerProvider';
-import { logIt, openFileInEditor } from './utils/common';
+import { openFileInEditor } from './utils/common';
 import { KeystrokeStatsRecorder } from './recorders/keystrokeStats';
 import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
+import logger from './utils/logger';
 
 let keystrokeStatsRecorder: KeystrokeStatsRecorder;
 
 export async function activate(context: ExtensionContext) {
-  logIt('[extension] activate!');
+  logger.debug('[extension] activate!');
   const { subscriptions } = context;
 
   // do not wait for async, let subsequent views be created
@@ -51,7 +52,7 @@ export async function activate(context: ExtensionContext) {
 }
 
 export function deactivate() {
-  logIt('[extension] deactivate!');
+  logger.debug('[extension] deactivate!');
 
   keystrokeStatsRecorder.deactivate();
 

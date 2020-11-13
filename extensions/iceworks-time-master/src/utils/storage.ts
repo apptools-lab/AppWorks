@@ -9,13 +9,24 @@ import orderBy = require('lodash.orderby');
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
+const homedir = os.homedir();
+const iceworksStroagePath = path.join(homedir, '.iceworks', 'TimeMaster');
+const EXTENSION_TAG = 'TimeMaster';
+
 export function getStoragePath() {
-  const homedir = os.homedir();
-  const storagePath = path.join(homedir, '.iceworks', 'TimeMaster');
+  const storagePath = path.join(iceworksStroagePath, EXTENSION_TAG);
   if (!fse.existsSync(storagePath)) {
     fse.mkdirSync(storagePath);
   }
   return storagePath;
+}
+
+export function getLogsPath() {
+  const logsPath = path.join(iceworksStroagePath, 'logs', EXTENSION_TAG);
+  if (!fse.existsSync(logsPath)) {
+    fse.mkdirSync(logsPath);
+  }
+  return logsPath;
 }
 
 export function getStorageDaysPath() {

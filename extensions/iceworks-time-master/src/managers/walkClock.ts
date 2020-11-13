@@ -1,13 +1,14 @@
 import { commands, window, WindowState } from 'vscode';
-import { logIt } from '../utils/common';
 import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
+import logger, { reloadLogger } from '../utils/logger';
 
 export async function checkMidnight() {
   if (isNewDay()) {
     setNowDay();
+    reloadLogger();
     try {
       await Promise.all([
         async function () {
@@ -19,7 +20,7 @@ export async function checkMidnight() {
         },
       ]);
     } catch (e) {
-      console.error('[walkClock][checkMidnight] got error', e);
+      logger.error('[walkClock][checkMidnight] got error:', e);
     }
   }
 }
@@ -34,7 +35,7 @@ export async function activate() {
 
   sendDataTimer = setInterval(() => {
     sendPayload().catch((e) => {
-      logIt('[walkClock][activate][setInterval]sendPayload got error:', e);
+      logger.debug('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
   }, ONE_MIN_MILLISECONDS * 15);
 
@@ -58,7 +59,7 @@ export function deactivate() {
 }
 
 export function refreshViews() {
-  logIt('[walkClock][refreshViews] run');
+  logger.debug('[walkClock][refreshViews] run');
   commands.executeCommand('iceworks-time-master.refreshTimerTree');
   commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }

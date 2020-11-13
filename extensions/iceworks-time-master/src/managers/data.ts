@@ -6,7 +6,7 @@ import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
 import { appendKeystrokesPayload } from '../utils/sender';
-import { logIt } from '../utils/common';
+import logger from '../utils/logger';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
@@ -17,7 +17,7 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
 }
 
 export async function processData(keystrokeStats: KeystrokeStats) {
-  logIt('[data][processData] run');
+  logger.debug('[data][processData] run');
   await checkMidnight();
   await Promise.all([saveDataToDisk, appendKeystrokesPayload].map(async (fn) => {
     await fn(keystrokeStats);
@@ -40,7 +40,9 @@ function setProgressToGenerateSummaryReport(title: string, generateFn: typeof ge
         await window.showTextDocument(doc, ViewColumn.One, false);
         progressMgr.done();
       } catch (e) {
-        window.showErrorMessage('Generate dashborad got error:', e);
+        const message = `Generate dashborad got error: ${e}`;
+        logger.error(message);
+        window.showErrorMessage(message);
       }
     },
   );

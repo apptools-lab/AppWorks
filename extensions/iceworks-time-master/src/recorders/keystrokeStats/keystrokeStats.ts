@@ -1,8 +1,8 @@
-import { logIt } from '../../utils/common';
 import { Project } from '../../storages/project';
 import { FileChange } from '../../storages/filesChange';
 import { getNowUTCSec } from '../../utils/time';
 import { processData } from '../../managers/data';
+import logger from '../../utils/logger';
 import forIn = require('lodash.forin');
 
 export interface KeystrokeStatsInfo {
@@ -90,7 +90,7 @@ export class KeystrokeStats {
 
   async sendData() {
     const isHasData = this.hasData();
-    logIt('[KeystrokeStats][sendData]isHasData', isHasData);
+    logger.debug('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
       await processData(this);

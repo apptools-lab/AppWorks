@@ -1,9 +1,10 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
-import { isFileActive, logIt } from '../../utils/common';
+import { isFileActive } from '../../utils/common';
 import { ONE_MIN_MILLISECONDS } from '../../constants';
 import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/filesChange';
 import { KeystrokeStats } from './keystrokeStats';
+import logger from '../../utils/logger';
 
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
@@ -135,7 +136,7 @@ export class KeystrokeStatsRecorder {
       keystrokeStats = new KeystrokeStats(project);
       keystrokeStats.activate();
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
-        logIt('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
+        logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
       }, ONE_MIN_MILLISECONDS);
     }
@@ -190,7 +191,7 @@ export class KeystrokeStatsRecorder {
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
     const windowIsFocused = window.state.focused;
-    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
     if (!windowIsFocused) {
       return;
     }
@@ -199,7 +200,7 @@ export class KeystrokeStatsRecorder {
     const { fileName: fsPath } = document;
 
     const isValidatedFile = this.isValidatedFile(document, fsPath);
-    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
     if (!isValidatedFile) {
       return;
     }
@@ -217,7 +218,7 @@ export class KeystrokeStatsRecorder {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
     // each changeset is triggered by a single keystroke
     if (contentChanges.length > 0) {
       currentFileChange.keystrokes += 1;
@@ -227,22 +228,22 @@ export class KeystrokeStatsRecorder {
       const textChangeInfo = this.getTextChangeInfo(contentChange);
       if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
         currentFileChange.pasteTimes += 1;
-        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.deleteTimes += 1;
-        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
       } else if (textChangeInfo.hasNonNewLine) {
         currentFileChange.addTimes += 1;
-        logIt('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logIt(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
+        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logIt(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
+        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -251,7 +252,7 @@ export class KeystrokeStatsRecorder {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logIt('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
     if (!windowState.focused) {
       await this.sendKeystrokeStatsMap();
     }

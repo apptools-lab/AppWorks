@@ -19,6 +19,7 @@ import { humanizeMinutes, seconds2minutes } from '../utils/time';
 import i18n from '../i18n';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
+import logger from '../utils/logger';
 
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
@@ -160,8 +161,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
           focus: true,
           select: false,
         });
-      } catch (err) {
-        console.error(`Unable to select tree item: ${err.message}`);
+      } catch (e) {
+        logger.error(`[TimerProvider][revealTreeView] Unable to select tree item: ${e.message}`);
       }
     }
   }
@@ -600,8 +601,8 @@ function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) 
       focus: false,
       select: false,
     });
-  } catch (err) {
-    console.error(`Unable to deselect track: ${err.message}`);
+  } catch (e) {
+    logger.error(`[TimerProvider][handleTimerChangeSelection]Unable to deselect track: ${e.message}`);
   }
 }
 
