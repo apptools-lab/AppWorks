@@ -110,7 +110,7 @@ export class KeystrokeStatsRecorder {
       if (this.keystrokeStatsTimeouts[projectPath]) {
         clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
       }
-      this.sendKeystrokeStats(projectPath);
+      await this.sendKeystrokeStats(projectPath);
     }));
 
     cleanTextInfoCache();

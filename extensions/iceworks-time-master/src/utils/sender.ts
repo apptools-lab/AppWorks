@@ -47,6 +47,7 @@ async function checkIsSendable() {
 }
 
 function checkIsSendNow(): boolean {
+  // Prevent multi window resource competition
   return window.state.focused;
 }
 
@@ -89,12 +90,12 @@ export async function appendEditorTimePayload() {
   // hold
 }
 
-export async function sendPayload() {
+export async function sendPayload(force?: boolean) {
   const isSendable = await checkIsSendable();
   const isSendNow = checkIsSendNow();
   await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
     if (isSendable) {
-      if (isSendNow) {
+      if (isSendNow || force) {
         await sendPayloadData(TYPE);
       }
     } else {
@@ -114,6 +115,20 @@ async function send(api: string, data: any) {
 }
 export function isResponseOk(response) {
   return response.status === 200 && response.data && response.data.success;
+}
+
+/**
+ * If payload is too large, there may be a large number of requests errors
+ */
+export async function checkPayloadIsLimited() {
+  const playloadLimit = 1024 * 1024 * 10; // mb
+  await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+    const file = getPayloadFile(TYPE);
+    const { size } = await fse.stat(file);
+    if (size > playloadLimit) {
+      await fse.remove(file);
+    }
+  }));
 }
 
 async function sendPayloadData(type: string) {

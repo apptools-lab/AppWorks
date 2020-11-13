@@ -12,6 +12,7 @@ export async function activate(context: ExtensionContext) {
   logIt('[extension] activate!');
   const { subscriptions } = context;
 
+  // do not wait for async, let subsequent views be created
   activateWalkClock();
 
   const timerProvider = new TimerProvider(context);

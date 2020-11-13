@@ -18,9 +18,10 @@ async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
 
 export async function processData(keystrokeStats: KeystrokeStats) {
   logIt('[data][processData] run');
-  checkMidnight();
-  saveDataToDisk(keystrokeStats);
-  appendKeystrokesPayload(keystrokeStats);
+  await checkMidnight();
+  await Promise.all([saveDataToDisk, appendKeystrokesPayload].map(async (fn) => {
+    await fn(keystrokeStats);
+  }));
 }
 
 function setProgressToGenerateSummaryReport(title: string, generateFn: typeof generateProjectReport | typeof generateUserReport) {

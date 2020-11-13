@@ -2,25 +2,32 @@ import { commands, window, WindowState } from 'vscode';
 import { logIt } from '../utils/common';
 import { setNowDay, isNewDay } from '../utils/time';
 import { ONE_MIN_MILLISECONDS } from '../constants';
-import { sendPayload } from '../utils/sender';
+import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
 
-export function checkMidnight() {
+export async function checkMidnight() {
   if (isNewDay()) {
     setNowDay();
-    checkStorageDaysIsLimited().catch((e) => {
-      logIt('[walkClock][checkMidnight]checkStorageDaysIsLimited got error:', e);
-    });
-    sendPayload().catch((e) => {
-      logIt('[walkClock][checkMidnight]sendPayload got error:', e);
-    });
+    try {
+      await Promise.all([
+        async function () {
+          await checkStorageDaysIsLimited();
+        },
+        async function () {
+          await checkPayloadIsLimited();
+          await sendPayload(true);
+        },
+      ]);
+    } catch (e) {
+      console.error('[walkClock][checkMidnight] got error', e);
+    }
   }
 }
 
 let dayCheckTimer: NodeJS.Timeout;
 let sendDataTimer: NodeJS.Timeout;
 
-export function activate() {
+export async function activate() {
   dayCheckTimer = setInterval(() => {
     checkMidnight();
   }, ONE_MIN_MILLISECONDS * 5);
@@ -37,10 +44,8 @@ export function activate() {
     }
   });
 
-  checkMidnight();
-  sendPayload().catch((e) => {
-    logIt('[walkClock][activate]sendPayload got error:', e);
-  });
+  await checkMidnight();
+  await sendPayload();
 }
 
 export function deactivate() {
