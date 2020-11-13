@@ -15,8 +15,8 @@ function getLogPath() {
 
 function getFileTransport() {
   return new FileTransport({
-    file: path.join(getLogPath(), 'error.log'),
-    level: 'ERROR',
+    file: path.join(getLogPath(), 'main.log'),
+    level: 'INFO',
   });
 }
 
