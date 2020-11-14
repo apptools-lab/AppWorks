@@ -10,7 +10,7 @@ import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo,
 import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
-import { sendPayloadDuration } from '../config';
+import { ONE_SEC_MILLISECONDS } from '../constants';
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
@@ -92,10 +92,13 @@ export async function appendEditorTimePayload() {
 }
 
 export async function sendPayload(force?: boolean) {
+  logger.info('[sender][sendPayload] run, force:', force);
   const isSendable = await checkIsSendable();
   const isSendNow = checkIsSendNow();
   await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+    logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
     if (isSendable) {
+      logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
       if (isSendNow || force) {
         await sendPayloadData(TYPE);
       }
@@ -105,10 +108,12 @@ export async function sendPayload(force?: boolean) {
   }));
 }
 
+const timeout = ONE_SEC_MILLISECONDS * 5;
 async function send(api: string, data: any) {
   return await axios({
     method: 'post',
     url: `${url}${api}`,
+    timeout,
     data: {
       data,
     },
@@ -139,6 +144,7 @@ async function sendPayloadData(type: string) {
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
+  logger.info(`[sender][sendPayload] run, ${type}'s playloadLength: ${playloadLength}`);
   if (Array.isArray(playload) && playloadLength) {
     // clear first to prevent duplicate sending when concurrent
     await clearPayloadData(type);
@@ -153,46 +159,23 @@ async function sendPayloadData(type: string) {
       userId: empId,
     };
 
-    if (playloadLength > sendPayloadDuration) {
-      logger.debug('[sender][sendPayloadData]_bulkCreate run', playloadLength);
-      try {
-        const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
-          ...record,
-          ...extra,
-        })));
+    // TODO batch logic
+    try {
+      const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
+        ...record,
+        ...extra,
+      })));
 
-        logger.debug('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
-        if (!isResponseOk(bulkCreateRespose)) {
-          throw new Error(bulkCreateRespose.data.message);
-        }
-      } catch (e) {
-
-        // if got error, write back the data and resend it in the next cycle
-        await appendPayloadData(type, playload);
-        logger.error('[sender][sendPayloadData]_bulkCreate got error:', e);
-        throw e;
+      logger.info('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
+      if (!isResponseOk(bulkCreateRespose)) {
+        throw new Error(bulkCreateRespose.data.message);
       }
-    } else {
-      logger.debug('[sender][sendPayloadData]_create run:', playloadLength);
-      const failRecords = await Promise.all(playload.map(async (record: any) => {
-        try {
-          const createResponse = await send(`/${type}/_create`, {
-            ...record,
-            ...extra,
-          });
-          logger.debug('[sender][sendPayloadData]_create response', createResponse);
-          if (!isResponseOk(createResponse)) {
-            throw new Error(createResponse.data.message);
-          }
-        } catch (e) {
-          logger.error('[sender][sendPayloadData]_create got error:', e);
-          return record;
-        }
-      }));
+    } catch (e) {
 
       // if got error, write back the data and resend it in the next cycle
-      const failPayload = failRecords.filter((failRecord) => failRecord);
-      await appendPayloadData(type, failPayload);
+      await appendPayloadData(type, playload);
+      logger.error('[sender][sendPayloadData]_bulkCreate got error:', e);
+      throw e;
     }
   }
 }
