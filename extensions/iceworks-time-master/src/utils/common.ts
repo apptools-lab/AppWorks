@@ -2,15 +2,6 @@ import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
 import logger from './logger';
 
-/**
- * @param num {number} The number to round
- * @param precision {number} The number of decimal places to preserve
- */
-export function roundUp(num: number, precision: number) {
-  precision = Math.pow(10, precision);
-  return Math.ceil(num * precision) / precision;
-}
-
 export async function openFileInEditor(file: string) {
   try {
     const doc = await workspace.openTextDocument(file);

@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as os from 'os';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 import { getNowDay } from './time';
-
-import orderBy = require('lodash.orderby');
+const orderBy = require('lodash.orderby');
+const mkdirp = require('mkdirp');
 
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
@@ -16,7 +16,7 @@ const EXTENSION_TAG = 'TimeMaster';
 export function getStoragePath() {
   const storagePath = path.join(iceworksStroagePath, EXTENSION_TAG);
   if (!fse.existsSync(storagePath)) {
-    fse.mkdirSync(storagePath);
+    mkdirp.sync(storagePath);
   }
   return storagePath;
 }
@@ -24,7 +24,7 @@ export function getStoragePath() {
 export function getLogsPath() {
   const logsPath = path.join(iceworksStroagePath, 'logs', EXTENSION_TAG);
   if (!fse.existsSync(logsPath)) {
-    fse.mkdirSync(logsPath);
+    mkdirp.sync(logsPath);
   }
   return logsPath;
 }
@@ -33,7 +33,7 @@ export function getStorageDaysPath() {
   const storagePath = getStoragePath();
   const storageDaysPath = path.join(storagePath, 'days');
   if (!fse.existsSync(storageDaysPath)) {
-    fse.mkdirSync(storageDaysPath);
+    mkdirp.sync(storageDaysPath);
   }
   return storageDaysPath;
 }
@@ -42,7 +42,7 @@ export function getStoragePayloadsPath() {
   const storagePath = getStoragePath();
   const storagePayloadsPath = path.join(storagePath, 'payloads');
   if (!fse.existsSync(storagePayloadsPath)) {
-    fse.mkdirSync(storagePayloadsPath);
+    mkdirp.sync(storagePayloadsPath);
   }
   return storagePayloadsPath;
 }
@@ -51,7 +51,7 @@ export function getStorageReportsPath() {
   const storagePath = getStoragePath();
   const storagePayloadsPath = path.join(storagePath, 'reports');
   if (!fse.existsSync(storagePayloadsPath)) {
-    fse.mkdirSync(storagePayloadsPath);
+    mkdirp.sync(storagePayloadsPath);
   }
   return storagePayloadsPath;
 }
@@ -60,7 +60,7 @@ export function getStorageDayPath(day?: string) {
   const storageDaysPath = getStorageDaysPath();
   const storageDayPath = path.join(storageDaysPath, day || getNowDay());
   if (!fse.existsSync(storageDayPath)) {
-    fse.mkdirSync(storageDayPath);
+    mkdirp.sync(storageDayPath);
   }
   return storageDayPath;
 }

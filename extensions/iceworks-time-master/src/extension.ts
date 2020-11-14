@@ -10,7 +10,7 @@ import logger from './utils/logger';
 let keystrokeStatsRecorder: KeystrokeStatsRecorder;
 
 export async function activate(context: ExtensionContext) {
-  logger.debug('[extension] activate!');
+  logger.debug('[TimeMaster][extension] activate!');
   const { subscriptions } = context;
 
   // do not wait for async, let subsequent views be created
@@ -52,7 +52,7 @@ export async function activate(context: ExtensionContext) {
 }
 
 export function deactivate() {
-  logger.debug('[extension] deactivate!');
+  logger.debug('[TimeMaster][extension] deactivate!');
 
   keystrokeStatsRecorder.deactivate();
 

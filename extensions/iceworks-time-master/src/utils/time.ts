@@ -1,8 +1,16 @@
 import storage from '@iceworks/storage';
 import * as moment from 'moment';
 import { ONE_MIN_SECONDS } from '../constants';
-import { roundUp } from './common';
 import i18n from '../i18n';
+
+/**
+ * @param num {number} The number to round
+ * @param precision {number} The number of decimal places to preserve
+ */
+export function roundUp(num: number, precision: number) {
+  precision = Math.pow(10, precision);
+  return Math.ceil(num * precision) / precision;
+}
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 export function getNowDay() {
