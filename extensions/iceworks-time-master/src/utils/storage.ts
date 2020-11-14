@@ -10,7 +10,7 @@ const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
 const homedir = os.homedir();
-const iceworksStroagePath = path.join(homedir, '.iceworks', 'TimeMaster');
+const iceworksStroagePath = path.join(homedir, '.iceworks');
 const EXTENSION_TAG = 'TimeMaster';
 
 export function getStoragePath() {
