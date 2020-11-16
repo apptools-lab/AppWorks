@@ -1,6 +1,5 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
 import { isFileActive } from '../../utils/common';
-import { ONE_MIN_MILLISECONDS } from '../../constants';
 import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/filesChange';
 import { KeystrokeStats } from './keystrokeStats';
@@ -139,7 +138,7 @@ export class KeystrokeStatsRecorder {
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
         this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
-      }, ONE_MIN_MILLISECONDS * recordKeystrokeDurationMins);
+      }, recordKeystrokeDurationMins);
     }
 
     if (!keystrokeStats.hasFile(fsPath)) {
