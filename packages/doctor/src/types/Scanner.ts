@@ -3,12 +3,13 @@ import { IClone } from '@jscpd/core';
 export interface IScannerOptions {
   ignore: string[];
   supportExts: string[];
-  framework: string;
-  languageType: 'js' | 'ts';
 }
 
 export interface IScanOptions {
   fix?: boolean;
+  framework?: string;
+  languageType?: 'js' | 'ts';
+  tempFileDir?: string;
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
@@ -51,6 +52,9 @@ export interface IRepeatabilityReports {
 export interface IEslintReports {
   score: number;
   reports: any[];
+  errorCount: number;
+  warningCount: number;
+  customConfig: any;
 }
 
 export interface IScannerReports {

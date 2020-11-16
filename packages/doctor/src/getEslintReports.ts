@@ -10,9 +10,12 @@ const ERROR_WEIGHT = 3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default function getBestPracticesReports(files: IFileInfo[], ruleKey: string, customConfig?, fix?: boolean): IEslintReports {
+export default function getEslintReports(files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
+  let warningCount = 0;
+
   let errorScore = 0;
+  let errorCount = 0;
 
   const reports = [];
 
@@ -54,7 +57,9 @@ export default function getBestPracticesReports(files: IFileInfo[], ruleKey: str
 
   // calculate score
   reports.forEach((report) => {
+    warningCount += report.warningCount;
     warningScore += report.warningCount * WARNING_WEIGHT;
+    errorCount += report.errorCount;
     errorScore += report.errorCount * ERROR_WEIGHT;
   });
 
@@ -70,8 +75,7 @@ export default function getBestPracticesReports(files: IFileInfo[], ruleKey: str
       scorer.plus(BONUS_WEIGHT);
     }
     // recommend-typescript
-    // TODO
-    if (packageInfo.dependencies && packageInfo.dependencies.typescript) {
+    if (packageInfo.devDependencies && packageInfo.devDependencies.typescript) {
       scorer.plus(BONUS_WEIGHT);
     }
   }
@@ -79,5 +83,8 @@ export default function getBestPracticesReports(files: IFileInfo[], ruleKey: str
   return {
     score: scorer.getScore(),
     reports,
+    errorCount,
+    warningCount,
+    customConfig,
   };
 }

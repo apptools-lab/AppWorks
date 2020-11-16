@@ -34,7 +34,10 @@ if (args.help) {
 // Check project
 if (args.scan) {
   const doctor = new Doctor(args);
-  doctor.scan(args.scan).then((result) => {
+  doctor.scan(args.scan, {
+    framework: args.framework,
+    languageType: args.languageType || 'js'
+  }).then((result) => {
     console.log({
       files: {
         count: result.filesInfo.count,

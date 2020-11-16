@@ -16,7 +16,7 @@ export { generateDebugMaterialData };
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
-const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
+// const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
 
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
@@ -41,13 +41,13 @@ const OFFICAL_MATERIAL_SOURCES = [
 ];
 
 const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
-  {
-    name: i18n.format('package.materialService.index.miniProgramTitle'),
-    type: 'miniProgram',
-    client: 'wireless',
-    source: MINI_PROGRAM_MATERIAL_SOURCE,
-    description: i18n.format('package.materialService.index.miniProgramDescription'),
-  },
+  // {
+  //   name: i18n.format('package.materialService.index.miniProgramTitle'),
+  //   type: 'miniProgram',
+  //   client: 'wireless',
+  //   source: MINI_PROGRAM_MATERIAL_SOURCE,
+  //   description: i18n.format('package.materialService.index.miniProgramDescription'),
+  // },
   {
     name: i18n.format('package.materialService.index.vueTitle'),
     type: 'vue',

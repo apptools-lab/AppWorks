@@ -4,7 +4,6 @@ import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 
 export default function getCustomESLintConfig(directory: string) {
-
   let config = {};
   const configFilePath = join(directory, '.eslintrc.js');
 
@@ -16,8 +15,8 @@ export default function getCustomESLintConfig(directory: string) {
     });
 
     traverse(ast, {
-      CallExpression(path: any) {
-        const { node } = path;
+      CallExpression(nodePath: any) {
+        const { node } = nodePath;
         if (node.callee.name === 'getESLintConfig' && node.arguments && node.arguments[1]) {
           const configNode = node.arguments[1];
           const configSource = source.substring(configNode.start, configNode.end);
