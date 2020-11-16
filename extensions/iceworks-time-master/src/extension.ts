@@ -1,17 +1,19 @@
 import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './views/timerProvider';
-import { logIt, openFileInEditor } from './utils/common';
-import { KpmManager } from './managers/kpm';
+import { openFileInEditor } from './utils/common';
+import { KeystrokeStatsRecorder } from './recorders/keystrokeStats';
 import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
-import { generateProjectSummaryDashboard, generateUserSummaryDashboard } from './managers/data';
+import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
+import logger from './utils/logger';
 
-let kpmInstance: KpmManager;
+let keystrokeStatsRecorder: KeystrokeStatsRecorder;
 
 export async function activate(context: ExtensionContext) {
-  logIt('[extension] activate!');
+  logger.debug('[TimeMaster][extension] activate!');
   const { subscriptions } = context;
 
+  // do not wait for async, let subsequent views be created
   activateWalkClock();
 
   const timerProvider = new TimerProvider(context);
@@ -21,15 +23,15 @@ export async function activate(context: ExtensionContext) {
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
 
-  kpmInstance = new KpmManager();
-  kpmInstance.activate();
+  keystrokeStatsRecorder = new KeystrokeStatsRecorder();
+  keystrokeStatsRecorder.activate();
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
       openFileInEditor(fsPath);
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
-      kpmInstance.sendKeystrokeStatsMap();
+      keystrokeStatsRecorder.sendKeystrokeStatsMap();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();
@@ -40,19 +42,19 @@ export async function activate(context: ExtensionContext) {
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
       timerProvider.revealTreeView();
     }),
-    commands.registerCommand('iceworks-time-master.generateProjectSummaryDashboard', () => {
-      generateProjectSummaryDashboard();
+    commands.registerCommand('iceworks-time-master.generateProjectSummaryReport', () => {
+      generateProjectSummaryReport();
     }),
-    commands.registerCommand('iceworks-time-master.generateUserSummaryDashboard', () => {
-      generateUserSummaryDashboard();
+    commands.registerCommand('iceworks-time-master.generateUserSummaryReport', () => {
+      generateUserSummaryReport();
     }),
   );
 }
 
 export function deactivate() {
-  logIt('[extension] deactivate!');
+  logger.debug('[TimeMaster][extension] deactivate!');
 
-  kpmInstance.deactivate();
+  keystrokeStatsRecorder.deactivate();
 
   deactivateWalkClock();
 }

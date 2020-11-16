@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as moment from 'moment';
-import { getAppDataDirPath, getAppDataDayDirPath } from '../utils/storage';
-import { getRangeDashboard } from '../utils/dashboard';
+import { getStorageReportsPath, getStorageDayPath } from '../utils/storage';
+import { getRangeReport } from '../utils/report';
 import { getDay, getLastWeekDays } from '../utils/time';
 import { updateAverageSummary } from './average';
-import { JSON_SPACES } from '../constants';
+import { jsonSpaces } from '../config';
 
 export class UserSummary {
   /**
@@ -28,7 +28,7 @@ export class UserSummary {
 export const userFileName = 'user.json';
 
 export function getUserFile(day?: string) {
-  return path.join(getAppDataDayDirPath(day), userFileName);
+  return path.join(getStorageDayPath(day), userFileName);
 }
 
 export async function getUserSummary(day?: string): Promise<UserSummary> {
@@ -44,7 +44,7 @@ export async function getUserSummary(day?: string): Promise<UserSummary> {
 
 export async function saveUserSummary(userSummary: UserSummary) {
   const file = getUserFile();
-  await fse.writeJson(file, userSummary, { spaces: JSON_SPACES });
+  await fse.writeJson(file, userSummary, { spaces: jsonSpaces });
 }
 
 export async function clearUserSummary() {
@@ -67,8 +67,8 @@ export async function updateUserSummary(increment: UserSummary) {
   await saveUserSummary(userSummary);
 }
 
-export function getUserDashboardFile() {
-  return path.join(getAppDataDirPath(), 'UserSummaryDashboard.txt');
+export function getUserReportFile() {
+  return path.join(getStorageReportsPath(), 'UserSummary.txt');
 }
 
 export async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise<UserSummary> {
@@ -126,47 +126,47 @@ export async function getCountAndAverage4UserSummary(days: string[]): Promise<{c
   };
 }
 
-export async function generateUserDashboard() {
+export async function generateUserReport() {
   const nowMoment = moment();
   const formattedDate = nowMoment.format('ddd, MMM Do h:mma');
   const lineBreakStr = '\n';
-  let dashboardContent = `User Summary (Last updated on ${formattedDate})\n`;
-  dashboardContent += lineBreakStr;
+  let reportContent = `User Summary (Last updated on ${formattedDate})\n`;
+  reportContent += lineBreakStr;
 
   const formattedToday = nowMoment.format('ddd, MMM Do');
   const todayUserSummary = await getUserSummary();
-  const todyStr = getRangeDashboard(todayUserSummary, `🐻 Today (${formattedToday})`);
-  dashboardContent += todyStr;
-  dashboardContent += lineBreakStr;
+  const todyStr = getRangeReport(todayUserSummary, `🐻 Today (${formattedToday})`);
+  reportContent += todyStr;
+  reportContent += lineBreakStr;
 
   const yesterdayMoment = nowMoment.clone().subtract(1, 'days');
   const formattedYesterday = yesterdayMoment.format('ddd, MMM Do');
   const yesterdayUserSummary = await getUserSummary(getDay(yesterdayMoment));
-  const yesterdayStr = getRangeDashboard(yesterdayUserSummary, `🦁 Yesterday (${formattedYesterday})`);
-  dashboardContent += yesterdayStr;
-  dashboardContent += lineBreakStr;
+  const yesterdayStr = getRangeReport(yesterdayUserSummary, `🦁 Yesterday (${formattedYesterday})`);
+  reportContent += yesterdayStr;
+  reportContent += lineBreakStr;
 
   const lastWeekDays = getLastWeekDays();
   const lastWeekMonday = lastWeekDays[0];
   const lastWeekFriday = lastWeekDays[4];
   const formattedLastWeek = `${getDay(lastWeekMonday)} to ${getDay(lastWeekFriday)}`;
   const lastWeekUserSummary = await getUserSummaryByDays(lastWeekDays);
-  const lastWeekStr = getRangeDashboard(lastWeekUserSummary, `🐯 Last week (${formattedLastWeek})`);
-  dashboardContent += lastWeekStr;
-  dashboardContent += lineBreakStr;
+  const lastWeekStr = getRangeReport(lastWeekUserSummary, `🐯 Last week (${formattedLastWeek})`);
+  reportContent += lastWeekStr;
+  reportContent += lineBreakStr;
 
   const averageSummary = await updateAverageSummary();
   const { dailyKeystrokes, dailyLinesAdded, dailyLinesRemoved, dailySessionSeconds } = averageSummary;
-  const avgStr = getRangeDashboard({
+  const avgStr = getRangeReport({
     sessionSeconds: dailySessionSeconds,
     keystrokes: dailyKeystrokes,
     linesAdded: dailyLinesAdded,
     linesRemoved: dailyLinesRemoved,
   }, '🐲 Average of Day');
-  dashboardContent += avgStr;
-  dashboardContent += lineBreakStr;
+  reportContent += avgStr;
+  reportContent += lineBreakStr;
 
-  const dashboardFile = getUserDashboardFile();
-  await fse.writeFile(dashboardFile, dashboardContent, 'utf8');
-  return dashboardFile;
+  const reportFile = getUserReportFile();
+  await fse.writeFile(reportFile, reportContent, 'utf8');
+  return reportFile;
 }

@@ -51,7 +51,7 @@ export default function getFiles(directory: string, supportExts: string[], ignor
       if (fs.existsSync(ignoreConfigFilePath)) {
         ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
       }
-    })
+    });
 
     // https://www.npmjs.com/package/glob
     return glob.sync(`${directory}/**/*.+(${supportExts.join('|')})`, options)
@@ -59,7 +59,7 @@ export default function getFiles(directory: string, supportExts: string[], ignor
       .filter((file) => {
         // https://www.npmjs.com/package/ignore
         // Use .ignore file to filter glob result. Same as https://www.npmjs.com/package/glob-gitignore
-        return file.LoC <= MAX_CHECK_LOC && !ig.ignores(file.path.replace(path.join(directory, '/'), ''))
+        return file.LoC <= MAX_CHECK_LOC && !ig.ignores(file.path.replace(path.join(directory, '/'), ''));
       });
   } catch (e) {
     console.log('Get files failed!', e);

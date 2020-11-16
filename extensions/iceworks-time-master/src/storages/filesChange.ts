@@ -1,29 +1,14 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import { TextDocument } from 'vscode';
-import { getAppDataDayDirPath } from '../utils/storage';
+import { getStorageDayPath } from '../utils/storage';
 import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
-import { KeystrokeStats } from '../managers/keystrokeStats';
-import { JSON_SPACES } from '../constants';
+import { jsonSpaces } from '../config';
+import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
 import forIn = require('lodash.forin');
 
-interface FileTextInfo {
-  /**
-   * The character length of the file
-   */
-  length: number;
-  /**
-   * The number of lines in the file
-   */
-  lineCount: number;
-  /**
-   * Syntax used by the file
-   */
-  syntax: string;
-}
-
-let textInfoCache: {[name: string]: FileTextInfo} = {};
+let textInfoCache: {[fileName: string]: FileTextInfo} = {};
 function getTextInfo(textDocument: TextDocument, fileName: string): FileTextInfo {
   if (textInfoCache[fileName]) {
     return textInfoCache[fileName];
@@ -41,19 +26,7 @@ export function cleanTextInfoCache() {
   textInfoCache = {};
 }
 
-export interface FileChangeSummary {
-  /**
-   * Filename
-   */
-  name: string;
-  /**
-   * The path where the file is located
-   */
-  fsPath: string;
-  /**
-   * The folder of the project to which the file belongs
-   */
-  projectDir: string;
+interface FileTextInfo {
   /**
    * The character length of the file
    */
@@ -66,24 +39,58 @@ export interface FileChangeSummary {
    * Syntax used by the file
    */
   syntax: string;
+}
 
+export interface FileInfo extends FileTextInfo {
   /**
-   * Keystrokes per minute
+   * Filename
    */
-  kpm: number;
+  fileName: string;
   /**
-   * Number of keystrokes
+   * The path where the file is located
    */
-  keystrokes: number;
-  /**
-   * File editor usage time
-   */
-  editorSeconds?: number;
-  /**
-   * Time used to edit files
-   */
-  sessionSeconds: number;
+  fsPath: string;
+}
 
+export interface FileEventInfo {
+  /**
+   * Open times
+   */
+  open: number;
+  /**
+   * Close times
+   */
+  close: number;
+  /**
+   * Update times
+   */
+  update: number;
+}
+
+export interface ContentChangeEventInfo {
+  /**
+   * Paste times
+   */
+  pasteTimes: number;
+  /**
+   * Add times
+   */
+  addTimes: number;
+  /**
+   * Delete times
+   */
+  deleteTimes: number;
+}
+
+export interface ContentChangeInfo {
+  /**
+   * How many lines have been added
+   */
+  linesAdded: number;
+  /**
+   * How many lines have been deleted
+   */
+  linesRemoved: number;
   /**
    * How many characters have been added
    */
@@ -96,66 +103,53 @@ export interface FileChangeSummary {
    * Number of characters pasted
    */
   charsPasted?: number;
-
-  /**
-   * File open times
-   */
-  open: number;
-  /**
-   * File close times
-   */
-  close: number;
-  /**
-   * File update times
-   */
-  update: number;
-
-  /**
-   * Paste times
-   */
-  paste: number;
-  /**
-   * Add times
-   */
-  add: number;
-  /**
-   * Delete times
-   */
-  delete: number;
-
-  /**
-   * How many lines have been added
-   */
-  linesAdded: number;
-  /**
-   * How many lines have been deleted
-   */
-  linesRemoved: number;
-
-  /**
-   * Time to start updating files
-   */
-  start: number;
-  /**
-   * End time to update file
-   */
-  end: number;
 }
 
-export class FileChange {
-  public name: string;
+export interface FileChangeInfo extends
+  FileInfo,
+  // TODO Remove it
+  FileEventInfo,
+  KeystrokeStatsInfo,
+  ContentChangeInfo,
+  ContentChangeEventInfo
+{
+  /**
+   * The folder of the project to which the file belongs
+   */
+  projectDirectory: string;
+}
+
+export interface FileChangeSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'durationSeconds'>, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
+  /**
+   * The folder of the project to which the file belongs
+   */
+  projectDirectory: string;
+  /**
+   * Keystrokes per minute
+   */
+  kpm: number;
+  /**
+   * Time used to edit files
+   */
+  sessionSeconds: number;
+  /**
+   * File editor usage time
+   */
+  editorSeconds?: number;
+}
+
+export class FileChange implements FileChangeInfo {
+  public fileName: string;
 
   public fsPath: string;
 
-  public projectDir: string;
+  public projectDirectory: string;
 
   public length: number;
 
   public lineCount: number;
 
   public syntax: string;
-
-  public kpm = 0;
 
   public keystrokes = 0;
 
@@ -169,11 +163,11 @@ export class FileChange {
 
   public close = 0;
 
-  public paste = 0;
+  public pasteTimes = 0;
 
-  public add = 0;
+  public addTimes = 0;
 
-  public delete = 0;
+  public deleteTimes = 0;
 
   public update = 0;
 
@@ -185,21 +179,16 @@ export class FileChange {
 
   public end = 0;
 
-  /**
-   * Interval between
-   * the end of the update and
-   * the beginning of the update
-   */
   public durationSeconds = 0;
 
-  constructor(values?: any) {
+  constructor(values?: Partial<FileChangeInfo>) {
     if (values) {
       Object.assign(this, values);
     }
   }
 
   updateTextInfo(textDocument: TextDocument) {
-    const { syntax, length, lineCount } = getTextInfo(textDocument, this.name);
+    const { syntax, length, lineCount } = getTextInfo(textDocument, this.fileName);
     this.syntax = syntax;
     this.length = length;
     this.lineCount = lineCount;
@@ -211,7 +200,6 @@ export class FileChange {
 
   deactivate() {
     this.update = 1;
-    this.kpm = this.keystrokes;
     this.durationSeconds = this.end - this.start;
   }
 
@@ -225,19 +213,19 @@ export class FileChange {
 
   static createInstance(fsPath: string, project: Project) {
     const baseName = path.basename(fsPath);
-    const name = baseName;
-    const projectDir = project.directory;
-    const fileChange = new FileChange({ name, projectDir, fsPath });
+    const fileName = baseName;
+    const projectDirectory = project.directory;
+    const fileChange = new FileChange({ fileName, projectDirectory, fsPath });
     return fileChange;
   }
 }
 
 export interface FilesChangeSummary {
-  [name: string]: FileChangeSummary;
+  [filePath: string]: FileChangeSummary;
 }
 
 export function getFilesChangeFile() {
-  return path.join(getAppDataDayDirPath(), 'filesChange.json');
+  return path.join(getStorageDayPath(), 'filesChange.json');
 }
 
 export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
@@ -253,7 +241,7 @@ export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
 
 export async function saveFilesChangeSummary(filesChangeSummary: FilesChangeSummary) {
   const file = getFilesChangeFile();
-  await fse.writeJson(file, filesChangeSummary, { spaces: JSON_SPACES });
+  await fse.writeJson(file, filesChangeSummary, { spaces: jsonSpaces });
 }
 
 export async function cleanFilesChangeSummary() {
@@ -270,20 +258,24 @@ export async function updateFilesChangeSummary(keystrokeStats: KeystrokeStats) {
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileChangeSummary = filesChangeSummary[fsPath];
     if (!fileChangeSummary) {
-      fileChangeSummary = { ...fileChange, sessionSeconds: fileChange.durationSeconds };
+      fileChangeSummary = {
+        ...fileChange,
+        sessionSeconds: fileChange.durationSeconds,
+        kpm: fileChange.keystrokes,
+      };
     } else {
       // aggregate
       fileChangeSummary.update += 1;
+      fileChangeSummary.open += fileChange.open;
+      fileChangeSummary.close += fileChange.close;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.kpm = fileChangeSummary.keystrokes / fileChangeSummary.update;
-      fileChangeSummary.add += fileChange.add;
-      fileChangeSummary.close += fileChange.close;
-      fileChangeSummary.delete += fileChange.delete;
+      fileChangeSummary.addTimes += fileChange.addTimes;
+      fileChangeSummary.deleteTimes += fileChange.deleteTimes;
+      fileChangeSummary.pasteTimes += fileChange.pasteTimes;
       fileChangeSummary.keystrokes += fileChange.keystrokes;
       fileChangeSummary.linesAdded += fileChange.linesAdded;
       fileChangeSummary.linesRemoved += fileChange.linesRemoved;
-      fileChangeSummary.open += fileChange.open;
-      fileChangeSummary.paste += fileChange.paste;
       fileChangeSummary.sessionSeconds += fileChange.durationSeconds;
       // non aggregates, just set
       fileChangeSummary.lineCount = fileChange.lineCount;
