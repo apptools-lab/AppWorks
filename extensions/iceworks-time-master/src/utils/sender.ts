@@ -44,6 +44,10 @@ export interface EditorTimePayload extends ProjectParams, EditorInfo, ExtensionI
  * ONLY SEND DATA IN ALIBABA INTERNAL!!!
  */
 async function checkIsSendable() {
+  // TODO
+  // checkIsAliInternal is judged by network environment
+  // There is a situation: the user is a member of Alibaba,
+  // but he works at home does not connect to the intranet.
   return await checkIsAliInternal();
 }
 
@@ -140,6 +144,7 @@ export async function checkPayloadIsLimited() {
 }
 
 async function sendPayloadData(type: string) {
+  // TODO get user info may fail
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
