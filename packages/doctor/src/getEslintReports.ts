@@ -4,9 +4,9 @@ import Scorer from './Scorer';
 import { IFileInfo, IEslintReports } from './types/Scanner';
 
 // level waring minus 1 point
-const WARNING_WEIGHT = 1;
+const WARNING_WEIGHT = -1;
 // level error minus 3 point
-const ERROR_WEIGHT = 3;
+const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
@@ -57,6 +57,18 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
 
   // calculate score
   reports.forEach((report) => {
+    // Add critical level calculate.
+    (report.messages || []).forEach(message => {
+      if (message.message.indexOf('[Critical]') === 0) {
+        if (message.severity === 2) {
+          // Critical error
+          errorScore += ERROR_WEIGHT;
+        } else {
+          // Critical warning
+          warningScore += WARNING_WEIGHT;
+        }
+      }
+    });
     warningCount += report.warningCount;
     warningScore += report.warningCount * WARNING_WEIGHT;
     errorCount += report.errorCount;
@@ -64,8 +76,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
   });
 
   const scorer = new Scorer();
-  scorer.minus(warningScore);
-  scorer.minus(errorScore);
+  scorer.plus(warningScore);
+  scorer.plus(errorScore);
 
   // Calculate bonus
   if (files[files.length - 1].path.endsWith('package.json')) {
