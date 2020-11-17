@@ -15,18 +15,18 @@ function getSpaces(spacesRequired: number) {
   }
   return vscode.env.language.indexOf('en') > -1 ? spaces : '';
 }
-function getDashboardValue(value: string) {
+function getReportValue(value: string) {
   const spacesRequired = DASHBOARD_VALUE_WIDTH - value.length - 2;
   const spaces = getSpaces(spacesRequired);
   return `${spaces}${value}`;
 }
-function getDashboardLabel(label: string) {
+function getReportLabel(label: string) {
   const spacesRequired = DASHBOARD_LABEL_WIDTH - label.length;
   const spaces = getSpaces(spacesRequired);
   return `${spaces}${label}`;
 }
 
-export function getDashboardHr() {
+export function getReportHr() {
   let content = '';
   const dashLen = DASHBOARD_LABEL_WIDTH + DASHBOARD_VALUE_WIDTH + DASHBOARD_SEPARATOR.length;
   for (let i = 0; i < dashLen; i++) {
@@ -36,49 +36,49 @@ export function getDashboardHr() {
   return content;
 }
 
-export function getDashboardRow(label: string, value: string) {
-  const dashboardLabel = getDashboardLabel(label);
-  const dashboardValue = getDashboardValue(value);
-  const content = `${dashboardLabel}${DASHBOARD_SEPARATOR}${dashboardValue}\n`;
+export function getReportRow(label: string, value: string) {
+  const reportLabel = getReportLabel(label);
+  const reportValue = getReportValue(value);
+  const content = `${reportLabel}${DASHBOARD_SEPARATOR}${reportValue}\n`;
   return content;
 }
 
-export function getRangeDashboard(userSummary: UserSummary, title?: string) {
+export function getRangeReport(userSummary: UserSummary, title?: string) {
   const { sessionSeconds = 0, linesAdded = 0, linesRemoved = 0, keystrokes = 0 } = userSummary;
   let str = '';
   if (title) {
     str += `${title}\n`;
-    str += getDashboardHr();
+    str += getReportHr();
   }
-  str += getDashboardRow(
+  str += getReportRow(
     i18n.format('extension.timeMaster.acCode'),
     humanizeMinutes(seconds2minutes(sessionSeconds)),
   );
-  str += getDashboardRow(
+  str += getReportRow(
     i18n.format('extension.timeMaster.linesAdded'),
     Number(linesAdded).toLocaleString(),
   );
-  str += getDashboardRow(
+  str += getReportRow(
     i18n.format('extension.timeMaster.linesRemoved'),
     Number(linesRemoved).toLocaleString(),
   );
-  str += getDashboardRow(
+  str += getReportRow(
     i18n.format('extension.timeMaster.keystrokes'),
     Number(keystrokes).toLocaleString(),
   );
-  // str += getDashboardRow(
+  // str += getReportRow(
   //   'Characters added',
   //   '15,397',
   // );
-  // str += getDashboardRow(
+  // str += getReportRow(
   //   'Characters deleted',
   //   '12,095',
   // );
-  // str += getDashboardRow(
+  // str += getReportRow(
   //   'KPM',
   //   '10',
   // );
-  // str += getDashboardRow(
+  // str += getReportRow(
   //   'Top language',
   //   'typescript',
   // );

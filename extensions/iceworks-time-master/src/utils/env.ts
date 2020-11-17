@@ -4,19 +4,30 @@ import * as os from 'os';
 import { getCommandResultLine } from './common';
 
 // eslint-disable-next-line
-const { name, version } = require('../../package.json');
+const { name: extensionName, version: extensionVersion } = require('../../package.json');
 
-export function getEditorInfo() {
+
+export interface EditorInfo {
+  editorName: string;
+  editorVersion: string;
+}
+
+export function getEditorInfo(): EditorInfo {
   return {
-    name: vscode.env.appName,
-    version: vscode.version,
+    editorName: vscode.env.appName,
+    editorVersion: vscode.version,
   };
 }
 
-export function getExtensionInfo() {
+export interface ExtensionInfo {
+  extensionName: string;
+  extensionVersion: string;
+}
+
+export function getExtensionInfo(): ExtensionInfo {
   return {
-    name,
-    version,
+    extensionName,
+    extensionVersion,
   };
 }
 
@@ -46,9 +57,20 @@ function getTimezone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
-export async function getSystemInfo() {
+export interface SystemInfo {
+  os: string;
+  hostname: string;
+  timezone: string;
+}
+
+let systemInfoCache;
+export async function getSystemInfo(): Promise<SystemInfo> {
+  if (systemInfoCache) {
+    return systemInfoCache;
+  }
   const osStr = getOS();
-  const hostname = getHostname();
+  const hostname = await getHostname();
   const timezone = getTimezone();
-  return { os: osStr, hostname, timezone };
+  systemInfoCache = { os: osStr, hostname, timezone };
+  return systemInfoCache;
 }
