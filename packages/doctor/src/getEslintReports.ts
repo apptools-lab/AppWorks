@@ -21,7 +21,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
 
   const cliEngine = new CLIEngine({
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
-    cwd: __dirname,
+    // Use plugin in @iceworks/spec
+    cwd: require.resolve('@iceworks/spec'),
     fix: !!fix,
     useEslintrc: false,
   });
