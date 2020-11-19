@@ -10,6 +10,7 @@ export interface IScanOptions {
   framework?: string;
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
+  timeout?: number;
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
