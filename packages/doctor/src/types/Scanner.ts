@@ -10,6 +10,7 @@ export interface IScanOptions {
   framework?: string;
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
+  timeout?: number;
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
@@ -63,6 +64,7 @@ export interface IScannerReports {
     lines: number;
   };
   score?: number;
+  scanTime?: number;
   ESLint?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
