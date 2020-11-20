@@ -1,6 +1,7 @@
 import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
 import Scorer from './Scorer';
+import Timer from './Timer';
 import { IFileInfo, IEslintReports } from './types/Scanner';
 
 // level waring minus 1 point
@@ -10,7 +11,7 @@ const ERROR_WEIGHT = 3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default function getEslintReports(files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
+export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
   let warningCount = 0;
 
@@ -48,6 +49,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
         ...result,
         filePath: file.path,
       });
+
+      timer.checkTimeout();
     });
   });
 

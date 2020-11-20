@@ -48,6 +48,7 @@ if (args.scan) {
       maintainability: result.maintainability.score,
       repeatability: result.repeatability.score,
     });
+    console.log(`Scan time: ${result.scanTime} s.`);
   }).catch((err) => {
     console.log('Error!');
     console.error(err);

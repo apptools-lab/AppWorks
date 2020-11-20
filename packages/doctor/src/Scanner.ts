@@ -1,4 +1,5 @@
 import * as path from 'path';
+import Timer from './Timer';
 import { IScannerOptions, IScanOptions, IFileInfo, IScannerReports } from './types/Scanner';
 import getCustomESLintConfig from './getCustomESLintConfig';
 import getEslintReports from './getEslintReports';
@@ -6,7 +7,6 @@ import getMaintainabilityReports from './getMaintainabilityReports';
 import getRepeatabilityReports from './getRepeatabilityReports';
 import getFiles from './getFiles';
 import getFinalScore from './getFinalScore';
-
 
 export default class Scanner {
   public options: IScannerOptions;
@@ -17,6 +17,7 @@ export default class Scanner {
 
   // Entry
   public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
+    const timer = new Timer(options.timeout);
     const reports = {} as IScannerReports;
 
     const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignore);
@@ -37,12 +38,12 @@ export default class Scanner {
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${options.framework || 'react'}${options.languageType === 'ts' ? '-ts' : ''}`;
-      reports.ESLint = getEslintReports(files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
+      reports.ESLint = getEslintReports(timer, files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
     }
 
     // Calculate maintainability
     if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(files);
+      reports.maintainability = getMaintainabilityReports(timer,files);
     }
 
     // Calculate repeatability
@@ -58,6 +59,9 @@ export default class Scanner {
         (reports.repeatability || {}).score,
       ].filter((score) => !isNaN(score)),
     );
+
+    // Duration seconds
+    reports.scanTime = timer.duration();
 
     return reports;
   }
