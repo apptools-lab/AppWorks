@@ -60,6 +60,9 @@ export default class Scanner {
       ].filter((score) => !isNaN(score)),
     );
 
+    // Duration seconds
+    reports.scanTime = timer.duration();
+
     return reports;
   }
 }

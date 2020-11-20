@@ -64,6 +64,7 @@ export interface IScannerReports {
     lines: number;
   };
   score?: number;
+  scanTime?: number;
   ESLint?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
