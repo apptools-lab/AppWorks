@@ -14,6 +14,11 @@
     "desc": "Scan target project directory.",
     "type": "string"
   },
+  "codemod":{
+    "alias": "c",
+    "desc": "codemod scripts that help update React(ICE) and Rax APIs.",
+    "type": "array"
+  },
   "ignore": {
     "desc": "Ignore directories when scan.",
     "type": "array"
