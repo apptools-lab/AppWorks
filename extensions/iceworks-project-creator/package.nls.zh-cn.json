@@ -1,4 +1,4 @@
 {
-  "iceworksProjectCreator.create-project.commands.start.title": "Iceworks: 创建应用",
-  "iceworksProjectCreator.custom-scaffold.commands.start.title": "Iceworks: 自定义模板"
+  "iceworksProjectCreator.create-project.commands.start.title": "Iceworks: 选择模板创建应用",
+  "iceworksProjectCreator.custom-scaffold.commands.start.title": "Iceworks: 配置模板创建应用"
 }

@@ -9,14 +9,14 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 Create a Universal Application(React/Rax/Vue, etc) quickly.
 
-## Create Application
+## Select Scaffold Create Application
 
 ### Activate Extension
 
 ![demo](https://user-images.githubusercontent.com/56879942/88181928-1e927f00-cc62-11ea-94fb-06d12dab77d1.gif)
 
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
-2. Enter `Iceworks: Create Application` to activate the extension.
+2. Enter `Iceworks: Select Scaffold to Create Application` to activate the extension.
 
 ### Usage
 
@@ -26,12 +26,12 @@ Create a Universal Application(React/Rax/Vue, etc) quickly.
 2. Input your application information.
 3. Create your application and open application automatically.
 
-## Custom Scaffold
+## Configure Scaffold to Create Application
 
 ### Activate Extension
 
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
-2. Enter `Iceworks: Custom Scaffold` to activate the extension.
+2. Enter `Iceworks: Configure Scaffold to Create Application` to activate the extension.
 
 ### Usage
 

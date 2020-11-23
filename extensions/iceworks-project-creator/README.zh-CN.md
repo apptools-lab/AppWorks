@@ -9,14 +9,14 @@
 
 快速创建多端应用（例如：React/Rax/Vue...）
 
-## 创建应用
+## 选择模板创建应用
 
 ### 激活
 
 ![使用示例](https://user-images.githubusercontent.com/56879942/87621232-e61b0e80-c752-11ea-852c-77bb164d2dab.gif)
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: Create Application` 激活插件
+2. 输入 `Iceworks: Select Scaffold to Create Application` 激活插件
 
 ### 使用
 
@@ -26,12 +26,12 @@
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
-## 自定义模板
+## 配置模板创建应用
 
 ### 激活
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: Custom Scaffold` 激活插件
+2. 输入 `Iceworks: Configure Scaffold to Create Application` 激活插件
 
 ### 使用
 
