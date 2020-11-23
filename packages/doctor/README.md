@@ -1,6 +1,6 @@
 # Iceworks Doctor
 
-Analyse react/rax projects, troubleshooting and automatically fixing errors.
+Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors.  
 ## 1. Code Scanner
 
 ### Installation
