@@ -143,6 +143,26 @@ export async function checkPayloadIsLimited() {
   }));
 }
 
+async function sendBlukCreate(type, playloadData, extra) {
+  try {
+    const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
+      ...record,
+      ...extra,
+    })));
+
+    logger.info('[sender][sendBlukCreate] response', bulkCreateRespose);
+    if (!isResponseOk(bulkCreateRespose)) {
+      throw new Error(bulkCreateRespose.data.message);
+    }
+  } catch (e) {
+
+    // if got error, write back the data and resend it in the next cycle
+    await appendPayloadData(type, playloadData);
+    logger.error('[sender][sendBlukCreate] got error:', e);
+    throw e;
+  }
+}
+
 async function sendPayloadData(type: string) {
   // TODO get user info may fail
   const { empId } = await getUserInfo();
@@ -164,23 +184,14 @@ async function sendPayloadData(type: string) {
       userId: empId,
     };
 
-    // TODO batch logic
-    try {
-      const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
-        ...record,
-        ...extra,
-      })));
-
-      logger.info('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
-      if (!isResponseOk(bulkCreateRespose)) {
-        throw new Error(bulkCreateRespose.data.message);
+    if (playloadLength > 100) {
+      const batchPlayloads = [];
+      while (playload.length) {
+        batchPlayloads.push(playload.splice(0, 10));
       }
-    } catch (e) {
-
-      // if got error, write back the data and resend it in the next cycle
-      await appendPayloadData(type, playload);
-      logger.error('[sender][sendPayloadData]_bulkCreate got error:', e);
-      throw e;
+      await Promise.all(batchPlayloads.map(async (batchPlayload) => await sendBlukCreate(type, batchPlayload, extra)));
+    } else {
+      await sendBlukCreate(type, playload, extra);
     }
   }
 }
