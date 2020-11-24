@@ -2,7 +2,7 @@ import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
-import { ALI_DIP_DAILY } from '@iceworks/constant';
+import { ALI_DIP_PRO } from '@iceworks/constant';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChange';
 import { getStoragePayloadsPath } from './storage';
@@ -16,7 +16,7 @@ import forIn = require('lodash.forin');
 const KEYSTROKES_RECORD = 'keystrokes';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-const url = `${ALI_DIP_DAILY}/api`;
+const url = `${ALI_DIP_PRO}/api`;
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
