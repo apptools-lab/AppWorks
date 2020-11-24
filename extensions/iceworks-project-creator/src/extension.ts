@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      projectCreatorwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject', true);
+      projectCreatorwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject', false);
       projectCreatorwebviewPanel.onDidDispose(
         () => {
           projectCreatorwebviewPanel = undefined;
@@ -69,7 +69,23 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', true, undefined, '', 'scaffoldtemplate');
+      const extraScaffoldTemplateHtml = `
+        <style>
+          body {
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+          }
+        </style>
+      `;
+
+      const iframeContent = getHtmlForWebview(extensionPath, 'scaffoldtemplate', false, undefined, extraScaffoldTemplateHtml);
+      const extraCustomScaffoldHtml = `
+        <script>
+          window.iframeContent = '${iframeContent}'
+        </script>
+      `;
+      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', false, undefined, extraCustomScaffoldHtml);
       customScaffoldWebviewPanel.onDidDispose(
         () => {
           customScaffoldWebviewPanel = undefined;

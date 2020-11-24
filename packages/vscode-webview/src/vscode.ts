@@ -99,8 +99,7 @@ export function getHtmlForWebview(
   entryName?: string,
   needVendor?: boolean,
   cdnBasePath?: string,
-  extraHtml?: string | Function,
-  iframeName?: string,
+  extraHtml = '',
 ): string {
   entryName = entryName || DEFAULT_ENTRY;
   const localBasePath = path.join(extensionPath, 'build');
@@ -113,16 +112,6 @@ export function getHtmlForWebview(
   const styleUri = cdnBasePath ?
     stylePath :
     vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
-
-  // iframe
-  let iframeScriptUri;
-  let iframeStyleUri;
-  if (iframeName) {
-    const iframeScriptPath = path.join(cdnBasePath || localBasePath, `js/${iframeName}.js`);
-    iframeScriptUri = cdnBasePath ? scriptPath : vscode.Uri.file(iframeScriptPath).with({ scheme: 'vscode-resource' });
-    const iframeStylePath = path.join(cdnBasePath || localBasePath, `css/${iframeName}.css`);
-    iframeStyleUri = cdnBasePath ? stylePath : vscode.Uri.file(iframeStylePath).with({ scheme: 'vscode-resource' });
-  }
 
   // vendor for MPA
   const vendorStylePath = path.join(rootPath, 'css/vendor.css');
@@ -137,17 +126,6 @@ export function getHtmlForWebview(
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
 
-  const vscodeResource = {
-    scriptUri,
-    styleUri,
-    vendorStyleUri,
-    vendorScriptUri,
-  };
-  let extraHtmlContent = extraHtml || '';
-  if (typeof extraHtml === 'function') {
-    extraHtmlContent = extraHtml(vscodeResource);
-  }
-
   const fileContent =
     `<!DOCTYPE html>
     <html>
@@ -157,13 +135,8 @@ export function getHtmlForWebview(
       <meta name="theme-color" content="#000000">
       <title>Iceworks</title>
       <link rel="stylesheet" type="text/css" href="${styleUri}">
-      ` + (iframeName ? `
-      <script>
-        window.__ICEWORKS_RESOURCE__ = {};
-        window.__ICEWORKS_RESOURCE__.iframeScriptUri = "${iframeScriptUri}";
-        window.__ICEWORKS_RESOURCE__.iframeStyleUri = "${iframeStyleUri}";
-      </script>
-      ` : '') +
+      ${extraHtml}
+      ` +
     (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') +
     `
     </head>
@@ -173,7 +146,6 @@ export function getHtmlForWebview(
       ` +
     (needVendor ? `<script nonce="${nonce}" src="${vendorScriptUri}"></script>` : '') +
     `<script nonce="${nonce}" src="${scriptUri}"></script>
-    ${extraHtmlContent}
     </body>
   </html>`;
   return fileContent;
