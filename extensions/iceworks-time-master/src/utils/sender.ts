@@ -85,6 +85,7 @@ function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeSta
 
 export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
   const playload = transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats);
+  logger.info('[sender][appendKeystrokesPayload] playload length:', playload.length);
   await appendPayloadData(KEYSTROKES_RECORD, playload);
 }
 
@@ -169,7 +170,7 @@ async function sendPayloadData(type: string) {
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
-  logger.info(`[sender][sendPayload] run, ${type}'s playloadLength: ${playloadLength}`);
+  logger.info(`[sender][sendPayloadData] run, ${type}'s playloadLength: ${playloadLength}`);
   if (Array.isArray(playload) && playloadLength) {
     // clear first to prevent duplicate sending when concurrent
     await clearPayloadData(type);
