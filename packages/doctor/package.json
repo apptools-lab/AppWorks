@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/doctor",
   "description": "Analyse react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.2.1",
+  "version": "0.2.4",
   "keywords": [
     "doctor",
     "analysis",
@@ -34,6 +34,7 @@
     "glob": "^7.1.6",
     "ignore": "^5.1.8",
     "jscpd": "^3.3.3",
+    "moment": "^2.29.1",
     "stylelint": "^13.7.0",
     "typescript": "^3.0.0",
     "typhonjs-escomplex": "^0.1.0"

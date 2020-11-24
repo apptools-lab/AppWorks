@@ -1,9 +1,10 @@
 import * as escomplex from 'typhonjs-escomplex';
 import Scorer from './Scorer';
+import Timer from './Timer';
 import { IFileInfo, IMaintainabilityReport, IMaintainabilityReports } from './types/Scanner';
 
 // https://www.npmjs.com/package/typhonjs-escomplex
-export default function getMaintainabilityReports(files: IFileInfo[]): IMaintainabilityReports {
+export default function getMaintainabilityReports(timer: Timer, files: IFileInfo[]): IMaintainabilityReports {
   const reports = [];
 
   files.forEach((file) => {
@@ -19,6 +20,8 @@ export default function getMaintainabilityReports(files: IFileInfo[]): IMaintain
     } catch (e) {
       // ignore
     }
+
+    timer.checkTimeout();
   });
 
   return {

@@ -1,16 +1,17 @@
 import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
 import Scorer from './Scorer';
+import Timer from './Timer';
 import { IFileInfo, IEslintReports } from './types/Scanner';
 
 // level waring minus 1 point
-const WARNING_WEIGHT = 1;
+const WARNING_WEIGHT = -1;
 // level error minus 3 point
-const ERROR_WEIGHT = 3;
+const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default function getEslintReports(files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
+export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
   let warningCount = 0;
 
@@ -21,7 +22,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
 
   const cliEngine = new CLIEngine({
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
-    cwd: __dirname,
+    // Use plugin in @iceworks/spec
+    cwd: require.resolve('@iceworks/spec'),
     fix: !!fix,
     useEslintrc: false,
   });
@@ -47,6 +49,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
         ...result,
         filePath: file.path,
       });
+
+      timer.checkTimeout();
     });
   });
 
@@ -57,6 +61,18 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
 
   // calculate score
   reports.forEach((report) => {
+    // Add critical level calculate.
+    (report.messages || []).forEach(message => {
+      if (message.message.indexOf('[Critical]') === 0) {
+        if (message.severity === 2) {
+          // Critical error
+          errorScore += ERROR_WEIGHT;
+        } else {
+          // Critical warning
+          warningScore += WARNING_WEIGHT;
+        }
+      }
+    });
     warningCount += report.warningCount;
     warningScore += report.warningCount * WARNING_WEIGHT;
     errorCount += report.errorCount;
@@ -64,8 +80,8 @@ export default function getEslintReports(files: IFileInfo[], ruleKey: string, cu
   });
 
   const scorer = new Scorer();
-  scorer.minus(warningScore);
-  scorer.minus(errorScore);
+  scorer.plus(warningScore);
+  scorer.plus(errorScore);
 
   // Calculate bonus
   if (files[files.length - 1].path.endsWith('package.json')) {
