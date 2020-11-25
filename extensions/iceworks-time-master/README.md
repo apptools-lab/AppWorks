@@ -7,7 +7,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-Metrics, insights, and time tracking automatically generated from your programming activity. Time Master is an Open Source project, completely independent of network environment, safe and lightweight.
+Metrics, insights, and time tracking automatically generated from your programming activity. Time Master is an open source project, independent of network environment, safe and lightweight.
 
 ## Usage
 
@@ -21,9 +21,13 @@ Metrics, insights, and time tracking automatically generated from your programmi
 
 ## Security and Privacy
 
-**We never access your code**: We do not process, send, or store your proprietary code. We only provide metrics about programming. Time Master is an open source plugin, we make it easy to see the data we collect.
+For community developers, Time Master are completely localized and never visit the network.
+
+**We never access your code**: We don't process, send, or store your code. Extension are open source, you can easily see our data processing logic.
 
 **Your data is private**: We will never share your individually identifiable data with anyone.
+
+> We only upload programming activity data in Alibaba Intranet environment.
 
 ## More
 

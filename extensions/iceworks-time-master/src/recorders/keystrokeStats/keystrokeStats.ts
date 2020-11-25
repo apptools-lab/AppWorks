@@ -1,21 +1,27 @@
-import { Project } from '../storages/project';
-import { FileChange } from '../storages/filesChange';
-import { logIt } from '../utils/common';
-import { getNowUTCSec } from '../utils/time';
-import { processData } from './data';
+import { Project } from '../../storages/project';
+import { FileChange } from '../../storages/filesChange';
+import { getNowUTCSec } from '../../utils/time';
+import { processData } from '../../managers/data';
+import logger from '../../utils/logger';
 import forIn = require('lodash.forin');
 
-export interface Editor {
-  id: string;
-  name: string;
-  version: string;
-  extensionId: string;
-  extensionVersion: string;
-}
-
-export interface User {
-  id: string;
-  email: string;
+export interface KeystrokeStatsInfo {
+  /**
+   * Time to start keystroke
+   */
+  start: number;
+  /**
+   * Time to end keystroke
+   */
+  end: number;
+  /**
+   * Number of keystrokes
+   */
+  keystrokes: number;
+  /**
+   * Interval between the end of the update and the start of the update
+   */
+  durationSeconds: number;
 }
 
 export class KeystrokeStats {
@@ -25,7 +31,7 @@ export class KeystrokeStats {
 
   public end: number;
 
-  public files: {[name: string]: FileChange} = {};
+  public files: { [filePath: string]: FileChange } = {};
 
   public project: Project;
 
@@ -45,9 +51,6 @@ export class KeystrokeStats {
       foundKpmData = true;
     }
 
-    // Now remove files that don't have any keystrokes
-    // that only have an open or close associated with them.
-    // If they have open and close then it's ok, keep it.
     let keystrokesTally = 0;
     keys.forEach((key) => {
       const fileChange: FileChange = this.files[key];
@@ -87,7 +90,7 @@ export class KeystrokeStats {
 
   async sendData() {
     const isHasData = this.hasData();
-    logIt('[KeystrokeStats][sendData]isHasData', isHasData);
+    logger.debug('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
       await processData(this);

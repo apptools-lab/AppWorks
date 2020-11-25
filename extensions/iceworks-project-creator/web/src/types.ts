@@ -40,3 +40,27 @@ export interface IScaffoldMarket {
   mainScaffolds: IMaterialScaffold[];
   otherScaffolds: IMaterialScaffold[];
 }
+
+export interface IPageDetail {
+  pageName: string;
+  path?: string;
+  parent?: string;
+}
+
+export interface IPageDetailForm {
+  isCreating: boolean;
+  visible: boolean;
+  onSubmit: (data: IPageDetail) => void;
+  onClose: () => void;
+  values: IPageDetailValue;
+}
+
+interface IPageDetailValue {
+  pageName: string;
+  path: string;
+}
+
+export interface IMenuType {
+  label: string;
+  value: string;
+}

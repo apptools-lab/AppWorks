@@ -13,7 +13,7 @@ interface IMaterialSourceCardProps {
 
 const MaterialSourceCard: React.FC<IMaterialSourceCardProps> = ({ title, selected, onClick, media }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <Card
         free
         className={classnames(styles.card, { [styles.active]: selected })}

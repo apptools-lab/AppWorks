@@ -36,6 +36,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
     }
 
     initData();
+    // eslint-disable-next-line
   }, []);
 
   async function getUserInfo() {

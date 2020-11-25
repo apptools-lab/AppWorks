@@ -2,16 +2,22 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
-import { UNTITLED, NO_PROJ_NAME, JSON_SPACES } from '../constants';
-import { getAppDataDirPath, getAppDataDayDirPath, getStorageDirs } from '../utils/storage';
-import { getResource } from '../utils/git';
-import { getDashboardHr, getDashboardRow, getRangeDashboard } from '../utils/dashboard';
+import { UNTITLED, NO_PROJ_NAME } from '../constants';
+import { jsonSpaces } from '../config';
+import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
+import { getResource, Resource } from '../utils/git';
+import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
 import forIn = require('lodash.forin');
 
-export interface ProjectResource {
-  repository: string;
-  branch: string;
-  tag?: string;
+interface ProjectResource {
+  gitRepository: PropType<Resource, 'repository'>;
+  gitBranch: PropType<Resource, 'branch'>;
+  gitTag?: PropType<Resource, 'tag'>;
+}
+
+export interface ProjectInfo extends ProjectResource {
+  name: string;
+  directory: string;
 }
 
 export function getProjectFolder(fsPath: string): WorkspaceFolder {
@@ -38,17 +44,14 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
   return null;
 }
 
-export class Project {
-  // public id: string = '';
+export class Project implements ProjectInfo {
   public name = '';
-
   public directory = '';
+  public gitRepository = '';
+  public gitBranch = '';
+  public gitTag = '';
 
-  public resource: ProjectResource = { repository: '', branch: '' };
-
-  constructor(values?: any) {
-    // const { resource, directory } = values;
-    // this.id = resource!.repository || directory;
+  constructor(values?: Partial<ProjectInfo>) {
     if (values) {
       Object.assign(this, values);
     }
@@ -57,18 +60,17 @@ export class Project {
   static async createInstance(fsPath: string) {
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
-    const name = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
-    const resource = await getResource(directory);
-    const project = new Project({ name, directory, resource });
+    const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
+    const { branch, tag, repository } = await getResource(directory);
+    const project = new Project({
+      name: workspaceFolderName,
+      directory,
+      gitBranch: branch,
+      gitTag: tag,
+      gitRepository: repository,
+    });
     return project;
   }
-}
-
-interface ProjectInfo {
-  // id?: string;
-  name: string;
-  directory: string;
-  resource?: ProjectResource;
 }
 
 interface ProjectData {
@@ -87,7 +89,7 @@ export interface ProjectsSummary {
 }
 
 export function getProjectsFile(day?: string) {
-  return path.join(getAppDataDayDirPath(day), 'projects.json');
+  return path.join(getStorageDayPath(day), 'projects.json');
 }
 
 export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
@@ -103,7 +105,7 @@ export async function getProjectsSummary(day?: string): Promise<ProjectsSummary>
 
 export async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
-  await fse.writeJson(file, values, { spaces: JSON_SPACES });
+  await fse.writeJson(file, values, { spaces: jsonSpaces });
 }
 
 export async function clearProjectsSummary() {
@@ -139,23 +141,23 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
   await saveProjectsSummary(projectsSummary);
 }
 
-export function getProjectDashboardFile() {
-  return path.join(getAppDataDirPath(), 'ProjectSummaryDashboard.txt');
+export function getProjectReportFile() {
+  return path.join(getStorageReportsPath(), 'ProjectSummary.txt');
 }
 
-export async function generateProjectDashboard() {
+export async function generateProjectReport() {
   const formattedDate = moment().format('ddd, MMM Do h:mma');
-  let dashboardContent = `Project Summary (Last updated on ${formattedDate})\n`;
-  dashboardContent += '\n';
-  const dashboardFile = getProjectDashboardFile();
+  let reportContent = `Project Summary (Last updated on ${formattedDate})\n`;
+  reportContent += '\n';
+  const reportFile = getProjectReportFile();
   const projectsSummary: ProjectsSummary = {};
-  const storageDirs = await getStorageDirs();
+  const storageDirs = await getStorageDaysDirs();
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {
-      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name } = dayProjectSummary;
-      if (!projectsSummary[name]) {
-        projectsSummary[name] = {
+      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
+      if (!projectsSummary[projectName]) {
+        projectsSummary[projectName] = {
           ...dayProjectSummary,
           sessionSeconds,
           keystrokes,
@@ -164,27 +166,27 @@ export async function generateProjectDashboard() {
         };
       } else {
         if (sessionSeconds) {
-          projectsSummary[name].sessionSeconds += sessionSeconds;
+          projectsSummary[projectName].sessionSeconds += sessionSeconds;
         }
         if (keystrokes) {
-          projectsSummary[name].keystrokes += keystrokes;
+          projectsSummary[projectName].keystrokes += keystrokes;
         }
         if (linesAdded) {
-          projectsSummary[name].linesAdded += linesAdded;
+          projectsSummary[projectName].linesAdded += linesAdded;
         }
         if (linesRemoved) {
-          projectsSummary[name].linesRemoved += linesRemoved;
+          projectsSummary[projectName].linesRemoved += linesRemoved;
         }
       }
     });
   }));
   forIn(projectsSummary, (projectSummary) => {
-    const { name } = projectSummary;
-    dashboardContent += getDashboardRow(name, 'Total');
-    dashboardContent += getRangeDashboard(projectSummary);
-    dashboardContent += getDashboardHr();
-    dashboardContent += '\n';
+    const { name: projectName } = projectSummary;
+    reportContent += getReportRow(projectName, 'Total');
+    reportContent += getRangeReport(projectSummary);
+    reportContent += getReportHr();
+    reportContent += '\n';
   });
-  await fse.writeFile(dashboardFile, dashboardContent, 'utf8');
-  return dashboardFile;
+  await fse.writeFile(reportFile, reportContent, 'utf8');
+  return reportFile;
 }

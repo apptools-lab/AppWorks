@@ -1,10 +1,11 @@
 {
   "name": "@iceworks/doctor",
-  "description": "Analyse react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.2.3",
+  "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
+  "version": "0.3.0",
   "keywords": [
     "doctor",
     "analysis",
+    "codemod",
     "lint",
     "troubleshooting"
   ],

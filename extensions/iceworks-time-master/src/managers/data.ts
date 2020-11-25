@@ -1,29 +1,30 @@
-import { commands, window, ProgressLocation, workspace, ViewColumn } from 'vscode';
-import { KeystrokeStats } from './keystrokeStats';
+import { window, ProgressLocation, workspace, ViewColumn } from 'vscode';
+import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { updateFilesChangeSummary } from '../storages/filesChange';
-import { updateProjectSummary, generateProjectDashboard } from '../storages/project';
-import { updateUserSummary, generateUserDashboard } from '../storages/user';
-import { checkMidnight } from './walkClock';
+import { updateProjectSummary, generateProjectReport } from '../storages/project';
+import { updateUserSummary, generateUserReport } from '../storages/user';
+import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
-import { recordSessionTime } from '../utils/recorder';
+import { appendKeystrokesPayload } from '../utils/sender';
+import logger from '../utils/logger';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
   const increment = await updateFilesChangeSummary(keystrokeStats);
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
-
-  commands.executeCommand('iceworks-time-master.refreshTimerTree');
-  commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
+  refreshViews();
 }
 
 export async function processData(keystrokeStats: KeystrokeStats) {
+  logger.debug('[data][processData] run');
   await checkMidnight();
-  saveDataToDisk(keystrokeStats);
-  recordSessionTime(keystrokeStats);
+  await Promise.all([saveDataToDisk, appendKeystrokesPayload].map(async (fn) => {
+    await fn(keystrokeStats);
+  }));
 }
 
-function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
+function setProgressToGenerateSummaryReport(title: string, generateFn: typeof generateProjectReport | typeof generateUserReport) {
   window.withProgress(
     {
       location: ProgressLocation.Notification,
@@ -39,16 +40,18 @@ function setProgressToGenerateSummaryDashboard(title: string, generateFn: any) {
         await window.showTextDocument(doc, ViewColumn.One, false);
         progressMgr.done();
       } catch (e) {
-        window.showErrorMessage('Generate dashborad got error:', e);
+        const message = `Generate dashborad got error: ${e}`;
+        logger.error(message);
+        window.showErrorMessage(message);
       }
     },
   );
 }
 
-export function generateProjectSummaryDashboard() {
-  setProgressToGenerateSummaryDashboard('Loading project summary...', generateProjectDashboard);
+export function generateProjectSummaryReport() {
+  setProgressToGenerateSummaryReport('Loading project summary...', generateProjectReport);
 }
 
-export function generateUserSummaryDashboard() {
-  setProgressToGenerateSummaryDashboard('Loading summary...', generateUserDashboard);
+export function generateUserSummaryReport() {
+  setProgressToGenerateSummaryReport('Loading summary...', generateUserReport);
 }

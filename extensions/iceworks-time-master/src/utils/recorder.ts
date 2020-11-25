@@ -6,6 +6,7 @@ import { KeystrokeStats } from '../managers/keystrokeStats';
 import { FileChange } from '../storages/filesChange';
 import { getAppDataDirPath } from '../utils/storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo } from '../utils/env';
+
 import forIn = require('lodash.forin');
 
 const SESSION_TIME_RECORD = 'session_time';

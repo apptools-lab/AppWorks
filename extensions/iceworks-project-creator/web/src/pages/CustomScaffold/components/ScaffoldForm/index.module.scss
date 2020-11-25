@@ -1,0 +1,33 @@
+.scaffoldScaffold {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 160px);
+
+  .content {
+    height: calc(100vh - 220px);
+
+    .scaffoldTemplateIframe {
+      height: 100%;
+      width: 96%;
+    }
+
+    .drawerBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 40px;
+      right: -30px;
+      height: 48px;
+      width: 48px;
+      cursor: pointer;
+      background: $color-brand1-6;
+    }
+  }
+
+  .action {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

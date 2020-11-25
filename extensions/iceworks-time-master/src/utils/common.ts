@@ -1,14 +1,6 @@
 import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
-
-/**
- * @param num {number} The number to round
- * @param precision {number} The number of decimal places to preserve
- */
-export function roundUp(num: number, precision: number) {
-  precision = Math.pow(10, precision);
-  return Math.ceil(num * precision) / precision;
-}
+import logger from './logger';
 
 export async function openFileInEditor(file: string) {
   try {
@@ -25,7 +17,7 @@ export async function openFileInEditor(file: string) {
     ) {
       window.showErrorMessage(`Cannot open ${file}. File not found.`);
     } else {
-      console.error(error);
+      logger.error('[utils][common][openFileInEditor] got error:', error);
     }
   }
 }
@@ -42,12 +34,12 @@ export function isFileActive(file: string): boolean {
   return false;
 }
 
-export async function wrapExecPromise(cmd: string, projectDir: string) {
+export async function wrapExecPromise(cmd: string, cwd: string) {
   let result = '';
   try {
-    result = await execPromise(cmd, { cwd: projectDir });
+    result = await execPromise(cmd, { cwd });
   } catch (e) {
-    console.error(e.message);
+    logger.error('[utils][common][wrapExecPromise] got error:', e.message);
   }
   return result;
 }
@@ -65,17 +57,8 @@ function execPromise(command: string, opts: any): Promise<string> {
   }));
 }
 
-/**
- * TODO Replace with community pack
- */
-export function logIt(...args: any) {
-  args[0] = `TimeMaster: ${ args[0]}`;
-  console.log.apply(null, args);
-}
-
-
-export async function getCommandResultLine(cmd: string, projectDir = '') {
-  const resultList = await getCommandResultList(cmd, projectDir);
+export async function getCommandResultLine(cmd: string, cwd = '') {
+  const resultList = await getCommandResultList(cmd, cwd);
   let resultLine = '';
   if (resultList && resultList.length) {
     for (let i = 0; i < resultList.length; i++) {
@@ -89,8 +72,8 @@ export async function getCommandResultLine(cmd: string, projectDir = '') {
   return resultLine;
 }
 
-async function getCommandResultList(cmd: string, projectDir = '') {
-  const result = await wrapExecPromise(`${cmd}`, projectDir);
+async function getCommandResultList(cmd: string, cwd = '') {
+  const result = await wrapExecPromise(`${cmd}`, cwd);
   if (!result) {
     return [];
   }

@@ -3,35 +3,73 @@ import * as path from 'path';
 import * as os from 'os';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 import { getNowDay } from './time';
-
-import orderBy = require('lodash.orderby');
+const orderBy = require('lodash.orderby');
+const mkdirp = require('mkdirp');
 
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
-export function getAppDataDirPath() {
-  const homedir = os.homedir();
-  const appDataDir = path.join(homedir, '.iceworks', 'TimeMaster');
-  if (!fse.existsSync(appDataDir)) {
-    fse.mkdirSync(appDataDir);
+const homedir = os.homedir();
+const iceworksStroagePath = path.join(homedir, '.iceworks');
+const EXTENSION_TAG = 'TimeMaster';
+
+export function getStoragePath() {
+  const storagePath = path.join(iceworksStroagePath, EXTENSION_TAG);
+  if (!fse.existsSync(storagePath)) {
+    mkdirp.sync(storagePath);
   }
-  return appDataDir;
+  return storagePath;
 }
 
-export function getAppDataDayDirPath(day?: string) {
-  const appDataDir = getAppDataDirPath();
-  const appDataDayDir = path.join(appDataDir, day || getNowDay());
-  if (!fse.existsSync(appDataDayDir)) {
-    fse.mkdirSync(appDataDayDir);
+export function getLogsPath() {
+  const logsPath = path.join(iceworksStroagePath, 'logs', EXTENSION_TAG);
+  if (!fse.existsSync(logsPath)) {
+    mkdirp.sync(logsPath);
   }
-  return appDataDayDir;
+  return logsPath;
 }
 
-export async function getStorageDirs() {
-  const appDataDir = getAppDataDirPath();
-  const fileNames = await fse.readdir(appDataDir);
+export function getStorageDaysPath() {
+  const storagePath = getStoragePath();
+  const storageDaysPath = path.join(storagePath, 'days');
+  if (!fse.existsSync(storageDaysPath)) {
+    mkdirp.sync(storageDaysPath);
+  }
+  return storageDaysPath;
+}
+
+export function getStoragePayloadsPath() {
+  const storagePath = getStoragePath();
+  const storagePayloadsPath = path.join(storagePath, 'payloads');
+  if (!fse.existsSync(storagePayloadsPath)) {
+    mkdirp.sync(storagePayloadsPath);
+  }
+  return storagePayloadsPath;
+}
+
+export function getStorageReportsPath() {
+  const storagePath = getStoragePath();
+  const storagePayloadsPath = path.join(storagePath, 'reports');
+  if (!fse.existsSync(storagePayloadsPath)) {
+    mkdirp.sync(storagePayloadsPath);
+  }
+  return storagePayloadsPath;
+}
+
+export function getStorageDayPath(day?: string) {
+  const storageDaysPath = getStorageDaysPath();
+  const storageDayPath = path.join(storageDaysPath, day || getNowDay());
+  if (!fse.existsSync(storageDayPath)) {
+    mkdirp.sync(storageDayPath);
+  }
+  return storageDayPath;
+}
+
+export async function getStorageDaysDirs() {
+  const storageDaysPath = getStorageDaysPath();
+  const fileNames = await fse.readdir(storageDaysPath);
   const dayDirPaths = orderBy((await Promise.all(fileNames.map(async (fileName) => {
-    const filePath = path.join(appDataDir, fileName);
+    const filePath = path.join(storageDaysPath, fileName);
     const fileStat = await fse.stat(filePath);
 
     // TODO more rigorous
@@ -40,16 +78,16 @@ export async function getStorageDirs() {
   return dayDirPaths;
 }
 
-export async function checkStorageIsLimited() {
+export async function checkStorageDaysIsLimited() {
   const timeStorageLimit = getDataFromSettingJson(CONFIGURATION_KEY_TIME_STORAGE_LIMIT) || DEFAULT_TIME_STORAGE_LIMIT;
-  const storageDirs = await getStorageDirs();
-  const excess = storageDirs.length - timeStorageLimit;
+  const storageDaysDirs = await getStorageDaysDirs();
+  const excess = storageDaysDirs.length - timeStorageLimit;
 
   // over the limit, delete the earlier storage
   if (excess) {
-    const appDataDir = getAppDataDirPath();
-    await Promise.all(storageDirs.splice(0, excess).map(async (storageDir) => {
-      await fse.remove(path.join(appDataDir, storageDir));
+    const storageDaysPath = getStorageDaysPath();
+    await Promise.all(storageDaysDirs.splice(0, excess).map(async (dayDir) => {
+      await fse.remove(path.join(storageDaysPath, dayDir));
     }));
   }
 }

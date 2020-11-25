@@ -25,5 +25,9 @@
   "extension.timeMaster.linesAdded": "Lines of code added",
   "extension.timeMaster.linesRemoved": "Lines of code deleted",
   "extension.timeMaster.keystrokes": "Total keystrokes",
-  "extension.timeMaster.separator": " : "
+  "extension.timeMaster.separator": " : ",
+  "extension.timeMaster.viewUserSummary.label": "View summary",
+  "extension.timeMaster.viewUserSummary.detail": "View your latest coding metrics right here in your editor",
+  "extension.timeMaster.viewProjectSummary.label": "View project summary",
+  "extension.timeMaster.viewProjectSummary.detail": ""
 }

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getAppDataDirPath } from '../utils/storage';
-import { JSON_SPACES } from '../constants';
+import { getStoragePath } from '../utils/storage';
+import { jsonSpaces } from '../config';
 
 export class GlobalSummary {
   dailySessionSeconds?: number = 0;
@@ -14,7 +14,7 @@ export class GlobalSummary {
 }
 
 export function getGlobalFile() {
-  return path.join(getAppDataDirPath(), 'global.json');
+  return path.join(getStoragePath(), 'global.json');
 }
 
 export async function getGlobalSummary(): Promise<GlobalSummary> {
@@ -30,7 +30,7 @@ export async function getGlobalSummary(): Promise<GlobalSummary> {
 
 export async function saveGlobalSummary(globalSummary: GlobalSummary) {
   const file = getGlobalFile();
-  await fse.writeJson(file, globalSummary, { spaces: JSON_SPACES });
+  await fse.writeJson(file, globalSummary, { spaces: jsonSpaces });
 }
 
 export async function clearGlobalSummary() {

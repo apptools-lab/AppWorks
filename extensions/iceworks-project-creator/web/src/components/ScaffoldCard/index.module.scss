@@ -6,38 +6,40 @@
   top: 3px;
 }
 
-.card {
-  width: 190px;
-  height: 230px;
-  border: 1px solid $color-fill1-4;
-  margin: 0 10px 20px 10px;
-  cursor: pointer;
-  position: relative;
+.container {
+  .card {
+    width: 190px;
+    height: 230px;
+    border: 1px solid $color-fill1-4;
+    margin: 0 10px 20px 10px;
+    cursor: pointer;
+    position: relative;
 
-  :global {
-    .next-card-content-container {
-      padding-bottom: 10px;
-      margin-top: 10px;
+    :global {
+      .next-card-content-container {
+        padding-bottom: 10px;
+        margin-top: 10px;
+      }
+      .next-card-header {
+        padding: 0 10px;
+      }
     }
-    .next-card-header {
-      padding: 0 10px;
+
+    .content {
+      user-select: none;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      width: 100%;
+    }
+
+    &:hover {
+      @extend .active;
     }
   }
 
-  .content {
-    user-select: none;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    width: 100%;
+  .active {
+    border: 1px solid $color-notice-3;
   }
-
-  &:hover {
-    @extend .active;
-  }
-}
-
-.active {
-  border: 1px solid $color-notice-3;
 }

@@ -19,6 +19,7 @@ import { humanizeMinutes, seconds2minutes } from '../utils/time';
 import i18n from '../i18n';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
+import logger from '../utils/logger';
 
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
@@ -84,7 +85,9 @@ class TimerTreeItem extends TreeItem {
     }
 
     if (lightPath && darkPath) {
+      // @ts-ignore
       this.iconPath.light = lightPath;
+      // @ts-ignore
       this.iconPath.dark = darkPath;
     } else {
       // no matching tag, remove the tree item icon path
@@ -101,7 +104,7 @@ class TimerTreeItem extends TreeItem {
 
   contextValue = 'treeItem';
 
-  getTreeItemIcon(treeItem: TimerItem): any {
+  getTreeItemIcon(treeItem: TimerItem) {
     const iconName = treeItem.icon;
     const lightPath =
       iconName ?
@@ -158,8 +161,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
           focus: true,
           select: false,
         });
-      } catch (err) {
-        console.error(`Unable to select tree item: ${err.message}`);
+      } catch (e) {
+        logger.error(`[TimerProvider][revealTreeView] Unable to select tree item: ${e.message}`);
       }
     }
   }
@@ -221,7 +224,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const highKpmChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].name;
+      const fileName = sortedArray[i].fileName;
       const kpm = sortedArray[i].kpm || 0;
       const kpmStr = kpm.toFixed(2);
       const label = `${fileName} | ${kpmStr}`;
@@ -249,7 +252,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const mostEditedChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].name;
+      const fileName = sortedArray[i].fileName;
       const keystrokes = sortedArray[i].keystrokes || 0;
       const keystrokesStr = numeral(keystrokes).format(NUMBER_FORMAT);
       const label = `${fileName} | ${keystrokesStr}`;
@@ -277,7 +280,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const longestCodeTimeChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].name;
+      const fileName = sortedArray[i].fileName;
       const durationMinutes = seconds2minutes(sortedArray[i].sessionSeconds);
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;
@@ -482,9 +485,9 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private buildViewProjectSummaryItem() {
     const item = this.buildActionItem(
-      'View project summary',
-      '',
-      'iceworks-time-master.generateProjectSummaryDashboard',
+      i18n.format('extension.timeMaster.viewProjectSummary.label'),
+      i18n.format('extension.timeMaster.viewProjectSummary.detail'),
+      'iceworks-time-master.generateProjectSummaryReport',
       'folder.svg',
       '',
       'red',
@@ -495,11 +498,11 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private buildViewUserSummaryItem() {
     const item = this.buildActionItem(
-      'View summary',
-      'View your latest coding metrics right here in your editor',
-      'iceworks-time-master.generateUserSummaryDashboard',
+      i18n.format('extension.timeMaster.viewUserSummary.label'),
+      i18n.format('extension.timeMaster.viewUserSummary.detail'),
+      'iceworks-time-master.generateUserSummaryReport',
       'dashboard.svg',
-      'TreeViewLaunchDashboard',
+      'TreeViewLaunchReport',
       'purple',
     );
     item.name = 'ct_summary_btn';
@@ -598,8 +601,8 @@ function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) 
       focus: false,
       select: false,
     });
-  } catch (err) {
-    console.error(`Unable to deselect track: ${err.message}`);
+  } catch (e) {
+    logger.error(`[TimerProvider][handleTimerChangeSelection]Unable to deselect track: ${e.message}`);
   }
 }
 

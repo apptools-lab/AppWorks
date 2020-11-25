@@ -93,35 +93,41 @@ export function connectService(
   );
 }
 
+function originResourceProcess(url: string) {
+  return vscode.Uri.file(url).with({ scheme: 'vscode-resource' });
+}
+
 const DEFAULT_ENTRY = 'index';
 export function getHtmlForWebview(
   extensionPath: string,
   entryName?: string,
   needVendor?: boolean,
   cdnBasePath?: string,
-  extraHtml = '',
+  extraHtml?: string,
+  resourceProcess?: (url: string) => vscode.Uri,
 ): string {
   entryName = entryName || DEFAULT_ENTRY;
+  resourceProcess = resourceProcess || originResourceProcess;
   const localBasePath = path.join(extensionPath, 'build');
   const rootPath = cdnBasePath || localBasePath;
   const scriptPath = path.join(rootPath, `js/${entryName}.js`);
   const scriptUri = cdnBasePath ?
     scriptPath :
-    vscode.Uri.file(scriptPath).with({ scheme: 'vscode-resource' });
+    resourceProcess(scriptPath);
   const stylePath = path.join(rootPath, `css/${entryName}.css`);
   const styleUri = cdnBasePath ?
     stylePath :
-    vscode.Uri.file(stylePath).with({ scheme: 'vscode-resource' });
+    resourceProcess(stylePath);
 
   // vendor for MPA
   const vendorStylePath = path.join(rootPath, 'css/vendor.css');
   const vendorStyleUri = cdnBasePath
     ? vendorStylePath
-    : vscode.Uri.file(vendorStylePath).with({ scheme: 'vscode-resource' });
+    : resourceProcess(vendorStylePath);
   const vendorScriptPath = path.join(rootPath, 'js/vendor.js');
   const vendorScriptUri = cdnBasePath
     ? vendorScriptPath
-    : vscode.Uri.file(path.join(localBasePath, 'js/vendor.js')).with({ scheme: 'vscode-resource' });
+    : resourceProcess(vendorScriptPath);
 
   // Use a nonce to whitelist which scripts can be run
   const nonce = getNonce();
@@ -135,7 +141,7 @@ export function getHtmlForWebview(
       <meta name="theme-color" content="#000000">
       <title>Iceworks</title>
       <link rel="stylesheet" type="text/css" href="${styleUri}">
-      ${extraHtml}
+      ${extraHtml || ''}
       ` +
     (needVendor ? `<link rel="stylesheet" type="text/css" href="${vendorStyleUri}" />` : '') +
     `
