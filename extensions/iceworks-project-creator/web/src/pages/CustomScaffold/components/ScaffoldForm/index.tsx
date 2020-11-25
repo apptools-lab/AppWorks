@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Drawer, Icon } from '@alifd/next';
 import LayoutConfig from '../LayoutConfig';
+import { Base64 } from 'js-base64';
 import styles from './index.module.scss';
 
 const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
@@ -22,7 +23,7 @@ const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
 
   const injectIframeContent = () => {
     iframeRef.current.contentWindow.document.open();
-    iframeRef.current.contentWindow.document.write(window.iframeContent);
+    iframeRef.current.contentWindow.document.write(Base64.decode(window.iframeContent));
     iframeRef.current.contentWindow.document.close();
   };
 

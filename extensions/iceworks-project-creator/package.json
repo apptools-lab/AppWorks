@@ -100,7 +100,8 @@
     "@iceworks/pegasus-service": "^0.1.2",
     "@iceworks/project-service": "^0.1.4",
     "@iceworks/recorder": "^0.1.6",
-    "@iceworks/vscode-webview": "^0.1.1"
+    "@iceworks/vscode-webview": "^0.1.1",
+    "js-base64": "^3.6.0"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-project-creator/README.md",
   "bugs": {

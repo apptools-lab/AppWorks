@@ -3,6 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
+import { Base64 } from 'js-base64';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -79,10 +80,12 @@ export function activate(context: vscode.ExtensionContext) {
         </style>
       `;
 
-      const iframeContent = getHtmlForWebview(extensionPath, 'scaffoldtemplate', false, undefined, extraScaffoldTemplateHtml);
+      const iframeContent = getHtmlForWebview(extensionPath, 'scaffoldtemplate', false, undefined, extraScaffoldTemplateHtml, (resourceUrl) => {
+        return customScaffoldWebviewPanel!.webview.asWebviewUri(vscode.Uri.file(resourceUrl));
+      });
       const extraCustomScaffoldHtml = `
         <script>
-          window.iframeContent = '${iframeContent}'
+          window.iframeContent = '${Base64.encode(iframeContent)}'
         </script>
       `;
       customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', false, undefined, extraCustomScaffoldHtml);
