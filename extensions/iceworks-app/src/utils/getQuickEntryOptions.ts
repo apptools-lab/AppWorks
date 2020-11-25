@@ -9,11 +9,11 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
     command: 'iceworks-project-creator.create-project.start',
   },
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
-    command: 'iceworks-project-creator.custom-scaffold.start',
-  },
+  // {
+  //   label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
+  //   detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
+  //   command: 'iceworks-project-creator.custom-scaffold.start',
+  // },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.detail'),

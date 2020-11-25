@@ -102,13 +102,13 @@ const ScaffoldMarket = ({
     }
   }
 
-  async function onAddScaffoldCardClick() {
-    try {
-      await callService('common', 'executeCommand', 'iceworks-project-creator.custom-scaffold.start');
-    } catch (e) {
-      Notification.error({ content: e.message });
-    }
-  }
+  // async function onAddScaffoldCardClick() {
+  //   try {
+  //     await callService('common', 'executeCommand', 'iceworks-project-creator.custom-scaffold.start');
+  //   } catch (e) {
+  //     Notification.error({ content: e.message });
+  //   }
+  // }
 
   useEffect(() => {
     initData();
@@ -196,7 +196,7 @@ const ScaffoldMarket = ({
                             />
                           );
                         })}
-                        {selectedSource.name === 'PC Web' && <AddScaffoldCard onClick={onAddScaffoldCardClick} />}
+                        {/* {selectedSource.name === 'PC Web' && <AddScaffoldCard onClick={onAddScaffoldCardClick} />} */}
                       </>
                     ) : (
                         <NotFound
