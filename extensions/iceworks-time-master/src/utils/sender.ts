@@ -2,7 +2,7 @@ import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';
-import { ALI_DIP_DAILY } from '@iceworks/constant';
+import { ALI_DIP_PRO } from '@iceworks/constant';
 import { KeystrokeStats } from '../recorders/keystrokeStats';
 import { FileChange, FileChangeInfo, FileEventInfo } from '../storages/filesChange';
 import { getStoragePayloadsPath } from './storage';
@@ -16,7 +16,7 @@ import forIn = require('lodash.forin');
 const KEYSTROKES_RECORD = 'keystrokes';
 const EDITOR_TIME_RECORD = 'editor_time';
 
-const url = `${ALI_DIP_DAILY}/api`;
+const url = `${ALI_DIP_PRO}/api`;
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
@@ -85,6 +85,7 @@ function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeSta
 
 export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
   const playload = transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats);
+  logger.info('[sender][appendKeystrokesPayload] playload length:', playload.length);
   await appendPayloadData(KEYSTROKES_RECORD, playload);
 }
 
@@ -143,13 +144,33 @@ export async function checkPayloadIsLimited() {
   }));
 }
 
+async function sendBlukCreate(type, playloadData, extra) {
+  try {
+    const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
+      ...record,
+      ...extra,
+    })));
+
+    logger.info('[sender][sendBlukCreate] response', bulkCreateRespose);
+    if (!isResponseOk(bulkCreateRespose)) {
+      throw new Error(bulkCreateRespose.data.message);
+    }
+  } catch (e) {
+
+    // if got error, write back the data and resend it in the next cycle
+    await appendPayloadData(type, playloadData);
+    logger.error('[sender][sendBlukCreate] got error:', e);
+    throw e;
+  }
+}
+
 async function sendPayloadData(type: string) {
   // TODO get user info may fail
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
-  logger.info(`[sender][sendPayload] run, ${type}'s playloadLength: ${playloadLength}`);
+  logger.info(`[sender][sendPayloadData] run, ${type}'s playloadLength: ${playloadLength}`);
   if (Array.isArray(playload) && playloadLength) {
     // clear first to prevent duplicate sending when concurrent
     await clearPayloadData(type);
@@ -164,23 +185,14 @@ async function sendPayloadData(type: string) {
       userId: empId,
     };
 
-    // TODO batch logic
-    try {
-      const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playload.map((record: any) => ({
-        ...record,
-        ...extra,
-      })));
-
-      logger.info('[sender][sendPayloadData]_bulkCreate response', bulkCreateRespose);
-      if (!isResponseOk(bulkCreateRespose)) {
-        throw new Error(bulkCreateRespose.data.message);
+    if (playloadLength > 100) {
+      const batchPlayloads = [];
+      while (playload.length) {
+        batchPlayloads.push(playload.splice(0, 10));
       }
-    } catch (e) {
-
-      // if got error, write back the data and resend it in the next cycle
-      await appendPayloadData(type, playload);
-      logger.error('[sender][sendPayloadData]_bulkCreate got error:', e);
-      throw e;
+      await Promise.all(batchPlayloads.map(async (batchPlayload) => await sendBlukCreate(type, batchPlayload, extra)));
+    } else {
+      await sendBlukCreate(type, playload, extra);
     }
   }
 }

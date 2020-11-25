@@ -1,3 +1,4 @@
 {
-  "extension.iceworksProjectCreator.extension.webViewTitle": "Create Project - Iceworks"
+  "extension.iceworksProjectCreator.createProject.webViewTitle": "Create Project - Iceworks",
+  "extension.iceworksProjectCreator.customScaffold.webViewTitle": "Custom Scaffold - Iceworks"
 }

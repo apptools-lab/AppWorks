@@ -1,6 +1,8 @@
 {
-  "extension.iceworksApp.showEntriesQuickPick.projectCreater.label": "Create Application",
-  "extension.iceworksApp.showEntriesQuickPick.projectCreater.detail": "Create a Universal Application(React/Rax/Vue, etc) quickly",
+  "extension.iceworksApp.showEntriesQuickPick.projectCreator.label": "Select Scaffold to Create Application",
+  "extension.iceworksApp.showEntriesQuickPick.projectCreator.detail": "Select Scaffold to Create a Universal Application(React/Rax/Vue, etc) quickly",
+  "extension.iceworksApp.showEntriesQuickPick.customScaffold.label": "Configure Scaffold to Create Application",
+  "extension.iceworksApp.showEntriesQuickPick.customScaffold.detail": "Configure Scaffold to Create React Application",
   "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "Generate Page by Blocks",
   "extension.iceworksApp.showEntriesQuickPick.generatePage.detail": "Generate pages by block assembly",
   "extension.iceworksApp.showEntriesQuickPick.createPage.label": "Generate Page by Configuration",

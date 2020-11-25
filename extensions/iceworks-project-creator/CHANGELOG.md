@@ -11,6 +11,7 @@
 # 0.3.18
 
 - refactor: material source card
+- feat: add custom scaffold 
 
 # 0.3.17
 

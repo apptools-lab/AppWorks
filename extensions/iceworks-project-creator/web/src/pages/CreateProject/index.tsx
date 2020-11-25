@@ -6,7 +6,7 @@ import { LocaleProvider } from '@/i18n';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { IMaterialSource } from '@iceworks/material-utils';
 import ScaffoldMarket from './components/ScaffoldMarket';
-import CreateProjectForm from './components/CreateProjectForm';
+import CreateProjectForm from '@/components/CreateProjectForm';
 import CreateDEFProjectForm from './components/CreateDEFProjectForm';
 import styles from './index.module.scss';
 
@@ -14,7 +14,7 @@ const { CLIENT_TOKEN } = process.env;
 
 const CreateProject: React.FC = () => {
   const intl = useIntl();
-  const [currentStep, setStep] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [createProjectLoading, setCreateProjectLoading] = useState(false);
   const [createDEFProjectLoading, setCreateDEFProjectLoading] = useState(false);
   const [isAliInternal, setIsAliInternal] = useState(false);
@@ -70,9 +70,7 @@ const CreateProject: React.FC = () => {
   ];
 
   if (isAliInternal) {
-    steps.splice(
-      2,
-      0,
+    steps.splice(2, 0,
       <CreateDEFProjectForm
         value={curDEFProjectField}
         onChange={onDEFProjectFormChange}
@@ -92,16 +90,15 @@ const CreateProject: React.FC = () => {
         >
           <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
         </Form.Submit>
-      </CreateDEFProjectForm>,
-    );
+      </CreateDEFProjectForm>);
   }
 
   function goNext() {
-    setStep(currentStep + 1);
+    setCurrentStep(currentStep + 1);
   }
 
   function goPrev() {
-    setStep(currentStep - 1);
+    setCurrentStep(currentStep - 1);
   }
 
   function onScaffoldSelect(source, scaffold) {

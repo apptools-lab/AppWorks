@@ -8,7 +8,7 @@ export default async function (context: vscode.ExtensionContext) {
   const { globalState } = context;
   const isNotTargetProject = await checkIsNotTarget();
   if (isNotTargetProject) {
-    vscode.commands.executeCommand('iceworks-project-creator.start');
+    vscode.commands.executeCommand('iceworks-project-creator.create-project.start');
   } else if (!globalState.get(didShowWelcomePageStateKey) && !globalState.get(didShowWelcomePageBySidebarStateKey)) {
     vscode.commands.executeCommand('iceworksApp.welcome.start');
     globalState.update(didShowWelcomePageBySidebarStateKey, true);

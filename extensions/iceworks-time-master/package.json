@@ -62,7 +62,9 @@
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build",
     "build": "rm -rf build && webpack --mode production",
-    "watch": "webpack --mode development --watch --info-verbosity verbose"
+    "dev": "webpack --mode development --watch --info-verbosity verbose",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",
@@ -78,7 +80,7 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.1.0",
-    "@iceworks/constant": "^0.1.1",
+    "@iceworks/constant": "^0.1.2",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/storage": "^0.1.0",
@@ -90,7 +92,8 @@
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
     "node-cache": "^5.1.2",
-    "numeral": "^2.0.6"
+    "numeral": "^2.0.6",
+    "utility": "^1.15.0"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-time-master/README.md",
   "bugs": {

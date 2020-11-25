@@ -1,6 +1,24 @@
 body {
-  height: 100vh;
-  background-color: $color-brand1-1;
-  color: $color-text1-4;
   padding: 0;
+  margin: 0;
+
+  // the `mask-background` css variables can't be parsed
+  // so update modal component overlay background
+  .next-overlay-wrapper {
+    .next-overlay-backdrop {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .next-card-header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .next-card-content-container {
+    padding-left: 14px;
+    padding-right: 14px;
+    margin-top: 0;
+    font-size: 12px;
+  }
 }

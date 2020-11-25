@@ -1,0 +1,19 @@
+.scaffoldLayout {
+  width: 100%;
+
+  .setting {
+    margin-bottom: 10px;
+    min-height: 60px;
+
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content {
+      margin-top: 10px;
+    }
+  }
+}

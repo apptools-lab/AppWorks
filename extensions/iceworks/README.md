@@ -79,4 +79,4 @@ Extension | Description | State
   We will respond quickly to the submitted issues.
 - Appointment training
 
-  For company or team that intend to use Iceworks on a large scale, we can provide free training. Please consult us for details by Email: wuji.xwt@alibabab-inc.com
+  For company or team that intend to use Iceworks on a large scale, we can provide free training. Please consult us for details by Email: wuji.xwt@alibaba-inc.com
