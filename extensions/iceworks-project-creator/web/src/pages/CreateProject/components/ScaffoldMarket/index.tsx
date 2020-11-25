@@ -4,12 +4,13 @@ import { Collapse, Notification, Loading, Button, Icon, Divider } from '@alifd/n
 import MaterialSourceCard from '@/components/MaterialSourceCard';
 import MobileScaffoldCard from '@/components/MobileScaffoldCard';
 import ScaffoldCard from '@/components/ScaffoldCard';
+import AddScaffoldCard from '@/components/AddScaffoldCard';
 import NotFound from '@/components/NotFound';
 import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '@/constant';
+import { mainScaffoldsList, tsScaffoldsList, jsScaffoldsList } from '../../constants';
 import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 import { useIntl } from 'react-intl';
@@ -101,6 +102,14 @@ const ScaffoldMarket = ({
     }
   }
 
+  async function onAddScaffoldCardClick() {
+    try {
+      await callService('common', 'executeCommand', 'iceworks-project-creator.custom-scaffold.start');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   useEffect(() => {
     initData();
   }, [materialSources]);
@@ -151,41 +160,44 @@ const ScaffoldMarket = ({
                 <>
                   <div className={styles.mainScaffolds}>
                     {!!mainScaffolds.length ? (
-                      mainScaffolds.map((item) => {
-                        // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
-                        // so the TypeScript and JavaScript logo only display in official scaffolds
-                        const scaffoldType = tsScaffoldsList.includes(item.source.npm)
-                          ? 'ts'
-                          : jsScaffoldsList.includes(item.source.npm)
-                            ? 'js'
-                            : '';
-                        const isWireless = checkIsWireless(selectedSource);
-                        const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
-                        return (
-                          <CardComponent
-                            key={item.name}
-                            title={
-                              <div className={styles.cardTitle}>
-                                {scaffoldType && (
-                                  <img
-                                    src={require(`@/assets/${scaffoldType}.svg`)}
-                                    alt="languageType"
-                                    width={20}
-                                    height={20}
-                                  />
-                                )}
-                                <div title={item.title}>
-                                  {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
+                      <>
+                        {mainScaffolds.map((item) => {
+                          // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                          // so the TypeScript and JavaScript logo only display in official scaffolds
+                          const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                            ? 'ts'
+                            : jsScaffoldsList.includes(item.source.npm)
+                              ? 'js'
+                              : '';
+                          const isWireless = checkIsWireless(selectedSource);
+                          const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
+                          return (
+                            <CardComponent
+                              key={item.name}
+                              title={
+                                <div className={styles.cardTitle}>
+                                  {scaffoldType && (
+                                    <img
+                                      src={require(`@/assets/${scaffoldType}.svg`)}
+                                      alt="languageType"
+                                      width={20}
+                                      height={20}
+                                    />
+                                  )}
+                                  <div>
+                                    {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
+                                  </div>
                                 </div>
-                              </div>
-                            }
-                            content={item.description}
-                            media={item.screenshot}
-                            selected={curProjectField.scaffold && curProjectField.scaffold.name === item.name}
-                            onClick={() => onScaffoldClick(item)}
-                          />
-                        );
-                      })
+                              }
+                              content={item.description}
+                              media={item.screenshot}
+                              selected={curProjectField.scaffold && curProjectField.scaffold.name === item.name}
+                              onClick={() => onScaffoldClick(item)}
+                            />
+                          );
+                        })}
+                        {selectedSource.name === 'PC Web' && <AddScaffoldCard onClick={onAddScaffoldCardClick} />}
+                      </>
                     ) : (
                         <NotFound
                           description={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.noTemplate' })}

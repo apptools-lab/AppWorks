@@ -14,7 +14,7 @@ interface IScaffoldCardProps {
 
 const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <Card
         free
         className={classnames(styles.card, { [styles.active]: selected })}

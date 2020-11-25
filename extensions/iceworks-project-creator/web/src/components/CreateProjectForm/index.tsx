@@ -24,9 +24,6 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
   loading,
 }) => {
   const intl = useIntl();
-  const {
-    source: { type },
-  } = value;
 
   return (
     <div className={styles.container}>
@@ -67,7 +64,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           <div className={styles.action}>{children}</div>
         </Form.Item>
       </Form>
-      {type === 'rax' && (
+      {value.source && value.source.type === 'rax' && (
         <div className={styles.scaffoldTypeForm}>
           <RaxScaffoldTypeForm onChange={onChange} value={value} disabled={loading} />
         </div>

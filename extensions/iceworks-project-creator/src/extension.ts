@@ -3,6 +3,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
+import { Base64 } from 'js-base64';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -17,44 +18,97 @@ export function activate(context: vscode.ExtensionContext) {
   // auto set configuration
   initExtension(context, name);
 
-  let webviewPanel: vscode.WebviewPanel | undefined;
+  let projectCreatorwebviewPanel: vscode.WebviewPanel | undefined;
 
-  function activeWebview() {
+  function activeProjectCreatorWebview() {
     recorder.recordActivate();
 
-    if (webviewPanel) {
-      webviewPanel.reveal();
+    if (projectCreatorwebviewPanel) {
+      projectCreatorwebviewPanel.reveal();
     } else {
-      webviewPanel = window.createWebviewPanel(
+      projectCreatorwebviewPanel = window.createWebviewPanel(
         'iceworks',
-        i18n.format('extension.iceworksProjectCreator.extension.webViewTitle'),
+        i18n.format('extension.iceworksProjectCreator.createProject.webViewTitle'),
         ViewColumn.One,
         {
           enableScripts: true,
           retainContextWhenHidden: true,
         },
       );
-      webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject');
-      webviewPanel.onDidDispose(
+      projectCreatorwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject', false);
+      projectCreatorwebviewPanel.onDidDispose(
         () => {
-          webviewPanel = undefined;
+          projectCreatorwebviewPanel = undefined;
         },
         null,
         context.subscriptions,
       );
-      connectService(webviewPanel, context, { services, recorder });
+      connectService(projectCreatorwebviewPanel, context, { services, recorder });
     }
   }
 
   subscriptions.push(
-    registerCommand('iceworks-project-creator.start', () => {
-      activeWebview();
+    registerCommand('iceworks-project-creator.create-project.start', () => {
+      activeProjectCreatorWebview();
+    }),
+  );
+
+  let customScaffoldWebviewPanel: vscode.WebviewPanel | undefined;
+
+  function activeCustomScaffoldWebview() {
+    recorder.recordActivate();
+
+    if (customScaffoldWebviewPanel) {
+      customScaffoldWebviewPanel.reveal();
+    } else {
+      customScaffoldWebviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksProjectCreator.customScaffold.webViewTitle'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        },
+      );
+      const extraScaffoldTemplateHtml = `
+        <style>
+          body {
+            background-color: #fff;
+            color: #000;
+            margin: 0;
+          }
+        </style>
+      `;
+
+      const iframeContent = getHtmlForWebview(extensionPath, 'scaffoldtemplate', false, undefined, extraScaffoldTemplateHtml, (resourceUrl) => {
+        return customScaffoldWebviewPanel!.webview.asWebviewUri(vscode.Uri.file(resourceUrl));
+      });
+      const extraCustomScaffoldHtml = `
+        <script>
+          window.iframeContent = '${Base64.encode(iframeContent)}'
+        </script>
+      `;
+      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', false, undefined, extraCustomScaffoldHtml);
+      customScaffoldWebviewPanel.onDidDispose(
+        () => {
+          customScaffoldWebviewPanel = undefined;
+        },
+        null,
+        context.subscriptions,
+      );
+      connectService(customScaffoldWebviewPanel, context, { services, recorder });
+    }
+  }
+
+  subscriptions.push(
+    registerCommand('iceworks-project-creator.custom-scaffold.start', () => {
+      activeCustomScaffoldWebview();
     }),
   );
 
   const stateKey = 'iceworks.projectCreator.autoActivedWebview';
   if (!globalState.get(stateKey)) {
-    activeWebview();
+    activeProjectCreatorWebview();
     globalState.update(stateKey, true);
   }
 }

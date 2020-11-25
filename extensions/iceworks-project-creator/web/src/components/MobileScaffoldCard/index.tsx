@@ -22,7 +22,7 @@ const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({
   style,
 }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <Card
         free
         style={{ ...style }}
