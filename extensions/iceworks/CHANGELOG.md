@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.13.1
+
+- docs: email typo
+
+## 0.13.0
+
+- feat: support O2
+- refactor: update rax and ice config schema 
+- fix: material debug can not clean source
+
 ## 0.12.0
 
 - chore: rename extensions

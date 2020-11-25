@@ -65,8 +65,8 @@ function recordExecuteCommand(command: string, args: any[]) {
 }
 
 export function checkIsO2() {
-  const variable = process.env.XPC_SERVICE_NAME;
-  return typeof variable === 'string' && variable.includes('com.taobao.o2');
+  const O2Version = process.env.O2_VERSION;
+  return O2Version;
 }
 
 const cacheId = 'isAliInternal';
@@ -174,7 +174,7 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
 
 /**
  * Compatible:
- * If there is an official material source, remove it. 
+ * If there is an official material source, remove it.
  * The official material source will be added automatically when it is obtained.
  */
 const didSetMaterialSourceStateKey = 'iceworks.materialSourceIsSet';

@@ -1,8 +1,9 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { getLogsPath } from './storage';
-import { getNowDay } from './time';
-const { Logger, FileTransport, ConsoleTransport } = require('egg-logger');
+import { getLogsPath } from '../storage';
+import { getNowDay } from '../time';
+import FileTransport from './fileTransport';
+const { Logger, ConsoleTransport } = require('egg-logger');
 const mkdirp = require('mkdirp');
 
 function getLogPath() {

@@ -79,4 +79,4 @@ Iceworks 套件内包含以下插件：
   向 Iceworks 的 Github 仓库提交 [issue](https://github.com/ice-lab/iceworks/issues/new) ，我们会快速响应所提交的问题。
 - 预约培训
 
-  对于打算大规模使用的公司或团队，我们可以提供免费的培训，具体请咨询 @梧忌(wuji.xwt@alibabab-inc.com)
+  对于打算大规模使用的公司或团队，我们可以提供免费的培训，具体请咨询 @梧忌(wuji.xwt@alibaba-inc.com)

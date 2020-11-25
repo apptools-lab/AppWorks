@@ -501,7 +501,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewUserSummary.label'),
       i18n.format('extension.timeMaster.viewUserSummary.detail'),
       'iceworks-time-master.generateUserSummaryReport',
-      'report.svg',
+      'dashboard.svg',
       'TreeViewLaunchReport',
       'purple',
     );
