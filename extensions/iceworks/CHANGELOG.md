@@ -3,6 +3,7 @@
 ## 0.13.1
 
 - docs: email typo
+- feat: add Time Master
 
 ## 0.13.0
 

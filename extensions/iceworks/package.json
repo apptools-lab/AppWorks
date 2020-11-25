@@ -39,7 +39,8 @@
     "iceworks-team.iceworks-style-helper",
     "iceworks-team.iceworks-material-helper",
     "iceworks-team.iceworks-config-helper",
-    "iceworks-team.iceworks-doctor"
+    "iceworks-team.iceworks-doctor",
+    "iceworks-team.iceworks-time-master"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",
   "bugs": {
