@@ -1,5 +1,13 @@
 # Change Log
 
+# 0.6.2
+
+- chore: remove configure scaffold entry
+
+# 0.6.1
+
+- chore: update project-creator command
+
 # 0.6.0
 
 - refactor: internal optimization

@@ -1,5 +1,13 @@
 # Change Log
 
+# 0.4.3
+
+- chore: remove configure scaffold entry
+
+# 0.4.2
+
+- feat: add configure scaffold to create application 
+
 # 0.4.1
 
 - chore: remove mini-program materials
