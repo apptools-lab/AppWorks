@@ -1,6 +1,6 @@
 # Change Log
 
-# 0.7.2
+# 0.7.0
 
 - feat: support rax preview
 # 0.6.2
