@@ -1,0 +1,71 @@
+.container {
+  position: relative;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #35363a;
+
+  :global {
+    .next-input {
+      flex: 1;
+    }
+  }
+}
+
+.icon {
+  position: relative;
+  margin: 2px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f2f6;
+  cursor: pointer;
+}
+
+.iconDisabled {
+  cursor: not-allowed;
+  color: #88898d !important;
+}
+
+.headerIcon {
+  font-family: "header-icon" !important;
+  font-size: 18px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.iconPhone {
+  &:before {
+    content: "\e635"
+  }
+}
+
+.iconLeft {
+  &:before {
+    content: "\e79b"
+  }
+}
+
+.iconRight {
+  &:before {
+    content: "\e68c"
+  }
+}
+
+.iconQRCode {
+  &:before {
+    content: "\e74a"
+  }
+}
+
+.QRCode {
+  position: relative;
+  margin: -12px;
+  padding: 2px;
+  width: 132px;
+  height: 132px;
+}
