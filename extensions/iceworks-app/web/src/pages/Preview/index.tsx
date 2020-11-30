@@ -4,7 +4,8 @@ import Previewer from './components/Previewer';
 import styles from './index.module.scss';
 
 export default function () {
-  const [url, setUrl] = useState('https://www.tmall.com/');
+  // @ts-ignore
+  const [url, setUrl] = useState(window.__URL__ || 'about:blank');
   const previewerRef = useRef(null);
 
   return (

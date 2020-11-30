@@ -29,7 +29,6 @@ function LoadingPercent(props, ref) {
   return show ? (
     <div className={styles.container} >
       <Progress
-        style={{ verticalAlign: 'top', marginTop: '-12px' }}
         color="#5584ff"
         backgroundColor="#ebecf0"
         percent={percent}
