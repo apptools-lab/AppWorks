@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
-import QRCode from 'qrcode.react';
 import classNames from 'classnames';
+import QRCodeWrap from '../QRCodeWrap/';
 import { UrlHistory } from './url-history';
+import { BLANK_URL } from '../../config';
 import styles from './index.module.scss';
 import './icon.css';
 
@@ -28,7 +29,7 @@ export default function (props: IProps) {
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
     let target = newUrl;
-    if (!/https?:\/\//.test(newUrl)) {
+    if (target !== BLANK_URL && !/https?:\/\//.test(newUrl)) {
       target = `https://${newUrl}`;
     }
     setUrl(target);
@@ -80,7 +81,7 @@ export default function (props: IProps) {
         closable={false}
       >
         <div className={styles.QRCode}>
-          <QRCode value={url} />
+          <QRCodeWrap url={url} />
         </div>
       </Balloon>
       <div className={styles.icon} onClick={() => { refresh && refresh(); }}>

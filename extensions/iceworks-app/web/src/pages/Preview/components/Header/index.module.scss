@@ -5,6 +5,7 @@
   flex-direction: row;
   align-items: center;
   background-color: #35363a;
+  box-shadow: -1px 1px 2px #1f2831;
 
   :global {
     .next-input {
@@ -64,8 +65,5 @@
 
 .QRCode {
   position: relative;
-  margin: -12px;
-  padding: 2px;
-  width: 132px;
-  height: 132px;
+  margin: -14px;
 }

@@ -1,12 +1,12 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import LoadingPercent from '../LoadingPercent';
+import { BLANK_URL } from '../../config';
 import styles from './index.module.scss';
 
 interface IProps {
   url: string
 }
 
-const REFRESH_HOLDER = 'about:blank';
 const REFRESH_TIMEOUT = 200;
 
 function Previewer(props: IProps, ref) {
@@ -16,7 +16,7 @@ function Previewer(props: IProps, ref) {
   const loadingPercentRef = useRef(null);
 
   const startLoading = () => {
-    if (url !== REFRESH_HOLDER) {
+    if (url !== BLANK_URL) {
       loadingPercentRef.current.start();
     }
   };
@@ -24,7 +24,7 @@ function Previewer(props: IProps, ref) {
   useEffect(() => {
     startLoading();
     frameRef.current.addEventListener('load', (e) => {
-      if (e.target.src !== REFRESH_HOLDER) {
+      if (e.target.src !== BLANK_URL) {
         loadingPercentRef.current.end();
       }
     });
@@ -37,7 +37,7 @@ function Previewer(props: IProps, ref) {
     refresh: () => {
       startLoading();
       // https://stackoverflow.com/questions/86428/what-s-the-best-way-to-reload-refresh-an-iframe
-      frameRef.current.src = REFRESH_HOLDER;
+      frameRef.current.src = BLANK_URL;
       setTimeout(() => {
         frameRef.current.src = url;
       }, REFRESH_TIMEOUT);
