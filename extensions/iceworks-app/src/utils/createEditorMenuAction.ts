@@ -18,7 +18,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
       executeCommand({
         command: EDITOR_MENU_RUN_DEBUG,
         title: 'Run Install',
-        arguments: [projectPath, createNpmCommand('run', 'start')],
+        arguments: [projectPath, createNpmCommand('install')],
       });
       return;
     }
@@ -31,7 +31,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
       executeCommand({
         command: EDITOR_MENU_RUN_DEBUG,
         title: 'Run Start',
-        arguments: [projectPath, createNpmCommand('run', 'start')],
+        arguments: [projectPath, createNpmCommand('run', 'start', '-- --disable-open')],
       });
 
       setTimeout(() => {
@@ -44,8 +44,10 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
           retainContextWhenHidden: true,
         });
 
-        const extraHtml = '<script>window.__URL__ = \'http://localhost:3334\';</script>';
-
+        const extraHtml = `<script>
+          window.__PREVIEW__DATA__ = { startUrl: 'http://localhost:3333/' };
+        </script>
+        `;
         previewWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'preview', false, undefined, extraHtml);
         previewWebviewPanel.onDidDispose(
           () => {
@@ -78,7 +80,8 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
       arguments: [projectPath, createNpmCommand('run', 'build')],
     };
     if (!pathExists) {
-      command.arguments = [projectPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      command.arguments = [projectPath, `${createNpmCommand('install')
+      } && ${command.arguments![1]}`];
       executeCommand(command);
       return;
     }
