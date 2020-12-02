@@ -42,19 +42,9 @@ export interface IReportKeys {
 
 export const reportKeys: IReportKeys[] = [
   {
-    name: '最佳实践',
-    nameEn: 'Best Practices',
-    key: 'bestPractices',
-  },
-  {
-    name: '安全实践',
-    nameEn: 'Security Practices',
-    key: 'securityPractices',
-  },
-  {
-    name: '阿里规约',
+    name: 'Ali ESLint',
     nameEn: 'Ali ESLint',
-    key: 'aliEslint',
+    key: 'ESLint',
   },
   {
     name: '代码可维护度',
