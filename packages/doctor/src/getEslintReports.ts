@@ -57,7 +57,7 @@ export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleK
 
   if (fix) {
     // output fixes to disk
-    cliEngine.outputFixes(cliEngine.executeOnFiles(files.map((file) => file.path)));
+    CLIEngine.outputFixes(cliEngine.executeOnFiles(files.map((file) => file.path)));
   }
 
   // calculate score
