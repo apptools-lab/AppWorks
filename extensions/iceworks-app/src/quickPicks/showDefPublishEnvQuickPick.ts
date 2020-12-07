@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { projectPath } from '@iceworks/project-service';
+import { checkIsO2, executeCommand as executeVSCodeCommand } from '@iceworks/common-service';
 import executeCommand from '../commands/executeCommand';
 import i18n from '../i18n';
 
@@ -11,11 +12,13 @@ export default function showDefPublishEnvQuickPick() {
       label: i18n.format('extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label'),
       detail: i18n.format('extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.detail'),
       command: 'def p -d',
+      value: 'daily',
     },
     {
       label: i18n.format('extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.label'),
       detail: i18n.format('extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail'),
       command: 'def p -o',
+      value: 'prod',
     },
   ];
 
@@ -24,12 +27,16 @@ export default function showDefPublishEnvQuickPick() {
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
       const env = DEFEnvOptions.find((option) => option.label === selection[0].label)!;
-      const command: vscode.Command = {
-        title: 'Publish',
-        command: 'iceworksApp.editorMenu.DefPublish',
-        arguments: [projectPath, env.command],
-      };
-      executeCommand(command);
+      if (!checkIsO2) {
+        const command: vscode.Command = {
+          title: 'Publish',
+          command: 'iceworksApp.editorMenu.DefPublish',
+          arguments: [projectPath, env.command],
+        };
+        executeCommand(command);
+      } else {
+        executeVSCodeCommand('core.def.publish', env.value);
+      }
       quickPick.dispose();
     }
   });
