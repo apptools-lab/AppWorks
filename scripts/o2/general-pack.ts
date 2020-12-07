@@ -14,15 +14,15 @@ import { isBeta, isPublish2Npm } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
 
-
 const PACK_EXTENSIONS = [
   'iceworks-team.iceworks-app',
   'iceworks-team.iceworks-config-helper',
-  // 'iceworks-team.iceworks-doctor',
   'iceworks-team.iceworks-material-helper',
-  'iceworks-team.iceworks-project-creator',
+  // 'iceworks-team.iceworks-doctor',
+  // 'iceworks-team.iceworks-project-creator',
   'iceworks-team.iceworks-style-helper',
   'iceworks-team.iceworks-ui-builder',
+  'iceworks-team.iceworks-time-master',
 ];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');

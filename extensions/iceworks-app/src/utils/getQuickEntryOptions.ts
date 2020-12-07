@@ -8,6 +8,10 @@ const entries = [
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
     command: 'iceworks-project-creator.create-project.start',
+    async condition() {
+      const isO2 = checkIsO2();
+      return !isO2;
+    },
   },
   // {
   //   label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
