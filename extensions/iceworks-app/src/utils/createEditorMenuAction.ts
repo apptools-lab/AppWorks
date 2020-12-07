@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
-import { setDebugConfig } from '../debugConfig/index';
 import showDefPublishEnvQuickPick from '../quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from '../commands/executeCommand';
 
@@ -19,15 +18,13 @@ export default async function createEditorMenuAction() {
       return;
     }
 
-    // Prepare VS Code debug config
-    await setDebugConfig();
-
-    // Run Debug
-    let workspaceFolder;
-    if (vscode.workspace.workspaceFolders) {
-      workspaceFolder = vscode.workspace.workspaceFolders[0];
-    }
-    vscode.debug.startDebugging(workspaceFolder, 'Iceworks Debug');
+    // npm run start.
+    // Debug in VS Code move to iceworks docs.
+    executeCommand({
+      command: EDITOR_MENU_RUN_DEBUG,
+      title: 'Run Start',
+      arguments: [projectPath, createNpmCommand('run', 'start')],
+    });
   });
 
   const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';

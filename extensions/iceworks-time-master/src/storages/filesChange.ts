@@ -6,6 +6,7 @@ import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
 import { jsonSpaces } from '../config';
 import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
+import logger from '../utils/logger';
 import forIn = require('lodash.forin');
 
 let textInfoCache: {[fileName: string]: FileTextInfo} = {};
@@ -235,7 +236,7 @@ export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
   try {
     filesChangeSummary = await fse.readJson(file);
   } catch (e) {
-    // ignore error
+    logger.error('[fileChangeStorage][getFilesChangeSummary] got error', e);
   }
   return filesChangeSummary;
 }

@@ -17,7 +17,7 @@ export default class Scanner {
 
   // Entry
   public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
-    const timer = new Timer(options.timeout);
+    const timer = new Timer(options?.timeout);
     const reports = {} as IScannerReports;
 
     const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignore);
@@ -37,18 +37,25 @@ export default class Scanner {
     // Calculate ESLint
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
-      const ruleKey = `${options.framework || 'react'}${options.languageType === 'ts' ? '-ts' : ''}`;
-      reports.ESLint = getEslintReports(timer, files, ruleKey, getCustomESLintConfig(directory), options && options.fix);
+      const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
+      const customConfig: any = getCustomESLintConfig(directory) || {};
+      if (options?.languageType === 'ts') {
+        if (!customConfig.parserOptions) {
+          customConfig.parserOptions = {};
+        }
+        customConfig.parserOptions.project = `${path.join(directory, './')}**/tsconfig.json`;
+      }
+      reports.ESLint = getEslintReports(timer, files, ruleKey, customConfig, options?.fix);
     }
 
     // Calculate maintainability
     if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(timer,files);
+      reports.maintainability = getMaintainabilityReports(timer, files);
     }
 
     // Calculate repeatability
     if (!options || options.disableRepeatability !== true) {
-      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore, options.tempFileDir);
+      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore, options?.tempFileDir);
     }
 
     // Calculate total score

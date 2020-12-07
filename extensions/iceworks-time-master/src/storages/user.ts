@@ -6,6 +6,7 @@ import { getRangeReport } from '../utils/report';
 import { getDay, getLastWeekDays } from '../utils/time';
 import { updateAverageSummary } from './average';
 import { jsonSpaces } from '../config';
+import logger from '../utils/logger';
 
 export class UserSummary {
   /**
@@ -37,7 +38,7 @@ export async function getUserSummary(day?: string): Promise<UserSummary> {
   try {
     userSummary = await fse.readJson(file);
   } catch (e) {
-    // ignore
+    logger.error('[userStorage][getUserSummary] got error', e);
   }
   return userSummary;
 }
