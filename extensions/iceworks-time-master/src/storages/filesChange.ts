@@ -200,7 +200,8 @@ export class FileChange implements FileChangeInfo {
 
   deactivate() {
     this.update = 1;
-    this.durationSeconds = this.end - this.start;
+    const durationSeconds = this.end - this.start;
+    this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
   }
 
   setStart(time?: number) {
