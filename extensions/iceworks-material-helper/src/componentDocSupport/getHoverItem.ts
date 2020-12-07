@@ -8,11 +8,10 @@ export default function getHoverItem(tagName: string) {
     return info.label === tagName;
   });
   if (tagInfo) {
-    const commandUri = vscode.Uri.parse(`command:${tagInfo.command}`, true);
     const docsLink = new vscode.MarkdownString(
       i18n.format('extension.iceworksMaterialHelper.getHoverItem.hoverItemLink', {
         componentName: tagInfo.label,
-        commandUri,
+        commandUri: tagInfo.url,
       }),
     );
     // To enable command URIs in Markdown content, you must set the `isTrusted` flag.
