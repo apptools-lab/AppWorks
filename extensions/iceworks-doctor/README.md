@@ -21,7 +21,7 @@ Display project details, including name, version, project type, build and Git in
 
 ## Quality Inspection
 
-The project is tested in 5 dimensions, `best practice`, `safety practice`, `Ali Eslint`, `maintainability` and `repeatability`.
+The project is tested in 3 dimensions, `Ali ESLint`([@iceworks/spec](https://www.npmjs.com/package/@iceworks/spec)), `maintainability` and `repeatability`.
 
 ## Detect when file is saved
 

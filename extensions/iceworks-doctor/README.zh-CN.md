@@ -20,7 +20,7 @@ Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫�
 
 ## 质量检测
 
-对项目进行 5 个维度的检测，包含：`最佳实践`、`安全实践`、`Ali Eslint`、`可维护性` 及 `代码重复度`。
+对项目进行 3 个维度的检测，包含：`Ali ESLint`([@iceworks/spec](https://www.npmjs.com/package/@iceworks/spec))、`可维护性` 及 `代码重复度`。
 
 ## 文件保存时检测
 

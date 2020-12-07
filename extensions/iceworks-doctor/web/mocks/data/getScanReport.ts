@@ -1,92 +1,10 @@
 /* eslint-disable */
 export default {
-  aliEslint: {
-    score: 96.6,
-    reports: [
-      {
-        filePath: '/Users/yangfan/Workspace/ali/yangfeng-test2/src/mobile/index.js',
-        messages: [
-          {
-            ruleId: 'no-unused-vars',
-            severity: 2,
-            message: "'createElement' is defined but never used.",
-            line: 1,
-            column: 10,
-            nodeType: 'Identifier',
-            messageId: 'unusedVar',
-            endLine: 1,
-            endColumn: 23,
-          },
-          {
-            ruleId: 'no-unused-vars',
-            severity: 2,
-            message: "'View' is defined but never used.",
-            line: 2,
-            column: 8,
-            nodeType: 'Identifier',
-            messageId: 'unusedVar',
-            endLine: 2,
-            endColumn: 12,
-          },
-          {
-            ruleId: 'no-unused-vars',
-            severity: 2,
-            message: "'Text' is defined but never used.",
-            line: 3,
-            column: 8,
-            nodeType: 'Identifier',
-            messageId: 'unusedVar',
-            endLine: 3,
-            endColumn: 12,
-          },
-          {
-            ruleId: 'no-unused-vars',
-            severity: 2,
-            message: "'Picture' is defined but never used.",
-            line: 4,
-            column: 8,
-            nodeType: 'Identifier',
-            messageId: 'unusedVar',
-            endLine: 4,
-            endColumn: 15,
-          },
-          {
-            ruleId: 'no-console',
-            severity: 1,
-            message: 'Unexpected console statement.',
-            line: 7,
-            column: 3,
-            nodeType: 'MemberExpression',
-            messageId: 'unexpected',
-            endLine: 7,
-            endColumn: 14,
-          },
-          {
-            ruleId: 'no-console',
-            severity: 1,
-            message: 'Unexpected console statement.',
-            line: 25,
-            column: 5,
-            nodeType: 'MemberExpression',
-            messageId: 'unexpected',
-            endLine: 25,
-            endColumn: 16,
-          },
-        ],
-        errorCount: 4,
-        warningCount: 2,
-        fixableErrorCount: 0,
-        fixableWarningCount: 0,
-        output:
-          "import { createElement, useEffect } from 'rax';\nimport View from 'rax-view';\nimport Text from 'rax-text';\nimport Picture from 'rax-picture';\n\nexport default function Mod(props) {\n  console.log(props);\n  const defaultTheme = {\n    themeColor: '#fff',\n  };\n  const defaultAttr = {\n    hidden: false,\n  };\n\n  const {\n    // 渲染依赖的核心数据\n    items = [],\n    // 模块主题皮肤设置\n    $theme: { themeColor } = defaultTheme,\n    // 模块配置\n    $attr: { hidden } = defaultAttr,\n  } = props.data;\n\n  useEffect(() => {\n    console.log(props);\n  }, []);\n\n  return (\n    <View className=\"mod\" style={{\n      backgroundColor: themeColor,\n      padding: '20px',\n    }}>\n      <a href=\"https://pegasus.alibaba-inc.com\" target=\"_blank\">\n        <Picture\n          source={{\n            uri: 'https://img.alicdn.com/tfs/TB1x2PDxXOWBuNjy0FiXXXFxVXa-760-760.png',\n          }}\n          style={{\n            width: 76,\n            height: 76,\n          }}\n        />\n      </a>\n      <Text style={{\n        color: '#333',\n        fontSize: '20px',\n        padding: '10px 0',\n      }}>欢迎使用天马模块开发工具！洋风测试</Text>\n      {\n        hidden !== 'true' ? <Text style={{\n          fontSize: '12px',\n        }}>这是一行可以通过模块 schema $attr 配置隐藏的文字</Text> : null\n      }\n      <ol style={{\n        padding: '10px 0',\n      }}>\n        {\n          items.map(element => {\n            return (<li style={{\n              marginLeft: '20px',\n              listStyle: 'decimal outside none',\n              fontSize: '18px',\n              color: '#2077ff',\n            }}>\n              <a target=\"_blank\" target=\"noopener noreferrer\" href={element.url} style={{\n                color: '#2077ff',\n                textDecoration: 'underline',\n              }}>\n                <Text>{element.key}</Text>\n              </a>\n            </li>);\n          })\n        }\n      </ol>\n    </View>\n  );\n}\n",
-      },
-    ],
-  },
   filesInfo: {
     count: 1,
     lines: 77,
   },
-  bestPractices: {
+  ESLint: {
     score: 90,
     reports: [
       {
@@ -147,85 +65,6 @@ export default {
         ],
         errorCount: 3,
         warningCount: 1,
-        fixableErrorCount: 0,
-        fixableWarningCount: 0,
-        output:
-          "import { createElement, useEffect } from 'rax';\nimport View from 'rax-view';\nimport Text from 'rax-text';\nimport Picture from 'rax-picture';\n\nexport default function Mod(props) {\n  console.log(props);\n  const defaultTheme = {\n    themeColor: '#fff'\n  };\n  const defaultAttr = {\n    hidden: false\n  };\n  \n  const {\n    // 渲染依赖的核心数据\n    items = [],\n    // 模块主题皮肤设置\n    $theme: { themeColor } = defaultTheme,\n    // 模块配置\n    $attr: { hidden } = defaultAttr,\n  } = props.data;\n\n  useEffect(() => {\n    console.log(props);\n  }, []);\n\n  return (\n    <View className=\"mod\" style={{\n      backgroundColor: themeColor,\n      padding: '20px'\n    }}>\n      <a href=\"https://pegasus.alibaba-inc.com\" target=\"_blank\">\n        <Picture\n          source={{\n            uri: 'https://img.alicdn.com/tfs/TB1x2PDxXOWBuNjy0FiXXXFxVXa-760-760.png',\n          }}\n          style={{\n            width: 76,\n            height: 76,\n          }}\n        />\n      </a>\n      <Text style={{\n        color: '#333',\n        fontSize: '20px',\n        padding: '10px 0'\n      }}>欢迎使用天马模块开发工具！洋风测试</Text>\n      {\n        hidden !== 'true' ? <Text style={{\n          fontSize: '12px'\n        }}>这是一行可以通过模块 schema $attr 配置隐藏的文字</Text> : null\n      }\n      <ol style={{\n        padding: '10px 0'\n      }}>\n        {\n          items.map(element => {\n            return (<li style={{\n              marginLeft: '20px',\n              listStyle: 'decimal outside none',\n              fontSize: '18px',\n              color: '#2077ff'\n            }}>\n              <a target=\"_blank\" target=\"noopener noreferrer\" href={element.url} style={{\n                color: '#2077ff',\n                textDecoration: 'underline'\n              }}>\n                <Text>{element.key}</Text>\n              </a>\n            </li>);\n          })\n        }\n      </ol>\n    </View>\n  );\n}",
-      },
-    ],
-  },
-  securityPractices: {
-    score: 83,
-    reports: [
-      {
-        filePath: '/Users/yangfan/Workspace/ali/yangfeng-test2/src/mobile/index.js',
-        messages: [
-          {
-            ruleId: 'react-hooks/exhaustive-deps',
-            severity: 1,
-            message:
-              "React Hook useEffect has a missing dependency: 'props'. Either include it or remove the dependency array.",
-            line: 26,
-            column: 6,
-            nodeType: 'ArrayExpression',
-            endLine: 26,
-            endColumn: 8,
-            suggestions: [
-              {
-                desc: 'Update the dependencies array to be: [props]',
-                fix: {
-                  range: [523, 525],
-                  text: '[props]',
-                },
-              },
-            ],
-          },
-          {
-            ruleId: '@iceworks/security-practices/no-internal-url',
-            severity: 1,
-            message: "The url 'https://pegasus.alibaba-inc.com' is not recommended",
-            line: 33,
-            column: 15,
-            nodeType: 'Literal',
-            messageId: 'noInternalUrl',
-            endLine: 33,
-            endColumn: 48,
-          },
-          {
-            ruleId: 'react/jsx-no-target-blank',
-            severity: 2,
-            message:
-              'Using target="_blank" without rel="noreferrer" is a security risk: see https://html.spec.whatwg.org/multipage/links.html#link-type-noopener',
-            line: 33,
-            column: 49,
-            nodeType: 'JSXAttribute',
-            endLine: 33,
-            endColumn: 64,
-          },
-          {
-            ruleId: 'react/jsx-no-target-blank',
-            severity: 2,
-            message:
-              'Using target="_blank" without rel="noreferrer" is a security risk: see https://html.spec.whatwg.org/multipage/links.html#link-type-noopener',
-            line: 65,
-            column: 18,
-            nodeType: 'JSXAttribute',
-            endLine: 65,
-            endColumn: 33,
-          },
-          {
-            ruleId: 'react/jsx-no-duplicate-props',
-            severity: 2,
-            message: 'No duplicate props allowed',
-            line: 65,
-            column: 34,
-            nodeType: 'JSXAttribute',
-            endLine: 65,
-            endColumn: 62,
-          },
-        ],
-        errorCount: 3,
-        warningCount: 2,
         fixableErrorCount: 0,
         fixableWarningCount: 0,
         output:

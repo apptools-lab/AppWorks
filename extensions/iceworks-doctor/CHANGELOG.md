@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.0
+- feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) and scan reports.
+
 ## 0.1.7
 
 - chore: change extension name
