@@ -59,15 +59,13 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
         connectService(previewWebviewPanel, context, { services, recorder });
       }, 5000);
     } else {
-      // Prepare VS Code debug config
-      await setDebugConfig();
-
-      // Run Debug
-      let workspaceFolder;
-      if (vscode.workspace.workspaceFolders) {
-        workspaceFolder = vscode.workspace.workspaceFolders[0];
-      }
-      vscode.debug.startDebugging(workspaceFolder, 'Iceworks Debug');
+      // npm run start.
+      // Debug in VS Code move to iceworks docs.
+      executeCommand({
+        command: EDITOR_MENU_RUN_DEBUG,
+        title: 'Run Start',
+        arguments: [projectPath, createNpmCommand('run', 'start')],
+      });
     }
   });
 

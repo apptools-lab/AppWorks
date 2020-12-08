@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
 import Scorer from './Scorer';
@@ -23,7 +24,7 @@ export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleK
   const cliEngine = new CLIEngine({
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
     // Use plugin in @iceworks/spec
-    cwd: require.resolve('@iceworks/spec'),
+    cwd: path.dirname(require.resolve('@iceworks/spec')),
     fix: !!fix,
     useEslintrc: false,
   });

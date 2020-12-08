@@ -31,11 +31,7 @@ const ScanSuccessWrap = (props) => {
         {reportKeys.map((reportKey: IReportKeys) => {
           const { key } = reportKey;
           switch (key) {
-            case 'bestPractices':
-              return <BestPracticesReport key={key} data={data[key]} />;
-            case 'securityPractices':
-              return <SecurityPracticesReport key={key} data={data[key]} />;
-            case 'aliEslint':
+            case 'ESLint':
               return <AliEslintReport key={key} data={data[key]} />;
             case 'maintainability':
               return <MaintainabilityReport key={key} data={data[key]} />;
