@@ -4,8 +4,6 @@ import { animateScroll as scroll } from 'react-scroll';
 import { reportKeys, IReportKeys } from '@/config';
 import Header from '../Header';
 import ScoreBoard from '../ScoreBoard';
-import BestPracticesReport from '../BestPracticesReport';
-import SecurityPracticesReport from '../SecurityPracticesReport';
 import AliEslintReport from '../AliEslintReport';
 import MaintainabilityReport from '../MaintainabilityReport';
 import RepeatabilityReport from '../RepeatabilityReport';
