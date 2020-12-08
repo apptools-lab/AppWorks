@@ -107,10 +107,10 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
           return (
             <Balloon
               align="t"
+              key={item.type}
               trigger={
                 <MenuCard
                   disabled={disabled}
-                  key={item.type}
                   selected={selected}
                   title={item.title}
                   icon={item.icon}
@@ -134,10 +134,10 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
             {webAppTypes.map((item) => (
               <Balloon
                 align="t"
+                key={item.type}
                 trigger={
                   <MenuCard
                     disabled={disabled}
-                    key={item.type}
                     style={{ width: 100, height: 36 }}
                     selected={isMpa === (item.type === 'mpa')}
                     title={item.title}
@@ -162,9 +162,9 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
             {miniAppTypes.map((item) => (
               <Balloon
                 align="t"
+                key={item.type}
                 trigger={
                   <MenuCard
-                    key={item.type}
                     disabled={disabled}
                     style={{ width: 100, height: 36 }}
                     selected={selectedMiniAppType === item.type}
