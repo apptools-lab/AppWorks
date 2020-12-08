@@ -1,4 +1,4 @@
-import { spawnSync } from 'child_process';
+import * as execa from 'execa';
 import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp, remove } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
@@ -48,12 +48,17 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
-      const { name, publisher } = extensionPackageJSON;
+      const { name, publisher, version } = extensionPackageJSON;
       if (extensionPack.includes(`${publisher}.${name}`)) {
         const newPackageName = getExtensionNpmName(name);
         if (pushExtension2NPM) {
           // compatible package.json
-          const latestVersion = await getLatestVersion(newPackageName, npmRegistry);
+          let latestVersion = version;
+          try {
+            latestVersion = await getLatestVersion(newPackageName, npmRegistry);
+          } catch (e) {
+            // ignonre error
+          }
           const nextVersion = padStart(String(parseInt(latestVersion.split('.').join('')) + 1), 3, '0').split('').join('.');
           merge(
             extensionPackageJSON,
@@ -62,7 +67,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
           );
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
-          spawnSync(
+          await execa(
             PACKAGE_MANAGER,
             ['publish'],
             { stdio: 'inherit', cwd: extensionFolderPath },
@@ -183,7 +188,11 @@ async function mergeExtensionsToPack(extensions) {
   const { manifests, nlsContents } = await getExtensionsRelatedInfo();
   await mergePackageJSON2Pack(manifests);
   // set other packages to dependencies
-  await mergePackageJSON2Pack({ dependencies: packages4pack.map((package4pack) => ({ [package4pack]: '*' })) });
+  const dependencies = {};
+  packages4pack.forEach((package4pack) => {
+    dependencies[package4pack] = '*';
+  });
+  await mergePackageJSON2Pack({ dependencies });
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
@@ -211,7 +220,7 @@ async function generalPackSource(extensions) {
   // general node entry
   const templateNodeEntryFileName = 'index.ts.ejs';
   const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
-  const packages = [...extensions, ...packages4pack].map(({ packageName }) => {
+  const packages = [...extensions, ...packages4pack.map(package4pack => ({ packageName: package4pack }))].map(({ packageName }) => {
     const func = camelCase(packageName);
     return {
       packageName,
