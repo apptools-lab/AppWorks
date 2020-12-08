@@ -6,15 +6,20 @@ Use VS Code and Chrome to debug the source code.
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
-Click the debug button in the upper right corner of the file to start debugging. Will insert .vscode/launch.json and .vscode/tasks.json in your project directory, and start VS Code Debug.
+Click the debug button in the upper right corner of the file to run `npm run start`. 
+
+If you want debug in  VS Code, first you should insert .vscode/launch.json and .vscode/tasks.json in your project directory, and start VS Code Debug,
+
+Second install [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome).
+
 
 PS: You can add the .vscode directory to the .gitignore config.
 
 ## launch.json
 
-It is automatically injected by Iceworks and is a standard VS Code debugging configuration. For more configuration, please refer to [VS Code debug document](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations).
+Recommended config is as follows. For more configuration, please refer to [VS Code debug document](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations).
 
- The default config is as follows:
+
 
 ```json
 {
@@ -37,7 +42,7 @@ It is automatically injected by Iceworks and is a standard VS Code debugging con
 
 ## tasks.json
 
-It is automatically injected by Iceworks and is a standard VS Code debugging configuration. For more configuration, please refer to [VS Code tasks document]( https://code.visualstudio.com/docs/editor/tasks#vscode).
+Recommended config is as follows. For more configuration, please refer to [VS Code tasks document]( https://code.visualstudio.com/docs/editor/tasks#vscode).
 
  The default config is as follows:
 
