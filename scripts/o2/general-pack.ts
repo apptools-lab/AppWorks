@@ -141,7 +141,7 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function getExtensionsRelatedInfo() {
-    let manifests: any = { contributes: { commands: [] }, activationEvents: [] };
+    let manifests: any = { contributes: { commands: [], views: { iceworksApp: [] } }, activationEvents: [] };
     let nlsContents = [];
     await Promise.all(extensions.map(async ({ extensionName }) => {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
@@ -150,16 +150,23 @@ async function mergeExtensionsToPack(extensions) {
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
       const {
-        contributes = {}, activationEvents,
-        name, version,
+        contributes = {},
+        activationEvents,
+        name,
+        version,
       } = extensionPackageJSON;
-      const { commands = [] } = contributes;
+      const { commands = [], views = {} } = contributes;
+      const { iceworksApp = [] } = views;
       manifests = merge(
         {},
         manifests,
         {
           contributes: {
             ...merge({}, manifests.contributes, contributes),
+            views: {
+              // TODO how to deep merge array?
+              iceworksApp: unionBy(manifests.contributes.views.iceworksApp.concat(iceworksApp), 'id'),
+            },
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
