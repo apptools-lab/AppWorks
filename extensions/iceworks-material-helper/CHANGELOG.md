@@ -1,5 +1,10 @@
 # Change Log
 
+# 0.5.1
+
+- feat: support generate route to app.json in rax application
+- fix: `<div>` to `<View>` rax page template 
+
 # 0.5.0
 
 - refactor: internal optimization
