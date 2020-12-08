@@ -189,8 +189,8 @@ async function mergeExtensionsToPack(extensions) {
   await mergePackageJSON2Pack(manifests);
   // set other packages to dependencies
   const dependencies = {};
-  packages4pack.forEach((package4pack) => {
-    dependencies[package4pack] = '*';
+  packages4pack.forEach(({ packageName }) => {
+    dependencies[packageName] = '*';
   });
   await mergePackageJSON2Pack({ dependencies });
   await mergeExtensionsNlsJSON2Pack(nlsContents);
@@ -220,12 +220,15 @@ async function generalPackSource(extensions) {
   // general node entry
   const templateNodeEntryFileName = 'index.ts.ejs';
   const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
-  const packages = [...extensions, ...packages4pack.map(package4pack => ({ packageName: package4pack }))].map(({ packageName }) => {
+  const packages = [...extensions, ...packages4pack].map(({ packageName, isActiveNode }) => {
     const func = camelCase(packageName);
     return {
       packageName,
+      isActiveNode,
       activateFunc: `${func}Active`,
       deactivateFunc: `${func}Deactivate`,
+      activateNodeFunc: `${func}NodeActive`,
+      deactivateNodeFunc: `${func}NodeDeactivate`,
     };
   });
   // @ts-ignore

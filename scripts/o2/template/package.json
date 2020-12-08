@@ -12,7 +12,8 @@
   },
   "devDependencies": {
     "@ali/kaitian": "latest",
-    "vscode": "^1.1.28"
+    "vscode": "^1.1.28",
+    "lodash.isfunction": "^3.0.9"
   },
   "scripts": {
     "prepublishOnly": "npm run compile",
