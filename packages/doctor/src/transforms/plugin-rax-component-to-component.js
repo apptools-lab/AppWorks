@@ -4,12 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 let demoOrder = 1;
-// glob to reg: demo/*.{js,jsx,ts,tsx} 
+// glob to reg: demo/*.{js,jsx,ts,tsx}
 const DEMO_FILE_REG = /demo\/.*\.(js|jsx|ts|tsx)$/;
 
 const changeFileExt = (file, ext) => {
   return path.join(path.dirname(file), path.basename(file, path.extname(file)) + ext);
-}
+};
 
 module.exports = (fileInfo, api) => {
   const j = api.jscodeshift;
@@ -42,7 +42,6 @@ module.exports = (fileInfo, api) => {
       }
     }
     return JSON.stringify(config, null, '  ');
-
   } else if (basename === 'package.json') {
     // {
     //   -  "build-plugin-rax-component": "^0.2.14",
@@ -72,42 +71,41 @@ module.exports = (fileInfo, api) => {
     // +   return <MyComponent />;
     // + }
     // + export default App;
-    // + ``` 
+    // + ```
     const transform = j(fileInfo.source);
     // render -> export function
-    transform.find(j.ExpressionStatement).forEach(path => {
-      const expression = path.node.expression;
+    transform.find(j.ExpressionStatement).forEach(p => {
+      const { expression } = p.node;
       if (expression.callee.name === 'render' && expression.arguments[0].type === 'JSXElement') {
         const demoFnName = 'App';
         const demoJSXElement = expression.arguments[0];
-        j(path).replaceWith(
-          j.functionDeclaration(j.identifier(demoFnName), [], j.blockStatement([j.returnStatement(demoJSXElement)]))
+        j(p).replaceWith(
+          j.functionDeclaration(j.identifier(demoFnName), [], j.blockStatement([j.returnStatement(demoJSXElement)])),
         ).insertAfter(
-          j.exportDeclaration(true, { type: 'Identifier', name: demoFnName })
-        )
+          j.exportDeclaration(true, { type: 'Identifier', name: demoFnName }),
+        );
       }
     });
-    // process import 
-    transform.find(j.ImportDeclaration).forEach(path => {
-      const { node } = path;
+    // process import
+    transform.find(j.ImportDeclaration).forEach(p => {
+      const { node } = p;
       // remove driver import like driver-universal
       if (node.source.value.indexOf('driver-') > -1) {
-        j(path).remove();
+        j(p).remove();
       }
     });
     // write xx.md file
     fs.writeFileSync(changeFileExt(fileInfo.path, '.md'),
-      '---\n' +
+      `${'---\n' +
       'title: Baisc\n' +
       `order: ${demoOrder++}\n` +
       '---\n' +
       '\n' +
       `${fileInfo.path} usage\n` +
-      '```jsx\n' +
-      transform.toSource() +
-      '```'
-      , 'utf8'
-    );
+      '```jsx\n'}${
+        transform.toSource()
+      }\`\`\``
+      , 'utf8');
     return fileInfo.source;
   } else {
     return fileInfo.source;

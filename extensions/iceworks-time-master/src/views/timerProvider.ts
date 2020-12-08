@@ -224,7 +224,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const highKpmChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].fileName;
+      const { fileName } = sortedArray[i];
       const kpm = sortedArray[i].kpm || 0;
       const kpmStr = kpm.toFixed(2);
       const label = `${fileName} | ${kpmStr}`;
@@ -252,7 +252,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const mostEditedChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].fileName;
+      const { fileName } = sortedArray[i];
       const keystrokes = sortedArray[i].keystrokes || 0;
       const keystrokesStr = numeral(keystrokes).format(NUMBER_FORMAT);
       const label = `${fileName} | ${keystrokesStr}`;
@@ -280,7 +280,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const longestCodeTimeChildren: TimerItem[] = [];
     const len = Math.min(3, sortedArray.length);
     for (let i = 0; i < len; i++) {
-      const fileName = sortedArray[i].fileName;
+      const { fileName } = sortedArray[i];
       const durationMinutes = seconds2minutes(sortedArray[i].sessionSeconds);
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;

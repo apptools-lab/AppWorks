@@ -7,6 +7,7 @@ import { Project } from './project';
 import { jsonSpaces } from '../config';
 import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
 import logger from '../utils/logger';
+
 import forIn = require('lodash.forin');
 
 let textInfoCache: {[fileName: string]: FileTextInfo} = {};

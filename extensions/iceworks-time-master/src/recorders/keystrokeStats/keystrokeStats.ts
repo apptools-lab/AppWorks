@@ -3,6 +3,7 @@ import { FileChange } from '../../storages/filesChange';
 import { getNowUTCSec } from '../../utils/time';
 import { processData } from '../../managers/data';
 import logger from '../../utils/logger';
+
 import forIn = require('lodash.forin');
 
 export interface KeystrokeStatsInfo {

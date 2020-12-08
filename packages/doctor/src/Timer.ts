@@ -2,6 +2,7 @@ const moment = require('moment');
 
 export default class Timer {
   protected startTime: number;
+
   protected endTime: undefined | number;
 
   constructor(timeout?: number) {

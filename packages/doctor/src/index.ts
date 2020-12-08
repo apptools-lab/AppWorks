@@ -10,8 +10,11 @@ const defaultSupportExts = ['js', 'jsx', 'ts', 'tsx'];
 
 class Doctor {
   public options: any;
+
   public ignore: string[];
+
   public supportExts: string[];
+
   private scanner: any;
 
   constructor(options: IDoctorOptions) {
