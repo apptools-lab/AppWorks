@@ -497,7 +497,6 @@
     "util": "^0.12.3"
   },
   "extensionDependencies": [
-    "msjsdiag.debugger-for-chrome",
     "iceworks-team.iceworks-project-creator",
     "iceworks-team.iceworks-ui-builder",
     "iceworks-team.iceworks-material-helper"

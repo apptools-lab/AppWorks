@@ -6,13 +6,16 @@
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
-点击文件右上角的 debug 按钮启动调试。 会在您的工程目录中插入 .vscode/launch.json 和 .vscode/tasks.json ，并启动 VS Code Debug。
+点击文件右上角的 debug 按钮启动 npm run start。 
+
+若希望在 VS Code 中进行断点调试，可在您的工程目录中插入 .vscode/launch.json 和 .vscode/tasks.json ，并启动 VS Code Debug。
+并安装 [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 插件。
 
 PS: 可将 .vscode 目录添加至 .gitignore 配置中。
 
 ## launch.json
 
-由 Iceworks 自动注入，为标准的 VS Code 调试配置。更多配置可参考 [VS Code debug 文档](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations)。默认配置如下：
+推荐配置如下，更多配置可参考 [VS Code debug 文档](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations)。
 
 ```json
 {
@@ -35,7 +38,7 @@ PS: 可将 .vscode 目录添加至 .gitignore 配置中。
 
 ## tasks.json
 
-由 Iceworks 自动注入，为标准的 VS Code 调试配置。更多配置可参考 [VS Code tasks 文档]( https://code.visualstudio.com/docs/editor/tasks#vscode)。默认配置如下：
+推荐配置如下，更多配置可参考 [VS Code tasks 文档]( https://code.visualstudio.com/docs/editor/tasks#vscode)。
 
 ```json
 {
