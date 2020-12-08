@@ -10,7 +10,7 @@ import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
 import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
-import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry } from './config';
+import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry, packages4pack } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
@@ -80,7 +80,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 }
 
 async function mergeExtensionsToPack(extensions) {
-  async function mergeExtensionsPackageJSON2Pack(values) {
+  async function mergePackageJSON2Pack(values) {
     const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
     merge(extensionPackageJSON, values);
     await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
@@ -181,7 +181,9 @@ async function mergeExtensionsToPack(extensions) {
   }
 
   const { manifests, nlsContents } = await getExtensionsRelatedInfo();
-  await mergeExtensionsPackageJSON2Pack(manifests);
+  await mergePackageJSON2Pack(manifests);
+  // set other packages to dependencies
+  await mergePackageJSON2Pack({ dependencies: packages4pack.map((package4pack) => ({ [package4pack]: '*' })) });
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
@@ -209,7 +211,7 @@ async function generalPackSource(extensions) {
   // general node entry
   const templateNodeEntryFileName = 'index.ts.ejs';
   const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
-  const packages = extensions.map(({ packageName }) => {
+  const packages = [...extensions, ...packages4pack].map(({ packageName }) => {
     const func = camelCase(packageName);
     return {
       packageName,

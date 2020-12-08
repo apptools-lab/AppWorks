@@ -1,3 +1,4 @@
+// src/node/index.ts
 <% packages.forEach(function({ activateFunc, deactivateFunc, packageName }){-%>
 import { activate as <%=activateFunc%>, deactivate as <%=deactivateFunc%> } from '<%=packageName%>';
 <%}) -%>
