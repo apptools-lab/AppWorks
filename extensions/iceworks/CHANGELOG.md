@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.14.0
+
+- refactor: upgrade extension features
+
 ## 0.13.1
 
 - docs: email typo

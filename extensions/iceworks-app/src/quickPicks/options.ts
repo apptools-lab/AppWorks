@@ -74,8 +74,9 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.design-component',
     async condition() {
+      const isO2 = checkIsO2();
       const projectType = await getProjectType();
-      return projectType === 'react';
+      return !isO2 && projectType === 'react';
     },
   },
   {
