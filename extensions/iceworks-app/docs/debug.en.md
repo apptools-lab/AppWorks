@@ -17,7 +17,7 @@ PS: You can add the .vscode directory to the .gitignore config.
 
 ## launch.json
 
- Recommended config is as follows. For more configuration, please refer to [VS Code debug document](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations).
+Recommended config is as follows. For more configuration, please refer to [VS Code debug document](https://code.visualstudio.com/docs/editor/debugging#_launch-configurations).
 
 
 
