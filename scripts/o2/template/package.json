@@ -17,7 +17,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run compile",
-    "compile": "kit-builder compile"
+    "compile": "NODE_ENV=development kit-builder compile"
   },
   "kaitianContributes": {
     "nodeMain": "./out/node/index.js",

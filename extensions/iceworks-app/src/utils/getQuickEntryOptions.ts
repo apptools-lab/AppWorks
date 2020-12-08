@@ -26,7 +26,7 @@ const entries = [
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
       const isTargetProject = !(await checkIsNotTarget());
       const isO2 = checkIsO2();
-      return isO2 ? isTargetProject : doctorExtension && isTargetProject;
+      return !isO2 && doctorExtension && isTargetProject;
     },
   },
   {
