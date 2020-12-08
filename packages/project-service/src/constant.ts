@@ -12,6 +12,8 @@ export const COMPONENT_DIR_NAME = 'components';
 export const dependencyDir = 'node_modules';
 export const packageJSONFilename = 'package.json';
 export const jsxFileExtnames = ['.jsx', '.tsx', '.js'];
+export const appJSONFileName = 'app.json';
+
 // user set path
 const generatePagePath = getDataFromSettingJson(CONFIGURATION_KEY_GENERATE_PAGE_PATH);
 const generateComponentPath = getDataFromSettingJson(CONFIGURATION_KEY_GENERATE_COMPONENT_PATH);

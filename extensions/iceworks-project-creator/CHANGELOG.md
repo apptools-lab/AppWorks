@@ -1,5 +1,9 @@
 # Change Log
 
+# 0.4.4
+
+- fix: create rax page styles
+
 # 0.4.3
 
 - chore: remove configure scaffold entry
