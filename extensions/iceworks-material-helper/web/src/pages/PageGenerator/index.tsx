@@ -104,9 +104,11 @@ const Home = () => {
     }
 
     try {
+      const projectType = await callService('project', 'getProjectType');
       const isRouteConfigPathExists = await callService('router', 'checkConfigPathExists');
       setIsConfigurableRouter(isRouteConfigPathExists);
-      if (isRouteConfigPathExists) {
+
+      if (projectType === 'react' && isRouteConfigPathExists) {
         // configurable router
         const config = await callService('router', 'getAll');
         setRouterConfig(config);
@@ -131,25 +133,30 @@ const Home = () => {
       pageIndexPath = result.pageIndexPath;
       const { pageName } = result;
 
-      if (isConfigurableRouter) {
-        try {
+      const projectType = await callService('project', 'getProjectType');
+
+      try {
+        if (isConfigurableRouter) {
           await callService('router', 'create', { ...values, pageName });
 
-          const layout = routerConfig.find((item) => item.path === parent);
-          if (layout) {
-            const layoutName = layout.component;
-            if (menuType) {
-              await callService('menu', 'create', {
-                ...values,
-                pageName,
-                layoutName,
-                menuType,
-              });
+          // add route path to menuConfig
+          if (projectType === 'react') {
+            const layout = routerConfig.find((item) => item.path === parent);
+            if (layout) {
+              const layoutName = layout.component;
+              if (menuType) {
+                await callService('menu', 'create', {
+                  ...values,
+                  pageName,
+                  layoutName,
+                  menuType,
+                });
+              }
             }
           }
-        } catch (error) {
-          Notification.error({ content: error.message });
         }
+      } catch (error) {
+        Notification.error({ content: error.message });
       }
     } catch (error) {
       Notification.error({ content: error.message });

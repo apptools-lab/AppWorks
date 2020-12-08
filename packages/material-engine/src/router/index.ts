@@ -6,7 +6,7 @@ import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
 import * as upperCamelCase from 'uppercamelcase';
-import { getProjectLanguageType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY } from '@iceworks/project-service';
+import { getProjectLanguageType, getProjectType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY, appJSONFileName } from '@iceworks/project-service';
 
 interface IRouter {
   /**
@@ -43,7 +43,17 @@ const noPathPrefix = false;
 
 export async function create(data) {
   const { path: setPath, pageName, parent } = data;
-  await bulkCreate(projectPath, [{ path: setPath, component: upperCamelCase(pageName) }], { parent });
+  const projectType = await getProjectType();
+  if (projectType === 'react') {
+    await bulkCreateReactProjectRoutes(projectPath, [{ path: setPath, component: upperCamelCase(pageName) }], { parent });
+  } else if (projectType === 'rax') {
+    const route = {
+      path: setPath,
+      source: `pages/${pageName}/index`,
+    };
+
+    await bulkCreateRaxProjectRoutes(projectPath, route);
+  }
 }
 
 export async function getAll() {
@@ -62,13 +72,36 @@ export async function getAll() {
 }
 
 export async function checkConfigPathExists() {
-  const projectLanguageType = await getProjectLanguageType();
-  const routeConfigPath = path.join(projectPath, 'src', `${routerConfigFileName}.${projectLanguageType}`);
+  const projectType = await getProjectType();
+  const srcBasePath = path.join(projectPath, 'src');
+  let routeConfigPath = '';
+
+  if (projectType === 'react') {
+    const projectLanguageType = await getProjectLanguageType();
+    routeConfigPath = path.join(srcBasePath, `${routerConfigFileName}.${projectLanguageType}`);
+  } else if (projectType === 'rax') {
+    routeConfigPath = path.join(srcBasePath, appJSONFileName);
+  }
+
   const pathExists: boolean = await fse.pathExists(routeConfigPath);
   return pathExists;
 }
 
-export async function bulkCreate(targetProjectPath: string, data: IRouter[], options: IRouterOptions = {}) {
+export async function bulkCreateRaxProjectRoutes(targetProjectPath, data) {
+  const appConfigPath = path.join(targetProjectPath, 'src', appJSONFileName);
+  const appConfig = fse.readJSONSync(appConfigPath);
+
+  const { routes } = appConfig;
+  if (routes && Array.isArray(routes)) {
+    routes.push(data);
+  } else {
+    appConfig.routes = [data];
+  }
+
+  fse.writeJSONSync(appConfigPath, appConfig, { spaces: 2 });
+}
+
+export async function bulkCreateReactProjectRoutes(targetProjectPath: string, data: IRouter[], options: IRouterOptions = {}) {
   const { replacement = false, parent } = options;
   const routerConfigAST = await getRouterConfigAST(targetProjectPath);
   const projectLanguageType = await getProjectLanguageType();
