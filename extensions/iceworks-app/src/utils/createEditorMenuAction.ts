@@ -3,7 +3,6 @@ import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand 
 import { dependencyDir, getProjectFramework, projectPath } from '@iceworks/project-service';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import services from '../services';
-import { setDebugConfig } from '../debugConfig/index';
 import showDefPublishEnvQuickPick from '../quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from '../commands/executeCommand';
 
