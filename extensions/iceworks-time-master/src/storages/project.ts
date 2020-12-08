@@ -7,6 +7,8 @@ import { jsonSpaces } from '../config';
 import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
 import { getResource, Resource } from '../utils/git';
 import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
+import logger from '../utils/logger';
+
 import forIn = require('lodash.forin');
 
 interface ProjectResource {
@@ -46,9 +48,13 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
 
 export class Project implements ProjectInfo {
   public name = '';
+
   public directory = '';
+
   public gitRepository = '';
+
   public gitBranch = '';
+
   public gitTag = '';
 
   constructor(values?: Partial<ProjectInfo>) {
@@ -98,7 +104,7 @@ export async function getProjectsSummary(day?: string): Promise<ProjectsSummary>
   try {
     projectsSummary = await fse.readJson(file);
   } catch (e) {
-    // ignore errors
+    logger.error('[projectStorage][getProjectsSummary] got error', e);
   }
   return projectsSummary;
 }

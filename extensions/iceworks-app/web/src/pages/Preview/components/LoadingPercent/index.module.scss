@@ -1,0 +1,22 @@
+.container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 999;
+  overflow: hidden;
+
+  :global {
+    .next-progress-line {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 4px;
+    }
+
+    .next-progress-line-container {
+      position: absolute;
+      top: 0;
+    }
+  }
+}
