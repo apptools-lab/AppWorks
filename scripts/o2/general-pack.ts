@@ -10,24 +10,11 @@ import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
 import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
-import { isBeta, isPublish2Npm } from './config';
+import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
-
-const PACK_EXTENSIONS = [
-  'iceworks-team.iceworks-app',
-  'iceworks-team.iceworks-config-helper',
-  'iceworks-team.iceworks-material-helper',
-  // 'iceworks-team.iceworks-doctor',
-  // 'iceworks-team.iceworks-project-creator',
-  'iceworks-team.iceworks-style-helper',
-  'iceworks-team.iceworks-ui-builder',
-  'iceworks-team.iceworks-time-master',
-];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
-
-const aliRegistry = 'https://registry.npm.alibaba-inc.com';
 
 const valuesAppendToExtensionPackageJSON = {
   scripts: {
@@ -38,7 +25,7 @@ const valuesAppendToExtensionPackageJSON = {
       access: 'public',
     } :
     {
-      registry: aliRegistry,
+      registry: npmRegistry,
     },
   files: [
     'build',
@@ -50,7 +37,7 @@ function getExtensionNpmName(name) {
 }
 
 async function getPackExtensions() {
-  return PACK_EXTENSIONS;
+  return extensions4pack;
 }
 
 async function publishExtensionsToNpm(extensionPack: string[]) {
@@ -64,9 +51,9 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const { name, publisher } = extensionPackageJSON;
       if (extensionPack.includes(`${publisher}.${name}`)) {
         const newPackageName = getExtensionNpmName(name);
-        if (isPublish2Npm) {
+        if (pushExtension2NPM) {
           // compatible package.json
-          const latestVersion = await getLatestVersion(newPackageName, aliRegistry);
+          const latestVersion = await getLatestVersion(newPackageName, npmRegistry);
           const nextVersion = padStart(String(parseInt(latestVersion.split('.').join('')) + 1), 3, '0').split('').join('.');
           merge(
             extensionPackageJSON,
@@ -171,7 +158,7 @@ async function mergeExtensionsToPack(extensions) {
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
-          dependencies: { [isPublish2Npm ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
+          dependencies: { [pushExtension2NPM ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
         },
       );
 
