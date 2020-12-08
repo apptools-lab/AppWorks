@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { registerCommand, executeCommand } from '@iceworks/common-service';
-import getQuickEntryOptions from '../utils/getQuickEntryOptions';
+import options from '../quickPicks/options';
+import getOptions from '../utils/getOptions';
 
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
   private extensionContext: vscode.ExtensionContext;
@@ -19,7 +20,7 @@ export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryI
   }
 
   private async getEntries() {
-    const entryOptions = await getQuickEntryOptions();
+    const entryOptions = await getOptions(options);
     return entryOptions.map((option) => {
       const { label, detail, command } = option;
       const entryCommand: vscode.Command = {

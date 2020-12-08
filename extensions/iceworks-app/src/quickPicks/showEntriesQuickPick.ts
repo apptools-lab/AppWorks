@@ -1,12 +1,13 @@
 import * as vscode from 'vscode';
-import getQuickEntryOptions from '../utils/getQuickEntryOptions';
+import options from '../quickPicks/options';
+import getOptions from '../utils/getOptions';
 
 const { window, commands } = vscode;
 
 export default async function showEntriesQuickPick() {
   const quickPick = window.createQuickPick();
-  const entryOptions = await getQuickEntryOptions();
-  quickPick.items = entryOptions.map((options) => ({ label: options.label, detail: options.detail }));
+  const entryOptions = await getOptions(options);
+  quickPick.items = entryOptions;
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
       const currentExtension = entryOptions.find((option) => option.label === selection[0].label)!;

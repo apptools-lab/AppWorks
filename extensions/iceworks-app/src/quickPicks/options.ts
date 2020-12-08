@@ -3,7 +3,7 @@ import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@icewor
 import { checkIsAliInternal, checkIsO2 } from '@iceworks/common-service';
 import i18n from '../i18n';
 
-const entries = [
+export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
@@ -129,18 +129,3 @@ const entries = [
     command: 'iceworksApp.configHelper.start',
   },
 ];
-
-export default async function () {
-  const conditionResults = await Promise.all(
-    entries.map(async ({ condition }) => {
-      if (condition) {
-        const result = await condition();
-        return result;
-      } else {
-        return true;
-      }
-    }),
-  );
-
-  return entries.filter((v, index) => conditionResults[index]);
-}
