@@ -4,6 +4,7 @@
 
 - feat: support generate route to app.json in rax application
 - fix: `<div>` to `<View>` rax page template 
+- refactor: find comopnent logic
 
 # 0.5.0
 

@@ -3,9 +3,7 @@ import { IMaterialData, IMaterialComponent, IMaterialBase } from '@iceworks/mate
 import { material } from '@iceworks/material-engine';
 import { window } from 'vscode';
 import { IComponentDocInfo } from './type';
-import openInBrowser from './openInBowser';
 import i18n from '../i18n';
-import services from '../services';
 
 let loading = true;
 let docInfoCache: IComponentDocInfo[] = [];
@@ -34,7 +32,6 @@ async function originGetDocInfos() {
         detail: e.title,
         description: e['description'] || '',
         url: e.homepage,
-        command: getDocInfoCommand(e.homepage),
       };
     });
   };
@@ -44,12 +41,4 @@ async function originGetDocInfos() {
   return (await componentInfos).reduce((componentDocInfos, materialInfo) => {
     return componentDocInfos.concat(getDocInfoFromMaterial(materialInfo));
   }, [] as IComponentDocInfo[]);
-}
-
-function getDocInfoCommand(url: string) {
-  const command = `iceworks:material-helper.openDocUrl:${url}`;
-  services.common.registerCommand(command, () => {
-    openInBrowser(url);
-  });
-  return command;
 }

@@ -1,17 +1,35 @@
-<% packages.forEach(function({ activateFunc, deactivateFunc, packageName }){-%>
+import * as isFunction from 'lodash.isfunction';
+<% packages.forEach(function({ isActiveNode, activateFunc, deactivateFunc, activateNodeFunc, deactivateNodeFunc, packageName }){-%>
 import { activate as <%=activateFunc%>, deactivate as <%=deactivateFunc%> } from '<%=packageName%>';
+<% if(isActiveNode) {-%>
+import { activate as <%=activateNodeFunc%>, deactivate as <%=deactivateNodeFunc%> } from '<%=packageName%>/out/node';
+<% }  -%>
 <%}) -%>
 
 export default class KitNode {
   activate(context) {
-  <% packages.forEach(function({ activateFunc }){-%>
-    <%=activateFunc%>(context);
-  <%}) -%>
+<% packages.forEach(function({ activateFunc, isActiveNode, activateNodeFunc }){-%>
+    if (isFunction(<%=activateFunc%>)) {
+      <%=activateFunc%>(context);
+    }
+<% if(isActiveNode) { -%>
+    if (isFunction(<%=activateNodeFunc%>)) {
+      <%=activateNodeFunc%>(context);
+    }
+<% } -%>
+<%}) -%>
   }
 
   deactivate() {
-  <% packages.forEach(function({ deactivateFunc }){-%>
-    <%=deactivateFunc%>();
-  <%}) -%>
+<% packages.forEach(function({ deactivateFunc, isActiveNode, deactivateNodeFunc }){-%>
+    if (isFunction(<%=deactivateFunc%>)) {
+      <%=deactivateFunc%>();
+    }
+<% if(isActiveNode) { -%>
+    if (isFunction(<%=deactivateNodeFunc%>)) {
+      <%=deactivateNodeFunc%>();
+    }
+<% } -%>
+<%}) -%>
   }
 }

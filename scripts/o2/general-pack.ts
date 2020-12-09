@@ -1,4 +1,4 @@
-import { spawnSync } from 'child_process';
+import * as execa from 'execa';
 import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp, remove } from 'fs-extra';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
@@ -10,24 +10,11 @@ import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
 import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
-import { isBeta, isPublish2Npm } from './config';
+import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry, packages4pack } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
-
-
-const PACK_EXTENSIONS = [
-  'iceworks-team.iceworks-app',
-  'iceworks-team.iceworks-config-helper',
-  // 'iceworks-team.iceworks-doctor',
-  'iceworks-team.iceworks-material-helper',
-  'iceworks-team.iceworks-project-creator',
-  'iceworks-team.iceworks-style-helper',
-  'iceworks-team.iceworks-ui-builder',
-];
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
-
-const aliRegistry = 'https://registry.npm.alibaba-inc.com';
 
 const valuesAppendToExtensionPackageJSON = {
   scripts: {
@@ -38,7 +25,7 @@ const valuesAppendToExtensionPackageJSON = {
       access: 'public',
     } :
     {
-      registry: aliRegistry,
+      registry: npmRegistry,
     },
   files: [
     'build',
@@ -50,7 +37,7 @@ function getExtensionNpmName(name) {
 }
 
 async function getPackExtensions() {
-  return PACK_EXTENSIONS;
+  return extensions4pack;
 }
 
 async function publishExtensionsToNpm(extensionPack: string[]) {
@@ -61,12 +48,17 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
-      const { name, publisher } = extensionPackageJSON;
+      const { name, publisher, version } = extensionPackageJSON;
       if (extensionPack.includes(`${publisher}.${name}`)) {
         const newPackageName = getExtensionNpmName(name);
-        if (isPublish2Npm) {
+        if (pushExtension2NPM) {
           // compatible package.json
-          const latestVersion = await getLatestVersion(newPackageName, aliRegistry);
+          let latestVersion = version;
+          try {
+            latestVersion = await getLatestVersion(newPackageName, npmRegistry);
+          } catch (e) {
+            // ignonre error
+          }
           const nextVersion = padStart(String(parseInt(latestVersion.split('.').join('')) + 1), 3, '0').split('').join('.');
           merge(
             extensionPackageJSON,
@@ -75,7 +67,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
           );
           await writeJson(extensionPackagePath, extensionPackageJSON, { spaces: 2 });
 
-          spawnSync(
+          await execa(
             PACKAGE_MANAGER,
             ['publish'],
             { stdio: 'inherit', cwd: extensionFolderPath },
@@ -93,7 +85,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 }
 
 async function mergeExtensionsToPack(extensions) {
-  async function mergeExtensionsPackageJSON2Pack(values) {
+  async function mergePackageJSON2Pack(values) {
     const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
     merge(extensionPackageJSON, values);
     await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
@@ -149,7 +141,7 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function getExtensionsRelatedInfo() {
-    let manifests: any = { contributes: { commands: [] }, activationEvents: [] };
+    let manifests: any = { contributes: { commands: [], views: { iceworksApp: [] } }, activationEvents: [] };
     let nlsContents = [];
     await Promise.all(extensions.map(async ({ extensionName }) => {
       const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
@@ -158,20 +150,27 @@ async function mergeExtensionsToPack(extensions) {
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
       const {
-        contributes = {}, activationEvents,
-        name, version,
+        contributes = {},
+        activationEvents,
+        name,
+        version,
       } = extensionPackageJSON;
-      const { commands = [] } = contributes;
+      const { commands = [], views = {} } = contributes;
+      const { iceworksApp = [] } = views;
       manifests = merge(
         {},
         manifests,
         {
           contributes: {
             ...merge({}, manifests.contributes, contributes),
+            views: {
+              // TODO how to deep merge array?
+              iceworksApp: unionBy(manifests.contributes.views.iceworksApp.concat(iceworksApp), 'id'),
+            },
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
-          dependencies: { [isPublish2Npm ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
+          dependencies: { [pushExtension2NPM ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
         },
       );
 
@@ -194,7 +193,13 @@ async function mergeExtensionsToPack(extensions) {
   }
 
   const { manifests, nlsContents } = await getExtensionsRelatedInfo();
-  await mergeExtensionsPackageJSON2Pack(manifests);
+  await mergePackageJSON2Pack(manifests);
+  // set other packages to dependencies
+  const dependencies = {};
+  packages4pack.forEach(({ packageName }) => {
+    dependencies[packageName] = '*';
+  });
+  await mergePackageJSON2Pack({ dependencies });
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
@@ -222,12 +227,15 @@ async function generalPackSource(extensions) {
   // general node entry
   const templateNodeEntryFileName = 'index.ts.ejs';
   const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
-  const packages = extensions.map(({ packageName }) => {
+  const packages = [...extensions, ...packages4pack].map(({ packageName, isActiveNode }) => {
     const func = camelCase(packageName);
     return {
       packageName,
+      isActiveNode,
       activateFunc: `${func}Active`,
       deactivateFunc: `${func}Deactivate`,
+      activateNodeFunc: `${func}NodeActive`,
+      deactivateNodeFunc: `${func}NodeDeactivate`,
     };
   });
   // @ts-ignore

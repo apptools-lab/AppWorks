@@ -3,11 +3,15 @@ import { getProjectType, checkIsPegasusProject, checkIsNotTarget } from '@icewor
 import { checkIsAliInternal, checkIsO2 } from '@iceworks/common-service';
 import i18n from '../i18n';
 
-const entries = [
+export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
     command: 'iceworks-project-creator.create-project.start',
+    async condition() {
+      const isO2 = checkIsO2();
+      return !isO2;
+    },
   },
   // {
   //   label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
@@ -21,8 +25,9 @@ const entries = [
     async condition() {
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
       const isTargetProject = !(await checkIsNotTarget());
+      // TODO disable Doctor in O2: too large causes GC to be packaged
       const isO2 = checkIsO2();
-      return isO2 ? isTargetProject : doctorExtension && isTargetProject;
+      return !isO2 && doctorExtension && isTargetProject;
     },
   },
   {
@@ -70,8 +75,10 @@ const entries = [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.design-component',
     async condition() {
+      // TODO disable Doctor in O2: Unknown error
+      const isO2 = checkIsO2();
       const projectType = await getProjectType();
-      return projectType === 'react';
+      return !isO2 && projectType === 'react';
     },
   },
   {
@@ -125,18 +132,3 @@ const entries = [
     command: 'iceworksApp.configHelper.start',
   },
 ];
-
-export default async function () {
-  const conditionResults = await Promise.all(
-    entries.map(async ({ condition }) => {
-      if (condition) {
-        const result = await condition();
-        return result;
-      } else {
-        return true;
-      }
-    }),
-  );
-
-  return entries.filter((v, index) => conditionResults[index]);
-}

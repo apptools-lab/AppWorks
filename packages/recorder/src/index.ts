@@ -3,8 +3,8 @@ import { checkAliInternal } from 'ice-npm-utils';
 import storage, { recordKey } from '@iceworks/storage';
 
 function checkIsO2() {
-  const variable = process.env.XPC_SERVICE_NAME;
-  return typeof variable === 'string' && variable.includes('com.taobao.o2');
+  const O2Version = process.env.O2_VERSION;
+  return O2Version;
 }
 
 // eslint-disable-next-line

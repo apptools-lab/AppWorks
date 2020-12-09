@@ -101,8 +101,8 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
   const componentsProvider = new ComponentsProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('components', { treeDataProvider: componentsProvider });
 
-  registerCommand('iceworksApp.components.add', () => {
-    showAddComponentQuickPick();
+  registerCommand('iceworksApp.components.add', async () => {
+    await showAddComponentQuickPick();
   });
   registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
   registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));

@@ -1,25 +1,16 @@
 import * as vscode from 'vscode';
-import i18n from '../i18n';
 import recorder from '../utils/recorder';
 
 function openInExternalBrowser(url) {
-  vscode.env.openExternal(url);
+  vscode.env.openExternal(vscode.Uri.parse(url));
 }
 
 function openInInternalBrowser(url: string) {
-  if (hasBrowserPreviewExtension()) {
-    vscode.commands.executeCommand('browser-preview.openPreview', url);
-  } else {
-    vscode.window.showErrorMessage(i18n.format('extension.iceworksMaterialHelper.openInBorwser.noBrowserPreview'));
-  }
+  vscode.commands.executeCommand('browser-preview.openPreview', url);
 }
 
 function openDocLinkInsideVSCode() {
-  return vscode.workspace.getConfiguration('iceworks.materialHelper').get('openDocLinkInsideVSCode');
-}
-
-function hasBrowserPreviewExtension() {
-  return vscode.extensions.getExtension('auchenberg.vscode-browser-preview');
+  return vscode.workspace.getConfiguration('iceworks.materialHelper').get('openDocLinkInsideVSCode') && vscode.extensions.getExtension('auchenberg.vscode-browser-preview');
 }
 
 export default function openInBrowser(url) {
