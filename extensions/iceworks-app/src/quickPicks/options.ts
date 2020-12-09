@@ -25,6 +25,7 @@ export default [
     async condition() {
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
       const isTargetProject = !(await checkIsNotTarget());
+      // TODO disable Doctor in O2: too large causes GC to be packaged
       const isO2 = checkIsO2();
       return !isO2 && doctorExtension && isTargetProject;
     },
@@ -74,6 +75,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.design-component',
     async condition() {
+      // TODO disable Doctor in O2: Unknown error
       const isO2 = checkIsO2();
       const projectType = await getProjectType();
       return !isO2 && projectType === 'react';
