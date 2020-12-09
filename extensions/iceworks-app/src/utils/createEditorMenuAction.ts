@@ -1,11 +1,14 @@
 import * as vscode from 'vscode';
 import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
-import { dependencyDir, projectPath } from '@iceworks/project-service';
-import { setDebugConfig } from '../debugConfig/index';
+import { dependencyDir, getProjectFramework, projectPath } from '@iceworks/project-service';
+import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import services from '../services';
 import showDefPublishEnvQuickPick from '../quickPicks/showDefPublishEnvQuickPick';
 import executeCommand from '../commands/executeCommand';
 
-export default async function createEditorMenuAction() {
+let previewWebviewPanel: vscode.WebviewPanel | undefined;
+
+export default async function createEditorMenuAction(context: vscode.ExtensionContext, recorder) {
   const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';
   registerCommand(EDITOR_MENU_RUN_DEBUG, async () => {
     // Check dependences
@@ -19,15 +22,50 @@ export default async function createEditorMenuAction() {
       return;
     }
 
-    // Prepare VS Code debug config
-    await setDebugConfig();
+    if (await getProjectFramework() === 'rax-app') {
+      // Rax project preview
+      const { window } = vscode;
+      const { extensionPath } = context;
 
-    // Run Debug
-    let workspaceFolder;
-    if (vscode.workspace.workspaceFolders) {
-      workspaceFolder = vscode.workspace.workspaceFolders[0];
+      executeCommand({
+        command: EDITOR_MENU_RUN_DEBUG,
+        title: 'Run Start',
+        arguments: [projectPath, createNpmCommand('run', 'start', '-- --disable-open')],
+      });
+
+      setTimeout(() => {
+        if (previewWebviewPanel) {
+          previewWebviewPanel.reveal();
+        }
+
+        previewWebviewPanel = window.createWebviewPanel('iceworks', 'Preview', vscode.ViewColumn.Two, {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        });
+
+        const extraHtml = `<script>
+          window.__PREVIEW__DATA__ = { startUrl: 'http://localhost:3333/' };
+        </script>
+        `;
+        previewWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'preview', false, undefined, extraHtml);
+        previewWebviewPanel.onDidDispose(
+          () => {
+            previewWebviewPanel = undefined;
+          },
+          null,
+          context.subscriptions,
+        );
+        connectService(previewWebviewPanel, context, { services, recorder });
+      }, 5000);
+    } else {
+      // npm run start.
+      // Debug in VS Code move to iceworks docs.
+      executeCommand({
+        command: EDITOR_MENU_RUN_DEBUG,
+        title: 'Run Start',
+        arguments: [projectPath, createNpmCommand('run', 'start')],
+      });
     }
-    vscode.debug.startDebugging(workspaceFolder, 'Iceworks Debug');
   });
 
   const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
@@ -39,7 +77,8 @@ export default async function createEditorMenuAction() {
       arguments: [projectPath, createNpmCommand('run', 'build')],
     };
     if (!pathExists) {
-      command.arguments = [projectPath, `${createNpmCommand('install')} && ${command.arguments![1]}`];
+      command.arguments = [projectPath, `${createNpmCommand('install')
+      } && ${command.arguments![1]}`];
       executeCommand(command);
       return;
     }

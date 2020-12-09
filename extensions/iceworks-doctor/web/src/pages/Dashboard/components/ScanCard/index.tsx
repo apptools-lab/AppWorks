@@ -11,9 +11,7 @@ const ScanCard = () => {
   const [data, setData] = useState({
     filesInfo: {},
     score: 100,
-    aliEslint: {},
-    bestPractices: {},
-    securityPractices: {},
+    ESLint: {},
     maintainability: {},
     repeatability: {},
   });

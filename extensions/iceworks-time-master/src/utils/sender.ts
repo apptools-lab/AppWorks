@@ -11,6 +11,7 @@ import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
+
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
@@ -156,7 +157,6 @@ async function sendBlukCreate(type, playloadData, extra) {
       throw new Error(bulkCreateRespose.data.message);
     }
   } catch (e) {
-
     // if got error, write back the data and resend it in the next cycle
     await appendPayloadData(type, playloadData);
     logger.error('[sender][sendBlukCreate] got error:', e);

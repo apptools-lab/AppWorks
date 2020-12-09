@@ -1,5 +1,10 @@
 # Change Log
 
+# 0.7.0
+
+- feat: support rax preview
+- refactor: disable some features in O2
+
 # 0.6.2
 
 - chore: remove configure scaffold entry

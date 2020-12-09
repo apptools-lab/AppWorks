@@ -6,6 +6,8 @@ import { getNowUTCSec } from '../utils/time';
 import { Project } from './project';
 import { jsonSpaces } from '../config';
 import { KeystrokeStatsInfo, KeystrokeStats } from '../recorders/keystrokeStats';
+import logger from '../utils/logger';
+
 import forIn = require('lodash.forin');
 
 let textInfoCache: {[fileName: string]: FileTextInfo} = {};
@@ -200,7 +202,8 @@ export class FileChange implements FileChangeInfo {
 
   deactivate() {
     this.update = 1;
-    this.durationSeconds = this.end - this.start;
+    const durationSeconds = this.end - this.start;
+    this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
   }
 
   setStart(time?: number) {
@@ -234,7 +237,7 @@ export async function getFilesChangeSummary(): Promise<FilesChangeSummary> {
   try {
     filesChangeSummary = await fse.readJson(file);
   } catch (e) {
-    // ignore error
+    logger.error('[fileChangeStorage][getFilesChangeSummary] got error', e);
   }
   return filesChangeSummary;
 }

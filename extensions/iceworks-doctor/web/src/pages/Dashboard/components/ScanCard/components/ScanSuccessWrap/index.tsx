@@ -4,8 +4,6 @@ import { animateScroll as scroll } from 'react-scroll';
 import { reportKeys, IReportKeys } from '@/config';
 import Header from '../Header';
 import ScoreBoard from '../ScoreBoard';
-import BestPracticesReport from '../BestPracticesReport';
-import SecurityPracticesReport from '../SecurityPracticesReport';
 import AliEslintReport from '../AliEslintReport';
 import MaintainabilityReport from '../MaintainabilityReport';
 import RepeatabilityReport from '../RepeatabilityReport';
@@ -31,11 +29,7 @@ const ScanSuccessWrap = (props) => {
         {reportKeys.map((reportKey: IReportKeys) => {
           const { key } = reportKey;
           switch (key) {
-            case 'bestPractices':
-              return <BestPracticesReport key={key} data={data[key]} />;
-            case 'securityPractices':
-              return <SecurityPracticesReport key={key} data={data[key]} />;
-            case 'aliEslint':
+            case 'ESLint':
               return <AliEslintReport key={key} data={data[key]} />;
             case 'maintainability':
               return <MaintainabilityReport key={key} data={data[key]} />;

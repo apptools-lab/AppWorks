@@ -30,10 +30,11 @@ function showQuickPick(quickPickItems: any[]) {
     const quickPick = vscode.window.createQuickPick();
     quickPick.items = quickPickItems;
     quickPick.onDidChangeSelection((selection) => {
-      if (selection[0]['command']) {
-        vscode.commands.executeCommand(selection[0]['command']);
+      const { command, url } = selection[0] as IComponentDocInfo;
+      if (command) {
+        vscode.commands.executeCommand(command);
       } else {
-        openInBrowser(selection[0]['url']);
+        openInBrowser(url);
       }
       quickPick.dispose();
     });

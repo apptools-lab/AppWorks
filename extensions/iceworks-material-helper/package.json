@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -30,7 +30,9 @@
     "onCommand:iceworks-material-helper.material-importer.start",
     "onCommand:iceworks-material-helper.component-creator.start",
     "onCommand:iceworks-material-helper.page-generator.start",
-    "onCommand:iceworks-material-helper.page-creator.start"
+    "onCommand:iceworks-material-helper.page-creator.start",
+    "onCommand:iceworks-material-helper.showMaterialDocs",
+    "onCommand:iceworks-material-helper.showMaterialDocsForCurrentFile"
   ],
   "contributes": {
     "commands": [

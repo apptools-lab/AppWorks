@@ -3,13 +3,12 @@ import * as path from 'path';
 
 const mkdirp = require('mkdirp');
 const utility = require('utility');
-const Transport = require('egg-logger').Transport;
+const { Transport } = require('egg-logger');
 
 /**
  * output log into file {@link Transport}。
  */
 export default class FileTransport extends Transport {
-
   /**
    * @constructor
    * @param {Object} options
