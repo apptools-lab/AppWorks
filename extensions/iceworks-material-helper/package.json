@@ -30,7 +30,9 @@
     "onCommand:iceworks-material-helper.material-importer.start",
     "onCommand:iceworks-material-helper.component-creator.start",
     "onCommand:iceworks-material-helper.page-generator.start",
-    "onCommand:iceworks-material-helper.page-creator.start"
+    "onCommand:iceworks-material-helper.page-creator.start",
+    "onCommand:iceworks-material-helper.showMaterialDocs",
+    "onCommand:iceworks-material-helper.showMaterialDocsForCurrentFile"
   ],
   "contributes": {
     "commands": [

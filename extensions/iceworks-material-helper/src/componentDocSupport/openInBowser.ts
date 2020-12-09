@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import recorder from '../utils/recorder';
 
 function openInExternalBrowser(url) {
-  vscode.env.openExternal(url);
+  vscode.env.openExternal(vscode.Uri.parse(url));
 }
 
 function openInInternalBrowser(url: string) {
