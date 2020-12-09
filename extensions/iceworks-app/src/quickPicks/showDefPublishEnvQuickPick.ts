@@ -27,7 +27,7 @@ export default function showDefPublishEnvQuickPick() {
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
       const env = DEFEnvOptions.find((option) => option.label === selection[0].label)!;
-      if (!checkIsO2) {
+      if (!checkIsO2()) {
         const command: vscode.Command = {
           title: 'Publish',
           command: 'iceworksApp.editorMenu.DefPublish',
