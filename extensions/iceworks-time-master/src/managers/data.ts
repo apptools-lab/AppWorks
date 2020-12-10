@@ -1,6 +1,5 @@
 import { window, ProgressLocation, workspace, ViewColumn } from 'vscode';
-import { KeystrokeStats } from '../recorders/keystrokeStats';
-import { updateFilesChangeSummary } from '../storages/filesChange';
+import { KeystrokeStats, updateFilesSummary } from '../recorders/keystrokeStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
@@ -10,7 +9,7 @@ import logger from '../utils/logger';
 
 async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
   const { project } = keystrokeStats;
-  const increment = await updateFilesChangeSummary(keystrokeStats);
+  const increment = await updateFilesSummary(keystrokeStats);
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
   refreshViews();

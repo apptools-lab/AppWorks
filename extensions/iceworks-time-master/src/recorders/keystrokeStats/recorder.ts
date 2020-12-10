@@ -1,7 +1,7 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
 import { isFileActive } from '../../utils/common';
 import { Project } from '../../storages/project';
-import { cleanTextInfoCache } from '../../storages/filesChange';
+import { cleanTextInfoCache } from '../../storages/file';
 import { KeystrokeStats } from './keystrokeStats';
 import logger from '../../utils/logger';
 import { recordKeystrokeDurationMins } from '../../config';
@@ -9,89 +9,7 @@ import { recordKeystrokeDurationMins } from '../../config';
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
 export class KeystrokeStatsRecorder {
-  /**
-  * This will return true if it's a validated file.
-  * we don't want to send events for .git or
-  * other event triggers such as extension.js.map events
-  */
-  private isValidatedFile(textDocument: TextDocument, fsPath: string, isCloseEvent?: boolean) {
-    if (!fsPath) {
-      return false;
-    }
-
-    const { scheme } = textDocument.uri;
-
-    // we'll get 'git' as a scheme, but these are the schemes that match to open files in the editor
-    const isDocEventScheme = scheme === 'file' || scheme === 'untitled' || scheme === 'vscode-remote';
-    const isLiveShareTmpFile = fsPath.match(/.*\.code-workspace.*vsliveshare.*tmp-.*/);
-    const isInternalFile = fsPath.match(
-      /.*\.iceworks.*/,
-    );
-
-    // return false that its not a doc that we want to track based on the
-    // following conditions:
-    // non-doc scheme, is liveShare tmp file, is internal file and the file is no longer active
-    if (
-      !isDocEventScheme ||
-      isLiveShareTmpFile ||
-      isInternalFile ||
-      (!isFileActive(fsPath) && !isCloseEvent)
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  private getTextChangeInfo(contentChange: TextDocumentContentChangeEvent) {
-    const { rangeLength, text, range } = contentChange;
-
-    let textChangeLen = text?.length;
-    const linesChanged = range.end.line - range.start.line;
-    const newLineMatches = text?.match(/[\n\r]/g);
-
-    let linesAdded = 0;
-    let linesDeleted = 0;
-    let isCharDelete = false;
-    if (linesChanged) {
-      // update removed lines
-      linesDeleted = linesChanged;
-    } else if (newLineMatches && textChangeLen) {
-      // this means there are new lines added
-      linesAdded = newLineMatches.length;
-    } else if (rangeLength && !text) {
-      // this may be a character delete
-      isCharDelete = true;
-    }
-
-    // check if its a character deletion
-    if (!textChangeLen && rangeLength) {
-      // NO content text but has a range change length, set the textChangeLen
-      // to the inverse of the rangeLength to show the chars deleted
-      textChangeLen = rangeLength / -1;
-    }
-
-    let hasNonNewLine = false;
-    if (textChangeLen && !linesAdded && !linesDeleted) {
-      // flag to state we have chars deleted but no new lines
-      hasNonNewLine = true;
-    }
-
-    let hasChanges = false;
-    if (linesAdded || linesDeleted || textChangeLen || isCharDelete) {
-      // there are changes
-      hasChanges = true;
-    }
-
-    return {
-      linesAdded,
-      linesDeleted,
-      textChangeLen,
-      isCharDelete,
-      hasNonNewLine,
-      hasChanges,
-    };
-  }
+  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
 
   public activate() {
     // document listener handlers
@@ -115,38 +33,6 @@ export class KeystrokeStatsRecorder {
     }));
 
     cleanTextInfoCache();
-  }
-
-  private async sendKeystrokeStats(projectPath: string) {
-    const keystrokeStats = keystrokeStatsMap[projectPath];
-    if (keystrokeStats) {
-      await keystrokeStats.sendData();
-      delete keystrokeStatsMap[projectPath];
-    }
-  }
-
-  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
-
-  private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
-    const { directory: projectPath } = project;
-    let keystrokeStats = keystrokeStatsMap[projectPath];
-
-    // create the keystroke count if it doesn't exist
-    if (!keystrokeStats) {
-      keystrokeStats = new KeystrokeStats(project);
-      keystrokeStats.activate();
-      this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
-        logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
-        this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
-      }, recordKeystrokeDurationMins);
-    }
-
-    if (!keystrokeStats.hasFile(fsPath)) {
-      keystrokeStats.addFile(fsPath);
-    }
-
-    keystrokeStatsMap[projectPath] = keystrokeStats;
-    return keystrokeStats;
   }
 
   public async onDidOpenTextDocument(textDocument: TextDocument) {
@@ -256,5 +142,119 @@ export class KeystrokeStatsRecorder {
     if (!windowState.focused) {
       await this.sendKeystrokeStatsMap();
     }
+  }
+
+  /**
+  * This will return true if it's a validated file.
+  * we don't want to send events for .git or
+  * other event triggers such as extension.js.map events
+  */
+  private isValidatedFile(textDocument: TextDocument, fsPath: string, isCloseEvent?: boolean) {
+    if (!fsPath) {
+      return false;
+    }
+
+    const { scheme } = textDocument.uri;
+
+    // we'll get 'git' as a scheme, but these are the schemes that match to open files in the editor
+    const isDocEventScheme = scheme === 'file' || scheme === 'untitled' || scheme === 'vscode-remote';
+    const isLiveShareTmpFile = fsPath.match(/.*\.code-workspace.*vsliveshare.*tmp-.*/);
+    const isInternalFile = fsPath.match(
+      /.*\.iceworks.*/,
+    );
+
+    // return false that its not a doc that we want to track based on the
+    // following conditions:
+    // non-doc scheme, is liveShare tmp file, is internal file and the file is no longer active
+    if (
+      !isDocEventScheme ||
+      isLiveShareTmpFile ||
+      isInternalFile ||
+      (!isFileActive(fsPath) && !isCloseEvent)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private getTextChangeInfo(contentChange: TextDocumentContentChangeEvent) {
+    const { rangeLength, text, range } = contentChange;
+
+    let textChangeLen = text?.length;
+    const linesChanged = range.end.line - range.start.line;
+    const newLineMatches = text?.match(/[\n\r]/g);
+
+    let linesAdded = 0;
+    let linesDeleted = 0;
+    let isCharDelete = false;
+    if (linesChanged) {
+      // update removed lines
+      linesDeleted = linesChanged;
+    } else if (newLineMatches && textChangeLen) {
+      // this means there are new lines added
+      linesAdded = newLineMatches.length;
+    } else if (rangeLength && !text) {
+      // this may be a character delete
+      isCharDelete = true;
+    }
+
+    // check if its a character deletion
+    if (!textChangeLen && rangeLength) {
+      // NO content text but has a range change length, set the textChangeLen
+      // to the inverse of the rangeLength to show the chars deleted
+      textChangeLen = rangeLength / -1;
+    }
+
+    let hasNonNewLine = false;
+    if (textChangeLen && !linesAdded && !linesDeleted) {
+      // flag to state we have chars deleted but no new lines
+      hasNonNewLine = true;
+    }
+
+    let hasChanges = false;
+    if (linesAdded || linesDeleted || textChangeLen || isCharDelete) {
+      // there are changes
+      hasChanges = true;
+    }
+
+    return {
+      linesAdded,
+      linesDeleted,
+      textChangeLen,
+      isCharDelete,
+      hasNonNewLine,
+      hasChanges,
+    };
+  }
+
+  private async sendKeystrokeStats(projectPath: string) {
+    const keystrokeStats = keystrokeStatsMap[projectPath];
+    if (keystrokeStats) {
+      await keystrokeStats.sendData();
+      delete keystrokeStatsMap[projectPath];
+    }
+  }
+
+  private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
+    const { directory: projectPath } = project;
+    let keystrokeStats = keystrokeStatsMap[projectPath];
+
+    // create the keystroke count if it doesn't exist
+    if (!keystrokeStats) {
+      keystrokeStats = new KeystrokeStats(project);
+      keystrokeStats.activate();
+      this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
+        logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
+        this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
+      }, recordKeystrokeDurationMins);
+    }
+
+    if (!keystrokeStats.hasFile(fsPath)) {
+      keystrokeStats.addFile(fsPath);
+    }
+
+    keystrokeStatsMap[projectPath] = keystrokeStats;
+    return keystrokeStats;
   }
 }
