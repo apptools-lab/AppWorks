@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.1
+
+- fix: ensure that the code time is not negative
+
 ## 0.2.0
 
 - feat: refresh views when window is focused
