@@ -13,11 +13,11 @@ export class FileWatch implements FileWatchInfo {
 
   public projectDirectory: string;
 
-  public length: number;
-
-  public lineCount: number;
-
   public syntax: string;
+
+  public length = 0;
+
+  public lineCount = 0;
 
   public start = 0;
 
@@ -44,8 +44,18 @@ export class FileWatch implements FileWatchInfo {
   }
 
   deactivate() {
-    const durationSeconds = this.end - this.start;
-    this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
+    if (this.start && this.end) {
+      const durationSeconds = this.end - this.start;
+      this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
+    }
+  }
+
+  setStart(time?: number) {
+    this.start = time || getNowUTCSec();
+  }
+
+  setEnd(time?: number) {
+    this.end = time || getNowUTCSec();
   }
 }
 
@@ -63,17 +73,19 @@ export class WatchStats {
   }
 
   hasData(): boolean {
-    return false;
+    const keys = Object.keys(this.files);
+    return keys.length > 0;
   }
 
-  hasFile(fsPath: string): boolean {
-    return !!this.files[fsPath];
+  getFile(fsPath: string): FileWatch {
+    return this.files[fsPath];
   }
 
-  addFile(fsPath: string): void {
+  addFile(fsPath: string): FileWatch {
     const fileWatch = FileWatch.createInstance(fsPath, this.project);
     fileWatch.activate();
     this.files[fsPath] = fileWatch;
+    return fileWatch;
   }
 
   setStart(time?: number) {

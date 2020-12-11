@@ -26,6 +26,7 @@ export class KeystrokeStatsRecorder {
 
   public async sendKeystrokeStatsMap() {
     await Promise.all(Object.keys(keystrokeStatsMap).map(async (projectPath) => {
+      // clear other sending instructions and prevent multiple sending
       if (this.keystrokeStatsTimeouts[projectPath]) {
         clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
       }
@@ -45,11 +46,7 @@ export class KeystrokeStatsRecorder {
       return;
     }
 
-    const projectInfo = await Project.createInstance(fsPath);
-
-    const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
-    // this.endPreviousModifiedFiles(keyStrokeStats, fsPath);
-
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
     const currentFileChange = keyStrokeStats.files[fsPath];
     currentFileChange.updateTextInfo(textDocument);
     currentFileChange.open += 1;
@@ -65,14 +62,9 @@ export class KeystrokeStatsRecorder {
       return;
     }
 
-    const projectInfo = await Project.createInstance(fsPath);
-    const keyStrokeStats = keystrokeStatsMap[projectInfo.directory];
-    if (keyStrokeStats) {
-      const currentFileChange = keyStrokeStats.files[fsPath];
-      if (currentFileChange) {
-        currentFileChange.close += 1;
-      }
-    }
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
+    currentFileChange.close += 1;
   }
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
@@ -91,9 +83,7 @@ export class KeystrokeStatsRecorder {
       return;
     }
 
-    const projectInfo = await Project.createInstance(fsPath);
-    const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
-
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
     const currentFileChange = keyStrokeStats.files[fsPath];
     if (!currentFileChange.start) {
       currentFileChange.setStart();
@@ -236,11 +226,11 @@ export class KeystrokeStatsRecorder {
     }
   }
 
-  private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
+  private async createKeystrokeStats(fsPath: string): Promise<KeystrokeStats> {
+    const project = await Project.createInstance(fsPath);
     const { directory: projectPath } = project;
     let keystrokeStats = keystrokeStatsMap[projectPath];
 
-    // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
       keystrokeStats = new KeystrokeStats(project);
       keystrokeStats.activate();

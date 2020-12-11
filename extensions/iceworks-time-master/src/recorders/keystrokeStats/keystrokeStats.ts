@@ -77,9 +77,13 @@ export class FileChange implements FileChangeInfo {
   }
 
   deactivate() {
-    this.update = 1;
-    const durationSeconds = this.end - this.start;
-    this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
+    if (this.keystrokes) {
+      this.update = 1;
+    }
+    if (this.start && this.end) {
+      const durationSeconds = this.end - this.start;
+      this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
+    }
   }
 
   setStart(time?: number) {
