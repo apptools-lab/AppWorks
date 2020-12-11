@@ -3,6 +3,7 @@ import logger from '../../utils/logger';
 import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/file';
 import { WatchStats } from './watchStats';
+import { NODE_ACTIVE_TEXT_EDITOR_NAME } from '../../constants';
 
 const watchStatsMap: {[projectPath: string]: WatchStats} = {};
 
@@ -26,25 +27,27 @@ export class WatchStatsRecorder {
 
   async startRecord() {
     const { activeTextEditor } = window;
-    const { document } = activeTextEditor;
-    const fsPath = document?.fileName;
+    const fsPath = activeTextEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
 
     this.currentFsPath = fsPath;
+
+    // start watch
     const watchStats = await this.createWatchStats(fsPath);
     const currentWatchFile = watchStats.files[fsPath];
-    // currentWatchFile.updateTextInfo(document);
     currentWatchFile.setStart();
+    currentWatchFile.updateTextInfo(activeTextEditor?.document);
   }
 
   async endRecord() {
     await Promise.all(Object.keys(watchStatsMap).map(async (projectPath) => {
       const watchStats = watchStatsMap[projectPath];
-      if (watchStats) {
-        watchStats.files[this.currentFsPath]?.setEnd();
-        await watchStats.sendData();
-        delete watchStats[projectPath];
-        this.currentFsPath = undefined;
-      }
+
+      // end current watch
+      watchStats.files[this.currentFsPath]?.setEnd();
+      this.currentFsPath = undefined;
+
+      await watchStats.sendData();
+      delete watchStatsMap[projectPath];
     }));
 
     cleanTextInfoCache();
@@ -63,18 +66,18 @@ export class WatchStatsRecorder {
   async onDidChangeActiveTextEditor(textEditor: TextEditor) {
     logger.debug('[EditorStatsRecorder][onDidChangeActiveTextEditor][textEditor]', textEditor);
 
-    const { document } = textEditor;
-    const fsPath = document?.fileName;
+    const fsPath = textEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
     if (fsPath !== this.currentFsPath) {
-      const watchStats = await this.createWatchStats(this.currentFsPath);
-      watchStats.files[this.currentFsPath].setEnd();
+      // end current watch
+      const currentWatchStats = await this.createWatchStats(this.currentFsPath);
+      currentWatchStats.files[this.currentFsPath].setEnd();
 
-      let currentFile = watchStats.getFile(fsPath);
-      if (!currentFile) {
-        currentFile = watchStats.addFile(fsPath);
-      }
-      currentFile.setStart();
+      // stat new watch
       this.currentFsPath = fsPath;
+      const newWatchStats = await this.createWatchStats(fsPath);
+      const newWatchFile = newWatchStats.files[fsPath];
+      newWatchFile.setStart();
+      newWatchFile.updateTextInfo(textEditor?.document);
     }
   }
 

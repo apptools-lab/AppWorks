@@ -12,9 +12,9 @@ export function getTextInfo(textDocument: TextDocument, fileName: string): FileT
   }
 
   textInfoCache[fileName] = {
-    syntax: textDocument.languageId || textDocument.fileName.split('.').slice(-1)[0],
-    length: textDocument.getText().length || 0,
-    lineCount: textDocument.lineCount || 0,
+    syntax: textDocument?.languageId || textDocument?.fileName.split('.').slice(-1)[0] || '',
+    length: textDocument?.getText().length || 0,
+    lineCount: textDocument?.lineCount || 0,
   };
   return textInfoCache[fileName];
 }

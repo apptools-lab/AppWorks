@@ -1,6 +1,7 @@
 import * as path from 'path';
+import { TextDocument } from 'vscode';
 import { Project } from '../../storages/project';
-import { FileWatchInfo } from '../../storages/file';
+import { FileWatchInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
 import logger from '../../utils/logger';
 
@@ -39,15 +40,19 @@ export class FileWatch implements FileWatchInfo {
     return fileChange;
   }
 
+  updateTextInfo(textDocument: TextDocument) {
+    const { syntax, length, lineCount } = getTextInfo(textDocument, this.fileName);
+    this.syntax = syntax;
+    this.length = length;
+    this.lineCount = lineCount;
+  }
+
   activate() {
     // placeholder
   }
 
   deactivate() {
-    if (this.start && this.end) {
-      const durationSeconds = this.end - this.start;
-      this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
-    }
+    // placeholder
   }
 
   setStart(time?: number) {
@@ -55,7 +60,19 @@ export class FileWatch implements FileWatchInfo {
   }
 
   setEnd(time?: number) {
-    this.end = time || getNowUTCSec();
+    const end = time || getNowUTCSec();
+    let durationSeconds = 0;
+    if (this.start) {
+      durationSeconds = end - this.start;
+    }
+
+    this.end = end;
+    this.incrementDurationSeconds(durationSeconds);
+  }
+
+  incrementDurationSeconds(durationSeconds: number) {
+    const increment = durationSeconds > 0 ? durationSeconds : 0;
+    this.durationSeconds += increment;
   }
 }
 
@@ -101,7 +118,7 @@ export class WatchStats {
     logger.debug('[WatchStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
-      // await processData(this);
+      logger.debug('[WatchStats][sendData]this', this);
     }
   }
 
