@@ -11,7 +11,7 @@ export class WatchStatsRecorder {
   private currentFsPath: string;
 
   async activate() {
-    logger.debug('[EditorStatsRecorder][activate][focused]', window.state.focused);
+    logger.debug('[WatchStatsRecorder][activate][focused]', window.state.focused);
 
     if (window.state.focused) {
       this.startRecord();
@@ -29,6 +29,8 @@ export class WatchStatsRecorder {
     const { activeTextEditor } = window;
     const fsPath = activeTextEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
 
+    logger.debug('[WatchStatsRecorder][startRecord][fsPath]', fsPath);
+
     this.currentFsPath = fsPath;
 
     // start watch
@@ -39,7 +41,10 @@ export class WatchStatsRecorder {
   }
 
   async endRecord() {
-    await Promise.all(Object.keys(watchStatsMap).map(async (projectPath) => {
+    const watchStatsMapKeys = Object.keys(watchStatsMap);
+    logger.debug('[WatchStatsRecorder][endRecord][watchStatsMapKeys]', watchStatsMapKeys);
+
+    await Promise.all(watchStatsMapKeys.map(async (projectPath) => {
       const watchStats = watchStatsMap[projectPath];
 
       // end current watch
@@ -54,7 +59,7 @@ export class WatchStatsRecorder {
   }
 
   async onDidChangeWindowState(windowState: WindowState) {
-    logger.debug('[EditorStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
+    logger.debug('[WatchStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
 
     if (!windowState.focused) {
       await this.endRecord();
@@ -64,9 +69,11 @@ export class WatchStatsRecorder {
   }
 
   async onDidChangeActiveTextEditor(textEditor: TextEditor) {
-    logger.debug('[EditorStatsRecorder][onDidChangeActiveTextEditor][textEditor]', textEditor);
-
     const fsPath = textEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
+
+    logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][fsPath]', fsPath);
+    logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][currentFsPath]', this.currentFsPath);
+
     if (fsPath !== this.currentFsPath) {
       // end current watch
       const currentWatchStats = await this.createWatchStats(this.currentFsPath);
