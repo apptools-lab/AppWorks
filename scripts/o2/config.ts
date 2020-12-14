@@ -14,6 +14,7 @@ export const packages4pack = [
   {
     packageName: '@ali/publish-visual',
     isActiveNode: true,
+    isActiveBrowser: true,
   },
 ];
 export const npmRegistry = process.env.REGISTRY ? process.env.REGISTRY : 'https://registry.npm.alibaba-inc.com';

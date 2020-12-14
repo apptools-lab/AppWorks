@@ -1,11 +1,12 @@
 import * as execa from 'execa';
-import { readJson, writeJson, copy, readdir, pathExists, writeFile, mkdirp, remove } from 'fs-extra';
+import { readJson, writeJson, copy, readdir, pathExists, writeFile, remove } from 'fs-extra';
+import * as globSync from 'glob';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
 import * as padStart from 'lodash.padstart';
 import * as util from 'util';
-import { join } from 'path';
+import { join, basename } from 'path';
 import { getLatestVersion } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
@@ -13,6 +14,7 @@ import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PA
 import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry, packages4pack } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
+const glob = util.promisify(globSync);
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
 
@@ -221,29 +223,37 @@ async function generalPackSource(extensions) {
   const sourceName = 'src';
   const templateSourcePath = join(TEMPLATE_DIR, sourceName);
   const packSourcePath = join(PACK_DIR, sourceName);
+
   await remove(packSourcePath);
   await copy(templateSourcePath, packSourcePath);
 
-  // general node entry
-  const templateNodeEntryFileName = 'index.ts.ejs';
-  const templateNodeEntryPath = join(join(TEMPLATE_DIR, templateNodeEntryFileName));
-  const packages = [...extensions, ...packages4pack].map(({ packageName, isActiveNode }) => {
+  const files = await glob('**', {
+    cwd: packSourcePath,
+    nodir: true,
+  });
+  const packages = [...extensions, ...packages4pack].map(({ packageName, isActiveNode, isActiveBrowser }) => {
     const func = camelCase(packageName);
     return {
       packageName,
       isActiveNode,
+      isActiveBrowser,
       activateFunc: `${func}Active`,
       deactivateFunc: `${func}Deactivate`,
       activateNodeFunc: `${func}NodeActive`,
       deactivateNodeFunc: `${func}NodeDeactivate`,
     };
   });
-  // @ts-ignore
-  const nodeEntryContent = await renderFile(templateNodeEntryPath, { packages });
-  const nodeEntryFileName = templateNodeEntryFileName.replace(/\.ejs$/, '');
-  const nodeEntryDir = join(packSourcePath, 'node');
-  await mkdirp(nodeEntryDir);
-  await writeFile(join(nodeEntryDir, nodeEntryFileName), nodeEntryContent);
+  await Promise.all(files.map(async (file) => {
+    const filePath = join(packSourcePath, file);
+    const fileName = basename(filePath);
+    const esMatchExpression = /\.ejs$/;
+    if (esMatchExpression.test(fileName)) {
+      const newFilePath = join(filePath, '../', fileName.replace(esMatchExpression, ''));
+      const content = await renderFile(filePath, { packages });
+      await writeFile(newFilePath, content);
+      await remove(filePath);
+    }
+  }));
 }
 
 async function generalPack() {
