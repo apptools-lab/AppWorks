@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { ALI_DIP_PRO } from '@iceworks/constant';
 import { KeystrokeStats, FileChange } from '../recorders/keystrokeStats';
-import { FileChangeInfo, FileEventInfo, WatchStatsInfo } from '../storages/file';
+import { FileChangeInfo, FileEventInfo, FileWatchInfo } from '../storages/file';
 import { getStoragePayloadsPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
@@ -44,7 +44,7 @@ export interface WatchPayload extends
   ExtensionInfo,
   SystemInfo,
   UserInfo,
-  WatchStatsInfo {
+  FileWatchInfo {
 }
 
 /**
