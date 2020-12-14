@@ -1,15 +1,15 @@
 import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './views/timerProvider';
 import { openFileInEditor } from './utils/common';
-import { KeystrokeStatsRecorder } from './recorders/keystrokeStats';
-import { WatchStatsRecorder } from './recorders/watchStats';
+import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
+import { getInterface as getWathStatsRecorder } from './recorders/watchStats';
 import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
 
-let keystrokeStatsRecorder: KeystrokeStatsRecorder;
-let wathStatsRecorder: WatchStatsRecorder;
+const keystrokeStatsRecorder = getKeystrokeStats();
+const wathStatsRecorder = getWathStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
   logger.debug('[TimeMaster][extension] activate!');
@@ -25,10 +25,7 @@ export async function activate(context: ExtensionContext) {
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
 
-  keystrokeStatsRecorder = new KeystrokeStatsRecorder();
   keystrokeStatsRecorder.activate();
-
-  wathStatsRecorder = new WatchStatsRecorder();
   wathStatsRecorder.activate();
 
   subscriptions.push(

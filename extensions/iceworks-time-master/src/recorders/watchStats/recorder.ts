@@ -25,22 +25,7 @@ export class WatchStatsRecorder {
     // placeholder
   }
 
-  async startRecord() {
-    const { activeTextEditor } = window;
-    const fsPath = activeTextEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
-
-    logger.debug('[WatchStatsRecorder][startRecord][fsPath]', fsPath);
-
-    this.currentFsPath = fsPath;
-
-    // start watch
-    const watchStats = await this.createWatchStats(fsPath);
-    const currentWatchFile = watchStats.files[fsPath];
-    currentWatchFile.setStart();
-    currentWatchFile.updateTextInfo(activeTextEditor?.document);
-  }
-
-  async endRecord() {
+  async sendData() {
     const watchStatsMapKeys = Object.keys(watchStatsMap);
     logger.debug('[WatchStatsRecorder][endRecord][watchStatsMapKeys]', watchStatsMapKeys);
 
@@ -58,7 +43,26 @@ export class WatchStatsRecorder {
     cleanTextInfoCache();
   }
 
-  async onDidChangeWindowState(windowState: WindowState) {
+  private async startRecord() {
+    const { activeTextEditor } = window;
+    const fsPath = activeTextEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
+
+    logger.debug('[WatchStatsRecorder][startRecord][fsPath]', fsPath);
+
+    this.currentFsPath = fsPath;
+
+    // start watch
+    const watchStats = await this.createWatchStats(fsPath);
+    const currentWatchFile = watchStats.files[fsPath];
+    currentWatchFile.setStart();
+    currentWatchFile.updateTextInfo(activeTextEditor?.document);
+  }
+
+  private async endRecord() {
+    await this.sendData();
+  }
+
+  private async onDidChangeWindowState(windowState: WindowState) {
     logger.debug('[WatchStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
 
     if (!windowState.focused) {
@@ -68,7 +72,7 @@ export class WatchStatsRecorder {
     }
   }
 
-  async onDidChangeActiveTextEditor(textEditor: TextEditor) {
+  private async onDidChangeActiveTextEditor(textEditor: TextEditor) {
     const fsPath = textEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
 
     logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][fsPath]', fsPath);
@@ -105,4 +109,12 @@ export class WatchStatsRecorder {
     watchStatsMap[projectPath] = watchStats;
     return watchStats;
   }
+}
+
+let wathStatsRecorder: WatchStatsRecorder;
+export function getInterface() {
+  if (!wathStatsRecorder) {
+    wathStatsRecorder = new WatchStatsRecorder();
+  }
+  return wathStatsRecorder;
 }

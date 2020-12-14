@@ -3,7 +3,10 @@ import { setNowDay, isNewDay } from '../utils/time';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
 import logger, { reloadLogger } from '../utils/logger';
-import { checkMidnightDurationMins, snedPayloadDurationMins } from '../config';
+import { getInterface as getWathStatsRecorder } from '../recorders/watchStats';
+import { checkMidnightDurationMins, snedPayloadDurationMins, processWatchStatsDurationMins } from '../config';
+
+const wathStatsRecorder = getWathStatsRecorder();
 
 export async function checkMidnight() {
   if (isNewDay()) {
@@ -27,6 +30,7 @@ export async function checkMidnight() {
 
 let dayCheckTimer: NodeJS.Timeout;
 let sendDataTimer: NodeJS.Timeout;
+let processWatchStatsTimmer: NodeJS.Timeout;
 
 export async function activate() {
   dayCheckTimer = setInterval(() => {
@@ -38,6 +42,14 @@ export async function activate() {
       logger.debug('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
   }, snedPayloadDurationMins);
+
+  processWatchStatsTimmer = setInterval(() => {
+    if (window.state.focused) {
+      wathStatsRecorder.sendData().catch((e) => {
+        logger.debug('[walkClock][activate][setInterval]wathStatsRecorder got error:', e);
+      });
+    }
+  }, processWatchStatsDurationMins);
 
   window.onDidChangeWindowState((windowState: WindowState) => {
     if (windowState.focused) {
@@ -55,6 +67,9 @@ export function deactivate() {
   }
   if (sendDataTimer) {
     clearInterval(sendDataTimer);
+  }
+  if (processWatchStatsTimmer) {
+    clearInterval(processWatchStatsTimmer);
   }
 }
 

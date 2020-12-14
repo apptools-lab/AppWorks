@@ -3,8 +3,8 @@ import { getFilesSummary, getFileSummaryDefaults, saveFilesSummary } from '../..
 
 const forIn = require('lodash.forin');
 
-export { KeystrokeStatsRecorder } from './recorder';
-export { KeystrokeStats, FileChange } from './keystrokeStats';
+export * from './recorder';
+export * from './keystrokeStats';
 export async function updateFilesSummary(keystrokeStats: KeystrokeStats) {
   const { files } = keystrokeStats;
   let linesAdded = 0;

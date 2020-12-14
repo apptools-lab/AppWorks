@@ -3,9 +3,8 @@ import { getFilesSummary, saveFilesSummary, getFileSummaryDefaults } from '../..
 
 const forIn = require('lodash.forin');
 
-export { WatchStatsRecorder } from './recorder';
-export { WatchStats, FileWatch } from './watchStats';
-
+export * from './recorder';
+export * from './watchStats';
 export async function updateFilesSummary(watchStats: WatchStats) {
   const { files } = watchStats;
   let editorSeconds = 0;

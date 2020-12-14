@@ -248,3 +248,11 @@ export class KeystrokeStatsRecorder {
     return keystrokeStats;
   }
 }
+
+let keystrokeStatsRecorder: KeystrokeStatsRecorder;
+export function getInterface() {
+  if (!keystrokeStatsRecorder) {
+    keystrokeStatsRecorder = new KeystrokeStatsRecorder();
+  }
+  return keystrokeStatsRecorder;
+}
