@@ -11,6 +11,7 @@ import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
+import { WatchStats } from '../recorders/watchStats';
 
 import forIn = require('lodash.forin');
 
@@ -93,8 +94,8 @@ export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
 /**
  * TODO
  */
-export async function appendEditorTimePayload() {
-  // hold
+export async function appendWatchTimePayload(watchStats: WatchStats) {
+  console.log(watchStats);
 }
 
 export async function sendPayload(force?: boolean) {

@@ -83,7 +83,7 @@ export class Project implements ProjectInfo {
 
 interface ProjectData {
   sessionSeconds: number;
-  editorSeconds?: number;
+  editorSeconds: number;
   keystrokes: number;
   linesAdded: number;
   linesRemoved: number;
@@ -120,16 +120,19 @@ export async function clearProjectsSummary() {
   await saveProjectsSummary({});
 }
 
-export async function updateProjectSummary(project: Project, increment: ProjectData) {
+export async function updateProjectSummary(project: Project, increment: Partial<ProjectData>) {
   const projectsSummary = await getProjectsSummary();
   const { directory } = project;
-  const { sessionSeconds, editorSeconds, keystrokes, linesAdded, linesRemoved } = increment;
+  const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0 } = increment;
   let projectSummary = projectsSummary[directory];
   if (!projectSummary) {
     projectSummary = {
       ...project,
-      ...increment,
-      editorSeconds: editorSeconds || sessionSeconds,
+      sessionSeconds,
+      editorSeconds,
+      keystrokes,
+      linesAdded,
+      linesRemoved,
     };
   } else {
     Object.assign(
@@ -140,6 +143,7 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
     projectSummary.linesRemoved += linesRemoved;
     projectSummary.keystrokes += keystrokes;
     projectSummary.sessionSeconds += sessionSeconds;
+    projectSummary.editorSeconds += editorSeconds;
     projectSummary.editorSeconds = Math.max(
       projectSummary.editorSeconds,
       projectSummary.sessionSeconds,

@@ -17,7 +17,7 @@ export class UserSummary {
   /**
    * Editor usage time
    */
-  editorSeconds?: number = 0;
+  editorSeconds = 0;
 
   keystrokes = 0;
 
@@ -53,8 +53,8 @@ export async function clearUserSummary() {
   await saveUserSummary(userSummary);
 }
 
-export async function updateUserSummary(increment: UserSummary) {
-  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = increment;
+export async function updateUserSummary(increment: Partial<UserSummary>) {
+  const { linesAdded = 0, linesRemoved = 0, keystrokes = 0, sessionSeconds = 0, editorSeconds = 0 } = increment;
   const userSummary = await getUserSummary();
   userSummary.sessionSeconds += sessionSeconds;
   userSummary.editorSeconds += editorSeconds;

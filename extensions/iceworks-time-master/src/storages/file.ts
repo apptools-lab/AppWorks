@@ -173,7 +173,7 @@ export interface FileSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'duratio
   /**
    * File editor usage time
    */
-  editorSeconds?: number;
+  editorSeconds: number;
 }
 
 export interface FilesSummary {

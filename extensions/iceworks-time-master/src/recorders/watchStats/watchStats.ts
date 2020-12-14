@@ -4,6 +4,7 @@ import { Project } from '../../storages/project';
 import { FileWatchInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
 import logger from '../../utils/logger';
+import { processData } from '../../managers/data';
 
 import forIn = require('lodash.forin');
 
@@ -118,7 +119,7 @@ export class WatchStats {
     logger.debug('[WatchStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
-      logger.debug('[WatchStats][sendData]this', this);
+      await processData(this);
     }
   }
 
