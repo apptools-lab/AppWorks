@@ -5,27 +5,27 @@ export const pushExtension2NPM = false;
 export const innerExtensions4pack = [
   {
     packageName: 'iceworks-team.iceworks-app',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   {
     packageName: 'iceworks-team.iceworks-config-helper',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   {
     packageName: 'iceworks-team.iceworks-material-helper',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   {
     packageName: 'iceworks-team.iceworks-style-helper',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   {
     packageName: 'iceworks-team.iceworks-ui-builder',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   {
     packageName: 'iceworks-team.iceworks-time-master',
-    assetsFolders: ['assetsFolders', 'schemas'],
+    assetsFolders: ['assets', 'schemas'],
   },
   // 'iceworks-team.iceworks-doctor',
   // 'iceworks-team.iceworks-project-creator',

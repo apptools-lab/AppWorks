@@ -1,21 +1,22 @@
 import * as util from 'util';
-import { join, basename } from 'path';
 import * as execa from 'execa';
-import { readJson, writeJson, copy, readdir, pathExists, writeFile, remove, mkdirp } from 'fs-extra';
 import * as globSync from 'glob';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
 import * as padStart from 'lodash.padstart';
 import packageJSON from 'package-json';
-import { getLatestVersion, getAndExtractTarball } from 'ice-npm-utils';
 import * as ejs from 'ejs';
+import { join, basename } from 'path';
+import { readJson, writeJson, copy, readdir, pathExists, writeFile, remove, mkdirp } from 'fs-extra';
+import { getLatestVersion, getAndExtractTarball } from 'ice-npm-utils';
 import scanDirectory from '../fn/scanDirectory';
 import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
-import { isBeta, pushExtension2NPM, innerExtensions4pack, npmRegistry, otherExtensions4pack } from './config';
+import { isBeta, pushExtension2NPM, npmRegistry, innerExtensions4pack, otherExtensions4pack } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
 const glob = util.promisify(globSync);
+
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
 const TMP_DIR = join(__dirname, 'tmp');
@@ -40,7 +41,7 @@ function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
-async function mergePackageJSON2Pack(values) {
+async function mergeValues2PackJSON(values) {
   const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
   merge(extensionPackageJSON, values);
   await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
@@ -210,7 +211,7 @@ async function mergeExtensionsToPack(extensions) {
   }
 
   const { manifests, nlsContents } = await getExtensionsRelatedInfo();
-  await mergePackageJSON2Pack(manifests);
+  await mergeValues2PackJSON(manifests);
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
