@@ -185,7 +185,7 @@ async function mergeExtensionsToPack(extensions) {
             commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
-          dependencies: { [pushExtension2Npm ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
+          dependencies: { [(pushExtension2Npm || isOther) ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
           kaitianContributes: {
             ...merge({}, manifests.kaitianContributes, kaitianContributes),
           },
