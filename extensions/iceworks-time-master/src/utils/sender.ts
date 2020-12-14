@@ -4,19 +4,19 @@ import axios from 'axios';
 import * as fse from 'fs-extra';
 import { ALI_DIP_PRO } from '@iceworks/constant';
 import { KeystrokeStats, FileChange } from '../recorders/keystrokeStats';
-import { FileChangeInfo, FileEventInfo } from '../storages/file';
+import { FileChangeInfo, FileEventInfo, WatchStatsInfo } from '../storages/file';
 import { getStoragePayloadsPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
-import { WatchStats } from '../recorders/watchStats';
+import { FileWatch, WatchStats } from '../recorders/watchStats';
 
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
-const EDITOR_TIME_RECORD = 'editor_time';
+const WATCHER_RECORD = 'watches';
 
 const url = `${ALI_DIP_PRO}/api`;
 
@@ -38,8 +38,13 @@ export interface KeystrokesPayload extends
   Omit<FileChangeInfo, keyof FileEventInfo> {
 }
 
-export interface EditorTimePayload extends ProjectParams, EditorInfo, ExtensionInfo, SystemInfo, UserInfo {
-  durationSeconds: number;
+export interface WatchPayload extends
+  ProjectParams,
+  EditorInfo,
+  ExtensionInfo,
+  SystemInfo,
+  UserInfo,
+  WatchStatsInfo {
 }
 
 /**
@@ -58,51 +63,53 @@ function checkIsSendNow(): boolean {
   return window.state.focused;
 }
 
-function transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats: KeystrokeStats): KeystrokesPayload[] {
-  const data: KeystrokesPayload[] = [];
+function transformDataToPayload(keystrokeStats: KeystrokeStats|WatchStats): Array<KeystrokesPayload|WatchPayload> {
+  const data: Array<KeystrokesPayload|WatchPayload> = [];
   const { files, project } = keystrokeStats;
   const { name: projectName, directory: projectDirectory, gitRepository, gitBranch, gitTag } = project;
-  forIn(files, (fileChange: FileChange) => {
-    data.push({
-      ...fileChange,
-      projectName,
-      projectDirectory,
-      gitRepository,
-      gitBranch,
-      gitTag,
+  const defaultValues = {
+    projectName,
+    projectDirectory,
+    gitRepository,
+    gitBranch,
+    gitTag,
 
-      // placeholder, will fill it before send
-      userId: '',
-      editorName: '',
-      editorVersion: '',
-      extensionName: '',
-      extensionVersion: '',
-      os: '',
-      hostname: '',
-      timezone: '',
+    // placeholder, will fill it before send
+    userId: '',
+    editorName: '',
+    editorVersion: '',
+    extensionName: '',
+    extensionVersion: '',
+    os: '',
+    hostname: '',
+    timezone: '',
+  };
+  forIn(files, (file: FileChange|FileWatch) => {
+    data.push({
+      ...file,
+      ...defaultValues,
     });
   });
   return data;
 }
 
 export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
-  const playload = transformKeyStrokeStatsToKeystrokesPayload(keystrokeStats);
+  const playload = transformDataToPayload(keystrokeStats);
   logger.info('[sender][appendKeystrokesPayload] playload length:', playload.length);
   await appendPayloadData(KEYSTROKES_RECORD, playload);
 }
 
-/**
- * TODO
- */
 export async function appendWatchTimePayload(watchStats: WatchStats) {
-  console.log(watchStats);
+  const playload = transformDataToPayload(watchStats);
+  logger.info('[sender][appendWatchTimePayload] playload length:', playload.length);
+  await appendPayloadData(WATCHER_RECORD, playload);
 }
 
 export async function sendPayload(force?: boolean) {
   logger.info('[sender][sendPayload] run, force:', force);
   const isSendable = await checkIsSendable();
   const isSendNow = checkIsSendNow();
-  await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+  await Promise.all([KEYSTROKES_RECORD, WATCHER_RECORD].map(async (TYPE) => {
     logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
     if (isSendable) {
       logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
@@ -136,7 +143,7 @@ export function isResponseOk(response) {
  */
 export async function checkPayloadIsLimited() {
   const playloadLimit = 1024 * 1024 * 10; // mb
-  await Promise.all([KEYSTROKES_RECORD, EDITOR_TIME_RECORD].map(async (TYPE) => {
+  await Promise.all([KEYSTROKES_RECORD, WATCHER_RECORD].map(async (TYPE) => {
     const file = getPayloadFile(TYPE);
     const { size } = await fse.stat(file);
     if (size > playloadLimit) {
@@ -213,12 +220,12 @@ async function clearPayloadData(type: string) {
   await fse.remove(getPayloadFile(type));
 }
 
-async function savePayloadData(type: string, playload: EditorTimePayload[]|KeystrokesPayload[]) {
+async function savePayloadData(type: string, playload: WatchPayload[]|KeystrokesPayload[]) {
   const file = getPayloadFile(type);
   await fse.writeJson(file, playload);
 }
 
-async function appendPayloadData(type: string, data: EditorTimePayload[]|KeystrokesPayload[]) {
+async function appendPayloadData(type: string, data: WatchPayload[]|KeystrokesPayload[]) {
   const playload = await getPayloadData(type);
   const nextData = playload.concat(data);
   await savePayloadData(type, nextData);
