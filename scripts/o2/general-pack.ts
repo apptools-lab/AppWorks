@@ -1,22 +1,24 @@
+import * as util from 'util';
+import { join, basename } from 'path';
 import * as execa from 'execa';
-import { readJson, writeJson, copy, readdir, pathExists, writeFile, remove } from 'fs-extra';
+import { readJson, writeJson, copy, readdir, pathExists, writeFile, remove, mkdirp } from 'fs-extra';
 import * as globSync from 'glob';
 import * as merge from 'lodash.merge';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
 import * as padStart from 'lodash.padstart';
-import * as util from 'util';
-import { join, basename } from 'path';
-import { getLatestVersion } from 'ice-npm-utils';
+import packageJSON from 'package-json';
+import { getLatestVersion, getAndExtractTarball } from 'ice-npm-utils';
 import * as ejs from 'ejs';
 import scanDirectory from '../fn/scanDirectory';
 import { EXTENSIONS_DIRECTORY, PACKAGE_JSON_NAME, PACK_DIR, PACK_PACKAGE_JSON_PATH, PACKAGE_MANAGER } from './constant';
-import { isBeta, pushExtension2NPM, extensions4pack, npmRegistry, packages4pack } from './config';
+import { isBeta, pushExtension2NPM, innerExtensions4pack, npmRegistry, otherExtensions4pack } from './config';
 
 const renderFile = util.promisify(ejs.renderFile);
 const glob = util.promisify(globSync);
 const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
 const TEMPLATE_DIR = join(__dirname, 'template');
+const TMP_DIR = join(__dirname, 'tmp');
 
 const valuesAppendToExtensionPackageJSON = {
   scripts: {
@@ -38,11 +40,13 @@ function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
-async function getPackExtensions() {
-  return extensions4pack;
+async function mergePackageJSON2Pack(values) {
+  const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
+  merge(extensionPackageJSON, values);
+  await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 }
 
-async function publishExtensionsToNpm(extensionPack: string[]) {
+async function publishExtensionsToNpm() {
   const publishedExtensions = [];
   const extensionNames = await scanDirectory(EXTENSIONS_DIRECTORY);
   await Promise.all(
@@ -51,7 +55,8 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
       const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackagePath);
       const { name, publisher, version } = extensionPackageJSON;
-      if (extensionPack.includes(`${publisher}.${name}`)) {
+      const innerExtension4pack = innerExtensions4pack.find(({ packageName }) => packageName === `${publisher}.${name}`);
+      if (innerExtension4pack) {
         const newPackageName = getExtensionNpmName(name);
         if (pushExtension2NPM) {
           // compatible package.json
@@ -77,6 +82,7 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
         }
 
         publishedExtensions.push({
+          ...innerExtension4pack,
           extensionName,
           packageName: newPackageName,
         });
@@ -87,11 +93,6 @@ async function publishExtensionsToNpm(extensionPack: string[]) {
 }
 
 async function mergeExtensionsToPack(extensions) {
-  async function mergePackageJSON2Pack(values) {
-    const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
-    merge(extensionPackageJSON, values);
-    await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
-  }
   async function mergeExtensionsNlsJSON2Pack(values) {
     for (let index = 0; index < values.length; index++) {
       const { fileName, content } = values[index];
@@ -107,20 +108,23 @@ async function mergeExtensionsToPack(extensions) {
     }
   }
   async function copyExtensionAssets2Pack() {
-    const folders = ['assets', 'schemas'];
-    for (let i = 0; i < folders.length; i++) {
-      const assetsFolderName = folders[i];
-      const packAssetsFolderPath = join(PACK_DIR, assetsFolderName);
-      try {
-        await remove(packAssetsFolderPath);
-      } catch (e) {
-        // ignore error
-      }
+    let allAssetsFolders = [];
+    extensions.forEach(({ assetsFolders }) => {
+      allAssetsFolders = allAssetsFolders.concat(assetsFolders);
+    });
+    allAssetsFolders = unionBy(allAssetsFolders);
+    for (let i = 0; i < allAssetsFolders.length; i++) {
+      try { await remove(join(PACK_DIR, allAssetsFolders[i])); } catch (e) { /* ignore error */ }
+    }
 
-      for (let index = 0; index < extensions.length; index++) {
-        const { extensionName } = extensions[index];
-        const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
+    for (let index = 0; index < extensions.length; index++) {
+      const { extensionName, assetsFolders, isOther } = extensions[index];
+      const extensionDir = isOther ? TMP_DIR : EXTENSIONS_DIRECTORY;
+      const extensionFolderPath = join(extensionDir, extensionName);
+      for (let i = 0; i < assetsFolders.length; i++) {
+        const assetsFolderName = assetsFolders[i];
         const assetsFolderPath = join(extensionFolderPath, assetsFolderName);
+        const packAssetsFolderPath = join(PACK_DIR, assetsFolderName);
         const assetsPathIsExists = await pathExists(assetsFolderPath);
         if (assetsPathIsExists) {
           await copy(assetsFolderPath, packAssetsFolderPath, { overwrite: true });
@@ -133,30 +137,38 @@ async function mergeExtensionsToPack(extensions) {
     const packBuildFolderPath = join(PACK_DIR, buildFolderName);
     await remove(packBuildFolderPath);
     for (let index = 0; index < extensions.length; index++) {
-      const { extensionName } = extensions[index];
-      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
-      const assetsFolderPath = join(extensionFolderPath, buildFolderName);
-      const assetsPathIsExists = await pathExists(assetsFolderPath);
-      if (assetsPathIsExists) {
-        await copy(assetsFolderPath, packBuildFolderPath, { overwrite: true });
+      const { extensionName, isOther } = extensions[index];
+      if (!isOther) {
+        const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
+        const assetsFolderPath = join(extensionFolderPath, buildFolderName);
+        const assetsPathIsExists = await pathExists(assetsFolderPath);
+        if (assetsPathIsExists) {
+          await copy(assetsFolderPath, packBuildFolderPath, { overwrite: true });
+        }
       }
     }
   }
   async function getExtensionsRelatedInfo() {
-    let manifests: any = { contributes: { commands: [], views: { iceworksApp: [] } }, activationEvents: [] };
+    let manifests: any = { contributes: { commands: [], views: { iceworksApp: [] } }, activationEvents: [], kaitianContributes: {} };
     let nlsContents = [];
-    await Promise.all(extensions.map(async ({ extensionName }) => {
-      const extensionFolderPath = join(EXTENSIONS_DIRECTORY, extensionName);
-
-      // general manifests
-      const extensionPackagePath = join(extensionFolderPath, PACKAGE_JSON_NAME);
-      const extensionPackageJSON = await readJson(extensionPackagePath);
+    await Promise.all(extensions.map(async ({ extensionName, isOther }) => {
+      const extensionDir = isOther ? TMP_DIR : EXTENSIONS_DIRECTORY;
+      const extensionFolderPath = join(extensionDir, extensionName);
+      const extensionPackageJSONPath = join(extensionFolderPath, PACKAGE_JSON_NAME);
+      const extensionPackageJSON = await readJson(extensionPackageJSONPath);
       const {
         contributes = {},
         activationEvents,
         name,
         version,
+        kaitianContributes = {},
       } = extensionPackageJSON;
+
+      // Delete useless fields
+      delete kaitianContributes.nodeMain;
+      delete kaitianContributes.browserMain;
+      delete kaitianContributes.workerMain;
+
       const { commands = [], views = {} } = contributes;
       const { iceworksApp = [] } = views;
       manifests = merge(
@@ -173,6 +185,9 @@ async function mergeExtensionsToPack(extensions) {
           },
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
           dependencies: { [pushExtension2NPM ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
+          kaitianContributes: {
+            ...merge({}, manifests.kaitianContributes, kaitianContributes),
+          },
         },
       );
 
@@ -196,12 +211,6 @@ async function mergeExtensionsToPack(extensions) {
 
   const { manifests, nlsContents } = await getExtensionsRelatedInfo();
   await mergePackageJSON2Pack(manifests);
-  // set other packages to dependencies
-  const dependencies = {};
-  packages4pack.forEach(({ packageName }) => {
-    dependencies[packageName] = '*';
-  });
-  await mergePackageJSON2Pack({ dependencies });
   await mergeExtensionsNlsJSON2Pack(nlsContents);
   await copyExtensionAssets2Pack();
   await copyExtensionWebviewFiles2Pack();
@@ -231,7 +240,7 @@ async function generalPackSource(extensions) {
     cwd: packSourcePath,
     nodir: true,
   });
-  const packages = [...extensions, ...packages4pack].map(({ packageName, isActiveNode, isActiveBrowser }) => {
+  const packages = extensions.map(({ packageName, isActiveNode, isActiveBrowser }) => {
     const func = camelCase(packageName);
     return {
       packageName,
@@ -256,12 +265,25 @@ async function generalPackSource(extensions) {
   }));
 }
 
+async function getOtherExtensionsSource() {
+  await remove(TMP_DIR);
+  await mkdirp(TMP_DIR);
+  await Promise.all(otherExtensions4pack.map(async ({ packageName, extensionName }) => {
+    const packageData = await packageJSON(packageName, { version: 'latest', registryUrl: npmRegistry });
+    // @ts-ignore
+    const tarballURL = packageData.dist.tarball;
+    const downloadPath = join(TMP_DIR, extensionName);
+    await getAndExtractTarball(downloadPath, tarballURL);
+  }));
+}
+
 async function generalPack() {
-  const extensionPack = await getPackExtensions();
-  const publishedExtensions = await publishExtensionsToNpm(extensionPack);
-  await mergeExtensionsToPack(publishedExtensions);
+  await getOtherExtensionsSource();
+  const publishedExtensions = await publishExtensionsToNpm();
+  const allExtensions = [].concat(publishedExtensions).concat(otherExtensions4pack);
+  await mergeExtensionsToPack(allExtensions);
+  await generalPackSource(allExtensions);
   await customPackPackageJSON();
-  await generalPackSource(publishedExtensions);
 }
 
 generalPack().catch((e) => {

@@ -82,6 +82,7 @@
     "lodash.unionby": "^4.8.0",
     "markdownlint": "^0.20.4",
     "nsfw": "^1.2.7",
+    "package-json": "^6.5.0",
     "pify": "^5.0.0",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
