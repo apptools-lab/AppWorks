@@ -6,6 +6,8 @@ import { jsonSpaces } from '../config';
 export class GlobalSummary {
   dailySessionSeconds?: number = 0;
 
+  dailyEditorSeconds?: number = 0;
+
   dailyKeystrokes?: number = 0;
 
   dailyLinesAdded?: number = 0;

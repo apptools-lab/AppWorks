@@ -1,5 +1,5 @@
 import { WatchStats, FileWatch } from './watchStats';
-import { getFilesSummary, saveFilesSummary } from '../../storages/file';
+import { getFilesSummary, saveFilesSummary, getFileSummaryDefaults } from '../../storages/file';
 
 const forIn = require('lodash.forin');
 
@@ -10,18 +10,21 @@ export async function updateFilesSummary(watchStats: WatchStats) {
   const { files } = watchStats;
   let editorSeconds = 0;
   const filesSummary = await getFilesSummary();
+  const defaultValues = getFileSummaryDefaults();
   forIn(files, (fileWatch: FileWatch, fsPath: string) => {
     let fileSummary = filesSummary[fsPath];
     if (!fileSummary) {
-      // TODO
-      // @ts-ignore
       fileSummary = {
+        ...defaultValues,
         ...fileWatch,
-        sessionSeconds: fileWatch.durationSeconds,
+        startWatch: fileWatch.start,
+        endWatch: fileWatch.end,
+        editorSeconds: fileWatch.durationSeconds,
       };
     } else {
       // aggregate
-      fileSummary.sessionSeconds += fileWatch.durationSeconds;
+      fileSummary.editorSeconds += fileWatch.durationSeconds;
+      fileSummary.endWatch += fileWatch.end;
     }
     editorSeconds += fileWatch.durationSeconds;
     filesSummary[fsPath] = fileSummary;

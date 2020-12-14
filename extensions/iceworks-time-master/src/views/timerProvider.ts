@@ -319,26 +319,60 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   private getUserSummaryItems(userSummary: UserSummary, globalSummary: GlobalSummary, averageSummary: AverageSummary): TimerItem[] {
     const {
-      // editorSeconds,
       sessionSeconds,
+      editorSeconds,
       linesAdded,
       linesRemoved,
       keystrokes,
     } = userSummary;
     const {
       dailySessionSeconds: globalDailySessionSeconds,
+      dailyEditorSeconds: globalDailyEditorSeconds,
       dailyKeystrokes: globalDailyLinesAdded,
       dailyLinesAdded: globalDailyLinesRemoved,
       dailyLinesRemoved: globalDailyKeystrokes,
     } = globalSummary;
     const {
       dailySessionSeconds: averageDailySessionSeconds,
+      dailyEditorSeconds: averageDailyEditorSeconds,
       dailyKeystrokes: averageDailyLinesAdded,
       dailyLinesAdded: averageDailyLinesRemoved,
       dailyLinesRemoved: averageDailyKeystrokes,
     } = averageSummary;
     const items: TimerItem[] = [];
     const dayStr = moment().format('ddd');
+
+    // Editor time
+    const etValues = [];
+    const editorMinutes = seconds2minutes(editorSeconds);
+    const editorMinutesStr = humanizeMinutes(editorMinutes);
+    etValues.push({ label: i18n.format('extension.timeMaster.tree.item.today', { value: editorMinutesStr }), icon: 'rocket.svg' });
+    if (averageDailyEditorSeconds) {
+      const averageDailyEditorMinutes = seconds2minutes(averageDailyEditorSeconds);
+      const avgEtMinStr = humanizeMinutes(averageDailyEditorMinutes);
+      const editorLightningBolt = editorMinutes > averageDailyEditorMinutes ? 'bolt.svg' : 'bolt-grey.svg';
+      etValues.push({
+        label: i18n.format('extension.timeMaster.tree.item.average', { day: dayStr, value: avgEtMinStr }),
+        icon: editorLightningBolt,
+      });
+    }
+    if (globalDailyEditorSeconds) {
+      const globalDailyEditorMinutes = seconds2minutes(globalDailyEditorSeconds);
+      const globalEditorMinutesStr = humanizeMinutes(globalDailyEditorMinutes);
+      etValues.push({
+        label: i18n.format('extension.timeMaster.tree.item.global', { day: dayStr, value: globalEditorMinutesStr }),
+        icon: 'global-grey.svg',
+      });
+    }
+    items.push(
+      this.buildUserSummaryItem(
+        i18n.format('extension.timeMaster.tree.item.editor.label'),
+        i18n.format('extension.timeMaster.tree.item.editor.detail'),
+        etValues,
+        TreeItemCollapsibleState.Expanded,
+        'ct_active_editortime_toggle_node',
+      ),
+    );
 
     // Active code time
     const actValues = [];

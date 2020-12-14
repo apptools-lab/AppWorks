@@ -1,5 +1,5 @@
 import { KeystrokeStats, FileChange } from './keystrokeStats';
-import { getFilesSummary, saveFilesSummary } from '../../storages/file';
+import { getFilesSummary, getFileSummaryDefaults, saveFilesSummary } from '../../storages/file';
 
 const forIn = require('lodash.forin');
 
@@ -12,11 +12,15 @@ export async function updateFilesSummary(keystrokeStats: KeystrokeStats) {
   let keystrokes = 0;
   let sessionSeconds = 0;
   const filesSummary = await getFilesSummary();
+  const defaultValues = getFileSummaryDefaults();
   forIn(files, (fileChange: FileChange, fsPath: string) => {
     let fileSummary = filesSummary[fsPath];
     if (!fileSummary) {
       fileSummary = {
+        ...defaultValues,
         ...fileChange,
+        startChange: fileChange.start,
+        endChange: fileChange.end,
         sessionSeconds: fileChange.durationSeconds,
         kpm: fileChange.keystrokes,
       };
@@ -37,7 +41,7 @@ export async function updateFilesSummary(keystrokeStats: KeystrokeStats) {
       // non aggregates, just set
       fileSummary.lineCount = fileChange.lineCount;
       fileSummary.length = fileChange.length;
-      fileSummary.end = fileChange.end;
+      fileSummary.endChange = fileChange.end;
     }
     keystrokes += fileChange.keystrokes;
     linesAdded += fileChange.linesAdded;

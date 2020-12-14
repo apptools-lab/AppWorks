@@ -138,9 +138,8 @@ export interface ContentChangeInfo {
 
 export interface FileChangeInfo extends
   FileInfo,
-  // TODO Remove it
-  FileEventInfo,
   KeystrokeStatsInfo,
+  FileEventInfo,
   ContentChangeInfo,
   ContentChangeEventInfo
 {
@@ -157,7 +156,11 @@ export interface FileWatchInfo extends FileInfo, WatchStatsInfo {
   projectDirectory: string;
 }
 
-export interface FileSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'durationSeconds'>, FileEventInfo, ContentChangeInfo, ContentChangeEventInfo {
+export interface FileSummary extends
+  FileInfo,
+  FileEventInfo,
+  ContentChangeInfo,
+  ContentChangeEventInfo {
   /**
    * The folder of the project to which the file belongs
    */
@@ -174,6 +177,44 @@ export interface FileSummary extends FileInfo, Omit<KeystrokeStatsInfo, 'duratio
    * File editor usage time
    */
   editorSeconds: number;
+
+  // KeystrokeStatsInfo
+  startChange: PropType<KeystrokeStatsInfo, 'start'>;
+  endChange: PropType<KeystrokeStatsInfo, 'end'>;
+  keystrokes: PropType<KeystrokeStatsInfo, 'keystrokes'>;
+  // WatchStatsInfo
+  startWatch: PropType<WatchStatsInfo, 'start'>;
+  endWatch: PropType<WatchStatsInfo, 'end'>;
+}
+
+export function getFileSummaryDefaults(): FileSummary {
+  return {
+    length: 0,
+    lineCount: 0,
+    syntax: '',
+    fileName: '',
+    fsPath: '',
+    open: 0,
+    close: 0,
+    update: 0,
+    pasteTimes: 0,
+    addTimes: 0,
+    deleteTimes: 0,
+    linesAdded: 0,
+    linesRemoved: 0,
+    charsAdded: 0,
+    charsDeleted: 0,
+    charsPasted: 0,
+    projectDirectory: '',
+    kpm: 0,
+    sessionSeconds: 0,
+    editorSeconds: 0,
+    startChange: 0,
+    endChange: 0,
+    keystrokes: 0,
+    startWatch: 0,
+    endWatch: 0,
+  };
 }
 
 export interface FilesSummary {

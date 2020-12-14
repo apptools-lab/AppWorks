@@ -1,4 +1,6 @@
 {
+  "extension.timeMaster.tree.item.editor.label": "Editor time",
+  "extension.timeMaster.tree.item.editor.detail": "Total time you have been spent in the editor",
   "extension.timeMaster.tree.item.acCode.label": "Active code time",
   "extension.timeMaster.tree.item.acCode.detail": "Total time you have been typing in the editor",
   "extension.timeMaster.tree.item.linesAdded.label": "Lines added",
