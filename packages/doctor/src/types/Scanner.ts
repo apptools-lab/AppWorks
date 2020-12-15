@@ -16,13 +16,6 @@ export interface IScanOptions {
   disableRepeatability?: boolean;
 }
 
-export interface IFileInfo {
-  path: string;
-  source: string;
-  // lines of code
-  LoC: number;
-}
-
 // https://www.npmjs.com/package/typhonjs-escomplex
 export interface IMaintainabilityReport {
   classes: any[];
