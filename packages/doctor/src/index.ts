@@ -40,7 +40,7 @@ class Doctor {
   }
 
   analyse(directory: string) {
-    this.analyzer.analyse(directory);
+    return this.analyzer.analyse(directory);
   }
 
   getFiles(directory: string): IFileInfo[] {
