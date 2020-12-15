@@ -58,7 +58,11 @@ export async function activate() {
   });
 
   await checkMidnight();
-  await sendPayload();
+  try {
+    await sendPayload();
+  } catch (e) {
+    logger.debug('[walkClock][activate]sendPayload got error:', e);
+  }
 }
 
 export function deactivate() {
