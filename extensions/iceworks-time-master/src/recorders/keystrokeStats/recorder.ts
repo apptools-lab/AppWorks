@@ -68,6 +68,10 @@ export class KeystrokeStatsRecorder {
   }
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
+    // TODO remove it, just avoid bug on O2
+    if (textDocumentChangeEvent.document.uri.scheme !== 'file') {
+      return;
+    }
     const windowIsFocused = window.state.focused;
     logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
     if (!windowIsFocused) {
