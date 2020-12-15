@@ -3,7 +3,8 @@ import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
 import Scorer from './Scorer';
 import Timer from './Timer';
-import { IFileInfo, IEslintReports } from './types/Scanner';
+import { IEslintReports } from './types/Scanner';
+import { IFileInfo } from './types/File';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;

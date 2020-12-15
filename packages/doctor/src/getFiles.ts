@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import ignore from 'ignore';
 import { glob } from 'glob';
-import { IFileInfo } from './types/Scanner';
+import { IFileInfo } from './types/File';
 
 // Supprot check file's max LoC
 const MAX_CHECK_LOC = 3000;
@@ -25,7 +25,7 @@ function getFileInfo(filePath: string): IFileInfo {
   };
 }
 
-export default function getFiles(directory: string, supportExts: string[], ignoreDirs?: string[]): IFileInfo[] {
+export default function getFiles(directory: string, supportExts?: string[], ignoreDirs?: string[]): IFileInfo[] {
   const options: any = {
     nodir: true,
   };
@@ -53,8 +53,13 @@ export default function getFiles(directory: string, supportExts: string[], ignor
       }
     });
 
+    let globPattern = `${directory}/**/*`;
+    if (supportExts) {
+      globPattern = `${directory}/**/*.+(${supportExts.join('|')})`;
+    }
+
     // https://www.npmjs.com/package/glob
-    return glob.sync(`${directory}/**/*.+(${supportExts.join('|')})`, options)
+    return glob.sync(globPattern, options)
       .map(getFileInfo)
       .filter((file) => {
         // https://www.npmjs.com/package/ignore

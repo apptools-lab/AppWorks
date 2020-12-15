@@ -1,6 +1,7 @@
 import * as path from 'path';
 import Timer from './Timer';
-import { IScannerOptions, IScanOptions, IFileInfo, IScannerReports } from './types/Scanner';
+import { IScannerOptions, IScanOptions, IScannerReports } from './types/Scanner';
+import { IFileInfo } from './types/File';
 import getCustomESLintConfig from './getCustomESLintConfig';
 import getEslintReports from './getEslintReports';
 import getMaintainabilityReports from './getMaintainabilityReports';
