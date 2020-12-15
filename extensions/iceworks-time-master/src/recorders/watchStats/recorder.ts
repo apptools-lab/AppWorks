@@ -48,9 +48,12 @@ export class WatchStatsRecorder {
   }
 
   private async destroyCurrentWatchFile() {
-    if (this.currentWatchFilePath) {
-      const currentWatchStats = await this.createWatchStats(this.currentWatchFilePath);
-      currentWatchStats.files[this.currentWatchFilePath].setEnd();
+    const cwFilePath = this.currentWatchFilePath;
+    if (cwFilePath) {
+      logger.debug('[WatchStatsRecorder][destroyCurrentWatchFile]currentWatchFilePath', cwFilePath);
+      const currentWatchStats = await this.createWatchStats(cwFilePath);
+      logger.debug('[WatchStatsRecorder][destroyCurrentWatchFile]files', Object.keys(currentWatchStats.files));
+      currentWatchStats.files[cwFilePath].setEnd();
       this.currentWatchFilePath = undefined;
     }
   }
@@ -80,19 +83,24 @@ export class WatchStatsRecorder {
 
   private async onDidChangeActiveTextEditor(textEditor: TextEditor) {
     const fsPath = textEditor?.document.fileName || NODE_ACTIVE_TEXT_EDITOR_NAME;
+    const cwFilePath = this.currentWatchFilePath;
 
     logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][fsPath]', fsPath);
-    logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][currentWatchFilePath]', this.currentWatchFilePath);
+    logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][currentWatchFilePath]', cwFilePath);
 
-    if (fsPath !== this.currentWatchFilePath) {
+    if (fsPath !== cwFilePath) {
       await this.destroyCurrentWatchFile();
       await this.createCurrentWatchFile(fsPath, textEditor?.document);
     }
   }
 
   private async createWatchStats(fsPath: string): Promise<WatchStats> {
+    logger.debug('[WatchStatsRecorder][createWatchStats]fsPath', fsPath);
+
     const project = await Project.createInstance(fsPath);
     const { directory: projectPath } = project;
+    logger.debug('[WatchStatsRecorder][createWatchStats]projectPath', projectPath);
+
     let watchStats = watchStatsMap[projectPath];
 
     if (!watchStats) {
@@ -100,7 +108,10 @@ export class WatchStatsRecorder {
       watchStats.activate();
     }
 
-    if (!watchStats.getFile(fsPath)) {
+    const hasFile = !!watchStats.getFile(fsPath);
+    logger.debug('[WatchStatsRecorder][createWatchStats]hasFile', hasFile);
+
+    if (!hasFile) {
       watchStats.addFile(fsPath);
     }
 
