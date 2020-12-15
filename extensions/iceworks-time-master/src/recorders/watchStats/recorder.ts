@@ -13,12 +13,12 @@ export class WatchStatsRecorder {
   async activate() {
     logger.debug('[WatchStatsRecorder][activate][focused]', window.state.focused);
 
-    if (window.state.focused) {
-      this.startRecord();
-    }
-
     window.onDidChangeActiveTextEditor(this.onDidChangeActiveTextEditor, this);
     window.onDidChangeWindowState(this.onDidChangeWindowState, this);
+
+    if (window.state.focused) {
+      await this.startRecord();
+    }
   }
 
   async deactivate() {

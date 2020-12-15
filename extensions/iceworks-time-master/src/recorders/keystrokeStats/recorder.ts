@@ -11,7 +11,7 @@ const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 export class KeystrokeStatsRecorder {
   private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
 
-  public activate() {
+  public async activate() {
     // document listener handlers
     workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
     workspace.onDidCloseTextDocument(this.onDidCloseTextDocument, this);
@@ -20,7 +20,7 @@ export class KeystrokeStatsRecorder {
     window.onDidChangeWindowState(this.onDidChangeWindowState, this);
   }
 
-  public deactivate() {
+  public async deactivate() {
     // placeholder
   }
 

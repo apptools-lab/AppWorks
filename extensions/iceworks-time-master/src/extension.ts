@@ -25,8 +25,12 @@ export async function activate(context: ExtensionContext) {
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.show();
 
-  keystrokeStatsRecorder.activate();
-  wathStatsRecorder.activate();
+  keystrokeStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
+  });
+  wathStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate wathStatsRecorder got error:', e);
+  });
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
@@ -56,8 +60,12 @@ export async function activate(context: ExtensionContext) {
 export function deactivate() {
   logger.debug('[TimeMaster][extension] deactivate!');
 
-  keystrokeStatsRecorder.deactivate();
-  wathStatsRecorder.deactivate();
+  keystrokeStatsRecorder.deactivate().catch((e) => {
+    logger.error('[TimeMaster][extension] deactivate keystrokeStatsRecorder got error:', e);
+  });
+  wathStatsRecorder.deactivate().catch((e) => {
+    logger.error('[TimeMaster][extension] deactivate wathStatsRecorder got error:', e);
+  });
 
   deactivateWalkClock();
 }
