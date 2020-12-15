@@ -1,7 +1,7 @@
 import * as util from 'util';
 import * as execa from 'execa';
 import * as globSync from 'glob';
-import * as merge from 'lodash.merge';
+import * as mergeWith from 'lodash.mergewith';
 import * as unionBy from 'lodash.unionby';
 import * as camelCase from 'lodash.camelcase';
 import * as padStart from 'lodash.padstart';
@@ -41,9 +41,15 @@ function getExtensionNpmName(name) {
   return `${EXTENSION_NPM_NAME_PREFIX}-${name}`;
 }
 
+function mergeCustomizer(objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+
 async function mergeValues2PackJSON(values) {
   const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
-  merge(extensionPackageJSON, values);
+  mergeWith(extensionPackageJSON, values, mergeCustomizer);
   await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 }
 
@@ -68,7 +74,7 @@ async function publishExtensionsToNpm() {
             // ignonre error
           }
           const nextVersion = padStart(String(parseInt(latestVersion.split('.').join('')) + 1), 3, '0').split('').join('.');
-          merge(
+          mergeWith(
             extensionPackageJSON,
             valuesAppendToExtensionPackageJSON,
             { name: newPackageName, version: nextVersion },
@@ -104,7 +110,7 @@ async function mergeExtensionsToPack(extensions) {
       } catch (e) {
         // ignore error
       }
-      merge(nlsJSON, content);
+      mergeWith(nlsJSON, content);
       await writeJson(nlsPath, nlsJSON, { spaces: 2 });
     }
   }
@@ -158,10 +164,10 @@ async function mergeExtensionsToPack(extensions) {
       const extensionPackageJSONPath = join(extensionFolderPath, PACKAGE_JSON_NAME);
       const extensionPackageJSON = await readJson(extensionPackageJSONPath);
       const {
-        contributes = {},
-        activationEvents,
         name,
         version,
+        contributes = {},
+        activationEvents = [],
         kaitianContributes = {},
       } = extensionPackageJSON;
 
@@ -170,25 +176,14 @@ async function mergeExtensionsToPack(extensions) {
       delete kaitianContributes.browserMain;
       delete kaitianContributes.workerMain;
 
-      const { commands = [], views = {} } = contributes;
-      const { iceworksApp = [] } = views;
-      manifests = merge(
+      manifests = mergeWith(
         {},
         manifests,
         {
-          contributes: {
-            ...merge({}, manifests.contributes, contributes),
-            views: {
-              // TODO how to deep merge array?
-              iceworksApp: unionBy(manifests.contributes.views.iceworksApp.concat(iceworksApp), 'id'),
-            },
-            commands: unionBy(manifests.contributes.commands.concat(commands), 'command'),
-          },
+          contributes: mergeWith({}, manifests.contributes, contributes, mergeCustomizer),
           activationEvents: unionBy(manifests.activationEvents.concat(activationEvents)),
+          kaitianContributes: mergeWith({}, manifests.kaitianContributes, kaitianContributes, mergeCustomizer),
           dependencies: { [(pushExtension2Npm || isOther) ? name : getExtensionNpmName(name)]: !isBeta ? version : '*' },
-          kaitianContributes: {
-            ...merge({}, manifests.kaitianContributes, kaitianContributes),
-          },
         },
       );
 
@@ -220,7 +215,7 @@ async function mergeExtensionsToPack(extensions) {
 async function customPackPackageJSON() {
   const extensionPackageJSON = await readJson(PACK_PACKAGE_JSON_PATH);
   const valuesAppendToPackPackageJSON = await readJson(join(PACK_TEMPLATE_DIR, 'package.json'));
-  merge(extensionPackageJSON, valuesAppendToPackPackageJSON);
+  mergeWith(extensionPackageJSON, valuesAppendToPackPackageJSON);
   delete extensionPackageJSON.extensionPack;
   await writeJson(PACK_PACKAGE_JSON_PATH, extensionPackageJSON, { spaces: 2 });
 
