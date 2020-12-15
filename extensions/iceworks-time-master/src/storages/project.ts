@@ -167,16 +167,20 @@ export async function generateProjectReport() {
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {
-      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
+      const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
       if (!projectsSummary[projectName]) {
         projectsSummary[projectName] = {
           ...dayProjectSummary,
+          editorSeconds,
           sessionSeconds,
           keystrokes,
           linesAdded,
           linesRemoved,
         };
       } else {
+        if (editorSeconds) {
+          projectsSummary[projectName].editorSeconds += editorSeconds;
+        }
         if (sessionSeconds) {
           projectsSummary[projectName].sessionSeconds += sessionSeconds;
         }

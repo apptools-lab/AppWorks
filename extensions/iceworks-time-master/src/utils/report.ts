@@ -44,12 +44,16 @@ export function getReportRow(label: string, value: string) {
 }
 
 export function getRangeReport(userSummary: UserSummary, title?: string) {
-  const { sessionSeconds = 0, linesAdded = 0, linesRemoved = 0, keystrokes = 0 } = userSummary;
+  const { sessionSeconds = 0, editorSeconds = 0, linesAdded = 0, linesRemoved = 0, keystrokes = 0 } = userSummary;
   let str = '';
   if (title) {
     str += `${title}\n`;
     str += getReportHr();
   }
+  str += getReportRow(
+    i18n.format('extension.timeMaster.edTime'),
+    humanizeMinutes(seconds2minutes(editorSeconds)),
+  );
   str += getReportRow(
     i18n.format('extension.timeMaster.acCode'),
     humanizeMinutes(seconds2minutes(sessionSeconds)),

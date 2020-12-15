@@ -3,7 +3,6 @@
 ## 0.3.0
 
 - feat: add editor time
-- feat: GUI Dashboard for View Summary
 
 ## 0.2.1
 
