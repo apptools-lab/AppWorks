@@ -7,6 +7,8 @@ import { jsonSpaces } from '../config';
 export class AverageSummary {
   dailySessionSeconds?: number = 0;
 
+  dailyEditorSeconds?: number = 0;
+
   dailyKeystrokes?: number = 0;
 
   dailyLinesAdded?: number = 0;
@@ -48,9 +50,10 @@ export async function updateAverageSummary(): Promise<AverageSummary> {
   }
 
   const { average } = await getCountAndAverage4UserSummary(storageDirs);
-  const { sessionSeconds, keystrokes, linesAdded, linesRemoved } = average;
+  const { sessionSeconds, editorSeconds, keystrokes, linesAdded, linesRemoved } = average;
   const averageSummary = {
     dailySessionSeconds: sessionSeconds,
+    dailyEditorSeconds: editorSeconds,
     dailyKeystrokes: keystrokes,
     dailyLinesAdded: linesAdded,
     dailyLinesRemoved: linesRemoved,

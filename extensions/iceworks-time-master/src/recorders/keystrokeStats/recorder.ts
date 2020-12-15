@@ -1,7 +1,7 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
 import { isFileActive } from '../../utils/common';
 import { Project } from '../../storages/project';
-import { cleanTextInfoCache } from '../../storages/filesChange';
+import { cleanTextInfoCache } from '../../storages/file';
 import { KeystrokeStats } from './keystrokeStats';
 import logger from '../../utils/logger';
 import { recordKeystrokeDurationMins } from '../../config';
@@ -9,6 +9,131 @@ import { recordKeystrokeDurationMins } from '../../config';
 const keystrokeStatsMap: {[projectPath: string]: KeystrokeStats} = {};
 
 export class KeystrokeStatsRecorder {
+  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
+
+  public async activate() {
+    // document listener handlers
+    workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
+    workspace.onDidCloseTextDocument(this.onDidCloseTextDocument, this);
+    workspace.onDidChangeTextDocument(this.onDidChangeTextDocument, this);
+    // window state changed handler
+    window.onDidChangeWindowState(this.onDidChangeWindowState, this);
+  }
+
+  public async deactivate() {
+    // placeholder
+  }
+
+  public async sendKeystrokeStatsMap() {
+    await Promise.all(Object.keys(keystrokeStatsMap).map(async (projectPath) => {
+      // clear other sending instructions and prevent multiple sending
+      if (this.keystrokeStatsTimeouts[projectPath]) {
+        clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
+      }
+      await this.sendKeystrokeStats(projectPath);
+    }));
+
+    cleanTextInfoCache();
+  }
+
+  public async onDidOpenTextDocument(textDocument: TextDocument) {
+    if (!window.state.focused) {
+      return;
+    }
+
+    const { fileName: fsPath } = textDocument;
+    if (!this.isValidatedFile(textDocument, fsPath)) {
+      return;
+    }
+
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
+    currentFileChange.updateTextInfo(textDocument);
+    currentFileChange.open += 1;
+  }
+
+  public async onDidCloseTextDocument(textDocument: TextDocument) {
+    if (!window.state.focused) {
+      return;
+    }
+
+    const { fileName: fsPath } = textDocument;
+    if (!this.isValidatedFile(textDocument, fsPath, true)) {
+      return;
+    }
+
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
+    currentFileChange.close += 1;
+  }
+
+  public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
+    const windowIsFocused = window.state.focused;
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
+    if (!windowIsFocused) {
+      return;
+    }
+
+    const { document } = textDocumentChangeEvent;
+    const { fileName: fsPath } = document;
+
+    const isValidatedFile = this.isValidatedFile(document, fsPath);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
+    if (!isValidatedFile) {
+      return;
+    }
+
+    const keyStrokeStats = await this.createKeystrokeStats(fsPath);
+    const currentFileChange = keyStrokeStats.files[fsPath];
+    if (!currentFileChange.start) {
+      currentFileChange.setStart();
+    }
+    currentFileChange.updateTextInfo(document);
+
+    // find the contentChange with a range in the contentChanges array
+    // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
+    // LOOP THROUGH AND REPEAT COUNTS
+    const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
+    // each changeset is triggered by a single keystroke
+    if (contentChanges.length > 0) {
+      currentFileChange.keystrokes += 1;
+    }
+
+    for (const contentChange of contentChanges) {
+      const textChangeInfo = this.getTextChangeInfo(contentChange);
+      if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
+        currentFileChange.pasteTimes += 1;
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
+      } else if (textChangeInfo.textChangeLen < 0) {
+        currentFileChange.deleteTimes += 1;
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
+      } else if (textChangeInfo.hasNonNewLine) {
+        currentFileChange.addTimes += 1;
+        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
+      }
+      // increment keystrokes by 1
+      keyStrokeStats.keystrokes += 1;
+
+      if (textChangeInfo.linesDeleted) {
+        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
+        currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
+      } else if (textChangeInfo.linesAdded) {
+        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
+        currentFileChange.linesAdded += textChangeInfo.linesAdded;
+      }
+    }
+
+    currentFileChange.setEnd();
+  }
+
+  public async onDidChangeWindowState(windowState: WindowState) {
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
+    if (!windowState.focused) {
+      await this.sendKeystrokeStatsMap();
+    }
+  }
+
   /**
   * This will return true if it's a validated file.
   * we don't want to send events for .git or
@@ -93,30 +218,6 @@ export class KeystrokeStatsRecorder {
     };
   }
 
-  public activate() {
-    // document listener handlers
-    workspace.onDidOpenTextDocument(this.onDidOpenTextDocument, this);
-    workspace.onDidCloseTextDocument(this.onDidCloseTextDocument, this);
-    workspace.onDidChangeTextDocument(this.onDidChangeTextDocument, this);
-    // window state changed handler
-    window.onDidChangeWindowState(this.onDidChangeWindowState, this);
-  }
-
-  public deactivate() {
-    // placeholder
-  }
-
-  public async sendKeystrokeStatsMap() {
-    await Promise.all(Object.keys(keystrokeStatsMap).map(async (projectPath) => {
-      if (this.keystrokeStatsTimeouts[projectPath]) {
-        clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
-      }
-      await this.sendKeystrokeStats(projectPath);
-    }));
-
-    cleanTextInfoCache();
-  }
-
   private async sendKeystrokeStats(projectPath: string) {
     const keystrokeStats = keystrokeStatsMap[projectPath];
     if (keystrokeStats) {
@@ -125,13 +226,11 @@ export class KeystrokeStatsRecorder {
     }
   }
 
-  private keystrokeStatsTimeouts: {[key: string]: NodeJS.Timeout} = {};
-
-  private async createKeystrokeStats(fsPath: string, project: Project): Promise<KeystrokeStats> {
+  private async createKeystrokeStats(fsPath: string): Promise<KeystrokeStats> {
+    const project = await Project.createInstance(fsPath);
     const { directory: projectPath } = project;
     let keystrokeStats = keystrokeStatsMap[projectPath];
 
-    // create the keystroke count if it doesn't exist
     if (!keystrokeStats) {
       keystrokeStats = new KeystrokeStats(project);
       keystrokeStats.activate();
@@ -148,113 +247,12 @@ export class KeystrokeStatsRecorder {
     keystrokeStatsMap[projectPath] = keystrokeStats;
     return keystrokeStats;
   }
+}
 
-  public async onDidOpenTextDocument(textDocument: TextDocument) {
-    if (!window.state.focused) {
-      return;
-    }
-
-    const { fileName: fsPath } = textDocument;
-    if (!this.isValidatedFile(textDocument, fsPath)) {
-      return;
-    }
-
-    const projectInfo = await Project.createInstance(fsPath);
-
-    const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
-    // this.endPreviousModifiedFiles(keyStrokeStats, fsPath);
-
-    const currentFileChange = keyStrokeStats.files[fsPath];
-    currentFileChange.updateTextInfo(textDocument);
-    currentFileChange.open += 1;
+let keystrokeStatsRecorder: KeystrokeStatsRecorder;
+export function getInterface() {
+  if (!keystrokeStatsRecorder) {
+    keystrokeStatsRecorder = new KeystrokeStatsRecorder();
   }
-
-  public async onDidCloseTextDocument(textDocument: TextDocument) {
-    if (!window.state.focused) {
-      return;
-    }
-
-    const { fileName: fsPath } = textDocument;
-    if (!this.isValidatedFile(textDocument, fsPath, true)) {
-      return;
-    }
-
-    const projectInfo = await Project.createInstance(fsPath);
-    const keyStrokeStats = keystrokeStatsMap[projectInfo.directory];
-    if (keyStrokeStats) {
-      const currentFileChange = keyStrokeStats.files[fsPath];
-      if (currentFileChange) {
-        currentFileChange.close += 1;
-      }
-    }
-  }
-
-  public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
-    const windowIsFocused = window.state.focused;
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][windowIsFocused]', windowIsFocused);
-    if (!windowIsFocused) {
-      return;
-    }
-
-    const { document } = textDocumentChangeEvent;
-    const { fileName: fsPath } = document;
-
-    const isValidatedFile = this.isValidatedFile(document, fsPath);
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument][isValidatedFile]', isValidatedFile);
-    if (!isValidatedFile) {
-      return;
-    }
-
-    const projectInfo = await Project.createInstance(fsPath);
-    const keyStrokeStats = await this.createKeystrokeStats(fsPath, projectInfo);
-
-    const currentFileChange = keyStrokeStats.files[fsPath];
-    if (!currentFileChange.start) {
-      currentFileChange.setStart();
-    }
-    currentFileChange.updateTextInfo(document);
-
-    // find the contentChange with a range in the contentChanges array
-    // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
-    // LOOP THROUGH AND REPEAT COUNTS
-    const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
-    // each changeset is triggered by a single keystroke
-    if (contentChanges.length > 0) {
-      currentFileChange.keystrokes += 1;
-    }
-
-    for (const contentChange of contentChanges) {
-      const textChangeInfo = this.getTextChangeInfo(contentChange);
-      if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
-        currentFileChange.pasteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
-      } else if (textChangeInfo.textChangeLen < 0) {
-        currentFileChange.deleteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
-      } else if (textChangeInfo.hasNonNewLine) {
-        currentFileChange.addTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
-      }
-      // increment keystrokes by 1
-      keyStrokeStats.keystrokes += 1;
-
-      if (textChangeInfo.linesDeleted) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
-        currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
-      } else if (textChangeInfo.linesAdded) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
-        currentFileChange.linesAdded += textChangeInfo.linesAdded;
-      }
-    }
-
-    currentFileChange.setEnd();
-  }
-
-  public async onDidChangeWindowState(windowState: WindowState) {
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
-    if (!windowState.focused) {
-      await this.sendKeystrokeStatsMap();
-    }
-  }
+  return keystrokeStatsRecorder;
 }

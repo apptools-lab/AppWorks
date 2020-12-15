@@ -17,7 +17,7 @@ export class UserSummary {
   /**
    * Editor usage time
    */
-  editorSeconds?: number = 0;
+  editorSeconds = 0;
 
   keystrokes = 0;
 
@@ -53,8 +53,8 @@ export async function clearUserSummary() {
   await saveUserSummary(userSummary);
 }
 
-export async function updateUserSummary(increment: UserSummary) {
-  const { linesAdded, linesRemoved, keystrokes, sessionSeconds = 0, editorSeconds = 0 } = increment;
+export async function updateUserSummary(increment: Partial<UserSummary>) {
+  const { linesAdded = 0, linesRemoved = 0, keystrokes = 0, sessionSeconds = 0, editorSeconds = 0 } = increment;
   const userSummary = await getUserSummary();
   userSummary.sessionSeconds += sessionSeconds;
   userSummary.editorSeconds += editorSeconds;
@@ -79,18 +79,24 @@ export async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise
 
 export async function getCountAndAverage4UserSummary(days: string[]): Promise<{count: UserSummary; average: UserSummary}> {
   let countSessionSeconds = 0;
+  let countEditorSeconds = 0;
   let countKeystrokes = 0;
   let countLinesAdded = 0;
   let countLinesRemoved = 0;
   let sessionSecondsDays = 0;
+  let editorSecondsDays = 0;
   let keystrokesDays = 0;
   let linesAddedDays = 0;
   let linesRemovedDays = 0;
   await Promise.all(days.map(async (day) => {
-    const { sessionSeconds, keystrokes, linesAdded, linesRemoved } = await getUserSummary(day);
+    const { sessionSeconds, editorSeconds, keystrokes, linesAdded, linesRemoved } = await getUserSummary(day);
     if (sessionSeconds) {
       countSessionSeconds += sessionSeconds;
       sessionSecondsDays++;
+    }
+    if (editorSeconds) {
+      countEditorSeconds += editorSeconds;
+      editorSecondsDays++;
     }
     if (keystrokes) {
       countKeystrokes += keystrokes;
@@ -106,17 +112,20 @@ export async function getCountAndAverage4UserSummary(days: string[]): Promise<{c
     }
   }));
   const dailySessionSeconds = countSessionSeconds / sessionSecondsDays;
+  const dailyEditorSeconds = countEditorSeconds / editorSecondsDays;
   const dailyKeystrokes = countKeystrokes / keystrokesDays;
   const dailyLinesAdded = countLinesAdded / linesAddedDays;
   const dailyLinesRemoved = countLinesRemoved / linesRemovedDays;
   const countSummary = {
     sessionSeconds: countSessionSeconds,
+    editorSeconds: countEditorSeconds,
     keystrokes: countKeystrokes,
     linesAdded: countLinesAdded,
     linesRemoved: countLinesRemoved,
   };
   const averageSummary = {
     sessionSeconds: dailySessionSeconds,
+    editorSeconds: dailyEditorSeconds,
     keystrokes: dailyKeystrokes,
     linesAdded: dailyLinesAdded,
     linesRemoved: dailyLinesRemoved,
@@ -157,9 +166,10 @@ export async function generateUserReport() {
   reportContent += lineBreakStr;
 
   const averageSummary = await updateAverageSummary();
-  const { dailyKeystrokes, dailyLinesAdded, dailyLinesRemoved, dailySessionSeconds } = averageSummary;
+  const { dailyKeystrokes, dailyEditorSeconds, dailyLinesAdded, dailyLinesRemoved, dailySessionSeconds } = averageSummary;
   const avgStr = getRangeReport({
     sessionSeconds: dailySessionSeconds,
+    editorSeconds: dailyEditorSeconds,
     keystrokes: dailyKeystrokes,
     linesAdded: dailyLinesAdded,
     linesRemoved: dailyLinesRemoved,

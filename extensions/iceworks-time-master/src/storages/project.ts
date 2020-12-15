@@ -23,6 +23,8 @@ export interface ProjectInfo extends ProjectResource {
 }
 
 export function getProjectFolder(fsPath: string): WorkspaceFolder {
+  logger.debug('[projectStorage][getProjectFolder]fsPath', fsPath);
+
   let liveShareFolder = null;
   if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
     for (let i = 0; i < workspace.workspaceFolders.length; i++) {
@@ -32,7 +34,7 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
         const isVslsScheme = folderUri.scheme === 'vsls';
         if (isVslsScheme) {
           liveShareFolder = workspaceFolder;
-        } else if (fsPath.includes(folderUri.fsPath)) {
+        } else if (fsPath?.includes(folderUri.fsPath)) {
           return workspaceFolder;
         }
       }
@@ -64,6 +66,8 @@ export class Project implements ProjectInfo {
   }
 
   static async createInstance(fsPath: string) {
+    logger.debug('[projectStorage][createInstance]fsPath', fsPath);
+
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
     const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
@@ -81,7 +85,7 @@ export class Project implements ProjectInfo {
 
 interface ProjectData {
   sessionSeconds: number;
-  editorSeconds?: number;
+  editorSeconds: number;
   keystrokes: number;
   linesAdded: number;
   linesRemoved: number;
@@ -118,16 +122,19 @@ export async function clearProjectsSummary() {
   await saveProjectsSummary({});
 }
 
-export async function updateProjectSummary(project: Project, increment: ProjectData) {
+export async function updateProjectSummary(project: Project, increment: Partial<ProjectData>) {
   const projectsSummary = await getProjectsSummary();
   const { directory } = project;
-  const { sessionSeconds, editorSeconds, keystrokes, linesAdded, linesRemoved } = increment;
+  const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0 } = increment;
   let projectSummary = projectsSummary[directory];
   if (!projectSummary) {
     projectSummary = {
       ...project,
-      ...increment,
-      editorSeconds: editorSeconds || sessionSeconds,
+      sessionSeconds,
+      editorSeconds,
+      keystrokes,
+      linesAdded,
+      linesRemoved,
     };
   } else {
     Object.assign(
@@ -138,6 +145,7 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
     projectSummary.linesRemoved += linesRemoved;
     projectSummary.keystrokes += keystrokes;
     projectSummary.sessionSeconds += sessionSeconds;
+    projectSummary.editorSeconds += editorSeconds;
     projectSummary.editorSeconds = Math.max(
       projectSummary.editorSeconds,
       projectSummary.sessionSeconds,
@@ -161,16 +169,20 @@ export async function generateProjectReport() {
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {
-      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
+      const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
       if (!projectsSummary[projectName]) {
         projectsSummary[projectName] = {
           ...dayProjectSummary,
+          editorSeconds,
           sessionSeconds,
           keystrokes,
           linesAdded,
           linesRemoved,
         };
       } else {
+        if (editorSeconds) {
+          projectsSummary[projectName].editorSeconds += editorSeconds;
+        }
         if (sessionSeconds) {
           projectsSummary[projectName].sessionSeconds += sessionSeconds;
         }

@@ -1,26 +1,34 @@
 import { window, ProgressLocation, workspace, ViewColumn } from 'vscode';
-import { KeystrokeStats } from '../recorders/keystrokeStats';
-import { updateFilesChangeSummary } from '../storages/filesChange';
+import { KeystrokeStats, updateFilesSummary as updateFilesSummaryByKeystrokeStats } from '../recorders/keystrokeStats';
+import { WatchStats, updateFilesSummary as updateFilesSummaryByWatchStats } from '../recorders/watchStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
-import { appendKeystrokesPayload } from '../utils/sender';
+import { appendKeystrokesPayload, appendWatchTimePayload } from '../utils/sender';
 import logger from '../utils/logger';
 
-async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
-  const { project } = keystrokeStats;
-  const increment = await updateFilesChangeSummary(keystrokeStats);
+async function saveDataToDisk(data: KeystrokeStats|WatchStats) {
+  const { project } = data;
+  const increment = data instanceof KeystrokeStats ?
+    await updateFilesSummaryByKeystrokeStats(data) :
+    await updateFilesSummaryByWatchStats(data);
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
   refreshViews();
 }
 
-export async function processData(keystrokeStats: KeystrokeStats) {
+async function appendDataToPayload(data: KeystrokeStats|WatchStats) {
+  data instanceof KeystrokeStats ?
+    await appendKeystrokesPayload(data) :
+    await appendWatchTimePayload(data);
+}
+
+export async function processData(data: KeystrokeStats|WatchStats) {
   logger.debug('[data][processData] run');
   await checkMidnight();
-  await Promise.all([saveDataToDisk, appendKeystrokesPayload].map(async (fn) => {
-    await fn(keystrokeStats);
+  await Promise.all([saveDataToDisk, appendDataToPayload].map(async (fn) => {
+    await fn(data);
   }));
 }
 
