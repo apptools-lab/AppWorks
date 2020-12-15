@@ -71,7 +71,9 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
         if (fs.existsSync(abcConfigFile)) {
           const abcConfig = fs.readJSONSync(abcConfigFile);
           if (abcConfig.type === 'pegasus' && abcConfig.group && abcConfig.name) {
-            openPreview({ startUrl: `${DEFAULT_START_URL}${abcConfig.group}/${abcConfig.name}` });
+            setTimeout(() => {
+              openPreview({ startUrl: `${DEFAULT_START_URL}${abcConfig.group}/${abcConfig.name}` });
+            }, 10000);
           }
         }
       } catch (e) {
