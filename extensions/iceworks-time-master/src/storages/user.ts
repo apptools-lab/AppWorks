@@ -26,21 +26,23 @@ export class UserSummary {
   linesRemoved = 0;
 }
 
-export const userFileName = 'user.json';
+function getUserFile(day?: string) {
+  return path.join(getStorageDayPath(day), 'user.json');
+}
 
-export function getUserFile(day?: string) {
-  return path.join(getStorageDayPath(day), userFileName);
+async function getOriginUserSummary(day?: string) {
+  const file = getUserFile(day);
+  const fileIsExists = await fse.pathExists(file);
+  return fileIsExists ? await fse.readJson(file) : new UserSummary();
 }
 
 export async function getUserSummary(day?: string): Promise<UserSummary> {
-  const file = getUserFile(day);
-  let userSummary = new UserSummary();
   try {
-    userSummary = await fse.readJson(file);
+    return await getOriginUserSummary(day);
   } catch (e) {
     logger.error('[userStorage][getUserSummary] got error', e);
+    return new UserSummary();
   }
-  return userSummary;
 }
 
 export async function saveUserSummary(userSummary: UserSummary) {
@@ -48,14 +50,19 @@ export async function saveUserSummary(userSummary: UserSummary) {
   await fse.writeJson(file, userSummary, { spaces: jsonSpaces });
 }
 
-export async function clearUserSummary() {
-  const userSummary = new UserSummary();
-  await saveUserSummary(userSummary);
-}
-
 export async function updateUserSummary(increment: Partial<UserSummary>) {
   const { linesAdded = 0, linesRemoved = 0, keystrokes = 0, sessionSeconds = 0, editorSeconds = 0 } = increment;
-  const userSummary = await getUserSummary();
+  // always make sure user summary is correct
+  let userSummary;
+  try {
+    userSummary = await getOriginUserSummary();
+  } catch (e) {
+    logger.error('[userStorage][updateUserSummary] getOriginUserSummary got error', e);
+  }
+  if (!userSummary) {
+    return;
+  }
+
   userSummary.sessionSeconds += sessionSeconds;
   userSummary.editorSeconds += editorSeconds;
   userSummary.editorSeconds = Math.max(

@@ -221,28 +221,29 @@ export interface FilesSummary {
   [filePath: string]: FileSummary;
 }
 
-export function getFilesFile() {
+export function getFilesFile(day?: string) {
   // better names "files.json"
   // however, in order to be compatible with the existing data, please do not modify it
-  return path.join(getStorageDayPath(), 'filesChange.json');
+  return path.join(getStorageDayPath(day), 'filesChange.json');
 }
 
-export async function getFilesSummary(): Promise<FilesSummary> {
-  const file = getFilesFile();
-  let filesSummary = {};
+
+async function getOriginFilesSummary(day?: string) {
+  const file = getFilesFile(day);
+  const fileIsExists = await fse.pathExists(file);
+  return fileIsExists ? await fse.readJson(file) : {};
+}
+
+export async function getFilesSummary(day?: string): Promise<FilesSummary> {
   try {
-    filesSummary = await fse.readJson(file);
+    return await getOriginFilesSummary(day);
   } catch (e) {
-    logger.error('[fileChangeStorage][getFilesSummary] got error', e);
+    logger.error('[fileStorage][getFilesSummary] got error', e);
+    return {};
   }
-  return filesSummary;
 }
 
 export async function saveFilesSummary(filesSummary: FilesSummary) {
   const file = getFilesFile();
   await fse.writeJson(file, filesSummary, { spaces: jsonSpaces });
-}
-
-export async function cleanFilesSummary() {
-  await saveFilesSummary({});
 }
