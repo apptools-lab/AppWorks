@@ -7,15 +7,10 @@ import { IFileInfo } from './types/File';
 
 // Ignore directories
 const defaultignore = ['build', 'es', 'dist', 'lib', 'mocks', 'coverage', 'node_modules', 'demo', 'examples', 'public', 'test', '__tests__'];
-// Support file exts
-const defaultSupportExts = ['js', 'jsx', 'ts', 'tsx'];
-
 class Doctor {
   public options: any;
 
   public ignore: string[];
-
-  public supportExts: string[];
 
   private scanner: any;
 
@@ -25,12 +20,8 @@ class Doctor {
     this.options = options || {};
 
     this.ignore = defaultignore.concat(this.options.ignore || []);
-    this.supportExts = defaultSupportExts.concat(this.options.supportExts || []);
 
-    this.scanner = new Scanner({
-      ignore: this.ignore,
-      supportExts: this.supportExts,
-    });
+    this.scanner = new Scanner({ ignore: this.ignore });
 
     this.analyzer = new Analyzer({ ignore: this.ignore });
   }
@@ -44,7 +35,7 @@ class Doctor {
   }
 
   getFiles(directory: string): IFileInfo[] {
-    return getFiles(directory, this.supportExts, this.ignore);
+    return getFiles(directory, this.ignore);
   }
 }
 

@@ -8,7 +8,7 @@ import { IFileInfo } from './types/File';
 const MAX_CHECK_LOC = 3000;
 
 // Get ignore config from file
-const IGNORE_CONFIG_FILES = ['.gitignore', '.eslintignore'];
+const IGNORE_CONFIG_FILES = ['.gitignore'];
 
 function getFileInfo(filePath: string): IFileInfo {
   let source = fs.readFileSync(filePath).toString().trim();
@@ -25,7 +25,7 @@ function getFileInfo(filePath: string): IFileInfo {
   };
 }
 
-export default function getFiles(directory: string, supportExts?: string[], ignoreDirs?: string[]): IFileInfo[] {
+export default function getFiles(directory: string, ignoreDirs?: string[]): IFileInfo[] {
   const options: any = {
     nodir: true,
   };
@@ -53,13 +53,8 @@ export default function getFiles(directory: string, supportExts?: string[], igno
       }
     });
 
-    let globPattern = `${directory}/**/*`;
-    if (supportExts) {
-      globPattern = `${directory}/**/*.+(${supportExts.join('|')})`;
-    }
-
     // https://www.npmjs.com/package/glob
-    return glob.sync(globPattern, options)
+    return glob.sync(`${directory}/**/*`, options)
       .map(getFileInfo)
       .filter((file) => {
         // https://www.npmjs.com/package/ignore

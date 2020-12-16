@@ -28,7 +28,7 @@ export default class Analyzer {
   public analyse(directory: string): IAnalyzerReport {
     const report = { languages: [] };
     const languageCache = {};
-    const files: IFileInfo[] = getFiles(directory, null, this.options.ignore);
+    const files: IFileInfo[] = getFiles(directory, this.options.ignore);
 
     files.forEach((file: IFileInfo) => {
       const language = LANGUAGE_MAP[path.extname(file.path)] || UNKNOWN_LANGUAGE;
