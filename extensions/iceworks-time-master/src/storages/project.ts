@@ -23,8 +23,6 @@ export interface ProjectInfo extends ProjectResource {
 }
 
 export function getProjectFolder(fsPath: string): WorkspaceFolder {
-  logger.debug('[projectStorage][getProjectFolder]fsPath', fsPath);
-
   let liveShareFolder = null;
   if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
     for (let i = 0; i < workspace.workspaceFolders.length; i++) {

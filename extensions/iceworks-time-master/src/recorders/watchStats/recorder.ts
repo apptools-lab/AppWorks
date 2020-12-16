@@ -30,8 +30,8 @@ export class WatchStatsRecorder {
     logger.debug('[WatchStatsRecorder][endRecord][watchStatsMapKeys]', watchStatsMapKeys);
 
     await this.destroyCurrentWatchFile();
-    for (const projectPath in watchStatsMapKeys) {
-      if (Object.prototype.hasOwnProperty.call(watchStatsMapKeys, projectPath)) {
+    for (const projectPath in watchStatsMap) {
+      if (Object.prototype.hasOwnProperty.call(watchStatsMap, projectPath)) {
         const watchStats = watchStatsMap[projectPath];
         await watchStats.sendData();
         delete watchStatsMap[projectPath];
@@ -52,9 +52,7 @@ export class WatchStatsRecorder {
   private async destroyCurrentWatchFile() {
     const cwFilePath = this.currentWatchFilePath;
     if (cwFilePath) {
-      logger.debug('[WatchStatsRecorder][destroyCurrentWatchFile]currentWatchFilePath', cwFilePath);
       const currentWatchStats = await this.createWatchStats(cwFilePath);
-      logger.debug('[WatchStatsRecorder][destroyCurrentWatchFile]files', Object.keys(currentWatchStats.files));
       currentWatchStats.files[cwFilePath].setEnd();
       this.currentWatchFilePath = undefined;
     }
@@ -97,12 +95,8 @@ export class WatchStatsRecorder {
   }
 
   private async createWatchStats(fsPath: string): Promise<WatchStats> {
-    logger.debug('[WatchStatsRecorder][createWatchStats]fsPath', fsPath);
-
     const project = await Project.createInstance(fsPath);
     const { directory: projectPath } = project;
-    logger.debug('[WatchStatsRecorder][createWatchStats]projectPath', projectPath);
-
     let watchStats = watchStatsMap[projectPath];
 
     if (!watchStats) {
@@ -111,8 +105,6 @@ export class WatchStatsRecorder {
     }
 
     const hasFile = !!watchStats.getFile(fsPath);
-    logger.debug('[WatchStatsRecorder][createWatchStats]hasFile', hasFile);
-
     if (!hasFile) {
       watchStats.addFile(fsPath);
     }
