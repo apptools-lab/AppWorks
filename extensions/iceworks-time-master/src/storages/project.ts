@@ -98,19 +98,23 @@ export interface ProjectsSummary {
   [path: string]: ProjectSummary;
 }
 
-export function getProjectsFile(day?: string) {
+function getProjectsFile(day?: string) {
   return path.join(getStorageDayPath(day), 'projects.json');
 }
 
-export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
+async function getOriginProjectsSummary(day?: string) {
   const file = getProjectsFile(day);
-  let projectsSummary = {};
+  const fileIsExists = await fse.pathExists(file);
+  return fileIsExists ? await fse.readJson(file) : {};
+}
+
+export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
   try {
-    projectsSummary = await fse.readJson(file);
+    return await getOriginProjectsSummary(day);
   } catch (e) {
     logger.error('[projectStorage][getProjectsSummary] got error', e);
+    return {};
   }
-  return projectsSummary;
 }
 
 export async function saveProjectsSummary(values: ProjectsSummary) {
@@ -123,7 +127,17 @@ export async function clearProjectsSummary() {
 }
 
 export async function updateProjectSummary(project: Project, increment: Partial<ProjectData>) {
-  const projectsSummary = await getProjectsSummary();
+  // always make sure projects summary is correct
+  let projectsSummary;
+  try {
+    projectsSummary = await getOriginProjectsSummary();
+  } catch (e) {
+    logger.error('[projectStorage][updateProjectSummary] getOriginProjectsSummary got error', e);
+  }
+  if (!projectsSummary) {
+    return;
+  }
+
   const { directory } = project;
   const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0 } = increment;
   let projectSummary = projectsSummary[directory];

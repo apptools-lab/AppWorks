@@ -25,13 +25,15 @@ export class KeystrokeStatsRecorder {
   }
 
   public async sendKeystrokeStatsMap() {
-    await Promise.all(Object.keys(keystrokeStatsMap).map(async (projectPath) => {
-      // clear other sending instructions and prevent multiple sending
-      if (this.keystrokeStatsTimeouts[projectPath]) {
-        clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
+    for (const projectPath in keystrokeStatsMap) {
+      if (Object.prototype.hasOwnProperty.call(keystrokeStatsMap, projectPath)) {
+        // clear other sending instructions and prevent multiple sending
+        if (this.keystrokeStatsTimeouts[projectPath]) {
+          clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
+        }
+        await this.sendKeystrokeStats(projectPath);
       }
-      await this.sendKeystrokeStats(projectPath);
-    }));
+    }
 
     cleanTextInfoCache();
   }

@@ -30,11 +30,13 @@ export class WatchStatsRecorder {
     logger.debug('[WatchStatsRecorder][endRecord][watchStatsMapKeys]', watchStatsMapKeys);
 
     await this.destroyCurrentWatchFile();
-    await Promise.all(watchStatsMapKeys.map(async (projectPath) => {
-      const watchStats = watchStatsMap[projectPath];
-      await watchStats.sendData();
-      delete watchStatsMap[projectPath];
-    }));
+    for (const projectPath in watchStatsMapKeys) {
+      if (Object.prototype.hasOwnProperty.call(watchStatsMapKeys, projectPath)) {
+        const watchStats = watchStatsMap[projectPath];
+        await watchStats.sendData();
+        delete watchStatsMap[projectPath];
+      }
+    }
 
     cleanTextInfoCache();
   }
