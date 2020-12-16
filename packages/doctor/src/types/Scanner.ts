@@ -2,7 +2,6 @@ import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
   ignore: string[];
-  supportExts: string[];
 }
 
 export interface IScanOptions {
@@ -14,13 +13,6 @@ export interface IScanOptions {
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
-}
-
-export interface IFileInfo {
-  path: string;
-  source: string;
-  // lines of code
-  LoC: number;
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex

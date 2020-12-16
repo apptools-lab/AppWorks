@@ -10,11 +10,11 @@ if (!window.__PREVIEW__DATA__) {
 
 // Example：
 // window.__PREVIEW__DATA__ = {
-//   startUrl: ' http://xx.xx.xx.xx:3333/',
+//   startUrl: 'http://xx.xx.xx.xx:3333/',
 //   startQRCodeInfo: {
-//     Web: 'http://xx.xx.xx.xx:3333/',
-//     Weex: 'http://xx.xx.xx.xx:3333/weex/index.js?wh_weex=true',
-//     Kraken: 'http://xx.xx.xx.xx:3333/kraken/index.js',
+//     web: ['http://xx.xx.xx.xx:3333/', 'http://xx.xx.xx.xx:3333/home', 'http://xx.xx.xx.xx:3333/detail'],
+//     weex: ['http://xx.xx.xx.xx:3333/weex/index.js?wh_weex=true'],
+//     kraken: ['http://xx.xx.xx.xx:3333/kraken/index.js'],
 //   },
 // };
 

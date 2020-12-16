@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- feat: add editor time
+
 ## 0.2.1
 
 - fix: ensure that the code time is not negative

@@ -6,7 +6,6 @@ import { getCommandResultLine } from './common';
 // eslint-disable-next-line
 const { name: extensionName, version: extensionVersion } = require('../../package.json');
 
-
 export interface EditorInfo {
   editorName: string;
   editorVersion: string;

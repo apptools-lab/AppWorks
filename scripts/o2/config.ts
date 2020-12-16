@@ -1,19 +1,42 @@
+import * as camelCase from 'lodash.camelcase';
+
 export const isBeta = !process.env.CI; // CI is true when running in GitHub action
-export const pushExtension2NPM = false;
-export const extensions4pack = [
-  'iceworks-team.iceworks-app',
-  'iceworks-team.iceworks-config-helper',
-  'iceworks-team.iceworks-material-helper',
-  'iceworks-team.iceworks-style-helper',
-  'iceworks-team.iceworks-ui-builder',
-  'iceworks-team.iceworks-time-master',
+export const pushExtension2Npm = false;
+export const innerExtensions4pack = [
+  {
+    packageName: 'iceworks-team.iceworks-app',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-config-helper',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-material-helper',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-style-helper',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-ui-builder',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-time-master',
+    assetsFolders: ['assets', 'schemas'],
+  },
   // 'iceworks-team.iceworks-doctor',
   // 'iceworks-team.iceworks-project-creator',
 ];
-export const packages4pack = [
+export const otherExtensions4pack = [
   {
+
     packageName: '@ali/publish-visual',
+    assetsFolders: ['icons', 'resource'],
     isActiveNode: true,
+    isActiveBrowser: true,
   },
-];
+].map((otherExtension4pack) => ({ ...otherExtension4pack, extensionName: camelCase(otherExtension4pack.packageName), isOther: true }));
 export const npmRegistry = process.env.REGISTRY ? process.env.REGISTRY : 'https://registry.npm.alibaba-inc.com';

@@ -1,9 +1,12 @@
+import * as fs from 'fs-extra';
 import * as path from 'path';
+import ignore from 'ignore';
 import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
 import Scorer from './Scorer';
 import Timer from './Timer';
-import { IFileInfo, IEslintReports } from './types/Scanner';
+import { IEslintReports } from './types/Scanner';
+import { IFileInfo } from './types/File';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -12,7 +15,9 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
+const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|package\.json)$/;
+
+export default function getEslintReports(directory: string, timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
   let warningCount = 0;
 
@@ -29,7 +34,15 @@ export default function getEslintReports(timer: Timer, files: IFileInfo[], ruleK
     useEslintrc: false,
   });
 
+  const ig = ignore();
+  const ignoreConfigFilePath = path.join(directory, '.eslintignore');
+  if (fs.existsSync(ignoreConfigFilePath)) {
+    ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
+  }
+
   files.forEach((file) => {
+    if (!SUPPORT_FILE_REG.test(file.path) || ig.ignores(file.path.replace(path.join(directory, '/'), ''))) return;
+
     cliEngine.executeOnText(file.source, file.path).results.forEach((result) => {
       // Remove Parsing error
       result.messages = (result.messages || []).filter((message) => {

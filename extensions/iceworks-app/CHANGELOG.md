@@ -1,4 +1,8 @@
 # Change Log
+# 0.7.1
+
+- feat: preview support read rax dev server start urls info
+- feat: add preview command
 
 # 0.7.0
 

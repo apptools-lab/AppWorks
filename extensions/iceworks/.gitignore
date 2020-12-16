@@ -4,4 +4,6 @@ tsconfig.json
 package.nls*
 assets/
 schemas/
+icons/
+resource/
 *.zip

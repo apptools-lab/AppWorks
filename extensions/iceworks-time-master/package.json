@@ -3,7 +3,7 @@
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"

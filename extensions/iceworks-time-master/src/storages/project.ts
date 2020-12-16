@@ -32,7 +32,7 @@ export function getProjectFolder(fsPath: string): WorkspaceFolder {
         const isVslsScheme = folderUri.scheme === 'vsls';
         if (isVslsScheme) {
           liveShareFolder = workspaceFolder;
-        } else if (fsPath.includes(folderUri.fsPath)) {
+        } else if (fsPath?.includes(folderUri.fsPath)) {
           return workspaceFolder;
         }
       }
@@ -81,7 +81,7 @@ export class Project implements ProjectInfo {
 
 interface ProjectData {
   sessionSeconds: number;
-  editorSeconds?: number;
+  editorSeconds: number;
   keystrokes: number;
   linesAdded: number;
   linesRemoved: number;
@@ -94,40 +94,53 @@ export interface ProjectsSummary {
   [path: string]: ProjectSummary;
 }
 
-export function getProjectsFile(day?: string) {
+function getProjectsFile(day?: string) {
   return path.join(getStorageDayPath(day), 'projects.json');
 }
 
-export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
+async function getOriginProjectsSummary(day?: string) {
   const file = getProjectsFile(day);
-  let projectsSummary = {};
-  try {
-    projectsSummary = await fse.readJson(file);
-  } catch (e) {
-    logger.error('[projectStorage][getProjectsSummary] got error', e);
-  }
-  return projectsSummary;
+  const fileIsExists = await fse.pathExists(file);
+  return fileIsExists ? await fse.readJson(file) : {};
 }
 
-export async function saveProjectsSummary(values: ProjectsSummary) {
+export async function getProjectsSummary(day?: string): Promise<ProjectsSummary> {
+  try {
+    return await getOriginProjectsSummary(day);
+  } catch (e) {
+    logger.error('[projectStorage][getProjectsSummary] got error', e);
+    return {};
+  }
+}
+
+async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
   await fse.writeJson(file, values, { spaces: jsonSpaces });
 }
 
-export async function clearProjectsSummary() {
-  await saveProjectsSummary({});
-}
+export async function updateProjectSummary(project: Project, increment: Partial<ProjectData>) {
+  // always make sure projects summary is correct
+  let projectsSummary;
+  try {
+    projectsSummary = await getOriginProjectsSummary();
+  } catch (e) {
+    logger.error('[projectStorage][updateProjectSummary] getOriginProjectsSummary got error', e);
+  }
+  if (!projectsSummary) {
+    return;
+  }
 
-export async function updateProjectSummary(project: Project, increment: ProjectData) {
-  const projectsSummary = await getProjectsSummary();
   const { directory } = project;
-  const { sessionSeconds, editorSeconds, keystrokes, linesAdded, linesRemoved } = increment;
+  const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0 } = increment;
   let projectSummary = projectsSummary[directory];
   if (!projectSummary) {
     projectSummary = {
       ...project,
-      ...increment,
-      editorSeconds: editorSeconds || sessionSeconds,
+      sessionSeconds,
+      editorSeconds,
+      keystrokes,
+      linesAdded,
+      linesRemoved,
     };
   } else {
     Object.assign(
@@ -138,6 +151,7 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
     projectSummary.linesRemoved += linesRemoved;
     projectSummary.keystrokes += keystrokes;
     projectSummary.sessionSeconds += sessionSeconds;
+    projectSummary.editorSeconds += editorSeconds;
     projectSummary.editorSeconds = Math.max(
       projectSummary.editorSeconds,
       projectSummary.sessionSeconds,
@@ -147,7 +161,7 @@ export async function updateProjectSummary(project: Project, increment: ProjectD
   await saveProjectsSummary(projectsSummary);
 }
 
-export function getProjectReportFile() {
+function getProjectReportFile() {
   return path.join(getStorageReportsPath(), 'ProjectSummary.txt');
 }
 
@@ -161,16 +175,20 @@ export async function generateProjectReport() {
   await Promise.all(storageDirs.map(async (storageDir) => {
     const dayProjectsSummary = await getProjectsSummary(storageDir);
     forIn(dayProjectsSummary, (dayProjectSummary: ProjectSummary) => {
-      const { sessionSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
+      const { sessionSeconds = 0, editorSeconds = 0, keystrokes = 0, linesAdded = 0, linesRemoved = 0, name: projectName } = dayProjectSummary;
       if (!projectsSummary[projectName]) {
         projectsSummary[projectName] = {
           ...dayProjectSummary,
+          editorSeconds,
           sessionSeconds,
           keystrokes,
           linesAdded,
           linesRemoved,
         };
       } else {
+        if (editorSeconds) {
+          projectsSummary[projectName].editorSeconds += editorSeconds;
+        }
         if (sessionSeconds) {
           projectsSummary[projectName].sessionSeconds += sessionSeconds;
         }
