@@ -11,12 +11,13 @@ export class WatchStatsRecorder {
   private currentWatchFilePath: string;
 
   async activate() {
-    logger.debug('[WatchStatsRecorder][activate][focused]', window.state.focused);
+    const { focused } = window.state;
+    logger.debug('[WatchStatsRecorder][activate][focused]', focused);
 
     window.onDidChangeActiveTextEditor(this.onDidChangeActiveTextEditor, this);
     window.onDidChangeWindowState(this.onDidChangeWindowState, this);
 
-    if (window.state.focused) {
+    if (focused) {
       await this.startRecord();
     }
   }
@@ -72,9 +73,10 @@ export class WatchStatsRecorder {
   }
 
   private async onDidChangeWindowState(windowState: WindowState) {
-    logger.debug('[WatchStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
+    const { focused } = windowState;
+    logger.debug('[WatchStatsRecorder][onDidChangeWindowState][focused]', focused);
 
-    if (!windowState.focused) {
+    if (!focused) {
       await this.endRecord();
     } else {
       await this.startRecord();
@@ -86,7 +88,6 @@ export class WatchStatsRecorder {
     const cwFilePath = this.currentWatchFilePath;
 
     logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][fsPath]', fsPath);
-    logger.debug('[WatchStatsRecorder][onDidChangeActiveTextEditor][currentWatchFilePath]', cwFilePath);
 
     if (fsPath !== cwFilePath) {
       await this.destroyCurrentWatchFile();

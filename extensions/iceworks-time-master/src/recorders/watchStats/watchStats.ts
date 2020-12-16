@@ -3,7 +3,6 @@ import { TextDocument } from 'vscode';
 import { Project } from '../../storages/project';
 import { FileWatchInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
-import logger from '../../utils/logger';
 import { processData } from '../../managers/data';
 
 import forIn = require('lodash.forin');
@@ -116,7 +115,6 @@ export class WatchStats {
 
   async sendData() {
     const isHasData = this.hasData();
-    logger.debug('[WatchStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
       await processData(this);

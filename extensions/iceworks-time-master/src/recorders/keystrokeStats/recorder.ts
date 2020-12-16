@@ -112,22 +112,17 @@ export class KeystrokeStatsRecorder {
       const textChangeInfo = this.getTextChangeInfo(contentChange);
       if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
         currentFileChange.pasteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.deleteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
       } else if (textChangeInfo.hasNonNewLine) {
         currentFileChange.addTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -136,8 +131,9 @@ export class KeystrokeStatsRecorder {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
-    if (!windowState.focused) {
+    const { focused } = windowState;
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', focused);
+    if (!focused) {
       await this.sendData();
     }
   }

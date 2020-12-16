@@ -64,8 +64,6 @@ export class Project implements ProjectInfo {
   }
 
   static async createInstance(fsPath: string) {
-    logger.debug('[projectStorage][createInstance]fsPath', fsPath);
-
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
     const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;

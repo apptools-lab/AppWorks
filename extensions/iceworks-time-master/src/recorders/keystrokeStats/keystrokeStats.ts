@@ -4,7 +4,6 @@ import { Project } from '../../storages/project';
 import { FileChangeInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
 import { processData } from '../../managers/data';
-import logger from '../../utils/logger';
 
 import forIn = require('lodash.forin');
 
@@ -161,7 +160,6 @@ export class KeystrokeStats {
 
   async sendData() {
     const isHasData = this.hasData();
-    logger.debug('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
       await processData(this);
