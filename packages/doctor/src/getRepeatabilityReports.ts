@@ -5,13 +5,14 @@ import { jscpd } from 'jscpd';
 import Scorer from './Scorer';
 import { IRepeatabilityReports } from './types/Scanner';
 
+const SUPPROT_FILE_EXTS = ['js', 'jsx', 'ts', 'tsx'];
+
 // Write temp file directory
 const tempDir = path.join(__dirname, 'tmp/');
 
 // https://www.npmjs.com/package/jscpd
 export default async function getRepeatabilityReports(
   directory: string,
-  supportExts: string[],
   ignore: string[],
   tempFileDir?: string,
 ): Promise<IRepeatabilityReports> {
@@ -21,7 +22,7 @@ export default async function getRepeatabilityReports(
   try {
     clones = await jscpd([
       '--formats-exts',
-      supportExts.join(','),
+      SUPPROT_FILE_EXTS.join(','),
       directory,
       '--ignore',
       `"${ignore.map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,

@@ -38,15 +38,14 @@ $ iceworks-doctor -s ./
 
 Options
 ```shell
-$ iceworks-doctor -s ./ --ignore types mock --supportExts css json
+$ iceworks-doctor -s ./ --ignore types mock
 ```
 
 ### Options
 
 #### new Doctor(options?);
 
-* ignore?: string[], Ignore directories, example ['mock'] .
-* supportExts?: string[], Support file exts, example ['css'] .
+* ignore?: string[], Ignore directories, example ['mock'] . `.gitignore` will work too.
 
 #### scan('/yourProjectPath', options?);
 
@@ -75,7 +74,7 @@ module.exports = getESLintConfig('react', {
   'no-unused-vars': 'off'
 });
 ```
-`.gitignore` and `.eslintignore` ignore config will merge into ESLint ignore.
+`.eslintignore` ignore config will merge into ESLint ignore.
 
 #### Maintainability
 

@@ -2,7 +2,6 @@ import { IClone } from '@jscpd/core';
 
 export interface IScannerOptions {
   ignore: string[];
-  supportExts: string[];
 }
 
 export interface IScanOptions {
