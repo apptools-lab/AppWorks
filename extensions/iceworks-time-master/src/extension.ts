@@ -37,7 +37,7 @@ export async function activate(context: ExtensionContext) {
       openFileInEditor(fsPath);
     }),
     commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
-      keystrokeStatsRecorder.sendKeystrokeStatsMap();
+      keystrokeStatsRecorder.sendData();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();

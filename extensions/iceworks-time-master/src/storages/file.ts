@@ -221,12 +221,11 @@ export interface FilesSummary {
   [filePath: string]: FileSummary;
 }
 
-export function getFilesFile(day?: string) {
+function getFilesFile(day?: string) {
   // better names "files.json"
   // however, in order to be compatible with the existing data, please do not modify it
   return path.join(getStorageDayPath(day), 'filesChange.json');
 }
-
 
 async function getOriginFilesSummary(day?: string) {
   const file = getFilesFile(day);

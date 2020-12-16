@@ -39,14 +39,14 @@ export async function activate() {
 
   sendDataTimer = setInterval(() => {
     sendPayload().catch((e) => {
-      logger.debug('[walkClock][activate][setInterval]sendPayload got error:', e);
+      logger.error('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
   }, snedPayloadDurationMins);
 
   processWatchStatsTimmer = setInterval(() => {
     if (window.state.focused) {
       wathStatsRecorder.sendData().catch((e) => {
-        logger.debug('[walkClock][activate][setInterval]wathStatsRecorder got error:', e);
+        logger.error('[walkClock][activate][setInterval]wathStatsRecorder got error:', e);
       });
     }
   }, processWatchStatsDurationMins);
@@ -61,7 +61,7 @@ export async function activate() {
   try {
     await sendPayload();
   } catch (e) {
-    logger.debug('[walkClock][activate]sendPayload got error:', e);
+    logger.error('[walkClock][activate]sendPayload got error:', e);
   }
 }
 

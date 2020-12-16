@@ -1,4 +1,5 @@
 import { TextDocument, TextDocumentChangeEvent, WindowState, window, TextDocumentContentChangeEvent, workspace } from 'vscode';
+import { checkIsO2 } from '@iceworks/common-service';
 import { isFileActive } from '../../utils/common';
 import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/file';
@@ -24,7 +25,7 @@ export class KeystrokeStatsRecorder {
     // placeholder
   }
 
-  public async sendKeystrokeStatsMap() {
+  public async sendData() {
     for (const projectPath in keystrokeStatsMap) {
       if (Object.prototype.hasOwnProperty.call(keystrokeStatsMap, projectPath)) {
         // clear other sending instructions and prevent multiple sending
@@ -71,7 +72,7 @@ export class KeystrokeStatsRecorder {
 
   public async onDidChangeTextDocument(textDocumentChangeEvent: TextDocumentChangeEvent) {
     // TODO remove it, just avoid bug on O2
-    if (textDocumentChangeEvent.document.uri.scheme !== 'file') {
+    if (checkIsO2() && textDocumentChangeEvent.document.uri.scheme !== 'file') {
       return;
     }
     const windowIsFocused = window.state.focused;
@@ -100,9 +101,10 @@ export class KeystrokeStatsRecorder {
     // THIS CAN HAVE MULTIPLE CONTENT_CHANGES WITH RANGES AT ONE TIME.
     // LOOP THROUGH AND REPEAT COUNTS
     const contentChanges = textDocumentChangeEvent.contentChanges.filter((change) => change.range);
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChanges);
+    const contentChangesLength = contentChanges.length;
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]contentChanges', contentChangesLength);
     // each changeset is triggered by a single keystroke
-    if (contentChanges.length > 0) {
+    if (contentChangesLength > 0) {
       currentFileChange.keystrokes += 1;
     }
 
@@ -110,22 +112,17 @@ export class KeystrokeStatsRecorder {
       const textChangeInfo = this.getTextChangeInfo(contentChange);
       if (textChangeInfo.textChangeLen > 4) { // 4 is the threshold here due to typical tab size of 4 spaces
         currentFileChange.pasteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]paste Incremented');
       } else if (textChangeInfo.textChangeLen < 0) {
         currentFileChange.deleteTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]delete incremented');
       } else if (textChangeInfo.hasNonNewLine) {
         currentFileChange.addTimes += 1;
-        logger.debug('[KeystrokeStatsRecorder][onDidChangeTextDocument]add incremented');
       }
       // increment keystrokes by 1
       keyStrokeStats.keystrokes += 1;
 
       if (textChangeInfo.linesDeleted) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Removed ${textChangeInfo.linesDeleted} lines`);
         currentFileChange.linesRemoved += textChangeInfo.linesDeleted;
       } else if (textChangeInfo.linesAdded) {
-        logger.debug(`[KeystrokeStatsRecorder][onDidChangeTextDocument]Added ${textChangeInfo.linesAdded} lines`);
         currentFileChange.linesAdded += textChangeInfo.linesAdded;
       }
     }
@@ -134,9 +131,10 @@ export class KeystrokeStatsRecorder {
   }
 
   public async onDidChangeWindowState(windowState: WindowState) {
-    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', windowState.focused);
-    if (!windowState.focused) {
-      await this.sendKeystrokeStatsMap();
+    const { focused } = windowState;
+    logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', focused);
+    if (!focused) {
+      await this.sendData();
     }
   }
 
