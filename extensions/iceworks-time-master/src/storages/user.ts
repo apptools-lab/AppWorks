@@ -45,7 +45,7 @@ export async function getUserSummary(day?: string): Promise<UserSummary> {
   }
 }
 
-export async function saveUserSummary(userSummary: UserSummary) {
+async function saveUserSummary(userSummary: UserSummary) {
   const file = getUserFile();
   await fse.writeJson(file, userSummary, { spaces: jsonSpaces });
 }
@@ -75,11 +75,11 @@ export async function updateUserSummary(increment: Partial<UserSummary>) {
   await saveUserSummary(userSummary);
 }
 
-export function getUserReportFile() {
+function getUserReportFile() {
   return path.join(getStorageReportsPath(), 'UserSummary.txt');
 }
 
-export async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise<UserSummary> {
+async function getUserSummaryByDays(dayMoments: moment.Moment[]): Promise<UserSummary> {
   const { count } = await getCountAndAverage4UserSummary(dayMoments.map((dayMoment => getDay(dayMoment))));
   return count;
 }

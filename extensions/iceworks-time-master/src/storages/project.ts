@@ -115,7 +115,7 @@ export async function getProjectsSummary(day?: string): Promise<ProjectsSummary>
   }
 }
 
-export async function saveProjectsSummary(values: ProjectsSummary) {
+async function saveProjectsSummary(values: ProjectsSummary) {
   const file = getProjectsFile();
   await fse.writeJson(file, values, { spaces: jsonSpaces });
 }
@@ -163,7 +163,7 @@ export async function updateProjectSummary(project: Project, increment: Partial<
   await saveProjectsSummary(projectsSummary);
 }
 
-export function getProjectReportFile() {
+function getProjectReportFile() {
   return path.join(getStorageReportsPath(), 'ProjectSummary.txt');
 }
 

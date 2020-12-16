@@ -13,6 +13,9 @@ async function saveDataToDisk(data: KeystrokeStats|WatchStats) {
   const increment = data instanceof KeystrokeStats ?
     await updateFilesSummaryByKeystrokeStats(data) :
     await updateFilesSummaryByWatchStats(data);
+
+  logger.debug('[data][saveDataToDisk] increment', increment);
+
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
   refreshViews();
