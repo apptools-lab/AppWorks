@@ -2,6 +2,8 @@ import { exec } from 'child_process';
 import { window, workspace, TextDocument } from 'vscode';
 import logger from './logger';
 
+export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(true), time));
+
 export async function openFileInEditor(file: string) {
   try {
     const doc = await workspace.openTextDocument(file);
