@@ -28,6 +28,7 @@ async function appendDataToPayload(data: KeystrokeStats|WatchStats) {
     await appendWatchTimePayload(data);
 }
 
+// TODO async logic
 let isProcessing = false;
 export async function processData(data: KeystrokeStats|WatchStats) {
   logger.debug('[data][processData] isProcessing', isProcessing);
