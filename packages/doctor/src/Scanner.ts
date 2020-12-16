@@ -21,13 +21,7 @@ export default class Scanner {
     const timer = new Timer(options?.timeout);
     const reports = {} as IScannerReports;
 
-    const files: IFileInfo[] = getFiles(directory, this.options.supportExts, this.options.ignore);
-
-    // Process package.json file.
-    const packageFileInfo = getFiles(path.join(directory, 'package.json'), ['json'])[0];
-    if (packageFileInfo) {
-      files.push(packageFileInfo);
-    }
+    const files: IFileInfo[] = getFiles(directory, this.options.ignore);
 
     // Set files info
     reports.filesInfo = {
@@ -46,7 +40,7 @@ export default class Scanner {
         }
         customConfig.parserOptions.project = `${path.join(directory, './')}**/tsconfig.json`;
       }
-      reports.ESLint = getEslintReports(timer, files, ruleKey, customConfig, options?.fix);
+      reports.ESLint = getEslintReports(directory, timer, files, ruleKey, customConfig, options?.fix);
     }
 
     // Calculate maintainability
@@ -56,7 +50,7 @@ export default class Scanner {
 
     // Calculate repeatability
     if (!options || options.disableRepeatability !== true) {
-      reports.repeatability = await getRepeatabilityReports(directory, this.options.supportExts, this.options.ignore, options?.tempFileDir);
+      reports.repeatability = await getRepeatabilityReports(directory, this.options.ignore, options?.tempFileDir);
     }
 
     // Calculate total score
