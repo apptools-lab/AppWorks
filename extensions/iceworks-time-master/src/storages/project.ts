@@ -122,10 +122,6 @@ export async function saveProjectsSummary(values: ProjectsSummary) {
   await fse.writeJson(file, values, { spaces: jsonSpaces });
 }
 
-export async function clearProjectsSummary() {
-  await saveProjectsSummary({});
-}
-
 export async function updateProjectSummary(project: Project, increment: Partial<ProjectData>) {
   // always make sure projects summary is correct
   let projectsSummary;

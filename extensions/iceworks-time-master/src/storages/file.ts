@@ -247,7 +247,3 @@ export async function saveFilesSummary(filesSummary: FilesSummary) {
   const file = getFilesFile();
   await fse.writeJson(file, filesSummary, { spaces: jsonSpaces });
 }
-
-export async function cleanFilesSummary() {
-  await saveFilesSummary({});
-}
