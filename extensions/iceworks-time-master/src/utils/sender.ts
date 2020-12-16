@@ -160,8 +160,8 @@ async function sendBlukCreate(type, playloadData, extra) {
       ...extra,
     })));
 
-    logger.info('[sender][sendBlukCreate] response', bulkCreateRespose);
     if (!isResponseOk(bulkCreateRespose)) {
+      logger.info('[sender][sendBlukCreate] response', bulkCreateRespose);
       throw new Error(bulkCreateRespose.data.message);
     }
   } catch (e) {
