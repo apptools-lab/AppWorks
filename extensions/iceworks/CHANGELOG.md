@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.15.0
+
+- feat: add Dashborad
+- feat: more materials for H5 / MiniProgram
+
+## 0.14.1
+
+- feat: add "Editor Time"
+- feat: upgrade rax preview
+- fix: update Active Code Time suddenly 0
+- fix: O2 problems
+
 ## 0.14.0
 
 - refactor: upgrade extension features
