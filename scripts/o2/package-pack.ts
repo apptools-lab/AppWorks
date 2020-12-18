@@ -9,7 +9,7 @@ async function installPackDeps() {
   );
 }
 
-async function packagePack() {
+async function buildPack() {
   spawnSync(
     PACKAGE_MANAGER,
     ['install', '@ali/kaitian-cli', '-g'],
@@ -22,11 +22,11 @@ async function packagePack() {
   );
 }
 
-async function buildPack() {
+async function packagePack() {
   await installPackDeps();
-  await packagePack();
+  await buildPack();
 }
 
-buildPack().catch((e) => {
+packagePack().catch((e) => {
   console.error(e);
 });
