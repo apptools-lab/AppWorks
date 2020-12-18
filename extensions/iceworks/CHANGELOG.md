@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.14.2
+
+- fix: upgrade DEF Publish extension for o2
+- fix: view summary
+
+## 0.14.1
+
+- feat: add "Editor Time"
+- feat: upgrade rax preview
+- fix: update Active Code Time suddenly 0
+- fix: O2 problems
+
 ## 0.14.0
 
 - refactor: upgrade extension features

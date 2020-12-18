@@ -13,6 +13,7 @@ import {
 } from 'vscode';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
+import { checkIsO2 } from '@iceworks/common-service';
 import { getUserSummary, UserSummary } from '../storages/user';
 import { getFilesSummary, FileSummary } from '../storages/file';
 import { humanizeMinutes, seconds2minutes } from '../utils/time';
@@ -169,6 +170,45 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
 
   public bindView(treeView: TreeView<TimerItem>): void {
     this.view = treeView;
+  }
+
+  public getParent(): undefined {
+    return undefined;
+  }
+
+  public getTreeItem(p: TimerItem) {
+    let treeItem = null;
+    if (p.children.length) {
+      const collapsedState = timerCollapsedStateMap[p.label];
+      if (!collapsedState) {
+        treeItem = createTimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
+      } else {
+        treeItem = createTimerTreeItem(p, collapsedState, this.extensionContext);
+      }
+    } else {
+      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
+    }
+    return treeItem;
+  }
+
+  public async getChildren(element?: TimerItem): Promise<TimerItem[]> {
+    let timerItems: TimerItem[] = [];
+    if (element) {
+      // return the children of this element
+      timerItems = element.children;
+    } else {
+      // return the parent elements
+      const isO2 = checkIsO2();
+      if (!isO2) {
+        timerItems = timerItems.concat([
+          this.buildViewUserSummaryItem(),
+          this.buildViewProjectSummaryItem(),
+          this.buildDividerItem(),
+        ]);
+      }
+      timerItems = timerItems.concat(await this.getTreeParents());
+    }
+    return timerItems;
   }
 
   private buildParentItem(label: string, tooltip: string, children: TimerItem[], name = '', location = 'ct_metrics_tree') {
@@ -580,42 +620,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     }
 
     return treeItems;
-  }
-
-  getParent(): undefined {
-    return undefined;
-  }
-
-  getTreeItem(p: TimerItem) {
-    let treeItem = null;
-    if (p.children.length) {
-      const collapsedState = timerCollapsedStateMap[p.label];
-      if (!collapsedState) {
-        treeItem = createTimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
-      } else {
-        treeItem = createTimerTreeItem(p, collapsedState, this.extensionContext);
-      }
-    } else {
-      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
-    }
-    return treeItem;
-  }
-
-  async getChildren(element?: TimerItem): Promise<TimerItem[]> {
-    let timerItems: TimerItem[] = [];
-    if (element) {
-      // return the children of this element
-      timerItems = element.children;
-    } else {
-      // return the parent elements
-      timerItems = [
-        this.buildViewUserSummaryItem(),
-        this.buildViewProjectSummaryItem(),
-        this.buildDividerItem(),
-        ...await this.getTreeParents(),
-      ];
-    }
-    return timerItems;
   }
 }
 
