@@ -37,6 +37,8 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.detail": "Release to daily environment.",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.label": "Production",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "Release to production environment.",
+  "extension.iceworksApp.showEntriesQuickPick.preview.label": "Preview",
+  "extension.iceworksApp.showEntriesQuickPick.preview.detail": "Preview Web page",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "Install <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
   "extension.iceworksApp.configHelper.extension.webviewTitle": "Settings - Iceworks",

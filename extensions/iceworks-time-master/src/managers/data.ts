@@ -1,27 +1,48 @@
 import { window, ProgressLocation, workspace, ViewColumn } from 'vscode';
-import { KeystrokeStats } from '../recorders/keystrokeStats';
-import { updateFilesChangeSummary } from '../storages/filesChange';
+import { KeystrokeStats, updateFilesSummary as updateFilesSummaryByKeystrokeStats } from '../recorders/keystrokeStats';
+import { WatchStats, updateFilesSummary as updateFilesSummaryByWatchStats } from '../recorders/watchStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
-import { appendKeystrokesPayload } from '../utils/sender';
+import { appendKeystrokesPayload, appendWatchTimePayload } from '../utils/sender';
 import logger from '../utils/logger';
+import { delay } from '../utils/common';
 
-async function saveDataToDisk(keystrokeStats: KeystrokeStats) {
-  const { project } = keystrokeStats;
-  const increment = await updateFilesChangeSummary(keystrokeStats);
+async function saveDataToDisk(data: KeystrokeStats|WatchStats) {
+  const { project } = data;
+  const increment = data instanceof KeystrokeStats ?
+    await updateFilesSummaryByKeystrokeStats(data) :
+    await updateFilesSummaryByWatchStats(data);
+
+  logger.debug('[data][saveDataToDisk] increment', increment);
+
   await updateProjectSummary(project, increment);
   await updateUserSummary(increment);
   refreshViews();
 }
 
-export async function processData(keystrokeStats: KeystrokeStats) {
-  logger.debug('[data][processData] run');
-  await checkMidnight();
-  await Promise.all([saveDataToDisk, appendKeystrokesPayload].map(async (fn) => {
-    await fn(keystrokeStats);
-  }));
+async function appendDataToPayload(data: KeystrokeStats|WatchStats) {
+  data instanceof KeystrokeStats ?
+    await appendKeystrokesPayload(data) :
+    await appendWatchTimePayload(data);
+}
+
+// TODO async logic
+let isProcessing = false;
+export async function processData(data: KeystrokeStats|WatchStats) {
+  logger.debug('[data][processData] isProcessing', isProcessing);
+  if (!isProcessing) {
+    isProcessing = true;
+    await checkMidnight();
+    await Promise.all([saveDataToDisk, appendDataToPayload].map(async (fn) => {
+      await fn(data);
+    }));
+    isProcessing = false;
+  } else {
+    await delay(1000);
+    await processData(data);
+  }
 }
 
 function setProgressToGenerateSummaryReport(title: string, generateFn: typeof generateProjectReport | typeof generateUserReport) {

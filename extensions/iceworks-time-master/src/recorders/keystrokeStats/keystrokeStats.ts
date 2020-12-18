@@ -1,28 +1,97 @@
+import { TextDocument } from 'vscode';
+import * as path from 'path';
 import { Project } from '../../storages/project';
-import { FileChange } from '../../storages/filesChange';
+import { FileChangeInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
 import { processData } from '../../managers/data';
-import logger from '../../utils/logger';
 
 import forIn = require('lodash.forin');
 
-export interface KeystrokeStatsInfo {
-  /**
-   * Time to start keystroke
-   */
-  start: number;
-  /**
-   * Time to end keystroke
-   */
-  end: number;
-  /**
-   * Number of keystrokes
-   */
-  keystrokes: number;
-  /**
-   * Interval between the end of the update and the start of the update
-   */
-  durationSeconds: number;
+export class FileChange implements FileChangeInfo {
+  public fileName: string;
+
+  public fsPath: string;
+
+  public projectDirectory: string;
+
+  public length: number;
+
+  public lineCount: number;
+
+  public syntax: string;
+
+  public keystrokes = 0;
+
+  public charsAdded = 0;
+
+  public charsDeleted = 0;
+
+  public charsPasted = 0;
+
+  public open = 0;
+
+  public close = 0;
+
+  public pasteTimes = 0;
+
+  public addTimes = 0;
+
+  public deleteTimes = 0;
+
+  public update = 0;
+
+  public linesAdded = 0;
+
+  public linesRemoved = 0;
+
+  public start = 0;
+
+  public end = 0;
+
+  public durationSeconds = 0;
+
+  constructor(values?: Partial<FileChangeInfo>) {
+    if (values) {
+      Object.assign(this, values);
+    }
+  }
+
+  static createInstance(fsPath: string, project: Project) {
+    const baseName = path.basename(fsPath);
+    const fileName = baseName;
+    const projectDirectory = project.directory;
+    const fileChange = new FileChange({ fileName, projectDirectory, fsPath });
+    return fileChange;
+  }
+
+  updateTextInfo(textDocument: TextDocument) {
+    const { syntax, length, lineCount } = getTextInfo(textDocument, this.fileName);
+    this.syntax = syntax;
+    this.length = length;
+    this.lineCount = lineCount;
+  }
+
+  activate() {
+    // placeholder
+  }
+
+  deactivate() {
+    if (this.keystrokes) {
+      this.update = 1;
+    }
+    if (this.start && this.end) {
+      const durationSeconds = this.end - this.start;
+      this.durationSeconds = durationSeconds > 0 ? durationSeconds : 0;
+    }
+  }
+
+  setStart(time?: number) {
+    this.start = time || getNowUTCSec();
+  }
+
+  setEnd(time?: number) {
+    this.end = time || getNowUTCSec();
+  }
 }
 
 export class KeystrokeStats {
@@ -91,7 +160,6 @@ export class KeystrokeStats {
 
   async sendData() {
     const isHasData = this.hasData();
-    logger.debug('[KeystrokeStats][sendData]isHasData', isHasData);
     if (isHasData) {
       this.deactivate();
       await processData(this);

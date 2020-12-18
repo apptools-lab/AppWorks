@@ -1,3 +1,4 @@
+export const NODE_ACTIVE_TEXT_EDITOR_NAME = 'Undefined';
 export const UNTITLED = 'Untitled';
 export const NO_PROJ_NAME = 'Unnamed';
 export const ONE_SEC_MILLISECONDS = 1000;

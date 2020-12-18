@@ -1,4 +1,6 @@
 {
+  "extension.timeMaster.tree.item.editor.label": "编辑器使用时间",
+  "extension.timeMaster.tree.item.editor.detail": "您今天使用编辑器的总时间",
   "extension.timeMaster.tree.item.acCode.label": "活跃编程时间",
   "extension.timeMaster.tree.item.acCode.detail": "您今天在编辑器中键入的总时间",
   "extension.timeMaster.tree.item.linesAdded.label": "添加的行数",
@@ -21,6 +23,7 @@
   "extension.timeMaster.time.hour": "小时",
   "extension.timeMaster.time.hours": "小时",
   "extension.timeMaster.time.min": "分钟",
+  "extension.timeMaster.edTime": "编辑器使用时间",
   "extension.timeMaster.acCode": "活跃编程时间",
   "extension.timeMaster.linesAdded": "添加的代码行数",
   "extension.timeMaster.linesRemoved": "删除的代码行数",

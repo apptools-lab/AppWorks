@@ -7,3 +7,5 @@ export const checkMidnightDuration = 5;
 export const checkMidnightDurationMins = ONE_MIN_MILLISECONDS * checkMidnightDuration;
 export const sendPayloadDuration = 15;
 export const snedPayloadDurationMins = ONE_MIN_MILLISECONDS * sendPayloadDuration;
+export const processWatchStatsDuration = 30;
+export const processWatchStatsDurationMins = ONE_MIN_MILLISECONDS * processWatchStatsDuration;

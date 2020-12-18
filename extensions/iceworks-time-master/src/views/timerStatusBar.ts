@@ -22,10 +22,10 @@ export async function createTimerStatusBar() {
 }
 
 async function getStatusBarText() {
-  const { sessionSeconds } = await getUserSummary();
-  const { dailySessionSeconds } = await getAverageSummary();
-  const inFlowIcon = dailySessionSeconds && sessionSeconds > dailySessionSeconds ? '$(rocket)' : '$(clock)';
-  const sessionMinutes = seconds2minutes(sessionSeconds);
+  const { editorSeconds } = await getUserSummary();
+  const { dailyEditorSeconds } = await getAverageSummary();
+  const inFlowIcon = dailyEditorSeconds && editorSeconds > dailyEditorSeconds ? '$(rocket)' : '$(clock)';
+  const sessionMinutes = seconds2minutes(editorSeconds);
   const text = `${inFlowIcon} ${humanizeMinutes(sessionMinutes)}`;
   return text;
 }

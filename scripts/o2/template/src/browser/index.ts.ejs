@@ -1,0 +1,5 @@
+<% packages.forEach(function({ isActiveBrowser, packageName }){-%>
+<% if(isActiveBrowser) {-%>
+export * from '<%=packageName%>/out/browser';
+<% }  -%>
+<%}) -%>

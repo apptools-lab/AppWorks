@@ -122,6 +122,11 @@ export default [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.preview.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.preview.detail'),
+    command: 'iceworksApp.preview.open',
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
     command: 'iceworksApp.welcome.start',
