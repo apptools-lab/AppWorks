@@ -27,6 +27,7 @@ export default function getEslintReports(directory: string, timer: Timer, files:
   const reports = [];
 
   const cliEngine = new CLIEngine({
+    cacheLocation: path.join(__dirname, '.eslintcache'),
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
     // Use plugin in @iceworks/spec
     cwd: path.dirname(require.resolve('@iceworks/spec')),
@@ -70,13 +71,15 @@ export default function getEslintReports(directory: string, timer: Timer, files:
 
   if (fix) {
     // output fixes to disk
-    CLIEngine.outputFixes(cliEngine.executeOnFiles(files.map((file) => file.path)));
+    CLIEngine.outputFixes(cliEngine.executeOnFiles(files.map((file) => {
+      return file.path.startsWith('.') ? path.join(process.cwd(), file.path) : file.path;
+    })));
   }
 
   // calculate score
   reports.forEach((report) => {
     // Add critical level calculate.
-    (report.messages || []).forEach(message => {
+    (report.messages || []).forEach((message) => {
       if (message.message.indexOf('[Critical]') === 0) {
         if (message.severity === 2) {
           // Critical error

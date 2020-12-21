@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.1
+- feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor).
+
 ## 0.2.0
 - feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) and scan reports.
 
