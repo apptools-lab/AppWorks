@@ -5,6 +5,15 @@
 - feat: add Dashborad
 - feat: more materials for H5 / MiniProgram
 
+## 0.14.3
+
+- fix: view summary
+
+## 0.14.2
+
+- fix: upgrade DEF Publish extension for o2
+- fix: disable view summary on o2
+
 ## 0.14.1
 
 - feat: add "Editor Time"
