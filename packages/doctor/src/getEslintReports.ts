@@ -56,6 +56,13 @@ export default function getEslintReports(directory: string, timer: Timer, files:
 
   const data = cliEngine.executeOnFiles(targetFiles);
 
+  if (fix) {
+    // output fixes to disk
+    CLIEngine.outputFixes(data);
+  }
+
+  timer.checkTimeout();
+
   (data.results || []).forEach((result) => {
     // Remove Parsing error
     result.messages = (result.messages || []).filter((message) => {
@@ -73,13 +80,7 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     });
 
     reports.push(result);
-    timer.checkTimeout();
   });
-
-  if (fix) {
-    // output fixes to disk
-    CLIEngine.outputFixes(data);
-  }
 
   // calculate score
   reports.forEach((report) => {
