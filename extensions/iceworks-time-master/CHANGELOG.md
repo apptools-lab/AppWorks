@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.2
+
+- fix: view summary on o2
+
 ## 0.3.1
 
 - fix: disable view summary on o2
