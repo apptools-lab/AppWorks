@@ -1,9 +1,13 @@
 # Change Log
 
+## 0.14.3
+
+- fix: view summary
+
 ## 0.14.2
 
 - fix: upgrade DEF Publish extension for o2
-- fix: view summary
+- fix: disable view summary on o2
 
 ## 0.14.1
 

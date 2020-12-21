@@ -1,8 +1,7 @@
 import {
   TreeDataProvider,
   TreeItem,
-  commands,
-  Command,
+  // commands,
   TreeItemCollapsibleState,
   EventEmitter,
   Event,
@@ -13,7 +12,6 @@ import {
 } from 'vscode';
 import * as moment from 'moment';
 import * as numeral from 'numeral';
-import { checkIsO2 } from '@iceworks/common-service';
 import { getUserSummary, UserSummary } from '../storages/user';
 import { getFilesSummary, FileSummary } from '../storages/file';
 import { humanizeMinutes, seconds2minutes } from '../utils/time';
@@ -75,12 +73,17 @@ class TimerTreeItem extends TreeItem {
     private readonly treeItem: TimerItem,
     public readonly collapsibleState: TreeItemCollapsibleState,
     public readonly extensionContext: ExtensionContext,
-    public readonly command?: Command,
   ) {
     super(treeItem.label, collapsibleState);
 
     const { lightPath, darkPath } = this.getTreeItemIcon(treeItem);
 
+    if (treeItem.command) {
+      this.command = {
+        command: treeItem.command,
+        title: treeItem.label,
+      };
+    }
     if (treeItem.description) {
       this.description = treeItem.description;
     }
@@ -198,15 +201,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       timerItems = element.children;
     } else {
       // return the parent elements
-      const isO2 = checkIsO2();
-      if (!isO2) {
-        timerItems = timerItems.concat([
-          this.buildViewUserSummaryItem(),
-          this.buildViewProjectSummaryItem(),
-          this.buildDividerItem(),
-        ]);
-      }
-      timerItems = timerItems.concat(await this.getTreeParents());
+      timerItems = [
+        this.buildViewUserSummaryItem(),
+        this.buildViewProjectSummaryItem(),
+        this.buildDividerItem(),
+        ...await this.getTreeParents(),
+      ];
     }
     return timerItems;
   }
@@ -623,26 +623,27 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   }
 }
 
-function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) {
-  if (item.command) {
-    const args = item.commandArgs || [];
-    if (args.length) {
-      commands.executeCommand(item.command, ...args);
-    } else {
-      commands.executeCommand(item.command, item);
-    }
-  }
+// TODO now just using TreeItem `command` field to achieve this feature
+// function handleTimerChangeSelection(view: TreeView<TimerItem>, item: TimerItem) {
+//   if (item.command) {
+//     const args = item.commandArgs || [];
+//     if (args.length) {
+//       commands.executeCommand(item.command, ...args);
+//     } else {
+//       commands.executeCommand(item.command, item);
+//     }
+//   }
 
-  // deselect it
-  try {
-    view.reveal(item, {
-      focus: false,
-      select: false,
-    });
-  } catch (e) {
-    logger.error(`[TimerProvider][handleTimerChangeSelection]Unable to deselect track: ${e.message}`);
-  }
-}
+//   // deselect it
+//   try {
+//     view.reveal(item, {
+//       focus: false,
+//       select: false,
+//     });
+//   } catch (e) {
+//     logger.error(`[TimerProvider][handleTimerChangeSelection]Unable to deselect track: ${e.message}`);
+//   }
+// }
 
 export function createTimerTreeView(timerProvider: TimerProvider) {
   const treeView = window.createTreeView('timeMaster', {
@@ -657,12 +658,12 @@ export function createTimerTreeView(timerProvider: TimerProvider) {
     const item: TimerItem = e.element;
     timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Expanded;
   });
-  treeView.onDidChangeSelection(async e => {
-    if (!e.selection || e.selection.length === 0) {
-      return;
-    }
-    const item: TimerItem = e.selection[0];
-    handleTimerChangeSelection(treeView, item);
-  });
+  // treeView.onDidChangeSelection(async e => {
+  //   if (!e.selection || e.selection.length === 0) {
+  //     return;
+  //   }
+  //   const item: TimerItem = e.selection[0];
+  //   handleTimerChangeSelection(treeView, item);
+  // });
   return treeView;
 }
