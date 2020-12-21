@@ -1,3 +1,4 @@
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import Timer from './Timer';
 import { IScannerOptions, IScanOptions, IScannerReports } from './types/Scanner';
@@ -38,7 +39,9 @@ export default class Scanner {
         if (!customConfig.parserOptions) {
           customConfig.parserOptions = {};
         }
-        customConfig.parserOptions.project = `${path.join(directory, './')}**/tsconfig.json`;
+        if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
+          customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
+        }
       }
       reports.ESLint = getEslintReports(directory, timer, files, ruleKey, customConfig, options?.fix);
     }

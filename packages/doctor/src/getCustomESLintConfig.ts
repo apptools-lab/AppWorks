@@ -14,7 +14,7 @@ export default function getCustomESLintConfig(directory: string) {
       plugins: ['flow', 'exportDefaultFrom', 'exportNamespaceFrom'],
     });
 
-    traverse(ast, {
+    traverse(ast as any, {
       CallExpression(nodePath: any) {
         const { node } = nodePath;
         if (node.callee.name === 'getESLintConfig' && node.arguments && node.arguments[1]) {
