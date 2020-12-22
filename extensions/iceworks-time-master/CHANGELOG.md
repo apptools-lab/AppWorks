@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.3
+
+- refactor: watch rename to usage
+
 ## 0.3.2
 
 - fix: view summary on o2

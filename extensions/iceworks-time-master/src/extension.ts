@@ -2,14 +2,14 @@ import { ExtensionContext, commands } from 'vscode';
 import { createTimerTreeView, TimerProvider } from './views/timerProvider';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
-import { getInterface as getWathStatsRecorder } from './recorders/watchStats';
+import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
 import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
 
 const keystrokeStatsRecorder = getKeystrokeStats();
-const wathStatsRecorder = getWathStatsRecorder();
+const usageStatsRecorder = getUsageStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
   logger.debug('[TimeMaster][extension] activate!');
@@ -28,8 +28,8 @@ export async function activate(context: ExtensionContext) {
   keystrokeStatsRecorder.activate().catch((e) => {
     logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
   });
-  wathStatsRecorder.activate().catch((e) => {
-    logger.error('[TimeMaster][extension] activate wathStatsRecorder got error:', e);
+  usageStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
   });
 
   subscriptions.push(
@@ -63,8 +63,8 @@ export function deactivate() {
   keystrokeStatsRecorder.deactivate().catch((e) => {
     logger.error('[TimeMaster][extension] deactivate keystrokeStatsRecorder got error:', e);
   });
-  wathStatsRecorder.deactivate().catch((e) => {
-    logger.error('[TimeMaster][extension] deactivate wathStatsRecorder got error:', e);
+  usageStatsRecorder.deactivate().catch((e) => {
+    logger.error('[TimeMaster][extension] deactivate usageStatsRecorder got error:', e);
   });
 
   deactivateWalkClock();
