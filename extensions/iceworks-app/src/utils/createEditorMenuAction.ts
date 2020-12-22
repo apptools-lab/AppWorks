@@ -16,6 +16,10 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
   const { extensionPath } = context;
 
   function openPreview(startInfo?: IDevServerStartInfo) {
+    if (!startInfo) {
+      return;
+    }
+
     if (previewWebviewPanel) {
       previewWebviewPanel.reveal();
     }
@@ -40,29 +44,30 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
 
   const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';
   registerCommand(EDITOR_MENU_RUN_DEBUG, async () => {
+    let shouldInstall = false;
     const isPegasusProject = await checkIsPegasusProject();
 
     // Check dependences
     if (!(await checkPathExists(projectPath, dependencyDir))) {
+      shouldInstall = true;
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
       executeCommand({
-        command: EDITOR_MENU_RUN_DEBUG,
+        command: 'iceworksApp.npmScripts.run',
         title: 'Run Install',
-        arguments: [projectPath, createNpmCommand('install')],
+        arguments: [projectPath, createNpmCommand('install'), 'Run Start'],
       });
-      return;
     }
 
     // npm run start.
     // Debug in VS Code move to iceworks docs.
     executeCommand({
-      command: EDITOR_MENU_RUN_DEBUG,
+      command: 'iceworksApp.npmScripts.run',
       title: 'Run Start',
-      arguments: [projectPath, createNpmCommand('run', 'start')],
+      arguments: [projectPath, createNpmCommand('run', 'start'), 'Run Start'],
     });
 
     if (await getProjectFramework() === 'rax-app') {
-      const devServerStartInfo: IDevServerStartInfo = await getDevServerStartInfo(projectPath);
+      const devServerStartInfo: IDevServerStartInfo | undefined = await getDevServerStartInfo(projectPath, shouldInstall ? 4 * 60000 : 2 * 60000);
       openPreview(devServerStartInfo);
     } else if (isPegasusProject) {
       // Set pegasus service url
@@ -81,9 +86,6 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
       }
     }
   });
-
-  const PREVIEW_OPEN = 'iceworksApp.preview.open';
-  registerCommand(PREVIEW_OPEN, openPreview);
 
   const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
   registerCommand(EDITOR_MENU_RUN_BUILD, async () => {

@@ -187,10 +187,6 @@
         "title": "%iceworksApp.command.pages.openFile.title%"
       },
       {
-        "command": "iceworksApp.preview.open",
-        "title": "%iceworksApp.command.preview.open.title%"
-      },
-      {
         "command": "iceworksApp.pages.delete",
         "title": "%iceworksApp.command.pages.delete.title%",
         "icon": {
