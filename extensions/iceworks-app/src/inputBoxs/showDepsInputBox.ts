@@ -11,8 +11,6 @@ export default async function showDepsInputBox(nodeDependenciesInstance: any, de
   if (!result) {
     return;
   }
-  const script = nodeDependenciesInstance.getAddDependencyScript(depType, result);
-  const { title } = script;
-  const [cwd, scriptCommand] = script.arguments;
-  runScript(title, cwd, scriptCommand);
+  const { title, cwd, command } = nodeDependenciesInstance.getAddDependencyScript(depType, result);
+  runScript(title, cwd, command);
 }

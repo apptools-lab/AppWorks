@@ -125,13 +125,12 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     if (await checkPathExists(nodeModulesPath)) {
       await rimrafAsync(nodeModulesPath);
     }
-    const npmCommand = createNpmCommand('install');
-    const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.reinstall',
+    const command = createNpmCommand('install');
+    return {
       title: 'Reinstall Dependencies',
-      arguments: [workspaceDir, npmCommand],
+      cwd: workspaceDir,
+      command,
     };
-    return command;
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
@@ -147,13 +146,12 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     } else if (isYarn) {
       extraAction = '-S';
     }
-    const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
-    const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
+    const command = createNpmCommand(npmCommandAction, packageName, extraAction);
+    return {
       title: 'Add Dependency',
-      arguments: [workspaceDir, npmCommand],
+      cwd: workspaceDir,
+      command,
     };
-    return command;
   }
 }
 
@@ -208,11 +206,9 @@ export function createNodeDependenciesTreeView(context) {
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
-      const script = await nodeDependenciesProvider.getReinstallScript();
-      const { title } = script;
-      const [cwd, commandScript] = script.arguments as any[];
+      const { title, cwd, command } = await nodeDependenciesProvider.getReinstallScript();
 
-      runScript(title, cwd, commandScript);
+      runScript(title, cwd, command);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(nodeDependenciesProvider, 'dependencies'));
