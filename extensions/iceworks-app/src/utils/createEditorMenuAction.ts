@@ -51,12 +51,12 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       shouldInstall = true;
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
-      runScript('Run Install', projectPath, createNpmCommand('install'));
+      runScript('Run Debug', projectPath, createNpmCommand('install'));
     }
 
     // npm run start.
     // Debug in VS Code move to iceworks docs.
-    runScript('Run Start', projectPath, createNpmCommand('run', 'start'));
+    runScript('Run Debug', projectPath, createNpmCommand('run', 'start'));
 
     if (await getProjectFramework() === 'rax-app') {
       const devServerStartInfo: IDevServerStartInfo | undefined = await getDevServerStartInfo(projectPath, shouldInstall ? 4 * 60000 : 2 * 60000);
