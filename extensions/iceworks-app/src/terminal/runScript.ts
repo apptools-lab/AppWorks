@@ -1,23 +1,17 @@
 import * as vscode from 'vscode';
 import { Terminal, TerminalOptions } from 'vscode';
 
-export default function executeCommand(command: vscode.Command) {
-  if (!command.arguments) {
-    return;
-  }
-  const args = command.arguments;
-  const [cwd, script, terminalName] = args;
+export default function runScript(terminalName: string, cwd: string, script: string) {
   if (!script) {
     return;
   }
 
   const { terminals } = vscode.window;
-
   let terminal: Terminal | undefined = terminals.find(({ name }) => {
-    return name === terminalName || name === script;
+    return name === terminalName;
   });
   if (!terminal) {
-    const terminalOptions: TerminalOptions = { cwd, name: terminalName || script };
+    const terminalOptions: TerminalOptions = { cwd, name: terminalName };
     terminal = vscode.window.createTerminal(terminalOptions);
   }
 

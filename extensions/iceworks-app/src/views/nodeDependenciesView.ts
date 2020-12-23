@@ -7,7 +7,7 @@ import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import { getDataFromSettingJson, createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
-import executeCommand from '../commands/executeCommand';
+import runScript from '../terminal/runScript';
 import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
 import showDepsInputBox from '../inputBoxs/showDepsInputBox';
@@ -125,13 +125,12 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     if (await checkPathExists(nodeModulesPath)) {
       await rimrafAsync(nodeModulesPath);
     }
-    const npmCommand = createNpmCommand('install');
-    const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.reinstall',
+    const command = createNpmCommand('install');
+    return {
       title: 'Reinstall Dependencies',
-      arguments: [workspaceDir, npmCommand],
+      cwd: workspaceDir,
+      command,
     };
-    return command;
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
@@ -147,13 +146,12 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     } else if (isYarn) {
       extraAction = '-S';
     }
-    const npmCommand = createNpmCommand(npmCommandAction, packageName, extraAction);
-    const command: vscode.Command = {
-      command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
+    const command = createNpmCommand(npmCommandAction, packageName, extraAction);
+    return {
       title: 'Add Dependency',
-      arguments: [workspaceDir, npmCommand],
+      cwd: workspaceDir,
+      command,
     };
-    return command;
   }
 }
 
@@ -199,14 +197,18 @@ export function createNodeDependenciesTreeView(context) {
 
   registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
-    if (node.command) {
-      executeCommand(node.command);
+    const { command } = node;
+    if (command) {
+      const { title } = command;
+      const [cwd, commandScript] = command?.arguments as any[];
+      runScript(title, cwd, commandScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
-      const script = await nodeDependenciesProvider.getReinstallScript();
-      executeCommand(script);
+      const { title, cwd, command } = await nodeDependenciesProvider.getReinstallScript();
+
+      runScript(title, cwd, command);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(nodeDependenciesProvider, 'dependencies'));

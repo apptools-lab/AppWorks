@@ -26,12 +26,6 @@ const READER_INTERVAL = 100;
 // Temp file valid time(compare to the 'compiledTime'). If over 5 minutes might read the old file.
 const MAX_VALID_INTERVAL = 300000;
 
-const DEFAULT_DEV_INFO = {
-  urls: {
-    web: [DEFAULT_START_URL],
-  },
-};
-
 function getDevInfo(root: string) {
   let devInfo = null;
   const tempFilePath = path.join(root, DEV_INFO_FILE);
@@ -56,12 +50,12 @@ export interface IDevServerStartInfo {
   startQRCodeInfo?: any;
 }
 
-export async function getDevServerStartInfo(root: string): Promise<IDevServerStartInfo> {
+export async function getDevServerStartInfo(root: string, timeout?: number): Promise<IDevServerStartInfo | undefined> {
   let timerTimeout;
   let timerReader;
 
   const timeoutPromise = new Promise((resolve) => {
-    timerTimeout = setTimeout(resolve, TIMEOUT, DEFAULT_DEV_INFO);
+    timerTimeout = setTimeout(resolve, timeout || TIMEOUT, undefined);
   });
 
   const readerPromise = new Promise((resolve) => {
@@ -78,16 +72,13 @@ export async function getDevServerStartInfo(root: string): Promise<IDevServerSta
   clearTimeout(timerTimeout);
   clearInterval(timerReader);
 
-  const devServerStartInfo = {
-    startUrl: DEFAULT_START_URL,
-    startQRCodeInfo: {},
-  };
+  let devServerStartInfo: IDevServerStartInfo | undefined;
 
   if (devInfo && devInfo.urls) {
-    devServerStartInfo.startQRCodeInfo = devInfo.urls;
-    if (devInfo.urls.web && devInfo.urls.web[0]) {
-      devServerStartInfo.startUrl = devInfo.urls.web[0];
-    }
+    devServerStartInfo = {
+      startUrl: devInfo.urls.web && devInfo.urls.web[0] ? devInfo.urls.web[0] : DEFAULT_START_URL,
+      startQRCodeInfo: devInfo.urls,
+    };
   }
 
   return devServerStartInfo;
