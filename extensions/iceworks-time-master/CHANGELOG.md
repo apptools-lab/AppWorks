@@ -2,7 +2,7 @@
 
 ## 0.3.3
 
-- refactor: watch rename to usage
+- feat: upload editor usage data in Alibaba Intranet environment
 
 ## 0.3.2
 

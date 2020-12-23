@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.5
+
+- fix: don not auto open materials settings dialog
+
 # 0.4.4
 
 - fix: create rax page styles

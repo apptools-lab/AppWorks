@@ -3,6 +3,7 @@
 # 0.7.2
 
 - fix: fail to run commands which contain `&&` in Windows
+- refactor: Debug && Preview logic
 
 # 0.7.1
 
