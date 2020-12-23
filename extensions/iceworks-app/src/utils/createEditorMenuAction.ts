@@ -7,7 +7,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import { DEFAULT_START_URL, IDevServerStartInfo, getDevServerStartInfo } from './getDevServerStartInfo';
 import services from '../services';
 import showDefPublishEnvQuickPick from '../quickPicks/showDefPublishEnvQuickPick';
-import executeCommand from '../commands/executeCommand';
+import runScript from '../terminal/runScript';
 
 let previewWebviewPanel: vscode.WebviewPanel | undefined;
 
@@ -51,20 +51,12 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       shouldInstall = true;
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
-      executeCommand({
-        command: 'iceworksApp.npmScripts.run',
-        title: 'Run Install',
-        arguments: [projectPath, createNpmCommand('install'), 'Run Start'],
-      });
+      runScript('Run Install', projectPath, createNpmCommand('install'));
     }
 
     // npm run start.
     // Debug in VS Code move to iceworks docs.
-    executeCommand({
-      command: 'iceworksApp.npmScripts.run',
-      title: 'Run Start',
-      arguments: [projectPath, createNpmCommand('run', 'start'), 'Run Start'],
-    });
+    runScript('Run Start', projectPath, createNpmCommand('run', 'start'));
 
     if (await getProjectFramework() === 'rax-app') {
       const devServerStartInfo: IDevServerStartInfo | undefined = await getDevServerStartInfo(projectPath, shouldInstall ? 4 * 60000 : 2 * 60000);
@@ -90,18 +82,17 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
   const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
   registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
     const pathExists = await checkPathExists(projectPath, dependencyDir);
-    const command: vscode.Command = {
-      command: EDITOR_MENU_RUN_BUILD,
-      title: 'Run Build',
-      arguments: [projectPath, createNpmCommand('run', 'build')],
-    };
+    const title = 'Run Build';
+    const npmBuildCommand = createNpmCommand('run', 'build');
+
     if (!pathExists) {
-      command.arguments = [projectPath, `${createNpmCommand('install')
-      } && ${command.arguments![1]}`];
-      executeCommand(command);
+      const npmInstallCommand = createNpmCommand('install');
+      runScript(title, projectPath, npmInstallCommand);
+      runScript(title, projectPath, npmBuildCommand);
       return;
     }
-    executeCommand(command);
+
+    runScript(title, projectPath, npmBuildCommand);
   });
 
   const isAliInternal = await checkIsAliInternal();
