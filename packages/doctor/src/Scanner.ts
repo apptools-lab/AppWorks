@@ -48,12 +48,15 @@ export default class Scanner {
 
     // Calculate maintainability
     if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(timer, files);
+      reports.maintainability = getMaintainabilityReports(files, timer);
     }
 
     // Calculate repeatability
-    if (!options || options.disableRepeatability !== true) {
-      reports.repeatability = await getRepeatabilityReports(directory, this.options.ignore, options?.tempFileDir);
+    if (
+      (!options || options.disableRepeatability !== true) &&
+      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
+    ) {
+      reports.repeatability = await getRepeatabilityReports(directory, timer, this.options.ignore, options?.tempFileDir);
     }
 
     // Calculate total score

@@ -13,6 +13,7 @@ export interface IScanOptions {
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
+  maxRepeatabilityCheckLines?: number;
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex
