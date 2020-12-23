@@ -7,7 +7,7 @@ import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import { getDataFromSettingJson, createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
-import executeCommand from '../commands/executeCommand';
+import runScript from '../terminal/runScript';
 import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
 import showDepsInputBox from '../inputBoxs/showDepsInputBox';
@@ -199,14 +199,20 @@ export function createNodeDependenciesTreeView(context) {
 
   registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
   registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
-    if (node.command) {
-      executeCommand(node.command);
+    const { command } = node;
+    if (command) {
+      const { title } = command;
+      const [cwd, commandScript] = command?.arguments as any[];
+      runScript(title, cwd, commandScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
     if (await nodeDependenciesProvider.packageJsonExists()) {
       const script = await nodeDependenciesProvider.getReinstallScript();
-      executeCommand(script);
+      const { title } = script;
+      const [cwd, commandScript] = script.arguments as any[];
+
+      runScript(title, cwd, commandScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.dependencies.add', () => showDepsInputBox(nodeDependenciesProvider, 'dependencies'));
