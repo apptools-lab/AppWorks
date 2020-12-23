@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.15.0
+
+- feat: add project dashboard
+- feat: add quick entries for O2
+- feat: more materials for Rax
+
 ## 0.14.4
 
 - feat: upload editor usage data in Alibaba Intranet environment
