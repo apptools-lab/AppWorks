@@ -37,8 +37,6 @@
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.detail": "发布到日常环境",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.label": "生产环境",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.prod.detail": "发布到生产环境",
-  "extension.iceworksApp.showEntriesQuickPick.preview.label": "启动预览页",
-  "extension.iceworksApp.showEntriesQuickPick.preview.detail": "在 VS Code 中预览 web 页面",
   "extension.iceworksApp.showDepsQuickPick.quickPickItem.detail": "安装 <%= label %>",
   "extension.iceworksApp.openEntryFile.ErrorMessage": "没有找到入口",
   "extension.iceworksApp.configHelper.extension.webviewTitle": "设置 - Iceworks",

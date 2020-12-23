@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.3
+
+- feat: upload editor usage data in Alibaba Intranet environment
+
 ## 0.3.2
 
 - fix: view summary on o2

@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.14.4
+
+- feat: upload editor usage data in Alibaba Intranet environment
+- fix: don not auto open materials settings dialog
+- fix: fail to run commands which contain `&&` in Windows
+- refactor: doctor score calculate
+- refactor: Debug && Preview logic
+
 ## 0.14.3
 
 - fix: view summary

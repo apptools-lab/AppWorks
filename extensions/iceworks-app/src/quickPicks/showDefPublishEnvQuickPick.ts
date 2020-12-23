@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { projectPath } from '@iceworks/project-service';
 import { checkIsO2, executeCommand as executeVSCodeCommand } from '@iceworks/common-service';
-import executeCommand from '../commands/executeCommand';
+import runScript from '../terminal/runScript';
 import i18n from '../i18n';
 
 const { window } = vscode;
@@ -28,12 +28,7 @@ export default function showDefPublishEnvQuickPick() {
     if (selection[0]) {
       const env = DEFEnvOptions.find((option) => option.label === selection[0].label)!;
       if (!checkIsO2()) {
-        const command: vscode.Command = {
-          title: 'Publish',
-          command: 'iceworksApp.editorMenu.DefPublish',
-          arguments: [projectPath, env.command],
-        };
-        executeCommand(command);
+        runScript('DEF Publish', projectPath, env.command);
       } else {
         executeVSCodeCommand('core.def.publish', env.value);
       }

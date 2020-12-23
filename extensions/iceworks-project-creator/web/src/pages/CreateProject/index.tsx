@@ -204,6 +204,14 @@ const CreateProject: React.FC = () => {
     }
   }
 
+  async function onSettingsClick() {
+    try {
+      await callService('common', 'executeCommand', 'iceworksApp.configHelper.start');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   async function getMaterialSources() {
     const sources: any = (await callService('material', 'getSources')) as IMaterialSource[];
     setMaterialSources(sources);
@@ -261,7 +269,7 @@ const CreateProject: React.FC = () => {
               </div>
             </div>
             <div className={styles.headerBtns}>
-              <Button size="medium" text onClick={onOpenConfigPanel} className={styles.btn}>
+              <Button size="medium" text onClick={onSettingsClick} className={styles.btn}>
                 <Icon type="set" />
                 <FormattedMessage id="web.iceworksProjectCreator.CreateProject.setting" />
               </Button>

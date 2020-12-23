@@ -3,7 +3,7 @@
   "displayName": "Application Explorer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -185,10 +185,6 @@
       {
         "command": "iceworksApp.pages.openFile",
         "title": "%iceworksApp.command.pages.openFile.title%"
-      },
-      {
-        "command": "iceworksApp.preview.open",
-        "title": "%iceworksApp.command.preview.open.title%"
       },
       {
         "command": "iceworksApp.pages.delete",
