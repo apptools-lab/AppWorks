@@ -1,19 +1,19 @@
 import { window, ProgressLocation, workspace, ViewColumn } from 'vscode';
 import { KeystrokeStats, updateFilesSummary as updateFilesSummaryByKeystrokeStats } from '../recorders/keystrokeStats';
-import { WatchStats, updateFilesSummary as updateFilesSummaryByWatchStats } from '../recorders/watchStats';
+import { UsageStats, updateFilesSummary as updateFilesSummaryByUsageStats } from '../recorders/usageStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
 import { checkMidnight, refreshViews } from './walkClock';
 import { Progress } from '../utils/progress';
-import { appendKeystrokesPayload, appendWatchTimePayload } from '../utils/sender';
+import { appendKeystrokesPayload, appendUsageTimePayload } from '../utils/sender';
 import logger from '../utils/logger';
 import { delay } from '../utils/common';
 
-async function saveDataToDisk(data: KeystrokeStats|WatchStats) {
+async function saveDataToDisk(data: KeystrokeStats|UsageStats) {
   const { project } = data;
   const increment = data instanceof KeystrokeStats ?
     await updateFilesSummaryByKeystrokeStats(data) :
-    await updateFilesSummaryByWatchStats(data);
+    await updateFilesSummaryByUsageStats(data);
 
   logger.debug('[data][saveDataToDisk] increment', increment);
 
@@ -22,15 +22,15 @@ async function saveDataToDisk(data: KeystrokeStats|WatchStats) {
   refreshViews();
 }
 
-async function appendDataToPayload(data: KeystrokeStats|WatchStats) {
+async function appendDataToPayload(data: KeystrokeStats|UsageStats) {
   data instanceof KeystrokeStats ?
     await appendKeystrokesPayload(data) :
-    await appendWatchTimePayload(data);
+    await appendUsageTimePayload(data);
 }
 
 // TODO async logic
 let isProcessing = false;
-export async function processData(data: KeystrokeStats|WatchStats) {
+export async function processData(data: KeystrokeStats|UsageStats) {
   logger.debug('[data][processData] isProcessing', isProcessing);
   if (!isProcessing) {
     isProcessing = true;

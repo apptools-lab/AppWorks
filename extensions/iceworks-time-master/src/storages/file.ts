@@ -42,17 +42,17 @@ export interface KeystrokeStatsInfo {
   durationSeconds: number;
 }
 
-export interface WatchStatsInfo {
+export interface UsageStatsInfo {
   /**
-   * Time to start watch
+   * Time to start usage
    */
   start: number;
   /**
-   * Time to end watch
+   * Time to end usage
    */
   end: number;
   /**
-   * Interval between the end of the watch and the start of the watch
+   * Interval between the end of the usage and the start of the usage
    */
   durationSeconds: number;
 }
@@ -149,7 +149,7 @@ export interface FileChangeInfo extends
   projectDirectory: string;
 }
 
-export interface FileWatchInfo extends FileInfo, WatchStatsInfo {
+export interface FileUsageInfo extends FileInfo, UsageStatsInfo {
   /**
    * The folder of the project to which the file belongs
    */
@@ -182,9 +182,9 @@ export interface FileSummary extends
   startChange: PropType<KeystrokeStatsInfo, 'start'>;
   endChange: PropType<KeystrokeStatsInfo, 'end'>;
   keystrokes: PropType<KeystrokeStatsInfo, 'keystrokes'>;
-  // WatchStatsInfo
-  startWatch: PropType<WatchStatsInfo, 'start'>;
-  endWatch: PropType<WatchStatsInfo, 'end'>;
+  // UsageStatsInfo
+  startUsage: PropType<UsageStatsInfo, 'start'>;
+  endUsage: PropType<UsageStatsInfo, 'end'>;
 }
 
 export function getFileSummaryDefaults(): FileSummary {
@@ -212,8 +212,8 @@ export function getFileSummaryDefaults(): FileSummary {
     startChange: 0,
     endChange: 0,
     keystrokes: 0,
-    startWatch: 0,
-    endWatch: 0,
+    startUsage: 0,
+    endUsage: 0,
   };
 }
 

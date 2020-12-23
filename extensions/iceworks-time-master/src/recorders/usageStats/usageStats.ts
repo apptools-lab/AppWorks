@@ -1,13 +1,13 @@
 import * as path from 'path';
 import { TextDocument } from 'vscode';
 import { Project } from '../../storages/project';
-import { FileWatchInfo, getTextInfo } from '../../storages/file';
+import { FileUsageInfo, getTextInfo } from '../../storages/file';
 import { getNowUTCSec } from '../../utils/time';
 import { processData } from '../../managers/data';
 
 import forIn = require('lodash.forin');
 
-export class FileWatch implements FileWatchInfo {
+export class FileUsage implements FileUsageInfo {
   public fileName: string;
 
   public fsPath: string;
@@ -36,7 +36,7 @@ export class FileWatch implements FileWatchInfo {
     const baseName = path.basename(fsPath);
     const fileName = baseName;
     const projectDirectory = project.directory;
-    const fileChange = new FileWatch({ fileName, projectDirectory, fsPath });
+    const fileChange = new FileUsage({ fileName, projectDirectory, fsPath });
     return fileChange;
   }
 
@@ -76,12 +76,12 @@ export class FileWatch implements FileWatchInfo {
   }
 }
 
-export class WatchStats {
+export class UsageStats {
   public start: number;
 
   public end: number;
 
-  public files: { [filePath: string]: FileWatch } = {};
+  public files: { [filePath: string]: FileUsage } = {};
 
   public project: Project;
 
@@ -94,15 +94,15 @@ export class WatchStats {
     return keys.length > 0;
   }
 
-  getFile(fsPath: string): FileWatch {
+  getFile(fsPath: string): FileUsage {
     return this.files[fsPath];
   }
 
-  addFile(fsPath: string): FileWatch {
-    const fileWatch = FileWatch.createInstance(fsPath, this.project);
-    fileWatch.activate();
-    this.files[fsPath] = fileWatch;
-    return fileWatch;
+  addFile(fsPath: string): FileUsage {
+    const fileUsage = FileUsage.createInstance(fsPath, this.project);
+    fileUsage.activate();
+    this.files[fsPath] = fileUsage;
+    return fileUsage;
   }
 
   setStart(time?: number) {
@@ -127,8 +127,8 @@ export class WatchStats {
 
   deactivate() {
     this.setEnd();
-    forIn(this.files, (fileWatch: FileWatch) => {
-      fileWatch.deactivate();
+    forIn(this.files, (fileUsage: FileUsage) => {
+      fileUsage.deactivate();
     });
   }
 }
