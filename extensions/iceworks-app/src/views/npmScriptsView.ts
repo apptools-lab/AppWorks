@@ -3,8 +3,8 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { dependencyDir, packageJSONFilename, projectPath } from '@iceworks/project-service';
-import executeCommand from '../commands/executeCommand';
-import stopCommand from '../commands/stopCommand';
+import runScript from '../terminal/runScript';
+import stopScript from '../terminal/stopScript';
 
 export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeItem> {
   private workspaceRoot: string | undefined;
@@ -90,18 +90,20 @@ export function createNpmScriptsTreeView(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('npmScripts', { treeDataProvider: npmScriptsProvider });
 
   registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
+    const { command } = script;
+    const { title } = command;
+    const [cwd, scriptCommand] = command.arguments as any[];
     if (!(await checkPathExists(projectPath, dependencyDir))) {
-      const installDepsCommand = {
-        ...script.command,
-        arguments: [projectPath, createNpmCommand('install'), script.command.arguments![1]],
-      };
-      executeCommand(installDepsCommand);
-      executeCommand(script.command);
+      runScript(title, cwd, createNpmCommand('install'));
+      runScript(title, cwd, scriptCommand);
       return;
     }
-    executeCommand(script.command);
+    runScript(title, cwd, scriptCommand);
   });
-  registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => stopCommand(script.command));
+  registerCommand('iceworksApp.npmScripts.stop', (script: ScriptTreeItem) => {
+    const { command: { title } } = script;
+    stopScript(title);
+  });
   registerCommand('iceworksApp.npmScripts.refresh', () => npmScriptsProvider.refresh());
 
   const pattern = new vscode.RelativePattern(projectPath, packageJSONFilename);
