@@ -6,16 +6,18 @@ export default function executeCommand(command: vscode.Command) {
     return;
   }
   const args = command.arguments;
-  const [cwd, script] = args;
+  const [cwd, script, terminalName] = args;
   if (!script) {
     return;
   }
 
   const { terminals } = vscode.window;
 
-  let terminal: Terminal | undefined = terminals.find(({ name }) => name === script);
+  let terminal: Terminal | undefined = terminals.find(({ name }) => {
+    return name === terminalName || name === script;
+  });
   if (!terminal) {
-    const terminalOptions: TerminalOptions = { cwd, name: script };
+    const terminalOptions: TerminalOptions = { cwd, name: terminalName || script };
     terminal = vscode.window.createTerminal(terminalOptions);
   }
 

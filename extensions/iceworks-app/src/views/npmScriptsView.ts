@@ -91,7 +91,11 @@ export function createNpmScriptsTreeView(context: vscode.ExtensionContext) {
 
   registerCommand('iceworksApp.npmScripts.run', async (script: ScriptTreeItem) => {
     if (!(await checkPathExists(projectPath, dependencyDir))) {
-      script.command.arguments = [projectPath, `${createNpmCommand('install')} && ${script.command.arguments![1]}`];
+      const installDepsCommand = {
+        ...script.command,
+        arguments: [projectPath, createNpmCommand('install'), script.command.arguments![1]],
+      };
+      executeCommand(installDepsCommand);
       executeCommand(script.command);
       return;
     }
