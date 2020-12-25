@@ -20,13 +20,13 @@ try {
 
 const isElectron = checkIsElectron();
 const isO2 = checkIsO2();
-let logCode = '';
-if (isO2) {
-  logCode = 'pack_o2';
-} else if (isElectron) {
-  logCode = 'pack_app';
-} else {
-  logCode = 'pack_web';
+let logCode = 'pack_app';
+if (isO2) { // Client
+  if (isElectron) {
+    logCode = 'pack_o2';
+  } else { // WebIDE
+    logCode = 'pack_web';
+  }
 }
 const outside = '_outside';
 let isAlibaba: boolean;
