@@ -21,8 +21,8 @@ try {
 const isElectron = checkIsElectron();
 const isO2 = checkIsO2();
 let logCode = 'pack_app';
-if (isO2) { // Client
-  if (isElectron) {
+if (isO2) {
+  if (isElectron) { // Client
     logCode = 'pack_o2';
   } else { // WebIDE
     logCode = 'pack_web';
