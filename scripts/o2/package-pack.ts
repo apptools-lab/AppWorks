@@ -11,11 +11,6 @@ async function installPackDeps() {
 
 async function buildPack() {
   spawnSync(
-    PACKAGE_MANAGER,
-    ['install', '@ali/kaitian-cli', '-g'],
-    { stdio: 'inherit', cwd: process.cwd() },
-  );
-  spawnSync(
     'kaitian',
     ['package', '--yarn'],
     { stdio: 'inherit', cwd: PACK_DIR },

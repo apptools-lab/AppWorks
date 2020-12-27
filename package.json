@@ -25,6 +25,7 @@
     "publish-beta:package": "ts-node ./scripts/publish-beta-package.ts",
     "publish-beta:extension": "ts-node ./scripts/publish-beta-extension.ts",
     "publish:o2": "npm run o2:general && npm run o2:build && npm run o2:upload",
+    "kaitian-cli:install": "ts-node ./scripts/o2/get-kaitian-cli-package.ts && ts-node ./scripts/o2/install-kaitian-cli-deps.ts",
     "o2:general": "ts-node ./scripts/o2/general-pack",
     "o2:package": "ts-node ./scripts/o2/package-pack",
     "o2:publish": "ts-node ./scripts/o2/publish-pack",

@@ -7,3 +7,9 @@ export const PACKAGE_JSON_NAME = 'package.json';
 export const PACK_DIR = join(INNER_EXTENSIONS_DIRECTORY, PACK_NAME);
 export const PACK_PACKAGE_JSON_PATH = join(PACK_DIR, PACKAGE_JSON_NAME);
 export const PACKAGE_MANAGER = isBeta ? 'tnpm' : 'npm';
+
+export const OSS_PACKAGES = [
+  '@ali/common-di',
+  '@ali/ide-extension-installer',
+  '@ali/kaitian-cli',
+];
