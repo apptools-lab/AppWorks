@@ -11,8 +11,8 @@ async function installPackDeps() {
 
 async function buildPack() {
   spawnSync(
-    'kaitian',
-    ['package', '--yarn'],
+    'node',
+    ['node_modules/@ali/kaitian-cli/bin/kaitian.js', 'package', '--yarn'],
     { stdio: 'inherit', cwd: PACK_DIR },
   );
 }

@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as spawn from 'cross-spawn';
-import { OSS_PACKAGES } from './constant';
+import { OSS_PACKAGES, PACK_DIR } from './constant';
 
-const nodeModulesPath = path.join(__dirname, '..', '..', 'node_modules');
+const nodeModulesPath = path.join(PACK_DIR, 'node_modules');
 
 (function () {
   OSS_PACKAGES.forEach(async (packageName) => {

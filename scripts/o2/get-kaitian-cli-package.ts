@@ -2,9 +2,7 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as oss from 'ali-oss';
 import * as AdmZip from 'adm-zip';
-import { OSS_PACKAGES } from './constant';
-
-const nodeModulesPath = path.join(__dirname, '..', '..', 'node_modules');
+import { OSS_PACKAGES, PACK_PACKAGE_NODE_MODULES_PATH } from './constant';
 
 if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
   const ossClient = oss({
@@ -26,11 +24,11 @@ if (process.env.ACCESS_KEY_ID && process.env.ACCESS_KEY_SECRET) {
           const zipPath = path.join(__dirname, 'tmp.zip');
           fse.writeFileSync(zipPath, result.content);
           const zip = new AdmZip(zipPath);
-          const extractPath = path.join(nodeModulesPath);
+          const extractPath = path.join(PACK_PACKAGE_NODE_MODULES_PATH);
           zip.extractAllTo(extractPath, true);
           fse.moveSync(
-            path.join(nodeModulesPath, ossPackageName),
-            path.join(nodeModulesPath, packageName),
+            path.join(PACK_PACKAGE_NODE_MODULES_PATH, ossPackageName),
+            path.join(PACK_PACKAGE_NODE_MODULES_PATH, packageName),
             { overwrite: true },
           );
           fse.removeSync(zipPath);
