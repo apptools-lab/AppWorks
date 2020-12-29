@@ -21,6 +21,8 @@ jobs:
           npm run dependency:check
           npm run test
           npm run coverage
+          npm run kaitian-cli:install
+          npm run publish:o2
         env:
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
