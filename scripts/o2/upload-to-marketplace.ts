@@ -1,11 +1,17 @@
 import axios from 'axios';
 
+
 async function uploadExtesion(name: string, url: string) {
   const response = await axios.post(
     'https://marketplace.antfin-inc.com/openapi/extension/upload',
     {
       name,
       url,
+    },
+    {
+      headers: {
+        // 'x-private-token': token,
+      },
     },
   );
   return response;
