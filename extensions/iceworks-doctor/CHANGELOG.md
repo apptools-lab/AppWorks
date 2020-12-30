@@ -1,5 +1,7 @@
 # Change Log
 
+## 0.2.2
+- feat: support vue project.
 ## 0.2.1
 - feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor).
 

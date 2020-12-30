@@ -18,7 +18,7 @@ export default async (options) => {
 
     const scanOption = Object.assign({}, options || {}, {
       // @iceworks/spec suppot rax rax-ts react react-ts
-      framework: projectType === 'rax' ? 'rax' : 'react',
+      framework: projectType === 'unknown' ? 'react' : projectType,
       languageType: projectLanguageType,
     });
 

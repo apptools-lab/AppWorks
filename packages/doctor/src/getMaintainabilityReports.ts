@@ -4,7 +4,7 @@ import Timer from './Timer';
 import { IMaintainabilityReport, IMaintainabilityReports } from './types/Scanner';
 import { IFileInfo } from './types/File';
 
-const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx)$/;
+const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue)$/;
 
 // https://www.npmjs.com/package/typhonjs-escomplex
 export default function getMaintainabilityReports(files: IFileInfo[], timer: Timer): IMaintainabilityReports {
