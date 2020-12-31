@@ -10,7 +10,16 @@ import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
+const SKIP_PACK_EXTENSION_LIST = [
+  // Doctor publish failed after pack command, because some script will delete file in node_modules.
+  // Only publish it.
+  'iceworks-doctor',
+];
+
 function packExtension(extension: string, directory: string, version: string) {
+  if (SKIP_PACK_EXTENSION_LIST.indexOf(extension) > -1) {
+    return;
+  }
   console.log('[VSCE] PACK: ', `${extension}@${version}`);
   spawnSync('vsce', ['package'], {
     stdio: 'inherit',
