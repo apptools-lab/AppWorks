@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1
+
+- feat: log DAU for O2
+
 ## 0.3.0
 
 - chore: internal optimization

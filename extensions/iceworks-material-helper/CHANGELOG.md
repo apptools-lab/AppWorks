@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.2
+
+- feat: log DAU for O2
+
 # 0.5.1
 
 - feat: support generate route to app.json in rax application
