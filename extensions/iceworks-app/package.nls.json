@@ -35,5 +35,7 @@
   "iceworksApp.command.nodeDependencies.upgrade.title": "Upgrade Dependency",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
-  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page"
+  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
+  "iceworksApp.o2.command.npmScripts.runDebug.title": "Run Debug",
+  "iceworksApp.o2.command.nodeDependencies.reinstall.title": "Reinstall Dependencies"
 }
