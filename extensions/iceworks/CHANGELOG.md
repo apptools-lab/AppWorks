@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.15.1
+
+- feat: more materials for Rax
+- feat: add quick entries for O2
+- feat: add create page&component to explorer
+- fix: doctor support Vue
+
 ## 0.14.4
 
 - feat: upload editor usage data in Alibaba Intranet environment

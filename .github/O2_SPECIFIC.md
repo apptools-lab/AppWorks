@@ -30,9 +30,12 @@ $ kaitian dev
 ## Publish O2 Pack
 
 ```bash
-$ npm run o2:package 
 # iceworks.zip generated
+$ npm run o2:package
 
-$ npm run o2:publish
+# upload iceworks.zip to OSS
+$ npm run o2:upload
+
 # O2.icework-kit published to Ali Marketplace
+$ npm run o2:release
 ```

@@ -14,6 +14,7 @@ const LANGUAGE_MAP = {
   '.less': 'Less',
   '.md': 'Markdown',
   '.json': 'JSON',
+  '.vue': 'VUE',
 };
 
 const UNKNOWN_LANGUAGE = 'Other';
@@ -26,7 +27,7 @@ export default class Analyzer {
   }
 
   public analyse(directory: string): IAnalyzerReport {
-    const report = { languages: [] };
+    const report = { languages: [] } as IAnalyzerReport;
     const languageCache = {};
     const files: IFileInfo[] = getFiles(directory, this.options.ignore);
 
@@ -42,6 +43,11 @@ export default class Analyzer {
     Object.keys(languageCache).forEach((key) => {
       report.languages.push(languageCache[key]);
     });
+
+    report.filesInfo = {
+      count: files.length,
+      lines: files.reduce((total, file) => total + file.LoC, 0),
+    };
 
     return report;
   }

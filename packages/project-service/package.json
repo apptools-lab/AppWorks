@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/project-service",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "Iceworks project service for VSCode extension.",
   "files": [
     "lib"
@@ -16,7 +16,6 @@
     "@iceworks/constant": "^0.1.0",
     "axios": "^0.19.2",
     "fs-extra": "^9.0.0",
-    "ice-npm-utils": "^2.0.0",
     "simple-git": "^2.5.0"
   },
   "devDependencies": {

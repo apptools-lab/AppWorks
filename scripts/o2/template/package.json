@@ -21,6 +21,24 @@
   },
   "kaitianContributes": {
     "nodeMain": "./out/node/index.js",
-    "browserMain": "./out/browser/index.js"
+    "browserMain": "./out/browser/index.js",
+    "toolbar": {
+      "actions": [
+        {
+          "type": "button",
+          "title": "%iceworksApp.kaitianContributes.toolbar.runDebug.title%",
+          "iconPath": "./assets/dark/run.svg",
+          "id": "iceworksApp.editorMenu.runDebug",
+          "command": "iceworksApp.editorMenu.runDebug"
+        },
+        {
+          "type": "button",
+          "title": "%iceworksApp.kaitianContributes.toolbar.reinstall.title%",
+          "iconPath": "./assets/dark/install.svg",
+          "id": "iceworksApp.nodeDependencies.reinstall",
+          "command": "iceworksApp.nodeDependencies.reinstall"
+        }
+      ]
+    }
   }
 }

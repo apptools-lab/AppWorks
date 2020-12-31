@@ -15,7 +15,7 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|package\.json)$/;
+const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
 export default function getEslintReports(directory: string, timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
