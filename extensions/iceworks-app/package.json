@@ -459,6 +459,26 @@
       }
     }
   },
+  "kaitianContributes": {
+    "toolbar": {
+      "actions": [
+        {
+          "type": "button",
+          "title": "启动调试",
+          "iconPath": "./assets/dark/run.svg",
+          "id": "iceworksApp.editorMenu.runDebug",
+          "command": "iceworksApp.editorMenu.runDebug"
+        },
+        {
+          "type": "button",
+          "title": "重装依赖",
+          "iconPath": "./assets/dark/install.svg",
+          "id": "iceworksApp.nodeDependencies.reinstall",
+          "command": "iceworksApp.nodeDependencies.reinstall"
+        }
+      ]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ice-lab/iceworks.git"
