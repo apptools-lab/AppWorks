@@ -2,9 +2,10 @@
 
 ## 0.15.1
 
-- feat: add project dashboard
-- feat: add quick entries for O2
 - feat: more materials for Rax
+- feat: add quick entries for O2
+- feat: add create page&component to explorer
+- fix: doctor support Vue
 
 ## 0.14.4
 
