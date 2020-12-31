@@ -2,7 +2,7 @@
 
 ## 0.3.1
 
-- feat: log DAU for O2
+- feat: record DAU for O2
 
 ## 0.3.0
 
