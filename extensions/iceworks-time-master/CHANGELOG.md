@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.4
+
+- feat: record DAU for O2
+
 ## 0.3.3
 
 - feat: upload editor usage data in Alibaba Intranet environment

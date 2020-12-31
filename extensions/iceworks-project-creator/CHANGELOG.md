@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.6
+
+- feat: record DAU for O2
+
 ## 0.4.5
 
 - fix: don not auto open materials settings dialog

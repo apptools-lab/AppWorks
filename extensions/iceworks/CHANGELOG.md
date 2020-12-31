@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.15.2
+
+- feat: record DAU for O2
+
 ## 0.15.1
 
 - feat: more materials for Rax
