@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.15.0
+## 0.15.1
 
 - feat: add project dashboard
 - feat: add quick entries for O2

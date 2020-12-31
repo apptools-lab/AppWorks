@@ -24,10 +24,11 @@
     "publish-beta": "npm run publish-beta:package && npm run publish-beta:extension",
     "publish-beta:package": "ts-node ./scripts/publish-beta-package.ts",
     "publish-beta:extension": "ts-node ./scripts/publish-beta-extension.ts",
-    "publish:o2": "npm run o2:general && npm run o2:build && npm run o2:upload",
+    "publish:o2": "npm run o2:general && npm run o2:package && npm run o2:upload && npm run o2:release",
     "o2:general": "ts-node ./scripts/o2/general-pack",
     "o2:package": "ts-node ./scripts/o2/package-pack",
-    "o2:publish": "ts-node ./scripts/o2/publish-pack",
+    "o2:upload": "ts-node ./scripts/o2/upload-pack",
+    "o2:release": "ts-node ./scripts/o2/release-pack",
     "lint": "eslint --cache --ext .ts,.tsx,.js,.jsx ./ --quiet",
     "lint:fix": "eslint --cache --ext .ts,.tsx,.js,.jsx ./ --quiet --fix",
     "coverage": "codecov",
@@ -89,6 +90,7 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.8.2",
     "union": "^0.5.0",
+    "urllib": "^2.36.1",
     "xima": "^0.2.15"
   },
   "husky": {

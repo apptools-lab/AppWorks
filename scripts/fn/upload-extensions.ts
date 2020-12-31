@@ -3,33 +3,15 @@
  */
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as oss from 'ali-oss';
 import * as AdmZip from 'adm-zip';
+import upload from './uploadToIceworksOSS';
 
 const zip = new AdmZip();
 
-const ossClient = oss({
-  bucket: 'iceworks',
-  endpoint: 'oss-cn-hangzhou.aliyuncs.com',
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  accessKeySecret: process.env.ACCESS_KEY_SECRET,
-  timeout: '300s',
-});
 
 const ZIP_NAME = 'Iceworks.zip';
 const ZIP_FILE = path.join(__dirname, ZIP_NAME);
 const EXTENSIONS_DIR = path.join(__dirname, 'Iceworks');
-
-function upload(target, filePath) {
-  ossClient
-    .put(target, filePath)
-    .then(() => {
-      console.log(`[UPLOAD] ${filePath} upload success.`);
-    })
-    .catch(() => {
-      console.log(`[ERROR] ${filePath} upload failed.`);
-    });
-}
 
 // Beta publish only zip published extension.
 // Production publish should zip all extensions.

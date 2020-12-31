@@ -25,3 +25,6 @@ export const ALI_GITLAB_URL = Base64.decode('Z2l0QGdpdGxhYi5hbGliYWJhLWluYy5jb20
 export const ALI_EMAIL = Base64.decode('YWxpYmFiYS1pbmMuY29t');
 export const ALI_DIP_DAILY = Base64.decode('aHR0cDovL2ljZXdvcmtzLWlkcC5meC5hbGliYWJhLm5ldA==');
 export const ALI_DIP_PRO = Base64.decode('aHR0cHM6Ly9pY2V3b3Jrcy1pZHAuZnguYWxpYmFiYS1pbmMuY29t');
+
+export const ALI_EXTENSION_UPLOAD_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi91cGxvYWQ=');
+export const ALI_EXTENSION_STATUS_UPDATE_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi9zdGF0dXM=');
