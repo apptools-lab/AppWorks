@@ -3,18 +3,12 @@
  */
 import * as path from 'path';
 import { spawnSync } from 'child_process';
-import uploadExtesions from './fn/upload-extensions';
+import uploadExtesions, { SKIP_PACK_EXTENSION_LIST } from './fn/upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './fn/getExtensionInfos';
 import sleep from './fn/sleep';
 import checkPackagePublished from './fn/checkPackagePublished';
 import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
-
-const SKIP_PACK_EXTENSION_LIST = [
-  // Doctor publish failed after pack command, because some script will delete file in node_modules.
-  // Only publish it.
-  'iceworks-doctor',
-];
 
 function packExtension(extension: string, directory: string, version: string) {
   if (SKIP_PACK_EXTENSION_LIST.indexOf(extension) > -1) {
