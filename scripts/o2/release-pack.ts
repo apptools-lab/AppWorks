@@ -3,6 +3,8 @@
  */
 import * as urllib from 'urllib';
 import { EXTENSION_ZIP_FILE_PATH } from './constant';
+import { ALI_EXTENSION_UPLOAD_URL, ALI_EXTENSION_STATUS_UPDATE_URL } from '@iceworks/constant';
+import { Base64 } from 'js-base64';
 
 const PRIVATE_TOKEN = process.argv[2];
 const EXTENSION_NAME = 'icework-kit';
@@ -10,7 +12,7 @@ const PUBLISHER = 'O2';
 
 async function uploadExtesion() {
   const response = await urllib.request(
-    `https://marketplace.antfin-inc.com/openapi/extension/upload?publisher=${PUBLISHER}`,
+    `${Base64.decode(ALI_EXTENSION_UPLOAD_URL)}?publisher=${PUBLISHER}`,
     {
       method: 'POST',
       dataType: 'json',
@@ -35,7 +37,7 @@ async function uploadExtesion() {
 
 async function updateExtensionStatus(extensionStatus: string, extensionReleaseId: string) {
   const response = await urllib.request(
-    'https://marketplace.antfin-inc.com/openapi/extension/status',
+    Base64.decode(ALI_EXTENSION_STATUS_UPDATE_URL),
     {
       method: 'PUT',
       dataType: 'json',
