@@ -71,7 +71,7 @@ async function updateExtensionStatus(extensionStatus: string, extensionReleaseId
   try {
     // upload extension to marketplace
     const { extensionReleaseId } = await uploadExtesion();
-    console.log(chalk.green(chalk.black.bgGreen(' SUCCESS '), 'Upload extension to ali marketplace successfully!'));
+    console.log(chalk.green(chalk.black.bgGreen(' SUCCESS '), 'Extension was uploaded to ali marketplace successfully!'));
     const intervalId = setInterval(async () => {
       try {
         // pass review extension
