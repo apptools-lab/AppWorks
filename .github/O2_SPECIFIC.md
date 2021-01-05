@@ -34,8 +34,8 @@ $ kaitian dev
 $ npm run o2:package
 
 # upload iceworks.zip to OSS
-$ npm run o2:upload
+$ ACCESS_KEY_ID=xxx ACCESS_KEY_SECRET=xxx npm run o2:upload
 
 # O2.icework-kit published to Ali Marketplace
-$ npm run o2:release
+$ npm run o2:release PRIVATE_TOKEN
 ```

@@ -7,9 +7,9 @@ Hi! I’m really excited that you are interested in contributing to ICE. Before 
 ```md
 .
 ├── extensions // VS Code extensions
-│   ├── app   // Core App Extension
-├── packages // Common packages
-│   ├── add-block
+│   ├── app
+├── packages // Common packages, used by multiple extensions
+│   ├── constant
 │   └── config
 └── scripts
 ```
@@ -20,10 +20,11 @@ clone repo and initialize the setup environment：
 
 ```bash
 $ git clone git@github.com:ice-lab/iceworks.git
-$ cd iceworks && npm run setup
+$ cd iceworks && npm run setup # This will take about 20 minutes
 
 # add dep to some package
 $ yarn workspace iceworks add <npmName>
+
 # add dep to project
 $ yarn add <npmName> -D -W
 ```
@@ -31,9 +32,7 @@ $ yarn add <npmName> -D -W
 ### Develop Packages
 
 ```bash
-$ npm run packages:watch
-
-$ npm run packages:build
+$ npm run packages:watch # Building packages in real time, helpful for develop extension
 
 $ npm run publish:package # or npm run publish-beta:package
 ```

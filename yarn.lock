@@ -17566,7 +17566,7 @@ urlgrey@0.4.4:
   resolved "https://registry.npm.taobao.org/urlgrey/download/urlgrey-0.4.4.tgz#892fe95960805e85519f1cd4389f2cb4cbb7652f"
   integrity sha1-iS/pWWCAXoVRnxzUOJ8stMu3ZS8=
 
-urllib@^2.33.1:
+urllib@^2.33.1, urllib@^2.36.1:
   version "2.36.1"
   resolved "https://registry.npm.taobao.org/urllib/download/urllib-2.36.1.tgz#fbd9fb13bbc140e1fc15bcdba8703d6142a7eb3a"
   integrity sha1-+9n7E7vBQOH8FbzbqHA9YUKn6zo=
