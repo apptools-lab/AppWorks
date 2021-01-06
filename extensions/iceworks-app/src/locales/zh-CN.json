@@ -15,7 +15,7 @@
   "extension.iceworksApp.showEntriesQuickPick.materialImport.detail": "通过可视化操作添加组件到应用代码",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "设置",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "设置 Iceworks 提供的相关功能",
-  "extension.iceworksApp.showEntriesQuickPick.openDashboard.label": "查看项目仪表盘",
+  "extension.iceworksApp.showEntriesQuickPick.openDashboard.label": "打开质量检测仪",
   "extension.iceworksApp.showEntriesQuickPick.openDashboard.detail": "查看项目信息及安全漏洞和质量问题",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "查找组件",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "快速搜索组件文档并进行浏览",

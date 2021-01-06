@@ -12,11 +12,7 @@ Doctor 是一个免费的安全和质量审核工具。借助基于集成多扫�
 ![demo](https://img.alicdn.com/tfs/TB1XB6_UpY7gK0jSZKzXXaikpXa-1200-724.gif)
 
 1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: 打开仪表盘` 或 `Iceworks: 扫描代码` 激活插件
-
-## 项目详情
-
-展示项目详情信息，包含名称，版本，项目类型，构建及 Git 信息。
+2. 输入 `Iceworks: 打开检测仪` 或 `Iceworks: 扫描代码` 激活插件
 
 ## 质量检测
 

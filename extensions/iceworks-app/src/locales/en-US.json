@@ -15,7 +15,7 @@
   "extension.iceworksApp.showEntriesQuickPick.createComponent.detail": "Download component materials to local",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "Settings",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "Set the related functions provided by Iceworks",
-  "extension.iceworksApp.showEntriesQuickPick.openDashboard.label": "Open Dashboard",
+  "extension.iceworksApp.showEntriesQuickPick.openDashboard.label": "Doctor",
   "extension.iceworksApp.showEntriesQuickPick.openDashboard.detail": "Display project details and code quality",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "Find Component",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "Quickly search and browse component documents",
