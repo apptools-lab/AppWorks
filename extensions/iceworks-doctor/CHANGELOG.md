@@ -1,11 +1,19 @@
 # Change Log
 
+## 0.3.0
+
+- refactor: remove project info
+
 ## 0.2.2
+
 - feat: support vue project.
+
 ## 0.2.1
+
 - feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor).
 
 ## 0.2.0
+
 - feat: update [@iceworks/doctor](https://www.npmjs.com/package/@iceworks/doctor) and scan reports.
 
 ## 0.1.7
