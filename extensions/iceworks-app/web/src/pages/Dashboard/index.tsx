@@ -13,10 +13,10 @@ export default () => {
           <Basic />
         </div>
         <div className={styles.box}>
-          <Doctor />
+          <Framework />
         </div>
         <div className={styles.box}>
-          <Framework />
+          <Doctor />
         </div>
       </div>
     </LocaleProvider>
