@@ -1,5 +1,7 @@
 # Change Log
 
+## 0.3.0
+
 - refactor: remove project info
 - fix: rax-app language type is always ts
 
