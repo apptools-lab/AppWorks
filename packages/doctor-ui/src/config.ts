@@ -34,39 +34,8 @@ export const scoreLevelInfos: IScoreLevelInfo[] = [
   },
 ];
 
-export interface IReportKeys {
-  name: string;
-  nameEn: string;
-  key: string;
-}
-
-export const reportKeys: IReportKeys[] = [
-  {
-    name: 'Ali ESLint',
-    nameEn: 'Ali ESLint',
-    key: 'ESLint',
-  },
-  {
-    name: '代码可维护度',
-    nameEn: 'Maintainability',
-    key: 'maintainability',
-  },
-  {
-    name: '代码重复度',
-    nameEn: 'Repeatability',
-    key: 'repeatability',
-  },
-];
-
-export default {
-  scoreLevelInfos,
-};
-
 export function getScoreLevelInfo(scroe: number): IScoreLevelInfo {
   return (
     scoreLevelInfos.find((config) => scroe >= config.range.start && scroe <= config.range.end) || scoreLevelInfos[0]
   );
-}
-export function getReportKey(key: string): IReportKeys {
-  return reportKeys.find((reportKey) => reportKey.key === key) || reportKeys[0];
 }

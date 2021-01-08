@@ -1,0 +1,77 @@
+@import '~@alifd/next/lib/core/index.scss';
+
+.dashboard {
+  user-select: none;
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+
+  .infos {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    margin: 10px 0;
+
+    .info {
+      margin: 0 30px;
+
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+
+        i {
+          color: $color-link-3;
+        }
+      }
+
+      .score {
+        line-height: 72px;
+        font-size: 72px;
+        margin: 0;
+      }
+
+      .label {
+        margin: 0;
+        font-size: 10px;
+        color: $color-text1-3;
+      }
+
+      .detail {
+        font-size: 14px;
+        color: $color-text1-4;
+      }
+    }
+  }
+
+  .scoreRanges {
+    display: inline-flex;
+    flex-direction: row;
+    padding: 6px 6px 6px 22px;
+    border-radius: 15px;
+    border: 1px solid $color-line1-4;
+
+    .scoreRange {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+      align-items: center;
+      margin-right: 16px;
+
+      .color {
+        margin-right: 5px;
+        position: relative;
+        border-radius: 2px;
+        width: 16px;
+        height: 5px;
+      }
+
+      .range {
+        margin: 0;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+  }
+}

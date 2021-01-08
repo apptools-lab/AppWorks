@@ -1,0 +1,52 @@
+{
+  "name": "@iceworks/doctor-ui",
+  "version": "1.0.0",
+  "description": "intro component",
+  "files": [
+    "demo/",
+    "es/",
+    "lib/",
+    "build/"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "stylePath": "style.js",
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ice",
+    "react",
+    "component"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.3",
+    "build-plugin-component": "^1.0.0",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "@alifd/next": "1.x",
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0",
+    "@alifd/next": "1.x"
+  },
+  "componentConfig": {
+    "name": "DoctorDashboard",
+    "title": "Doctor Dashboard",
+    "category": "Information"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "homepage": "https://unpkg.com/@iceworks/doctor-ui@1.0.0/build/index.html"
+}
