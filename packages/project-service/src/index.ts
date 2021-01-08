@@ -49,11 +49,18 @@ export async function checkIsNotTarget() {
 
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
-  const hasAppJs =
+
+  const framework = await getProjectFramework();
+  let isTypescript = false;
+
+  if (framework !== 'unknown') {
+    const hasAppJs =
       fsExtra.existsSync(path.join(projectPath, 'src/app.js')) ||
       fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));
-
-  const isTypescript = hasTsconfig && !hasAppJs;
+    isTypescript = hasTsconfig && !hasAppJs;
+  } else {
+    isTypescript = hasTsconfig;
+  }
 
   return isTypescript ? 'ts' : 'js';
 }
