@@ -16,6 +16,7 @@
     "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^1.2.1",
     "@iceworks/constant": "^0.1.0",
+    "@iceworks/doctor-ui": "^1.0.1",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.1",
     "ahooks": "^2.9.1",
