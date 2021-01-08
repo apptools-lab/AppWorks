@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Balloon, Icon } from '@alifd/next';
 import { scoreLevelInfos, getScoreLevelInfo } from './config';
 import styles from './index.module.scss';
@@ -7,7 +8,7 @@ const { Tooltip } = Balloon;
 interface Props {
   filesInfo: { count: number; lines: number };
   score: number;
-  locale: any;
+  locale?: any;
 }
 
 const Dashboard = (props: Props) => {

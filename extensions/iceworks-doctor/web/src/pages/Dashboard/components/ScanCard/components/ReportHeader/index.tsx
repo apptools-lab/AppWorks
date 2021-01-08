@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getScoreLevelInfo } from '@/config';
+import { getScoreLevelInfo } from '@iceworks/doctor-ui/lib/config';
 import styles from './index.module.scss';
 
 const ReportHeader = (props) => {
