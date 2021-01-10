@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.4
+
+- fix: rax app language type is always ts
+
 ## 0.7.3
 
 - feat: add menus to explorer
