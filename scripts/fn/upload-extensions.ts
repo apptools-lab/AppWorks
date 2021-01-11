@@ -3,33 +3,20 @@
  */
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as oss from 'ali-oss';
 import * as AdmZip from 'adm-zip';
+import upload from './uploadToIceworksOSS';
 
 const zip = new AdmZip();
-
-const ossClient = oss({
-  bucket: 'iceworks',
-  endpoint: 'oss-cn-hangzhou.aliyuncs.com',
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  accessKeySecret: process.env.ACCESS_KEY_SECRET,
-  timeout: '300s',
-});
 
 const ZIP_NAME = 'Iceworks.zip';
 const ZIP_FILE = path.join(__dirname, ZIP_NAME);
 const EXTENSIONS_DIR = path.join(__dirname, 'Iceworks');
 
-function upload(target, filePath) {
-  ossClient
-    .put(target, filePath)
-    .then(() => {
-      console.log(`[UPLOAD] ${filePath} upload success.`);
-    })
-    .catch(() => {
-      console.log(`[ERROR] ${filePath} upload failed.`);
-    });
-}
+export const SKIP_PACK_EXTENSION_LIST = [
+  // Doctor publish failed after pack command, because some script will delete file in node_modules.
+  // Only publish it.
+  'iceworks-doctor',
+];
 
 // Beta publish only zip published extension.
 // Production publish should zip all extensions.
@@ -38,6 +25,10 @@ export default function uploadExtesions(extensions: string[], production?: boole
     const info = extension.split(':');
     const name = info[0];
     const version = info[1];
+
+    if (SKIP_PACK_EXTENSION_LIST.indexOf(name) > -1) {
+      return;
+    }
 
     const extensionFile = `${name}-${version}.vsix`;
     const extensionFilePath = path.join(__dirname, '../../extensions', name, extensionFile);

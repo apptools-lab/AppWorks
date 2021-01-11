@@ -10,7 +10,6 @@
   "iceworksApp.viewsWelcome.components.contents": "未找到组件",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "未找到依赖",
   "iceworksApp.command.configHelper.start.title": "Iceworks: 设置",
-  "iceworksApp.command.preview.open.title": "Iceworks: 预览",
   "iceworksApp.command.welcome.start.title": "Iceworks: 欢迎",
   "iceworksApp.command.DefPublish.title": "Iceworks: DEF 发布",
   "iceworksApp.command.quickEntries.start.title": "启动",
@@ -36,5 +35,7 @@
   "iceworksApp.command.nodeDependencies.upgrade.title": "升级依赖",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具",
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
-  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "是否显示欢迎页"
+  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "是否显示欢迎页",
+  "iceworksApp.kaitianContributes.toolbar.runDebug.title": "启动调试",
+  "iceworksApp.kaitianContributes.toolbar.reinstall.title": "重装依赖"
 }

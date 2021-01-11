@@ -43,16 +43,19 @@ if (args.scan) {
     framework: args.framework,
     languageType: args.languageType || 'js',
   }).then((result) => {
-    console.log({
+    const report = {
       files: {
         count: result.filesInfo.count,
         lines: result.filesInfo.lines,
       },
-      score: result.score,
-      ESLint: result.ESLint.score,
-      maintainability: result.maintainability.score,
-      repeatability: result.repeatability.score,
+      score: result.score || 0,
+    };
+    ['ESLint', 'maintainability', 'repeatability'].forEach(key => {
+      if (result[key]) {
+        report[key] = result[key].score;
+      }
     });
+    console.log(report);
     console.log(`Scan time: ${result.scanTime} s.`);
   }).catch((err) => {
     console.log('Error!');

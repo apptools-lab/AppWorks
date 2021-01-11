@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.3.4
+
+- feat: record DAU for O2
+
+## 0.3.3
+
+- feat: upload editor usage data in Alibaba Intranet environment
+
+## 0.3.2
+
+- fix: view summary on o2
+
+## 0.3.1
+
+- fix: disable view summary on o2
+
 ## 0.3.0
 
 - feat: add editor time

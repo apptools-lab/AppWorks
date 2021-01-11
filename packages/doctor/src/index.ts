@@ -6,7 +6,7 @@ import { IScanOptions, IScannerReports } from './types/Scanner';
 import { IFileInfo } from './types/File';
 
 // Ignore directories
-const defaultignore = ['build', 'es', 'dist', 'lib', 'mocks', 'coverage', 'node_modules', 'demo', 'examples', 'public', 'test', '__tests__'];
+const defaultignore = ['.ice', '.rax', 'build', 'es', 'dist', 'lib', 'mocks', 'coverage', 'node_modules', 'demo', 'examples', 'public', 'test', '__tests__'];
 class Doctor {
   public options: any;
 

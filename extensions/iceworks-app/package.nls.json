@@ -10,7 +10,6 @@
   "iceworksApp.viewsWelcome.components.contents": "Components could not be found",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json",
   "iceworksApp.command.configHelper.start.title": "Iceworks: Settings",
-  "iceworksApp.command.preview.open.title": "Iceworks: Preview",
   "iceworksApp.command.welcome.start.title": "Iceworks: Welcome",
   "iceworksApp.command.DefPublish.title": "Iceworks: Def Publish",
   "iceworksApp.command.quickEntries.start.title": "Start",
@@ -36,5 +35,7 @@
   "iceworksApp.command.nodeDependencies.upgrade.title": "Upgrade Dependency",
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
-  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page"
+  "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
+  "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Run Debug",
+  "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall Dependencies"
 }

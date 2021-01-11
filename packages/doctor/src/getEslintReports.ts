@@ -15,7 +15,7 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|package\.json)$/;
+const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
 export default function getEslintReports(directory: string, timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
   let warningScore = 0;
@@ -24,9 +24,13 @@ export default function getEslintReports(directory: string, timer: Timer, files:
   let errorScore = 0;
   let errorCount = 0;
 
+  // package.json object
+  let packageInfo: any = {};
+
   const reports = [];
 
   const cliEngine = new CLIEngine({
+    cache: false,
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
     // Use plugin in @iceworks/spec
     cwd: path.dirname(require.resolve('@iceworks/spec')),
@@ -40,43 +44,48 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
   }
 
-  files.forEach((file) => {
-    if (!SUPPORT_FILE_REG.test(file.path) || ig.ignores(file.path.replace(path.join(directory, '/'), ''))) return;
-
-    cliEngine.executeOnText(file.source, file.path).results.forEach((result) => {
-      // Remove Parsing error
-      result.messages = (result.messages || []).filter((message) => {
-        if (
-          message.severity === 2 && (
-            // Ignore Parsing error
-            (message.fatal && message.message.startsWith('Parsing error:')) ||
-            // Ignore no rules error
-            message.message.startsWith('Definition for rule')
-          )) {
-          result.errorCount--;
-          return false;
-        }
-        return true;
-      });
-
-      reports.push({
-        ...result,
-        filePath: file.path,
-      });
-
-      timer.checkTimeout();
-    });
+  const targetFiles: string[] = files.filter((file: IFileInfo) => {
+    if (file.path.endsWith('package.json')) {
+      packageInfo = JSON.parse(file.source);
+    }
+    return SUPPORT_FILE_REG.test(file.path) && !ig.ignores(file.path.replace(path.join(directory, '/'), ''));
+  }).map((file: IFileInfo) => {
+    // Use absolute path
+    return file.path.startsWith('.') ? path.join(process.cwd(), file.path) : file.path;
   });
+
+  const data = cliEngine.executeOnFiles(targetFiles);
 
   if (fix) {
     // output fixes to disk
-    CLIEngine.outputFixes(cliEngine.executeOnFiles(files.map((file) => file.path)));
+    CLIEngine.outputFixes(data);
   }
+
+  timer.checkTimeout();
+
+  (data.results || []).forEach((result) => {
+    // Remove Parsing error
+    result.messages = (result.messages || []).filter((message) => {
+      if (
+        message.severity === 2 && (
+          // Ignore Parsing error
+          (message.fatal && message.message.startsWith('Parsing error:')) ||
+          // Ignore no rules error
+          message.message.startsWith('Definition for rule')
+        )) {
+        result.errorCount--;
+        return false;
+      }
+      return true;
+    });
+
+    reports.push(result);
+  });
 
   // calculate score
   reports.forEach((report) => {
     // Add critical level calculate.
-    (report.messages || []).forEach(message => {
+    (report.messages || []).forEach((message) => {
       if (message.message.indexOf('[Critical]') === 0) {
         if (message.severity === 2) {
           // Critical error
@@ -98,16 +107,13 @@ export default function getEslintReports(directory: string, timer: Timer, files:
   scorer.plus(errorScore);
 
   // Calculate bonus
-  if (files[files.length - 1].path.endsWith('package.json')) {
-    const packageInfo = JSON.parse(files[files.length - 1].source);
-    // recommend-deps-fusion-design
-    if (packageInfo.dependencies && packageInfo.dependencies['@alifd/next']) {
-      scorer.plus(BONUS_WEIGHT);
-    }
-    // recommend-typescript
-    if (packageInfo.devDependencies && packageInfo.devDependencies.typescript) {
-      scorer.plus(BONUS_WEIGHT);
-    }
+  // recommend-deps-fusion-design
+  if (packageInfo.dependencies && packageInfo.dependencies['@alifd/next']) {
+    scorer.plus(BONUS_WEIGHT);
+  }
+  // recommend-typescript
+  if (packageInfo.devDependencies && packageInfo.devDependencies.typescript) {
+    scorer.plus(BONUS_WEIGHT);
   }
 
   return {

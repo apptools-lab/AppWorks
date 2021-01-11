@@ -1,23 +1,33 @@
 # Change Log
-# 0.7.1
+
+## 0.7.3
+
+- feat: add menus to explorer
+
+## 0.7.2
+
+- fix: fail to run commands which contain `&&` in Windows
+- refactor: Debug && Preview logic
+
+## 0.7.1
 
 - feat: preview support read rax dev server start urls info
 - feat: add preview command
 
-# 0.7.0
+## 0.7.0
 
 - feat: support rax preview
 - refactor: disable some features in O2
 
-# 0.6.2
+## 0.6.2
 
 - chore: remove configure scaffold entry
 
-# 0.6.1
+## 0.6.1
 
 - chore: update project-creator command
 
-# 0.6.0
+## 0.6.0
 
 - refactor: internal optimization
 
@@ -73,7 +83,7 @@
 
 - fix: build error
 
-# 0.4.7
+## 0.4.7
 - feat: auto focus field
 - chore: quick entries title and detail
 - feat: hide some entries and treeview in pegasus project

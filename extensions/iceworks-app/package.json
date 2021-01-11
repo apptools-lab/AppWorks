@@ -3,7 +3,7 @@
   "displayName": "Application Explorer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.7.1",
+  "version": "0.7.3",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -187,10 +187,6 @@
         "title": "%iceworksApp.command.pages.openFile.title%"
       },
       {
-        "command": "iceworksApp.preview.open",
-        "title": "%iceworksApp.command.preview.open.title%"
-      },
-      {
         "command": "iceworksApp.pages.delete",
         "title": "%iceworksApp.command.pages.delete.title%",
         "icon": {
@@ -345,6 +341,18 @@
           "command": "iceworksApp.editorMenu.DefPublish",
           "group": "navigation@03",
           "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "iceworksApp.components.add",
+          "when": "!iceworks:projectIsNotTarget",
+          "group": "iceworks@1"
+        },
+        {
+          "command": "iceworksApp.pages.add",
+          "when": "!iceworks:projectIsNotTarget",
+          "group": "iceworks@2"
         }
       ],
       "view/title": [

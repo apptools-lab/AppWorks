@@ -3,7 +3,7 @@
  */
 import * as path from 'path';
 import { spawnSync } from 'child_process';
-import uploadExtesions from './fn/upload-extensions';
+import uploadExtesions, { SKIP_PACK_EXTENSION_LIST } from './fn/upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './fn/getExtensionInfos';
 import sleep from './fn/sleep';
 import checkPackagePublished from './fn/checkPackagePublished';
@@ -11,6 +11,9 @@ import extensionDepsInstall from './fn/extension-deps-install';
 import updateExtensionDependencies from './fn/updateExtensionDependencies';
 
 function packExtension(extension: string, directory: string, version: string) {
+  if (SKIP_PACK_EXTENSION_LIST.indexOf(extension) > -1) {
+    return;
+  }
   console.log('[VSCE] PACK: ', `${extension}@${version}`);
   spawnSync('vsce', ['package'], {
     stdio: 'inherit',

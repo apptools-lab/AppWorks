@@ -1,3 +1,4 @@
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import Timer from './Timer';
 import { IScannerOptions, IScanOptions, IScannerReports } from './types/Scanner';
@@ -38,19 +39,24 @@ export default class Scanner {
         if (!customConfig.parserOptions) {
           customConfig.parserOptions = {};
         }
-        customConfig.parserOptions.project = `${path.join(directory, './')}**/tsconfig.json`;
+        if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
+          customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
+        }
       }
       reports.ESLint = getEslintReports(directory, timer, files, ruleKey, customConfig, options?.fix);
     }
 
     // Calculate maintainability
     if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(timer, files);
+      reports.maintainability = getMaintainabilityReports(files, timer);
     }
 
     // Calculate repeatability
-    if (!options || options.disableRepeatability !== true) {
-      reports.repeatability = await getRepeatabilityReports(directory, this.options.ignore, options?.tempFileDir);
+    if (
+      (!options || options.disableRepeatability !== true) &&
+      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
+    ) {
+      reports.repeatability = await getRepeatabilityReports(directory, timer, this.options.ignore, options?.tempFileDir);
     }
 
     // Calculate total score

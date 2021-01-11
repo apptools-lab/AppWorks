@@ -1,5 +1,40 @@
 # Change Log
 
+## 0.15.2
+
+- feat: record DAU for O2
+
+## 0.15.1
+
+- feat: more materials for Rax
+- feat: add quick entries for O2
+- feat: add create page&component to explorer
+- fix: doctor support Vue
+
+## 0.14.4
+
+- feat: upload editor usage data in Alibaba Intranet environment
+- fix: don not auto open materials settings dialog
+- fix: fail to run commands which contain `&&` in Windows
+- refactor: doctor score calculate
+- refactor: Debug && Preview logic
+
+## 0.14.3
+
+- fix: view summary
+
+## 0.14.2
+
+- fix: upgrade DEF Publish extension for o2
+- fix: disable view summary on o2
+
+## 0.14.1
+
+- feat: add "Editor Time"
+- feat: upgrade rax preview
+- fix: update Active Code Time suddenly 0
+- fix: O2 problems
+
 ## 0.14.0
 
 - refactor: upgrade extension features
