@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
-import { checkIsTargetProject, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
+import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import axios from 'axios';
@@ -25,26 +25,18 @@ export async function autoSetContext() {
   const languageType = await getProjectLanguageType();
   const type = await getProjectType();
   const framework = await getProjectFramework();
-  const isNotTarget = await checkIsNotTarget();
-  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTarget', isNotTarget);
+  const isNotTargetType = !await checkIsTargetProjectType();
+  const isNotTargetFramework = !await checkIsTargetProjectFramework(projectPath);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetType', isNotTargetType);
+  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetFramework', isNotTargetFramework);
   vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
   vscode.commands.executeCommand('setContext', 'iceworks:projectLanguageType', languageType);
   vscode.commands.executeCommand('setContext', 'iceworks:projectType', type);
   vscode.commands.executeCommand('setContext', 'iceworks:projectFramework', framework);
 }
 
-export async function checkIsNotTarget() {
-  let isNotTarget = false;
-  if (!vscode.workspace.rootPath) {
-    isNotTarget = true;
-  } else {
-    try {
-      isNotTarget = !await checkIsTargetProject(projectPath);
-    } catch (e) {
-      isNotTarget = true;
-    }
-  }
-  return isNotTarget;
+export async function checkIsTargetProjectType() {
+  return await orginCheckIsTargetProjectType(projectPath);
 }
 
 export async function getProjectLanguageType() {
@@ -52,8 +44,8 @@ export async function getProjectLanguageType() {
 
   const framework = await getProjectFramework();
   let isTypescript = false;
-  if (framework === 'icejs') {
-    // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+
+  if (framework !== 'unknown') {
     const hasAppJs =
       fsExtra.existsSync(path.join(projectPath, 'src/app.js')) ||
       fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));

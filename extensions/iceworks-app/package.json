@@ -3,7 +3,7 @@
   "displayName": "Application Explorer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -43,7 +43,7 @@
         {
           "id": "welcome",
           "name": "Welcome",
-          "when": "iceworks:projectIsNotTarget"
+          "when": "iceworks:projectIsNotTargetType"
         },
         {
           "id": "quickEntries",
@@ -52,22 +52,22 @@
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "!iceworks:projectIsNotTarget"
+          "when": "!iceworks:projectIsNotTargetType"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "!iceworks:projectIsNotTarget"
+          "when": "!iceworks:projectIsNotTargetType"
         }
       ]
     },
@@ -346,12 +346,12 @@
       "explorer/context": [
         {
           "command": "iceworksApp.components.add",
-          "when": "!iceworks:projectIsNotTarget",
+          "when": "!iceworks:projectIsNotTargetType",
           "group": "iceworks@1"
         },
         {
           "command": "iceworksApp.pages.add",
-          "when": "!iceworks:projectIsNotTarget",
+          "when": "!iceworks:projectIsNotTargetType",
           "group": "iceworks@2"
         }
       ],

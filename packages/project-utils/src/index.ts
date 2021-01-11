@@ -47,7 +47,7 @@ export async function getProjectFramework(projectPath: string): Promise<ProjectF
   return framework;
 }
 
-export async function checkIsTargetProject(projectPath: string): Promise<boolean> {
+export async function checkIsTargetProjectType(projectPath: string): Promise<boolean> {
   return (await getProjectType(projectPath)) !== 'unknown';
 }
 
