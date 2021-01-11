@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.4
+
+- refactor: page&component tree display logic
+
 ## 0.7.3
 
 - feat: add menus to explorer
