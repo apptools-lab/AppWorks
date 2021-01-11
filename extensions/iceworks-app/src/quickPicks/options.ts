@@ -19,8 +19,8 @@ export default [
   //   command: 'iceworks-project-creator.custom-scaffold.start',
   // },
   {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openDashboard.detail'),
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.detail'),
     command: 'iceworks-doctor.dashboard',
     async condition() {
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');

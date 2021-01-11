@@ -44,8 +44,8 @@ export async function getProjectLanguageType() {
 
   const framework = await getProjectFramework();
   let isTypescript = false;
-  if (framework === 'icejs') {
-    // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
+
+  if (framework !== 'unknown') {
     const hasAppJs =
       fsExtra.existsSync(path.join(projectPath, 'src/app.js')) ||
       fsExtra.existsSync(path.join(projectPath, 'src/app.jsx'));

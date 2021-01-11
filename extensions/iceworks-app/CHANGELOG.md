@@ -3,6 +3,7 @@
 ## 0.7.4
 
 - refactor: page&component tree display logic
+- fix: rax app language type is always ts
 
 ## 0.7.3
 
