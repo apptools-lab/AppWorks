@@ -10,7 +10,7 @@ import PegasusCard from '@/components/PegasusCard';
 import PegasusScaffoldContent from '@/components/PegasusScaffoldContent';
 import callService from '@/callService';
 import { IMaterialSource, IMaterialScaffold } from '@iceworks/material-utils';
-import { mainScaffoldsList, blackList } from '../../constants';
+import { mainScaffoldsList, scaffoldsBlackList, tsScaffoldsList, jsScaffoldsList } from '../../constants';
 import { IScaffoldMarket } from '@/types';
 import styles from './index.module.scss';
 import { useIntl } from 'react-intl';
@@ -64,8 +64,22 @@ const ScaffoldMarket = ({
   async function getScaffolds(source: string): Promise<IScaffoldMarket> {
     try {
       const scaffolds = (await callService('scaffold', 'getAll', source)) as IMaterialScaffold[];
-      let main = scaffolds.filter((scaffold) => mainScaffoldsList.includes(scaffold.source.npm) && !blackList.includes(scaffold.source.npm));
-      let other = scaffolds.filter((scaffold) => !mainScaffoldsList.includes(scaffold.source.npm) && !blackList.includes(scaffold.source.npm));
+      let main = scaffolds.filter((scaffold) => {
+        const isMainScaffold = mainScaffoldsList.includes(scaffold.source.npm);
+        let isInScaffoldBlackList = false;
+        if (isAliInternal) {
+          isInScaffoldBlackList = scaffoldsBlackList.includes(scaffold.source.npm)
+        }
+        return isMainScaffold && !isInScaffoldBlackList;
+      });
+      let other = scaffolds.filter((scaffold) => {
+        const isOtherScaffold = !mainScaffoldsList.includes(scaffold.source.npm);
+        let isInScaffoldBlackList = false;
+        if (isAliInternal) {
+          isInScaffoldBlackList = scaffoldsBlackList.includes(scaffold.source.npm)
+        }
+        return isOtherScaffold && !isInScaffoldBlackList;
+      });
       if (!main.length && other.length) {
         main = other;
         other = [];
@@ -162,7 +176,13 @@ const ScaffoldMarket = ({
                     {!!mainScaffolds.length ? (
                       <>
                         {mainScaffolds.map((item) => {
-                          const scaffoldLanguageType = item.languageType;
+                          // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                          // so the TypeScript and JavaScript logo only display in official scaffolds
+                          const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                            ? 'ts'
+                            : jsScaffoldsList.includes(item.source.npm)
+                              ? 'js'
+                              : '';
                           const isWireless = checkIsWireless(selectedSource);
                           const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
                           return (
@@ -170,16 +190,16 @@ const ScaffoldMarket = ({
                               key={item.name}
                               title={
                                 <div className={styles.cardTitle}>
-                                  {scaffoldLanguageType && (
+                                  {scaffoldType && (
                                     <img
-                                      src={require(`@/assets/${scaffoldLanguageType}.svg`)}
+                                      src={require(`@/assets/${scaffoldType}.svg`)}
                                       alt="languageType"
                                       width={20}
                                       height={20}
                                     />
                                   )}
                                   <div>
-                                    {scaffoldLanguageType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
+                                    {scaffoldType ? item.title.replace(' - TS', '').replace(' - JS', '') : item.title}
                                   </div>
                                 </div>
                               }
@@ -203,7 +223,13 @@ const ScaffoldMarket = ({
                       <Collapse.Panel title={intl.formatMessage({ id: 'web.iceworksProjectCreator.ScaffoldMarket.more' })}>
                         <div className={styles.collapseScaffolds}>
                           {otherScaffolds.map((item) => {
-                            const scaffoldLanguageType = item.languageType;
+                            // tsScaffoldsList and jsScaffoldsList only contain the official scaffolds
+                            // so the TypeScript and JavaScript logo only display in official scaffolds
+                            const scaffoldType = tsScaffoldsList.includes(item.source.npm)
+                              ? 'ts'
+                              : jsScaffoldsList.includes(item.source.npm)
+                                ? 'js'
+                                : '';
                             const isWireless = checkIsWireless(selectedSource);
                             const CardComponent = isWireless ? MobileScaffoldCard : ScaffoldCard;
                             return (
@@ -211,16 +237,16 @@ const ScaffoldMarket = ({
                                 key={item.name}
                                 title={
                                   <div className={styles.cardTitle}>
-                                    {scaffoldLanguageType && (
+                                    {scaffoldType && (
                                       <img
-                                        src={require(`@/assets/${scaffoldLanguageType}.svg`)}
+                                        src={require(`@/assets/${scaffoldType}.svg`)}
                                         alt="languageType"
                                         width={20}
                                         height={20}
                                       />
                                     )}
                                     <div>
-                                      {scaffoldLanguageType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
+                                      {scaffoldType ? item.title.replace(' - JS', '').replace(' - TS', '') : item.title}
                                     </div>
                                   </div>
                                 }
