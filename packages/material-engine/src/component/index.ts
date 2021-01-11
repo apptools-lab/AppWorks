@@ -71,11 +71,12 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   }
 
   const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
+  const packageManagerInstallText = packageManager === 'yarn' ? 'add' : 'install';
 
   const terminal = getIceworksTerminal();
   terminal.show();
   terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(`${packageManager} install ${npm}@${version} --save`, true);
+  terminal.sendText(`${packageManager} ${packageManagerInstallText} ${npm}@${version} --save`, true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
