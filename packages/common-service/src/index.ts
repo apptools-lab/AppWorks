@@ -246,6 +246,20 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   });
 }
 
+export function isYarnPackageManager(): boolean {
+  const packageManager = getDataFromSettingJson('packageManager', 'npm');
+  const isYarn = packageManager === 'yarn';
+  return isYarn;
+}
+
+export function getAddDependencyAction(): 'add' | 'install' {
+  return isYarnPackageManager() ? 'add' : 'install';
+}
+
+export function getUpdateDependencyAction(): 'upgrade' | 'update' {
+  return isYarnPackageManager() ? 'upgrade' : 'update';
+}
+
 export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
