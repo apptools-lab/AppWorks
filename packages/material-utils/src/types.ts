@@ -52,6 +52,7 @@ export interface IMaterialScaffold {
   title: string;
   updateTime: string;
   isNewlyCreated?: boolean;
+  languageType?: string;
 }
 
 export interface IMaterialComponent {
