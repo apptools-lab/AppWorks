@@ -5,16 +5,10 @@ import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY
 import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
-import axios from 'axios';
-import { ALI_EMAIL, ALI_GITLAB_URL } from '@iceworks/constant';
-import {
-  generatorCreatetaskUrl,
-  generatorTaskResultUrl,
-  applyRepositoryUrl,
-  GeneratorTaskStatus,
-  projectPath,
-  jsxFileExtnames,
-} from './constant';
+import { ALI_GITLAB_URL, ALI_DEF_IDP_URL, ALI_DEF_WORK_URL } from '@iceworks/constant';
+import { projectPath, jsxFileExtnames } from './constant';
+import { generatorCreatetask, getGeneratorTaskStatus, applyRepository, getBasicInfo } from './def';
+import { getInfo } from './git';
 import i18n from './i18n';
 import { IDEFProjectField, IProjectField } from './types';
 
@@ -59,6 +53,39 @@ export async function getProjectLanguageType() {
 
 export async function getProjectType() {
   return await originGetProjectType(projectPath);
+}
+
+export async function getProjectBaseInfo() {
+  const { name, description } = await getPackageJSON(projectPath);
+  const type = await getProjectType();
+  const framework = await getProjectFramework();
+  return {
+    name,
+    description,
+    type,
+    framework,
+    path: projectPath,
+  };
+}
+
+export async function getProjectGitInfo() {
+  const info = await getInfo(projectPath);
+  const repository = info.repository
+    .replace(/^git@/, 'https://')
+    .replace(/\.git/, '')
+    .replace(/\.com:/, '.com/');
+  const [,,, group, project] = repository.split('/');
+  return { ...info, repository, group, project };
+}
+
+export async function getProjectDefInfo(clientToken: string) {
+  const { group, project } = await getProjectGitInfo();
+  const info = await getBasicInfo(`${group}/${project}`, clientToken);
+  return {
+    ...info,
+    defUrl: `${ALI_DEF_WORK_URL}/app/${info.id}`,
+    idpUrl: ALI_DEF_IDP_URL,
+  };
 }
 
 export async function checkIsPegasusProject() {
@@ -163,102 +190,4 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
   }
   const repoPath = `${ALI_GITLAB_URL}:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir);
-}
-
-async function generatorCreatetask(field: IDEFProjectField) {
-  const { empId, account, group, project, gitlabToken, scaffold, clientToken, ejsOptions } = field;
-  const projectType = field.source.type;
-  const { description, source } = scaffold;
-  const { npm } = source;
-  let generatorId = 6;
-  if (projectType === 'rax') {
-    generatorId = 5;
-  }
-  const response = await axios.post(generatorCreatetaskUrl, {
-    group,
-    project,
-    description,
-    trunk: 'master',
-    generator_id: generatorId,
-    schema_data: {
-      npmName: npm,
-      ...ejsOptions,
-    },
-    gitlab_info: {
-      id: empId,
-      token: gitlabToken,
-      name: account,
-      email: `${account}@${ALI_EMAIL}`,
-    },
-    emp_id: empId,
-    client_token: clientToken,
-  });
-  console.log('generatorCreatetaskResponse', response);
-  if (response.data.error) {
-    throw new Error(response.data.error);
-  }
-  return response;
-}
-
-function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const interval = setInterval(async () => {
-      try {
-        const response = await axios.get(`${generatorTaskResultUrl}/${taskId}`, {
-          params: {
-            need_generator: true,
-            client_token: clientToken,
-          },
-        });
-        console.log('generatorTaskResultResponse', response);
-        const {
-          data: { status },
-          error,
-        } = response.data;
-        if (error) {
-          reject(new Error(error));
-        }
-        if (status !== GeneratorTaskStatus.running && status !== GeneratorTaskStatus.Created) {
-          clearInterval(interval);
-          if (status === GeneratorTaskStatus.Failed) {
-            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', { taskId })));
-          }
-          if (status === GeneratorTaskStatus.Timeout) {
-            reject(new Error(i18n.format('package.projectService.index.DEFOutTime', { taskId })));
-          }
-          if (status === GeneratorTaskStatus.Success) {
-            resolve();
-          }
-        }
-      } catch (error) {
-        reject(error);
-      }
-    }, 1000);
-  });
-}
-
-async function applyRepository(field: IDEFProjectField) {
-  const { empId, group, project, scaffold, clientToken, source } = field;
-  const { description } = scaffold;
-  const reason = '';
-  const user = [];
-  let pubtype = 1; // default publish type: assets
-  if (source.type === 'rax') {
-    pubtype = 6;
-  }
-  const response = await axios.post(applyRepositoryUrl, {
-    emp_id: empId,
-    group,
-    project,
-    description,
-    reason,
-    pubtype,
-    user,
-    client_token: clientToken,
-  });
-  console.log('applyRepositoryResponse', response);
-  if (response.data.error) {
-    throw new Error(response.data.error);
-  }
-  return response;
 }

@@ -9,28 +9,48 @@
 
   .main {
     margin-top: 12px;
-
     h3 {
       margin: 0;
       font-weight: 400;
     }
 
-    .description {
-      margin-top: 6px;
-      font-size: 14px;
-      color: $color-text1-2;
+    .header {
+      .description {
+        margin-top: 6px;
+        font-size: 14px;
+        color: $color-text1-2;
+      }
     }
 
-    ul {
-      padding-left: 18px;
+    .infos {
+      .info {
+        margin: 12px 0;
+        font-size: 14px;
+        ul {
+          list-style: none;
+          display: flex;
+          flex-direction: row;
+          border-bottom: 1px solid $color-line1-3;
+          padding: 12px 0;
+          margin: 0;
 
-      li {
-        margin-bottom: 6px;
-        strong {
-          font-weight: 400;
-        }
-        a {
-          color: $color-text1-4;
+          li {
+            display: flex;
+            flex-direction: column;
+            margin-right: 48px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+            strong {
+              font-weight: 400;
+              color: $color-text1-2;
+              margin-bottom: 6px;
+            }
+            a {
+              color: $color-text1-4;
+            }
+          }
         }
       }
     }

@@ -1,58 +1,95 @@
-import React from 'react';
-import { Grid } from '@alifd/next';
+import React, { useEffect, useState } from 'react';
+import callService from '@/callService';
 import styles from './index.module.scss';
 
-const { Row, Col } = Grid;
-
 export default () => {
+  const [basicInfo, setBasicInfo] = useState({ name: '', description: '', type: '', framework: '', path: '' });
+  const { name, description, type, framework, path } = basicInfo;
+  const [gitInfo, setGitInfo] = useState({ repository: '', branch: '', isGit: false });
+  const { repository, branch, isGit } = gitInfo;
+  const [defInfo, setDefInfo] = useState({ idpUrl: '', defUrl: '', isDef: false });
+  const { defUrl, idpUrl, isDef } = defInfo;
+
+  useEffect(() => {
+    async function getProjectBaseInfo() {
+      try {
+        setBasicInfo(await callService('project', 'getProjectBaseInfo'));
+      } catch (e) { /* ignore */ }
+    }
+    async function getProjectGitInfo() {
+      try {
+        setGitInfo(await callService('project', 'getProjectGitInfo'));
+      } catch (e) { /* ignore */ }
+    }
+    async function getProjectDefInfo() {
+      try {
+        setDefInfo(await callService('project', 'getProjectDefInfo'));
+      } catch (e) { /* ignore */ }
+    }
+    getProjectBaseInfo();
+    getProjectGitInfo();
+    getProjectDefInfo();
+  }, []);
+
   return (
     <div className={styles.container}>
       <h2>
         基础信息
-        <a href="https://iceworks-idp.fx.alibaba-inc.com">
-          研发数据平台 &gt;
-        </a>
       </h2>
       <div className={styles.main}>
-        <Row>
-          <Col span="16">
-            <h3> Fusion Lite </h3>
-            <div className={styles.description}>
-              轻量级模板，使用 TypeScript，仅包含基础的 Layout。
-            </div>
+        <div className={styles.header}>
+          <h3>{name}</h3>
+          <div className={styles.description}>
+            {description}
+          </div>
+        </div>
+        <div className={styles.infos}>
+          <div className={styles.info}>
+            <h3>项目信息</h3>
             <ul>
               <li>
-                <strong>本地路径：</strong>
-                <a href="">/Users/xuwentao/iceworks-workspace/fusion-lite</a>
+                <strong>类型</strong>
+                <span>{type}</span>
               </li>
               <li>
-                <strong>仓库路径：</strong>
-                <a href="">https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-lites</a>
+                <strong>框架</strong>
+                <span>{framework}</span>
               </li>
               <li>
-                <strong>DEF 地址：</strong>
-                <a href="">https://work.def.alibaba-inc.com/app/131078/index</a>
+                <strong>本地路径</strong>
+                <a href={path}>{path}</a>
               </li>
             </ul>
-          </Col>
-          <Col span="8">
-            <h3>应用资源</h3>
+          </div>
+          {isGit &&
+          <div className={styles.info}>
+            <h3>Git 信息</h3>
             <ul>
               <li>
-                <strong>日常：</strong>
-                <a href="">www.taobao.com</a>
+                <strong>仓库路径</strong>
+                <a href={repository}>{repository}</a>
               </li>
               <li>
-                <strong>预发：</strong>
-                <a href="">www.taobao.com</a>
-              </li>
-              <li>
-                <strong>线上：</strong>
-                <a href="">www.taobao.com</a>
+                <strong>当前分支</strong>
+                <span>{branch}</span>
               </li>
             </ul>
-          </Col>
-        </Row>
+          </div>}
+          {isDef &&
+          <div className={styles.info}>
+            <h3>DEF 信息</h3>
+            <ul>
+              <li>
+                <strong>工程平台</strong>
+                <a href={defUrl}>{defUrl}</a>
+              </li>
+              <li>
+                <strong>研发数据</strong>
+                <a href={idpUrl}>{idpUrl}</a>
+              </li>
+            </ul>
+          </div>}
+        </div>
       </div>
     </div>
   );

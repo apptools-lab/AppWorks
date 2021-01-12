@@ -1,0 +1,5 @@
+{
+  "defUrl": "http://www.def.com/app/123",
+  "idpUrl": "http://www.idp.com/app/123",
+  "isDef": true
+}

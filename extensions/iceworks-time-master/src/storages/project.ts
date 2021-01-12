@@ -2,19 +2,38 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
+import { getInfo, Info } from '@iceworks/project-service/lib/git';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
 import { jsonSpaces } from '../config';
 import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
-import { getResource, Resource } from '../utils/git';
 import { getReportHr, getReportRow, getRangeReport } from '../utils/report';
 import logger from '../utils/logger';
 
-import forIn = require('lodash.forin');
+const forIn = require('lodash.forin');
+const NodeCache = require('node-cache');
+
+const nodeCache = new NodeCache({ stdTTL: 120 });
+const cacheTimeoutSeconds = 60 * 30;
 
 interface ProjectResource {
-  gitRepository: PropType<Resource, 'repository'>;
-  gitBranch: PropType<Resource, 'branch'>;
-  gitTag?: PropType<Resource, 'tag'>;
+  gitRepository: PropType<Info, 'repository'>;
+  gitBranch: PropType<Info, 'branch'>;
+  gitTag?: PropType<Info, 'tag'>;
+}
+
+async function getGitInfo(dirPath: string): Promise<Info> {
+  const noSpacesProjDir = dirPath.replace(/^\s+/g, '');
+  const cacheId = `resource-info-${noSpacesProjDir}`;
+
+  let resourceInfo = nodeCache.get(cacheId);
+  // return from cache if we have it
+  if (resourceInfo) {
+    return resourceInfo;
+  }
+
+  resourceInfo = await getInfo(dirPath);
+  nodeCache.set(cacheId, resourceInfo, cacheTimeoutSeconds);
+  return resourceInfo;
 }
 
 export interface ProjectInfo extends ProjectResource {
@@ -67,7 +86,7 @@ export class Project implements ProjectInfo {
     const workspaceFolder: WorkspaceFolder = getProjectFolder(fsPath);
     const directory = workspaceFolder ? workspaceFolder.uri.fsPath : UNTITLED;
     const workspaceFolderName = workspaceFolder ? workspaceFolder.name : NO_PROJ_NAME;
-    const { branch, tag, repository } = await getResource(directory);
+    const { branch, tag, repository } = await getGitInfo(directory);
     const project = new Project({
       name: workspaceFolderName,
       directory,
