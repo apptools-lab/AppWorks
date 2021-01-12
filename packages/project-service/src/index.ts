@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
-import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
+import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework as orginCheckIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
 import { ALI_GITLAB_URL, ALI_DEF_IDP_URL, ALI_DEF_WORK_URL } from '@iceworks/constant';
@@ -22,7 +22,7 @@ export async function autoSetContext() {
   const type = await getProjectType();
   const framework = await getProjectFramework();
   const isNotTargetType = !await checkIsTargetProjectType();
-  const isNotTargetFramework = !await checkIsTargetProjectFramework(projectPath);
+  const isNotTargetFramework = !await checkIsTargetProjectFramework();
   vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetType', isNotTargetType);
   vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetFramework', isNotTargetFramework);
   vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
@@ -33,6 +33,10 @@ export async function autoSetContext() {
 
 export async function checkIsTargetProjectType() {
   return await orginCheckIsTargetProjectType(projectPath);
+}
+
+export async function checkIsTargetProjectFramework() {
+  return await orginCheckIsTargetProjectFramework(projectPath);
 }
 
 export async function getProjectLanguageType() {
