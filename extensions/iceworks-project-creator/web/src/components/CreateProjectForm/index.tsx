@@ -60,15 +60,15 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           />
         </Form.Item>
         <Form.Item>
-          {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
           <div className={styles.action}>{children}</div>
         </Form.Item>
       </Form>
-      {value.source && value.source.type === 'rax' && (
-        <div className={styles.scaffoldTypeForm}>
+      <div className={styles.optionWrap}>
+        {value.source && value.source.type === 'rax' && (
           <RaxScaffoldTypeForm onChange={onChange} value={value} disabled={loading} />
-        </div>
-      )}
+        )}
+        {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+      </div>
     </div>
   );
 };

@@ -2,9 +2,15 @@
   .row {
     display: flex;
     flex-direction: row;
+    margin-top: 14px;
   }
 
   .title {
     margin: 20px 0 5px;
+    font-size: 14px;
+  }
+
+  .radioGroup {
+    margin-top: 8px;
   }
 }
