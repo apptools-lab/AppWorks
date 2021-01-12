@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
@@ -34,7 +35,7 @@ export default () => {
   return (
     <div className={styles.container}>
       <h2>
-        基础信息
+        <FormattedMessage id="web.iceworksApp.Dashboard.basic.title" />
       </h2>
       <div className={styles.main}>
         <div className={styles.header}>
@@ -45,46 +46,46 @@ export default () => {
         </div>
         <div className={styles.infos}>
           <div className={styles.info}>
-            <h3>项目信息</h3>
+            <h3><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></h3>
             <ul>
               <li>
-                <strong>类型</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
                 <span>{type}</span>
               </li>
               <li>
-                <strong>框架</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
                 <span>{framework}</span>
               </li>
               <li>
-                <strong>本地路径</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
                 <a href={path}>{path}</a>
               </li>
             </ul>
           </div>
           {isGit &&
           <div className={styles.info}>
-            <h3>Git 信息</h3>
+            <h3><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.title" /></h3>
             <ul>
               <li>
-                <strong>仓库路径</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.repository" /></strong>
                 <a href={repository}>{repository}</a>
               </li>
               <li>
-                <strong>当前分支</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.branch" /></strong>
                 <span>{branch}</span>
               </li>
             </ul>
           </div>}
           {isDef &&
           <div className={styles.info}>
-            <h3>DEF 信息</h3>
+            <h3><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.def.title" /></h3>
             <ul>
               <li>
-                <strong>工程平台</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.def.defUrl" /></strong>
                 <a href={defUrl}>{defUrl}</a>
               </li>
               <li>
-                <strong>研发数据</strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.def.idpUrl" /></strong>
                 <a href={idpUrl}>{idpUrl}</a>
               </li>
             </ul>

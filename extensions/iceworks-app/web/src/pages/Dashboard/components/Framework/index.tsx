@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from '@alifd/next';
+import { FormattedMessage } from 'react-intl';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
@@ -52,13 +53,13 @@ export default () => {
   return (
     <div className={styles.container}>
       <h2>
-        框架信息
+        <FormattedMessage id="web.iceworksApp.Dashboard.framwork.title" />
       </h2>
       <div className={styles.main}>
         <Row>
           <Col span="8">
             <div className={styles.title}>
-              核心依赖
+              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.core.title" />
             </div>
             <ul>
               {coreDependencies.map(Item)}
@@ -66,7 +67,7 @@ export default () => {
           </Col>
           <Col span="8">
             <div className={styles.title}>
-              组件依赖
+              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.component.title" />
             </div>
             <ul>
               {componentDependencies.map(Item)}
@@ -74,7 +75,7 @@ export default () => {
           </Col>
           <Col span="8">
             <div className={styles.title}>
-              插件依赖
+              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.plugin.title" />
             </div>
             <ul>
               {pluginDependencies.map(Item)}
