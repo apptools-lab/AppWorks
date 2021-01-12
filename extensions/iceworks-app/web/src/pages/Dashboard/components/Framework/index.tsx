@@ -1,27 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from '@alifd/next';
+import callService from '@/callService';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
-const cores = [
-  {
-    name: 'react',
-    currentVersion: '1.5.7',
-    nextVersion: '1.5.7',
-    needUpgrade: true,
-  },
-  {
-    name: 'icejs',
-    currentVersion: '1.5.7',
-    nextVersion: '1.5.7',
-    needUpgrade: true,
-  },
-];
-
-function Item({ name, currentVersion, needUpgrade }) {
+function Item({ name, version, outdated }) {
   function handleUpgrade() {
-
+    callService('common', 'executeCommand', 'iceworksApp.configHelper.start', { command: { arguments: ['', name] } });
   }
   return (
     <li>
@@ -30,14 +16,39 @@ function Item({ name, currentVersion, needUpgrade }) {
       </strong>
       :&nbsp;
       <span>
-        {currentVersion}
+        {version}
       </span>
-      { needUpgrade && <Icon type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
+      { outdated && <Icon type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
     </li>
   );
 }
 
 export default () => {
+  const [coreDependencies, setCoreDependencies] = useState([]);
+  const [componentDependencies, setComponentDependencies] = useState([]);
+  const [pluginDependencies, setPluginDependencies] = useState([]);
+
+  useEffect(() => {
+    async function getCoreDependencies() {
+      try {
+        setCoreDependencies(await callService('project', 'getCoreDependencies'));
+      } catch (e) { /* ignore */ }
+    }
+    async function getComponentDependencies() {
+      try {
+        setComponentDependencies(await callService('project', 'getComponentDependencies'));
+      } catch (e) { /* ignore */ }
+    }
+    async function getPluginDependencies() {
+      try {
+        setPluginDependencies(await callService('project', 'getPluginDependencies'));
+      } catch (e) { /* ignore */ }
+    }
+    getCoreDependencies();
+    getComponentDependencies();
+    getPluginDependencies();
+  }, []);
+
   return (
     <div className={styles.container}>
       <h2>
@@ -47,26 +58,26 @@ export default () => {
         <Row>
           <Col span="8">
             <div className={styles.title}>
-              核心信息
+              核心依赖
             </div>
             <ul>
-              {cores.map(Item)}
+              {coreDependencies.map(Item)}
             </ul>
           </Col>
           <Col span="8">
             <div className={styles.title}>
-              组件信息
+              组件依赖
             </div>
             <ul>
-              {cores.map(Item)}
+              {componentDependencies.map(Item)}
             </ul>
           </Col>
           <Col span="8">
             <div className={styles.title}>
-              插件信息
+              插件依赖
             </div>
             <ul>
-              {cores.map(Item)}
+              {pluginDependencies.map(Item)}
             </ul>
           </Col>
         </Row>

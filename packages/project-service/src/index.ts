@@ -10,9 +10,11 @@ import { projectPath, jsxFileExtnames } from './constant';
 import { generatorCreatetask, getGeneratorTaskStatus, applyRepository, getBasicInfo } from './def';
 import { getInfo } from './git';
 import i18n from './i18n';
+import { getProjectPackageJSON } from './utils';
 import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
+export * from './dependency';
 
 export async function autoSetContext() {
   const isPegasus = await checkIsPegasusProject();
@@ -56,7 +58,7 @@ export async function getProjectType() {
 }
 
 export async function getProjectBaseInfo() {
-  const { name, description } = await getPackageJSON(projectPath);
+  const { name, description } = await getProjectPackageJSON();
   const type = await getProjectType();
   const framework = await getProjectFramework();
   return {
@@ -103,14 +105,6 @@ export async function checkIsPegasusProject() {
 
 export async function getProjectFramework() {
   return await originGetProjectFramework(projectPath);
-}
-
-export async function getPackageJSON(packagePath: string): Promise<any> {
-  const packagePathIsExist = await fsExtra.pathExists(packagePath);
-  if (!packagePathIsExist) {
-    throw new Error(i18n.format('package.projectService.index.packageNotFound'));
-  }
-  return await fsExtra.readJson(packagePath);
 }
 
 export function getIceVersion(packageJSON): string {
