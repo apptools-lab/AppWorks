@@ -9,31 +9,29 @@ export default () => {
     <div className={styles.container}>
       <h2>
         基础信息
-        <a href="">
-          研发数据平台
+        <a href="https://iceworks-idp.fx.alibaba-inc.com">
+          研发数据平台 &gt;
         </a>
       </h2>
-      <div>
+      <div className={styles.main}>
         <Row>
           <Col span="16">
-            <h3>
-              Fusion Lite
-            </h3>
-            <div>
+            <h3> Fusion Lite </h3>
+            <div className={styles.description}>
               轻量级模板，使用 TypeScript，仅包含基础的 Layout。
             </div>
             <ul>
               <li>
                 <strong>本地路径：</strong>
-                <a href="">www.taobao.com</a>
+                <a href="">/Users/xuwentao/iceworks-workspace/fusion-lite</a>
               </li>
               <li>
                 <strong>仓库路径：</strong>
-                <a href="">www.taobao.com</a>
+                <a href="">https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-lites</a>
               </li>
               <li>
                 <strong>DEF 地址：</strong>
-                <a href="">www.taobao.com</a>
+                <a href="">https://work.def.alibaba-inc.com/app/131078/index</a>
               </li>
             </ul>
           </Col>

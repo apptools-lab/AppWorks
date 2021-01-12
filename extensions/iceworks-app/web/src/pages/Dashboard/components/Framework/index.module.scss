@@ -1,3 +1,16 @@
 .container {
-  font-size: 12px;
+  .main {
+    margin-top: 12px;
+    ul {
+      padding-left: 18px;
+
+      li {
+        :global {
+          .next-icon {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }
