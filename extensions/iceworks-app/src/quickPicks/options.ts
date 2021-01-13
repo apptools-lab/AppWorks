@@ -16,7 +16,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.detail'),
-    command: 'iceworksApp.welcome.start',
+    command: 'iceworksApp.dashboard.start',
     async condition() {
       const isTargetProjectType = await checkIsTargetProjectType();
       return isTargetProjectType;

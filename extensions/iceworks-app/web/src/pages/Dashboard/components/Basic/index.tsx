@@ -14,31 +14,31 @@ export default () => {
   const { defUrl, idpUrl, isDef } = defInfo;
   const [feedbackLink, setFeedbackLink] = useState('');
 
+  async function getProjectBaseInfo() {
+    try {
+      setBasicInfo(await callService('project', 'getProjectBaseInfo'));
+    } catch (e) { /* ignore */ }
+  }
+  async function getProjectGitInfo() {
+    try {
+      setGitInfo(await callService('project', 'getProjectGitInfo'));
+    } catch (e) { /* ignore */ }
+  }
+  async function getProjectDefInfo() {
+    try {
+      setDefInfo(await callService('project', 'getProjectDefInfo', CLIENT_TOKEN));
+    } catch (e) { /* ignore */ }
+  }
+  async function getFeedbackLink() {
+    try {
+      setFeedbackLink(await callService('project', 'getFeedbackLink'));
+    } catch (e) { /* ignore */ }
+  }
   function handleOpenLocalPath() {
     callService('common', 'openInExternalFinder', path);
   }
 
   useEffect(() => {
-    async function getProjectBaseInfo() {
-      try {
-        setBasicInfo(await callService('project', 'getProjectBaseInfo'));
-      } catch (e) { /* ignore */ }
-    }
-    async function getProjectGitInfo() {
-      try {
-        setGitInfo(await callService('project', 'getProjectGitInfo'));
-      } catch (e) { /* ignore */ }
-    }
-    async function getProjectDefInfo() {
-      try {
-        setDefInfo(await callService('project', 'getProjectDefInfo', CLIENT_TOKEN));
-      } catch (e) { /* ignore */ }
-    }
-    async function getFeedbackLink() {
-      try {
-        setFeedbackLink(await callService('project', 'getFeedbackLink'));
-      } catch (e) { /* ignore */ }
-    }
     getProjectBaseInfo();
     getProjectGitInfo();
     getProjectDefInfo();

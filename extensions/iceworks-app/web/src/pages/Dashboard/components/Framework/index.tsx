@@ -30,31 +30,36 @@ export default () => {
   const [componentDependencies, setComponentDependencies] = useState([]);
   const [pluginDependencies, setPluginDependencies] = useState([]);
 
-  useEffect(() => {
-    async function getCoreDependencies() {
-      try {
-        setCoreDependencies(await callService('project', 'getCoreDependencies'));
-      } catch (e) { /* ignore */ }
-    }
-    async function getComponentDependencies() {
-      try {
-        setComponentDependencies(await callService('project', 'getComponentDependencies'));
-      } catch (e) { /* ignore */ }
-    }
-    async function getPluginDependencies() {
-      try {
-        setPluginDependencies(await callService('project', 'getPluginDependencies'));
-      } catch (e) { /* ignore */ }
-    }
+  async function getCoreDependencies() {
+    try {
+      setCoreDependencies(await callService('project', 'getCoreDependencies'));
+    } catch (e) { /* ignore */ }
+  }
+  async function getComponentDependencies() {
+    try {
+      setComponentDependencies(await callService('project', 'getComponentDependencies'));
+    } catch (e) { /* ignore */ }
+  }
+  async function getPluginDependencies() {
+    try {
+      setPluginDependencies(await callService('project', 'getPluginDependencies'));
+    } catch (e) { /* ignore */ }
+  }
+
+  function refresh() {
     getCoreDependencies();
     getComponentDependencies();
     getPluginDependencies();
+  }
+  useEffect(() => {
+    refresh();
   }, []);
 
   return (
     <div className={styles.container}>
       <h2>
         <FormattedMessage id="web.iceworksApp.Dashboard.framwork.title" />
+        <Icon type="refresh" onClick={refresh} className={styles.refresh} size="small" />
       </h2>
       <div className={styles.main}>
         <Row>
