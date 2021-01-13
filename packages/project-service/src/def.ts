@@ -108,12 +108,14 @@ export async function applyRepository(field: IDEFProjectField) {
 }
 
 export async function getBasicInfo(repo: string, clientToken: string) {
-  const response = await axios.post(basicUrl, {
-    repo,
-    client_token: clientToken,
+  const response = await axios.get(basicUrl, {
+    params: {
+      repo,
+      client_token: clientToken,
+    },
   });
-  if (!response.data || response.data.error || !response.data.app) {
+  if (response.data.error || !response.data.data || !response.data.data.app) {
     return { isDef: false };
   }
-  return { isDef: true, ...response.data.app };
+  return { isDef: true, ...response.data.data.app };
 }

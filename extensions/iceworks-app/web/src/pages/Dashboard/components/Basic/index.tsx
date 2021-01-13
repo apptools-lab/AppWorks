@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
+const CLIENT_TOKEN = process && process.env && process.env.CLIENT_TOKEN;
+
 export default () => {
   const [basicInfo, setBasicInfo] = useState({ name: '', description: '', type: '', framework: '', path: '' });
   const { name, description, type, framework, path } = basicInfo;
@@ -29,7 +31,7 @@ export default () => {
     }
     async function getProjectDefInfo() {
       try {
-        setDefInfo(await callService('project', 'getProjectDefInfo'));
+        setDefInfo(await callService('project', 'getProjectDefInfo', CLIENT_TOKEN));
       } catch (e) { /* ignore */ }
     }
     async function getFeedbackLink() {

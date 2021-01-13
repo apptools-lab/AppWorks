@@ -28,6 +28,7 @@
       {
         "activeInDev": true
       }
-    ]
+    ],
+    "./build.plugin.js"
   ]
 }
