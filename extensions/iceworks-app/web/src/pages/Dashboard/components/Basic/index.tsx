@@ -12,6 +12,10 @@ export default () => {
   const { defUrl, idpUrl, isDef } = defInfo;
   const [feedbackLink, setFeedbackLink] = useState('');
 
+  function handleOpenLocalPath() {
+    callService('common', 'openInExternalFinder', path);
+  }
+
   useEffect(() => {
     async function getProjectBaseInfo() {
       try {
@@ -60,16 +64,16 @@ export default () => {
             <h3><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></h3>
             <ul>
               <li>
-                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.type" /></strong>
                 <span>{type}</span>
               </li>
               <li>
-                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.framework" /></strong>
                 <span>{framework}</span>
               </li>
               <li>
-                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.title" /></strong>
-                <a href={path}>{path}</a>
+                <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.project.path" /></strong>
+                <span className={styles.projectPath} onClick={handleOpenLocalPath}>{path}</span>
               </li>
             </ul>
           </div>

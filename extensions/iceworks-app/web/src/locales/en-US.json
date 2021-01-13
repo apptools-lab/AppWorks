@@ -60,7 +60,7 @@
   "web.iceworksApp.Dashboard.framwork.list.core.title": "Core Dependencies",
   "web.iceworksApp.Dashboard.framwork.list.component.title": "Component Dependencies",
   "web.iceworksApp.Dashboard.framwork.list.plugin.title": "Plugin Dependencies",
-  "web.iceworksApp.Dashboard.framwork.list.core.upgrade": "There is a new version, click to upgrade local dependency package.",
+  "web.iceworksApp.Dashboard.framwork.list.core.upgrade": "There is a new version, click to upgrade local package to {outdated}.",
   "web.iceworksApp.Dashboard.doctor.title": "Quality",
   "web.iceworksApp.Dashboard.doctor.scan": "Scan",
   "web.iceworksApp.Dashboard.doctor.projectRating": "Project Rating",

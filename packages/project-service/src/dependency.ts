@@ -23,7 +23,11 @@ export async function getCoreDependencies() {
     coreDeps = iceCoreDeps;
   }
 
-  return await Promise.all(coreDeps.map(async (dep) => await getLocalDependencyInfo(dep)));
+  const deps = await Promise.all(coreDeps.map(async (dep) => {
+    const info = await getLocalDependencyInfo(dep);
+    return info;
+  }));
+  return deps;
 }
 
 export async function getComponentDependencies() {
@@ -39,18 +43,26 @@ export async function getComponentDependencies() {
   // eslint-disable-next-line
   let checkIsComponent = async (packageName: string) => false;
   if (framwork === 'rax-app') {
-    checkIsComponent = checkIsReactComponent;
-  } else if (framwork === 'icejs') {
     checkIsComponent = checkIsRaxComponent;
+  } else if (framwork === 'icejs') {
+    checkIsComponent = checkIsReactComponent;
   }
 
-  const { devDependencies, dependencies } = await getProjectPackageJSON();
-  const allDeps = { ...devDependencies, ...dependencies };
-  return await Promise.all(
-    Object.keys(allDeps)
-      .filter(async (dep) => await checkIsComponent(dep))
-      .map(async (dep) => await getLocalDependencyInfo(dep)),
+  const { dependencies } = await getProjectPackageJSON();
+  const componentDeps = (await Promise.all(
+    Object.keys(dependencies)
+      .map(async (dep) => {
+        const isComponent = await checkIsComponent(dep);
+        return { name: dep, value: dependencies[dep], isComponent };
+      }),
+  )).filter(({ isComponent }) => isComponent);
+  const depInfos = await Promise.all(
+    componentDeps.map(async ({ name }) => {
+      const info = await getLocalDependencyInfo(name);
+      return info;
+    }),
   );
+  return depInfos;
 }
 
 export async function getPluginDependencies() {
@@ -61,22 +73,27 @@ export async function getPluginDependencies() {
       packageName.startsWith('@ali/build-plugin-');
   }
 
-  const { devDependencies, dependencies } = await getProjectPackageJSON();
-  const allDeps = { ...devDependencies, ...dependencies };
-  return await Promise.all(
-    Object.keys(allDeps)
-      .filter(async (dep) => await checkIsPlugin(dep))
-      .map(async (dep) => await getLocalDependencyInfo(dep)),
+  const { devDependencies } = await getProjectPackageJSON();
+  const pluginDeps = (await Promise.all(
+    Object.keys(devDependencies)
+      .map(async (dep) => {
+        const isPlugin = await checkIsPlugin(dep);
+        return { name: dep, value: devDependencies[dep], isPlugin };
+      }),
+  )).filter(({ isPlugin }) => isPlugin);
+  const deps = await Promise.all(
+    pluginDeps.map(async ({ name }) => {
+      const info = await getLocalDependencyInfo(name);
+      return info;
+    }),
   );
+  return deps;
 }
 
 export async function getLocalDependencyInfo(moduleName) {
   const version = getLocalDependencyVersion(moduleName);
-  let outdated = false;
-  if (version === defaultVersion) {
-    // when the package version is defaultVersion, don't show the outdated
-    outdated = false;
-  } else {
+  let outdated = '';
+  if (version !== defaultVersion) {
     outdated = await getNpmOutdated(moduleName, version);
   }
 
@@ -107,8 +124,8 @@ function getLocalDependencyVersion(moduleName: string): string {
 async function getNpmOutdated(moduleName: string, version: string) {
   try {
     const latest = await latestVersion(moduleName);
-    return version !== latest;
+    return version !== latest ? latest : '';
   } catch (err) {
-    return false;
+    return '';
   }
 }

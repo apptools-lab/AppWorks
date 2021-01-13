@@ -28,6 +28,11 @@
       .info {
         margin: 12px 0;
         font-size: 14px;
+
+        .projectPath {
+          text-decoration: underline;
+          cursor: pointer;
+        }
         ul {
           list-style: none;
           display: flex;

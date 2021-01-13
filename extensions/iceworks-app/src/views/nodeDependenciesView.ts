@@ -132,7 +132,7 @@ class DependencyTreeItem extends vscode.TreeItem {
     public readonly id: string,
     public readonly command?: vscode.Command,
     public readonly version?: string,
-    public readonly outDated?: boolean,
+    public readonly outDated?: string,
   ) {
     super(label, collapsibleState);
     this.id = id;
@@ -202,7 +202,7 @@ function toDep(
   workspaceDir: string,
   moduleName: string,
   version: string,
-  outdated: boolean,
+  outdated: string,
 ) {
   const command = outdated
     ? {

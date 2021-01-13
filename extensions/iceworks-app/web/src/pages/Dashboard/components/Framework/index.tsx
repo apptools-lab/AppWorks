@@ -9,7 +9,7 @@ const { Row, Col } = Grid;
 function Item({ name, version, outdated }) {
   const intl = useIntl();
   function handleUpgrade() {
-    callService('common', 'executeCommand', 'iceworksApp.configHelper.start', { command: { arguments: ['', name] } });
+    callService('common', 'executeCommand', 'iceworksApp.nodeDependencies.upgrade', { command: { arguments: ['', name] } });
   }
   return (
     <li>
@@ -20,7 +20,7 @@ function Item({ name, version, outdated }) {
       <span>
         {version}
       </span>
-      { outdated && <Icon title={intl.formatMessage({ id: 'web.iceworksApp.Dashboard.framwork.list.core.upgrade' })} type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
+      { outdated && <Icon title={intl.formatMessage({ id: 'web.iceworksApp.Dashboard.framwork.list.core.upgrade' }, { outdated })} type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
     </li>
   );
 }
@@ -59,25 +59,25 @@ export default () => {
       <div className={styles.main}>
         <Row>
           <Col span="8">
-            <div className={styles.title}>
+            <h3 className={styles.title}>
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.core.title" />
-            </div>
+            </h3>
             <ul>
               {coreDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>
           </Col>
           <Col span="8">
-            <div className={styles.title}>
+            <h3 className={styles.title}>
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.component.title" />
-            </div>
+            </h3>
             <ul>
               {componentDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>
           </Col>
           <Col span="8">
-            <div className={styles.title}>
+            <h3 className={styles.title}>
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.plugin.title" />
-            </div>
+            </h3>
             <ul>
               {pluginDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>

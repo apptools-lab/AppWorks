@@ -87,6 +87,10 @@ export async function checkPathExists(p: string, folderName?: string): Promise<b
   return await fse.pathExists(p);
 }
 
+export function openInExternalFinder(url) {
+  vscode.env.openExternal(vscode.Uri.file(url));
+}
+
 export function saveDataToSettingJson(section: string, data: any, configurationTarget: boolean = true): void {
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }

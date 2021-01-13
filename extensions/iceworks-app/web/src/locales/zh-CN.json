@@ -60,7 +60,7 @@
   "web.iceworksApp.Dashboard.framwork.list.core.title": "核心依赖",
   "web.iceworksApp.Dashboard.framwork.list.component.title": "组件依赖",
   "web.iceworksApp.Dashboard.framwork.list.plugin.title": "插件依赖",
-  "web.iceworksApp.Dashboard.framwork.list.core.upgrade": "有新版本，点击升级本地依赖包。",
+  "web.iceworksApp.Dashboard.framwork.list.core.upgrade": "有新版本，点击升级本地依赖包到 {outdated}。",
   "web.iceworksApp.Dashboard.doctor.title": "质量信息",
   "web.iceworksApp.Dashboard.doctor.scan": "重新检测",
   "web.iceworksApp.Dashboard.doctor.projectRating": "项目评分",
