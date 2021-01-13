@@ -28,7 +28,7 @@
   "web.iceworksProjectCreator.ScaffoldMarket.noTemplate": "暂无模板",
   "web.iceworksProjectCreator.ScaffoldMarket.more": "查看更多",
   "web.iceworksProjectCreator.ScaffoldMarket.pegasus": "天马模块",
-  "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "请选择 App 类型",
+  "web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle": "请选择应用类型",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle": "Web 应用",
   "web.iceworksProjectCreator.RaxScaffoldTypeForm.crossEndTitle": "跨端应用",
   "web.iceworksProjectCreator.pageGenerator.selectBlocks": "请至少选择一个区块",

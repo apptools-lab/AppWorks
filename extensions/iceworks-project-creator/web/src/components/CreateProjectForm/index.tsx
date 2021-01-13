@@ -37,6 +37,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           patternMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.projectNamePattern' })}
         >
           <Input
+            size="small"
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.inputProjectName' })}
             name="projectName"
             disabled={loading}
@@ -49,6 +50,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           requiredMessage="请选择应用存储的本地路径"
         >
           <Input
+            size="small"
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath' })}
             name="projectPath"
             aria-label="projectPath"

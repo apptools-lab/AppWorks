@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Balloon, Radio } from '@alifd/next';
+import { Balloon } from '@alifd/next';
 import { useIntl } from 'react-intl';
 import MenuCard from '@/components/MenuCard';
 import { IProjectField } from '@/types';
-import { webAppTypes, crossEndAppTypes } from './config';
+import { webAppTypes, crossEndAppTypes, IAppType } from './config';
 import styles from './index.module.scss';
 
 interface IScaffoldTypeForm {
@@ -15,7 +15,7 @@ interface IScaffoldTypeForm {
 const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onChange }) => {
   const intl = useIntl();
 
-  const [radioValue, setRadioValue] = useState('web');
+  const [pubAppType, setPubAppType] = useState('web');
   const [selectedAppType, setSelectedAppType] = useState(() => {
     if (value.ejsOptions && value.ejsOptions.appType) {
       return value.ejsOptions.appType;
@@ -23,18 +23,14 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
     return webAppTypes[0].type;
   });
 
-  const onRadioChange = (key) => {
-    setRadioValue(key as string);
-    onChange({ ejsOptions: { ...value.ejsOptions }, pubAppType: key });
+  const onAppTypeClick = (appType: IAppType) => {
+    const { type, pubType } = appType;
+    setSelectedAppType(type);
+    setPubAppType(pubType);
+    onChange({ ejsOptions: { ...value.ejsOptions, appType: type }, pubAppType: pubType });
   };
 
-  const onAppTypeClick = (appType) => {
-    const currentType = appType.type;
-    setSelectedAppType(currentType);
-    onChange({ ejsOptions: { ...value.ejsOptions, appType: currentType } });
-  };
-
-  const AppList = ({ appTypes }) => {
+  const AppList = ({ appTypes }: { appTypes: IAppType[] }) => {
     return (
       <div className={styles.row}>
         {
@@ -49,7 +45,6 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
                     disabled={disabled}
                     selected={selected}
                     title={appType.title}
-                    subTitle={appType.subTitle}
                     icon={appType.icon}
                     onClick={() => onAppTypeClick(appType)}
                   />
@@ -67,18 +62,17 @@ const RaxScaffoldTypeForm: React.FC<IScaffoldTypeForm> = ({ value, disabled, onC
   };
   useEffect(() => {
     // init value
-    onChange({ ejsOptions: { appType: selectedAppType }, pubAppType: radioValue });
+    onChange({ ejsOptions: { appType: selectedAppType }, pubAppType });
   }, []);
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         {intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.targetTitle' })}
       </div>
-      <Radio.Group value={radioValue} onChange={onRadioChange} className={styles.radioGroup}>
-        <Radio value="web">{intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle' })}</Radio>
-        <Radio value="crossEnd">{intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.crossEndTitle' })}</Radio>
-      </Radio.Group>
-      <AppList appTypes={radioValue === 'web' ? webAppTypes : crossEndAppTypes} />
+      <div className={styles.subTitle}>{intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.webAppTitle' })}</div>
+      <AppList appTypes={webAppTypes} />
+      <div className={styles.subTitle}>{intl.formatMessage({ id: 'web.iceworksProjectCreator.RaxScaffoldTypeForm.crossEndTitle' })}</div>
+      <AppList appTypes={crossEndAppTypes} />
     </div>
   );
 };

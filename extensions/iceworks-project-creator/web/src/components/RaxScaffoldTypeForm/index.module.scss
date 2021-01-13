@@ -2,15 +2,17 @@
   .row {
     display: flex;
     flex-direction: row;
-    margin-top: 14px;
   }
 
   .title {
-    margin: 20px 0 5px;
+    margin-top: 10px;
     font-size: 14px;
+    color: white;
+    font-weight: bold;
   }
 
-  .radioGroup {
-    margin-top: 8px;
+  .subTitle {
+    margin: 8px 0;
+    font-size: 12px;
   }
 }
