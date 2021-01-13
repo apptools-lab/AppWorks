@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DoctorDashboard from '@iceworks/doctor-ui';
 import { useIntl, FormattedMessage } from 'react-intl';
 import callService from '@/callService';
@@ -11,6 +11,15 @@ export default () => {
     callService('common', 'executeCommand', 'iceworks-doctor.scan');
   }
 
+  async function getReport() {
+    setReport(await callService('common', 'executeCommand', 'iceworks-doctor.getReport'));
+  }
+
+  const [report, setReport] = useState({ filesInfo: { lines: 0, count: 0 }, score: 0 });
+  useEffect(() => {
+    getReport();
+  }, []);
+
   return (
     <div className={styles.container}>
       <h2>
@@ -21,8 +30,7 @@ export default () => {
       </h2>
       <div>
         <DoctorDashboard
-          filesInfo={{ lines: 0, count: 0 }}
-          score={0}
+          {...report}
           locale={{
             projectRating: intl.formatMessage({ id: 'web.iceworksApp.Dashboard.doctor.projectRating' }),
             haveProblem: intl.formatMessage({ id: 'web.iceworksApp.Dashboard.doctor.haveProblem' }),
