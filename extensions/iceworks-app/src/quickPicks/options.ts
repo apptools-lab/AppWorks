@@ -13,14 +13,18 @@ export default [
       return !isO2;
     },
   },
-  // {
-  //   label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
-  //   detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
-  //   command: 'iceworks-project-creator.custom-scaffold.start',
-  // },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.detail'),
+    command: 'iceworksApp.welcome.start',
+    async condition() {
+      const isTargetProjectType = await checkIsTargetProjectType();
+      return isTargetProjectType;
+    },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.doctor.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.doctor.detail'),
     command: 'iceworks-doctor.dashboard',
     async condition() {
       const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');

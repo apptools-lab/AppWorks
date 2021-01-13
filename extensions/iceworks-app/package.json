@@ -25,7 +25,8 @@
     "onView:pages",
     "onView:components",
     "onCommand:iceworksApp.configHelper.start",
-    "onCommand:iceworksApp.welcome.start"
+    "onCommand:iceworksApp.welcome.start",
+    "onCommand:iceworksApp.dashboard.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -109,6 +110,10 @@
       {
         "command": "iceworksApp.welcome.start",
         "title": "%iceworksApp.command.welcome.start.title%"
+      },
+      {
+        "command": "iceworksApp.dashboard.start",
+        "title": "%iceworksApp.command.dashboard.start.title%"
       },
       {
         "command": "iceworksApp.editorMenu.DefPublish",

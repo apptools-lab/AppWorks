@@ -59,7 +59,7 @@
     "commands": [
       {
         "command": "iceworks-doctor.dashboard",
-        "title": "%iceworksDoctor.commands.dashboard.title%"
+        "title": "%iceworksDoctor.commands.doctor.title%"
       },
       {
         "command": "iceworks-doctor.scan",

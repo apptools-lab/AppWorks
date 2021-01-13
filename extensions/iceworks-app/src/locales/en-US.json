@@ -15,8 +15,8 @@
   "extension.iceworksApp.showEntriesQuickPick.createComponent.detail": "Download component materials to local",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.label": "Settings",
   "extension.iceworksApp.showEntriesQuickPick.openSettings.detail": "Set the related functions provided by Iceworks",
-  "extension.iceworksApp.showEntriesQuickPick.dashboard.label": "Doctor",
-  "extension.iceworksApp.showEntriesQuickPick.dashboard.detail": "Display project details and code quality",
+  "extension.iceworksApp.showEntriesQuickPick.doctor.label": "Doctor",
+  "extension.iceworksApp.showEntriesQuickPick.doctor.detail": "Display code quality",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.label": "Find Component",
   "extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail": "Quickly search and browse component documents",
   "extension.iceworksApp.showEntriesQuickPick.runDebug.label": "Debug",
@@ -31,6 +31,8 @@
   "extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.detail": "Add a new dependency package for the application",
   "extension.iceworksApp.showEntriesQuickPick.welcomePage.label": "Welcome",
   "extension.iceworksApp.showEntriesQuickPick.welcomePage.detail": "Show welcome page",
+  "extension.iceworksApp.showEntriesQuickPick.dashboard.label": "Dashboard",
+  "extension.iceworksApp.showEntriesQuickPick.dashboard.detail": "Show project dashboard",
   "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "for example: lodash react@latest.",
   "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "Please enter the name of the dependency to be addded to <%= depType %>. Multiple dependencies should be spilted by Spaces.",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "Daily",
@@ -41,5 +43,6 @@
   "extension.iceworksApp.openEntryFile.ErrorMessage": "Cannot find entry",
   "extension.iceworksApp.configHelper.extension.webviewTitle": "Settings - Iceworks",
   "extension.iceworksApp.welcome.extension.webviewTitle": "Welcome - Iceworks",
+  "extension.iceworksApp.dashboard.extension.webviewTitle": "Dashboard - Iceworks",
   "extension.iceworksApp.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
 }
