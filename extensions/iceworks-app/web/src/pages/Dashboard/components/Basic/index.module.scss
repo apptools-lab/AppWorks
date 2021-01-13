@@ -1,9 +1,11 @@
 .container {
   h2 {
-    a {
+    .goto {
       float: right;
-      color: $color-text1-4;
       font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+      color: $color-text1-4;
     }
   }
 

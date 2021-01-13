@@ -39,6 +39,15 @@ export async function checkIsTargetProjectFramework() {
   return await orginCheckIsTargetProjectFramework(projectPath);
 }
 
+export async function getFeedbackLink() {
+  const framework = await getProjectFramework();
+  if (framework === 'icejs') {
+    return 'https://c.tb.cn/F3.ZpKQYk';
+  } else if (framework === 'rax-app') {
+    return 'https://c.tb.cn/F3.ZLhGNW';
+  }
+}
+
 export async function getProjectLanguageType() {
   const hasTsconfig = fsExtra.existsSync(path.join(projectPath, 'tsconfig.json'));
 

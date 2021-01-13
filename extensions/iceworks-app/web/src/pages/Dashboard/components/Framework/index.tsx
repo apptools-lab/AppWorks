@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Icon } from '@alifd/next';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
 const { Row, Col } = Grid;
 
 function Item({ name, version, outdated }) {
+  const intl = useIntl();
   function handleUpgrade() {
     callService('common', 'executeCommand', 'iceworksApp.configHelper.start', { command: { arguments: ['', name] } });
   }
@@ -19,7 +20,7 @@ function Item({ name, version, outdated }) {
       <span>
         {version}
       </span>
-      { outdated && <Icon type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
+      { outdated && <Icon title={intl.formatMessage({ id: 'web.iceworksApp.Dashboard.framwork.list.core.upgrade' })} type="warning" style={{ color: '#FFA003', marginLeft: '6px' }} onClick={handleUpgrade} />}
     </li>
   );
 }
@@ -62,7 +63,7 @@ export default () => {
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.core.title" />
             </div>
             <ul>
-              {coreDependencies.map(Item)}
+              {coreDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>
           </Col>
           <Col span="8">
@@ -70,7 +71,7 @@ export default () => {
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.component.title" />
             </div>
             <ul>
-              {componentDependencies.map(Item)}
+              {componentDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>
           </Col>
           <Col span="8">
@@ -78,7 +79,7 @@ export default () => {
               <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.plugin.title" />
             </div>
             <ul>
-              {pluginDependencies.map(Item)}
+              {pluginDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
             </ul>
           </Col>
         </Row>

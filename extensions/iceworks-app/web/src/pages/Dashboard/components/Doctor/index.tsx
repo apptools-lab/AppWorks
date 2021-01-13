@@ -1,14 +1,23 @@
 import React from 'react';
 import DoctorDashboard from '@iceworks/doctor-ui';
 import { useIntl, FormattedMessage } from 'react-intl';
+import callService from '@/callService';
+import styles from './index.module.scss';
 
 export default () => {
   const intl = useIntl();
 
+  function handleOpenDoctor() {
+    callService('common', 'executeCommand', 'iceworks-doctor.scan');
+  }
+
   return (
-    <div>
+    <div className={styles.container}>
       <h2>
         <FormattedMessage id="web.iceworksApp.Dashboard.doctor.title" />
+        <span className={styles.goto} onClick={handleOpenDoctor}>
+          <FormattedMessage id="web.iceworksApp.Dashboard.doctor.scan" /> &gt;
+        </span>
       </h2>
       <div>
         <DoctorDashboard
