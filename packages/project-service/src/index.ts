@@ -5,7 +5,7 @@ import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY
 import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework as orginCheckIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
 import * as path from 'path';
-import { ALI_GITLAB_URL, ALI_DEF_IDP_URL, ALI_DEF_WORK_URL } from '@iceworks/constant';
+import { ALI_GITLAB_URL, ALI_DIP_PRO, ALI_DEF_WORK_URL } from '@iceworks/constant';
 import { projectPath, jsxFileExtnames } from './constant';
 import { generatorCreatetask, getGeneratorTaskStatus, applyRepository, getBasicInfo } from './def';
 import { getInfo } from './git';
@@ -99,7 +99,7 @@ export async function getProjectDefInfo(clientToken: string) {
   return {
     ...info,
     defUrl: `${ALI_DEF_WORK_URL}/app/${info.id}`,
-    idpUrl: ALI_DEF_IDP_URL,
+    idpUrl: ALI_DIP_PRO,
   };
 }
 
