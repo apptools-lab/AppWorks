@@ -5,7 +5,15 @@ import * as util from 'util';
 import * as path from 'path';
 import latestVersion from 'latest-version';
 import { getPackageLocalVersion } from 'ice-npm-utils';
-import { getDataFromSettingJson, createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
+import {
+  getDataFromSettingJson,
+  createNpmCommand,
+  checkPathExists,
+  registerCommand,
+  isYarnPackageManager,
+  getAddDependencyAction,
+  getUpdateDependencyAction,
+} from '@iceworks/common-service';
 import { dependencyDir, projectPath } from '@iceworks/project-service';
 import runScript from '../terminal/runScript';
 import { NodeDepTypes } from '../types';
@@ -135,10 +143,9 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getDataFromSettingJson('packageManager');
-    const isYarn = packageManager === 'yarn';
+    const isYarn = isYarnPackageManager();
     const isDevDep = depType === 'devDependencies';
-    const npmCommandAction = isYarn ? 'add' : 'install';
+    const npmCommandAction = getAddDependencyAction(); // `add` or `install`
 
     let extraAction = '';
     if (isDevDep) {
@@ -231,9 +238,8 @@ function toDep(
   version: string,
   outdated: boolean,
 ) {
-  const packageManager = getDataFromSettingJson('packageManager');
-  const isYarn = packageManager === 'yarn';
-  const npmCommand = createNpmCommand(isYarn ? 'upgrade' : 'update', moduleName);
+  const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
+  const npmCommand = createNpmCommand(updateDependencyAction, moduleName);
   const command = outdated
     ? {
       command: 'iceworksApp.nodeDependencies.upgrade',

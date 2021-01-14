@@ -10,6 +10,8 @@ import {
   getIceworksTerminal,
   checkPathExists,
   showTextDocument,
+  getAddDependencyAction,
+  createNpmCommand,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -70,12 +72,12 @@ export async function addBizCode(dataSource: IMaterialComponent) {
     // ignore
   }
 
-  const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
+  const addDependencyAction = getAddDependencyAction(); // `add` or `install`
 
   const terminal = getIceworksTerminal();
   terminal.show();
   terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(`${packageManager} install ${npm}@${version} --save`, true);
+  terminal.sendText(createNpmCommand(addDependencyAction, `${npm}@${version}`, '--save'), true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }
