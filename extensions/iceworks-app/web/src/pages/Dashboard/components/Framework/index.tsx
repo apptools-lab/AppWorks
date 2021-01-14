@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Icon } from '@alifd/next';
+import React, { useEffect } from 'react';
+import { Grid, Icon, Loading } from '@alifd/next';
 import { FormattedMessage, useIntl } from 'react-intl';
+import pageStore from '@/pages/Dashboard/store';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
@@ -25,63 +26,60 @@ function Item({ name, version, outdated }) {
   );
 }
 
-function List({ title, data }) {
+function List({ title, data, isLoading, error, inited }) {
+  const isEmpty = inited && !data.length;
+  const content = !isEmpty ?
+    (
+      <ul>
+        {data.map((dep) => <Item key={dep.name} {...dep} />)}
+      </ul>
+    ) :
+    (
+      <div className={styles.empty}>
+        None
+      </div>
+    );
   return (
     <Col span="8">
       <h3 className={styles.title}>
         <FormattedMessage id={title} />
       </h3>
-      <ul>
-        {data.map((dep) => <Item key={dep.name} {...dep} />)}
-      </ul>
+      <Loading className={styles.loading} visible={isLoading || !inited}>
+        {!error ?
+          content :
+          <div className={styles.error}>
+            Error
+          </div>
+        }
+      </Loading>
     </Col>
   );
 }
 
-function Cores() {
-  const [dependencies, setDependencies] = useState([]);
-  async function getDependencies() {
-    setDependencies(await callService('project', 'getCoreDependencies'));
-  }
+function ListWitchState({ name }) {
+  const moduleName = `${name}Dependencies`;
+  const [state, dispatchers] = pageStore.useModel(moduleName);
+  const effectsState = pageStore.useModelEffectsState(moduleName);
   useEffect(() => {
-    getDependencies();
+    dispatchers.refresh();
   }, []);
   return (<List
-    title="web.iceworksApp.Dashboard.framwork.list.core.title"
-    data={dependencies}
-  />);
-}
-
-function Components() {
-  const [dependencies, setDependencies] = useState([]);
-  async function getDependencies() {
-    setDependencies(await callService('project', 'getComponentDependencies'));
-  }
-  useEffect(() => {
-    getDependencies();
-  }, []);
-  return (<List
-    title="web.iceworksApp.Dashboard.framwork.list.component.title"
-    data={dependencies}
-  />);
-}
-
-function Plugins() {
-  const [dependencies, setDependencies] = useState([]);
-  async function getDependencies() {
-    setDependencies(await callService('project', 'getPluginDependencies'));
-  }
-  useEffect(() => {
-    getDependencies();
-  }, []);
-  return (<List
-    title="web.iceworksApp.Dashboard.framwork.list.plugin.title"
-    data={dependencies}
+    {...state}
+    title={`web.iceworksApp.Dashboard.framwork.list.${name}.title`}
+    isLoading={effectsState.refresh.isLoading}
+    error={effectsState.refresh.error}
   />);
 }
 
 export default () => {
+  const coreDispatcher = pageStore.useModelDispatchers('coreDependencies');
+  const componentDispatcher = pageStore.useModelDispatchers('componentDependencies');
+  const pluginDispatcher = pageStore.useModelDispatchers('pluginDependencies');
+
   function refresh() {
+    coreDispatcher.refresh();
+    componentDispatcher.refresh();
+    pluginDispatcher.refresh();
   }
 
   return (
@@ -92,9 +90,9 @@ export default () => {
       </h2>
       <div className={styles.main}>
         <Row>
-          <Cores />
-          <Components />
-          <Plugins />
+          <ListWitchState name="core" />
+          <ListWitchState name="component" />
+          <ListWitchState name="plugin" />
         </Row>
       </div>
     </div>

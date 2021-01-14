@@ -10,6 +10,16 @@
       font-weight: 400;
       margin: 0;
     }
+    .loading {
+      width: 100%;
+
+      .error {
+        margin-top: 12px;
+      }
+      .empty {
+        margin-top: 12px;
+      }
+    }
     ul {
       padding-left: 18px;
 

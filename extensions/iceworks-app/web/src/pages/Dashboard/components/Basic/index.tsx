@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Loading } from '@alifd/next';
 import callService from '@/callService';
 import pageStore from '@/pages/Dashboard/store';
-import ServerError from '@/components/ServerError';
+import ServerError from '../ServerError';
 import styles from './index.module.scss';
 
 export default () => {
