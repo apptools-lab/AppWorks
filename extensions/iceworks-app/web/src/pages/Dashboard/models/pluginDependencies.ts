@@ -9,9 +9,9 @@ export default {
   },
   effects: () => ({
     async refresh() {
+      this.setState({ inited: true });
       this.setState({
         data: await callService('project', 'getPluginDependencies'),
-        inited: true,
       });
     },
   }),
