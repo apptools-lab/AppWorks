@@ -32,7 +32,6 @@ export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
 export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_KEY_GENERATE_PAGE_PATH = 'generatePagePath';
 export const CONFIGURATION_KEY_GENERATE_COMPONENT_PATH = 'generateComponentPath';
-
 export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
@@ -373,7 +372,7 @@ export const getFolderLanguageType = (templateSourceSrcPath) => {
   });
 
   return index >= 0 ? 'ts' : 'js';
-};
+}
 
 /**
  * Install materials dependencies
@@ -411,7 +410,7 @@ export const bulkInstallMaterialsDependencies = async function (
   } else {
     return [];
   }
-};
+}
 
 export const bulkDownloadMaterials = async function (
   materials: IMaterialPage[] | IMaterialBlock[],
@@ -467,7 +466,8 @@ export const bulkDownloadMaterials = async function (
       }
     })
   );
-};
+}
+
 export function openMaterialsSettings() {
   if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
     executeCommand('iceworksApp.configHelper.start', 'iceworks.materialSources');
@@ -497,4 +497,9 @@ export function getFolderExistsTime(folderPath: string) {
   const curTime = new Date();
   const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000))
   return existsTime;
+}
+
+export function checkIsInstalledDoctor() {
+  const doctorExtension = vscode.extensions.getExtension('iceworks-team.iceworks-doctor');
+  return !!doctorExtension;
 }
