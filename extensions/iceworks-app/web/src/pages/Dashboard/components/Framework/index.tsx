@@ -25,29 +25,64 @@ function Item({ name, version, outdated }) {
   );
 }
 
-export default () => {
-  const [coreDependencies, setCoreDependencies] = useState([]);
-  const [componentDependencies, setComponentDependencies] = useState([]);
-  const [pluginDependencies, setPluginDependencies] = useState([]);
+function List({ title, data }) {
+  return (
+    <Col span="8">
+      <h3 className={styles.title}>
+        <FormattedMessage id={title} />
+      </h3>
+      <ul>
+        {data.map((dep) => <Item key={dep.name} {...dep} />)}
+      </ul>
+    </Col>
+  );
+}
 
-  async function getCoreDependencies() {
-    setCoreDependencies(await callService('project', 'getCoreDependencies'));
-  }
-  async function getComponentDependencies() {
-    setComponentDependencies(await callService('project', 'getComponentDependencies'));
-  }
-  async function getPluginDependencies() {
-    setPluginDependencies(await callService('project', 'getPluginDependencies'));
-  }
-
-  function refresh() {
-    getCoreDependencies();
-    getComponentDependencies();
-    getPluginDependencies();
+function Cores() {
+  const [dependencies, setDependencies] = useState([]);
+  async function getDependencies() {
+    setDependencies(await callService('project', 'getCoreDependencies'));
   }
   useEffect(() => {
-    refresh();
+    getDependencies();
   }, []);
+  return (<List
+    title="web.iceworksApp.Dashboard.framwork.list.core.title"
+    data={dependencies}
+  />);
+}
+
+function Components() {
+  const [dependencies, setDependencies] = useState([]);
+  async function getDependencies() {
+    setDependencies(await callService('project', 'getComponentDependencies'));
+  }
+  useEffect(() => {
+    getDependencies();
+  }, []);
+  return (<List
+    title="web.iceworksApp.Dashboard.framwork.list.component.title"
+    data={dependencies}
+  />);
+}
+
+function Plugins() {
+  const [dependencies, setDependencies] = useState([]);
+  async function getDependencies() {
+    setDependencies(await callService('project', 'getPluginDependencies'));
+  }
+  useEffect(() => {
+    getDependencies();
+  }, []);
+  return (<List
+    title="web.iceworksApp.Dashboard.framwork.list.plugin.title"
+    data={dependencies}
+  />);
+}
+
+export default () => {
+  function refresh() {
+  }
 
   return (
     <div className={styles.container}>
@@ -57,30 +92,9 @@ export default () => {
       </h2>
       <div className={styles.main}>
         <Row>
-          <Col span="8">
-            <h3 className={styles.title}>
-              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.core.title" />
-            </h3>
-            <ul>
-              {coreDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
-            </ul>
-          </Col>
-          <Col span="8">
-            <h3 className={styles.title}>
-              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.component.title" />
-            </h3>
-            <ul>
-              {componentDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
-            </ul>
-          </Col>
-          <Col span="8">
-            <h3 className={styles.title}>
-              <FormattedMessage id="web.iceworksApp.Dashboard.framwork.list.plugin.title" />
-            </h3>
-            <ul>
-              {pluginDependencies.map((dep) => <Item key={dep.name} {...dep} />)}
-            </ul>
-          </Col>
+          <Cores />
+          <Components />
+          <Plugins />
         </Row>
       </div>
     </div>

@@ -8,12 +8,11 @@ import styles from './index.module.scss';
 
 export default () => {
   const [state, dispatchers] = pageStore.useModel('info');
+  const effectsState = pageStore.useModelEffectsState('info');
   const { basic, git, def, inited } = state;
   const { name, description, type, framework, path, feedbackLink } = basic;
   const { repository, branch, isGit } = git;
   const { defUrl, idpUrl, isDef } = def;
-
-  const effectsState = pageStore.useModelEffectsState('info');
 
   function handleOpenLocalPath() {
     callService('common', 'openInExternalFinder', path);
