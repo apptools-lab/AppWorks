@@ -3,7 +3,14 @@ import * as rimraf from 'rimraf';
 import * as fse from 'fs-extra';
 import * as util from 'util';
 import * as path from 'path';
-import { getDataFromSettingJson, createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
+import {
+  createNpmCommand,
+  checkPathExists,
+  registerCommand,
+  isYarnPackageManager,
+  getAddDependencyAction,
+  getUpdateDependencyAction,
+} from '@iceworks/common-service';
 import { dependencyDir, projectPath, getLocalDependencyInfo } from '@iceworks/project-service';
 import runScript from '../terminal/runScript';
 import { NodeDepTypes } from '../types';
@@ -104,10 +111,9 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const packageManager = getDataFromSettingJson('packageManager');
-    const isYarn = packageManager === 'yarn';
+    const isYarn = isYarnPackageManager();
     const isDevDep = depType === 'devDependencies';
-    const npmCommandAction = isYarn ? 'add' : 'install';
+    const npmCommandAction = getAddDependencyAction(); // `add` or `install`
 
     let extraAction = '';
     if (isDevDep) {
@@ -171,8 +177,8 @@ export function createNodeDependenciesTreeView(context) {
     const { command } = node;
     if (command) {
       const [cwd, moduleName] = command?.arguments as any[];
-      const packageManager = getDataFromSettingJson('packageManager');
-      const commandScript = createNpmCommand(packageManager === 'yarn' ? 'upgrade' : 'update', moduleName);
+      const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
+      const commandScript = createNpmCommand(updateDependencyAction, moduleName);
       runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, commandScript);
     }
   });
