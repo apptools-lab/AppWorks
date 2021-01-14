@@ -1,52 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Loading } from '@alifd/next';
 import callService from '@/callService';
+import pageStore from '@/pages/Dashboard/store';
 import styles from './index.module.scss';
 
-const CLIENT_TOKEN = process && process.env && process.env.CLIENT_TOKEN;
-
 export default () => {
-  const [basicInfo, setBasicInfo] = useState({ name: '', description: '', type: '', framework: '', path: '' });
-  const { name, description, type, framework, path } = basicInfo;
-  const [gitInfo, setGitInfo] = useState({ repository: '', branch: '', isGit: false });
-  const { repository, branch, isGit } = gitInfo;
-  const [defInfo, setDefInfo] = useState({ idpUrl: '', defUrl: '', isDef: false });
-  const { defUrl, idpUrl, isDef } = defInfo;
-  const [feedbackLink, setFeedbackLink] = useState('');
+  const [state, dispatchers] = pageStore.useModel('info');
+  const { basic, git, def, inited } = state;
+  const { name, description, type, framework, path, feedbackLink } = basic;
+  const { repository, branch, isGit } = git;
+  const { defUrl, idpUrl, isDef } = def;
 
-  async function getProjectBaseInfo() {
-    try {
-      setBasicInfo(await callService('project', 'getProjectBaseInfo'));
-    } catch (e) { /* ignore */ }
-  }
-  async function getProjectGitInfo() {
-    try {
-      setGitInfo(await callService('project', 'getProjectGitInfo'));
-    } catch (e) { /* ignore */ }
-  }
-  async function getProjectDefInfo() {
-    try {
-      setDefInfo(await callService('project', 'getProjectDefInfo', CLIENT_TOKEN));
-    } catch (e) { /* ignore */ }
-  }
-  async function getFeedbackLink() {
-    try {
-      setFeedbackLink(await callService('project', 'getFeedbackLink'));
-    } catch (e) { /* ignore */ }
-  }
+  const effectsState = pageStore.useModelEffectsState('info');
+
   function handleOpenLocalPath() {
     callService('common', 'openInExternalFinder', path);
   }
 
   useEffect(() => {
-    getProjectBaseInfo();
-    getProjectGitInfo();
-    getProjectDefInfo();
-    getFeedbackLink();
+    dispatchers.refresh();
   }, []);
 
   return (
-    <div className={styles.container}>
+    <Loading className={styles.container} visible={effectsState.refresh.isLoading || !inited}>
       <h2>
         <FormattedMessage id="web.iceworksApp.Dashboard.basic.title" />
         {feedbackLink &&
@@ -109,6 +86,6 @@ export default () => {
           </div>}
         </div>
       </div>
-    </div>
+    </Loading>
   );
 };

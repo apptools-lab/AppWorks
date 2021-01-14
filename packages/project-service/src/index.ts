@@ -74,12 +74,14 @@ export async function getProjectBaseInfo() {
   const { name, description } = await getProjectPackageJSON();
   const type = await getProjectType();
   const framework = await getProjectFramework();
+  const feedbackLink = await getFeedbackLink();
   return {
     name,
     description,
     type,
     framework,
     path: projectPath,
+    feedbackLink,
   };
 }
 

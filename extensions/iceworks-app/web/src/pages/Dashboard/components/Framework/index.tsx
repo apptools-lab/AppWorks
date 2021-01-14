@@ -31,19 +31,13 @@ export default () => {
   const [pluginDependencies, setPluginDependencies] = useState([]);
 
   async function getCoreDependencies() {
-    try {
-      setCoreDependencies(await callService('project', 'getCoreDependencies'));
-    } catch (e) { /* ignore */ }
+    setCoreDependencies(await callService('project', 'getCoreDependencies'));
   }
   async function getComponentDependencies() {
-    try {
-      setComponentDependencies(await callService('project', 'getComponentDependencies'));
-    } catch (e) { /* ignore */ }
+    setComponentDependencies(await callService('project', 'getComponentDependencies'));
   }
   async function getPluginDependencies() {
-    try {
-      setPluginDependencies(await callService('project', 'getPluginDependencies'));
-    } catch (e) { /* ignore */ }
+    setPluginDependencies(await callService('project', 'getPluginDependencies'));
   }
 
   function refresh() {
