@@ -12,9 +12,6 @@
     "ice.js": "^1.14.1",
     "typescript": "^3.8.3"
   },
-  "resolutions": {
-    "@builder/app-helpers": "2.1.0"
-  },
   "dependencies": {
     "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^1.2.1",
