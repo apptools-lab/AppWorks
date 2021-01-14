@@ -24,7 +24,7 @@ export async function getProjectType(projectPath: string): Promise<ProjectType> 
       type = 'vue';
     }
   } catch (error) {
-    // ignore error
+    console.error('read packageJson error:', error);
   }
   return type;
 }

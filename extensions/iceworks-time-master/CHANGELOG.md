@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.5
+
+- refactor: internal optimization
+
 ## 0.3.4
 
 - feat: record DAU for O2
