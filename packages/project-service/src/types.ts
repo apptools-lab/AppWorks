@@ -7,6 +7,7 @@ export interface IProjectField {
   scaffold: IMaterialScaffold;
   source: IMaterialSource;
   ejsOptions?: IEjsOptions;
+  pubAppType?: string;
 }
 
 export interface IDEFProjectField extends IProjectField {
@@ -21,4 +22,5 @@ export interface IDEFProjectField extends IProjectField {
   projectName: string;
   source: IMaterialSource;
   ejsOptions?: IEjsOptions;
+  pubAppType?: string;
 }

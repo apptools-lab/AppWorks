@@ -26,3 +26,9 @@ export const jsScaffoldsList = [
   '@miniprogram-materials/scaffolds-app-js',
   '@miniprogram-materials/scaffolds-todos',
 ];
+
+export const scaffoldsBlackList = [
+  '@icedesign/scaffold-midway-faas',
+  '@rax-materials/scaffolds-app-midway-faas',
+  '@rax-materials/scaffolds-app-midway-ssr',
+];

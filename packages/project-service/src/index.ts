@@ -148,7 +148,11 @@ export async function getFolderPath(openLabel = 'Open'): Promise<string | undefi
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField;
+  const { projectPath: setProjectPath, projectName, scaffold } = projectField;
+  let ejsOptions = {};
+  if (projectField.ejsOptions) {
+    ejsOptions = modifyEjsOptions(projectField.ejsOptions);
+  }
   const projectDir: string = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
@@ -199,4 +203,33 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
   }
   const repoPath = `${ALI_GITLAB_URL}:${group}/${project}.git`;
   await simpleGit().clone(repoPath, projectDir);
+}
+
+function modifyEjsOptions(ejsOptions) {
+  let enableMPA = false;
+  let enablePHA = false;
+  let targets = [];
+
+  const { appType } = ejsOptions;
+
+  if (appType === 'web-mpa') {
+    enableMPA = true;
+    enablePHA = true;
+    targets = ['web'];
+  } else if (appType === 'miniapp') {
+    targets = ['web', 'miniapp', 'wechat-miniprogram'];
+  } else if (appType === 'kraken-mpa') {
+    enableMPA = true;
+    targets = ['web', 'kraken'];
+  } else if (appType === 'weex-mpa') {
+    enableMPA = true;
+    targets = ['web', 'weex'];
+  }
+
+  return {
+    ...ejsOptions,
+    mpa: enableMPA,
+    pha: enablePHA,
+    targets,
+  };
 }
