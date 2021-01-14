@@ -112,7 +112,11 @@ export async function getFolderPath(openLabel = 'Open'): Promise<string | undefi
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, scaffold, ejsOptions } = projectField;
+  const { projectPath: setProjectPath, projectName, scaffold } = projectField;
+  let ejsOptions = {};
+  if (projectField.ejsOptions) {
+    ejsOptions = modifyEjsOptions(projectField.ejsOptions);
+  }
   const projectDir: string = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
@@ -166,7 +170,11 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
 }
 
 async function generatorCreatetask(field: IDEFProjectField) {
-  const { empId, account, group, project, gitlabToken, scaffold, clientToken, ejsOptions } = field;
+  const { empId, account, group, project, gitlabToken, scaffold, clientToken } = field;
+  let ejsOptions = {};
+  if (field.ejsOptions) {
+    ejsOptions = modifyEjsOptions(field.ejsOptions);
+  }
   const projectType = field.source.type;
   const { description, source } = scaffold;
   const { npm } = source;
@@ -238,13 +246,16 @@ function getGeneratorTaskStatus(taskId: number, clientToken: string): Promise<an
 }
 
 async function applyRepository(field: IDEFProjectField) {
-  const { empId, group, project, scaffold, clientToken, source } = field;
+  const { empId, group, project, scaffold, clientToken, source, pubAppType } = field;
   const { description } = scaffold;
   const reason = '';
   const user = [];
-  let pubtype = 1; // default publish type: assets
+  // default publish type: assets = 1
+  let pubtype = 1;
   if (source.type === 'rax') {
-    pubtype = 6;
+    // weex = 3
+    // webapp = 6
+    pubtype = pubAppType === 'web' ? 6 : 3;
   }
   const response = await axios.post(applyRepositoryUrl, {
     emp_id: empId,
@@ -261,4 +272,33 @@ async function applyRepository(field: IDEFProjectField) {
     throw new Error(response.data.error);
   }
   return response;
+}
+
+function modifyEjsOptions(ejsOptions) {
+  let enableMPA = false;
+  let enablePHA = false;
+  let targets = [];
+
+  const { appType } = ejsOptions;
+
+  if (appType === 'web-mpa') {
+    enableMPA = true;
+    enablePHA = true;
+    targets = ['web'];
+  } else if (appType === 'miniapp') {
+    targets = ['web', 'miniapp', 'wechat-miniprogram'];
+  } else if (appType === 'kraken-mpa') {
+    enableMPA = true;
+    targets = ['web', 'kraken'];
+  } else if (appType === 'weex-mpa') {
+    enableMPA = true;
+    targets = ['web', 'weex'];
+  }
+
+  return {
+    ...ejsOptions,
+    mpa: enableMPA,
+    pha: enablePHA,
+    targets,
+  };
 }

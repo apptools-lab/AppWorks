@@ -20,4 +20,22 @@ body {
     margin-top: 0;
     font-size: 12px;
   }
+
+  .next-form-item-label {
+    label {
+      font-weight: bold;
+      color: white;
+    }
+  }
+
+  .next-form-item-control {
+    span {
+      input {
+        font-size: 12px;
+      }
+      input::-webkit-input-placeholder {
+        font-size: 12px;
+      }
+    }
+  }
 }
