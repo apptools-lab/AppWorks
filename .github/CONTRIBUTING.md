@@ -66,7 +66,7 @@ Use the VS Code to develop the extension project. open a new window, set `/exten
 ## Pull Request Guidelines
 
 - Only code that's ready for release should be committed to the master branch. All development should be done in dedicated branches.
-- Checkout a **new** topic branch from master branch, and merge back against master branch.
+- Checkout a new topic branch from master branch, and merge back against master branch.
 - Make sure `npm test` passes.
 - If adding new feature:
   - Add accompanying test case.
