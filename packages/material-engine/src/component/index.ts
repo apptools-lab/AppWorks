@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
+import { IMaterialComponent } from '@iceworks/material-utils';
 import {
   getLastAcitveTextEditor,
   getTagTemplate,
@@ -42,7 +42,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
-  const { name, source } = dataSource;
+  const { name, source, importStatement } = dataSource;
   const { npm, version } = source;
   const activeTextEditor = getLastAcitveTextEditor();
 
@@ -50,10 +50,48 @@ export async function addBizCode(dataSource: IMaterialComponent) {
     throw new Error(templateError);
   }
 
+  const { active } = activeTextEditor.selection;
   const { fsPath } = activeTextEditor.document.uri;
   const isTemplate = checkIsTemplate(fsPath);
   if (!isTemplate) {
     throw new Error(templateError);
+  }
+
+  if (importStatement) {
+    // handle with base components
+    const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
+      activeTextEditor.document.getText(),
+    );
+    const baseImportDeclaration = importDeclarations.find(({ source: { value } }) => {
+      return value === npm;
+    });
+
+    const insertPosition = new Position(active.line, active.character);
+    activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+      let existImportedName = '';
+      if (!baseImportDeclaration) {
+        editBuilder.insert(importDeclarationPosition, `${importStatement}\n`);
+      } else {
+        const baseSpecifiers = baseImportDeclaration.specifiers;
+        baseSpecifiers.forEach(({ imported, local }) => {
+          if (imported.name === name) {
+            existImportedName = local.name;
+          }
+        });
+
+        if (!existImportedName) {
+          const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
+          const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
+
+          editBuilder.insert(
+            new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
+            `, ${name}`,
+          );
+        }
+      }
+
+      editBuilder.insert(insertPosition, getTagTemplate(existImportedName || name));
+    });
   }
 
   // insert code
@@ -75,63 +113,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   const terminal = getIceworksTerminal();
   terminal.show();
   terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(createNpmCommand(addDependencyAction, `${npm}@${version}`, '--save'), true);
-  // activate the textEditor
-  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
-}
-
-export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = i18nService.format('package.component-service.index.templateError', {
-    jsxFileExtnames: jsxFileExtnames.join(','),
-  });
-  const activeTextEditor = getLastAcitveTextEditor();
-
-  if (!activeTextEditor) {
-    throw new Error(templateError);
-  }
-
-  const { active } = activeTextEditor.selection;
-  const { fsPath } = activeTextEditor.document.uri;
-  const isTemplate = checkIsTemplate(fsPath);
-  if (!isTemplate) {
-    throw new Error(templateError);
-  }
-
-  const { importStatement, name, source } = dataSource;
-  const { npm } = source;
-  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
-    activeTextEditor.document.getText(),
-  );
-  const baseImportDeclaration = importDeclarations.find(({ source: { value } }) => {
-    return value === npm;
-  });
-
-  const insertPosition = new Position(active.line, active.character);
-  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    let existImportedName = '';
-    if (!baseImportDeclaration) {
-      editBuilder.insert(importDeclarationPosition, `${importStatement}\n`);
-    } else {
-      const baseSpecifiers = baseImportDeclaration.specifiers;
-      baseSpecifiers.forEach(({ imported, local }) => {
-        if (imported.name === name) {
-          existImportedName = local.name;
-        }
-      });
-
-      if (!existImportedName) {
-        const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
-        const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
-
-        editBuilder.insert(
-          new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
-          `, ${name}`,
-        );
-      }
-    }
-
-    editBuilder.insert(insertPosition, getTagTemplate(existImportedName || name));
-  });
+  terminal.sendText(createNpmCommand(addDependencyAction, `${npm}@${version || 'latest'}`, '--save'), true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }

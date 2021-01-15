@@ -65,7 +65,7 @@ const Home: React.FC<any> = () => {
 
   const onBaseClick = async (base: IMaterialBase) => {
     try {
-      await callService('component', 'addBaseCode', base);
+      await callService('component', 'addBizCode', base);
     } catch (e) {
       Notification.error({ content: e.message });
     }

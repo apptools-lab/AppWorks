@@ -22,7 +22,7 @@ const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materia
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
-const RAX_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/fusion-mobile-components-2.x.json';
+const RAX_BASE_COMPONENTS_SOURCE = 'http://ice.alicdn.com/assets/rax-base-components.json';
 
 const OFFICAL_MATERIAL_SOURCES = [
   {
@@ -120,6 +120,12 @@ export const getData = async function (source: string): Promise<IMaterialData> {
       materialData = result.data;
     }
 
+    if (isRaxMaterial(source)) {
+      // handle with fusion-mobile components
+      materialData.components = getBaseMaterials(materialData.components, '@alifd/meet', '2.2.6');
+    }
+
+    // base materials
     let bases: IMaterialBase[];
     try {
       if (isIceMaterial(source)) {
@@ -127,7 +133,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
         bases = getBaseMaterials(baseResult.data, '@alifd/next', '1.18.16');
       } else if (isRaxMaterial(source)) {
         const baseResult = await axios({ url: RAX_BASE_COMPONENTS_SOURCE });
-        bases = getBaseMaterials(baseResult.data, '@alifd/meet', '2.2.6');
+        bases = baseResult.data;
       }
     } catch (error) {
       console.log('get base materials error:', error);
@@ -147,9 +153,9 @@ export const getData = async function (source: string): Promise<IMaterialData> {
   return data;
 };
 
-function getBaseMaterials(data, npm, version) {
+function getBaseMaterials(data, npm?, version?) {
   return data.map((base: any) => {
-    const { name, title, type, importStatement } = base;
+    const { name, title, type, importStatement, source } = base;
     return {
       name,
       title,
@@ -157,7 +163,7 @@ function getBaseMaterials(data, npm, version) {
       importStatement,
       homepage: `${MATERIAL_BASE_HOME_URL}/${name.toLowerCase()}`,
       repository: `${MATERIAL_BASE_REPOSITORY_URL}/${kebabCase(name)}`,
-      source: {
+      source: source || {
         type: 'npm',
         npm,
         version,

@@ -67,6 +67,7 @@ export interface IMaterialComponent {
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
+  importStatement?: string;
 }
 
 export interface IMaterialBlock {
