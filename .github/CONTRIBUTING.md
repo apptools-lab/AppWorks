@@ -41,7 +41,7 @@ $ npm run publish:package # or npm run publish-beta:package
 
 You can add the VS Code Extension of Iceworks to the directory `extension`.
 
-#### 1. Initialization
+#### Create a new Extension
 
 Install [Yeoman](http://yeoman.io/) and [VS Code Extension Generator](https://www.npmjs.com/package/generator-code)：
 
@@ -55,13 +55,11 @@ In the `extensions/` Directory, execute `yo code` to initialize the extension
 yo code
 ```
 
-#### 2. Development and Debugging
+#### Development and Debugging
 
-Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api)
+Use the VS Code to develop the extension project. open a new window, set `/extensions/foo` as workspace, enable extension debugging through `F5`.
 
-Use the VS Code to develop the extension project, and enable extension debugging through `F5`.
-
-**Note!!!** Please always set `/extensions/foo` as workspace for develop extension.
+> Please see [VS Code Extension](https://code.visualstudio.com/api) for more details.
 
 ## Pull Request Guidelines
 
@@ -75,8 +73,8 @@ Use the VS Code to develop the extension project, and enable extension debugging
   - If you are resolving a special issue, add `(fix #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
-- Make sure PR includes following changes:
-  - Update extension or package version of package.json
+- Make sure includes following changes:
+  - Update extension or package `version` of package.json
   - Update `CHANGLOG.md` for extensions
 
 ### Auto Publish
