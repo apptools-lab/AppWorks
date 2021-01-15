@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import * as common from '@iceworks/common-service';
-import getProjectInfo from './getProjectInfo';
 import getScanReport from './getScanReport';
 
 const openFile = (options) => {
@@ -25,9 +24,6 @@ const openFile = (options) => {
 export const services = {
   action: {
     open: openFile,
-  },
-  data: {
-    getProjectInfo,
     getScanReport,
   },
   common,

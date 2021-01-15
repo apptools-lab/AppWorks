@@ -1,4 +1,6 @@
-.header {
+@import '~@alifd/next/lib/core/index.scss';
+
+.dashboard {
   user-select: none;
   position: relative;
   text-align: center;
@@ -27,6 +29,7 @@
       .score {
         line-height: 72px;
         font-size: 72px;
+        margin: 0;
       }
 
       .label {

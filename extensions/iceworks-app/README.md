@@ -19,7 +19,7 @@ The initialization panel appears if your current workspace is empty or **isn't R
 
 ![demo](https://user-images.githubusercontent.com/56879942/87553484-8e928980-c6e5-11ea-8183-a6ba7f4eae95.gif)
 
-### Create a new project
+#### Create a new project
 
 When you open an empty folder, the initialization panel automatically invokes the create application process, which you can also invoke by clicking the Create Application button on the panel.
 
@@ -46,7 +46,7 @@ When your workspace is a React or Rax application, the Application Explorer Pane
 2. Click the `Play` button to execute the script at terminal immediately.
 3. Click the `Stop` button to end the corresponding script executed at terminal.
 
-### Pages and Components
+#### Pages and Components
 
 #### Jump into corresponding pages and components
 
@@ -62,9 +62,9 @@ When your workspace is a React or Rax application, the Application Explorer Pane
 1. Click `+` in PAGES header to jump into GENERATE PAGE page.
 2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
 
-### Node Dependencies
+#### Node Dependencies
 
-#### View the application dependency information and install new dependencies
+##### View the application dependency information and install new dependencies
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393973-9cf77d00-c5e1-11ea-8baa-96c8c41229cf.gif)
 
@@ -72,7 +72,7 @@ When your workspace is a React or Rax application, the Application Explorer Pane
 2. Click `⬆` button next to dependency item,  you can update  the dependency to the latest version.
 3. Click `Reinstall Dependencies` button on  NODE DEPENDENCIES header to reinstall all the dependencies of the project.
 
-#### Install and reinstall dependencies
+##### Install and reinstall dependencies
 
 ![demo](https://user-images.githubusercontent.com/56879942/87393970-9bc65000-c5e1-11ea-9724-3bd47c4b21ed.gif)
 
@@ -82,7 +82,7 @@ When your workspace is a React or Rax application, the Application Explorer Pane
 4. The npm package will be installed automatically.
    NOTE: If the package was installed, it will be reinstalled.
 
-## Command Palette
+### Command Palette
 
 If you install [Iceworks](https://marketplace.visualstudio.com/items?ItemName=iceworks-team.iceworks), you can activate other extensions in VS Code command palette.
 
@@ -91,6 +91,15 @@ If you install [Iceworks](https://marketplace.visualstudio.com/items?ItemName=ic
 1. Find Iceworks in the bottom right of VS Code.
     > NOTE: if you do not find the Iceworks icon, Activate Extension the Iceworks plugin by following the action in 'Activate Extension'.
 2. Click the Iceworks plugin icon to enter the Iceworks command palette.
+
+### Dashboard
+
+![demo](https://img.alicdn.com/imgextra/i4/O1CN01zCZrfi293Xvs3fPPH_!!6000000008012-2-tps-2048-1538.png)
+
+**Activate:**
+
+- Open through `Dashboard` in the sidebar quick entries
+- Open through `Iceworks: Dashboard` option on the Command Palette
 
 ### Debug
 

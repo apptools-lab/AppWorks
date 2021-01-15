@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.1
+
+- refactir: remove project info
+
 ## 0.3.0
 
 - refactor: remove project info

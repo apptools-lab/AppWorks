@@ -1,0 +1,8 @@
+{
+  "name": "Fusion Lite",
+  "description": "轻量级模板，使用 TypeScript，仅包含基础的 Layout。",
+  "type": "react",
+  "framework": "icejs",
+  "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks",
+  "feedbackLink": "http://www.taobao.com"
+}

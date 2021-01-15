@@ -26,21 +26,6 @@
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
-## 配置模板创建应用
-
-### 激活
-
-1. 通过 `⇧⌘P` 或 `Ctrl+Shift+P` 快捷键唤醒命令面板
-2. 输入 `Iceworks: Configure Scaffold to Create Application` 激活插件
-
-### 使用
-
-1. 点击右侧配置按钮，选择布局配置、布局风格等配置，支持在页面中查看效果
-2. 输入应用信息
-3. 创建应用并自动打开应用
-
-![usage](https://user-images.githubusercontent.com/44047106/98786993-de862080-2439-11eb-8c93-cb69afda78dd.gif)
-
 ## 更多
 
 本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

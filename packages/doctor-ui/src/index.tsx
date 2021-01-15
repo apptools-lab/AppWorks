@@ -1,23 +1,40 @@
 import * as React from 'react';
 import { Balloon, Icon } from '@alifd/next';
-import { scoreLevelInfos, getScoreLevelInfo } from '@/config';
+import { scoreLevelInfos, getScoreLevelInfo } from './config';
 import styles from './index.module.scss';
 
 const { Tooltip } = Balloon;
 
-const Header = (props) => {
-  const { filesInfo = {}, score } = props;
+interface Props {
+  filesInfo: { count: number; lines: number };
+  score: number;
+  locale?: any;
+}
+
+const Dashboard = (props: Props) => {
+  const {
+    filesInfo = { count: 0, lines: 0 },
+    score = 0,
+    locale = {
+      projectRating: '项目评分',
+      haveProblem: '对评分有异议？请至 ',
+      reportProblem: '反馈',
+      projectScale: '项目规模',
+      filesNumber: '文件总数：',
+      LoC: '总行数/平均行数',
+    },
+  } = props;
   return (
-    <div className={styles.header}>
+    <div className={styles.dashboard}>
       <div className={styles.infos}>
         <div className={styles.info}>
-          <Tooltip delay={100} align="t" trigger={<p className={styles.title}>{window.USE_EN ? 'Project Rating' : '项目评分'} <Icon type="prompt" size="small" /></p>}>
+          <Tooltip delay={100} align="t" trigger={<p className={styles.title}>{locale.projectRating} <Icon type="prompt" size="small" /></p>}>
             <p>
-              {window.USE_EN ? 'Have some problem? open ' : '对评分有异议？请至 '}
+              {locale.haveProblem}
               <a href="https://github.com/ice-lab/iceworks/issues" target="_blank">
                 https://github.com/ice-lab/iceworks/issues
               </a>
-              {window.USE_EN ? ' report your problem' : ' 反馈'}
+              {locale.reportProblem}
             </p>
           </Tooltip>
           <p className={styles.score} style={{ color: getScoreLevelInfo(score).color }}>
@@ -26,11 +43,13 @@ const Header = (props) => {
         </div>
 
         <div className={styles.info}>
-          <p className={styles.title}>{window.USE_EN ? 'Project Scale' : '项目规模'}</p>
-          <p className={styles.detail}>{`${window.USE_EN ? 'Files Number: ' : '文件总数：'} ${filesInfo.count || 0
-          }`}
+          <p className={styles.title}>
+            {locale.projectScale}
           </p>
-          <p className={styles.label}>{window.USE_EN ? 'LoC/Average LoC' : '总行数/平均行数'}</p>
+          <p className={styles.detail}>
+            {`${locale.filesNumber} ${filesInfo.count || 0}`}
+          </p>
+          <p className={styles.label}>{locale.LoC}</p>
           <p className={styles.detail}>
             {filesInfo.lines || 0}/{Math.round(filesInfo.lines / filesInfo.count) || 0}
           </p>
@@ -52,4 +71,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default Dashboard;

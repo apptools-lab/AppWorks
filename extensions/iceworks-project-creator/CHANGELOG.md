@@ -2,6 +2,7 @@
 
 ## 0.4.7
 
+- docs: delete Configure Scaffold section
 - fix: rax-app language type is always ts
 
 ## 0.4.6

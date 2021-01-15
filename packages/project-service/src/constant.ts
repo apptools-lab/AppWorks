@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { getDataFromSettingJson, CONFIGURATION_KEY_GENERATE_PAGE_PATH, CONFIGURATION_KEY_GENERATE_COMPONENT_PATH } from '@iceworks/common-service';
-import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL } from '@iceworks/constant';
+import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL, ALI_DEF_BASIC_URL } from '@iceworks/constant';
 
 const { workspace } = vscode;
 
@@ -26,6 +26,7 @@ export const packageJSONPath = path.join(projectPath, packageJSONFilename);
 export const generatorCreatetaskUrl = ALI_CREATETASK_URL;
 export const generatorTaskResultUrl = ALI_TASKRESULT_URL;
 export const applyRepositoryUrl = ALI_APPLYREPO_URL;
+export const basicUrl = ALI_DEF_BASIC_URL;
 
 /**
  * DEF平台返回task的状态值
