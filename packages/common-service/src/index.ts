@@ -417,10 +417,11 @@ export const bulkInstallMaterialsDependencies = async function (
       return `${packageName}@${version}`;
     });
 
+    const addDependencyAction = getAddDependencyAction(); // `add` or `install`
     const terminal = getIceworksTerminal();
     terminal.show();
     terminal.sendText(`cd '${projectPath}'`, true);
-    terminal.sendText(createNpmCommand('install', deps.join(' '), '--save'), true);
+    terminal.sendText(createNpmCommand(addDependencyAction, deps.join(' '), '--save'), true);
   } else {
     return [];
   }
