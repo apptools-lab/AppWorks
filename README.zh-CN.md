@@ -8,7 +8,7 @@
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">可视化智能开发助手</p>
+<p align="center">可视化智能开发套件</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
