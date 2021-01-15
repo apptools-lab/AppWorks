@@ -5,8 +5,6 @@ import {
   getLastAcitveTextEditor,
   getTagTemplate,
   getImportInfos,
-  CONFIGURATION_KEY_PCKAGE_MANAGER,
-  getDataFromSettingJson,
   getIceworksTerminal,
   checkPathExists,
   showTextDocument,

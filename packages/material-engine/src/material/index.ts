@@ -22,6 +22,7 @@ const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materia
 const MATERIAL_BASE_HOME_URL = 'https://ice.work/component';
 const MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
 const ICE_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
+const RAX_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/fusion-mobile-components-2.x.json';
 
 const OFFICAL_MATERIAL_SOURCES = [
   {
@@ -59,6 +60,10 @@ let dataCache: { [source: string]: IMaterialData } = {};
 
 const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
+};
+
+const isRaxMaterial = (source: string) => {
+  return source === RAX_MATERIAL_SOURCE;
 };
 
 export const getSourcesByProjectType = async function () {
@@ -116,29 +121,16 @@ export const getData = async function (source: string): Promise<IMaterialData> {
     }
 
     let bases: IMaterialBase[];
-    if (isIceMaterial(source)) {
-      try {
+    try {
+      if (isIceMaterial(source)) {
         const baseResult = await axios({ url: ICE_BASE_COMPONENTS_SOURCE });
-        bases = baseResult.data.map((base: any) => {
-          const { name, title, type, importStatement } = base;
-          return {
-            name,
-            title,
-            categories: [type],
-            importStatement,
-            homepage: `${MATERIAL_BASE_HOME_URL}/${name.toLowerCase()}`,
-            repository: `${MATERIAL_BASE_REPOSITORY_URL}/${kebabCase(name)}`,
-            source: {
-              type: 'npm',
-              npm: '@alifd/next',
-              version: '1.18.16',
-              registry: 'http://registry.npmjs.com',
-            },
-          };
-        });
-      } catch (error) {
-        // ignore error
+        bases = getBaseMaterials(baseResult.data, '@alifd/next', '1.18.16');
+      } else if (isRaxMaterial(source)) {
+        const baseResult = await axios({ url: RAX_BASE_COMPONENTS_SOURCE });
+        bases = getBaseMaterials(baseResult.data, '@alifd/meet', '2.2.6');
       }
+    } catch (error) {
+      console.log('get base materials error:', error);
     }
 
     data = {
@@ -154,6 +146,26 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 
   return data;
 };
+
+function getBaseMaterials(data, npm, version) {
+  return data.map((base: any) => {
+    const { name, title, type, importStatement } = base;
+    return {
+      name,
+      title,
+      categories: [type],
+      importStatement,
+      homepage: `${MATERIAL_BASE_HOME_URL}/${name.toLowerCase()}`,
+      repository: `${MATERIAL_BASE_REPOSITORY_URL}/${kebabCase(name)}`,
+      source: {
+        type: 'npm',
+        npm,
+        version,
+        registry: 'http://registry.npmjs.com',
+      },
+    };
+  });
+}
 
 export const addSource = async function (materialSource: IMaterialSource) {
   const { source, name } = materialSource;
