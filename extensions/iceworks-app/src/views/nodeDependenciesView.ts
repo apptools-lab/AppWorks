@@ -75,11 +75,12 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
+      const packageDeps = packageJson[label];
       let deps: DependencyTreeItem[] = [];
-      if (packageJson[label]) {
+      if (packageDeps) {
         deps = await Promise.all(
-          Object.keys(packageJson[label]).map(async (dep) => {
-            const { outdated, version } = await getLocalDependencyInfo(dep);
+          Object.keys(packageDeps).map(async (dep) => {
+            const { outdated, version } = await getLocalDependencyInfo(dep, packageDeps[dep]);
             return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
           }),
         );

@@ -53,7 +53,6 @@
     "build:web": "cd web && npm run build",
     "watch:web": "cd web && npm run start",
     "compile": "tsc -p ./tsconfig.json"
-
   },
   "contributes": {
     "commands": [
