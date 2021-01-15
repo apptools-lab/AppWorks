@@ -75,15 +75,14 @@ Use the VS Code to develop the extension project, and enable extension debugging
   - If you are resolving a special issue, add `(fix #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
-- Auto Publish
-  - Add "publisher": "iceworks-team" into your extension package.json:
-    ```json
-    {
-      "publisher": "iceworks-team"
-    }
-    ```
-  - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
+- Make sure PR includes following changes:
+  - Update extension or package version of package.json
+  - Update `CHANGLOG.md` for extensions
+
+### Auto Publish
+
+- When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
+- When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
 
 ## Issue Reporting Guidelines
 
