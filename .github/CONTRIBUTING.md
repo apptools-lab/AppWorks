@@ -2,7 +2,9 @@
 
 Hi! I’m really excited that you are interested in contributing to ICE. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
-## Directory
+## Develop Guidelines
+
+### Directory
 
 ```md
 .
@@ -14,7 +16,7 @@ Hi! I’m really excited that you are interested in contributing to ICE. Before 
 └── scripts // Script command execution files
 ```
 
-## Setup Environment
+### Setup Environment
 
 Clone repo and initialize the setup environment：
 
@@ -37,7 +39,7 @@ $ npm run packages:watch # Building packages in real time, helpful for develop e
 $ npm run publish:package # or npm run publish-beta:package
 ```
 
-### Develop VS Code extensions
+### Develop Extensions
 
 You can add the VS Code Extension of Iceworks to the directory `extension`.
 
@@ -55,7 +57,7 @@ In the `extensions/` Directory, execute `yo code` to initialize the extension
 yo code
 ```
 
-#### Development and Debugging
+#### Development and Debugging  
 
 Use the VS Code to develop the extension project. open a new window, set `/extensions/foo` as workspace, enable extension debugging through `F5`.
 
