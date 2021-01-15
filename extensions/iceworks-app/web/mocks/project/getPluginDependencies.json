@@ -1,0 +1,21 @@
+[
+  {
+    "name": "@ali/build-plugin-rax-app-def",
+    "version": "1.5.7",
+    "outdated": true
+  },
+  {
+    "name": "@ali/build-plugin-def",
+    "version": "1.5.7",
+    "outdated": true
+  },
+  {
+    "name": "@ali/build-plugin-rax",
+    "version": "1.5.7"
+  },
+  {
+    "name": "@ali/build-plugin-app",
+    "version": "1.5.7",
+    "outdated": true
+  }
+]

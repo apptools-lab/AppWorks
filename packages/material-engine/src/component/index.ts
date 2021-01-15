@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as fsExtra from 'fs-extra';
 import { IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
 import {
   getLastAcitveTextEditor,
   getTagTemplate,
   getImportInfos,
-  CONFIGURATION_KEY_PCKAGE_MANAGER,
-  getDataFromSettingJson,
   getIceworksTerminal,
   checkPathExists,
   showTextDocument,
@@ -19,7 +18,6 @@ import {
   dependencyDir,
   packageJSONFilename,
   checkIsTemplate,
-  getPackageJSON,
   componentsPath,
   getProjectLanguageType,
   getFolderPath,
@@ -64,7 +62,7 @@ export async function addBizCode(dataSource: IMaterialComponent) {
   // install dependencies
   const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
   try {
-    const packageJSON = await getPackageJSON(packageJSONPath);
+    const packageJSON = await fsExtra.readJson(packageJSONPath);
     if (packageJSON.version === version) {
       return;
     }

@@ -9,13 +9,14 @@
     "build-plugin-css-assets-local": "^0.1.0",
     "build-plugin-fusion": "^0.1.3",
     "build-plugin-moment-locales": "^0.1.0",
-    "ice.js": "^1.0.0",
+    "ice.js": "^1.14.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "@alifd/next": "~1.19.2",
     "@alifd/theme-iceworks-dark": "^1.2.1",
     "@iceworks/constant": "^0.1.0",
+    "@iceworks/doctor-ui": "^1.0.1",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.1",
     "ahooks": "^2.9.1",
@@ -24,6 +25,7 @@
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
     "qrcode.react": "^1.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-intl": "^5.3.2",

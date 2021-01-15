@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Progress } from '@alifd/next';
 import classNames from 'classnames';
-import { getScoreLevelInfo } from '@/config';
+import { getScoreLevelInfo } from '@iceworks/doctor-ui/lib/config';
 import styles from './index.module.scss';
 
 const ScoreRing = (props) => {

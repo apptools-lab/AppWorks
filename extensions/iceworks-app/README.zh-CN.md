@@ -91,9 +91,18 @@
     > 注意 : 如果没有 Iceworks 图标，请按照 `激活` 章节的内容来激活此按钮。
 2. 点击 Iceworks 按钮，打开命令面板。
 
+### 项目仪表盘
+
+![使用示例](https://img.alicdn.com/imgextra/i4/O1CN01zCZrfi293Xvs3fPPH_!!6000000008012-2-tps-2048-1538.png)
+
+**激活：**
+
+- 通过侧边栏快速入口中的「项目仪表盘」打开
+- 通过命名面板上的 `Iceworks: 项目仪表盘` 打开
+
 ### 工程调试
 
-![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
+![使用示例](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
 更多请看[参考文档](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)
 

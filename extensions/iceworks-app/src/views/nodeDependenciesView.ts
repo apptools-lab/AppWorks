@@ -3,10 +3,7 @@ import * as rimraf from 'rimraf';
 import * as fse from 'fs-extra';
 import * as util from 'util';
 import * as path from 'path';
-import latestVersion from 'latest-version';
-import { getPackageLocalVersion } from 'ice-npm-utils';
 import {
-  getDataFromSettingJson,
   createNpmCommand,
   checkPathExists,
   registerCommand,
@@ -14,7 +11,7 @@ import {
   getAddDependencyAction,
   getUpdateDependencyAction,
 } from '@iceworks/common-service';
-import { dependencyDir, projectPath } from '@iceworks/project-service';
+import { dependencyDir, projectPath, getLocalDependencyInfo } from '@iceworks/project-service';
 import runScript from '../terminal/runScript';
 import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
@@ -36,13 +33,10 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
   packageJsonPath: string;
 
-  defaultVersion: string;
-
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
     this.packageJsonPath = path.join(this.workspaceRoot, 'package.json');
-    this.defaultVersion = '-';
   }
 
   refresh(): void {
@@ -76,15 +70,6 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     }
   }
 
-  private getDepVersion(moduleName: string): string {
-    try {
-      const version = getPackageLocalVersion(this.workspaceRoot, moduleName);
-      return version;
-    } catch (err) {
-      return this.defaultVersion; // when the package version is not found, it shows defaultVersion
-    }
-  }
-
   private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
     if (await checkPathExists(packageJsonPath)) {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
@@ -94,14 +79,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
       if (packageJson[label]) {
         deps = await Promise.all(
           Object.keys(packageJson[label]).map(async (dep) => {
-            const version = this.getDepVersion(dep);
-            let outdated: boolean;
-            if (version === this.defaultVersion) {
-              // when the package version is defaultVersion, don't show the outdated
-              outdated = false;
-            } else {
-              outdated = await this.getNpmOutdated(dep, version);
-            }
+            const { outdated, version } = await getLocalDependencyInfo(dep);
             return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
           }),
         );
@@ -110,16 +88,6 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
       return deps;
     } else {
       return [];
-    }
-  }
-
-  private async getNpmOutdated(moduleName: string, version: string) {
-    try {
-      const latest = await latestVersion(moduleName);
-      return version !== latest;
-    } catch (err) {
-      console.error(err);
-      return false;
     }
   }
 
@@ -170,7 +138,7 @@ class DependencyTreeItem extends vscode.TreeItem {
     public readonly id: string,
     public readonly command?: vscode.Command,
     public readonly version?: string,
-    public readonly outDated?: boolean,
+    public readonly outdated?: string,
   ) {
     super(label, collapsibleState);
     this.id = id;
@@ -182,7 +150,7 @@ class DependencyTreeItem extends vscode.TreeItem {
 
   get contextValue(): string {
     if (this.version) {
-      return this.outDated ? 'outdatedDependency' : 'dependency';
+      return this.outdated ? 'outdatedDependency' : 'dependency';
     } else {
       return this.label;
     }
@@ -203,12 +171,15 @@ export function createNodeDependenciesTreeView(context) {
   const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
 
   registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
+
+  // TODO
   registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
     const { command } = node;
     if (command) {
-      const { title } = command;
-      const [cwd, commandScript] = command?.arguments as any[];
-      runScript(title, cwd, commandScript);
+      const [cwd, moduleName] = command?.arguments as any[];
+      const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
+      const commandScript = createNpmCommand(updateDependencyAction, moduleName);
+      runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, commandScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
@@ -231,20 +202,19 @@ export function createNodeDependenciesTreeView(context) {
   return treeView;
 }
 
+const upgradeDependencyCommandTitle = 'Upgrade Dependency';
 function toDep(
   extensionContext: vscode.ExtensionContext,
   workspaceDir: string,
   moduleName: string,
   version: string,
-  outdated: boolean,
+  outdated: string,
 ) {
-  const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
-  const npmCommand = createNpmCommand(updateDependencyAction, moduleName);
   const command = outdated
     ? {
       command: 'iceworksApp.nodeDependencies.upgrade',
-      title: 'Upgrade Dependency',
-      arguments: [workspaceDir, npmCommand],
+      title: upgradeDependencyCommandTitle,
+      arguments: [workspaceDir, moduleName],
     }
     : undefined;
   return new DependencyTreeItem(

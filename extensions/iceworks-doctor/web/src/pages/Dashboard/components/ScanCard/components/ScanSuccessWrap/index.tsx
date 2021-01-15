@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@alifd/next';
 import { animateScroll as scroll } from 'react-scroll';
 import { reportKeys, IReportKeys } from '@/config';
-import Header from '../Header';
+import DoctorDashboard from '@iceworks/doctor-ui';
 import ScoreBoard from '../ScoreBoard';
 import AliEslintReport from '../AliEslintReport';
 import MaintainabilityReport from '../MaintainabilityReport';
@@ -21,9 +21,18 @@ const ScanSuccessWrap = (props) => {
     });
   };
 
+  const locale = {
+    projectRating: window.USE_EN ? 'Project Rating' : '项目评分',
+    haveProblem: window.USE_EN ? 'Have some problem? open ' : '对评分有异议？请至 ',
+    reportProblem: window.USE_EN ? ' report your problem' : '反馈',
+    projectScale: window.USE_EN ? 'Project Scale' : '项目规模',
+    filesNumber: window.USE_EN ? 'Files Number' : '文件总数：',
+    LoC: window.USE_EN ? 'LoC/Average LoC' : '总行数/平均行数',
+  };
+
   return (
     <div className={styles.scanSuccessWrap}>
-      <Header score={data.score} filesInfo={data.filesInfo} />
+      <DoctorDashboard score={data.score} filesInfo={data.filesInfo} locale={locale} />
       <ScoreBoard data={data} onAffix={(newAffixed) => setAffixed(newAffixed)} />
       <div className={styles.reportWrap}>
         {reportKeys.map((reportKey: IReportKeys) => {

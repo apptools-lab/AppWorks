@@ -9,6 +9,7 @@ import setDiagnostics from './setDiagnostics';
 import * as zhCNTextMap from './locales/zh-CN.json';
 import * as enUSTextMap from './locales/en-US.json';
 import { services } from './services';
+import { getReport } from './storage';
 
 // eslint-disable-next-line
 const { name } = require('../package.json');
@@ -61,8 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
     if (!fse.existsSync(path.join(workspace.rootPath || '', 'package.json'))) {
       window.showErrorMessage(
         useEn
-          ? enUSTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory']
-          : zhCNTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory'],
+          ? enUSTextMap['extension.iceworksDoctor.doctor.error.illegalDirectory']
+          : zhCNTextMap['extension.iceworksDoctor.doctor.error.illegalDirectory'],
       );
       return;
     }
@@ -71,8 +72,8 @@ export function activate(context: vscode.ExtensionContext) {
       reportWebviewPanel.reveal();
       window.showWarningMessage(
         useEn
-          ? enUSTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen']
-          : zhCNTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen'],
+          ? enUSTextMap['extension.iceworksDoctor.doctor.error.twiceOpen']
+          : zhCNTextMap['extension.iceworksDoctor.doctor.error.twiceOpen'],
       );
       return;
     }
@@ -111,6 +112,10 @@ export function activate(context: vscode.ExtensionContext) {
   // Scan project
   registerCommand('iceworks-doctor.scan', () => {
     openWebview(true);
+  });
+
+  registerCommand('iceworks-doctor.getReport', async () => {
+    return await getReport();
   });
 }
 

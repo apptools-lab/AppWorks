@@ -11,6 +11,7 @@
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json",
   "iceworksApp.command.configHelper.start.title": "Iceworks: Settings",
   "iceworksApp.command.welcome.start.title": "Iceworks: Welcome",
+  "iceworksApp.command.dashboard.start.title": "Iceworks: Dashboard",
   "iceworksApp.command.DefPublish.title": "Iceworks: DEF Publish",
   "iceworksApp.command.quickEntries.start.title": "Start",
   "iceworksApp.command.npmScripts.refresh.title": "Refresh",
