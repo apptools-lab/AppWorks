@@ -11,12 +11,12 @@ Hi! I’m really excited that you are interested in contributing to ICE. Before 
 ├── packages // Common packages, used by multiple extensions
 │   ├── constant
 │   └── config
-└── scripts
+└── scripts // Script command execution files
 ```
 
 ## Setup Environment
 
-clone repo and initialize the setup environment：
+Clone repo and initialize the setup environment：
 
 ```bash
 $ git clone git@github.com:ice-lab/iceworks.git
@@ -61,6 +61,8 @@ Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api
 
 Use the VS Code to develop the extension project, and enable extension debugging through `F5`.
 
+**Note!!!** Please always set `/extensions/foo` as workspace for develop extension.
+
 ## Pull Request Guidelines
 
 - Only code that's ready for release should be committed to the master branch. All development should be done in dedicated branches.
@@ -80,7 +82,7 @@ Use the VS Code to develop the extension project, and enable extension debugging
       "publisher": "iceworks-team"
     }
     ```
-  - When your PR has been merged into `product`, changed packages and VS Code Extensions will be auto published.
+  - When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
   - When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
 
 ## Issue Reporting Guidelines
