@@ -22,12 +22,25 @@ export async function getCoreDependencies() {
   } else if (framwork === 'icejs') {
     coreDeps = iceCoreDeps;
   }
-
-  const deps = await Promise.all(coreDeps.map(async (dep) => {
-    const info = await getLocalDependencyInfo(dep);
-    return info;
-  }));
-  return deps;
+  async function checkIsCore(packageName) {
+    return !!coreDeps.includes(packageName);
+  }
+  const { dependencies, devDependencies } = await getProjectPackageJSON();
+  const packageDeps = { ...devDependencies, ...dependencies };
+  const componentDeps = (await Promise.all(
+    Object.keys(packageDeps)
+      .map(async (dep) => {
+        const isCore = await checkIsCore(dep);
+        return { name: dep, value: packageDeps[dep], isCore };
+      }),
+  )).filter(({ isCore }) => isCore);
+  const depInfos = await Promise.all(
+    componentDeps.map(async ({ name, value }) => {
+      const info = await getLocalDependencyInfo(name, value);
+      return info;
+    }),
+  );
+  return depInfos;
 }
 
 export async function getComponentDependencies() {
@@ -57,8 +70,8 @@ export async function getComponentDependencies() {
       }),
   )).filter(({ isComponent }) => isComponent);
   const depInfos = await Promise.all(
-    componentDeps.map(async ({ name }) => {
-      const info = await getLocalDependencyInfo(name);
+    componentDeps.map(async ({ name, value }) => {
+      const info = await getLocalDependencyInfo(name, value);
       return info;
     }),
   );
@@ -82,22 +95,19 @@ export async function getPluginDependencies() {
       }),
   )).filter(({ isPlugin }) => isPlugin);
   const deps = await Promise.all(
-    pluginDeps.map(async ({ name }) => {
-      const info = await getLocalDependencyInfo(name);
+    pluginDeps.map(async ({ name, value }) => {
+      const info = await getLocalDependencyInfo(name, value);
       return info;
     }),
   );
   return deps;
 }
 
-/**
- * TODO better return latest compatible version
- */
-export async function getLocalDependencyInfo(moduleName) {
+export async function getLocalDependencyInfo(moduleName, semver) {
   const version = getLocalDependencyVersion(moduleName);
   let outdated = '';
   if (version !== defaultVersion) {
-    outdated = await getNpmOutdated(moduleName, version);
+    outdated = await getNpmOutdated(moduleName, version, semver);
   }
 
   return {
@@ -124,9 +134,9 @@ function getLocalDependencyVersion(moduleName: string): string {
   }
 }
 
-async function getNpmOutdated(moduleName: string, version: string) {
+async function getNpmOutdated(moduleName: string, version: string, semver: string) {
   try {
-    const latest = await latestVersion(moduleName);
+    const latest = await latestVersion(moduleName, { version: semver });
     return version !== latest ? latest : '';
   } catch (err) {
     return '';
