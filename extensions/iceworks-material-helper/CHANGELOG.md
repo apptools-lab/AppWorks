@@ -3,6 +3,7 @@
 ## 0.5.3
 
 - fix: rax-app language type is always ts
+- fix: page cannot be created when block name is duplicate
 
 ## 0.5.2
 
