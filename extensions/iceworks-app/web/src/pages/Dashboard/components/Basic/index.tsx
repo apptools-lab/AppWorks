@@ -10,7 +10,7 @@ export default () => {
   const [state, dispatchers] = pageStore.useModel('info');
   const effectsState = pageStore.useModelEffectsState('info');
   const { basic, git, def, inited } = state;
-  const { name, description, type, framework, path, feedbackLink } = basic;
+  const { name, type, framework, path, feedbackLink } = basic;
   const { repository, branch, isGit } = git;
   const { defUrl, idpUrl, isDef } = def;
 
@@ -35,9 +35,9 @@ export default () => {
         <div className={styles.main}>
           <div className={styles.header}>
             <h3>{name}</h3>
-            <div className={styles.description}>
+            {/* <div className={styles.description}>
               {description}
-            </div>
+            </div> */}
           </div>
           <div className={styles.infos}>
             <div className={styles.info}>
