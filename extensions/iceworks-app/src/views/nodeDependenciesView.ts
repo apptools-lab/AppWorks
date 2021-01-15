@@ -138,7 +138,7 @@ class DependencyTreeItem extends vscode.TreeItem {
     public readonly id: string,
     public readonly command?: vscode.Command,
     public readonly version?: string,
-    public readonly outDated?: string,
+    public readonly outdated?: string,
   ) {
     super(label, collapsibleState);
     this.id = id;
@@ -150,7 +150,7 @@ class DependencyTreeItem extends vscode.TreeItem {
 
   get contextValue(): string {
     if (this.version) {
-      return this.outDated ? 'outdatedDependency' : 'dependency';
+      return this.outdated ? 'outdatedDependency' : 'dependency';
     } else {
       return this.label;
     }

@@ -90,6 +90,9 @@ export async function getPluginDependencies() {
   return deps;
 }
 
+/**
+ * TODO better return latest compatible version
+ */
 export async function getLocalDependencyInfo(moduleName) {
   const version = getLocalDependencyVersion(moduleName);
   let outdated = '';
