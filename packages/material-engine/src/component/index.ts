@@ -38,7 +38,7 @@ import i18nService from './i18n';
 
 const { window, Position } = vscode;
 
-export async function addBizCode(dataSource: IMaterialComponent) {
+export async function addCode(dataSource: IMaterialComponent) {
   const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
