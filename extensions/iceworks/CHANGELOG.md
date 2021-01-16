@@ -3,6 +3,7 @@
 ## 0.16.0
 
 - feat: Project Dashboard
+- feat: add more materials for Rax
 - refactor: only show page&component tree for target framework
 - refactor: disable FaaS template
 - fix: rax project always using ts
