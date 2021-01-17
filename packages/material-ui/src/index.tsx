@@ -11,9 +11,9 @@ import {
 import { MaterialView } from './components/view';
 
 const Index: React.FC<{
-  refreshSources: () => Promise<IMaterialSource[]>;
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
+  refreshSources?: () => Promise<IMaterialSource[]>;
   disableLazyLoad?: boolean;
   selectedBlocks?: IMaterialBlock[];
   selectedComponents?: IMaterialComponent[];
