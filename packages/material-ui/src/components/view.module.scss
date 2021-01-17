@@ -5,6 +5,9 @@
 
   :global(.next-tabs-bar) {
     margin-bottom: 16px;
+    :global(.next-tabs-nav-container.next-tabs-nav-container-scrolling) {
+      margin-right: 40px;
+    }
   }
 
   :global(.next-tabs-content) {
