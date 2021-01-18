@@ -9,7 +9,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ice-lab/iceworks/pulls)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-可视化智能开发助手，通过可视化编程和智能辅助手段，更快更好地构建多端应用，支持 Web 、HTML 5 和小程序应用。
+可视化智能开发套件，通过可视化编程和智能辅助手段，更快更好地构建多端应用，支持 Web 、HTML 5 和小程序应用。
 
 ## 核心特性
 

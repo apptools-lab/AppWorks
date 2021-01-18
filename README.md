@@ -8,7 +8,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">Visual Intelligent Development Assistant</p>
+<p align="center">Visual Intelligent Development Pack</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
@@ -28,12 +28,9 @@ Use Iceworks to develop Universal Application quickly:
 - Click "Shop Icon" on Activity Bar of VS Code
 - Enter "iceworks" in the input box to search
 - Click the Install button on the first iceworks option
+- After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start
 
-![install demo](https://img.alicdn.com/tfs/TB1.Wz9SuH2gK0jSZJnXXaT1FXa-1024-768.png_790x10000.jpg)
-
-After installation is successful, click the "Iceworks icon" on Activity Bar of VS Code to start:
-
-![demo](https://img.alicdn.com/tfs/TB1Z8T0gzMZ7e4jSZFOXXX7epXa-1024-768.png_790x10000.jpg)
+![demo](https://img.alicdn.com/imgextra/i2/O1CN018zKsMr230RYUOdLja_!!6000000007193-2-tps-2208-768.png)
 
 [See the Pack for more details](extensions/iceworks/README.md).
 

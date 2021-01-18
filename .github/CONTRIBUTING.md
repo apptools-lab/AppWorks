@@ -2,7 +2,9 @@
 
 Hi! I’m really excited that you are interested in contributing to ICE. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
-## Directory
+## Develop Guidelines
+
+### Directory
 
 ```md
 .
@@ -11,12 +13,12 @@ Hi! I’m really excited that you are interested in contributing to ICE. Before 
 ├── packages // Common packages, used by multiple extensions
 │   ├── constant
 │   └── config
-└── scripts
+└── scripts // Script command execution files
 ```
 
-## Setup Environment
+### Setup Environment
 
-clone repo and initialize the setup environment：
+Clone repo and initialize the setup environment：
 
 ```bash
 $ git clone git@github.com:ice-lab/iceworks.git
@@ -37,11 +39,11 @@ $ npm run packages:watch # Building packages in real time, helpful for develop e
 $ npm run publish:package # or npm run publish-beta:package
 ```
 
-### Develop VS Code extensions
+### Develop Extensions
 
 You can add the VS Code Extension of Iceworks to the directory `extension`.
 
-#### 1. Initialization
+#### Create a new Extension
 
 Install [Yeoman](http://yeoman.io/) and [VS Code Extension Generator](https://www.npmjs.com/package/generator-code)：
 
@@ -55,16 +57,16 @@ In the `extensions/` Directory, execute `yo code` to initialize the extension
 yo code
 ```
 
-#### 2. Development and Debugging
+#### Development and Debugging  
 
-Document：[https://code.visualstudio.com/api](https://code.visualstudio.com/api)
+Use the VS Code to develop the extension project. open a new window, set `/extensions/foo` as workspace, enable extension debugging through `F5`.
 
-Use the VS Code to develop the extension project, and enable extension debugging through `F5`.
+> Please see [VS Code Extension](https://code.visualstudio.com/api) for more details.
 
 ## Pull Request Guidelines
 
 - Only code that's ready for release should be committed to the master branch. All development should be done in dedicated branches.
-- Checkout a **new** topic branch from master branch, and merge back against master branch.
+- Checkout a new topic branch from master branch, and merge back against master branch.
 - Make sure `npm test` passes.
 - If adding new feature:
   - Add accompanying test case.
@@ -73,15 +75,14 @@ Use the VS Code to develop the extension project, and enable extension debugging
   - If you are resolving a special issue, add `(fix #xxxx[,#xxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
-- Auto Publish
-  - Add "publisher": "iceworks-team" into your extension package.json:
-    ```json
-    {
-      "publisher": "iceworks-team"
-    }
-    ```
-  - When your PR has been merged into `product`, changed packages and VS Code Extensions will be auto published.
-  - When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
+- Make sure includes following changes:
+  - Update extension or package `version` of package.json
+  - Update `CHANGLOG.md` for extensions
+
+### Auto Publish
+
+- When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
+- When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
 
 ## Issue Reporting Guidelines
 

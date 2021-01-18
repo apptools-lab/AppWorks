@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.16.0
+
+- feat: Project Dashboard
+- feat: add more materials for Rax
+- refactor: only show page&component tree for target framework
+- refactor: disable FaaS template
+- fix: rax project always using ts
+- fix: upgrade dependency should respecting semver
+- fix: install&update scripts compatible with yarn
+
 ## 0.15.2
 
 - feat: record DAU for O2
