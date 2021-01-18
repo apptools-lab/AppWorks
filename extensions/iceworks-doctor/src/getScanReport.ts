@@ -2,7 +2,7 @@ import { Doctor } from '@iceworks/doctor';
 import { projectPath, getProjectType, getProjectLanguageType } from '@iceworks/project-service';
 import getRecorder from './getRecorder';
 import setDiagnostics from './setDiagnostics';
-import { saveReport } from './storage';
+import storage from './storage';
 
 const doctor = new Doctor({ ignore: ['.vscode', '.ice', 'mocks', '.eslintrc.js', 'webpack.config.js'] });
 
@@ -26,7 +26,7 @@ export default async (options) => {
     report = await doctor.scan(targetPath, scanOption);
 
     // store the latest result locally
-    saveReport(report);
+    storage.saveReport(report);
 
     // Set VS Code problems
     setDiagnostics(report.securityPractices, true);
