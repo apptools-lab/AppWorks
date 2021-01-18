@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as mkdirp from 'mkdirp';
 import * as fse from 'fs-extra';
 import { Storage } from './storage';
 
@@ -11,13 +10,6 @@ export class DoctorStorage extends Storage {
   protected path: string = path.join(Storage.path, DoctorStorage.domain);
 
   private reportFilePath = path.join(this.path, DoctorStorage.reportFilename);
-
-  constructor() {
-    super();
-    if (!fse.existsSync(this.path)) {
-      mkdirp.sync(this.path);
-    }
-  }
 
   public async saveReport(value) {
     const filePath = this.reportFilePath;
