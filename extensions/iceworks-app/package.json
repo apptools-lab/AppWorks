@@ -119,8 +119,8 @@
         "command": "iceworksApp.editorMenu.DefPublish",
         "title": "%iceworksApp.command.DefPublish.title%",
         "icon": {
-          "light": "assets/light/publish.svg",
-          "dark": "assets/dark/publish.svg"
+          "light": "assets/light/upload.svg",
+          "dark": "assets/dark/upload.svg"
         }
       },
       {
