@@ -5,6 +5,7 @@
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
     { "path": "packages/storage" },
+    { "path": "packages/configure" },
     { "path": "packages/recorder" },
     { "path": "packages/config" },
     { "path": "packages/vscode-webview" },
