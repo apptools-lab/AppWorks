@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Loading } from '@alifd/next';
 import DoctorDashboard from '@iceworks/doctor-ui';
 import { useIntl, FormattedMessage } from 'react-intl';
+import pageStore from '@/pages/Dashboard/store';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
 export default () => {
   const intl = useIntl();
+  const [state, dispatchers] = pageStore.useModel('doctor');
+  const effectsState = pageStore.useModelEffectsState('doctor');
+  const { report, inited } = state;
 
   function handleOpenDoctor() {
     callService('common', 'executeCommand', 'iceworks-doctor.scan');
   }
 
-  async function getReport() {
-    setReport(await callService('common', 'executeCommand', 'iceworks-doctor.getReport'));
-  }
-
-  const [report, setReport] = useState({ filesInfo: { lines: 0, count: 0 }, score: 0 });
   useEffect(() => {
-    getReport();
+    dispatchers.getReport();
   }, []);
 
   return (
@@ -28,7 +28,7 @@ export default () => {
           <FormattedMessage id="web.iceworksApp.Dashboard.doctor.scan" /> &gt;
         </span>
       </h2>
-      <div>
+      <Loading className={styles.loading} visible={effectsState.getReport.isLoading || !inited}>
         <DoctorDashboard
           {...report}
           locale={{
@@ -40,7 +40,7 @@ export default () => {
             LoC: intl.formatMessage({ id: 'web.iceworksApp.Dashboard.doctor.LoC' }),
           }}
         />
-      </div>
+      </Loading>
     </div>
   );
 };

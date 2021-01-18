@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
-import storage, { recordKey } from '@iceworks/storage';
+import configure, { recordKey } from '@iceworks/configure';
 
 function checkIsO2() {
   const O2Version = process.env.O2_VERSION;
@@ -102,11 +102,11 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
 async function recordUV(originParam: IGoldlogParam) {
   const nowtDate = new Date().toDateString();
   const dauKey = `${JSON.stringify(originParam)}`;
-  const records = storage.get(recordKey);
+  const records = configure.get(recordKey);
   const lastDate = records[dauKey];
   if (nowtDate !== lastDate) {
     records[dauKey] = nowtDate;
-    storage.set(recordKey, records);
+    configure.set(recordKey, records);
     return await recordPV(originParam, 'UV');
   }
 }
