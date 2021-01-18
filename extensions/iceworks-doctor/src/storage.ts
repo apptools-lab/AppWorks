@@ -1,3 +1,3 @@
-import { DoctorStorage } from '@icework/storage';
+import { DoctorStorage } from '@iceworks/storage';
 
 export default new DoctorStorage();
