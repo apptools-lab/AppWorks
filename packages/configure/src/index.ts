@@ -23,10 +23,10 @@ const schema = {
   },
 };
 
-const storage = new Conf({
+const configure = new Conf({
   schema,
   configName: 'database',
   cwd: confPath,
 });
 
-export default storage;
+export default configure;

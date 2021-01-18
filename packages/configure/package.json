@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/storage",
+  "name": "@iceworks/configure",
   "version": "0.1.0",
-  "description": "Global Storage for Iceworks",
+  "description": "Configure for Iceworks",
   "main": "lib/index.js",
   "files": [
     "lib"
