@@ -6,13 +6,15 @@ import * as userHome from 'user-home';
 export class Storage {
   static path: string = path.join(userHome, '.iceworks');
 
+  protected path: string = Storage.path;
+
   constructor() {
-    if (!fse.existsSync(Storage.path)) {
-      mkdirp.sync(Storage.path);
+    if (!fse.existsSync(this.path)) {
+      mkdirp.sync(this.path);
     }
   }
 
   getPath(): string {
-    return Storage.path;
+    return this.path;
   }
 }

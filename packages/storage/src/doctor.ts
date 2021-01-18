@@ -3,21 +3,19 @@ import * as mkdirp from 'mkdirp';
 import * as fse from 'fs-extra';
 import { Storage } from './storage';
 
-const EXTENSION_TAG = 'Doctor';
-
 export class DoctorStorage extends Storage {
   static domain = 'Doctor';
 
   static reportFilename = 'report.json';
 
-  static path = path.join(Storage.path, EXTENSION_TAG);
+  protected path: string = path.join(Storage.path, DoctorStorage.domain);
 
-  private reportFilePath = path.join(DoctorStorage.domain, DoctorStorage.reportFilename);
+  private reportFilePath = path.join(this.path, DoctorStorage.reportFilename);
 
   constructor() {
     super();
-    if (!fse.existsSync(DoctorStorage.path)) {
-      mkdirp.sync(DoctorStorage.path);
+    if (!fse.existsSync(this.path)) {
+      mkdirp.sync(this.path);
     }
   }
 
