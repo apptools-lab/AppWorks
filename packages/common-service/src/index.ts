@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, record } from '@iceworks/recorder';
+import configure from '@iceworks/configure';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -332,7 +333,13 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
   return { position, declarations: importDeclarations };
 }
 
-export async function getUserInfo() {
+const CONFIGURE_USER_KEY = 'user';
+interface UserInfo {
+  empId: string;
+  account: string;
+  gitlabToken: string;
+}
+export async function getUserInfo(): Promise<UserInfo> {
   const fn = co.wrap(function* () {
     if (defClient) {
       const user = yield defClient.user();
@@ -343,7 +350,7 @@ export async function getUserInfo() {
   });
 
   // get user info from setting.json
-  const userData = getDataFromSettingJson('user') || {};
+  const userData = configure.get(CONFIGURE_USER_KEY) || {};
   const { empId, account, gitlabToken } = userData;
 
   if (empId && account) {
@@ -352,12 +359,16 @@ export async function getUserInfo() {
     try {
       const { account, empid: empId } = await fn();
       const result = { account, empId, gitlabToken };
-      saveDataToSettingJson('user', result);
+      configure.set(CONFIGURE_USER_KEY, result);
       return result;
     } catch (e) {
       throw new Error(e.message);
     }
   }
+}
+
+export async function saveUserInfo(value: UserInfo) {
+  configure.set(CONFIGURE_USER_KEY, value);
 }
 
 export function getLanguage() {
