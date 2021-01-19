@@ -61,8 +61,8 @@ export function activate(context: vscode.ExtensionContext) {
     if (!fse.existsSync(path.join(workspace.rootPath || '', 'package.json'))) {
       window.showErrorMessage(
         useEn
-          ? enUSTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory']
-          : zhCNTextMap['extension.iceworksDoctor.dashboard.error.illegalDirectory'],
+          ? enUSTextMap['extension.iceworksDoctor.doctor.error.illegalDirectory']
+          : zhCNTextMap['extension.iceworksDoctor.doctor.error.illegalDirectory'],
       );
       return;
     }
@@ -71,8 +71,8 @@ export function activate(context: vscode.ExtensionContext) {
       reportWebviewPanel.reveal();
       window.showWarningMessage(
         useEn
-          ? enUSTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen']
-          : zhCNTextMap['extension.iceworksDoctor.dashboard.error.twiceOpen'],
+          ? enUSTextMap['extension.iceworksDoctor.doctor.error.twiceOpen']
+          : zhCNTextMap['extension.iceworksDoctor.doctor.error.twiceOpen'],
       );
       return;
     }

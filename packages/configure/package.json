@@ -1,0 +1,21 @@
+{
+  "name": "@iceworks/configure",
+  "version": "0.1.0",
+  "description": "Configure for Iceworks",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "conf": "^7.1.1",
+    "@iceworks/storage": "^0.2.0"
+  },
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

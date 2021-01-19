@@ -1,4 +1,4 @@
-import storage from '@iceworks/storage';
+import configure from '@iceworks/configure';
 import * as moment from 'moment';
 import { ONE_MIN_SECONDS } from '../constants';
 import i18n from '../i18n';
@@ -14,7 +14,7 @@ export function roundUp(num: number, precision: number) {
 
 const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 export function getNowDay() {
-  let currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  let currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);
   if (!currentDay) {
     currentDay = setNowDay();
   }
@@ -23,13 +23,13 @@ export function getNowDay() {
 
 export function setNowDay() {
   const day = getDay();
-  storage.set(CURRENT_DAY_STORAGE_KEY, day);
+  configure.set(CURRENT_DAY_STORAGE_KEY, day);
   return day;
 }
 
 export function isNewDay() {
   const day = getDay();
-  const currentDay = storage.get(CURRENT_DAY_STORAGE_KEY);
+  const currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);
   return currentDay !== day;
 }
 

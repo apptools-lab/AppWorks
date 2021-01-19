@@ -1,15 +1,16 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { IMaterialComponent, IMaterialBase } from '@iceworks/material-utils';
+import * as fsExtra from 'fs-extra';
+import { IMaterialComponent } from '@iceworks/material-utils';
 import {
   getLastAcitveTextEditor,
   getTagTemplate,
   getImportInfos,
-  CONFIGURATION_KEY_PCKAGE_MANAGER,
-  getDataFromSettingJson,
   getIceworksTerminal,
   checkPathExists,
   showTextDocument,
+  getAddDependencyAction,
+  createNpmCommand,
 } from '@iceworks/common-service';
 import {
   jsxFileExtnames,
@@ -17,7 +18,6 @@ import {
   dependencyDir,
   packageJSONFilename,
   checkIsTemplate,
-  getPackageJSON,
   componentsPath,
   getProjectLanguageType,
   getFolderPath,
@@ -38,52 +38,12 @@ import i18nService from './i18n';
 
 const { window, Position } = vscode;
 
-export async function addBizCode(dataSource: IMaterialComponent) {
+export async function addCode(dataSource: IMaterialComponent) {
   const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
-  const { name, source } = dataSource;
+  const { name, source, importStatement } = dataSource;
   const { npm, version } = source;
-  const activeTextEditor = getLastAcitveTextEditor();
-
-  if (!activeTextEditor) {
-    throw new Error(templateError);
-  }
-
-  const { fsPath } = activeTextEditor.document.uri;
-  const isTemplate = checkIsTemplate(fsPath);
-  if (!isTemplate) {
-    throw new Error(templateError);
-  }
-
-  // insert code
-  await insertComponent(activeTextEditor, name, npm);
-
-  // install dependencies
-  const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
-  try {
-    const packageJSON = await getPackageJSON(packageJSONPath);
-    if (packageJSON.version === version) {
-      return;
-    }
-  } catch {
-    // ignore
-  }
-
-  const packageManager = getDataFromSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER);
-
-  const terminal = getIceworksTerminal();
-  terminal.show();
-  terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
-  terminal.sendText(`${packageManager} install ${npm}@${version} --save`, true);
-  // activate the textEditor
-  window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
-}
-
-export async function addBaseCode(dataSource: IMaterialBase) {
-  const templateError = i18nService.format('package.component-service.index.templateError', {
-    jsxFileExtnames: jsxFileExtnames.join(','),
-  });
   const activeTextEditor = getLastAcitveTextEditor();
 
   if (!activeTextEditor) {
@@ -97,41 +57,63 @@ export async function addBaseCode(dataSource: IMaterialBase) {
     throw new Error(templateError);
   }
 
-  const { importStatement, name, source } = dataSource;
-  const { npm } = source;
-  const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
-    activeTextEditor.document.getText(),
-  );
-  const baseImportDeclaration = importDeclarations.find(({ source: { value } }) => {
-    return value === npm;
-  });
+  if (importStatement) {
+    // handle with base components
+    const { position: importDeclarationPosition, declarations: importDeclarations } = await getImportInfos(
+      activeTextEditor.document.getText(),
+    );
+    const baseImportDeclaration = importDeclarations.find(({ source: { value } }) => {
+      return value === npm;
+    });
 
-  const insertPosition = new Position(active.line, active.character);
-  activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
-    let existImportedName = '';
-    if (!baseImportDeclaration) {
-      editBuilder.insert(importDeclarationPosition, `${importStatement}\n`);
-    } else {
-      const baseSpecifiers = baseImportDeclaration.specifiers;
-      baseSpecifiers.forEach(({ imported, local }) => {
-        if (imported.name === name) {
-          existImportedName = local.name;
+    const insertPosition = new Position(active.line, active.character);
+    activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
+      let existImportedName = '';
+      if (!baseImportDeclaration) {
+        editBuilder.insert(importDeclarationPosition, `${importStatement}\n`);
+      } else {
+        const baseSpecifiers = baseImportDeclaration.specifiers;
+        baseSpecifiers.forEach(({ imported, local }) => {
+          if (imported.name === name) {
+            existImportedName = local.name;
+          }
+        });
+
+        if (!existImportedName) {
+          const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
+          const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
+
+          editBuilder.insert(
+            new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
+            `, ${name}`,
+          );
         }
-      });
-
-      if (!existImportedName) {
-        const baseLastSpecifier = baseSpecifiers[baseSpecifiers.length - 1];
-        const baseLastSpecifierPosition = baseLastSpecifier.loc.end;
-
-        editBuilder.insert(
-          new Position(baseLastSpecifierPosition.line - 1, baseLastSpecifierPosition.column),
-          `, ${name}`,
-        );
       }
-    }
 
-    editBuilder.insert(insertPosition, getTagTemplate(existImportedName || name));
-  });
+      editBuilder.insert(insertPosition, getTagTemplate(existImportedName || name));
+    });
+  }
+
+  // insert code
+  await insertComponent(activeTextEditor, name, npm);
+
+  // install dependencies
+  const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
+  try {
+    const packageJSON = await fsExtra.readJson(packageJSONPath);
+    if (packageJSON.version === version) {
+      return;
+    }
+  } catch {
+    // ignore
+  }
+
+  const addDependencyAction = getAddDependencyAction(); // `add` or `install`
+
+  const terminal = getIceworksTerminal();
+  terminal.show();
+  terminal.sendText(`cd '${projectPath}'`, true); // the command, for example `cd 'd:\workspace'`, is to be compatible with Windows and Linux
+  terminal.sendText(createNpmCommand(addDependencyAction, `${npm}@${version || 'latest'}`, '--save'), true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
 }

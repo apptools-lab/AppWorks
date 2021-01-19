@@ -26,7 +26,7 @@ export default function uploadExtesions(extensions: string[], production?: boole
     const name = info[0];
     const version = info[1];
 
-    if (SKIP_PACK_EXTENSION_LIST.indexOf(name) > -1) {
+    if (production && SKIP_PACK_EXTENSION_LIST.indexOf(name) > -1) {
       return;
     }
 

@@ -2,17 +2,19 @@
  * Release to marketplace
  */
 import * as urllib from 'urllib';
+import * as chalk from 'chalk';
 import { EXTENSION_ZIP_FILE_PATH } from './constant';
 import { ALI_EXTENSION_UPLOAD_URL, ALI_EXTENSION_STATUS_UPDATE_URL } from '@iceworks/constant';
-import { Base64 } from 'js-base64';
 
 const PRIVATE_TOKEN = process.argv[2];
 const EXTENSION_NAME = 'icework-kit';
 const PUBLISHER = 'O2';
 
+const SCANNING_CODE = 'EStateNoChangeFromSCANING';
+
 async function uploadExtesion() {
   const response = await urllib.request(
-    `${Base64.decode(ALI_EXTENSION_UPLOAD_URL)}?publisher=${PUBLISHER}`,
+    `${ALI_EXTENSION_UPLOAD_URL}?publisher=${PUBLISHER}`,
     {
       method: 'POST',
       dataType: 'json',
@@ -31,13 +33,13 @@ async function uploadExtesion() {
     return data;
   } else {
     const { code, message } = data;
-    throw new Error(`Error: Code: ${code}, Message: ${message}`);
+    throw new Error(`Code: ${code}, Message: ${message}`);
   }
 }
 
 async function updateExtensionStatus(extensionStatus: string, extensionReleaseId: string) {
   const response = await urllib.request(
-    Base64.decode(ALI_EXTENSION_STATUS_UPDATE_URL),
+    ALI_EXTENSION_STATUS_UPDATE_URL,
     {
       method: 'PUT',
       dataType: 'json',
@@ -52,11 +54,11 @@ async function updateExtensionStatus(extensionStatus: string, extensionReleaseId
   );
 
   const { status, data } = response;
-  if (status === 200) {
+  const { code, message } = data;
+  if (status === 200 || code === SCANNING_CODE) {
     return data;
   } else {
-    const { code, message } = data;
-    throw new Error(`Error: Code: ${code}, Message: ${message}`);
+    throw new Error(`Code: ${code}, Message: ${message}`);
   }
 }
 
@@ -69,14 +71,20 @@ async function updateExtensionStatus(extensionStatus: string, extensionReleaseId
   try {
     // upload extension to marketplace
     const { extensionReleaseId } = await uploadExtesion();
-
+    console.log(chalk.green(chalk.black.bgGreen(' SUCCESS '), 'Extension was uploaded to ali marketplace successfully!'));
     const intervalId = setInterval(async () => {
       try {
         // pass review extension
-        await updateExtensionStatus('PASSED_REVIEW', extensionReleaseId);
+        const { code } = await updateExtensionStatus('PASSED_REVIEW', extensionReleaseId);
+        if (code === SCANNING_CODE) {
+          console.log(chalk.yellow(chalk.black.bgYellow(' WARN '), 'Security scanning is in progress. Please wait for a while.'));
+          return;
+        }
+        console.log(chalk.green(chalk.black.bgGreen(' SUCCESS '), 'Extension was passed review successfully!'));
         clearInterval(intervalId);
         // publish extension
         await updateExtensionStatus('PUBLISHED', extensionReleaseId);
+        console.log(chalk.green(chalk.black.bgGreen(' SUCCESS '), 'Extension was published successfully!'));
       } catch (error) {
         console.log(error);
       }

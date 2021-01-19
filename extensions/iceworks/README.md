@@ -9,7 +9,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ice-lab/iceworks/pulls)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-Iceworks is a Visual Intelligent Development Assistant, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram Application.
+Iceworks is a Visual Intelligent Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram Application.
 
 ## Features
 
@@ -39,11 +39,14 @@ In the process of code writing, Iceworks Intelli Code can automatically predict 
 
 Iceworks Code Completion is based on semantic and code analysis, completely local execution, ensure code security; millisecond response, smooth coding!
 
-### Abundant Materials
+### Quality and Efficiency
 
-Iceworks set [Fusion Design](https://fusion.design/) and [Rax UI](https://rax.js.org/docs/components/introduce) components as built-in materials, abundant materials can be used out of the box: applications can be created through materials, components and pages can be generated through materials, and codes can be added with one click. Iceworks also supports the access of custom materials, and provides the whole process support for the material development link. Developers can easily customize the business specific material collection:
+Iceworks provides two basic functions: Quality Check and Programming Timer.
 
-![Abundant Material](https://img.alicdn.com/tfs/TB1UjO9SET1gK0jSZFrXXcNCXXa-1000-750.png_790x10000.jpg)
+Based on a large number of project practices, we have produced a quality evaluation model, which can generate quality reports for projects and provide methods to repair related quality problems.
+Programming Timer measures developer's programming efficiency by automatically tracking developer's programming activities. It can help developers review their programming activities, generate programming efficiency reports and give relevant suggestions.
+
+![Doctor](https://img.alicdn.com/imgextra/i4/O1CN01FNcqIN1orpTya1lj8_!!6000000005279-2-tps-746-387.png)
 
 ## Quick start
 

@@ -16,7 +16,7 @@ Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.j
 ![demo](https://user-images.githubusercontent.com/56879942/88197902-b2ba1180-cc75-11ea-8e33-0ce4e7faa368.gif)
 
 1. Open VS Code command palette through `Ctrl+Shift+P` or `⇧⌘P`.
-2. Enter `Iceworks: Import Material` to activate Material Panel.
+2. Enter `Iceworks: Import Component` to activate Material Panel.
 
 ### Use in Pages
 

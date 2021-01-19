@@ -1,0 +1,36 @@
+.container {
+  .refresh {
+    cursor: pointer;
+    margin-left: 6px;
+  }
+  .main {
+    margin-top: 12px;
+
+    .title {
+      font-weight: 400;
+      margin: 0;
+    }
+    .loading {
+      width: 100%;
+
+      .error {
+        margin-top: 12px;
+      }
+      .empty {
+        margin-top: 12px;
+      }
+    }
+    ul {
+      padding-left: 18px;
+
+      li {
+        margin-bottom: 6px;
+        :global {
+          .next-icon {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

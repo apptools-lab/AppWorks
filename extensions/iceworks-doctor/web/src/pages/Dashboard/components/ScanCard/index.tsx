@@ -21,7 +21,7 @@ const ScanCard = () => {
   async function getData(options?) {
     setStatus(2); // scanning
     try {
-      const scanReport = await callService('data', 'getScanReport', options);
+      const scanReport = await callService('action', 'getScanReport', options);
       if (scanReport.error) {
         setStatus(4); // scan failed
         console.error(scanReport.error);

@@ -1,5 +1,8 @@
-import { readFile } from 'jsonfile';
 import { join } from 'path';
+import { readFile } from 'fs';
+import { promisify } from 'util';
+
+const readFileAsync = promisify(readFile);
 
 const packageJSONFilename = 'package.json';
 
@@ -10,7 +13,7 @@ export async function getProjectType(projectPath: string): Promise<ProjectType> 
   let type: ProjectType = 'unknown';
   try {
     const packageJsonPath = join(projectPath, packageJSONFilename);
-    const { dependencies = {} } = await readFile(packageJsonPath);
+    const { dependencies = {} } = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
     if (dependencies.rax) {
       type = 'rax';
     }
@@ -21,7 +24,7 @@ export async function getProjectType(projectPath: string): Promise<ProjectType> 
       type = 'vue';
     }
   } catch (error) {
-    // ignore error
+    console.error('read packageJson error:', error);
   }
   return type;
 }
@@ -30,7 +33,8 @@ export async function getProjectFramework(projectPath: string): Promise<ProjectF
   let framework: ProjectFramework = 'unknown';
   try {
     const packageJsonPath = join(projectPath, packageJSONFilename);
-    const { dependencies = {}, devDependencies = {} } = await readFile(packageJsonPath);
+    const packageJson = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
+    const { dependencies = {}, devDependencies = {} } = packageJson;
     if (devDependencies['rax-app'] || dependencies['rax-app']) {
       framework = 'rax-app';
     }
@@ -42,12 +46,13 @@ export async function getProjectFramework(projectPath: string): Promise<ProjectF
     }
   } catch (error) {
     // ignore errors
+    console.error('read packageJson error:', error);
   }
 
   return framework;
 }
 
-export async function checkIsTargetProject(projectPath: string): Promise<boolean> {
+export async function checkIsTargetProjectType(projectPath: string): Promise<boolean> {
   return (await getProjectType(projectPath)) !== 'unknown';
 }
 

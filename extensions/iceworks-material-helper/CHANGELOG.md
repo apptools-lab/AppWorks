@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.5.3
+
+- fix: rax-app language type is always ts
+- fix: page cannot be created when block name is duplicate
+- feat: support add fusion-mobile materials
+
 ## 0.5.2
 
 - feat: record DAU for O2

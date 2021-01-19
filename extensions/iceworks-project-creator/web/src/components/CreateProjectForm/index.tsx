@@ -37,6 +37,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           patternMessage={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.projectNamePattern' })}
         >
           <Input
+            size="small"
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.inputProjectName' })}
             name="projectName"
             disabled={loading}
@@ -49,6 +50,7 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           requiredMessage="请选择应用存储的本地路径"
         >
           <Input
+            size="small"
             placeholder={intl.formatMessage({ id: 'web.iceworksProjectCreator.CreateProjectForm.chooseLocalPath' })}
             name="projectPath"
             aria-label="projectPath"
@@ -60,15 +62,15 @@ const CreateProjectForm: React.FC<IProjectFormProps> = ({
           />
         </Form.Item>
         <Form.Item>
-          {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
           <div className={styles.action}>{children}</div>
         </Form.Item>
       </Form>
-      {value.source && value.source.type === 'rax' && (
-        <div className={styles.scaffoldTypeForm}>
+      <div className={styles.optionWrap}>
+        {value.source && value.source.type === 'rax' && (
           <RaxScaffoldTypeForm onChange={onChange} value={value} disabled={loading} />
-        </div>
-      )}
+        )}
+        {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+      </div>
     </div>
   );
 };

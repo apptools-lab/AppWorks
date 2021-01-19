@@ -9,7 +9,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ice-lab/iceworks/pulls)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-可视化智能开发助手，通过可视化编程和智能辅助手段，更快更好地构建多端应用，支持 Web 、HTML 5 和小程序应用。
+可视化智能开发套件，通过可视化编程和智能辅助手段，更快更好地构建多端应用，支持 Web 、HTML 5 和小程序应用。
 
 ## 核心特性
 
@@ -39,11 +39,14 @@ Iceworks 智能编程当前提供了两个基本功能：代码自动补全和�
 
 Iceworks 的代码自动补全能力基于语言语义和源代码分析，完全本地执行，确保代码安全；毫秒级响应，流畅进行编码！
 
-### 丰富的物料体系
+### 编码质效
 
-Iceworks 内置 [Fusion Design](https://fusion.design/)、[Rax UI](https://rax.js.org/docs/components/introduce) 组件库，丰富的物料开箱即用：可通过物料创建应用、生成组件和组装页面、一键添加到代码……同时支持接入自定义物料，对物料开发的链路提供了全流程的支持，开发者可轻松定制业务专属的物料集合：
+Iceworks 编码质效当前提供了两个基本功能：质量检查修复和编程时间管理。
 
-![物料示例](https://img.alicdn.com/tfs/TB1UjO9SET1gK0jSZFrXXcNCXXa-1000-750.png_790x10000.jpg)
+我们基于大量的企业级项目实践，产出了质量评估模型，它能够为项目生成质量报告，并提供了修复相关质量问题的方法。
+时间管理通过自动跟踪开发者的编程活动从而度量开发者编程效率，它能够帮助开发者回顾自己的编程活动，生成编程效率报告并给予相关的提效建议。
+
+![Doctor](https://img.alicdn.com/imgextra/i4/O1CN01FNcqIN1orpTya1lj8_!!6000000005279-2-tps-746-387.png)
 
 ## 快速开始
 

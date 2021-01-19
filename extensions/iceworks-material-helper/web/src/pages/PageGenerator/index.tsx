@@ -65,7 +65,20 @@ const Home = () => {
     }
   }
 
+  function generateBlockName(defineName: string): Promise<string> {
+    function generateName(setName, count = 0) {
+      const newName = !count ? setName : `${setName}${count}`;
+      const isConflict = selectedBlocks.some(({ name }) => name === newName);
+      if (isConflict) {
+        return generateName(setName, count + 1);
+      }
+      return newName;
+    }
+    return generateName(defineName);
+  }
+
   function onAdd(block) {
+    block.name = generateBlockName(block.name);
     setSelectedBlocks([...selectedBlocks, block]);
   }
 

@@ -3,7 +3,7 @@
   "displayName": "Application Explorer",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -25,7 +25,8 @@
     "onView:pages",
     "onView:components",
     "onCommand:iceworksApp.configHelper.start",
-    "onCommand:iceworksApp.welcome.start"
+    "onCommand:iceworksApp.welcome.start",
+    "onCommand:iceworksApp.dashboard.start"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -43,7 +44,7 @@
         {
           "id": "welcome",
           "name": "Welcome",
-          "when": "iceworks:projectIsNotTarget"
+          "when": "iceworks:projectIsNotTargetType"
         },
         {
           "id": "quickEntries",
@@ -52,22 +53,22 @@
         {
           "id": "npmScripts",
           "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "!iceworks:projectIsNotTarget"
+          "when": "!iceworks:projectIsNotTargetType"
         },
         {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
-          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         },
         {
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
-          "when": "!iceworks:projectIsNotTarget && !iceworks:projectIsPegasus"
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         },
         {
           "id": "nodeDependencies",
           "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "!iceworks:projectIsNotTarget"
+          "when": "!iceworks:projectIsNotTargetType"
         }
       ]
     },
@@ -111,11 +112,15 @@
         "title": "%iceworksApp.command.welcome.start.title%"
       },
       {
+        "command": "iceworksApp.dashboard.start",
+        "title": "%iceworksApp.command.dashboard.start.title%"
+      },
+      {
         "command": "iceworksApp.editorMenu.DefPublish",
         "title": "%iceworksApp.command.DefPublish.title%",
         "icon": {
-          "light": "assets/light/publish.svg",
-          "dark": "assets/dark/publish.svg"
+          "light": "assets/light/upload.svg",
+          "dark": "assets/dark/upload.svg"
         }
       },
       {
@@ -346,12 +351,12 @@
       "explorer/context": [
         {
           "command": "iceworksApp.components.add",
-          "when": "!iceworks:projectIsNotTarget",
+          "when": "!iceworks:projectIsNotTargetType",
           "group": "iceworks@1"
         },
         {
           "command": "iceworksApp.pages.add",
-          "when": "!iceworks:projectIsNotTarget",
+          "when": "!iceworks:projectIsNotTargetType",
           "group": "iceworks@2"
         }
       ],
@@ -484,7 +489,6 @@
     "compile": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
-    "@types/latest-version": "^4.0.1",
     "@types/node": "^13.11.0",
     "@types/rimraf": "^3.0.0",
     "@types/vscode": "^1.41.0",
@@ -504,7 +508,6 @@
     "ejs": "^3.1.3",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.0.0",
-    "latest-version": "^5.1.0",
     "rimraf": "^3.0.2",
     "util": "^0.12.3"
   },

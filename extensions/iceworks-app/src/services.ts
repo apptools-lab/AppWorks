@@ -1,4 +1,18 @@
 import * as common from '@iceworks/common-service';
 import * as material from '@iceworks/material-engine/lib/material';
+import * as project from '@iceworks/project-service';
+import { DoctorStorage } from '@iceworks/storage';
 
-export default { common, material };
+const doctorStorage = new DoctorStorage();
+
+export default {
+  common,
+  material,
+  project,
+  doctor: {
+    async getReport() {
+      const report = await doctorStorage.getReport();
+      return report;
+    },
+  },
+};

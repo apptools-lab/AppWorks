@@ -8,7 +8,7 @@
 
 <h1 align="center">Iceworks</h1>
 
-<p align="center">可视化智能开发助手</p>
+<p align="center">可视化智能开发套件</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
@@ -25,15 +25,12 @@
 
 - 点击 VS Code 活动栏上的「插件商店图标」；
 - 在输入框中输入「iceworks」进行搜索；
-- 点击第一个「iceworks」选项上的「安装」按钮。
+- 点击第一个「iceworks」选项上的「安装」按钮；
+- 安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用。
 
-![安装 Iceworks](https://img.alicdn.com/tfs/TB1vS2kg9R26e4jSZFEXXbwuXXa-1024-768.png_790x10000.jpg)
+![示例](https://img.alicdn.com/imgextra/i1/O1CN0134fC4y1TwJQoZvsOr_!!6000000002446-2-tps-2208-768.png)
 
-安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用：
-
-![使用示例](https://img.alicdn.com/tfs/TB1Qr7oi8Bh1e4jSZFhXXcC9VXa-1024-768.png_790x10000.jpg)
-
-[查看套件了解更多功能](extensions/iceworks/README.md)。
+[查看套件文档](extensions/iceworks/README.md)，了解更多功能。
 
 ## 参与贡献
 

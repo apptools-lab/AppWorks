@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Element } from 'react-scroll';
 import { Balloon, Icon } from '@alifd/next';
-import { getReportKey, getScoreLevelInfo } from '@/config';
+import { getReportKey } from '@/config';
+import { getScoreLevelInfo } from '@iceworks/doctor-ui/lib/config';
 import callService from '@/callService';
 import Appreciate from '../Appreciate';
 import ReportHeader from '../ReportHeader';

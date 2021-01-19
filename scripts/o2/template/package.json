@@ -26,6 +26,13 @@
       "actions": [
         {
           "type": "button",
+          "title": "%iceworksApp.kaitianContributes.toolbar.dashboard.title%",
+          "iconPath": "./assets/dark/entry.svg",
+          "id": "iceworksApp.dashboard.start",
+          "command": "iceworksApp.dashboard.start"
+        },
+        {
+          "type": "button",
           "title": "%iceworksApp.kaitianContributes.toolbar.runDebug.title%",
           "iconPath": "./assets/dark/run.svg",
           "id": "iceworksApp.editorMenu.runDebug",

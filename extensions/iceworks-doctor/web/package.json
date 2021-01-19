@@ -5,6 +5,7 @@
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-dark-pro": "^0.1.0",
+    "@iceworks/doctor-ui": "^1.0.0",
     "classnames": "^2.2.6",
     "moment": "^2.24.0",
     "react": "^16.4.1",

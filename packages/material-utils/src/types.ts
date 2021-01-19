@@ -67,6 +67,7 @@ export interface IMaterialComponent {
   source: IMaterialNpmSource;
   title: string;
   updateTime: string;
+  importStatement?: string;
 }
 
 export interface IMaterialBlock {
@@ -163,8 +164,7 @@ export interface IMaterialModule extends IMaterialServer {
   deleteLocalBlock(blockName: string): void;
   createLocalBlock(): void;
   addBlockCode(block: IMaterialBlock): Promise<void>;
-  addBizCode(dataSource: IMaterialComponent): Promise<void>;
-  addBaseCode(dataSource: IMaterialBase): Promise<void>;
+  addCode(dataSource: IMaterialComponent): Promise<void>;
 }
 
 export const IMaterialModule = Symbol('IMaterialModule');

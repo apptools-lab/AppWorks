@@ -4,7 +4,7 @@ import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/
 import {
   getProjectType,
   checkIsPegasusProject,
-  checkIsNotTarget,
+  checkIsTargetProjectType,
   autoSetContext as autoSetContextByProject,
   projectPath,
 } from '@iceworks/project-service';
@@ -83,6 +83,7 @@ export async function activate(context: vscode.ExtensionContext) {
       recorder.recordActivate();
     }),
   );
+
   // init welcome webview
   let welcomeWebviewPanel: vscode.WebviewPanel | undefined;
   function activeWelcomeWebview() {
@@ -117,9 +118,42 @@ export async function activate(context: vscode.ExtensionContext) {
     }),
   );
 
+  // init dashboard webview
+  let dashboardWebviewPanel: vscode.WebviewPanel | undefined;
+  function activeDashboardWebview() {
+    if (dashboardWebviewPanel) {
+      dashboardWebviewPanel.reveal();
+    } else {
+      dashboardWebviewPanel = window.createWebviewPanel(
+        'iceworks',
+        i18n.format('extension.iceworksApp.dashboard.extension.webviewTitle'),
+        ViewColumn.One,
+        {
+          enableScripts: true,
+          retainContextWhenHidden: true,
+        },
+      );
+
+      dashboardWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'dashboard');
+      dashboardWebviewPanel.onDidDispose(
+        () => {
+          dashboardWebviewPanel = undefined;
+        },
+        null,
+        context.subscriptions,
+      );
+      connectService(dashboardWebviewPanel, context, { services, recorder });
+    }
+  }
+  subscriptions.push(
+    registerCommand('iceworksApp.dashboard.start', () => {
+      activeDashboardWebview();
+      recorder.recordActivate();
+    }),
+  );
+
   // init tree view
   const treeViews: any[] = [];
-
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
@@ -160,9 +194,9 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   // TODO auto start welcome page when the application is new
-  const isNotTargetProject = await checkIsNotTarget();
+  const isTargetProjectType = await checkIsTargetProjectType();
   const isShowWelcomePage = await getDataFromSettingJson('showWelcomePage', true);
-  if (projectPath && !isNotTargetProject && isShowWelcomePage && !vscode.window.activeTextEditor) {
+  if (projectPath && isTargetProjectType && isShowWelcomePage && !vscode.window.activeTextEditor) {
     const curProjectExistsTime = getFolderExistsTime(projectPath);
     if (projectExistsTime > curProjectExistsTime) {
       // vscode.commands.executeCommand('iceworksApp.welcome.start');
