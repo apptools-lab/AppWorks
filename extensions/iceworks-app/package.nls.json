@@ -38,5 +38,6 @@
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Run Debug",
-  "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall Dependencies"
+  "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall Dependencies",
+  "iceworksApp.kaitianContributes.toolbar.dashboard.title": "Dashboard"
 }
