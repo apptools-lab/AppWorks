@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { getDataFromSettingJson } from '@iceworks/common-service';
 import recorder from '../utils/recorder';
 
 function openInExternalBrowser(url) {
@@ -10,7 +11,7 @@ function openInInternalBrowser(url: string) {
 }
 
 function openDocLinkInsideVSCode() {
-  return vscode.workspace.getConfiguration('iceworks.materialHelper').get('openDocLinkInsideVSCode') && vscode.extensions.getExtension('auchenberg.vscode-browser-preview');
+  return getDataFromSettingJson('openDocLinkInsideVSCode') && vscode.extensions.getExtension('auchenberg.vscode-browser-preview');
 }
 
 export default function openInBrowser(url) {
