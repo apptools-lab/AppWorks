@@ -69,7 +69,7 @@
       "type": "object",
       "title": "Iceworks Doctor",
       "properties": {
-        "Iceworks.Doctor.enableCheckSecurityPracticesOnSave": {
+        "iceworks.enableCheckSecurityPracticesOnSave": {
           "scope": "window",
           "type": "boolean",
           "default": true,

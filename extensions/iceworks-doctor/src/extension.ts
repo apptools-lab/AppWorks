@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { registerCommand, initExtension } from '@iceworks/common-service';
+import { registerCommand, initExtension, getDataFromSettingJson } from '@iceworks/common-service';
 import getRecorder from './getRecorder';
 import getScanReport from './getScanReport';
 import setDiagnostics from './setDiagnostics';
@@ -27,10 +27,8 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.workspace.onDidSaveTextDocument(
     (editor) => {
       if (editor && editor.fileName) {
-        const configuration = workspace.getConfiguration();
-
         if (
-          configuration.get('Iceworks.Doctor.enableCheckSecurityPracticesOnSave') &&
+          getDataFromSettingJson('enableCheckSecurityPracticesOnSave') &&
           // Only check js file
           /(jsx|js|tsx|ts)$/.test(editor.fileName)
         ) {
