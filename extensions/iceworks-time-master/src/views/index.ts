@@ -1,6 +1,6 @@
 import { extensions, Memento, workspace, ConfigurationChangeEvent } from 'vscode';
 import { checkIsO2, saveDataToSettingJson } from '@iceworks/common-service';
-import { CONFIG_KEY_ICEWORKS_ENABLE_VIEWS, CONFIG_KEY_SECTION_ENABLE_VIEWS } from '../constants';
+import { CONFIG_KEY_ICEWORKS_ENABLE_VIEWS, CONFIG_KEY_SECTION } from '../constants';
 
 export * from './timerProvider';
 export * from './timerStatusBar';
@@ -18,7 +18,7 @@ export function autoSetEnableViews(globalState: Memento) {
   if (!enableViewsIsSet) {
     const isAutoDisableViews = checkIsAutoDisableViews();
     if (isAutoDisableViews) {
-      saveDataToSettingJson(CONFIG_KEY_SECTION_ENABLE_VIEWS, false);
+      saveDataToSettingJson(CONFIG_KEY_SECTION, false);
     }
 
     workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
