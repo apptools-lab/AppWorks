@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.5
+
+- chore: update the text of main button
+
 ## 0.7.4
 
 - refactor: page&component tree display logic
