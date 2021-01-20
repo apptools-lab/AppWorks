@@ -61,9 +61,7 @@
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build",
     "build": "rm -rf build && webpack --mode production",
-    "dev": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "dev": "webpack --mode development --watch --info-verbosity verbose"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",
