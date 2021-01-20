@@ -52,13 +52,13 @@ export async function activate(context: ExtensionContext) {
       keystrokeStatsRecorder.sendData();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
-      timerProvider && timerProvider.refresh();
+      timerProvider.refresh();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
-      timerStatusBar && timerStatusBar.refresh();
+      timerStatusBar.refresh();
     }),
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
-      timerProvider && timerProvider.revealTreeView();
+      timerProvider.revealTreeView();
       recordDAU();
       recorder.record({
         module: 'command',
