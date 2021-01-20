@@ -38,7 +38,7 @@
         {
           "id": "timeMaster",
           "name": "%timeMaster.views.iceworksApp.timeMaster.name%",
-          "when": "iceworks:enableTimeMasterView"
+          "when": "config.iceworks.enableViews"
         }
       ]
     },
@@ -50,6 +50,12 @@
           "default": 7,
           "title": "timeMaster.configuration.properties.iceworks.timeLimit.title",
           "description": "%timeMaster.configuration.properties.iceworks.timeLimit.description%"
+        },
+        "iceworks.enableViews": {
+          "type": "boolean",
+          "default": true,
+          "title": "timeMaster.configuration.properties.iceworks.enableViews.title",
+          "description": "%timeMaster.configuration.properties.iceworks.enableViews.description%"
         }
       }
     }

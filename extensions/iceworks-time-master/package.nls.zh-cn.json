@@ -1,5 +1,7 @@
 {
   "timeMaster.views.iceworksApp.timeMaster.name": "时间管理",
   "timeMaster.configuration.properties.iceworks.timeLimit.title": "统计数据的保存时长（天数）",
-  "timeMaster.configuration.properties.iceworks.timeLimit.description": "时间越长，占用本地磁盘容量越多"
+  "timeMaster.configuration.properties.iceworks.timeLimit.description": "时间越长，占用本地磁盘容量越多",
+  "timeMaster.configuration.properties.iceworks.enableViews.title": "是否显示视图",
+  "timeMaster.configuration.properties.iceworks.enableViews.description": "勾选后将在侧边栏显示详细的列表数据，以及在窗口右下角的状态栏显示编辑器使用时间数值"
 }

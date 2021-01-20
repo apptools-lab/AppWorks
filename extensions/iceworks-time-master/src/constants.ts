@@ -4,3 +4,6 @@ export const NO_PROJ_NAME = 'Unnamed';
 export const ONE_SEC_MILLISECONDS = 1000;
 export const ONE_MIN_SECONDS = 60;
 export const ONE_MIN_MILLISECONDS = ONE_SEC_MILLISECONDS * ONE_MIN_SECONDS;
+export const CONFIG_KEY_DOMAIN = 'iceworks';
+export const CONFIG_KEY_SECTION_ENABLE_VIEWS = 'enableViews';
+export const CONFIG_KEY_ICEWORKS_ENABLE_VIEWS = `${CONFIG_KEY_DOMAIN}.${CONFIG_KEY_SECTION_ENABLE_VIEWS}`;

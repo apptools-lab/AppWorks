@@ -1,35 +1,31 @@
+import { extensions, Memento, workspace, ConfigurationChangeEvent } from 'vscode';
+import { checkIsO2, saveDataToSettingJson } from '@iceworks/common-service';
+import { CONFIG_KEY_ICEWORKS_ENABLE_VIEWS, CONFIG_KEY_SECTION_ENABLE_VIEWS } from '../constants';
 
-import { ExtensionContext, extensions, commands } from 'vscode';
-import { checkIsO2 } from '@iceworks/common-service';
-import { createTimerTreeView, TimerProvider } from './timerProvider';
-import { createTimerStatusBar } from './timerStatusBar';
-import logger from '../utils/logger';
+export * from './timerProvider';
+export * from './timerStatusBar';
 
-function checkIsShowViews(): boolean {
+function checkIsAutoDisableViews(): boolean {
   const isO2 = checkIsO2();
   const hasIceworksKit = extensions.getExtension('O2.icework-kit');
-  return !(isO2 && hasIceworksKit);
+  const isDisableView = !!(isO2 && hasIceworksKit);
+  return isDisableView;
 }
 
-export default async function (context: ExtensionContext) {
-  const isShowViews = checkIsShowViews();
-  let timerProvider: TimerProvider;
-  let timerStatusBar;
+const didSetEnableViewsStateKey = 'iceworks.timeMaster.enableViews';
+export function autoSetEnableViews(globalState: Memento) {
+  const enableViewsIsSet = globalState.get(didSetEnableViewsStateKey);
+  if (!enableViewsIsSet) {
+    const isAutoDisableViews = checkIsAutoDisableViews();
+    if (isAutoDisableViews) {
+      saveDataToSettingJson(CONFIG_KEY_SECTION_ENABLE_VIEWS, false);
+    }
 
-  logger.debug('[TimeMaster][views]isShowViews', isShowViews);
-  if (isShowViews) {
-    commands.executeCommand('setContext', 'iceworks:enableTimeMasterView', true);
-
-    timerProvider = new TimerProvider(context);
-    const timerTreeView = createTimerTreeView(timerProvider);
-    timerProvider.bindView(timerTreeView);
-
-    timerStatusBar = await createTimerStatusBar();
-    timerStatusBar.show();
+    workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
+      const isTrue = event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_VIEWS);
+      if (isTrue) {
+        globalState.update(didSetEnableViewsStateKey, true);
+      }
+    });
   }
-
-  return {
-    timerProvider,
-    timerStatusBar,
-  };
 }

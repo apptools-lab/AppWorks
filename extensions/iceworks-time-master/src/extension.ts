@@ -1,6 +1,6 @@
 import { ExtensionContext, commands } from 'vscode';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import createViews from './views';
+import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViews } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
 import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
@@ -17,12 +17,20 @@ const usageStatsRecorder = getUsageStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
   logger.debug('[TimeMaster][extension] activate!');
-  const { subscriptions } = context;
+  const { subscriptions, globalState } = context;
 
   // do not wait for async, let subsequent views be created
   activateWalkClock();
 
-  const { timerProvider, timerStatusBar } = await createViews(context);
+  autoSetEnableViews(globalState);
+
+  // create views
+  const timerProvider = new TimerProvider(context);
+  const timerTreeView = createTimerTreeView(timerProvider);
+  timerProvider.bindView(timerTreeView);
+
+  const timerStatusBar = await createTimerStatusBar();
+  timerStatusBar.activate();
 
   keystrokeStatsRecorder.activate().catch((e) => {
     logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);

@@ -1,5 +1,7 @@
 {
   "timeMaster.views.iceworksApp.timeMaster.name": "Time Master",
   "timeMaster.configuration.properties.iceworks.timeLimit.title": "How long (days) the statistics are saved",
-  "timeMaster.configuration.properties.iceworks.timeLimit.description": "The longer the time, the more local disk capacity"
+  "timeMaster.configuration.properties.iceworks.timeLimit.description": "The longer the time, the more local disk capacity",
+  "timeMaster.configuration.properties.iceworks.enableViews.title": "Enable Views",
+  "timeMaster.configuration.properties.iceworks.enableViews.description": "The detailed list data will be displayed in the sidebar, and the editor usage time will be displayed in the status bar"
 }
