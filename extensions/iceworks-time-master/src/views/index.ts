@@ -5,26 +5,26 @@ import { CONFIG_KEY_ICEWORKS_ENABLE_VIEWS, CONFIG_KEY_SECTION } from '../constan
 export * from './timerProvider';
 export * from './timerStatusBar';
 
-function checkIsAutoDisableViews(): boolean {
+function checkIsDisableViews(): boolean {
   const isO2 = checkIsO2();
   const hasIceworksKit = extensions.getExtension('O2.icework-kit');
-  const isDisableView = !!(isO2 && hasIceworksKit);
-  return isDisableView;
+  const isDisableViews = isO2 && !hasIceworksKit;
+  return isDisableViews;
 }
 
-const didSetEnableViewsStateKey = 'iceworks.timeMaster.enableViews';
-export function autoSetEnableViews(globalState: Memento) {
-  const enableViewsIsSet = globalState.get(didSetEnableViewsStateKey);
-  if (!enableViewsIsSet) {
-    const isAutoDisableViews = checkIsAutoDisableViews();
-    if (isAutoDisableViews) {
+const didManualSetEnableViewsStateKey = 'iceworks.timeMaster.enableViews';
+export function autoSetEnableViewsConfig(globalState: Memento) {
+  const didManualSetEnableViews = globalState.get(didManualSetEnableViewsStateKey);
+  if (!didManualSetEnableViews) {
+    const isDisableViews = checkIsDisableViews();
+    if (isDisableViews) {
       saveDataToSettingJson(CONFIG_KEY_SECTION, false);
     }
 
     workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
-      const isTrue = event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_VIEWS);
-      if (isTrue) {
-        globalState.update(didSetEnableViewsStateKey, true);
+      const affectConfig = event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_VIEWS);
+      if (affectConfig) {
+        globalState.update(didManualSetEnableViewsStateKey, true);
       }
     });
   }

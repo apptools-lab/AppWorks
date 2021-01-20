@@ -1,6 +1,6 @@
 import { ExtensionContext, commands } from 'vscode';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViews } from './views';
+import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViewsConfig } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
 import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
@@ -22,7 +22,7 @@ export async function activate(context: ExtensionContext) {
   // do not wait for async, let subsequent views be created
   activateWalkClock();
 
-  autoSetEnableViews(globalState);
+  autoSetEnableViewsConfig(globalState);
 
   // create views
   const timerProvider = new TimerProvider(context);
