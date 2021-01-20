@@ -2,7 +2,7 @@ import { window, StatusBarAlignment, StatusBarItem, workspace, ConfigurationChan
 import { getUserSummary } from '../storages/user';
 import { humanizeMinutes, seconds2minutes } from '../utils/time';
 import { getAverageSummary } from '../storages/average';
-import { CONFIG_KEY_ICEWORKS_ENABLE_VIEWS, CONFIG_KEY_SECTION } from '../constants';
+import { CONFIG_KEY_ICEWORKS_ENABLE_STATUS_BAR, CONFIG_KEY_SECTION_ENABLE_STATUS_BAR } from '../constants';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 
 interface TimerStatusBar extends StatusBarItem {
@@ -22,15 +22,15 @@ export async function createTimerStatusBar() {
     statusBar.text = await getStatusBarText();
   };
   statusBar.activate = function () {
-    const enableViews = getDataFromSettingJson(CONFIG_KEY_SECTION);
-    if (enableViews) {
+    const enableStatusBar = getDataFromSettingJson(CONFIG_KEY_SECTION_ENABLE_STATUS_BAR);
+    if (enableStatusBar) {
       statusBar.show();
     }
     workspace.onDidChangeConfiguration((event: ConfigurationChangeEvent) => {
-      const isChanged = event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_VIEWS);
+      const isChanged = event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_STATUS_BAR);
       if (isChanged) {
-        const newEnableViews = getDataFromSettingJson(CONFIG_KEY_SECTION);
-        if (newEnableViews) {
+        const newEnableStatusBar = getDataFromSettingJson(CONFIG_KEY_SECTION_ENABLE_STATUS_BAR);
+        if (newEnableStatusBar) {
           statusBar.show();
         } else {
           statusBar.hide();

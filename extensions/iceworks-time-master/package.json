@@ -38,7 +38,7 @@
         {
           "id": "timeMaster",
           "name": "%timeMaster.views.iceworksApp.timeMaster.name%",
-          "when": "config.iceworks.enableViews"
+          "when": "config.iceworks.enableView"
         }
       ]
     },
@@ -51,11 +51,17 @@
           "title": "timeMaster.configuration.properties.iceworks.timeLimit.title",
           "description": "%timeMaster.configuration.properties.iceworks.timeLimit.description%"
         },
-        "iceworks.enableViews": {
+        "iceworks.enableView": {
           "type": "boolean",
           "default": true,
-          "title": "timeMaster.configuration.properties.iceworks.enableViews.title",
-          "description": "%timeMaster.configuration.properties.iceworks.enableViews.description%"
+          "title": "timeMaster.configuration.properties.iceworks.enableView.title",
+          "description": "%timeMaster.configuration.properties.iceworks.enableView.description%"
+        },
+        "iceworks.enableStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "title": "timeMaster.configuration.properties.iceworks.enableStatusBar.title",
+          "description": "%timeMaster.configuration.properties.iceworks.enableStatusBar.description%"
         }
       }
     }
