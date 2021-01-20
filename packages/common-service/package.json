@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -14,6 +14,7 @@
     "@iceworks/constant": "^0.1.0",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-utils": "^0.1.5",
+    "@iceworks/configure": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "axios": "^0.19.2",
     "co": "4.6.0",

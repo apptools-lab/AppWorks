@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -82,7 +82,7 @@
     "configuration": {
       "title": "Iceworks Material Helper",
       "properties": {
-        "iceworks.materialHelper.openDocLinkInsideVSCode": {
+        "iceworks.openDocLinkInsideVSCode": {
           "type": "boolean",
           "default": false,
           "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",

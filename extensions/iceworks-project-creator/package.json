@@ -42,29 +42,6 @@
           "type": "string",
           "default": "",
           "description": "Iceworks workspace"
-        },
-        "iceworks.user": {
-          "type": "object",
-          "default": {
-            "empId": "",
-            "account": "",
-            "gitlabToken": ""
-          },
-          "properties": {
-            "empId": {
-              "type": "string",
-              "description": "工号"
-            },
-            "account": {
-              "type": "string",
-              "description": "域账号"
-            },
-            "gitlabToken": {
-              "type": "string",
-              "description": "gitlab 私人 token"
-            }
-          },
-          "description": "Iceworks user information"
         }
       }
     }
