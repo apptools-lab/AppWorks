@@ -2,7 +2,7 @@
 
 ## 0.3.6
 
-- refactor: disable views on O2
+- refactor: control views by configuration
 
 ## 0.3.5
 
