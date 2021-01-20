@@ -3,6 +3,7 @@ import { ExtensionContext, extensions, commands } from 'vscode';
 import { checkIsO2 } from '@iceworks/common-service';
 import { createTimerTreeView, TimerProvider } from './timerProvider';
 import { createTimerStatusBar } from './timerStatusBar';
+import logger from '../utils/logger';
 
 function checkIsShowViews(): boolean {
   const isO2 = checkIsO2();
@@ -14,6 +15,8 @@ export default async function (context: ExtensionContext) {
   const isShowViews = checkIsShowViews();
   let timerProvider: TimerProvider;
   let timerStatusBar;
+
+  logger.debug('[TimeMaster][views]isShowViews', isShowViews);
   if (isShowViews) {
     commands.executeCommand('setContext', 'iceworks:enableTimeMasterView', true);
 
