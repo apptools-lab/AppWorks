@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.6
+
+- refactor: disable views on O2
+
 ## 0.3.5
 
 - refactor: internal optimization
