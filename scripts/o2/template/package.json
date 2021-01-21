@@ -24,6 +24,10 @@
   "kaitianContributes": {
     "nodeMain": "./out/node/index.js",
     "browserMain": "./out/browser/index.js",
+    "includes": [
+      "iceworks-team.iceworks-time-master",
+      "tao.def-basic-kit"
+    ],
     "toolbar": {
       "actions": [
         {
