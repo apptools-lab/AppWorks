@@ -1,10 +1,9 @@
 import { ExtensionContext, commands } from 'vscode';
 import { Recorder, recordDAU } from '@iceworks/recorder';
-import { createTimerTreeView, TimerProvider } from './views/timerProvider';
+import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViewsConfig } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
 import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
-import { createTimerStatusBar } from './views/timerStatusBar';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
@@ -18,17 +17,20 @@ const usageStatsRecorder = getUsageStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
   logger.debug('[TimeMaster][extension] activate!');
-  const { subscriptions } = context;
+  const { subscriptions, globalState } = context;
 
   // do not wait for async, let subsequent views be created
   activateWalkClock();
 
+  autoSetEnableViewsConfig(globalState);
+
+  // create views
   const timerProvider = new TimerProvider(context);
   const timerTreeView = createTimerTreeView(timerProvider);
   timerProvider.bindView(timerTreeView);
 
   const timerStatusBar = await createTimerStatusBar();
-  timerStatusBar.show();
+  timerStatusBar.activate();
 
   keystrokeStatsRecorder.activate().catch((e) => {
     logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
@@ -53,7 +55,7 @@ export async function activate(context: ExtensionContext) {
       timerProvider.refresh();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
-      timerStatusBar.refresh().catch(() => { /* ignore error */ });
+      timerStatusBar.refresh();
     }),
     commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
       timerProvider.revealTreeView();

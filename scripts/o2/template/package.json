@@ -1,4 +1,6 @@
 {
+  "name": "icework-kit",
+  "publisher": "O2",
   "engines": {
     "kaitian": "^1.20.0"
   },
