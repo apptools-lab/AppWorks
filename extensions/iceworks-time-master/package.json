@@ -3,7 +3,7 @@
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"
@@ -37,7 +37,8 @@
       "iceworksApp": [
         {
           "id": "timeMaster",
-          "name": "%timeMaster.views.iceworksApp.timeMaster.name%"
+          "name": "%timeMaster.views.iceworksApp.timeMaster.name%",
+          "when": "config.iceworks.enableView"
         }
       ]
     },
@@ -49,6 +50,18 @@
           "default": 7,
           "title": "timeMaster.configuration.properties.iceworks.timeLimit.title",
           "description": "%timeMaster.configuration.properties.iceworks.timeLimit.description%"
+        },
+        "iceworks.enableView": {
+          "type": "boolean",
+          "default": true,
+          "title": "timeMaster.configuration.properties.iceworks.enableView.title",
+          "description": "%timeMaster.configuration.properties.iceworks.enableView.description%"
+        },
+        "iceworks.enableStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "title": "timeMaster.configuration.properties.iceworks.enableStatusBar.title",
+          "description": "%timeMaster.configuration.properties.iceworks.enableStatusBar.description%"
         }
       }
     }
@@ -61,9 +74,7 @@
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build",
     "build": "rm -rf build && webpack --mode production",
-    "dev": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "dev": "webpack --mode development --watch --info-verbosity verbose"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",

@@ -3,7 +3,7 @@
   "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -69,7 +69,7 @@
       "type": "object",
       "title": "Iceworks Doctor",
       "properties": {
-        "Iceworks.Doctor.enableCheckSecurityPracticesOnSave": {
+        "iceworks.enableCheckSecurityPracticesOnSave": {
           "scope": "window",
           "type": "boolean",
           "default": true,

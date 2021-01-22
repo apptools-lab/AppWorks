@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.8
+
+- refactor: internal optimization
+
 ## 0.4.7
 
 - docs: delete Configure Scaffold section

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.5
+
+- chore: update O2 toolbar button text
+
 ## 0.7.4
 
 - refactor: page&component tree display logic

@@ -33,6 +33,10 @@ $ kaitian dev
 # iceworks.zip generated
 $ npm run o2:package
 
+# test
+$ kaitian install extensions/iceworks/iceworks-team-iceworks-x.x.x.zip # install Pack to o2
+$ o2 # open o2 by CLI
+
 # upload iceworks.zip to OSS
 $ ACCESS_KEY_ID=xxx ACCESS_KEY_SECRET=xxx npm run o2:upload
 

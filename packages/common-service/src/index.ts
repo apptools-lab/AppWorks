@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, record } from '@iceworks/recorder';
+import configure from '@iceworks/configure';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -27,14 +28,14 @@ const nodeCache = new NodeCache();
 const { name: namespace } = require('../package.json');
 
 export const CONFIGURATION_SECTION = 'iceworks';
-export const CONFIGURATION_KEY_PCKAGE_MANAGER = 'packageManager';
+export const CONFIGURATION_KEY_PACKAGE_MANAGER = 'packageManager';
 export const CONFIGURATION_KEY_NPM_REGISTRY = 'npmRegistry';
 export const CONFIGURATION_KEY_MATERIAL_SOURCES = 'materialSources';
 export const CONFIGURATION_KEY_GENERATE_PAGE_PATH = 'generatePagePath';
 export const CONFIGURATION_KEY_GENERATE_COMPONENT_PATH = 'generateComponentPath';
-export const CONFIGURATION_SECTION_PCKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PCKAGE_MANAGER}`;
+export const CONFIGURATION_SECTION_PACKAGE_MANAGER = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_PACKAGE_MANAGER}`;
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
-export const CONFIGURATION_SETION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
+export const CONFIGURATION_SECTION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 export const indexFileSuffix = ['.jsx', '.js', '.tsx', '.ts', '.rml', '.vue'];
 
 let Client;
@@ -118,7 +119,7 @@ export function registerCommand(command: string, callback: (...args: any[]) => a
 
 export function getPackageManagersDefaultFromPackageJson(packageJsonPath: string): string[] {
   const packageJson = JSON.parse(fse.readFileSync(packageJsonPath, 'utf-8'));
-  return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_PCKAGE_MANAGER].enum;
+  return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_PACKAGE_MANAGER].enum;
 }
 
 export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): string[] {
@@ -196,7 +197,7 @@ async function autoInitMaterialSource(globalState: vscode.Memento) {
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
-    const isTrue = event.affectsConfiguration(CONFIGURATION_KEY_MATERIAL_SOURCES);
+    const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_MATERIAL_SOURCES);
     if (isTrue) {
       globalState.update(didSetMaterialSourceStateKey, true);
     }
@@ -213,14 +214,14 @@ async function autoSetPackageManagerConfiguration(globalState: vscode.Memento, i
   console.log('autoSetPackageManager: run');
 
   const stateKey = 'iceworks.packageManagerIsSeted';
-  const packageManagerIsSeted = globalState.get(stateKey);
-  if (!packageManagerIsSeted && isAliInternal) {
+  const packageManagerIsSelected = globalState.get(stateKey);
+  if (!packageManagerIsSelected && isAliInternal) {
     console.log('autoSetPackageManager: do');
-    saveDataToSettingJson(CONFIGURATION_KEY_PCKAGE_MANAGER, 'tnpm');
+    saveDataToSettingJson(CONFIGURATION_KEY_PACKAGE_MANAGER, 'tnpm');
   }
 
   vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
-    const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_PCKAGE_MANAGER);
+    const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_PACKAGE_MANAGER);
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
 
@@ -233,8 +234,8 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
   console.log('autoSetNpmRegistry: run');
 
   const stateKey = 'iceworks.npmRegistryIsSeted';
-  const npmRegistryIsSeted = globalState.get(stateKey);
-  if (!npmRegistryIsSeted && isAliInternal) {
+  const npmRegistryIsSelected = globalState.get(stateKey);
+  if (!npmRegistryIsSelected && isAliInternal) {
     console.log('autoSetNpmRegistry: do');
     saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, ALI_NPM_REGISTRY);
   }
@@ -332,7 +333,13 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
   return { position, declarations: importDeclarations };
 }
 
-export async function getUserInfo() {
+const CONFIGURE_USER_KEY = 'user';
+interface UserInfo {
+  empId: string;
+  account: string;
+  gitlabToken: string;
+}
+export async function getUserInfo(): Promise<UserInfo> {
   const fn = co.wrap(function* () {
     if (defClient) {
       const user = yield defClient.user();
@@ -343,7 +350,7 @@ export async function getUserInfo() {
   });
 
   // get user info from setting.json
-  const userData = getDataFromSettingJson('user') || {};
+  const userData = configure.get(CONFIGURE_USER_KEY) || {};
   const { empId, account, gitlabToken } = userData;
 
   if (empId && account) {
@@ -352,12 +359,16 @@ export async function getUserInfo() {
     try {
       const { account, empid: empId } = await fn();
       const result = { account, empId, gitlabToken };
-      saveDataToSettingJson('user', result);
+      configure.set(CONFIGURE_USER_KEY, result);
       return result;
     } catch (e) {
       throw new Error(e.message);
     }
   }
+}
+
+export async function saveUserInfo(value: UserInfo) {
+  configure.set(CONFIGURE_USER_KEY, value);
 }
 
 export function getLanguage() {
