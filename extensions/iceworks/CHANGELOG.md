@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.16.1
+
+- refactor: control Time Master Views
+
 ## 0.16.0
 
 - feat: Project Dashboard
