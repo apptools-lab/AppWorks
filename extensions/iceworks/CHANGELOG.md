@@ -2,9 +2,11 @@
 
 ## 0.16.1
 
+- feat: settings for control Time Master Views
 - chore: update O2 toolbar button text
-- refactor: save user info to iceworks configuration #745
 - fix: do not auto set material source after user manually updates the settings
+- refactor: save user info to iceworks configuration
+- refactor: disable some duplicate features(extensions) in O2
 
 ## 0.16.0
 
@@ -16,7 +18,7 @@
 - fix: upgrade dependency should respecting semver
 - fix: install&update scripts compatible with yarn
 
-  ## 0.15.2
+## 0.15.2
 
 - feat: record DAU for O2
 
