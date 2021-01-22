@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.3
+
+- refactor: internal optimization
+
 ## 0.5.2
 
 - fix: rax-app language type is always ts

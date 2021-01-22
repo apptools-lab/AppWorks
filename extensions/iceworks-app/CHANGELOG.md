@@ -2,7 +2,7 @@
 
 ## 0.7.5
 
-- chore: update the text of main button
+- chore: update O2 toolbar button text
 
 ## 0.7.4
 

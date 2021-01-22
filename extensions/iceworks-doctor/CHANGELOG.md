@@ -1,8 +1,12 @@
 # Change Log
 
+## 0.3.2
+
+- refactor: internal optimization
+
 ## 0.3.1
 
-- refactir: remove project info
+- refactor: remove project info
 
 ## 0.3.0
 
