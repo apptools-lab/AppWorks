@@ -54,6 +54,11 @@ const Home = () => {
     if (!blocks.length) {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
     }
+    // determine if there is a block with the same name
+    const blockNames = blocks.map(block => block.name);
+    if (blockNames.length !== new Set(blockNames).size) {
+      return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated' });
+    }
     return '';
   }
 
@@ -65,21 +70,24 @@ const Home = () => {
     }
   }
 
-  function generateBlockName(defineName: string): Promise<string> {
-    function generateName(setName, count = 0) {
-      const newName = !count ? setName : `${setName}${count}`;
-      const isConflict = selectedBlocks.some(({ name }) => name === newName);
+  // the string value will increment by 1
+  function generateBlockStringVal(defineValue: string, defineKey: string): string {
+    function generateValue(setValue: string, setKey: string, count = 0) {
+      const newValue = !count ? setValue : `${setValue}${count}`;
+      const isConflict = selectedBlocks.some((block) => block[setKey] === newValue);
       if (isConflict) {
-        return generateName(setName, count + 1);
+        return generateValue(newValue, setKey, count + 1);
       }
-      return newName;
+      return newValue;
     }
-    return generateName(defineName);
+    return generateValue(defineValue, defineKey);
   }
 
   function onAdd(block) {
-    block.name = generateBlockName(block.name);
-    setSelectedBlocks([...selectedBlocks, block]);
+    const blockData = { ...block };
+    blockData.name = generateBlockStringVal(blockData.name, 'name');
+    blockData.key = generateBlockStringVal(blockData.name, 'key');
+    setSelectedBlocks([...selectedBlocks, { ...blockData }]);
   }
 
   function onDelete(targetIndex) {

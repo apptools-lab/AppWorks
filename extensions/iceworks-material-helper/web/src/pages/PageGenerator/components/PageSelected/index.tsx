@@ -40,7 +40,7 @@ const PageSelected = SortableContainer(({ blocks, onNameChange, onDelete, isSort
             return (
               <SelectedBlock
                 {...block}
-                key={block.name}
+                key={block.key}
                 index={index}
                 targetIndex={index}
                 onNameChange={onNameChange}

@@ -22,6 +22,7 @@
   "web.iceworksMaterialHelper.pageCreator.defaultTitle": "页面模板配置",
   "web.iceworksMaterialHelper.pageCreator.defaultDescription": "请进行配置以生成个性化页面",
   "web.iceworksMaterialHelper.pageGenerater.selectBlocks": "请至少选择一个区块",
+  "web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated": "区块名称不能重名",
   "web.iceworksMaterialHelper.pageGenerater.successCreatePage": "成功生成页面代码！",
   "web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath": "成功生成页面代码到 {path}",
   "web.iceworksMaterialHelper.pageGenerater.openFile": "打开文件",
