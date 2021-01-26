@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.6
+
+- fix: terminal names are the same when running npm scripts
+
 ## 0.7.5
 
 - chore: update O2 toolbar button text
