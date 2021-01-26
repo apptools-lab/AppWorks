@@ -71,16 +71,16 @@ const Home = () => {
   }
 
   // the string value will increment by 1
-  function generateBlockStringVal(defineValue: string, defineKey: string): string {
-    function generateValue(setValue: string, setKey: string, count = 0) {
-      const newValue = !count ? setValue : `${setValue}${count}`;
-      const isConflict = selectedBlocks.some((block) => block[setKey] === newValue);
+  function generateBlockStringVal(originValue: string, originKey: string): string {
+    function generateValue(value: string, key: string, count = 0) {
+      const newValue = !count ? value : `${value}${count}`;
+      const isConflict = selectedBlocks.some((block) => block[key] === newValue);
       if (isConflict) {
-        return generateValue(newValue, setKey, count + 1);
+        return generateValue(newValue, key, count + 1);
       }
       return newValue;
     }
-    return generateValue(defineValue, defineKey);
+    return generateValue(originValue, originKey);
   }
 
   function onAdd(block) {
