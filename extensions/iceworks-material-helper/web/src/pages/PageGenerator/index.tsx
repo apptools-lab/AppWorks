@@ -54,7 +54,7 @@ const Home = () => {
     if (!blocks.length) {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
     }
-    // determine if there is a block with the same name
+    // validate if there is a block with the same name
     const blockNames = blocks.map(block => block.name);
     if (blockNames.length !== new Set(blockNames).size) {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated' });
@@ -87,7 +87,7 @@ const Home = () => {
     const blockData = { ...block };
     blockData.name = generateBlockStringVal(blockData.name, 'name');
     blockData.key = generateBlockStringVal(blockData.name, 'key');
-    setSelectedBlocks([...selectedBlocks, { ...blockData }]);
+    setSelectedBlocks([...selectedBlocks, blockData]);
   }
 
   function onDelete(targetIndex) {
