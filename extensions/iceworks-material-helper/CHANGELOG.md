@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.5
+
+- feat: compatible block and component material name
+
 ## 0.5.4
 
 - refactor: internal optimization
