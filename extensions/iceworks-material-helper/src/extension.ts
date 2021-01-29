@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
+  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context, name);
@@ -23,7 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
   // set material importer
   let materialImporterWebviewPanel: vscode.WebviewPanel | undefined;
   function activeMaterialImporterWebview() {
-    recorder.recordActivate();
     if (materialImporterWebviewPanel) {
       materialImporterWebviewPanel.reveal();
     } else {

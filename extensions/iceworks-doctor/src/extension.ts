@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { registerCommand, initExtension, getDataFromSettingJson } from '@iceworks/common-service';
-import getRecorder from './getRecorder';
+import recorder from './recorder';
 import getScanReport from './getScanReport';
 import setDiagnostics from './setDiagnostics';
 import * as zhCNTextMap from './locales/zh-CN.json';
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
       context.subscriptions,
     );
 
-    connectService(reportWebviewPanel, context, { services, recorder: getRecorder() });
+    connectService(reportWebviewPanel, context, { services, recorder });
   };
 
   // Code Quality Dashboard

@@ -30,6 +30,9 @@ const recorder = new Recorder(name, version);
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
 
+  console.log('Congratulations, your extension "iceworks-app" is now active!');
+  recorder.recordActivate();
+
   // auto set configuration & context
   initExtension(context, name);
   autoSetContextByProject();
@@ -43,7 +46,6 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand(showExtensionsQuickPickCommandId, async () => {
       await showEntriesQuickPick();
-      recorder.recordActivate();
     }),
   );
 
@@ -80,7 +82,6 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworksApp.configHelper.start', (focusField: string) => {
       activeConfigWebview(focusField);
-      recorder.recordActivate();
     }),
   );
 
@@ -114,7 +115,6 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworksApp.welcome.start', () => {
       activeWelcomeWebview();
-      recorder.recordActivate();
     }),
   );
 
@@ -148,7 +148,6 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(
     registerCommand('iceworksApp.dashboard.start', () => {
       activeDashboardWebview();
-      recorder.recordActivate();
     }),
   );
 

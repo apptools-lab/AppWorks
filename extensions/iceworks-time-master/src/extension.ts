@@ -16,8 +16,10 @@ const keystrokeStatsRecorder = getKeystrokeStats();
 const usageStatsRecorder = getUsageStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
-  logger.debug('[TimeMaster][extension] activate!');
   const { subscriptions, globalState } = context;
+
+  console.log('Congratulations, your extension "iceworks-time-master" is now active!');
+  recorder.recordActivate();
 
   // do not wait for async, let subsequent views be created
   activateWalkClock();
