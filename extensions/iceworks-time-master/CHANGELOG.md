@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.7
+
+- refactor: internal optimization
+
 ## 0.3.6
 
 - refactor: control views by configuration

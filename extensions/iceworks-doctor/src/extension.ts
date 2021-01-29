@@ -15,6 +15,10 @@ const { name } = require('../package.json');
 
 export function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
+
+  console.log('Congratulations, your extension "iceworks-doctor" is now active!');
+  recorder.recordActivate();
+
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
 
