@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'fs';
 const packageJSONFilename = 'package.json';
 
 export type ProjectType = 'unknown' | 'rax' | 'react' | 'vue';
-export type ProjectFramework = 'unknown' | 'rax-app' | 'icejs' | 'component' | 'pegasus' | 'vue';
+export type ProjectFramework = 'unknown' | 'rax-app' | 'icejs' | 'rax-component' | 'react-component' | 'pegasus-module' | 'vue';
 
 function processProjectType(projectPath: string): { type: ProjectType, version: string } {
   let type: ProjectType = 'unknown';
@@ -47,13 +47,31 @@ function processProjectFramework(projectPath: string): { framework: ProjectFrame
       framework = 'icejs';
       version = devDependencies['ice.js'] || dependencies['ice.js'];
     }
-    if (devDependencies['build-plugin-component']) {
-      framework = 'component';
-      version = devDependencies['build-plugin-component'];
+
+    if (devDependencies['build-plugin-rax-component']) {
+      framework = 'rax-component';
+      version = devDependencies['build-plugin-rax-component'];
     }
-    if (devDependencies['@ali/build-plugin-pegasus-base']) {
-      framework = 'pegasus';
-      version = devDependencies['@ali/build-plugin-pegasus-base'];
+    if (devDependencies['build-plugin-component']) {
+      const buildJsonPath = join(projectPath, 'build.json');
+      const buildConfig = existsSync(buildJsonPath) ? JSON.parse(readFileSync(buildJsonPath, { encoding: 'utf-8' })) : {};
+
+      if (buildConfig.type === 'rax') {
+        framework = 'rax-component';
+        version = devDependencies['build-plugin-component'];
+      } else {
+        framework = 'react-component';
+        version = devDependencies['build-plugin-component'];
+      }
+    }
+
+    const abcJsonPath = join(projectPath, 'abc.json');
+    if (existsSync(abcJsonPath) && devDependencies['@ali/build-plugin-pegasus-base']) {
+      const abcConfig = JSON.parse(readFileSync(abcJsonPath, { encoding: 'utf-8' }));
+      if (abcConfig.builder === '@ali/builder-pegasus') {
+        framework = 'pegasus-module';
+        version = devDependencies['@ali/build-plugin-pegasus-base'];
+      }
     }
     if (dependencies.vue) {
       framework = 'vue';
