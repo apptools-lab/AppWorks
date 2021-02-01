@@ -27,7 +27,7 @@ export default class Scanner {
     const subprocessList: any[] = [];
 
     if (!fs.pathExistsSync(tempFileDir)) {
-      await fs.mkdirpSync(tempFileDir);
+      fs.mkdirpSync(tempFileDir);
     }
 
     const files: IFileInfo[] = getFiles(directory, this.options.ignore);
