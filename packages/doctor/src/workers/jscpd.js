@@ -1,23 +1,16 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import { IClone } from '@jscpd/core';
-import { jscpd } from 'jscpd';
-import Scorer from './Scorer';
-import Timer from './Timer';
-import { IRepeatabilityReports } from './types/Scanner';
+/* eslint-disable */
+const fs = require('fs-extra');
+const path = require('path');
+const { jscpd } = require('jscpd');
+const config = require('../config').default;
+const Scorer = require('../Scorer').default;
 
-
-// Write temp file directory
-const tempDir = path.join(__dirname, 'tmp/');
+const [directory, tempFileDir, ignore] = process.argv.slice(2)[0].split(' ');
+getRepeatabilityReports();
 
 // https://www.npmjs.com/package/jscpd
-export default async function getRepeatabilityReports(
-  directory: string,
-  timer: Timer,
-  ignore: string[],
-  tempFileDir?: string,
-): Promise<IRepeatabilityReports> {
-  let clones: IClone[] = [];
+async function getRepeatabilityReports() {
+  let clones = [];
   let repetitionPercentage = 0;
 
   try {
@@ -26,21 +19,18 @@ export default async function getRepeatabilityReports(
       // .ice/xxx/xxx/xx.js can't be ignored, see: https://github.com/kucherenko/jscpd/issues/419
       path.join(directory, './src'),
       '--ignore',
-      `"${ignore.map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
+      `"${ignore.split(',').map((ignoreDir) => `${path.join(directory, '/')}**/${ignoreDir}/**`).join(',')}"`,
       '--reporters',
       'json',
       '--output',
-      tempFileDir || tempDir,
+      tempFileDir,
       '--max-size',
       '30kb',
       '--mode',
       'weak',
       '--silent',
     ]);
-
-    timer.checkTimeout();
-
-    const repeatabilityResultFile = path.join(tempFileDir || tempDir, 'jscpd-report.json');
+    const repeatabilityResultFile = path.join(tempFileDir, 'jscpd-report.json');
     if (fs.existsSync(repeatabilityResultFile)) {
       const repeatabilityResult = fs.readJSONSync(repeatabilityResultFile);
       repetitionPercentage = repeatabilityResult.statistics.total.percentage;
@@ -50,9 +40,11 @@ export default async function getRepeatabilityReports(
     console.log(e);
   }
 
-  return {
+  const result = {
     // High repetitionPercentage is a big problem, increase the deduction
     score: new Scorer().minus(repetitionPercentage * 3),
     clones,
   };
+
+  fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.report.jscpd), JSON.stringify(result));
 }

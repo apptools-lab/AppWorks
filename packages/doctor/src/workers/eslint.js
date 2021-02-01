@@ -1,12 +1,12 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import ignore from 'ignore';
-import { CLIEngine } from 'eslint';
-import { deepmerge, getESLintConfig } from '@iceworks/spec';
-import Scorer from './Scorer';
-import Timer from './Timer';
-import { IEslintReports } from './types/Scanner';
-import { IFileInfo } from './types/File';
+/* eslint-disable */
+const fs = require('fs-extra');
+const path = require('path');
+const ignore = require('ignore');
+const { CLIEngine } = require('eslint');
+const { deepmerge, getESLintConfig } = require('@iceworks/spec');
+const config = require('../config').default;
+const getCustomESLintConfig = require('../getCustomESLintConfig').default;
+const Scorer = require('../Scorer').default;
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -17,7 +17,22 @@ const BONUS_WEIGHT = 2;
 
 const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
-export default function getEslintReports(directory: string, timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
+const [directory, tempFileDir, ruleKey, fix] = process.argv.slice(2)[0].split(' ');
+getEslintReports();
+
+function getEslintReports() {
+  const fixErr = fix === 'true';
+  const files = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.files));
+  const customConfig = getCustomESLintConfig(directory) || {};
+  if (ruleKey.indexOf('ts') !== -1) {
+    if (!customConfig.parserOptions) {
+      customConfig.parserOptions = {};
+    }
+    if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
+      customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
+    }
+  }
+
   let warningScore = 0;
   let warningCount = 0;
 
@@ -25,7 +40,7 @@ export default function getEslintReports(directory: string, timer: Timer, files:
   let errorCount = 0;
 
   // package.json object
-  let packageInfo: any = {};
+  let packageInfo = {};
 
   const reports = [];
 
@@ -34,7 +49,7 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
     // Use plugin in @iceworks/spec
     cwd: path.dirname(require.resolve('@iceworks/spec')),
-    fix: !!fix,
+    fix: !!fixErr,
     useEslintrc: false,
   });
 
@@ -44,24 +59,22 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
   }
 
-  const targetFiles: string[] = files.filter((file: IFileInfo) => {
+  const targetFiles = files.filter((file) => {
     if (file.path.endsWith('package.json')) {
       packageInfo = JSON.parse(file.source);
     }
     return SUPPORT_FILE_REG.test(file.path) && !ig.ignores(file.path.replace(path.join(directory, '/'), ''));
-  }).map((file: IFileInfo) => {
+  }).map((file) => {
     // Use absolute path
     return file.path.startsWith('.') ? path.join(process.cwd(), file.path) : file.path;
   });
 
   const data = cliEngine.executeOnFiles(targetFiles);
 
-  if (fix) {
+  if (fixErr) {
     // output fixes to disk
     CLIEngine.outputFixes(data);
   }
-
-  timer.checkTimeout();
 
   (data.results || []).forEach((result) => {
     // Remove Parsing error
@@ -116,11 +129,12 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     scorer.plus(BONUS_WEIGHT);
   }
 
-  return {
+  const result = {
     score: scorer.getScore(),
     reports,
     errorCount,
     warningCount,
     customConfig,
   };
+  fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.report.eslint), JSON.stringify(result));
 }

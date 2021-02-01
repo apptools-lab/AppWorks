@@ -1,14 +1,16 @@
+/* eslint-disable max-len */
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import Timer from './Timer';
 import { IScannerOptions, IScanOptions, IScannerReports } from './types/Scanner';
 import { IFileInfo } from './types/File';
-import getCustomESLintConfig from './getCustomESLintConfig';
-import getEslintReports from './getEslintReports';
-import getMaintainabilityReports from './getMaintainabilityReports';
-import getRepeatabilityReports from './getRepeatabilityReports';
+import * as execa from 'execa';
+import config from './config';
 import getFiles from './getFiles';
 import getFinalScore from './getFinalScore';
+
+// Write temp file directory
+const tempDir = path.join(__dirname, 'tmp/');
 
 export default class Scanner {
   public options: IScannerOptions;
@@ -21,6 +23,12 @@ export default class Scanner {
   public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
     const timer = new Timer(options?.timeout);
     const reports = {} as IScannerReports;
+    const tempFileDir = options?.tempFileDir || tempDir;
+    const subprocessList: any[] = [];
+
+    if (!fs.pathExistsSync(tempFileDir)) {
+      await fs.mkdirpSync(tempFileDir);
+    }
 
     const files: IFileInfo[] = getFiles(directory, this.options.ignore);
 
@@ -30,33 +38,41 @@ export default class Scanner {
       lines: files.reduce((total, file) => total + file.LoC, 0),
     };
 
-    // Calculate ESLint
-    if (!options || options.disableESLint !== true) {
+    fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.files), JSON.stringify(files));
+
+    const shouldRunEslint = !options || options.disableESLint !== true;
+    const shouldRunEscomplex = !options || options.disableMaintainability !== true;
+    const shouldRunJscpd = (!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines);
+
+    // Run ESLint
+    if (shouldRunEslint) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
-      const customConfig: any = getCustomESLintConfig(directory) || {};
-      if (options?.languageType === 'ts') {
-        if (!customConfig.parserOptions) {
-          customConfig.parserOptions = {};
-        }
-        if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
-          customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
-        }
-      }
-      reports.ESLint = getEslintReports(directory, timer, files, ruleKey, customConfig, options?.fix);
+      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
     }
 
-    // Calculate maintainability
-    if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(files, timer);
+    // Run maintainability
+    if (shouldRunEscomplex) {
+      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex.js'), [tempFileDir]));
     }
 
-    // Calculate repeatability
-    if (
-      (!options || options.disableRepeatability !== true) &&
-      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
-    ) {
-      reports.repeatability = await getRepeatabilityReports(directory, timer, this.options.ignore, options?.tempFileDir);
+    // Run repeatability
+    if (shouldRunJscpd) {
+      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+    }
+
+    await Promise.all(subprocessList);
+    // Set ESLint result
+    if (shouldRunEslint) {
+      reports.ESLint = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.eslint));
+    }
+    // Set maintainability result
+    if (shouldRunEscomplex) {
+      reports.maintainability = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.escomplex));
+    }
+    // Set repeatability result
+    if (shouldRunJscpd) {
+      reports.repeatability = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.jscpd));
     }
 
     // Calculate total score

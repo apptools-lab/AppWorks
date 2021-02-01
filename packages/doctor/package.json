@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "keywords": [
     "doctor",
     "analysis",
@@ -31,6 +31,7 @@
     "@jscpd/core": "^3.3.3",
     "argv-parse": "^1.0.1",
     "eslint": "^6.0.0",
+    "execa": "^4.1.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "ignore": "^5.1.8",
