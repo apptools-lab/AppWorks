@@ -12,17 +12,17 @@ function processProjectType(projectPath: string): { type: ProjectType, version: 
 
   try {
     const packageJsonPath = join(projectPath, packageJSONFilename);
-    const { dependencies = {} } = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf-8' }));
+    const { dependencies = {}, peerDependencies = {} } = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf-8' }));
 
-    if (dependencies.rax) {
+    if (dependencies.rax || peerDependencies.rax) {
       type = 'rax';
-      version = dependencies.rax;
-    } else if (dependencies.react) {
+      version = dependencies.rax || peerDependencies.rax;
+    } else if (dependencies.react || peerDependencies.react) {
       type = 'react';
-      version = dependencies.react;
-    } else if (dependencies.vue) {
+      version = dependencies.react || peerDependencies.react;
+    } else if (dependencies.vue || peerDependencies.vue) {
       type = 'vue';
-      version = dependencies.vue;
+      version = dependencies.vue || peerDependencies.vue;
     }
   } catch (error) {
     console.error('process projectType error:', error);
