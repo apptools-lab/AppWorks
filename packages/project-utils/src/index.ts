@@ -6,7 +6,7 @@ const packageJSONFilename = 'package.json';
 export type ProjectType = 'unknown' | 'rax' | 'react' | 'vue';
 export type ProjectFramework = 'unknown' | 'rax-app' | 'icejs' | 'rax-component' | 'react-component' | 'pegasus-module' | 'vue';
 
-function processProjectType(projectPath: string): { type: ProjectType, version: string } {
+function getProjectTypeInfo(projectPath: string): { type: ProjectType, version: string } {
   let type: ProjectType = 'unknown';
   let version = 'unknown';
 
@@ -31,7 +31,7 @@ function processProjectType(projectPath: string): { type: ProjectType, version: 
   return { type, version };
 }
 
-function processProjectFramework(projectPath: string): { framework: ProjectFramework, version: string } {
+function getProjectFrameworkInfo(projectPath: string): { framework: ProjectFramework, version: string } {
   let framework: ProjectFramework = 'unknown';
   let version = 'unknown';
 
@@ -85,19 +85,19 @@ function processProjectFramework(projectPath: string): { framework: ProjectFrame
 }
 
 export async function getProjectType(projectPath: string): Promise<ProjectType> {
-  return processProjectType(projectPath).type;
+  return getProjectTypeInfo(projectPath).type;
 }
 
 export async function getProjectFramework(projectPath: string): Promise<ProjectFramework> {
-  return processProjectFramework(projectPath).framework;
+  return getProjectFrameworkInfo(projectPath).framework;
 }
 
 export function getProjectTypeAndVersionSync(projectPath: string): { type: ProjectType, version: string } {
-  return processProjectType(projectPath);
+  return getProjectTypeInfo(projectPath);
 }
 
 export function getProjectFrameworkAndVersionSync(projectPath: string): { framework: ProjectFramework, version: string } {
-  return processProjectFramework(projectPath);
+  return getProjectFrameworkInfo(projectPath);
 }
 
 export function getProjectLanguageTypeSync(projectPath: string): 'ts' | 'js' {
