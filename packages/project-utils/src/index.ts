@@ -13,7 +13,7 @@ export type ProjectLanguageType = 'ts' | 'js';
 export type ProjectTypeInfo = { type: ProjectType, version: string };
 export type ProjectFrameworkInfo = { framework: ProjectFramework, version: string };
 
-async function getProjectTypeInfo(projectPath: string): Promise<ProjectTypeInfo> {
+export async function getProjectTypeInfo(projectPath: string): Promise<ProjectTypeInfo> {
   let type: ProjectType = 'unknown';
   let version = 'unknown';
 
@@ -38,7 +38,7 @@ async function getProjectTypeInfo(projectPath: string): Promise<ProjectTypeInfo>
   return { type, version };
 }
 
-async function getProjectFrameworkInfo(projectPath: string): Promise<ProjectFrameworkInfo> {
+export async function getProjectFrameworkInfo(projectPath: string): Promise<ProjectFrameworkInfo> {
   let framework: ProjectFramework = 'unknown';
   let version = 'unknown';
 
@@ -101,18 +101,10 @@ export async function getProjectFramework(projectPath: string): Promise<ProjectF
   return framework;
 }
 
-export async function getProjectTypeAndVersion(projectPath: string): Promise<ProjectTypeInfo> {
-  return getProjectTypeInfo(projectPath);
-}
-
-export async function getProjectFrameworkAndVersion(projectPath: string): Promise<ProjectFrameworkInfo> {
-  return getProjectFrameworkInfo(projectPath);
-}
-
 export async function getProjectLanguageType(projectPath: string): Promise<ProjectLanguageType> {
   const hasTsconfig = await existsAsync(join(projectPath, 'tsconfig.json'));
 
-  const { framework, version } = await getProjectFrameworkAndVersion(projectPath);
+  const { framework, version } = await getProjectFrameworkInfo(projectPath);
   let isTypescript = false;
   if (framework === 'icejs') {
     // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
