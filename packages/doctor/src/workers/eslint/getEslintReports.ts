@@ -55,12 +55,12 @@ export default function getEslintReports(directory: string, files: IFileInfo[], 
     ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
   }
 
-  const targetFiles = files.filter((file) => {
+  const targetFiles: string[] = files.filter((file: IFileInfo) => {
     if (file.path.endsWith('package.json')) {
       packageInfo = JSON.parse(file.source);
     }
     return SUPPORT_FILE_REG.test(file.path) && !ig.ignores(file.path.replace(path.join(directory, '/'), ''));
-  }).map((file) => {
+  }).map((file: IFileInfo) => {
     // Use absolute path
     return file.path.startsWith('.') ? path.join(process.cwd(), file.path) : file.path;
   });
