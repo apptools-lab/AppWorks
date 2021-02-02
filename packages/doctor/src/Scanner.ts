@@ -1,14 +1,16 @@
+/* eslint-disable max-len */
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import Timer from './Timer';
 import { IScannerOptions, IScanOptions, IScannerReports } from './types/Scanner';
 import { IFileInfo } from './types/File';
-import getCustomESLintConfig from './getCustomESLintConfig';
-import getEslintReports from './getEslintReports';
-import getMaintainabilityReports from './getMaintainabilityReports';
-import getRepeatabilityReports from './getRepeatabilityReports';
+import * as execa from 'execa';
+import config from './config';
 import getFiles from './getFiles';
 import getFinalScore from './getFinalScore';
+
+// Write temp file directory
+const tempDir = path.join(__dirname, 'tmp/');
 
 export default class Scanner {
   public options: IScannerOptions;
@@ -21,6 +23,13 @@ export default class Scanner {
   public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
     const timer = new Timer(options?.timeout);
     const reports = {} as IScannerReports;
+    const tempFileDir = options?.tempFileDir || tempDir;
+    const subprocessList: any[] = [];
+    const processReportList: any[] = [];
+
+    if (!fs.pathExistsSync(tempFileDir)) {
+      fs.mkdirpSync(tempFileDir);
+    }
 
     const files: IFileInfo[] = getFiles(directory, this.options.ignore);
 
@@ -30,34 +39,38 @@ export default class Scanner {
       lines: files.reduce((total, file) => total + file.LoC, 0),
     };
 
-    // Calculate ESLint
+    fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.files), JSON.stringify(files));
+
+    // Run ESLint
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
-      const customConfig: any = getCustomESLintConfig(directory) || {};
-      if (options?.languageType === 'ts') {
-        if (!customConfig.parserOptions) {
-          customConfig.parserOptions = {};
-        }
-        if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
-          customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
-        }
-      }
-      reports.ESLint = getEslintReports(directory, timer, files, ruleKey, customConfig, options?.fix);
+      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint/index.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
+      processReportList.push(async () => {
+        reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
+      });
     }
 
-    // Calculate maintainability
+    // Run maintainability
     if (!options || options.disableMaintainability !== true) {
-      reports.maintainability = getMaintainabilityReports(files, timer);
+      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]));
+      processReportList.push(async () => {
+        reports.maintainability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.escomplex));
+      });
     }
 
-    // Calculate repeatability
-    if (
-      (!options || options.disableRepeatability !== true) &&
-      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
-    ) {
-      reports.repeatability = await getRepeatabilityReports(directory, timer, this.options.ignore, options?.tempFileDir);
+    // Run repeatability
+    if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
+      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd/index.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+      processReportList.push(async () => {
+        reports.repeatability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.jscpd));
+      });
     }
+
+    // Check
+    await Promise.all(subprocessList);
+    // Set result
+    await Promise.all(processReportList.map(async (fn) => { await fn(); }));
 
     // Calculate total score
     reports.score = getFinalScore(

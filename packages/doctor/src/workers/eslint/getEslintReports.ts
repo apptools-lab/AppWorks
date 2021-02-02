@@ -3,10 +3,10 @@ import * as path from 'path';
 import ignore from 'ignore';
 import { CLIEngine } from 'eslint';
 import { deepmerge, getESLintConfig } from '@iceworks/spec';
-import Scorer from './Scorer';
-import Timer from './Timer';
-import { IEslintReports } from './types/Scanner';
-import { IFileInfo } from './types/File';
+import getCustomESLintConfig from './getCustomESLintConfig';
+import Scorer from '../../Scorer';
+import { IEslintReports } from '../../types/Scanner';
+import { IFileInfo } from '../../types/File';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -17,7 +17,18 @@ const BONUS_WEIGHT = 2;
 
 const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
-export default function getEslintReports(directory: string, timer: Timer, files: IFileInfo[], ruleKey: string, customConfig?: any, fix?: boolean): IEslintReports {
+export default function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: string): IEslintReports {
+  const fixErr = fix === 'true';
+  const customConfig: any = getCustomESLintConfig(directory) || {};
+  if (ruleKey.indexOf('ts') !== -1) {
+    if (!customConfig.parserOptions) {
+      customConfig.parserOptions = {};
+    }
+    if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
+      customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
+    }
+  }
+
   let warningScore = 0;
   let warningCount = 0;
 
@@ -34,7 +45,7 @@ export default function getEslintReports(directory: string, timer: Timer, files:
     baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
     // Use plugin in @iceworks/spec
     cwd: path.dirname(require.resolve('@iceworks/spec')),
-    fix: !!fix,
+    fix: !!fixErr,
     useEslintrc: false,
   });
 
@@ -56,12 +67,10 @@ export default function getEslintReports(directory: string, timer: Timer, files:
 
   const data = cliEngine.executeOnFiles(targetFiles);
 
-  if (fix) {
+  if (fixErr) {
     // output fixes to disk
     CLIEngine.outputFixes(data);
   }
-
-  timer.checkTimeout();
 
   (data.results || []).forEach((result) => {
     // Remove Parsing error
