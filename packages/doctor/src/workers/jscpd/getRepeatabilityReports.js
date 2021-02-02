@@ -2,14 +2,10 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { jscpd } = require('jscpd');
-const config = require('../config').default;
-const Scorer = require('../Scorer').default;
-
-const [directory, tempFileDir, ignore] = process.argv.slice(2)[0].split(' ');
-getRepeatabilityReports();
+const Scorer = require('../../Scorer').default;
 
 // https://www.npmjs.com/package/jscpd
-async function getRepeatabilityReports() {
+module.exports = async function getRepeatabilityReports(directory, tempFileDir, ignore) {
   let clones = [];
   let repetitionPercentage = 0;
 
@@ -40,11 +36,9 @@ async function getRepeatabilityReports() {
     console.log(e);
   }
 
-  const result = {
+  return {
     // High repetitionPercentage is a big problem, increase the deduction
     score: new Scorer().minus(repetitionPercentage * 3),
     clones,
   };
-
-  fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.report.jscpd), JSON.stringify(result));
-}
+};

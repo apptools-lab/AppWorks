@@ -45,7 +45,7 @@ export default class Scanner {
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
-      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
+      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint/index.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
       processReportList.push(async () => {
         reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
       });
@@ -53,7 +53,7 @@ export default class Scanner {
 
     // Run maintainability
     if (!options || options.disableMaintainability !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex.js'), [tempFileDir]));
+      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]));
       processReportList.push(async () => {
         reports.maintainability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.escomplex));
       });
@@ -61,7 +61,7 @@ export default class Scanner {
 
     // Run repeatability
     if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd/index.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
       processReportList.push(async () => {
         reports.repeatability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.jscpd));
       });

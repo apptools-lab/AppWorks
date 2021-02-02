@@ -1,9 +1,10 @@
-import * as fs from 'fs-extra';
-import { join } from 'path';
-import { parse } from '@babel/parser';
-import traverse from '@babel/traverse';
+/* eslint-disable */
+const fs = require('fs-extra');
+const { join } = require('path');
+const { parse } = require('@babel/parser');
+const traverse = require('@babel/traverse').default;
 
-export default function getCustomESLintConfig(directory: string) {
+module.exports = function getCustomESLintConfig(directory) {
   let config = {};
   const configFilePath = join(directory, '.eslintrc.js');
 
@@ -14,8 +15,8 @@ export default function getCustomESLintConfig(directory: string) {
       plugins: ['flow', 'exportDefaultFrom', 'exportNamespaceFrom'],
     });
 
-    traverse(ast as any, {
-      CallExpression(nodePath: any) {
+    traverse(ast, {
+      CallExpression(nodePath) {
         const { node } = nodePath;
         if (node.callee.name === 'getESLintConfig' && node.arguments && node.arguments[1]) {
           const configNode = node.arguments[1];
@@ -28,4 +29,4 @@ export default function getCustomESLintConfig(directory: string) {
   }
 
   return config;
-}
+};

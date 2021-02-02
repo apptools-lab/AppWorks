@@ -1,12 +1,12 @@
+
 /* eslint-disable */
 const fs = require('fs-extra');
 const path = require('path');
 const ignore = require('ignore');
 const { CLIEngine } = require('eslint');
 const { deepmerge, getESLintConfig } = require('@iceworks/spec');
-const config = require('../config').default;
-const getCustomESLintConfig = require('../getCustomESLintConfig').default;
-const Scorer = require('../Scorer').default;
+const getCustomESLintConfig = require('./getCustomESLintConfig');
+const Scorer = require('../../Scorer').default;
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -17,12 +17,8 @@ const BONUS_WEIGHT = 2;
 
 const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
-const [directory, tempFileDir, ruleKey, fix] = process.argv.slice(2)[0].split(' ');
-getEslintReports();
-
-function getEslintReports() {
+module.exports = function getEslintReports(directory, files, ruleKey, fix) {
   const fixErr = fix === 'true';
-  const files = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.files));
   const customConfig = getCustomESLintConfig(directory) || {};
   if (ruleKey.indexOf('ts') !== -1) {
     if (!customConfig.parserOptions) {
@@ -129,12 +125,11 @@ function getEslintReports() {
     scorer.plus(BONUS_WEIGHT);
   }
 
-  const result = {
+  return {
     score: scorer.getScore(),
     reports,
     errorCount,
     warningCount,
     customConfig,
   };
-  fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.report.eslint), JSON.stringify(result));
-}
+};
