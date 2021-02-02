@@ -4,6 +4,4 @@ import { Recorder } from '@iceworks/recorder';
 const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
-export default () => {
-  return recorder;
-};
+export default recorder;

@@ -3,7 +3,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { registerCommand, initExtension, getDataFromSettingJson } from '@iceworks/common-service';
-import getRecorder from './getRecorder';
+import recorder from './recorder';
 import getScanReport from './getScanReport';
 import setDiagnostics from './setDiagnostics';
 import * as zhCNTextMap from './locales/zh-CN.json';
@@ -15,6 +15,10 @@ const { name } = require('../package.json');
 
 export function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
+
+  console.log('Congratulations, your extension "iceworks-doctor" is now active!');
+  recorder.recordActivate();
+
   const { extensionPath } = context;
   const useEn = vscode.env.language !== 'zh-cn';
 
@@ -98,7 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
       context.subscriptions,
     );
 
-    connectService(reportWebviewPanel, context, { services, recorder: getRecorder() });
+    connectService(reportWebviewPanel, context, { services, recorder });
   };
 
   // Code Quality Dashboard
