@@ -105,14 +105,14 @@ export async function getProjectTypeAndVersion(projectPath: string): Promise<Pro
   return getProjectTypeInfo(projectPath);
 }
 
-export async function getProjectFrameworkAndVersionSync(projectPath: string): Promise<ProjectFrameworkInfo> {
+export async function getProjectFrameworkAndVersion(projectPath: string): Promise<ProjectFrameworkInfo> {
   return getProjectFrameworkInfo(projectPath);
 }
 
-export async function getProjectLanguageTypeSync(projectPath: string): Promise<ProjectLanguageType> {
+export async function getProjectLanguageType(projectPath: string): Promise<ProjectLanguageType> {
   const hasTsconfig = await existsAsync(join(projectPath, 'tsconfig.json'));
 
-  const { framework, version } = await getProjectFrameworkAndVersionSync(projectPath);
+  const { framework, version } = await getProjectFrameworkAndVersion(projectPath);
   let isTypescript = false;
   if (framework === 'icejs') {
     // icejs 都有 tsconfig，因此需要通过 src/app.js[x] 进一步区分
