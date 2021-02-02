@@ -25,6 +25,7 @@ export default class Scanner {
     const reports = {} as IScannerReports;
     const tempFileDir = options?.tempFileDir || tempDir;
     const subprocessList: any[] = [];
+    const processReportList: any[] = [];
 
     if (!fs.pathExistsSync(tempFileDir)) {
       fs.mkdirpSync(tempFileDir);
@@ -40,40 +41,36 @@ export default class Scanner {
 
     fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.files), JSON.stringify(files));
 
-    const shouldRunEslint = !options || options.disableESLint !== true;
-    const shouldRunEscomplex = !options || options.disableMaintainability !== true;
-    const shouldRunJscpd = (!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines);
-
     // Run ESLint
-    if (shouldRunEslint) {
+    if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts
       const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
       subprocessList.push(execa.node(path.join(__dirname, './workers/eslint.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
+      processReportList.push(async () => {
+        reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
+      });
     }
 
     // Run maintainability
-    if (shouldRunEscomplex) {
+    if (!options || options.disableMaintainability !== true) {
       subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex.js'), [tempFileDir]));
+      processReportList.push(async () => {
+        reports.maintainability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.escomplex));
+      });
     }
 
     // Run repeatability
-    if (shouldRunJscpd) {
+    if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
       subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+      processReportList.push(async () => {
+        reports.repeatability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.jscpd));
+      });
     }
 
+    // Check
     await Promise.all(subprocessList);
-    // Set ESLint result
-    if (shouldRunEslint) {
-      reports.ESLint = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.eslint));
-    }
-    // Set maintainability result
-    if (shouldRunEscomplex) {
-      reports.maintainability = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.escomplex));
-    }
-    // Set repeatability result
-    if (shouldRunJscpd) {
-      reports.repeatability = fs.readJSONSync(path.join(tempFileDir, config.tmpFiles.report.jscpd));
-    }
+    // Set result
+    await Promise.all(processReportList.map(async (fn) => { await fn(); }));
 
     // Calculate total score
     reports.score = getFinalScore(
