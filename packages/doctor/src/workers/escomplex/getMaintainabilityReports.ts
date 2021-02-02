@@ -1,11 +1,12 @@
-/* eslint-disable */
-const escomplex = require('typhonjs-escomplex');
-const Scorer = require('../../Scorer').default;
+import * as escomplex from 'typhonjs-escomplex';
+import Scorer from '../../Scorer';
+import { IMaintainabilityReport, IMaintainabilityReports } from '../../types/Scanner';
+import { IFileInfo } from '../../types/File';
 
 const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue)$/;
 
 // https://www.npmjs.com/package/typhonjs-escomplex
-module.exports = function getMaintainabilityReports(files) {
+export default function getMaintainabilityReports(files: IFileInfo[]): IMaintainabilityReports {
   const reports = [];
 
   files.forEach((file) => {
@@ -26,7 +27,7 @@ module.exports = function getMaintainabilityReports(files) {
   });
 
   return {
-    score: new Scorer().getAverage(reports.map((item) => item.maintainability)),
+    score: new Scorer().getAverage(reports.map((item: IMaintainabilityReport) => item.maintainability)),
     reports,
   };
-};
+}

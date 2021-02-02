@@ -1,12 +1,12 @@
-
-/* eslint-disable */
-const fs = require('fs-extra');
-const path = require('path');
-const ignore = require('ignore');
-const { CLIEngine } = require('eslint');
-const { deepmerge, getESLintConfig } = require('@iceworks/spec');
-const getCustomESLintConfig = require('./getCustomESLintConfig');
-const Scorer = require('../../Scorer').default;
+import * as fs from 'fs-extra';
+import * as path from 'path';
+import ignore from 'ignore';
+import { CLIEngine } from 'eslint';
+import { deepmerge, getESLintConfig } from '@iceworks/spec';
+import getCustomESLintConfig from './getCustomESLintConfig';
+import Scorer from '../../Scorer';
+import { IEslintReports } from '../../types/Scanner';
+import { IFileInfo } from '../../types/File';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -17,9 +17,9 @@ const BONUS_WEIGHT = 2;
 
 const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
 
-module.exports = function getEslintReports(directory, files, ruleKey, fix) {
+export default function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: string): IEslintReports {
   const fixErr = fix === 'true';
-  const customConfig = getCustomESLintConfig(directory) || {};
+  const customConfig: any = getCustomESLintConfig(directory) || {};
   if (ruleKey.indexOf('ts') !== -1) {
     if (!customConfig.parserOptions) {
       customConfig.parserOptions = {};
@@ -36,7 +36,7 @@ module.exports = function getEslintReports(directory, files, ruleKey, fix) {
   let errorCount = 0;
 
   // package.json object
-  let packageInfo = {};
+  let packageInfo: any = {};
 
   const reports = [];
 
@@ -132,4 +132,4 @@ module.exports = function getEslintReports(directory, files, ruleKey, fix) {
     warningCount,
     customConfig,
   };
-};
+}

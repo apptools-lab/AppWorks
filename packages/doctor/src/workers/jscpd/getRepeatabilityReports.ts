@@ -1,12 +1,13 @@
-/* eslint-disable */
-const fs = require('fs-extra');
-const path = require('path');
-const { jscpd } = require('jscpd');
-const Scorer = require('../../Scorer').default;
+import * as fs from 'fs-extra';
+import * as path from 'path';
+import { IClone } from '@jscpd/core';
+import { jscpd } from 'jscpd';
+import Scorer from '../../Scorer';
+import { IRepeatabilityReports } from '../../types/Scanner';
 
 // https://www.npmjs.com/package/jscpd
-module.exports = async function getRepeatabilityReports(directory, tempFileDir, ignore) {
-  let clones = [];
+export default async function getRepeatabilityReports(directory: string, tempFileDir: string, ignore: string): Promise<IRepeatabilityReports> {
+  let clones: IClone[] = [];
   let repetitionPercentage = 0;
 
   try {
@@ -41,4 +42,4 @@ module.exports = async function getRepeatabilityReports(directory, tempFileDir, 
     score: new Scorer().minus(repetitionPercentage * 3),
     clones,
   };
-};
+}
