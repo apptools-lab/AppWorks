@@ -8,7 +8,7 @@ import * as path from 'path';
 import { ALI_GITLAB_URL, ALI_DIP_PRO, ALI_DEF_WORK_URL } from '@iceworks/constant';
 import { projectPath, jsxFileExtnames } from './constant';
 import { generatorCreatetask, getGeneratorTaskStatus, applyRepository, getBasicInfo } from './def';
-import { getInfo } from '@iceworks/project-utils/lib/git';
+import { getGitInfo } from '@iceworks/project-utils/lib/git';
 import i18n from './i18n';
 import { getProjectPackageJSON } from './utils';
 import { IDEFProjectField, IProjectField } from './types';
@@ -86,7 +86,7 @@ export async function getProjectBaseInfo() {
 }
 
 export async function getProjectGitInfo() {
-  const info = await getInfo(projectPath);
+  const info = await getGitInfo(projectPath);
   return info;
 }
 

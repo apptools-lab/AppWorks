@@ -6,7 +6,7 @@ import * as GitUrlParse from 'git-url-parse';
 const gitBranch = require('git-branch');
 const gitRemoteOriginUrl = require('git-remote-origin-url');
 
-export interface Info {
+export interface GitInfo {
   branch: string; // master
   repository: string; // git@github.com:ice-lab/iceworks.git
   remoteUrl: string; // https://github.com/ice-lab/iceworks
@@ -20,17 +20,17 @@ export function checkIsGitProject(dirPath: string) {
   return fse.existsSync(path.join(dirPath, '.git'));
 }
 
-export async function getBranch(dirPath: string) {
+export async function getGitBranch(dirPath: string) {
   const branch = await gitBranch(dirPath);
   return branch;
 }
 
-export async function getRemoteOriginUrl(dirPath: string) {
+export async function getGitRemoteOriginUrl(dirPath: string) {
   const remoteOriginUrl = await gitRemoteOriginUrl(dirPath);
   return remoteOriginUrl;
 }
 
-export async function getInfo(dirPath: string): Promise<Info> {
+export async function getGitInfo(dirPath: string): Promise<GitInfo> {
   const isGit = checkIsGitProject(dirPath);
   let repository = '';
   let branch = '';
@@ -39,8 +39,8 @@ export async function getInfo(dirPath: string): Promise<Info> {
   let group = '';
   let project = '';
   if (isGit) {
-    repository = await getRemoteOriginUrl(dirPath);
-    branch = await getBranch(dirPath);
+    repository = await getGitRemoteOriginUrl(dirPath);
+    branch = await getGitBranch(dirPath);
     tag = await execPromise(
       'git describe --all',
       { cwd: dirPath },
