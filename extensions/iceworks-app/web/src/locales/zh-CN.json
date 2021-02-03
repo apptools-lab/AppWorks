@@ -51,7 +51,7 @@
   "web.iceworksApp.Dashboard.basic.list.project.framework": "框架",
   "web.iceworksApp.Dashboard.basic.list.project.path": "本地路径",
   "web.iceworksApp.Dashboard.basic.list.git.title": "Git 信息",
-  "web.iceworksApp.Dashboard.basic.list.git.repository": "仓库",
+  "web.iceworksApp.Dashboard.basic.list.git.remoteUrl": "仓库",
   "web.iceworksApp.Dashboard.basic.list.git.branch": "分支",
   "web.iceworksApp.Dashboard.basic.list.def.title": "DEF 信息",
   "web.iceworksApp.Dashboard.basic.list.def.defUrl": "工程平台",

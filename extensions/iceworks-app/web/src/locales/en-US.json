@@ -51,7 +51,7 @@
   "web.iceworksApp.Dashboard.basic.list.project.framework": "Framework",
   "web.iceworksApp.Dashboard.basic.list.project.path": "Local Path",
   "web.iceworksApp.Dashboard.basic.list.git.title": "Git",
-  "web.iceworksApp.Dashboard.basic.list.git.repository": "Repository",
+  "web.iceworksApp.Dashboard.basic.list.git.remoteUrl": "Repository",
   "web.iceworksApp.Dashboard.basic.list.git.branch": "Branch",
   "web.iceworksApp.Dashboard.basic.list.def.title": "DEF",
   "web.iceworksApp.Dashboard.basic.list.def.defUrl": "DEF URL",

@@ -2,7 +2,7 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
-import { getInfo, Info } from '@iceworks/project-service/lib/git';
+import { getInfo, Info } from '@iceworks/project-utils/lib/git';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
 import { jsonSpaces } from '../config';
 import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';

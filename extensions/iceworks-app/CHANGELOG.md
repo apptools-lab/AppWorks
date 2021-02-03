@@ -3,6 +3,7 @@
 ## 0.7.6
 
 - fix: terminal names are the same when running npm scripts
+- refactor: internal optimization
 
 ## 0.7.5
 

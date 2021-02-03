@@ -11,7 +11,7 @@ export default () => {
   const effectsState = pageStore.useModelEffectsState('info');
   const { basic, git, def, inited } = state;
   const { name, type, framework, path, feedbackLink } = basic;
-  const { repository, branch, isGit } = git;
+  const { remoteUrl, branch, isGit } = git;
   const { defUrl, idpUrl, isDef } = def;
 
   function handleOpenLocalPath() {
@@ -62,8 +62,8 @@ export default () => {
               <h3><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.title" /></h3>
               <ul>
                 <li>
-                  <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.repository" /></strong>
-                  <a href={repository}>{repository}</a>
+                  <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.remoteUrl" /></strong>
+                  <a href={remoteUrl}>{remoteUrl}</a>
                 </li>
                 <li>
                   <strong><FormattedMessage id="web.iceworksApp.Dashboard.basic.list.git.branch" /></strong>
