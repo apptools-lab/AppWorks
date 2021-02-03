@@ -5,7 +5,7 @@ const CLIENT_TOKEN = process && process.env && process.env.CLIENT_TOKEN;
 export default {
   state: {
     basic: { name: '-', description: '-', type: '-', framework: '-', path: '-', feedbackLink: '' },
-    git: { repository: '-', branch: '-', isGit: false },
+    git: { remoteUrl: '-', branch: '-', isGit: false },
     def: { idpUrl: '-', defUrl: '-', isDef: false },
     inited: false,
   },
