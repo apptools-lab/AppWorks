@@ -6,15 +6,37 @@ import { getCommandResultLine } from './common';
 // eslint-disable-next-line
 const { name: extensionName, version: extensionVersion } = require('../../package.json');
 
+// eslint-disable-next-line
+const checkIsElectron = require('is-electron');
+
+function getO2Version() {
+  const O2Version = process.env.O2_VERSION;
+  return O2Version;
+}
+
 export interface EditorInfo {
   editorName: string;
   editorVersion: string;
 }
 
 export function getEditorInfo(): EditorInfo {
+  const o2Version = getO2Version();
+  const isElectron = checkIsElectron();
+
+  let editorName = vscode.env.appName;
+  let editorVersion = vscode.version;
+  if (o2Version) {
+    editorVersion = o2Version;
+    if (isElectron) {
+      editorName = 'O2 Client';
+    } else {
+      editorName = 'O2 Online';
+    }
+  }
+
   return {
-    editorName: vscode.env.appName,
-    editorVersion: vscode.version,
+    editorName,
+    editorVersion,
   };
 }
 

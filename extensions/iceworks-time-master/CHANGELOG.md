@@ -3,6 +3,7 @@
 ## 0.3.7
 
 - refactor: internal optimization
+- feat: editor info
 
 ## 0.3.6
 
