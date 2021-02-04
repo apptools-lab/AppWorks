@@ -46,13 +46,13 @@ export async function getGitInfo(dirPath: string): Promise<GitInfo> {
         'git describe --all',
         { cwd: dirPath },
       );
+      const gitUrlParse = GitUrlParse(repository);
+      remoteUrl = gitUrlParse.toString('https');
+      group = gitUrlParse.owner;
+      project = gitUrlParse.name;
     } catch (e) {
       // ignore error
     }
-    const gitUrlParse = GitUrlParse(repository);
-    remoteUrl = gitUrlParse.toString('https');
-    group = gitUrlParse.owner;
-    project = gitUrlParse.name;
   }
   return {
     branch,
