@@ -3,6 +3,8 @@
 ## 0.3.7
 
 - refactor: internal optimization
+- feat: editor info
+- fix: storage limit
 
 ## 0.3.6
 
