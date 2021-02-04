@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.16.2
+
+- fix: generator page by blocks
+- fix: terminal names are the same when running the scripts
+- refactor: record extension active
+- fix: time master
+
 ## 0.16.1
 
 - feat: settings for control Time Master Views
