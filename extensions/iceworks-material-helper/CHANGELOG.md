@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.5
+
+- fix: generator page by blocks
+
 ## 0.5.4
 
 - refactor: internal optimization
@@ -18,7 +22,7 @@
 
 - feat: support generate route to app.json in rax application
 - fix: `<div>` to `<View>` rax page template 
-- refactor: find comopnent logic
+- refactor: find comopnent logic  
 
 # 0.5.0
 

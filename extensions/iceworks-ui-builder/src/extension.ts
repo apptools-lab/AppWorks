@@ -15,12 +15,12 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-ui-builder" is now active!');
+  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context, name);
 
   function activeComponentGeneratorWebview() {
-    recorder.recordActivate();
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(
       'iceworks',
       i18n.format('extension.iceworksComponentGenerator.extension.webviewTitle'),

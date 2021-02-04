@@ -82,7 +82,7 @@ export async function getStorageDaysDirs() {
 export async function checkStorageDaysIsLimited() {
   const timeStorageLimit = getDataFromSettingJson(CONFIGURATION_KEY_TIME_STORAGE_LIMIT) || DEFAULT_TIME_STORAGE_LIMIT;
   const storageDaysDirs = await getStorageDaysDirs();
-  const excess = storageDaysDirs.length - timeStorageLimit;
+  const excess = storageDaysDirs.length - timeStorageLimit > 0;
 
   // over the limit, delete the earlier storage
   if (excess) {

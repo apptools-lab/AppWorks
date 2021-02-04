@@ -22,6 +22,7 @@
   "web.iceworksMaterialHelper.pageCreator.defaultTitle": "Page Template Setting",
   "web.iceworksMaterialHelper.pageCreator.defaultDescription": "Plase complete this Form to generate customize page",
   "web.iceworksMaterialHelper.pageGenerater.selectBlocks": "Please select at least one block.",
+  "web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated": "Block name cannot be duplicated",
   "web.iceworksMaterialHelper.pageGenerater.successCreatePage": "Generate page code successfully!",
   "web.iceworksMaterialHelper.pageGenerater.successCreatePageToPath": "Successfully generated page code to {path}",
   "web.iceworksMaterialHelper.pageGenerater.openFile": "Open file",

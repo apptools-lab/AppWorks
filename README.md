@@ -36,9 +36,9 @@ Use Iceworks to develop Universal Application quickly:
 
 ## Contributors
 
-Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on icestore.
+Feel free to report any questions as an [issue](https://github.com/ice-lab/iceworks/issues/new), we'd love to have your helping hand on Iceworks.
 
-If you're interested in icestore, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
+If you're interested in Iceworks, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
 
 ## ICE Ecosystem
 

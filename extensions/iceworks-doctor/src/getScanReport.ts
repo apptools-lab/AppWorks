@@ -1,6 +1,6 @@
 import { Doctor } from '@iceworks/doctor';
 import { projectPath, getProjectType, getProjectLanguageType } from '@iceworks/project-service';
-import getRecorder from './getRecorder';
+import recorder from './recorder';
 import setDiagnostics from './setDiagnostics';
 import storage from './storage';
 
@@ -31,7 +31,7 @@ export default async (options) => {
     // Set VS Code problems
     setDiagnostics(report.securityPractices, true);
     // Record data
-    getRecorder().record({
+    recorder.record({
       module: 'main',
       action: 'doctor',
       data: {

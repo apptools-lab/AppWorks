@@ -47,10 +47,11 @@ export class NpmScriptsProvider implements vscode.TreeDataProvider<ScriptTreeIte
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
 
       const toScript = (scriptName: string, scriptCommand: string, id: string): ScriptTreeItem => {
+        const npmScript: string = createNpmCommand('run', scriptName);
         const command: vscode.Command = {
           command: 'iceworksApp.npmScripts.run',
-          title: 'Run Script',
-          arguments: [this.workspaceRoot, createNpmCommand('run', scriptName)],
+          title: npmScript,
+          arguments: [this.workspaceRoot, npmScript],
         };
         return new ScriptTreeItem(this.extensionContext, scriptName, scriptCommand, command, id);
       };
