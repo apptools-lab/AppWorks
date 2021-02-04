@@ -39,16 +39,20 @@ export async function getGitInfo(dirPath: string): Promise<GitInfo> {
   let group = '';
   let project = '';
   if (isGit) {
-    repository = await getGitRemoteOriginUrl(dirPath);
-    branch = await getGitBranch(dirPath);
-    tag = await execPromise(
-      'git describe --all',
-      { cwd: dirPath },
-    );
-    const gitUrlParse = GitUrlParse(repository);
-    remoteUrl = gitUrlParse.toString('https');
-    group = gitUrlParse.owner;
-    project = gitUrlParse.name;
+    try {
+      repository = await getGitRemoteOriginUrl(dirPath);
+      branch = await getGitBranch(dirPath);
+      tag = await execPromise(
+        'git describe --all',
+        { cwd: dirPath },
+      );
+      const gitUrlParse = GitUrlParse(repository);
+      remoteUrl = gitUrlParse.toString('https');
+      group = gitUrlParse.owner;
+      project = gitUrlParse.name;
+    } catch (e) {
+      // ignore error
+    }
   }
   return {
     branch,
