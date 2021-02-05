@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.6
+
+- refactor: internal optimization
+
 ## 0.5.5
 
 - fix: generator page by blocks
