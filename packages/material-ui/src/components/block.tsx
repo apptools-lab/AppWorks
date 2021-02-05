@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IMaterialBlock, PLACEHOLDER_IMG } from '@iceworks/material-utils';
 import classnames from 'classnames';
 import { Icon } from '@alifd/next';
-import * as styles from './block.module.scss';
+import styles from './block.module.scss';
 
 export const MaterialBlock: React.FC<{
   dataSource: IMaterialBlock;

@@ -18,7 +18,7 @@
     "@alifd/theme-iceworks-dark": "^1.1.0",
     "@formily/next": "^1.3.5",
     "@formily/next-components": "^1.3.5",
-    "@iceworks/material-ui": "^0.1.6",
+    "@iceworks/material-ui": "^0.1.17",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.1",
     "lodash.forin": "^4.4.0",

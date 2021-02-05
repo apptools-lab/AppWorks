@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IMaterialBase } from '@iceworks/material-utils';
 import classnames from 'classnames';
-import * as styles from './base.module.scss';
+import styles from './base.module.scss';
 
 export const MaterialBase: React.FC<{
   dataSource: IMaterialBase;
