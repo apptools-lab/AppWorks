@@ -15,7 +15,7 @@ import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';
 import { MaterialBase } from './base';
 import { MaterialPage } from './page';
-import * as styles from './type.module.scss';
+import styles from './type.module.scss';
 
 const { Cell } = ResponsiveGrid;
 
