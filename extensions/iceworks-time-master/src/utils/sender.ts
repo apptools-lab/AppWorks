@@ -149,10 +149,13 @@ export async function checkPayloadIsLimited() {
   const playloadLimit = 1024 * 1024 * 10; // mb
   await Promise.all([KEYSTROKES_RECORD, USAGES_RECORD].map(async (TYPE) => {
     const file = getPayloadFile(TYPE);
-    const { size } = await fse.stat(file);
-    if (size > playloadLimit) {
-      await clearPayloadData(TYPE);
-      logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
+    const fileIsExists = await fse.pathExists(file);
+    if (fileIsExists) {
+      const { size } = await fse.stat(file);
+      if (size > playloadLimit) {
+        await clearPayloadData(TYPE);
+        logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
+      }
     }
   }));
 }
