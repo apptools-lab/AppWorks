@@ -83,12 +83,13 @@ export async function checkStorageDaysIsLimited() {
   const timeStorageLimit = getDataFromSettingJson(CONFIGURATION_KEY_TIME_STORAGE_LIMIT) || DEFAULT_TIME_STORAGE_LIMIT;
   const storageDaysDirs = await getStorageDaysDirs();
   const timeStorageLength = storageDaysDirs.length;
-  const excess = timeStorageLength - timeStorageLimit > 0;
+  const excess = timeStorageLength - timeStorageLimit;
+  const isExcess = excess > 0;
 
-  logger.info(`[storage][checkStorageDaysIsLimited], timeStorageLength(${timeStorageLength}), timeStorageLimit(${timeStorageLimit})`);
+  logger.info(`[storage][checkStorageDaysIsLimited], timeStorageLength(${timeStorageLength}), timeStorageLimit(${timeStorageLimit}), isExcess(${isExcess})`);
 
   // over the limit, delete the earlier storage
-  if (excess) {
+  if (isExcess) {
     const storageDaysPath = getStorageDaysPath();
     await Promise.all(storageDaysDirs.splice(0, excess).map(async (dayDir) => {
       await fse.remove(path.join(storageDaysPath, dayDir));
