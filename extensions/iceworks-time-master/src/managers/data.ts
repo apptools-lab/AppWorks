@@ -72,5 +72,5 @@ export function generateProjectSummaryReport() {
 }
 
 export function generateUserSummaryReport() {
-  setProgressToGenerateSummaryReport('Loading summary...', generateUserReport);
+  setProgressToGenerateSummaryReport('Loading user summary...', generateUserReport);
 }
