@@ -169,7 +169,7 @@ async function sendBulkCreate(type, playloadData, extra) {
     })));
 
     if (!isResponseOk(bulkCreateResponse)) {
-      logger.info('[sender][sendBulkCreate] response', bulkCreateResponse);
+      logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText}), data(${bulkCreateResponse.data})`);
       throw new Error(bulkCreateResponse.data.message);
     }
   } catch (e) {
