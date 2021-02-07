@@ -1,6 +1,6 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as os from 'os';
+import * as userHome from 'user-home';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 import { getNowDay } from './time';
 import logger from './logger';
@@ -11,8 +11,7 @@ const mkdirp = require('mkdirp');
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
-const homedir = os.homedir();
-const iceworksStoragePath = path.join(homedir, '.iceworks');
+const iceworksStoragePath = path.join(userHome, '.iceworks');
 const EXTENSION_TAG = 'TimeMaster';
 
 export function getStoragePath() {

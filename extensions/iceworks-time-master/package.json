@@ -95,6 +95,7 @@
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/configure": "^0.1.0",
+    "user-home": "^2.0.0",
     "axios": "^0.21.0",
     "egg-logger": "^2.4.2",
     "fs-extra": "^9.0.1",
