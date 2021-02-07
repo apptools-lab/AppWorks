@@ -50,9 +50,6 @@ export async function activate(context: ExtensionContext) {
         action: 'openFileInEditor',
       });
     }),
-    commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
-      keystrokeStatsRecorder.sendData();
-    }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();
     }),

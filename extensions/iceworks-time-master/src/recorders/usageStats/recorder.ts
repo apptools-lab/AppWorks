@@ -4,11 +4,14 @@ import { Project } from '../../storages/project';
 import { cleanTextInfoCache } from '../../storages/file';
 import { UsageStats } from './usageStats';
 import { NODE_ACTIVE_TEXT_EDITOR_NAME } from '../../constants';
+import { processUsageStatsDurationMins } from '../../config';
 
 const usageStatsMap: {[projectPath: string]: UsageStats} = {};
 
 export class UsageStatsRecorder {
   private currentUsageFilePath: string;
+
+  private processUsageStatsTimmer: NodeJS.Timeout;
 
   async activate() {
     const { focused } = window.state;
@@ -20,13 +23,29 @@ export class UsageStatsRecorder {
     if (focused) {
       await this.startRecord();
     }
+
+    this.processUsageStatsTimmer = setInterval(() => {
+      if (window.state.focused) {
+        this.sendData().catch((e) => {
+          logger.error('[UsageStatsRecorder][activate][setInterval]got error:', e);
+        });
+      }
+    }, processUsageStatsDurationMins);
   }
 
   async deactivate() {
-    // placeholder
+    if (this.processUsageStatsTimmer) {
+      clearInterval(this.processUsageStatsTimmer);
+    }
   }
 
-  async sendData() {
+  /**
+   * send logic:
+   *
+   * - Change Window State, not focused
+   * - A certain time interval, control by "processUsageStatsDurationMins"
+   */
+  private async sendData() {
     const usageStatsMapKeys = Object.keys(usageStatsMap);
     logger.debug('[UsageStatsRecorder][endRecord][usageStatsMapKeys]', usageStatsMapKeys);
 
