@@ -3,7 +3,6 @@ import * as path from 'path';
 import * as userHome from 'user-home';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 import { getNowDay } from './time';
-import logger from './logger';
 
 const orderBy = require('lodash.orderby');
 const mkdirp = require('mkdirp');
@@ -85,8 +84,6 @@ export async function checkStorageDaysIsLimited() {
   const timeStorageLength = storageDaysDirs.length;
   const excess = timeStorageLength - timeStorageLimit;
   const isExcess = excess > 0;
-
-  logger.info(`[storage][checkStorageDaysIsLimited], timeStorageLength(${timeStorageLength}), timeStorageLimit(${timeStorageLimit}), isExcess(${isExcess})`);
 
   // over the limit, delete the earlier storage
   if (isExcess) {
