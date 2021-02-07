@@ -4,7 +4,7 @@ import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
 import logger, { reloadLogger } from '../utils/logger';
 import { getInterface as getUsageStatsRecorder } from '../recorders/usageStats';
-import { checkMidnightDurationMins, snedPayloadDurationMins, processUsageStatsDurationMins } from '../config';
+import { checkMidnightDurationMins, sendPayloadDurationMins, processUsageStatsDurationMins } from '../config';
 
 const usageStatsRecorder = getUsageStatsRecorder();
 
@@ -41,7 +41,7 @@ export async function activate() {
     sendPayload().catch((e) => {
       logger.error('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
-  }, snedPayloadDurationMins);
+  }, sendPayloadDurationMins);
 
   processUsageStatsTimmer = setInterval(() => {
     if (window.state.focused) {
