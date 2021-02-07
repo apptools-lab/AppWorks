@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.16.3
+
+- chore: upgrade material helper
+
 ## 0.16.2
 
 - fix: generator page by blocks

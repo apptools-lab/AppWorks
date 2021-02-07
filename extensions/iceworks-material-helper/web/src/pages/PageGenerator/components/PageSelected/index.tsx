@@ -3,7 +3,7 @@ import { Icon, Input } from '@alifd/next';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { PLACEHOLDER_IMG } from '@iceworks/material-utils';
 import { FormattedMessage } from 'react-intl';
-import * as styles from './index.module.scss';
+import styles from './index.module.scss';
 
 export const BlockDragHandle = SortableHandle(({ title, screenshot }) => (
   <div className={styles.screenshot}>

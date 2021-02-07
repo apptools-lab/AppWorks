@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IMaterialComponent } from '@iceworks/material-utils';
 import classnames from 'classnames';
-import * as styles from './component.module.scss';
+import styles from './component.module.scss';
 
 export const MaterialComponent: React.FC<{
   dataSource: IMaterialComponent;
