@@ -41,7 +41,7 @@
       "explorer": [
         {
           "id": "npmScripts",
-          "name": "%iceworksApp.view.npmScripts.name%",
+          "name": "%iceworksApp.view.actions.name%",
           "when": "!iceworks:projectIsNotTargetType"
         },
         {
