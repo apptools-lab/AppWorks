@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.7
+
+- feat: add "importer material" and "show material doc" to editor title
+
 ## 0.5.6
 
 - refactor: internal optimization

@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
