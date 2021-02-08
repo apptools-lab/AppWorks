@@ -39,5 +39,5 @@
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Debug",
   "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall",
-  "iceworksApp.kaitianContributes.toolbar.dashboard.title": "Dashboard"
+  "iceworksApp.kaitianContributes.toolbar.DefPublish.title": "Publish"
 }
