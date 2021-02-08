@@ -35,9 +35,7 @@ export async function processData(data: KeystrokeStats|UsageStats) {
   if (!isProcessing) {
     isProcessing = true;
     await checkMidnight();
-    await Promise.all([saveDataToDisk, appendDataToPayload].map(async (fn) => {
-      await fn(data);
-    }));
+    await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
     isProcessing = false;
   } else {
     await delay(1000);
@@ -74,5 +72,5 @@ export function generateProjectSummaryReport() {
 }
 
 export function generateUserSummaryReport() {
-  setProgressToGenerateSummaryReport('Loading summary...', generateUserReport);
+  setProgressToGenerateSummaryReport('Loading user summary...', generateUserReport);
 }

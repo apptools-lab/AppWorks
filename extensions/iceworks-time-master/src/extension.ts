@@ -22,7 +22,9 @@ export async function activate(context: ExtensionContext) {
   recorder.recordActivate();
 
   // do not wait for async, let subsequent views be created
-  activateWalkClock();
+  activateWalkClock().catch((e) => {
+    logger.error('[TimeMaster][extension] activate walkClock got error:', e);
+  });
 
   autoSetEnableViewsConfig(globalState);
 
@@ -49,9 +51,6 @@ export async function activate(context: ExtensionContext) {
         module: 'command',
         action: 'openFileInEditor',
       });
-    }),
-    commands.registerCommand('iceworks-time-master.sendKeystrokeStatsMap', () => {
-      keystrokeStatsRecorder.sendData();
     }),
     commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
       timerProvider.refresh();
@@ -86,15 +85,21 @@ export async function activate(context: ExtensionContext) {
   );
 }
 
-export function deactivate() {
+export async function deactivate() {
   logger.debug('[TimeMaster][extension] deactivate!');
 
-  keystrokeStatsRecorder.deactivate().catch((e) => {
-    logger.error('[TimeMaster][extension] deactivate keystrokeStatsRecorder got error:', e);
-  });
-  usageStatsRecorder.deactivate().catch((e) => {
-    logger.error('[TimeMaster][extension] deactivate usageStatsRecorder got error:', e);
-  });
+  try {
+    await Promise.all([
+      keystrokeStatsRecorder.deactivate(),
+      usageStatsRecorder.deactivate(),
+    ]);
+  } catch (e) {
+    logger.error('[TimeMaster][extension] deactivate recorders got error:', e);
+  }
 
-  deactivateWalkClock();
+  try {
+    await deactivateWalkClock();
+  } catch (e) {
+    logger.error('[TimeMaster][extension] deactivate walkClock got error:', e);
+  }
 }
