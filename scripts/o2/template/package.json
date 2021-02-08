@@ -34,8 +34,8 @@
           "type": "button",
           "title": "%iceworksApp.kaitianContributes.toolbar.runDebug.title%",
           "iconPath": "./assets/dark/run.svg",
-          "id": "iceworksApp.editorMenu.runDebug",
-          "command": "iceworksApp.editorMenu.runDebug"
+          "id": "iceworksApp.scripts.runDebug",
+          "command": "iceworksApp.scripts.runDebug"
         },
         {
           "type": "button",
@@ -48,8 +48,8 @@
           "type": "button",
           "title": "%iceworksApp.kaitianContributes.toolbar.DefPublish.title%",
           "iconPath": "./assets/dark/upload.svg",
-          "id": "iceworksApp.editorMenu.DefPublish",
-          "command": "iceworksApp.editorMenu.DefPublish"
+          "id": "iceworksApp.scripts.DefPublish",
+          "command": "iceworksApp.scripts.DefPublish"
         }
       ]
     }

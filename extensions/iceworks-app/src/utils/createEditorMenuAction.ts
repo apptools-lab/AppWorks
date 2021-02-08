@@ -42,7 +42,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     connectService(previewWebviewPanel, context, { services, recorder });
   }
 
-  const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';
+  const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.scripts.runDebug';
   registerCommand(EDITOR_MENU_RUN_DEBUG, async () => {
     let shouldInstall = false;
     const isPegasusProject = await checkIsPegasusProject();
@@ -79,7 +79,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     }
   });
 
-  const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
+  const EDITOR_MENU_RUN_BUILD = 'iceworksApp.scripts.runBuild';
   registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
     const pathExists = await checkPathExists(projectPath, dependencyDir);
     const title = 'Run Build';
@@ -97,7 +97,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
 
   const isAliInternal = await checkIsAliInternal();
   if (isAliInternal) {
-    registerCommand('iceworksApp.editorMenu.DefPublish', () => {
+    registerCommand('iceworksApp.scripts.DefPublish', () => {
       showDefPublishEnvQuickPick();
     });
   }

@@ -34,7 +34,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.detail'),
-    command: 'iceworksApp.editorMenu.runDebug',
+    command: 'iceworksApp.scripts.runDebug',
     async condition() {
       return await checkIsTargetProjectType();
     },
@@ -42,7 +42,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.detail'),
-    command: 'iceworksApp.editorMenu.DefPublish',
+    command: 'iceworksApp.scripts.DefPublish',
     async condition() {
       return (await checkIsAliInternal()) && await checkIsTargetProjectType();
     },
@@ -117,7 +117,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.detail'),
-    command: 'iceworksApp.editorMenu.runBuild',
+    command: 'iceworksApp.scripts.runBuild',
     async condition() {
       return await checkIsTargetProjectType();
     },
