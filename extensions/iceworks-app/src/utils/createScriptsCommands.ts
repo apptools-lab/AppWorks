@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
+import { createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { checkIsPegasusProject, dependencyDir, getProjectFramework, projectPath } from '@iceworks/project-service';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { DEFAULT_START_URL, IDevServerStartInfo, getDevServerStartInfo } from './getDevServerStartInfo';
@@ -11,7 +11,7 @@ import runScript from '../terminal/runScript';
 
 let previewWebviewPanel: vscode.WebviewPanel | undefined;
 
-export default async function createEditorMenuAction(context: vscode.ExtensionContext, recorder) {
+export default async function createScriptsCommands(context: vscode.ExtensionContext, recorder) {
   const { window } = vscode;
   const { extensionPath } = context;
 
@@ -95,10 +95,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     runScript(title, projectPath, npmBuildCommand);
   });
 
-  const isAliInternal = await checkIsAliInternal();
-  if (isAliInternal) {
-    registerCommand('iceworksApp.scripts.DefPublish', () => {
-      showDefPublishEnvQuickPick();
-    });
-  }
+  registerCommand('iceworksApp.scripts.DefPublish', () => {
+    showDefPublishEnvQuickPick();
+  });
 }

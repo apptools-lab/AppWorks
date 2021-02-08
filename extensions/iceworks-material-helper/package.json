@@ -77,6 +77,18 @@
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
         }
+      ],
+      "editor/title": [
+        {
+          "command": "iceworks-material-helper.material-importer.start",
+          "group": "navigation@01",
+          "when": "iceworks:isJSXFile"
+        },
+        {
+          "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
+          "group": "navigation@02",
+          "when": "iceworks:isJSXFile"
+        }
       ]
     },
     "configuration": {

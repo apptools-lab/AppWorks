@@ -18,7 +18,7 @@ import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
 import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
 import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
-import createEditorMenuAction from './utils/createEditorMenuAction';
+import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import autoStart from './utils/autoStart';
 import i18n from './i18n';
@@ -186,11 +186,7 @@ export async function activate(context: vscode.ExtensionContext) {
     });
   });
 
-  // init editor title menu
-  if (projectType !== 'unknown') {
-    vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
-    await createEditorMenuAction(context, recorder);
-  }
+  await createScriptsCommands(context, recorder);
 
   // TODO auto start welcome page when the application is new
   const isTargetProjectType = await checkIsTargetProjectType();

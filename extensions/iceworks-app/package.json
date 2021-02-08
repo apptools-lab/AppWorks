@@ -331,23 +331,6 @@
           "when": "false"
         }
       ],
-      "editor/title": [
-        {
-          "command": "iceworksApp.scripts.runDebug",
-          "group": "navigation@01",
-          "when": "iceworks:showScriptIconInEditorTitleMenu"
-        },
-        {
-          "command": "iceworksApp.scripts.runBuild",
-          "group": "navigation@02",
-          "when": "iceworks:showScriptIconInEditorTitleMenu"
-        },
-        {
-          "command": "iceworksApp.scripts.DefPublish",
-          "group": "navigation@03",
-          "when": "iceworks:showScriptIconInEditorTitleMenu && iceworks:isAliInternal"
-        }
-      ],
       "explorer/context": [
         {
           "command": "iceworksApp.components.add",
