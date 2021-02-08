@@ -27,7 +27,7 @@ export function setNowDay() {
   return day;
 }
 
-export function isNewDay() {
+export function checkIsNewDay() {
   const day = getDay();
   const currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);
   return currentDay !== day;

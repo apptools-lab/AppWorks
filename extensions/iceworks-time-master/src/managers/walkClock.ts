@@ -1,12 +1,15 @@
 import { commands, window, WindowState } from 'vscode';
-import { setNowDay, isNewDay } from '../utils/time';
+import { setNowDay, checkIsNewDay } from '../utils/time';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
 import logger, { checkLogsIsLimited, reloadLogger } from '../utils/logger';
 import { checkMidnightDurationMins, sendPayloadDurationMins } from '../config';
 
 export async function checkMidnight() {
-  if (isNewDay()) {
+  const isNewDay = checkIsNewDay();
+  logger.info('[walkClock][checkMidnight] run, isNewDay:', isNewDay);
+
+  if (isNewDay) {
     setNowDay();
     reloadLogger();
     try {
