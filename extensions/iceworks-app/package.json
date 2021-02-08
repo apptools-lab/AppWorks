@@ -40,6 +40,18 @@
       ]
     },
     "views": {
+      "explorer": [
+        {
+          "id": "npmScripts",
+          "name": "%iceworksApp.view.npmScripts.name%",
+          "when": "!iceworks:projectIsNotTargetType"
+        },
+        {
+          "id": "nodeDependencies",
+          "name": "%iceworksApp.view.nodeDependencies.name%",
+          "when": "!iceworks:projectIsNotTargetType"
+        }
+      ],
       "iceworksApp": [
         {
           "id": "welcome",
@@ -51,11 +63,6 @@
           "name": "%iceworksApp.view.quickEntries.name%"
         },
         {
-          "id": "npmScripts",
-          "name": "%iceworksApp.view.npmScripts.name%",
-          "when": "!iceworks:projectIsNotTargetType"
-        },
-        {
           "id": "pages",
           "name": "%iceworksApp.view.pages.name%",
           "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
@@ -64,11 +71,6 @@
           "id": "components",
           "name": "%iceworksApp.view.components.name%",
           "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
-        },
-        {
-          "id": "nodeDependencies",
-          "name": "%iceworksApp.view.nodeDependencies.name%",
-          "when": "!iceworks:projectIsNotTargetType"
         }
       ]
     },
