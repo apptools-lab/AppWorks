@@ -13,6 +13,7 @@ import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
 
+// eslint-disable-next-line
 import forIn = require('lodash.forin');
 
 const KEYSTROKES_RECORD = 'keystrokes';
@@ -55,7 +56,8 @@ async function checkIsSendable() {
   // checkIsAliInternal is judged by network environment
   // There is a situation: the user is a member of Alibaba,
   // but he works at home does not connect to the intranet.
-  return await checkIsAliInternal();
+  const isAliInternal = await checkIsAliInternal();
+  return isAliInternal;
 }
 
 function checkIsSendNow(): boolean {
@@ -63,7 +65,8 @@ function checkIsSendNow(): boolean {
   return window.state.focused;
 }
 
-function transformDataToPayload(keystrokeStats: KeystrokeStats|UsageStats): Array<KeystrokesPayload|UsagePayload> {
+function transformDataToPayload(keystrokeStats: KeystrokeStats|UsageStats):
+Array<KeystrokesPayload|UsagePayload> {
   const data: Array<KeystrokesPayload|UsagePayload> = [];
   const { files, project } = keystrokeStats;
   const { name: projectName, directory: projectDirectory, gitRepository, gitBranch, gitTag } = project;
@@ -124,7 +127,7 @@ export async function sendPayload(force?: boolean) {
 
 const timeout = ONE_SEC_MILLISECONDS * 5;
 async function send(api: string, data: any) {
-  return await axios({
+  const response = await axios({
     method: 'post',
     url: `${url}${api}`,
     timeout,
@@ -132,6 +135,7 @@ async function send(api: string, data: any) {
       data,
     },
   });
+  return response;
 }
 
 export function isResponseOk(response) {
@@ -145,29 +149,33 @@ export async function checkPayloadIsLimited() {
   const playloadLimit = 1024 * 1024 * 10; // mb
   await Promise.all([KEYSTROKES_RECORD, USAGES_RECORD].map(async (TYPE) => {
     const file = getPayloadFile(TYPE);
-    const { size } = await fse.stat(file);
-    if (size > playloadLimit) {
-      await clearPayloadData(TYPE);
-      logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
+    const fileIsExists = await fse.pathExists(file);
+    if (fileIsExists) {
+      const { size } = await fse.stat(file);
+      if (size > playloadLimit) {
+        await clearPayloadData(TYPE);
+        logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
+      }
     }
   }));
 }
 
-async function sendBlukCreate(type, playloadData, extra) {
+async function sendBulkCreate(type, playloadData, extra) {
+  logger.info(`[sender][sendBulkCreate] run, ${type}'s playloadData: ${playloadData.length}`);
   try {
-    const bulkCreateRespose = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
+    const bulkCreateResponse = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
       ...record,
       ...extra,
     })));
 
-    if (!isResponseOk(bulkCreateRespose)) {
-      logger.info('[sender][sendBlukCreate] response', bulkCreateRespose);
-      throw new Error(bulkCreateRespose.data.message);
+    if (!isResponseOk(bulkCreateResponse)) {
+      logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText}), data(${bulkCreateResponse.data})`);
+      throw new Error(bulkCreateResponse.data.message);
     }
   } catch (e) {
     // if got error, write back the data and resend it in the next cycle
     await appendPayloadData(type, playloadData);
-    logger.error('[sender][sendBlukCreate] got error:', e);
+    logger.error('[sender][sendBulkCreate] got error:', e);
     throw e;
   }
 }
@@ -194,13 +202,15 @@ async function sendPayloadData(type: string) {
     };
 
     if (playloadLength > 100) {
-      const batchPlayloads = [];
+      const batchPlayloadList = [];
       while (playload.length) {
-        batchPlayloads.push(playload.splice(0, 10));
+        batchPlayloadList.push(playload.splice(0, 10));
       }
-      await Promise.all(batchPlayloads.map(async (batchPlayload) => await sendBlukCreate(type, batchPlayload, extra)));
+      await Promise.all(batchPlayloadList.map(async (batchPlayload) => {
+        await sendBulkCreate(type, batchPlayload, extra);
+      }));
     } else {
-      await sendBlukCreate(type, playload, extra);
+      await sendBulkCreate(type, playload, extra);
     }
   }
 }
