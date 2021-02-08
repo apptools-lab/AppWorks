@@ -14,7 +14,7 @@ import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
 import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
-import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
+import showAllQuickPick from './quickPicks/showAllQuickPick';
 import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import autoStart from './utils/autoStart';
@@ -41,7 +41,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
     registerCommand(showExtensionsQuickPickCommandId, async () => {
-      await showEntriesQuickPick();
+      await showAllQuickPick();
     }),
   );
 
