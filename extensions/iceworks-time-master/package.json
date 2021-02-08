@@ -27,17 +27,17 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "iceworksApp",
-          "title": "Iceworks",
+          "id": "iceworksTimeMaster",
+          "title": "Time Master",
           "icon": "assets/sidebar-logo.png"
         }
       ]
     },
     "views": {
-      "iceworksApp": [
+      "iceworksTimeMaster": [
         {
           "id": "timeMaster",
-          "name": "%timeMaster.views.iceworksApp.timeMaster.name%",
+          "name": "%timeMaster.views.iceworksTimeMaster.timeMaster.name%",
           "when": "config.iceworks.enableView"
         }
       ]
