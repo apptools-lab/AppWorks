@@ -70,10 +70,12 @@ export async function getStorageDaysDirs() {
   const fileNames = await fse.readdir(storageDaysPath);
   const dayDirPaths = orderBy((await Promise.all(fileNames.map(async (fileName) => {
     const filePath = path.join(storageDaysPath, fileName);
-    const fileStat = await fse.stat(filePath);
+    const fileIsExists = await fse.pathExists(filePath);
 
     // TODO more rigorous
-    return fileStat.isDirectory() ? fileName : undefined;
+    return fileIsExists ?
+      ((await fse.stat(filePath)).isDirectory() ? fileName : undefined) :
+      undefined;
   }))).filter((isDirectory) => isDirectory));
   return dayDirPaths;
 }

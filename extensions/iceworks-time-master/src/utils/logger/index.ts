@@ -42,10 +42,12 @@ async function getLogDaysDirs() {
   const fileNames = await fse.readdir(logsPath);
   const logDaysDirs = orderBy((await Promise.all(fileNames.map(async (fileName) => {
     const filePath = path.join(logsPath, fileName);
-    const fileStat = await fse.stat(filePath);
+    const fileIsExists = await fse.pathExists(filePath);
 
     // TODO more rigorous
-    return fileStat.isDirectory() ? fileName : undefined;
+    return fileIsExists ?
+      ((await fse.stat(filePath)).isDirectory() ? fileName : undefined) :
+      undefined;
   }))).filter((isDirectory) => isDirectory));
   return logDaysDirs;
 }
