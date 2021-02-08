@@ -1,12 +1,15 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
+import { autoSetContext as autoSetContextByProject } from '@iceworks/project-service';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
 import { registerDebugCommand } from './utils/debugMaterials';
+import { createComponentsTreeView } from './views/componentsView';
+import { createPagesTreeView } from './views/pagesView';
 
 const { name } = require('../package.json');
 
@@ -20,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   // auto set configuration
   initExtension(context, name);
+  autoSetContextByProject();
 
   // set material importer
   let materialImporterWebviewPanel: vscode.WebviewPanel | undefined;
@@ -131,6 +135,10 @@ export function activate(context: vscode.ExtensionContext) {
   // set propsAutoCompleter
   propsAutoComplete();
   registerComponentDocSupport();
+
+  // views
+  createComponentsTreeView(context);
+  createPagesTreeView(context);
 }
 
 export function deactivate() { }

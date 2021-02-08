@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import {
-  getProjectType,
   checkIsPegasusProject,
   checkIsTargetProjectType,
   autoSetContext as autoSetContextByProject,
@@ -12,8 +11,6 @@ import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
 import { createNpmScriptsTreeView } from './views/npmScriptsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
-import { createComponentsTreeView } from './views/componentsView';
-import { createPagesTreeView } from './views/pagesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
 import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
@@ -37,7 +34,6 @@ export async function activate(context: vscode.ExtensionContext) {
   initExtension(context, name);
   autoSetContextByProject();
 
-  const projectType = await getProjectType();
   const isPegasusProject = await checkIsPegasusProject();
 
   // init statusBarItem
@@ -156,10 +152,6 @@ export async function activate(context: vscode.ExtensionContext) {
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createNpmScriptsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
-  if (!isPegasusProject) {
-    treeViews.push(createComponentsTreeView(context));
-    treeViews.push(createPagesTreeView(context));
-  }
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;

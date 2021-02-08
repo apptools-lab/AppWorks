@@ -4,7 +4,40 @@ import * as path from 'path';
 import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { componentsPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../utils/openEntryFile';
-import showAddComponentQuickPick from '../quickPicks/showAddComponentQuickPick';
+import i18n from '../i18n';
+import getOptions from '../utils/getOptions';
+
+const { window, commands } = vscode;
+
+const addComponentTypeOptions = [
+  {
+    label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.label'),
+    detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.detail'),
+    command: 'iceworks-ui-builder.design-component',
+    async condition() {
+      return vscode.extensions.getExtension('iceworks-team.iceworks-ui-builder');
+    },
+  },
+  {
+    label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label'),
+    detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail'),
+    command: 'iceworks-material-helper.component-creator.start',
+  },
+];
+
+async function showAddComponentQuickPick() {
+  const quickPick = window.createQuickPick();
+  quickPick.items = await getOptions(addComponentTypeOptions);
+  quickPick.onDidChangeSelection((selection) => {
+    if (selection[0]) {
+      const currentExtension = addComponentTypeOptions.find((option) => option.label === selection[0].label)!;
+      commands.executeCommand(currentExtension.command);
+      quickPick.dispose();
+    }
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+}
 
 class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
   private workspaceRoot: string;
@@ -55,7 +88,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
           const componentPath = path.join(targetPath, componentName);
 
           const command: vscode.Command = {
-            command: 'iceworksApp.components.openFile',
+            command: 'iceworks-material-helper.components.openFile',
             title: 'Open File',
             arguments: [componentPath],
           };
@@ -101,12 +134,12 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
   const componentsProvider = new ComponentsProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('components', { treeDataProvider: componentsProvider });
 
-  registerCommand('iceworksApp.components.add', async () => {
+  registerCommand('iceworks-material-helper.components.add', async () => {
     await showAddComponentQuickPick();
   });
-  registerCommand('iceworksApp.components.refresh', () => componentsProvider.refresh());
-  registerCommand('iceworksApp.components.openFile', (componentPath) => openEntryFile(componentPath));
-  registerCommand('iceworksApp.components.delete', async (component) => await fse.remove(component.path));
+  registerCommand('iceworks-material-helper.components.refresh', () => componentsProvider.refresh());
+  registerCommand('iceworks-material-helper.components.openFile', (componentPath) => openEntryFile(componentPath));
+  registerCommand('iceworks-material-helper.components.delete', async (component) => await fse.remove(component.path));
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

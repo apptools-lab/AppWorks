@@ -22,8 +22,6 @@
     "*",
     "onView:nodeDependencies",
     "onView:scripts",
-    "onView:pages",
-    "onView:components",
     "onCommand:iceworksApp.configHelper.start",
     "onCommand:iceworksApp.welcome.start",
     "onCommand:iceworksApp.dashboard.start"
@@ -61,16 +59,6 @@
         {
           "id": "quickEntries",
           "name": "%iceworksApp.view.quickEntries.name%"
-        },
-        {
-          "id": "pages",
-          "name": "%iceworksApp.view.pages.name%",
-          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
-        },
-        {
-          "id": "components",
-          "name": "%iceworksApp.view.components.name%",
-          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         }
       ]
     },
@@ -86,14 +74,6 @@
       {
         "view": "npmScripts",
         "contents": "%iceworksApp.viewsWelcome.npmScripts.contents%"
-      },
-      {
-        "view": "pages",
-        "contents": "%iceworksApp.viewsWelcome.pages.contents%"
-      },
-      {
-        "view": "components",
-        "contents": "%iceworksApp.viewsWelcome.components.contents%"
       },
       {
         "view": "nodeDependencies",
@@ -174,62 +154,6 @@
         }
       },
       {
-        "command": "iceworksApp.pages.add",
-        "title": "%iceworksApp.command.pages.add.title%",
-        "icon": {
-          "light": "assets/light/add.svg",
-          "dark": "assets/dark/add.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.pages.refresh",
-        "title": "%iceworksApp.command.pages.refresh.title%",
-        "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.pages.openFile",
-        "title": "%iceworksApp.command.pages.openFile.title%"
-      },
-      {
-        "command": "iceworksApp.pages.delete",
-        "title": "%iceworksApp.command.pages.delete.title%",
-        "icon": {
-          "light": "assets/light/delete.svg",
-          "dark": "assets/dark/delete.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.components.add",
-        "title": "%iceworksApp.command.components.add.title%",
-        "icon": {
-          "light": "assets/light/add.svg",
-          "dark": "assets/dark/add.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.components.refresh",
-        "title": "%iceworksApp.command.components.refresh.title%",
-        "icon": {
-          "light": "assets/light/refresh.svg",
-          "dark": "assets/dark/refresh.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.components.delete",
-        "title": "%iceworksApp.command.components.delete.title%",
-        "icon": {
-          "light": "assets/light/delete.svg",
-          "dark": "assets/dark/delete.svg"
-        }
-      },
-      {
-        "command": "iceworksApp.components.openFile",
-        "title": "%iceworksApp.command.components.openFile.title%"
-      },
-      {
         "command": "iceworksApp.nodeDependencies.addDepsAndDevDeps",
         "title": "%iceworksApp.command.nodeDependencies.addDepsAndDevDeps.title%",
         "icon": {
@@ -293,38 +217,6 @@
           "when": "false"
         },
         {
-          "command": "iceworksApp.pages.add",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.pages.refresh",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.pages.openFile",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.pages.delete",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.components.add",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.components.refresh",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.components.delete",
-          "when": "false"
-        },
-        {
-          "command": "iceworksApp.components.openFile",
-          "when": "false"
-        },
-        {
           "command": "iceworksApp.nodeDependencies.refresh",
           "when": "false"
         },
@@ -333,42 +225,10 @@
           "when": "false"
         }
       ],
-      "explorer/context": [
-        {
-          "command": "iceworksApp.components.add",
-          "when": "!iceworks:projectIsNotTargetType",
-          "group": "iceworks@1"
-        },
-        {
-          "command": "iceworksApp.pages.add",
-          "when": "!iceworks:projectIsNotTargetType",
-          "group": "iceworks@2"
-        }
-      ],
       "view/title": [
         {
           "command": "iceworksApp.npmScripts.refresh",
           "when": "view == npmScripts",
-          "group": "navigation"
-        },
-        {
-          "command": "iceworksApp.pages.add",
-          "when": "view == pages",
-          "group": "navigation"
-        },
-        {
-          "command": "iceworksApp.pages.refresh",
-          "when": "view == pages",
-          "group": "navigation"
-        },
-        {
-          "command": "iceworksApp.components.add",
-          "when": "view == components",
-          "group": "navigation"
-        },
-        {
-          "command": "iceworksApp.components.refresh",
-          "when": "view == components",
           "group": "navigation"
         },
         {
@@ -401,16 +261,6 @@
         {
           "command": "iceworksApp.npmScripts.stop",
           "when": "view == npmScripts && viewItem == script",
-          "group": "inline"
-        },
-        {
-          "command": "iceworksApp.pages.delete",
-          "when": "view == pages && viewItem == page",
-          "group": "inline"
-        },
-        {
-          "command": "iceworksApp.components.delete",
-          "when": "view == components && viewItem == component",
           "group": "inline"
         },
         {
@@ -497,9 +347,7 @@
     "util": "^0.12.3"
   },
   "extensionDependencies": [
-    "iceworks-team.iceworks-project-creator",
-    "iceworks-team.iceworks-ui-builder",
-    "iceworks-team.iceworks-material-helper"
+    "iceworks-team.iceworks-project-creator"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/README.md",
   "bugs": {

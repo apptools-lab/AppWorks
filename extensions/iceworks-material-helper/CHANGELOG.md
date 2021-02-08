@@ -1,8 +1,9 @@
 # Change Log
 
-## 0.5.7
+## 0.6.0
 
 - feat: add "importer material" and "show material doc" to editor title
+- feat: add sidebar 
 
 ## 0.5.6
 

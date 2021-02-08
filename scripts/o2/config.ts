@@ -19,10 +19,10 @@ export const innerExtensions4pack = [
     packageName: 'iceworks-team.iceworks-style-helper',
     assetsFolders: ['assets', 'schemas'],
   },
-  {
-    packageName: 'iceworks-team.iceworks-ui-builder',
-    assetsFolders: ['assets', 'schemas'],
-  },
+  // {
+  //   packageName: 'iceworks-team.iceworks-ui-builder',
+  //   assetsFolders: ['assets', 'schemas'],
+  // },
   {
     packageName: 'iceworks-team.iceworks-time-master',
     assetsFolders: ['assets', 'schemas'],
