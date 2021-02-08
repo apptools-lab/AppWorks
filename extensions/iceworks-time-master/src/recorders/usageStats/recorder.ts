@@ -37,6 +37,7 @@ export class UsageStatsRecorder {
     if (this.processUsageStatsTimmer) {
       clearInterval(this.processUsageStatsTimmer);
     }
+    await this.sendData();
   }
 
   /**
@@ -44,6 +45,7 @@ export class UsageStatsRecorder {
    *
    * - Change Window State, not focused
    * - A certain time interval, control by "processUsageStatsDurationMins"
+   * - extension deactivate
    */
   private async sendData() {
     const usageStatsMapKeys = Object.keys(usageStatsMap);

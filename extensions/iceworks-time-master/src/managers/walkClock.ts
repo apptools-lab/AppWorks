@@ -28,14 +28,12 @@ export async function checkMidnight() {
 }
 
 let dayCheckTimer: NodeJS.Timeout;
-let sendDataTimer: NodeJS.Timeout;
+let sendPayloadTimer: NodeJS.Timeout;
 
 export async function activate() {
-  dayCheckTimer = setInterval(() => {
-    checkMidnight();
-  }, checkMidnightDurationMins);
+  dayCheckTimer = setInterval(checkMidnight, checkMidnightDurationMins);
 
-  sendDataTimer = setInterval(() => {
+  sendPayloadTimer = setInterval(() => {
     sendPayload().catch((e) => {
       logger.error('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
@@ -48,20 +46,19 @@ export async function activate() {
   });
 
   await checkMidnight();
-  try {
-    await sendPayload();
-  } catch (e) {
-    logger.error('[walkClock][activate]sendPayload got error:', e);
-  }
+  await sendPayload();
 }
 
-export function deactivate() {
+export async function deactivate() {
   if (dayCheckTimer) {
     clearInterval(dayCheckTimer);
   }
-  if (sendDataTimer) {
-    clearInterval(sendDataTimer);
+  await checkMidnight();
+
+  if (sendPayloadTimer) {
+    clearInterval(sendPayloadTimer);
   }
+  await sendPayload(true);
 }
 
 export function refreshViews() {

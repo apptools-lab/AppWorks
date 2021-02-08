@@ -22,7 +22,7 @@ export class KeystrokeStatsRecorder {
   }
 
   public async deactivate() {
-    // placeholder
+    await this.sendData();
   }
 
   /**
@@ -30,6 +30,7 @@ export class KeystrokeStatsRecorder {
    *
    * - Change Window State, not focused
    * - The time interval between keystrokes, control by "recordKeystrokeDurationMins"
+   * - extension deactivate
    */
   private async sendData() {
     for (const projectPath in keystrokeStatsMap) {
