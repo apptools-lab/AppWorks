@@ -33,7 +33,6 @@ class TimerItem {
   contextValue = '';
   icon = '';
   children: TimerItem[] = [];
-  name = '';
   initialCollapsibleState: TreeItemCollapsibleState = TreeItemCollapsibleState.Collapsed;
 }
 
@@ -180,14 +179,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     label: string,
     tooltip: string,
     children: TimerItem[],
-    name = '',
   ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
     item.id = `${label}_title`;
     item.contextValue = 'title_item';
-    item.name = name;
     item.children = children;
     return item;
   }
@@ -198,14 +195,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     icon: string = null,
     command : string = null,
     commandArgs: any[] = null,
-    name = '',
   ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
     item.id = `${label}_message`;
     item.contextValue = 'message_item';
-    item.name = name;
     item.icon = icon;
     item.command = command;
     item.commandArgs = commandArgs;
@@ -217,14 +212,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     tooltip: string,
     command: string,
     icon = '',
-    name = '',
   ): TimerItem {
     const item = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
     item.id = label;
     item.contextValue = 'action_button';
-    item.name = name;
     item.command = command;
     item.icon = icon;
     return item;
@@ -234,7 +227,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     const parentItem = this.buildMessageItem(
       i18n.format('extension.timeMaster.tree.item.filesChanged.label'),
       i18n.format('extension.timeMaster.tree.item.filesChanged.detail'),
-      null,
       null,
       null,
       null,
@@ -267,7 +259,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.topFilesByKPM.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByKPM.detail'),
       highKpmChildren,
-      'ct_top_files_by_kpm_toggle_node',
     );
     return highKpmParent;
   }
@@ -295,7 +286,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.topFilesByKey.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByKey.detail'),
       mostEditedChildren,
-      'ct_top_files_by_keystrokes_toggle_node',
     );
     return mostEditedParent;
   }
@@ -323,7 +313,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.topFilesByCT.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByCT.detail'),
       longestCodeTimeChildren,
-      'ct_top_files_by_codetime_toggle_node',
     );
     return longestCodeTimeParent;
   }
@@ -333,9 +322,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     tooltip: string,
     values: Array<{label?: string;tooltip?: string;icon?: string}>,
     collapsibleState: TreeItemCollapsibleState = null,
-    name = '',
   ) {
-    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null, name);
+    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null);
     values.forEach(({ label: vLabel, tooltip: vTooltip, icon: vIcon }) => {
       const child = this.buildMessageItem(vLabel, vTooltip, vIcon);
       parent.children.push(child);
@@ -399,7 +387,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         i18n.format('extension.timeMaster.tree.item.editor.detail'),
         etValues,
         TreeItemCollapsibleState.Expanded,
-        'ct_active_editortime_toggle_node',
       ),
     );
 
@@ -431,7 +418,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         i18n.format('extension.timeMaster.tree.item.acCode.detail'),
         actValues,
         TreeItemCollapsibleState.Expanded,
-        'ct_active_codetime_toggle_node',
       ),
     );
 
@@ -459,7 +445,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.linesAdded.detail'),
       laValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_lines_added_toggle_node',
     ));
 
     // Lines removed
@@ -486,7 +471,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.linesRemoved.detail'),
       lrValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_lines_removed_toggle_node',
     ));
 
     // Keystrokes
@@ -513,7 +497,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.keystrokes.detail'),
       kValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_keystrokes_toggle_node',
     ));
 
     return items;
@@ -530,7 +513,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewProjectSummary.detail'),
       'iceworks-time-master.generateProjectSummaryReport',
       'folder.svg',
-      'ct_project_summary_btn',
     );
     return item;
   }
@@ -541,7 +523,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewUserSummary.detail'),
       'iceworks-time-master.generateUserSummaryReport',
       'dashboard.svg',
-      'ct_summary_btn',
     );
     return item;
   }
