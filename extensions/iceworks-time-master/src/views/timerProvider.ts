@@ -23,49 +23,19 @@ import logger from '../utils/logger';
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
-enum UIInteractionType {
-  Keyboard = 'keyboard',
-  Click = 'click',
-}
-
 class TimerItem {
   id = '';
-
   label = '';
-
   description = '';
-
-  value = '';
-
   tooltip = '';
-
   command = '';
-
   commandArgs: any[] = [];
-
-  type = '';
-
   contextValue = '';
-
-  callback: any = null;
-
   icon = '';
-
   children: TimerItem[] = [];
-
-  color = '';
-
   location = '';
-
   name = '';
-
-  eventDescription = '';
-
   initialCollapsibleState: TreeItemCollapsibleState = TreeItemCollapsibleState.Collapsed;
-
-  interactionType: UIInteractionType = UIInteractionType.Click;
-
-  hideCTAInTracker = false;
 }
 
 class TimerTreeItem extends TreeItem {
@@ -179,7 +149,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return undefined;
   }
 
-  public getTreeItem(p: TimerItem) {
+  public getTreeItem(p: TimerItem): TimerTreeItem {
     let treeItem = null;
     if (p.children.length) {
       const collapsedState = timerCollapsedStateMap[p.label];
@@ -211,31 +181,63 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return timerItems;
   }
 
-  private buildParentItem(label: string, tooltip: string, children: TimerItem[], name = '', location = 'ct_metrics_tree') {
+  private buildParentItem(
+    label: string,
+    tooltip: string,
+    children: TimerItem[],
+    name = '',
+    location = 'ct_metrics_tree'
+  ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
     item.id = `${label}_title`;
     item.contextValue = 'title_item';
-    item.children = children;
-    item.eventDescription = null;
     item.name = name;
     item.location = location;
+    item.children = children;
     return item;
   }
 
-  private buildMessageItem(label: string, tooltip = '', icon: string = null, command : string = null, commandArgs: any[] = null, name = '', location = '') {
+  private buildMessageItem(
+    label: string,
+    tooltip = '',
+    icon: string = null,
+    command : string = null,
+    commandArgs: any[] = null,
+    name = '',
+    location = ''
+  ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
+    item.id = `${label}_message`;
+    item.contextValue = 'message_item';
+    item.name = name;
+    item.location = location;
     item.icon = icon;
     item.command = command;
     item.commandArgs = commandArgs;
-    item.id = `${label}_message`;
-    item.contextValue = 'message_item';
-    item.eventDescription = null;
+    return item;
+  }
+
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    command: string,
+    icon = '',
+    name = '',
+    location = 'ct_metrics_tree',
+  ): TimerItem {
+    const item = new TimerItem();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = label;
+    item.contextValue = 'action_button';
     item.name = name;
     item.location = location;
+    item.command = command;
+    item.icon = icon;
     return item;
   }
 
@@ -530,28 +532,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return items;
   }
 
-  private buildActionItem(
-    label: string,
-    tooltip: string,
-    command: string,
-    icon = '',
-    eventDescription = '',
-    color = '',
-    location = 'ct_metrics_tree',
-  ): TimerItem {
-    const item = new TimerItem();
-    item.tooltip = tooltip;
-    item.label = label;
-    item.id = label;
-    item.command = command;
-    item.icon = icon;
-    item.contextValue = 'action_button';
-    item.eventDescription = eventDescription;
-    item.color = color;
-    item.location = location;
-    return item;
-  }
-
   private buildDividerItem() {
     const item = this.buildActionItem('', '', '', 'blue-line-96.png');
     return item;
@@ -563,10 +543,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewProjectSummary.detail'),
       'iceworks-time-master.generateProjectSummaryReport',
       'folder.svg',
-      '',
-      'red',
+      'ct_project_summary_btn',
     );
-    item.name = 'ct_project_summary_btn';
     return item;
   }
 
@@ -576,10 +554,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewUserSummary.detail'),
       'iceworks-time-master.generateUserSummaryReport',
       'dashboard.svg',
-      'TreeViewLaunchReport',
-      'purple',
+      'ct_summary_btn',
     );
-    item.name = 'ct_summary_btn';
     return item;
   }
 
