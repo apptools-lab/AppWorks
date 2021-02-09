@@ -28,8 +28,7 @@ class TimerItem {
   label = '';
   description = '';
   tooltip = '';
-  command = '';
-  commandArgs: any[] = [];
+  command;
   contextValue = '';
   icon = '';
   children: TimerItem[] = [];
@@ -47,10 +46,7 @@ class TimerTreeItem extends TreeItem {
     const { lightPath, darkPath } = this.getTreeItemIcon(treeItem);
 
     if (treeItem.command) {
-      this.command = {
-        command: treeItem.command,
-        title: treeItem.label,
-      };
+      this.command = treeItem.command;
     }
     if (treeItem.description) {
       this.description = treeItem.description;
@@ -192,9 +188,9 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   private buildMessageItem(
     label: string,
     tooltip = '',
-    icon: string = null,
     command : string = null,
     commandArgs: any[] = null,
+    icon: string = null,
   ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
@@ -202,8 +198,11 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.id = `${label}_message`;
     item.contextValue = 'message_item';
     item.icon = icon;
-    item.command = command;
-    item.commandArgs = commandArgs;
+    item.command = command ? {
+      command: command,
+      title: label,
+      arguments: commandArgs,
+    } : null;
     return item;
   }
 
@@ -211,6 +210,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     label: string,
     tooltip: string,
     command: string,
+    commandArgs: any[] = null,
     icon = '',
   ): TimerItem {
     const item = new TimerItem();
@@ -218,7 +218,11 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.tooltip = tooltip;
     item.id = label;
     item.contextValue = 'action_button';
-    item.command = command;
+    item.command = command ? {
+      command: command,
+      title: label,
+      arguments: commandArgs,
+    } : null;
     item.icon = icon;
     return item;
   }
@@ -250,9 +254,13 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const kpm = sortedArray[i].kpm || 0;
       const kpmStr = kpm.toFixed(2);
       const label = `${fileName} | ${kpmStr}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [ sortedArray[i].fsPath, ],
+        null,
+      );
       highKpmChildren.push(messageItem);
     }
     const highKpmParent = this.buildParentItem(
@@ -277,9 +285,13 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const keystrokes = sortedArray[i].keystrokes || 0;
       const keystrokesStr = numeral(keystrokes).format(NUMBER_FORMAT);
       const label = `${fileName} | ${keystrokesStr}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [ sortedArray[i].fsPath, ],
+        null,
+      );
       mostEditedChildren.push(messageItem);
     }
     const mostEditedParent = this.buildParentItem(
@@ -304,9 +316,13 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const durationMinutes = seconds2minutes(sortedArray[i].sessionSeconds);
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [ sortedArray[i].fsPath, ],
+        null,
+      );
       longestCodeTimeChildren.push(messageItem);
     }
     const longestCodeTimeParent = this.buildParentItem(
@@ -325,7 +341,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   ) {
     const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null);
     values.forEach(({ label: vLabel, tooltip: vTooltip, icon: vIcon }) => {
-      const child = this.buildMessageItem(vLabel, vTooltip, vIcon);
+      const child = this.buildMessageItem(vLabel, vTooltip, null, null, vIcon);
       parent.children.push(child);
     });
     if (collapsibleState) {
@@ -503,7 +519,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   }
 
   private buildDividerItem() {
-    const item = this.buildActionItem('', '', '', 'blue-line-96.png');
+    const item = this.buildActionItem('', '', '', null, 'blue-line-96.png');
     return item;
   }
 
@@ -512,6 +528,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewProjectSummary.label'),
       i18n.format('extension.timeMaster.viewProjectSummary.detail'),
       'iceworks-time-master.generateProjectSummaryReport',
+      null,
       'folder.svg',
     );
     return item;
@@ -522,6 +539,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewUserSummary.label'),
       i18n.format('extension.timeMaster.viewUserSummary.detail'),
       'iceworks-time-master.generateUserSummaryReport',
+      null,
       'dashboard.svg',
     );
     return item;
