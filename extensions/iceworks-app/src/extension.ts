@@ -9,7 +9,7 @@ import {
 } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
-import { createNpmScriptsTreeView } from './views/npmScriptsView';
+import { createActionsTreeView } from './views/actionsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
@@ -150,7 +150,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // init tree view
   const treeViews: any[] = [];
   treeViews.push(createQuickEntriesTreeView(context));
-  treeViews.push(createNpmScriptsTreeView(context));
+  treeViews.push(createActionsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
   let didSetViewContext;
   treeViews.forEach((treeView) => {

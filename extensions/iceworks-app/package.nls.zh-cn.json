@@ -1,6 +1,6 @@
 {
   "iceworksApp.view.quickEntries.name": "快速入口",
-  "iceworksApp.view.actions.name": "Iceworks 快捷操作",
+  "iceworksApp.view.actions.name": "快捷操作",
   "iceworksApp.view.nodeDependencies.name": "依赖列表",
   "iceworksApp.viewsWelcome.welcome.contents": "要使用 Iceworks，您需要先打开或创建一个应用。\n[打开文件夹](command:vscode.openFolder)\n[创建应用](command:iceworks-project-creator.create-project.start)\n[设置](command:iceworksApp.configHelper.start)\n查看[文档](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)以学习如何在 VS Code 中如何使用 Iceworks App。",
   "iceworksApp.viewsWelcome.quickEntries.contents": "未找到快速入口",
