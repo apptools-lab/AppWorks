@@ -33,7 +33,6 @@ class TimerItem {
   contextValue = '';
   icon = '';
   children: TimerItem[] = [];
-  location = '';
   name = '';
   initialCollapsibleState: TreeItemCollapsibleState = TreeItemCollapsibleState.Collapsed;
 }
@@ -102,10 +101,6 @@ class TimerTreeItem extends TreeItem {
   }
 }
 
-function createTimerTreeItem(p: TimerItem, state: TreeItemCollapsibleState, extensionContext: ExtensionContext): TimerTreeItem {
-  return new TimerTreeItem(p, state, extensionContext);
-}
-
 export class TimerProvider implements TreeDataProvider<TimerItem> {
   private _onDidChangeTreeData: EventEmitter<TimerItem | undefined> = new EventEmitter<TimerItem | undefined>();
 
@@ -154,12 +149,12 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     if (p.children.length) {
       const collapsedState = timerCollapsedStateMap[p.label];
       if (!collapsedState) {
-        treeItem = createTimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
+        treeItem = new TimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
       } else {
-        treeItem = createTimerTreeItem(p, collapsedState, this.extensionContext);
+        treeItem = new TimerTreeItem(p, collapsedState, this.extensionContext);
       }
     } else {
-      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
+      treeItem = new TimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
     }
     return treeItem;
   }
@@ -186,7 +181,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     tooltip: string,
     children: TimerItem[],
     name = '',
-    location = 'ct_metrics_tree'
   ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
@@ -194,7 +188,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.id = `${label}_title`;
     item.contextValue = 'title_item';
     item.name = name;
-    item.location = location;
     item.children = children;
     return item;
   }
@@ -206,7 +199,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     command : string = null,
     commandArgs: any[] = null,
     name = '',
-    location = ''
   ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
@@ -214,7 +206,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.id = `${label}_message`;
     item.contextValue = 'message_item';
     item.name = name;
-    item.location = location;
     item.icon = icon;
     item.command = command;
     item.commandArgs = commandArgs;
@@ -227,7 +218,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     command: string,
     icon = '',
     name = '',
-    location = 'ct_metrics_tree',
   ): TimerItem {
     const item = new TimerItem();
     item.label = label;
@@ -235,7 +225,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.id = label;
     item.contextValue = 'action_button';
     item.name = name;
-    item.location = location;
     item.command = command;
     item.icon = icon;
     return item;
@@ -249,7 +238,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       null,
       null,
       null,
-      'ct_top_files_by_kpm_toggle_node',
     );
     const childItem = this.buildMessageItem(i18n.format('extension.timeMaster.tree.item.today', { value: filesSummary.length }));
     parentItem.children = [childItem];
@@ -346,9 +334,8 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     values: Array<{label?: string;tooltip?: string;icon?: string}>,
     collapsibleState: TreeItemCollapsibleState = null,
     name = '',
-    location = 'ct_metrics_tree',
   ) {
-    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null, name, location);
+    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null, name);
     values.forEach(({ label: vLabel, tooltip: vTooltip, icon: vIcon }) => {
       const child = this.buildMessageItem(vLabel, vTooltip, vIcon);
       parent.children.push(child);
