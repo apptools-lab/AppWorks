@@ -171,9 +171,11 @@ export async function activate(context: vscode.ExtensionContext) {
         action: 'active',
       });
       if (visible && !didSetViewContext) {
-        didSetViewContext = true;
-        recordDAU();
-        autoStart(context);
+        if (!(['npmScripts', 'nodeDependencies'].includes(title))) {
+          didSetViewContext = true;
+          recordDAU();
+          autoStart(context);
+        }
       }
     });
   });
