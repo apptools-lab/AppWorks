@@ -3,6 +3,15 @@ import { registerCommand, executeCommand } from '@iceworks/common-service';
 import options from '../quickPicks/options';
 import getOptions from '../utils/getOptions';
 
+const entryOptions = options.filter(({ command }) => {
+  return [
+    'iceworks-project-creator.create-project.start',
+    'iceworksApp.dashboard.start',
+    'iceworksApp.welcome.start',
+    'iceworksApp.configHelper.start',
+  ].includes(command);
+});
+
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
   private extensionContext: vscode.ExtensionContext;
 
@@ -20,8 +29,7 @@ export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryI
   }
 
   private async getEntries() {
-    const entryOptions = await getOptions(options);
-    return entryOptions.map((option) => {
+    return (await getOptions(entryOptions)).map((option) => {
       const { label, detail, command } = option;
       const entryCommand: vscode.Command = {
         command,

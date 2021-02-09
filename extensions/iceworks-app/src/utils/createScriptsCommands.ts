@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { createNpmCommand, checkPathExists, checkIsAliInternal, registerCommand } from '@iceworks/common-service';
+import { createNpmCommand, checkPathExists, registerCommand } from '@iceworks/common-service';
 import { checkIsPegasusProject, dependencyDir, getProjectFramework, projectPath } from '@iceworks/project-service';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { DEFAULT_START_URL, IDevServerStartInfo, getDevServerStartInfo } from './getDevServerStartInfo';
@@ -11,7 +11,7 @@ import runScript from '../terminal/runScript';
 
 let previewWebviewPanel: vscode.WebviewPanel | undefined;
 
-export default async function createEditorMenuAction(context: vscode.ExtensionContext, recorder) {
+export default async function createScriptsCommands(context: vscode.ExtensionContext, recorder) {
   const { window } = vscode;
   const { extensionPath } = context;
 
@@ -42,7 +42,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     connectService(previewWebviewPanel, context, { services, recorder });
   }
 
-  const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.editorMenu.runDebug';
+  const EDITOR_MENU_RUN_DEBUG = 'iceworksApp.scripts.runDebug';
   registerCommand(EDITOR_MENU_RUN_DEBUG, async () => {
     let shouldInstall = false;
     const isPegasusProject = await checkIsPegasusProject();
@@ -79,7 +79,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     }
   });
 
-  const EDITOR_MENU_RUN_BUILD = 'iceworksApp.editorMenu.runBuild';
+  const EDITOR_MENU_RUN_BUILD = 'iceworksApp.scripts.runBuild';
   registerCommand(EDITOR_MENU_RUN_BUILD, async () => {
     const pathExists = await checkPathExists(projectPath, dependencyDir);
     const title = 'Run Build';
@@ -95,10 +95,7 @@ export default async function createEditorMenuAction(context: vscode.ExtensionCo
     runScript(title, projectPath, npmBuildCommand);
   });
 
-  const isAliInternal = await checkIsAliInternal();
-  if (isAliInternal) {
-    registerCommand('iceworksApp.editorMenu.DefPublish', () => {
-      showDefPublishEnvQuickPick();
-    });
-  }
+  registerCommand('iceworksApp.scripts.DefPublish', () => {
+    showDefPublishEnvQuickPick();
+  });
 }

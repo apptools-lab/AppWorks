@@ -1,13 +1,10 @@
 {
   "iceworksApp.view.quickEntries.name": "Quick Entries",
-  "iceworksApp.view.npmScripts.name": "npm Scripts",
-  "iceworksApp.view.pages.name": "Pages",
-  "iceworksApp.view.components.name": "Components",
+  "iceworksApp.view.actions.name": "Actions",
   "iceworksApp.view.nodeDependencies.name": "Node Dependencies",
   "iceworksApp.viewsWelcome.welcome.contents": "To use Iceworks, you need to open or create a application first. \n[Open a Folder](command:vscode.openFolder)\n[Create Application](command:iceworks-project-creator.create-project.start)\n[Configuration](command:iceworksApp.configHelper.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks in VS Code.",
+  "iceworksApp.viewsWelcome.quickEntries.contents": "Quick Entries could not be found",
   "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json",
-  "iceworksApp.viewsWelcome.pages.contents": "Pages could not be found",
-  "iceworksApp.viewsWelcome.components.contents": "Components could not be found",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json",
   "iceworksApp.command.configHelper.start.title": "Iceworks: Settings",
   "iceworksApp.command.welcome.start.title": "Iceworks: Welcome",
@@ -20,14 +17,6 @@
   "iceworksApp.command.npmScripts.runDebug.title": "Iceworks: Debug",
   "iceworksApp.command.npmScripts.stopDev.title": "Iceworks: Stop Dev",
   "iceworksApp.command.npmScripts.runBuild.title": "Iceworks: Run Build",
-  "iceworksApp.command.pages.add.title": "New Page",
-  "iceworksApp.command.pages.refresh.title": "Refresh",
-  "iceworksApp.command.pages.openFile.title": "Open Page",
-  "iceworksApp.command.pages.delete.title": "Delete",
-  "iceworksApp.command.components.add.title": "New Component",
-  "iceworksApp.command.components.refresh.title": "Refresh",
-  "iceworksApp.command.components.delete.title": "Delete",
-  "iceworksApp.command.components.openFile.title": "Open Component",
   "iceworksApp.command.nodeDependencies.addDepsAndDevDeps.title": "Iceworks: Add Dependencies",
   "iceworksApp.command.nodeDependencies.dependencies.add.title": "Iceworks: Add Dependency",
   "iceworksApp.command.nodeDependencies.devDependencies.add.title": "Iceworks: Add DevDependency",
@@ -39,5 +28,5 @@
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Debug",
   "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall",
-  "iceworksApp.kaitianContributes.toolbar.dashboard.title": "Dashboard"
+  "iceworksApp.kaitianContributes.toolbar.DefPublish.title": "Publish"
 }
