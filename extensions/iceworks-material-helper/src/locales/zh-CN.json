@@ -17,5 +17,13 @@
   "extension.iceworksMaterialHelper.debugMaterial.addMaterial.openLabel": "调试物料",
   "extension.iceworksMaterialHelper.initDebug.err": "初始化物料调试失败： <%= errMessage %>",
   "extension.iceworksMaterialHelper.debugInput.addSourceSuccess": "添加调试物料项目成功",
-  "extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess": "删除调试物料项目成功"
+  "extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess": "删除调试物料项目成功",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.label": "使用区块组装页面",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.detail": "通过区块组装的方式生成页面",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.label": "使用模板生成页面",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.detail": "通过可视化配置模板的方式生成页面",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.label": "可视化搭建组件",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.detail": "通过可视化方式搭建生成组件",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label": "下载区块物料到本地",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail": "通过下载远程区块创建本地组件"
 }

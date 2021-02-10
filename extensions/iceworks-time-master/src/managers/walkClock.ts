@@ -1,26 +1,25 @@
 import { commands, window, WindowState } from 'vscode';
-import { setNowDay, isNewDay } from '../utils/time';
+import { setNowDay, checkIsNewDay } from '../utils/time';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
-import logger, { reloadLogger } from '../utils/logger';
-import { getInterface as getUsageStatsRecorder } from '../recorders/usageStats';
-import { checkMidnightDurationMins, snedPayloadDurationMins, processUsageStatsDurationMins } from '../config';
-
-const usageStatsRecorder = getUsageStatsRecorder();
+import logger, { checkLogsIsLimited, reloadLogger } from '../utils/logger';
+import { checkMidnightDurationMins, sendPayloadDurationMins } from '../config';
 
 export async function checkMidnight() {
-  if (isNewDay()) {
+  const isNewDay = checkIsNewDay();
+  logger.info('[walkClock][checkMidnight] run, isNewDay:', isNewDay);
+
+  if (isNewDay) {
     setNowDay();
     reloadLogger();
     try {
       await Promise.all([
-        async function () {
-          await checkStorageDaysIsLimited();
-        },
-        async function () {
+        checkLogsIsLimited(),
+        checkStorageDaysIsLimited(),
+        (async function () {
           await checkPayloadIsLimited();
           await sendPayload(true);
-        },
+        })(),
       ]);
     } catch (e) {
       logger.error('[walkClock][checkMidnight] got error:', e);
@@ -29,27 +28,16 @@ export async function checkMidnight() {
 }
 
 let dayCheckTimer: NodeJS.Timeout;
-let sendDataTimer: NodeJS.Timeout;
-let processUsageStatsTimmer: NodeJS.Timeout;
+let sendPayloadTimer: NodeJS.Timeout;
 
 export async function activate() {
-  dayCheckTimer = setInterval(() => {
-    checkMidnight();
-  }, checkMidnightDurationMins);
+  dayCheckTimer = setInterval(checkMidnight, checkMidnightDurationMins);
 
-  sendDataTimer = setInterval(() => {
+  sendPayloadTimer = setInterval(() => {
     sendPayload().catch((e) => {
       logger.error('[walkClock][activate][setInterval]sendPayload got error:', e);
     });
-  }, snedPayloadDurationMins);
-
-  processUsageStatsTimmer = setInterval(() => {
-    if (window.state.focused) {
-      usageStatsRecorder.sendData().catch((e) => {
-        logger.error('[walkClock][activate][setInterval]usageStatsRecorder got error:', e);
-      });
-    }
-  }, processUsageStatsDurationMins);
+  }, sendPayloadDurationMins);
 
   window.onDidChangeWindowState((windowState: WindowState) => {
     if (windowState.focused) {
@@ -58,23 +46,19 @@ export async function activate() {
   });
 
   await checkMidnight();
-  try {
-    await sendPayload();
-  } catch (e) {
-    logger.error('[walkClock][activate]sendPayload got error:', e);
-  }
+  await sendPayload();
 }
 
-export function deactivate() {
+export async function deactivate() {
   if (dayCheckTimer) {
     clearInterval(dayCheckTimer);
   }
-  if (sendDataTimer) {
-    clearInterval(sendDataTimer);
+  await checkMidnight();
+
+  if (sendPayloadTimer) {
+    clearInterval(sendPayloadTimer);
   }
-  if (processUsageStatsTimmer) {
-    clearInterval(processUsageStatsTimmer);
-  }
+  await sendPayload(true);
 }
 
 export function refreshViews() {

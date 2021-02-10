@@ -17,5 +17,13 @@
   "extension.iceworksMaterialHelper.debugMaterial.addMaterial.openLabel": "Debug Materials",
   "extension.iceworksMaterialHelper.initDebug.err": "init Debug Err： <%= errMessage %>",
   "extension.iceworksMaterialHelper.debugInput.addSourceSuccess": "Add Debug Material Item Successfully",
-  "extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully"
+  "extension.iceworksMaterialHelper.debugInput.deleteSourceSuccess": "Delete Debug Material Item Successfully",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.label": "Generate Page by Blocks",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.detail": "Generate pages by block assembly",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.label": "Generate Page by Configuration",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.detail": "Generate pages by using template configuration",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.label": "Design Component",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.detail": "Generate components in a completely visual canvas",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label": "Download Component Materials",
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail": "Download component materials to local"
 }

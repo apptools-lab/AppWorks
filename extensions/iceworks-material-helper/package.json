@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -32,13 +32,19 @@
     "onCommand:iceworks-material-helper.page-generator.start",
     "onCommand:iceworks-material-helper.page-creator.start",
     "onCommand:iceworks-material-helper.showMaterialDocs",
-    "onCommand:iceworks-material-helper.showMaterialDocsForCurrentFile"
+    "onCommand:iceworks-material-helper.showMaterialDocsForCurrentFile",
+    "onView:pages",
+    "onView:components"
   ],
   "contributes": {
     "commands": [
       {
         "command": "iceworks-material-helper.material-importer.start",
-        "title": "%iceworksMaterialHelper.commands.materialImporter.start.title%"
+        "title": "%iceworksMaterialHelper.commands.materialImporter.start.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
       },
       {
         "command": "iceworks-material-helper.component-creator.start",
@@ -62,10 +68,116 @@
       },
       {
         "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
-        "title": "%iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title%"
+        "title": "%iceworksMaterialHelper.commands.showDocumentMaterialQuickPicks.title%",
+        "icon": {
+          "light": "assets/light/file_search.svg",
+          "dark": "assets/dark/file_search.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.pages.add",
+        "title": "%iceworksMaterialHelper.command.pages.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.pages.refresh",
+        "title": "%iceworksMaterialHelper.command.pages.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.pages.openFile",
+        "title": "%iceworksMaterialHelper.command.pages.openFile.title%"
+      },
+      {
+        "command": "iceworks-material-helper.pages.delete",
+        "title": "%iceworksMaterialHelper.command.pages.delete.title%",
+        "icon": {
+          "light": "assets/light/delete.svg",
+          "dark": "assets/dark/delete.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.components.add",
+        "title": "%iceworksMaterialHelper.command.components.add.title%",
+        "icon": {
+          "light": "assets/light/add.svg",
+          "dark": "assets/dark/add.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.components.refresh",
+        "title": "%iceworksMaterialHelper.command.components.refresh.title%",
+        "icon": {
+          "light": "assets/light/refresh.svg",
+          "dark": "assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.components.delete",
+        "title": "%iceworksMaterialHelper.command.components.delete.title%",
+        "icon": {
+          "light": "assets/light/delete.svg",
+          "dark": "assets/dark/delete.svg"
+        }
+      },
+      {
+        "command": "iceworks-material-helper.components.openFile",
+        "title": "%iceworksMaterialHelper.command.components.openFile.title%"
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "iceworks-material-helper.pages.add",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.pages.refresh",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.pages.openFile",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.pages.delete",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.components.add",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.components.refresh",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.components.delete",
+          "when": "false"
+        },
+        {
+          "command": "iceworks-material-helper.components.openFile",
+          "when": "false"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "iceworks-material-helper.components.add",
+          "when": "!iceworks:projectIsNotTargetType",
+          "group": "iceworks@1"
+        },
+        {
+          "command": "iceworks-material-helper.pages.add",
+          "when": "!iceworks:projectIsNotTargetType",
+          "group": "iceworks@2"
+        }
+      ],
       "editor/context": [
         {
           "command": "iceworks-material-helper.material-importer.start",
@@ -76,6 +188,85 @@
           "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
           "group": "iceworksMaterialHelper",
           "when": "editorTextFocus && iceworks:isJSXFile"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "iceworks-material-helper.material-importer.start",
+          "group": "navigation@01",
+          "when": "iceworks:isJSXFile"
+        },
+        {
+          "command": "iceworks-material-helper.showMaterialDocsForCurrentFile",
+          "group": "navigation@02",
+          "when": "iceworks:isJSXFile"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "iceworks-material-helper.pages.add",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-material-helper.pages.refresh",
+          "when": "view == pages",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-material-helper.components.add",
+          "when": "view == components",
+          "group": "navigation"
+        },
+        {
+          "command": "iceworks-material-helper.components.refresh",
+          "when": "view == components",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "iceworks-material-helper.pages.delete",
+          "when": "view == pages && viewItem == page",
+          "group": "inline"
+        },
+        {
+          "command": "iceworks-material-helper.components.delete",
+          "when": "view == components && viewItem == component",
+          "group": "inline"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "iceworksApp",
+          "title": "Iceworks",
+          "icon": "assets/sidebar-logo.png"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "pages",
+        "contents": "%iceworksMaterialHelper.viewsWelcome.pages.contents%"
+      },
+      {
+        "view": "components",
+        "contents": "%iceworksMaterialHelper.viewsWelcome.components.contents%"
+      }
+    ],
+    "views": {
+      "iceworksApp": [
+        {
+          "id": "pages",
+          "name": "%iceworksMaterialHelper.view.pages.name%",
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
+        },
+        {
+          "id": "components",
+          "name": "%iceworksMaterialHelper.view.components.name%",
+          "when": "!iceworks:projectIsNotTargetFramework && !iceworks:projectIsPegasus"
         }
       ]
     },
@@ -171,6 +362,7 @@
     "@babel/traverse": "^7.10.1",
     "@babel/types": "^7.10.2",
     "@iceworks/common-service": "^0.1.3",
+    "@iceworks/project-service": "^0.1.6",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-engine": "^0.1.0",
     "@iceworks/recorder": "^0.1.6",

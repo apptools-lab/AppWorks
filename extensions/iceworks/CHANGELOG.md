@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.17.0
+
+- refactor: quick entries
+
 ## 0.16.3
 
 - chore: upgrade material helper

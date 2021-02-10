@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.0
+
+- fix: check storage limit
+- feat: check logs limit
+- feat: send data when extension deactivate
+- chore: typo & more logs
+
 ## 0.3.7
 
 - refactor: internal optimization

@@ -1,15 +1,18 @@
+import * as vscode from 'vscode';
 import { getProjectType, checkIsPegasusProject, checkIsTargetProjectType } from '@iceworks/project-service';
-import { checkIsAliInternal, checkIsO2, checkIsInstalledDoctor } from '@iceworks/common-service';
+import { checkIsAliInternal, checkIsInstalledDoctor } from '@iceworks/common-service';
 import i18n from '../i18n';
 
+/**
+ * 该数组总是列出所有可用的命令，外部可以基于该数组进行赛选
+ */
 export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.projectCreator.detail'),
     command: 'iceworks-project-creator.create-project.start',
     async condition() {
-      const isO2 = checkIsO2();
-      return !isO2;
+      return vscode.extensions.getExtension('iceworks-team.iceworks-project-creator');
     },
   },
   {
@@ -20,6 +23,16 @@ export default [
       const isTargetProjectType = await checkIsTargetProjectType();
       return isTargetProjectType;
     },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
+    command: 'iceworksApp.welcome.start',
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
+    command: 'iceworksApp.configHelper.start',
   },
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.doctor.label'),
@@ -34,7 +47,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runDebug.detail'),
-    command: 'iceworksApp.editorMenu.runDebug',
+    command: 'iceworksApp.scripts.runDebug',
     async condition() {
       return await checkIsTargetProjectType();
     },
@@ -42,7 +55,7 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.DefPublish.detail'),
-    command: 'iceworksApp.editorMenu.DefPublish',
+    command: 'iceworksApp.scripts.DefPublish',
     async condition() {
       return (await checkIsAliInternal()) && await checkIsTargetProjectType();
     },
@@ -52,7 +65,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-material-helper.page-generator.start',
     async condition() {
-      return await checkIsTargetProjectType() && !(await checkIsPegasusProject());
+      return (await checkIsTargetProjectType()) && !(await checkIsPegasusProject()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
     },
   },
   {
@@ -60,7 +73,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
     command: 'iceworks-material-helper.page-creator.start',
     async condition() {
-      return await checkIsTargetProjectType() && !(await checkIsPegasusProject());
+      return (await checkIsTargetProjectType()) && !(await checkIsPegasusProject()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
     },
   },
   {
@@ -68,7 +81,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.materialImport.detail'),
     command: 'iceworks-material-helper.material-importer.start',
     async condition() {
-      return await checkIsTargetProjectType();
+      return (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
     },
   },
   {
@@ -76,10 +89,8 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.design-component',
     async condition() {
-      // TODO disable Doctor in O2: Unknown error
-      const isO2 = checkIsO2();
       const projectType = await getProjectType();
-      return !isO2 && projectType === 'react';
+      return projectType === 'react' && vscode.extensions.getExtension('iceworks-team.iceworks-ui-builder');
     },
   },
   {
@@ -87,7 +98,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createComponent.detail'),
     command: 'iceworks-material-helper.component-creator.start',
     async condition() {
-      return await checkIsTargetProjectType() && !(await checkIsPegasusProject());
+      return (await checkIsTargetProjectType()) && !(await checkIsPegasusProject()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
     },
   },
   {
@@ -95,7 +106,7 @@ export default [
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.showMaterialDocs.detail'),
     command: 'iceworks-material-helper.showMaterialDocs',
     async condition() {
-      return await checkIsTargetProjectType();
+      return (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
     },
   },
   {
@@ -117,19 +128,9 @@ export default [
   {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.runBuild.detail'),
-    command: 'iceworksApp.editorMenu.runBuild',
+    command: 'iceworksApp.scripts.runBuild',
     async condition() {
       return await checkIsTargetProjectType();
     },
-  },
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.welcomePage.detail'),
-    command: 'iceworksApp.welcome.start',
-  },
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.openSettings.detail'),
-    command: 'iceworksApp.configHelper.start',
   },
 ];

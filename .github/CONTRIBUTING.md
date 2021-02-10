@@ -59,9 +59,34 @@ yo code
 
 #### Development and Debugging  
 
-Use the VS Code to develop the extension project. open a new window, set `/extensions/foo` as workspace, enable extension debugging through `F5`.
+Use the VS Code to develop the extension project. 
+
+Open a new window and set `/extensions/xxx` as workspace, enable extension debugging through `F5`:
+
+```bash
+# Take iceworks-app for example
+
+$ code ./extensions/iceworks-app
+```
 
 > Please see [VS Code Extension](https://code.visualstudio.com/api) for more details.
+
+#### Publish Extension
+
+```bash
+# Install CLI package
+$ npm install -g vsce
+
+$ cd ./extensions/iceworks-app
+$ vsce package 
+# iceworks-app.vsix generated
+
+# Test extension
+$ code --install-extension ./extensions/iceworks-app/iceworks-app-x.x.x.vsix
+
+$ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN 
+# <publisherID>.iceworks-app published to VS Code Marketplace
+```
 
 ## Pull Request Guidelines
 

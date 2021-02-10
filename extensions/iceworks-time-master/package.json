@@ -3,7 +3,7 @@
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"
@@ -27,17 +27,17 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "iceworksApp",
-          "title": "Iceworks",
+          "id": "iceworksTimeMaster",
+          "title": "Time Master",
           "icon": "assets/sidebar-logo.png"
         }
       ]
     },
     "views": {
-      "iceworksApp": [
+      "iceworksTimeMaster": [
         {
           "id": "timeMaster",
-          "name": "%timeMaster.views.iceworksApp.timeMaster.name%",
+          "name": "%timeMaster.views.iceworksTimeMaster.timeMaster.name%",
           "when": "config.iceworks.enableView"
         }
       ]
@@ -72,9 +72,11 @@
   },
   "main": "./build/extension.js",
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build",
+    "vscode:prepublish": "npm run build",
     "build": "rm -rf build && webpack --mode production",
-    "dev": "webpack --mode development --watch --info-verbosity verbose"
+    "dev": "webpack --mode development --watch --info-verbosity verbose",
+    "compile": "rm -rf build && tsc -p ./",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.2",
@@ -95,6 +97,7 @@
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/configure": "^0.1.0",
+    "user-home": "^2.0.0",
     "axios": "^0.21.0",
     "egg-logger": "^2.4.2",
     "fs-extra": "^9.0.1",

@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import {
-  getProjectType,
   checkIsPegasusProject,
   checkIsTargetProjectType,
   autoSetContext as autoSetContextByProject,
@@ -10,15 +9,13 @@ import {
 } from '@iceworks/project-service';
 import { Recorder, recordDAU } from '@iceworks/recorder';
 import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
-import { createNpmScriptsTreeView } from './views/npmScriptsView';
+import { createActionsTreeView } from './views/actionsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
-import { createComponentsTreeView } from './views/componentsView';
-import { createPagesTreeView } from './views/pagesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
 import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
-import showEntriesQuickPick from './quickPicks/showEntriesQuickPick';
-import createEditorMenuAction from './utils/createEditorMenuAction';
+import showAllQuickPick from './quickPicks/showAllQuickPick';
+import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import autoStart from './utils/autoStart';
 import i18n from './i18n';
@@ -37,7 +34,6 @@ export async function activate(context: vscode.ExtensionContext) {
   initExtension(context, name);
   autoSetContextByProject();
 
-  const projectType = await getProjectType();
   const isPegasusProject = await checkIsPegasusProject();
 
   // init statusBarItem
@@ -45,7 +41,7 @@ export async function activate(context: vscode.ExtensionContext) {
   subscriptions.push(extensionsStatusBar);
   subscriptions.push(
     registerCommand(showExtensionsQuickPickCommandId, async () => {
-      await showEntriesQuickPick();
+      await showAllQuickPick();
     }),
   );
 
@@ -154,12 +150,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // init tree view
   const treeViews: any[] = [];
   treeViews.push(createQuickEntriesTreeView(context));
-  treeViews.push(createNpmScriptsTreeView(context));
+  treeViews.push(createActionsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
-  if (!isPegasusProject) {
-    treeViews.push(createComponentsTreeView(context));
-    treeViews.push(createPagesTreeView(context));
-  }
   let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
@@ -179,18 +171,16 @@ export async function activate(context: vscode.ExtensionContext) {
         action: 'active',
       });
       if (visible && !didSetViewContext) {
-        didSetViewContext = true;
-        recordDAU();
-        autoStart(context);
+        if (!(['npmScripts', 'nodeDependencies'].includes(title))) {
+          didSetViewContext = true;
+          recordDAU();
+          autoStart(context);
+        }
       }
     });
   });
 
-  // init editor title menu
-  if (projectType !== 'unknown') {
-    vscode.commands.executeCommand('setContext', 'iceworks:showScriptIconInEditorTitleMenu', true);
-    await createEditorMenuAction(context, recorder);
-  }
+  await createScriptsCommands(context, recorder);
 
   // TODO auto start welcome page when the application is new
   const isTargetProjectType = await checkIsTargetProjectType();

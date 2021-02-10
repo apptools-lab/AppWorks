@@ -6,7 +6,30 @@ import { pagesPath as projectPagesPath, projectPath } from '@iceworks/project-se
 import openEntryFile from '../utils/openEntryFile';
 import i18n from '../i18n';
 
-export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
+const addPageQuickPickItems: any[] = [
+  {
+    label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.label'),
+    detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.detail'),
+    command: 'iceworks-material-helper.page-creator.start',
+  },
+  {
+    label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.label'),
+    detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.detail'),
+    command: 'iceworks-material-helper.page-generator.start',
+  },
+];
+function showAddPageQuickPicks() {
+  const quickPick = vscode.window.createQuickPick();
+  quickPick.items = addPageQuickPickItems;
+  quickPick.onDidChangeSelection((change) => {
+    // @ts-ignore
+    vscode.commands.executeCommand(change[0].command);
+  });
+  quickPick.onDidHide(() => quickPick.dispose());
+  quickPick.show();
+}
+
+class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
@@ -49,7 +72,7 @@ export class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
         const pagePath = path.join(pagesPath, pageName);
 
         const command: vscode.Command = {
-          command: 'iceworksApp.pages.openFile',
+          command: 'iceworks-material-helper.pages.openFile',
           title: 'Open File',
           arguments: [pagePath],
         };
@@ -87,39 +110,16 @@ class PageTreeItem extends vscode.TreeItem {
   contextValue = 'page';
 }
 
-const addPageQuickPickItems: any[] = [
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
-    command: 'iceworks-material-helper.page-creator.start',
-  },
-  {
-    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
-    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
-    command: 'iceworks-material-helper.page-generator.start',
-  },
-];
-function showAddPageQuickPicks() {
-  const quickPick = vscode.window.createQuickPick();
-  quickPick.items = addPageQuickPickItems;
-  quickPick.onDidChangeSelection((change) => {
-    // @ts-ignore
-    vscode.commands.executeCommand(change[0].command);
-  });
-  quickPick.onDidHide(() => quickPick.dispose());
-  quickPick.show();
-}
-
 export function createPagesTreeView(context: vscode.ExtensionContext) {
   const pagesProvider = new PagesProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('pages', { treeDataProvider: pagesProvider });
 
-  registerCommand('iceworksApp.pages.add', () => {
+  registerCommand('iceworks-material-helper.pages.add', () => {
     showAddPageQuickPicks();
   });
-  registerCommand('iceworksApp.pages.refresh', () => pagesProvider.refresh());
-  registerCommand('iceworksApp.pages.openFile', (pagePath) => openEntryFile(pagePath));
-  registerCommand('iceworksApp.pages.delete', async (page) => await fse.remove(page.path));
+  registerCommand('iceworks-material-helper.pages.refresh', () => pagesProvider.refresh());
+  registerCommand('iceworks-material-helper.pages.openFile', (pagePath) => openEntryFile(pagePath));
+  registerCommand('iceworks-material-helper.pages.delete', async (page) => await fse.remove(page.path));
 
   const pattern = new vscode.RelativePattern(projectPagesPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
