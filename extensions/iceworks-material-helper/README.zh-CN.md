@@ -9,6 +9,22 @@
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快更好地添加组件、编写组件属性、查找组件文档，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
+## 页面和组件信息
+
+### 快速跳转至对应页面和组件的源码
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+
+1. 点击左侧面板中页面列表和组件列表中的选项。
+2. 跳转到所选项目所在的源码文件
+
+### 支持激活添加页面和组件功能
+
+![使用示例](https://user-images.githubusercontent.com/56879942/87393953-949f4200-c5e1-11ea-896a-fd2d592050e0.gif)
+
+1. 点击页面列表标题栏的 `+` 进入生成页面界面；
+2. 点击组件列表标题栏的 `+` 进入创建组件界面。
+
 ## 使用物料面板
 
 > [什么是物料？](https://ice.work/docs/materials/about)

@@ -9,6 +9,22 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.js.org/).
 
+## Pages and Components
+
+### Jump into corresponding pages and components
+
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+
+1. Click items in PAGES and COMPONENTS on the left panel.
+2. Jump into files of selected projects.
+
+### Activate Generate Page and Create Component
+
+![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+
+1. Click `+` in PAGES header to jump into GENERATE PAGE page.
+2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
+
 ## Using Material Panel
 
 ### Activate

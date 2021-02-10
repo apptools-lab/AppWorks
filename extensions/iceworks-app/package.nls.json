@@ -2,7 +2,7 @@
   "iceworksApp.view.quickEntries.name": "Quick Entries",
   "iceworksApp.view.actions.name": "Actions",
   "iceworksApp.view.nodeDependencies.name": "Node Dependencies",
-  "iceworksApp.viewsWelcome.welcome.contents": "To use Iceworks, you need to open or create a application first. \n[Open a Folder](command:vscode.openFolder)\n[Create Application](command:iceworks-project-creator.create-project.start)\n[Configuration](command:iceworksApp.configHelper.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks in VS Code.",
+  "iceworksApp.viewsWelcome.welcome.contents": "To use Iceworks, you need to open or create a application first. \n[Open a Folder](command:vscode.openFolder)\n[Create Application](command:iceworks-project-creator.create-project.start)\n[Settings](command:iceworksApp.configHelper.start)\nRead the [docs](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) to learn more about how to use Iceworks in VS Code.",
   "iceworksApp.viewsWelcome.quickEntries.contents": "Quick Entries could not be found",
   "iceworksApp.viewsWelcome.npmScripts.contents": "npm scripts could not be found in package.json",
   "iceworksApp.viewsWelcome.nodeDependencies.contents": "Node dependencies could not be found in package.json",

@@ -1,6 +1,6 @@
 {
   "name": "iceworks-app",
-  "displayName": "Application Explorer",
+  "displayName": "Application Manager",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
   "version": "0.8.0",
