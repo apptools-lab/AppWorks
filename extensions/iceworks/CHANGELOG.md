@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.17.1
+
+- fix: sidebar logo for O2
+
 ## 0.17.0
 
 - refactor: quick entries

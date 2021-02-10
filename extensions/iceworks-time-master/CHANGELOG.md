@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1
+
+- fix: sidebar logo for O2
+
 ## 0.4.0
 
 - fix: check storage limit
