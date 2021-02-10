@@ -11,16 +11,14 @@ Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.j
 
 ## Pages and Components
 
-### Jump into corresponding pages and components
+![demo](https://img.alicdn.com/imgextra/i3/O1CN01UnlYme22ks5npf5u2_!!6000000007159-2-tps-2880-1754.png)
 
-![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
+### Jump into corresponding pages and components
 
 1. Click items in PAGES and COMPONENTS on the left panel.
 2. Jump into files of selected projects.
 
 ### Activate Generate Page and Create Component
-
-![demo](https://user-images.githubusercontent.com/56879942/87393958-9963f600-c5e1-11ea-9c96-94fc10492577.gif)
 
 1. Click `+` in PAGES header to jump into GENERATE PAGE page.
 2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
