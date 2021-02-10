@@ -99,13 +99,13 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
     items.push(debugItem);
 
     if (vscode.extensions.getExtension('iceworks-team.iceworks-material-helper')) {
-      const createPageLabel = i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.label');
+      const createPageLabel = i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label');
       const createPageItem = this.buildActionItem(
         createPageLabel,
-        i18n.format('extension.iceworksApp.showEntriesQuickPick.createPage.detail'),
+        i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
         'add.svg',
         {
-          command: 'iceworks-material-helper.page-creator.start',
+          command: 'iceworks-material-helper.page-generator.start',
           title: createPageLabel
         },
       );
