@@ -20,6 +20,31 @@ import showDepsQuickPick from '../quickPicks/showDepsQuickPick';
 
 const rimrafAsync = util.promisify(rimraf);
 
+class DependencyTreeItem extends vscode.TreeItem {
+  constructor(
+    public readonly label: string,
+    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
+    public readonly extensionContext: vscode.ExtensionContext,
+    public readonly id: string,
+    public readonly contextValue: string,
+    icon: string,
+    public readonly description?: string,
+    public readonly command?: vscode.Command,
+  ) {
+    super(label, collapsibleState);
+
+    // @ts-ignore
+    this.iconPath.light = vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/light/${icon}`));
+    // @ts-ignore
+    this.iconPath.dark = vscode.Uri.file(this.extensionContext.asAbsolutePath(`assets/dark/${icon}`));
+  }
+
+  iconPath = {
+    light: '',
+    dark: '',
+  };
+}
+
 class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   private workspaceRoot: string;
 
@@ -31,7 +56,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
 
   readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
 
-  packageJsonPath: string;
+  public packageJsonPath: string;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -48,66 +73,44 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   }
 
   getChildren(element?: DependencyTreeItem) {
-    if (!this.workspaceRoot) {
-      return Promise.resolve([]);
-    }
-
-    if (element) {
-      const { label } = element;
-      const deps = this.getDepsInPackageJson(this.packageJsonPath, label as NodeDepTypes);
-      return deps;
-    } else {
-      return Promise.resolve(
-        nodeDepTypes.map(
+    if (this.workspaceRoot) {
+      if (element) {
+        const { label } = element;
+        const deps = this.getDepsInPackageJson(this.packageJsonPath, label as NodeDepTypes);
+        return deps;
+      } else {
+        return nodeDepTypes.map(
           (nodeDepType) => new DependencyTreeItem(
-            this.extensionContext,
             nodeDepType,
             vscode.TreeItemCollapsibleState.Collapsed,
+            this.extensionContext,
+            `parent-${nodeDepType}`,
             nodeDepType,
+            'dependency-entry.svg',
           ),
-        ),
-      );
+        );
+      }
     }
   }
 
-  private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
+  private async getDepsInPackageJson(packageJsonPath: string, depType: NodeDepTypes) {
     if (await checkPathExists(packageJsonPath)) {
       const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
       const workspaceDir: string = path.dirname(packageJsonPath);
 
-      const packageDeps = packageJson[label];
+      const packageDeps = packageJson[depType];
       let deps: DependencyTreeItem[] = [];
       if (packageDeps) {
         deps = await Promise.all(
           Object.keys(packageDeps).map(async (dep) => {
             const { outdated, version } = await getLocalDependencyInfo(dep, packageDeps[dep]);
-            return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
+            return toDep(depType, this.extensionContext, workspaceDir, dep, version, outdated);
           }),
         );
       }
 
       return deps;
-    } else {
-      return [];
     }
-  }
-
-  public async packageJsonExists() {
-    return await checkPathExists(this.packageJsonPath);
-  }
-
-  public async getReinstallScript() {
-    const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-    if (await checkPathExists(nodeModulesPath)) {
-      await rimrafAsync(nodeModulesPath);
-    }
-    const command = createNpmCommand('install');
-    return {
-      title: 'Reinstall Dependencies',
-      cwd: workspaceDir,
-      command,
-    };
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
@@ -131,42 +134,6 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   }
 }
 
-class DependencyTreeItem extends vscode.TreeItem {
-  constructor(
-    public readonly extensionContext: vscode.ExtensionContext,
-    public readonly label: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly id: string,
-    public readonly command?: vscode.Command,
-    public readonly version?: string,
-    public readonly outdated?: string,
-  ) {
-    super(label, collapsibleState);
-    this.id = id;
-  }
-
-  get description(): string {
-    return this.version ? this.version : '';
-  }
-
-  get contextValue(): string {
-    if (this.version) {
-      return this.outdated ? 'outdatedDependency' : 'dependency';
-    } else {
-      return this.label;
-    }
-  }
-
-  iconPath = {
-    dark: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
-    ),
-    light: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
-    ),
-  };
-}
-
 export function createNodeDependenciesTreeView(context) {
   const nodeDependenciesProvider = new DepNodeProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
@@ -184,9 +151,15 @@ export function createNodeDependenciesTreeView(context) {
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
-    if (await nodeDependenciesProvider.packageJsonExists()) {
-      const { title, cwd, command } = await nodeDependenciesProvider.getReinstallScript();
-
+    if (await checkPathExists(nodeDependenciesProvider.packageJsonPath)) {
+      const workspaceDir: string = path.dirname(nodeDependenciesProvider.packageJsonPath);
+      const nodeModulesPath = path.join(workspaceDir, 'node_modules');
+      if (await checkPathExists(nodeModulesPath)) {
+        await rimrafAsync(nodeModulesPath);
+      }
+      const command = createNpmCommand('install');
+      const title = 'Reinstall Dependencies';
+      const cwd = workspaceDir;
       runScript(title, cwd, command);
     }
   });
@@ -205,6 +178,7 @@ export function createNodeDependenciesTreeView(context) {
 
 const upgradeDependencyCommandTitle = 'Upgrade Dependency';
 function toDep(
+  depType: NodeDepTypes,
   extensionContext: vscode.ExtensionContext,
   workspaceDir: string,
   moduleName: string,
@@ -219,12 +193,13 @@ function toDep(
     }
     : undefined;
   return new DependencyTreeItem(
-    extensionContext,
     moduleName,
     vscode.TreeItemCollapsibleState.None,
-    `nodeDependencies-${moduleName}`,
-    command,
+    extensionContext,
+    `child-${depType}-${moduleName}`,
+    outdated ? 'outdatedDependency' : '',
+    'dependency.svg',
     version,
-    outdated,
+    command,
   );
 }
