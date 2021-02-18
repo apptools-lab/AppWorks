@@ -48,19 +48,14 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
   }
 
   getTreeItem(p: ItemData): TreeItem {
-    let treeItem;
-    if (p.children.length) {
-      treeItem = new TreeItem(p, p.initialCollapsibleState, this.extensionContext);
-    } else {
-      treeItem = new TreeItem(p, vscode.TreeItemCollapsibleState.None, this.extensionContext);
-    }
+    const treeItem = new TreeItem(p, p.initialCollapsibleState, this.extensionContext);
     return treeItem;
   }
 
-  async getChildren(element): Promise<ItemData[]> {
+  async getChildren(element: ItemData): Promise<ItemData[]> {
     let itemDataList: ItemData[] = [];
     if (element) {
-      itemDataList = element.children;
+      itemDataList = await this.buildDepsChildItems(element.contextValue as NodeDepTypes);
     } else {
       itemDataList = [
         ...this.buildQuickItems(),
@@ -112,41 +107,44 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
     return item;
   }
 
-  async buildDepsParentItem(): Promise<ItemData[]> {
+  public async buildDepsChildItems(nodeDepType: NodeDepTypes) {
+    let depItems: ItemData[] = [];
+    if (this.workspaceRoot && await checkPathExists(this.packageJsonPath)) {
+      const packageJson = await fse.readJSON(this.packageJsonPath);
+      const packageDeps = packageJson[nodeDepType];
+      if (packageDeps) {
+        depItems = await Promise.all(
+          Object.keys(packageDeps).map(async (moduleName) => {
+            const { outdated, version } = await getLocalDependencyInfo(moduleName, packageDeps[moduleName]);
+            const command = outdated
+              ? {
+                command: 'iceworksApp.nodeDependencies.upgrade',
+                title: upgradeDependencyCommandTitle,
+                arguments: [this.workspaceRoot, moduleName],
+              }
+              : undefined;
+            const itemData = new ItemData();
+            itemData.label = moduleName;
+            itemData.contextValue = outdated ? 'outdatedDependency' : '';
+            itemData.icon = 'dependency.svg';
+            itemData.tooltip = version;
+            itemData.description = version;
+            itemData.command = command;
+            return itemData;
+          }),
+        );
+      }
+    }
+    return depItems;
+  }
+
+  private async buildDepsParentItem(): Promise<ItemData[]> {
     return await Promise.all(nodeDepTypes.map(
       async (nodeDepType) => {
-        let depItems: ItemData[] = [];
-        if (this.workspaceRoot && await checkPathExists(this.packageJsonPath)) {
-          const packageJson = await fse.readJSON(this.packageJsonPath);
-          const packageDeps = packageJson[nodeDepType];
-          if (packageDeps) {
-            depItems = await Promise.all(
-              Object.keys(packageDeps).map(async (moduleName) => {
-                const { outdated, version } = await getLocalDependencyInfo(moduleName, packageDeps[moduleName]);
-                const command = outdated
-                  ? {
-                    command: 'iceworksApp.nodeDependencies.upgrade',
-                    title: upgradeDependencyCommandTitle,
-                    arguments: [this.workspaceRoot, moduleName],
-                  }
-                  : undefined;
-                const itemData = new ItemData();
-                itemData.label = moduleName;
-                itemData.contextValue = outdated ? 'outdatedDependency' : '';
-                itemData.icon = 'dependency.svg';
-                itemData.tooltip = version;
-                itemData.description = version;
-                itemData.command = command;
-                return itemData;
-              }),
-            );
-          }
-        }
-
         return this.buildParentItem(
           nodeDepType,
           nodeDepType,
-          depItems,
+          [],
           vscode.TreeItemCollapsibleState.Collapsed,
           nodeDepType,
           'dependency-entry.svg'
