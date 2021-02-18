@@ -33,6 +33,8 @@
   "extension.iceworksApp.showEntriesQuickPick.welcomePage.detail": "Show welcome page",
   "extension.iceworksApp.showEntriesQuickPick.dashboard.label": "Dashboard",
   "extension.iceworksApp.showEntriesQuickPick.dashboard.detail": "Show project dashboard",
+  "extension.iceworksApp.showEntriesQuickPick.more.label": "More",
+  "extension.iceworksApp.showEntriesQuickPick.more.detail": "See all commands",
   "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "for example: lodash react@latest.",
   "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "Please enter the name of the dependency to be addded to <%= depType %>. Multiple dependencies should be spilted by Spaces.",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "Daily",

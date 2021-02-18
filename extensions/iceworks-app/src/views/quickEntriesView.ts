@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { registerCommand, executeCommand } from '@iceworks/common-service';
 import options from '../quickPicks/options';
 import getOptions from '../utils/getOptions';
+import { showExtensionsQuickPickCommandId } from '../constants';
+import i18n from '../i18n';
 
 const entryOptions = options.filter(({ command }) => {
   return [
@@ -10,7 +12,13 @@ const entryOptions = options.filter(({ command }) => {
     'iceworksApp.welcome.start',
     'iceworksApp.configHelper.start',
   ].includes(command);
-});
+}).concat([
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.more.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.more.detail'),
+    command: showExtensionsQuickPickCommandId,
+  },
+]);
 
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
   private extensionContext: vscode.ExtensionContext;

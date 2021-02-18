@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { window, ViewColumn } from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import {
-  checkIsPegasusProject,
   checkIsTargetProjectType,
   autoSetContext as autoSetContextByProject,
   projectPath,
@@ -33,8 +32,6 @@ export async function activate(context: vscode.ExtensionContext) {
   // auto set configuration & context
   initExtension(context, name);
   autoSetContextByProject();
-
-  const isPegasusProject = await checkIsPegasusProject();
 
   // init statusBarItem
   const extensionsStatusBar = createExtensionsStatusBar();
