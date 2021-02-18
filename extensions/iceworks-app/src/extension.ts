@@ -6,7 +6,7 @@ import {
   autoSetContext as autoSetContextByProject,
   projectPath,
 } from '@iceworks/project-service';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { Recorder } from '@iceworks/recorder';
 import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
 import { createActionsTreeView } from './views/actionsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
@@ -16,7 +16,6 @@ import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants
 import showAllQuickPick from './quickPicks/showAllQuickPick';
 import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import autoStart from './utils/autoStart';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -149,7 +148,6 @@ export async function activate(context: vscode.ExtensionContext) {
   treeViews.push(createQuickEntriesTreeView(context));
   treeViews.push(createActionsTreeView(context));
   treeViews.push(createNodeDependenciesTreeView(context));
-  let didSetViewContext;
   treeViews.forEach((treeView) => {
     const { title } = treeView;
     treeView.onDidChangeVisibility(({ visible }) => {
@@ -167,13 +165,6 @@ export async function activate(context: vscode.ExtensionContext) {
         module: 'treeView',
         action: 'active',
       });
-      if (visible && !didSetViewContext) {
-        if (!(['npmScripts', 'nodeDependencies'].includes(title))) {
-          didSetViewContext = true;
-          recordDAU();
-          autoStart(context);
-        }
-      }
     });
   });
 

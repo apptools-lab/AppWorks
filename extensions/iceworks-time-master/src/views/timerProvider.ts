@@ -19,6 +19,7 @@ import i18n from '../i18n';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 import logger from '../utils/logger';
+import { recordDAU } from '@iceworks/recorder';
 
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
@@ -619,6 +620,11 @@ export function createTimerTreeView(timerProvider: TimerProvider) {
   treeView.onDidExpandElement(async e => {
     const item: TimerItem = e.element;
     timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Expanded;
+  });
+  treeView.onDidChangeVisibility(({ visible }) => {
+    if (visible) {
+      recordDAU();
+    }
   });
   // treeView.onDidChangeSelection(async e => {
   //   if (!e.selection || e.selection.length === 0) {
