@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.17.2
+
+- refactor: add actions for PAGES & COMPONENTS & NODE DEPENDENCIES view
+
 ## 0.17.1
 
 - fix: sidebar logo for O2
