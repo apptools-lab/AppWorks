@@ -83,6 +83,7 @@ export async function activate(context: ExtensionContext) {
 }
 
 export async function deactivate() {
+  logger.disable('console');
   logger.debug('[TimeMaster][extension] deactivate!');
 
   try {
@@ -94,9 +95,13 @@ export async function deactivate() {
     logger.error('[TimeMaster][extension] deactivate recorders got error:', e);
   }
 
+  logger.info('[TimeMaster][extension] deactivate recorders success!');
+
   try {
     await deactivateWalkClock();
   } catch (e) {
     logger.error('[TimeMaster][extension] deactivate walkClock got error:', e);
   }
+
+  logger.info('[TimeMaster][extension] deactivate walkClock success!');
 }
