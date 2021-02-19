@@ -84,7 +84,7 @@ export async function activate(context: ExtensionContext) {
 
 export async function deactivate() {
   logger.disable('console');
-  logger.debug('[TimeMaster][extension] deactivate!');
+  logger.info('[TimeMaster][extension][deactivate] start!');
 
   try {
     await Promise.all([
@@ -92,16 +92,18 @@ export async function deactivate() {
       usageStatsRecorder.deactivate(),
     ]);
   } catch (e) {
-    logger.error('[TimeMaster][extension] deactivate recorders got error:', e);
+    logger.error('[TimeMaster][extension][deactivate] recorders got error:', e);
   }
 
-  logger.info('[TimeMaster][extension] deactivate recorders success!');
+  logger.info('[TimeMaster][extension][deactivate] recorders success!');
 
   try {
     await deactivateWalkClock();
   } catch (e) {
-    logger.error('[TimeMaster][extension] deactivate walkClock got error:', e);
+    logger.error('[TimeMaster][extension][deactivate] walkClock got error:', e);
   }
 
-  logger.info('[TimeMaster][extension] deactivate walkClock success!');
+  logger.info('[TimeMaster][extension][deactivate] walkClock success!');
+
+  logger.info('[TimeMaster][extension][deactivate] done!');
 }
