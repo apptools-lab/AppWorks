@@ -20,6 +20,7 @@ import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 import logger from '../utils/logger';
 import { recordDAU } from '@iceworks/recorder';
+import recorder from '../utils/recorder';
 
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
@@ -624,7 +625,16 @@ export function createTimerTreeView(timerProvider: TimerProvider) {
   treeView.onDidChangeVisibility(({ visible }) => {
     if (visible) {
       recordDAU();
+      recorder.record({
+        module: 'treeView',
+        action: 'visible',
+      });
     }
+
+    recorder.record({
+      module: 'treeView',
+      action: 'active',
+    });
   });
   // treeView.onDidChangeSelection(async e => {
   //   if (!e.selection || e.selection.length === 0) {
