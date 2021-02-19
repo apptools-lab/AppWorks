@@ -18,11 +18,6 @@ export async function activate(context: ExtensionContext) {
   console.log('Congratulations, your extension "iceworks-time-master" is now active!');
   recorder.recordActivate();
 
-  // do not wait for async, let subsequent views be created
-  activateWalkClock().catch((e) => {
-    logger.error('[TimeMaster][extension] activate walkClock got error:', e);
-  });
-
   autoSetEnableViewsConfig(globalState);
 
   // create views
@@ -32,13 +27,6 @@ export async function activate(context: ExtensionContext) {
 
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.activate();
-
-  keystrokeStatsRecorder.activate().catch((e) => {
-    logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
-  });
-  usageStatsRecorder.activate().catch((e) => {
-    logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
-  });
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
@@ -80,6 +68,18 @@ export async function activate(context: ExtensionContext) {
       });
     }),
   );
+
+  // do not wait for async, let subsequent views be created
+  activateWalkClock().catch((e) => {
+    logger.error('[TimeMaster][extension] activate walkClock got error:', e);
+  });
+
+  keystrokeStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
+  });
+  usageStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
+  });
 }
 
 export async function deactivate() {
