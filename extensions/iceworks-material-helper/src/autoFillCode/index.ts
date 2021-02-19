@@ -8,7 +8,7 @@ import * as upperFirst from 'lodash.upperfirst';
 const renderFileAsync = util.promisify(ejs.renderFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-function checkIsDir() {
+function checkIsCreatedDir() {
 
 }
 
@@ -22,17 +22,25 @@ function checkIsInTargetFolder(fsPath: string): boolean {
   });
 }
 
+function checkIsIndexNames(name: string): boolean {
+  return ['index'].includes(name);
+}
+
 export default function() {
-  vscode.workspace.onDidCreateFiles(function({ files }) {
-    files.map(async function(file) {
+  vscode.workspace.onDidCreateFiles(async function({ files }) {
+    console.log('onDidCreateFiles', files);
+    await Promise.all(files.map(async function(file) {
       const { fsPath } = file;
-      if (checkIsTargetType(fsPath)) {
-        const name = upperFirst(path.basename(fsPath));
+      const isTargetType = checkIsTargetType(fsPath);
+      if (isTargetType) {
+        const filename = path.basename(fsPath, path.extname(fsPath));
+        const dirname = path.basename(path.dirname(fsPath));
+        const name = upperFirst(checkIsIndexNames(filename) ? dirname : filename);
         const templatePath = path.join(__dirname, 'component.react.tsx.ejs');
         const content = await renderFileAsync(templatePath, { name });
         await writeFileAsync(fsPath, content);
       }
-    });
+    }));
   });
   vscode.workspace.onDidRenameFiles(function({ files }) {
     console.log('onDidRenameFiles', files);
