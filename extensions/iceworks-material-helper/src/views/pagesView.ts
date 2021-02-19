@@ -5,6 +5,7 @@ import { checkPathExists, registerCommand } from '@iceworks/common-service';
 import { pagesPath as projectPagesPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../utils/openEntryFile';
 import i18n from '../i18n';
+import { ItemData, TreeItem } from './treeItem';
 
 const addPageQuickPickItems: any[] = [
   {
@@ -29,85 +30,130 @@ function showAddPageQuickPicks() {
   quickPick.show();
 }
 
-class PagesProvider implements vscode.TreeDataProvider<PageTreeItem> {
+class PagesProvider implements vscode.TreeDataProvider<ItemData> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<PageTreeItem | undefined> = new vscode.EventEmitter<
-  PageTreeItem | undefined
+  private onDidChange: vscode.EventEmitter<ItemData | undefined> = new vscode.EventEmitter<
+  ItemData | undefined
   >();
 
-  readonly onDidChangeTreeData: vscode.Event<PageTreeItem | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ItemData | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
     this.workspaceRoot = workspaceRoot;
   }
 
-  getTreeItem(element: PageTreeItem): vscode.TreeItem {
-    return element;
-  }
-
   refresh(): void {
     this.onDidChange.fire(undefined);
   }
 
-  async getChildren() {
-    if (!this.workspaceRoot) {
-      return Promise.resolve([]);
-    }
-    const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');
-    if (await checkPathExists(pagesPath)) {
-      const pages = this.getPages(pagesPath);
-      return Promise.resolve(pages);
+  getTreeItem(p: ItemData): TreeItem {
+    let treeItem;
+    if (p.children.length) {
+      treeItem = new TreeItem(p, p.initialCollapsibleState, this.extensionContext);
     } else {
-      return Promise.resolve([]);
+      treeItem = new TreeItem(p, vscode.TreeItemCollapsibleState.None, this.extensionContext);
     }
+    return treeItem;
   }
 
-  private async getPages(pagesPath: string) {
-    if (await checkPathExists(pagesPath)) {
-      const toPage = (pageName: string) => {
-        const pagePath = path.join(pagesPath, pageName);
+  async getChildren(element): Promise<ItemData[]> {
+    let itemDataList: ItemData[] = [];
+    if (element) {
+      itemDataList = element.children;
+    } else {
+      itemDataList = [
+        ...this.buildQuickItems(),
+        this.buildDividerItem(),
+        ...await this.buildPageItems(),
+      ];
+    }
+    return itemDataList;
+  }
 
-        const command: vscode.Command = {
-          command: 'iceworks-material-helper.pages.openFile',
-          title: 'Open File',
-          arguments: [pagePath],
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    icon = '',
+    command?: vscode.Command,
+  ): ItemData {
+    const item = new ItemData();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = label;
+    item.contextValue = 'action_button';
+    item.command = command;
+    item.icon = icon;
+    return item;
+  }
+
+  private buildDividerItem(): ItemData {
+    const item = this.buildActionItem('', '', 'blue-line-96.png');
+    return item;
+  }
+
+  private buildQuickItems(): ItemData[] {
+    const items: ItemData[] = [];
+    const generatePageLabel = i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.label');
+    const generatePageItem = this.buildActionItem(
+      generatePageLabel,
+      i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generatePage.detail'),
+      'order.svg',
+      {
+        command: 'iceworks-material-helper.page-generator.start',
+        title: generatePageLabel
+      },
+    );
+    items.push(generatePageItem);
+
+    const createPageLabel = i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.label');
+    const createPageItem = this.buildActionItem(
+      createPageLabel,
+      i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createPage.detail'),
+      'discount.svg',
+      {
+        command: 'iceworks-material-helper.page-creator.start',
+        title: createPageLabel
+      },
+    );
+    items.push(createPageItem);
+    return items;
+  }
+
+  private async buildPageItems(): Promise<ItemData[]> {
+    if (this.workspaceRoot) {
+      const pagesPath = path.join(this.workspaceRoot, 'src', 'pages');
+      const isPagePathExists = await checkPathExists(pagesPath);
+      if (isPagePathExists) {
+        const toPage = (pageName: string) => {
+          const pagePath = path.join(pagesPath, pageName);
+          const command: vscode.Command = {
+            command: 'iceworks-material-helper.pages.openFile',
+            title: 'Open File',
+            arguments: [pagePath],
+          };
+          const itemData = new ItemData();
+          itemData.label = pageName;
+          itemData.command = command;
+          itemData.contextValue = 'page';
+          itemData.icon = 'page.svg';
+          // @ts-ignore
+          itemData.fsPath = pagePath;
+          return itemData;
         };
-        return new PageTreeItem(this.extensionContext, pageName, command, pagePath);
-      };
-      const dirNames = await fse.readdir(pagesPath);
-      // except the file
-      const pageNames = dirNames.filter((dirname) => {
-        const stat = fse.statSync(path.join(pagesPath, dirname));
-        return stat.isDirectory();
-      });
-      return pageNames.map((pageName) => toPage(pageName));
-    } else {
-      return [];
+        const dirNames = await fse.readdir(pagesPath);
+        const pageNames = dirNames.filter((dirname) => {
+          const stat = fse.statSync(path.join(pagesPath, dirname));
+          return stat.isDirectory();
+        });
+        return pageNames.map((pageName) => toPage(pageName));
+      }
     }
+    return [];
   }
-}
-
-class PageTreeItem extends vscode.TreeItem {
-  constructor(
-    public readonly extensionContext: vscode.ExtensionContext,
-    public readonly label: string,
-    public readonly command: vscode.Command,
-    // eslint-disable-next-line no-shadow
-    public readonly path: string,
-  ) {
-    super(label);
-  }
-
-  iconPath = {
-    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/page.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/page.svg')),
-  };
-
-  contextValue = 'page';
 }
 
 export function createPagesTreeView(context: vscode.ExtensionContext) {
@@ -119,7 +165,7 @@ export function createPagesTreeView(context: vscode.ExtensionContext) {
   });
   registerCommand('iceworks-material-helper.pages.refresh', () => pagesProvider.refresh());
   registerCommand('iceworks-material-helper.pages.openFile', (pagePath) => openEntryFile(pagePath));
-  registerCommand('iceworks-material-helper.pages.delete', async (page) => await fse.remove(page.path));
+  registerCommand('iceworks-material-helper.pages.delete', async (page) => await fse.remove(page.fsPath));
 
   const pattern = new vscode.RelativePattern(projectPagesPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

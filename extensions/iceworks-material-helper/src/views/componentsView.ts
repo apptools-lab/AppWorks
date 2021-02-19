@@ -6,6 +6,7 @@ import { componentsPath, projectPath } from '@iceworks/project-service';
 import openEntryFile from '../utils/openEntryFile';
 import i18n from '../i18n';
 import getOptions from '../utils/getOptions';
+import { ItemData, TreeItem } from './treeItem';
 
 const { window, commands } = vscode;
 
@@ -39,16 +40,16 @@ async function showAddComponentQuickPick() {
   quickPick.show();
 }
 
-class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
+class ComponentsProvider implements vscode.TreeDataProvider<ItemData> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<ComponentTreeItem | undefined> = new vscode.EventEmitter<
-  ComponentTreeItem | undefined
+  private onDidChange: vscode.EventEmitter<ItemData | undefined> = new vscode.EventEmitter<
+  ItemData | undefined
   >();
 
-  readonly onDidChangeTreeData: vscode.Event<ComponentTreeItem | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ItemData | undefined> = this.onDidChange.event;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -59,75 +60,112 @@ class ComponentsProvider implements vscode.TreeDataProvider<ComponentTreeItem> {
     this.onDidChange.fire(undefined);
   }
 
-  getTreeItem(element: ComponentTreeItem): vscode.TreeItem {
-    return element;
+  getTreeItem(p: ItemData): TreeItem {
+    let treeItem;
+    if (p.children.length) {
+      treeItem = new TreeItem(p, p.initialCollapsibleState, this.extensionContext);
+    } else {
+      treeItem = new TreeItem(p, vscode.TreeItemCollapsibleState.None, this.extensionContext);
+    }
+    return treeItem;
   }
 
-  async getChildren() {
-    if (!this.workspaceRoot) {
-      return Promise.resolve([]);
+  async getChildren(element): Promise<ItemData[]> {
+    let itemDataList: ItemData[] = [];
+    if (element) {
+      itemDataList = element.children;
+    } else {
+      itemDataList = [
+        ...this.buildQuickItems(),
+        this.buildDividerItem(),
+        ...await this.buildComponentItems(),
+      ];
     }
-    try {
+    return itemDataList;
+  }
+
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    icon = '',
+    command?: vscode.Command,
+  ): ItemData {
+    const item = new ItemData();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = label;
+    item.contextValue = 'action_button';
+    item.command = command;
+    item.icon = icon;
+    return item;
+  }
+
+  private buildDividerItem(): ItemData {
+    const item = this.buildActionItem('', '', 'blue-line-96.png');
+    return item;
+  }
+
+  private buildQuickItems(): ItemData[] {
+    const items: ItemData[] = [];
+    const createComponentLabel = i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label');
+    const createComponentItem = this.buildActionItem(
+      createComponentLabel,
+      i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail'),
+      'download.svg',
+      {
+        command: 'iceworks-material-helper.component-creator.start',
+        title: createComponentLabel
+      },
+    );
+    items.push(createComponentItem);
+
+    if (vscode.extensions.getExtension('iceworks-team.iceworks-ui-builder')) {
+      const generateComponentLabel = i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.label');
+      const generateComponentItem = this.buildActionItem(
+        generateComponentLabel,
+        i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.detail'),
+        'image.svg',
+        {
+          command: 'iceworks-ui-builder.design-component',
+          title: generateComponentLabel
+        },
+      );
+      items.push(generateComponentItem);
+    }
+    return items;
+  }
+
+  async buildComponentItems(): Promise<ItemData[]> {
+    if (this.workspaceRoot) {
       const isComponentPathExists = await checkPathExists(componentsPath);
       if (isComponentPathExists) {
-        const components = this.getComponents(componentsPath);
-        return Promise.resolve(components);
-      } else {
-        return Promise.resolve([]);
-      }
-    } catch (error) {
-      return Promise.resolve([]);
-    }
-  }
-
-  private async getComponents(targetPath: string) {
-    try {
-      const isComponentPathExists = await checkPathExists(targetPath);
-      if (isComponentPathExists) {
         const toComponent = (componentName: string) => {
-          const componentPath = path.join(targetPath, componentName);
-
+          const componentPath = path.join(componentsPath, componentName);
           const command: vscode.Command = {
             command: 'iceworks-material-helper.components.openFile',
             title: 'Open File',
             arguments: [componentPath],
           };
-
-          return new ComponentTreeItem(this.extensionContext, componentName, command, componentPath);
+          const itemData = new ItemData();
+          itemData.label = componentName;
+          itemData.command = command;
+          itemData.contextValue = 'component';
+          itemData.icon = 'component.svg';
+          // @ts-ignore
+          itemData.fsPath = componentPath;
+          return itemData;
         };
-        const dirNames = await fse.readdir(targetPath);
-        // except file
+        const dirNames = await fse.readdir(componentsPath);
         const componentNames = dirNames.filter((dirname) => {
-          const stat = fse.statSync(path.join(targetPath, dirname));
+          const stat = fse.statSync(path.join(componentsPath, dirname));
           return stat.isDirectory();
         });
         return componentNames.map((componentName) => toComponent(componentName));
-      } else {
-        return [];
       }
-    } catch (e) {
-      return [];
     }
+
+    return [];
   }
-}
-
-class ComponentTreeItem extends vscode.TreeItem {
-  constructor(
-    public readonly extensionContext: vscode.ExtensionContext,
-    public readonly label: string,
-    public readonly command: vscode.Command,
-    // eslint-disable-next-line no-shadow
-    public readonly path: string,
-  ) {
-    super(label);
-  }
-
-  iconPath = {
-    dark: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/dark/component.svg')),
-    light: vscode.Uri.file(this.extensionContext.asAbsolutePath('assets/light/component.svg')),
-  };
-
-  contextValue = 'component';
 }
 
 export function createComponentsTreeView(context: vscode.ExtensionContext) {
@@ -139,7 +177,7 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
   });
   registerCommand('iceworks-material-helper.components.refresh', () => componentsProvider.refresh());
   registerCommand('iceworks-material-helper.components.openFile', (componentPath) => openEntryFile(componentPath));
-  registerCommand('iceworks-material-helper.components.delete', async (component) => await fse.remove(component.path));
+  registerCommand('iceworks-material-helper.components.delete', async (component) => await fse.remove(component.fsPath));
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);

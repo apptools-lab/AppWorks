@@ -10,7 +10,7 @@ export class ItemData {
   contextValue = '';
   icon = '';
   children: ItemData[] = [];
-  initialCollapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.None;
+  initialCollapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed;
 }
 
 export class TreeItem extends vscode.TreeItem {
