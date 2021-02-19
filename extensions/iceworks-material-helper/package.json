@@ -383,6 +383,7 @@
     "@iceworks/recorder": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.1",
     "ejs": "^3.1.6",
+    "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1"
   },
   "repository": {

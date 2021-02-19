@@ -4,6 +4,7 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
 import * as upperFirst from 'lodash.upperfirst';
+import * as camelCase from 'lodash.camelcase';
 import { getProjectLanguageType, getProjectType } from '@iceworks/project-utils';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 
@@ -49,10 +50,10 @@ function checkIsIndexNames(name: string): boolean {
  */
 async function filContent(fsPath: string): Promise<string> {
   const isCreatedFolder = checkIsCreatedDir(fsPath);
-  const workspaceRootPath = vscode.workspace.workspaceFolders?.find((workspaceFolder) => fsPath.includes(workspaceFolder.uri.fsPath))?.uri.fsPath;
+  const workspaceRootPath = vscode.workspace.workspaceFolders?.find((workspaceFolder) => fsPath.includes(workspaceFolder.uri.fsPath))?.uri.fsPath as string;
   const filename = path.basename(fsPath, path.extname(fsPath));
   const dirname = path.basename(path.dirname(fsPath));
-  const name = upperFirst(checkIsIndexNames(filename) ? dirname : filename);
+  const name = upperFirst(camelCase(checkIsIndexNames(filename) ? dirname : filename));
   const projectType = await getProjectType(workspaceRootPath);
   const templatePath = path.join(__dirname, `component.${projectType}.tsx.ejs`);
   const content = await renderFileAsync(templatePath, { name });
