@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.0
+
+- feat: auto react code snippet
+
 ## 0.6.0
 
 - feat: add "importer material" and "show material doc" to editor title

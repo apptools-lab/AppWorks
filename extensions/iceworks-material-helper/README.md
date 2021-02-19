@@ -152,6 +152,12 @@ When editing the props of a component in a JSX file, an automatic completion rem
 1. Use materials in JSX files (such as View).
 2. Enter part of props in the material tag, it will arouse automatic completion.
 
+## Auto React Code Snippet
+
+After created a folder or file, automatically create the index.j[t]sx file and complete the code snippet.
+
+![demo](https://img.alicdn.com/imgextra/i2/O1CN01wge0kr25ZMzp40FSY_!!6000000007540-1-tps-1446-906.gif)
+
 ## Debug Materials Project
 
 Iceworks provides local debugging capabilities for materials project.
