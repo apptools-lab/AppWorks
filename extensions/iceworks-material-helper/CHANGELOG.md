@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.6.1
+
+- feat: add actions for PAGES && COMPONENTS view
+
 ## 0.6.0
 
 - feat: add "importer material" and "show material doc" to editor title

@@ -1,10 +1,13 @@
 # Change Log
 
+## 0.8.1
+
+- feat: add actions for NODE DEPENDENCIES view
+
 ## 0.8.0
 
 - refactor: remove pages & components view
 - refactor: move scripts&dependencies view to explorer sidebar
-
 
 ## 0.7.6
 

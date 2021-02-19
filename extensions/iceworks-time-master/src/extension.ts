@@ -1,5 +1,5 @@
 import { ExtensionContext, commands } from 'vscode';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { recordDAU } from '@iceworks/recorder';
 import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViewsConfig } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
@@ -7,10 +7,7 @@ import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
-
-// eslint-disable-next-line
-const { name, version } = require('../package.json');
-const recorder = new Recorder(name, version);
+import recorder from './utils/recorder';
 
 const keystrokeStatsRecorder = getKeystrokeStats();
 const usageStatsRecorder = getUsageStatsRecorder();
