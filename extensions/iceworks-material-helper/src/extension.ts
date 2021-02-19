@@ -4,6 +4,7 @@ import { initExtension, registerCommand } from '@iceworks/common-service';
 import { autoSetContext as autoSetContextByProject } from '@iceworks/project-service';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
+import autoFillCode from './autoFillCode';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
@@ -132,9 +133,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   registerDebugCommand(subscriptions);
 
-  // set propsAutoCompleter
   propsAutoComplete();
   registerComponentDocSupport();
+  autoFillCode();
 
   // views
   createComponentsTreeView(context);

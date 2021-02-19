@@ -362,11 +362,13 @@
     "@babel/traverse": "^7.10.1",
     "@babel/types": "^7.10.2",
     "@iceworks/common-service": "^0.1.3",
-    "@iceworks/project-service": "^0.1.6",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-engine": "^0.1.0",
+    "@iceworks/project-service": "^0.1.6",
     "@iceworks/recorder": "^0.1.6",
-    "@iceworks/vscode-webview": "^0.1.1"
+    "@iceworks/vscode-webview": "^0.1.1",
+    "ejs": "^3.1.6",
+    "lodash.upperfirst": "^4.3.1"
   },
   "repository": {
     "type": "git",
