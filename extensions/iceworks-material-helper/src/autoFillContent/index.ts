@@ -4,7 +4,7 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as ejs from 'ejs';
 import * as upperFirst from 'lodash.upperfirst';
-import { getProjectLanguageType } from '@iceworks/project-service';
+import { getProjectLanguageType, getProjectType } from '@iceworks/project-utils';
 import { getDataFromSettingJson } from '@iceworks/common-service';
 
 const renderFileAsync = util.promisify(ejs.renderFile);
@@ -43,13 +43,28 @@ function checkIsIndexNames(name: string): boolean {
   return [indexFilename].includes(name);
 }
 
-async function getContent(fsPath: string) {
+/**
+ * TODO
+ * Code snippet effect, which can have a better editing experience
+ */
+async function filContent(fsPath: string): Promise<string> {
+  const isCreatedFolder = checkIsCreatedDir(fsPath);
+  const workspaceRootPath = vscode.workspace.workspaceFolders?.find((workspaceFolder) => fsPath.includes(workspaceFolder.uri.fsPath))?.uri.fsPath;
   const filename = path.basename(fsPath, path.extname(fsPath));
   const dirname = path.basename(path.dirname(fsPath));
   const name = upperFirst(checkIsIndexNames(filename) ? dirname : filename);
-  const templatePath = path.join(__dirname, 'component.react.tsx.ejs');
+  const projectType = await getProjectType(workspaceRootPath);
+  const templatePath = path.join(__dirname, `component.${projectType}.tsx.ejs`);
   const content = await renderFileAsync(templatePath, { name });
-  return content;
+
+  let newFsPath = fsPath;
+  if (isCreatedFolder) {
+    const projectLanguageType = await getProjectLanguageType(workspaceRootPath);
+    newFsPath = path.join(fsPath, `${indexFilename}.${projectLanguageType}x`);
+  }
+
+  await writeFileAsync(newFsPath, content);
+  return newFsPath;
 }
 
 export default function() {
@@ -66,10 +81,7 @@ export default function() {
           const createdDirname = path.basename(fsPath);
           const isCreatedBlackListDir = ['hooks', 'components', 'models'].includes(createdDirname);
           if (isInComponentDir && !isCreatedBlackListDir) {
-            const content = await getContent(fsPath);
-            const projectLanguageType = await getProjectLanguageType();
-            const newFilename = path.join(fsPath, `${indexFilename}.${projectLanguageType}x`);
-            await writeFileAsync(newFilename, content);
+            const newFilename = await filContent(fsPath);
             await vscode.workspace.openTextDocument(newFilename);
           }
         } else if(!isCreatedFolder && enableAutoFillComponentCode) {
@@ -78,8 +90,7 @@ export default function() {
           const createdFilename = path.basename(fsPath, path.extname(fsPath));
           const isCreatedBlackListFile = ['components'].includes(createdDirname) && checkIsIndexNames(createdFilename);
           if (isValidateType && !isCreatedBlackListFile) {
-            const content = await getContent(fsPath);
-            await writeFileAsync(fsPath, content);
+            await filContent(fsPath);
           }
         }
       }
