@@ -23,5 +23,9 @@
   "iceworksMaterialHelper.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
   "iceworksMaterialHelper.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
   "iceworksMaterialHelper.configuration.properties.iceworks.generatePagePath.description": "Application pages directory. The default directory is `src/pages`.",
-  "iceworksMaterialHelper.configuration.properties.iceworks.generateComponentPath.description": "Application components directory. The default directory is `src/components`."
+  "iceworksMaterialHelper.configuration.properties.iceworks.generateComponentPath.description": "Application components directory. The default directory is `src/components`.",
+  "iceworksMaterialHelper.configuration.autoCreateIndexFile.description": "After created folders under src/pages/, src/components/, create a index.j[t]sx file automatically",
+  "iceworksMaterialHelper.configuration.autoCreateIndexFile.title": "After created a folder, the index.j[t]sx file is created automatically",
+  "iceworksMaterialHelper.configuration.autoFillComponentCode.description": "After created the index.j[t]sx file in src/ folder, automatically complete the component declaration code according to the filename",
+  "iceworksMaterialHelper.configuration.autoFillComponentCode.title": "After created the index.j[t]sx file, the component code will be completed automatically"
 }

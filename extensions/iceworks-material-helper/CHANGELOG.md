@@ -1,7 +1,8 @@
 # Change Log
 
-## 0.6.1
+## 0.7.0
 
+- feat: auto react code snippet
 - feat: add actions for PAGES && COMPONENTS view
 
 ## 0.6.0
