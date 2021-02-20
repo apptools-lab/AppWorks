@@ -3,6 +3,8 @@
 ## 0.8.1
 
 - feat: add actions for NODE DEPENDENCIES view
+- fix: install dependency before run debug
+- fix: upgrade dependency
 
 ## 0.8.0
 

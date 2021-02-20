@@ -9,7 +9,6 @@ import {
   registerCommand,
   isYarnPackageManager,
   getAddDependencyAction,
-  getUpdateDependencyAction,
 } from '@iceworks/common-service';
 import { dependencyDir, projectPath, getLocalDependencyInfo } from '@iceworks/project-service';
 import runScript from '../terminal/runScript';
@@ -120,7 +119,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
               ? {
                 command: 'iceworksApp.nodeDependencies.upgrade',
                 title: upgradeDependencyCommandTitle,
-                arguments: [this.workspaceRoot, moduleName],
+                arguments: [this.workspaceRoot, moduleName, outdated],
               }
               : undefined;
             const itemData = new ItemData();
@@ -211,10 +210,17 @@ export function createNodeDependenciesTreeView(context) {
   registerCommand('iceworksApp.nodeDependencies.upgrade', (node: ItemData) => {
     const { command } = node;
     if (command) {
-      const [cwd, moduleName] = command?.arguments as any[];
-      const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
-      const commandScript = createNpmCommand(updateDependencyAction, moduleName);
-      runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, commandScript);
+      const [cwd, moduleName, outdated] = command?.arguments as any[];
+      const isYarn = isYarnPackageManager();
+      let updateScript = '';
+      if (isYarn) {
+        updateScript = createNpmCommand('upgrade', moduleName);
+      } else {
+        const uninstallScript = createNpmCommand('uninstall', moduleName, '--no-save');
+        const installScript = createNpmCommand('install', outdated ? `${moduleName}@${outdated}` : moduleName);
+        updateScript = `${uninstallScript} && ${installScript}`;
+      }
+      runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, updateScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {

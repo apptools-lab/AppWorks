@@ -260,10 +260,6 @@ export function getAddDependencyAction(): 'add' | 'install' {
   return isYarnPackageManager() ? 'add' : 'install';
 }
 
-export function getUpdateDependencyAction(): 'upgrade' | 'update' {
-  return isYarnPackageManager() ? 'upgrade' : 'update';
-}
-
 export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
