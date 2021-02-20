@@ -48,15 +48,16 @@ export default async function createScriptsCommands(context: vscode.ExtensionCon
     const isPegasusProject = await checkIsPegasusProject();
 
     // Check dependences
+    let scripts = createNpmCommand('run', 'start');
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       shouldInstall = true;
       vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
-      runScript('Run Debug', projectPath, createNpmCommand('install'));
+      scripts = `${createNpmCommand('install')} && ${scripts}`
     }
 
     // npm run start.
     // Debug in VS Code move to iceworks docs.
-    runScript('Run Debug', projectPath, createNpmCommand('run', 'start'));
+    runScript('Run Debug', projectPath, scripts);
 
     if (await getProjectFramework() === 'rax-app') {
       const devServerStartInfo: IDevServerStartInfo | undefined = await getDevServerStartInfo(projectPath, shouldInstall ? 4 * 60000 : 2 * 60000);
