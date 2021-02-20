@@ -152,7 +152,7 @@ When editing the props of a component in a JSX file, an automatic completion rem
 1. Use materials in JSX files (such as View).
 2. Enter part of props in the material tag, it will arouse automatic completion.
 
-## Auto fill React/Rax Code Snippet
+## Auto fill React/Rax Code to File
 
 After created a folder or file, automatically create the index.j[t]sx file and complete the code snippet.
 
