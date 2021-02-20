@@ -51,7 +51,6 @@ export default async function createScriptsCommands(context: vscode.ExtensionCon
     let scripts = createNpmCommand('run', 'start');
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       shouldInstall = true;
-      vscode.window.showInformationMessage('"node_modules" directory not found! Install dependencies first.');
       scripts = `${createNpmCommand('install')} && ${scripts}`
     }
 
