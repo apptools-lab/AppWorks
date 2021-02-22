@@ -44,7 +44,10 @@ const config = {
     new CopyPlugin({
       patterns: [
         {
-            from: 'src/**/*.ejs',
+            from: 'src/templates/*.ejs',
+            globOptions: {
+              gitignore: true,
+            },
             to: function() {
               return destPath + '/[name].[ext]';
             },
