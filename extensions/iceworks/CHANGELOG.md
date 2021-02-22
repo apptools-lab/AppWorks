@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.17.2
+
+- feat: auto fill React/Rax Code to File
+- refactor: add actions for PAGES & COMPONENTS & NODE DEPENDENCIES view
+- fix: Time Master deactivate
+- fix: auto install dependencies before run debug
+- fix: upgrade dependency
+
 ## 0.17.1
 
 - fix: sidebar logo for O2

@@ -1,5 +1,5 @@
 import { ExtensionContext, commands } from 'vscode';
-import { Recorder, recordDAU } from '@iceworks/recorder';
+import { recordDAU } from '@iceworks/recorder';
 import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViewsConfig } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
@@ -7,10 +7,7 @@ import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
-
-// eslint-disable-next-line
-const { name, version } = require('../package.json');
-const recorder = new Recorder(name, version);
+import recorder from './utils/recorder';
 
 const keystrokeStatsRecorder = getKeystrokeStats();
 const usageStatsRecorder = getUsageStatsRecorder();
@@ -21,11 +18,6 @@ export async function activate(context: ExtensionContext) {
   console.log('Congratulations, your extension "iceworks-time-master" is now active!');
   recorder.recordActivate();
 
-  // do not wait for async, let subsequent views be created
-  activateWalkClock().catch((e) => {
-    logger.error('[TimeMaster][extension] activate walkClock got error:', e);
-  });
-
   autoSetEnableViewsConfig(globalState);
 
   // create views
@@ -35,13 +27,6 @@ export async function activate(context: ExtensionContext) {
 
   const timerStatusBar = await createTimerStatusBar();
   timerStatusBar.activate();
-
-  keystrokeStatsRecorder.activate().catch((e) => {
-    logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
-  });
-  usageStatsRecorder.activate().catch((e) => {
-    logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
-  });
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
@@ -83,10 +68,23 @@ export async function activate(context: ExtensionContext) {
       });
     }),
   );
+
+  // do not wait for async, let subsequent views be created
+  activateWalkClock().catch((e) => {
+    logger.error('[TimeMaster][extension] activate walkClock got error:', e);
+  });
+
+  keystrokeStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate keystrokeStatsRecorder got error:', e);
+  });
+  usageStatsRecorder.activate().catch((e) => {
+    logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
+  });
 }
 
 export async function deactivate() {
-  logger.debug('[TimeMaster][extension] deactivate!');
+  logger.disable('console');
+  logger.info('[TimeMaster][extension][deactivate] start!');
 
   try {
     await Promise.all([
@@ -94,12 +92,18 @@ export async function deactivate() {
       usageStatsRecorder.deactivate(),
     ]);
   } catch (e) {
-    logger.error('[TimeMaster][extension] deactivate recorders got error:', e);
+    logger.error('[TimeMaster][extension][deactivate] recorders got error:', e);
   }
+
+  logger.info('[TimeMaster][extension][deactivate] recorders success!');
 
   try {
     await deactivateWalkClock();
   } catch (e) {
-    logger.error('[TimeMaster][extension] deactivate walkClock got error:', e);
+    logger.error('[TimeMaster][extension][deactivate] walkClock got error:', e);
   }
+
+  logger.info('[TimeMaster][extension][deactivate] walkClock success!');
+
+  logger.info('[TimeMaster][extension][deactivate] done!');
 }

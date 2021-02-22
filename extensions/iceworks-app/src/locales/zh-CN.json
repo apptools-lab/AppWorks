@@ -33,6 +33,8 @@
   "extension.iceworksApp.showEntriesQuickPick.welcomePage.detail": "启动欢迎页",
   "extension.iceworksApp.showEntriesQuickPick.dashboard.label": "项目仪表盘",
   "extension.iceworksApp.showEntriesQuickPick.dashboard.detail": "查看项目仪表盘",
+  "extension.iceworksApp.showEntriesQuickPick.more.label": "更多",
+  "extension.iceworksApp.showEntriesQuickPick.more.detail": "查看所有可用命令",
   "extension.iceworksApp.showDepsInputBox.materialImport.placeHolder": "例如: lodash react@latest",
   "extension.iceworksApp.showDepsInputBox.materialImport.prompt": "请输入需要添加到 <%= depType %> 的依赖名称, 支持通过空格添加多个依赖",
   "extension.iceworksApp.showDefPublishEnvQuickPick.DEFEnvOptions.daily.label": "日常环境",
