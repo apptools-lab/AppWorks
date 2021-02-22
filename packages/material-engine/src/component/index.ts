@@ -35,6 +35,7 @@ import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
 import transformTextComponent from './utils/transformTextComponent';
 import i18nService from './i18n';
+import formatMaterial from '../utils/formatMaterial';
 
 const { window, Position } = vscode;
 
@@ -42,6 +43,8 @@ export async function addCode(dataSource: IMaterialComponent) {
   const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
+
+  dataSource = formatMaterial(dataSource);
   const { name, source, importStatement } = dataSource;
   const { npm, version } = source;
   const activeTextEditor = getLastAcitveTextEditor();

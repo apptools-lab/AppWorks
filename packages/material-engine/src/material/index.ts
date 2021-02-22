@@ -1,5 +1,4 @@
 import * as kebabCase from 'lodash.kebabcase';
-import * as startcase from 'lodash.startcase';
 import axios from 'axios';
 import {
   checkIsAliInternal,
@@ -142,8 +141,8 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 
     data = {
       ...materialData,
-      blocks: formatMaterialsName(materialData.blocks || []),
-      components: formatMaterialsName(materialData.components || []),
+      blocks: materialData.blocks || [],
+      components: materialData.components || [],
       scaffolds: materialData.scaffolds || [],
       bases,
     };
@@ -153,19 +152,6 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 
   return data;
 };
-
-/**
- * format block or component name. e.g. @ali/example-block -> AliExampleBlock
- * @param materials
- */
-function formatMaterialsName(materials) {
-  return materials.map(material => {
-    if (material.name) {
-      material.name = startcase(material.name).replace(/\s+/g, '');
-    }
-    return material;
-  });
-}
 
 function getBaseMaterials(data, npm?, version?) {
   return data.map((base: any) => {
