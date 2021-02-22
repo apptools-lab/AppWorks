@@ -15,14 +15,15 @@ const { window, ViewColumn } = vscode;
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions, globalState } = context;
 
+  console.log('Congratulations, your extension "iceworks-project-creator" is now active!');
+  recorder.recordActivate();
+
   // auto set configuration
   initExtension(context, name);
 
   let projectCreatorwebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeProjectCreatorWebview() {
-    recorder.recordActivate();
-
     if (projectCreatorwebviewPanel) {
       projectCreatorwebviewPanel.reveal();
     } else {
@@ -56,8 +57,6 @@ export function activate(context: vscode.ExtensionContext) {
   let customScaffoldWebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeCustomScaffoldWebview() {
-    recorder.recordActivate();
-
     if (customScaffoldWebviewPanel) {
       customScaffoldWebviewPanel.reveal();
     } else {

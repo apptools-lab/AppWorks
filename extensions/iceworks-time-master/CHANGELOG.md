@@ -1,5 +1,26 @@
 # Change Log
 
+## 0.4.2
+
+- feat: record dau
+
+## 0.4.1
+
+- fix: sidebar logo for O2
+
+## 0.4.0
+
+- fix: check storage limit
+- feat: check logs limit
+- feat: send data when extension deactivate
+- chore: typo & more logs
+
+## 0.3.7
+
+- refactor: internal optimization
+- feat: editor info
+- fix: storage limit
+
 ## 0.3.6
 
 - refactor: control views by configuration

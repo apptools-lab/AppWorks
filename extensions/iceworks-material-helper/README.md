@@ -9,6 +9,20 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.js.org/).
 
+## Pages and Components
+
+![demo](https://img.alicdn.com/imgextra/i3/O1CN01UnlYme22ks5npf5u2_!!6000000007159-2-tps-2880-1754.png)
+
+### Jump into corresponding pages and components
+
+1. Click items in PAGES and COMPONENTS on the left panel.
+2. Jump into files of selected projects.
+
+### Activate Generate Page and Create Component
+
+1. Click `+` in PAGES header to jump into GENERATE PAGE page.
+2. Click `+` in COMPONENTS header to jump into CREATE COMPONENT page.
+
 ## Using Material Panel
 
 ### Activate
@@ -137,6 +151,12 @@ When editing the props of a component in a JSX file, an automatic completion rem
 
 1. Use materials in JSX files (such as View).
 2. Enter part of props in the material tag, it will arouse automatic completion.
+
+## Auto fill React/Rax Code to File
+
+After created a folder or file, automatically create the index.j[t]sx file and complete the code snippet.
+
+![demo](https://img.alicdn.com/imgextra/i2/O1CN01wge0kr25ZMzp40FSY_!!6000000007540-1-tps-1446-906.gif)
 
 ## Debug Materials Project
 

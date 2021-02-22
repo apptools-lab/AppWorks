@@ -2,11 +2,10 @@
   "extends": "../../tsconfig.extension.json",
   "compilerOptions": {
     "outDir": "build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "strictNullChecks": false
   },
-  "include": ["src"],
   "exclude": [".vscode-test"]
 }

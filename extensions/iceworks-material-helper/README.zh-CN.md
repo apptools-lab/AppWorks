@@ -9,6 +9,20 @@
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快更好地添加组件、编写组件属性、查找组件文档，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
+## 页面和组件信息
+
+![示例](https://img.alicdn.com/imgextra/i3/O1CN01UnlYme22ks5npf5u2_!!6000000007159-2-tps-2880-1754.png)
+
+### 快速跳转至对应页面和组件的源码
+
+1. 点击左侧面板中页面列表和组件列表中的选项。
+2. 跳转到所选项目所在的源码文件
+
+### 支持激活添加页面和组件功能
+
+1. 点击页面列表标题栏的 `+` 进入生成页面界面；
+2. 点击组件列表标题栏的 `+` 进入创建组件界面。
+
 ## 使用物料面板
 
 > [什么是物料？](https://ice.work/docs/materials/about)
@@ -137,6 +151,12 @@
 
 1. 在 JSX 文件中使用组件（如 View ）
 2. 在组件标签内输入属性的部分内容，将会激活自动补全提醒。
+
+## 自动填充 React/Rax 代码片段到文件
+
+在创建文件夹或文件时，识别创建组件的意图，自动创建 index.j[t]sx 文件并填充代码片段。
+
+![示例](https://img.alicdn.com/imgextra/i2/O1CN01wge0kr25ZMzp40FSY_!!6000000007540-1-tps-1446-906.gif)
 
 ## 调试物料
 

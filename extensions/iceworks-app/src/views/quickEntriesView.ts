@@ -1,7 +1,26 @@
 import * as vscode from 'vscode';
 import { registerCommand, executeCommand } from '@iceworks/common-service';
+import { recordDAU } from '@iceworks/recorder';
 import options from '../quickPicks/options';
 import getOptions from '../utils/getOptions';
+import { showExtensionsQuickPickCommandId } from '../constants';
+import i18n from '../i18n';
+import autoStart from '../utils/autoStart';
+
+const entryOptions = options.filter(({ command }) => {
+  return [
+    'iceworks-project-creator.create-project.start',
+    'iceworksApp.dashboard.start',
+    'iceworksApp.welcome.start',
+    'iceworksApp.configHelper.start',
+  ].includes(command);
+}).concat([
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.more.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.more.detail'),
+    command: showExtensionsQuickPickCommandId,
+  },
+]);
 
 export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryItem> {
   private extensionContext: vscode.ExtensionContext;
@@ -20,8 +39,7 @@ export class QuickEntriesProvider implements vscode.TreeDataProvider<QuickEntryI
   }
 
   private async getEntries() {
-    const entryOptions = await getOptions(options);
-    return entryOptions.map((option) => {
+    return (await getOptions(entryOptions)).map((option) => {
       const { label, detail, command } = option;
       const entryCommand: vscode.Command = {
         command,
@@ -53,6 +71,14 @@ class QuickEntryItem extends vscode.TreeItem {
 export function createQuickEntriesTreeView(context: vscode.ExtensionContext) {
   const quickEntriesProvider = new QuickEntriesProvider(context);
   const treeView = vscode.window.createTreeView('quickEntries', { treeDataProvider: quickEntriesProvider });
+  let didSetViewContext = false;
+  treeView.onDidChangeVisibility(({ visible }) => {
+    if (visible && !didSetViewContext) {
+      didSetViewContext = true;
+      recordDAU();
+      autoStart(context);
+    }
+  });
 
   registerCommand('iceworksApp.quickEntries.start', (quickEntry: QuickEntryItem) => {
     executeCommand(quickEntry.command.command);

@@ -1,8 +1,26 @@
 # Change Log
 
-## 0.5.5
+## 0.7.1
 
 - feat: compatible block and component material name
+
+## 0.7.0
+
+- feat: auto react code snippet
+- feat: add actions for PAGES && COMPONENTS view
+
+## 0.6.0
+
+- feat: add "importer material" and "show material doc" to editor title
+- feat: add sidebar 
+
+## 0.5.6
+
+- refactor: internal optimization
+
+## 0.5.5
+
+- fix: generator page by blocks
 
 ## 0.5.4
 
@@ -22,7 +40,7 @@
 
 - feat: support generate route to app.json in rax application
 - fix: `<div>` to `<View>` rax page template 
-- refactor: find comopnent logic
+- refactor: find comopnent logic  
 
 # 0.5.0
 

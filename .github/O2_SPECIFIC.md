@@ -1,6 +1,6 @@
 # O2 SPECIFIC
 
-O2 is a Ali internal editor, if you are a community developer, please ignore this document.
+O2 is a Ali internal editor, if you are a community developer, **PLEASE IGNORE** this document.
 
 Iceworks converts VS Code Pack to O2 Pack, this document describes the develop, debug, and publish of the O2 Pack.
 

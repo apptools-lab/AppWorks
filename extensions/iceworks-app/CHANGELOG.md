@@ -1,8 +1,20 @@
 # Change Log
 
+## 0.8.1
+
+- feat: add actions for NODE DEPENDENCIES view
+- fix: install dependency before run debug
+- fix: upgrade dependency
+
+## 0.8.0
+
+- refactor: remove pages & components view
+- refactor: move scripts&dependencies view to explorer sidebar
+
 ## 0.7.6
 
 - fix: terminal names are the same when running npm scripts
+- refactor: internal optimization
 
 ## 0.7.5
 

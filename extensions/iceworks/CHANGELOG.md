@@ -1,5 +1,32 @@
 # Change Log
 
+## 0.17.2
+
+- feat: auto fill React/Rax Code to File
+- refactor: add actions for PAGES & COMPONENTS & NODE DEPENDENCIES view
+- fix: Time Master deactivate
+- fix: auto install dependencies before run debug
+- fix: upgrade dependency
+
+## 0.17.1
+
+- fix: sidebar logo for O2
+
+## 0.17.0
+
+- refactor: quick entries
+
+## 0.16.3
+
+- chore: upgrade material helper
+
+## 0.16.2
+
+- fix: generator page by blocks
+- fix: terminal names are the same when running the scripts
+- refactor: record extension active
+- fix: time master
+
 ## 0.16.1
 
 - feat: settings for control Time Master Views

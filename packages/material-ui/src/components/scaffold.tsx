@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon } from '@alifd/next';
 import { IMaterialScaffold, PLACEHOLDER_IMG } from '@iceworks/material-utils';
-import * as styles from './scaffold.module.scss';
+import styles from './scaffold.module.scss';
 
 export const MaterialScaffold: React.FC<{
   dataSource: IMaterialScaffold;

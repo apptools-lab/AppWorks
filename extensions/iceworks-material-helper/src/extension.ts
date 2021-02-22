@@ -1,12 +1,16 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
+import { autoSetContext as autoSetContextByProject } from '@iceworks/project-service';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
+import autoFillContent from './autoFillContent';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
 import { registerDebugCommand } from './utils/debugMaterials';
+import { createComponentsTreeView } from './views/componentsView';
+import { createPagesTreeView } from './views/pagesView';
 
 const { name } = require('../package.json');
 
@@ -16,14 +20,15 @@ export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-material-helper" is now active!');
+  recorder.recordActivate();
 
   // auto set configuration
   initExtension(context, name);
+  autoSetContextByProject();
 
   // set material importer
   let materialImporterWebviewPanel: vscode.WebviewPanel | undefined;
   function activeMaterialImporterWebview() {
-    recorder.recordActivate();
     if (materialImporterWebviewPanel) {
       materialImporterWebviewPanel.reveal();
     } else {
@@ -128,9 +133,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   registerDebugCommand(subscriptions);
 
-  // set propsAutoCompleter
   propsAutoComplete();
   registerComponentDocSupport();
+  autoFillContent();
+
+  // views
+  createComponentsTreeView(context);
+  createPagesTreeView(context);
 }
 
 export function deactivate() { }

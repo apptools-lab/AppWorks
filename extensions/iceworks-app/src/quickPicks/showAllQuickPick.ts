@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import options from '../quickPicks/options';
+import options from './options';
 import getOptions from '../utils/getOptions';
 
 const { window, commands } = vscode;
 
-export default async function showEntriesQuickPick() {
+export default async function showAllQuickPick() {
   const quickPick = window.createQuickPick();
   const entryOptions = await getOptions(options);
   quickPick.items = entryOptions;

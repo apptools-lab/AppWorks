@@ -9,7 +9,6 @@ import {
   registerCommand,
   isYarnPackageManager,
   getAddDependencyAction,
-  getUpdateDependencyAction,
 } from '@iceworks/common-service';
 import { dependencyDir, projectPath, getLocalDependencyInfo } from '@iceworks/project-service';
 import runScript from '../terminal/runScript';
@@ -17,21 +16,25 @@ import { NodeDepTypes } from '../types';
 import { nodeDepTypes } from '../constants';
 import showDepsInputBox from '../inputBoxs/showDepsInputBox';
 import showDepsQuickPick from '../quickPicks/showDepsQuickPick';
+import { ItemData, TreeItem } from './treeItem';
+import i18n from '../i18n';
 
 const rimrafAsync = util.promisify(rimraf);
 
-class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
+const upgradeDependencyCommandTitle = 'Upgrade Dependency';
+
+class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
   private workspaceRoot: string;
 
   private extensionContext: vscode.ExtensionContext;
 
-  private onDidChange: vscode.EventEmitter<DependencyTreeItem | undefined> = new vscode.EventEmitter<
-  DependencyTreeItem | undefined
+  private onDidChange: vscode.EventEmitter<ItemData | undefined> = new vscode.EventEmitter<
+  ItemData | undefined
   >();
 
-  readonly onDidChangeTreeData: vscode.Event<DependencyTreeItem | undefined> = this.onDidChange.event;
+  readonly onDidChangeTreeData: vscode.Event<ItemData | undefined> = this.onDidChange.event;
 
-  packageJsonPath: string;
+  public packageJsonPath: string;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -43,71 +46,138 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
     this.onDidChange.fire(undefined);
   }
 
-  getTreeItem(element: DependencyTreeItem): vscode.TreeItem {
-    return element;
+  getTreeItem(p: ItemData): TreeItem {
+    const treeItem = new TreeItem(p, p.initialCollapsibleState, this.extensionContext);
+    return treeItem;
   }
 
-  getChildren(element?: DependencyTreeItem) {
-    if (!this.workspaceRoot) {
-      return Promise.resolve([]);
-    }
-
+  async getChildren(element: ItemData): Promise<ItemData[]> {
+    let itemDataList: ItemData[] = [];
     if (element) {
-      const { label } = element;
-      const deps = this.getDepsInPackageJson(this.packageJsonPath, label as NodeDepTypes);
-      return deps;
+      itemDataList = await this.buildDepsChildItems(element.contextValue as NodeDepTypes);
     } else {
-      return Promise.resolve(
-        nodeDepTypes.map(
-          (nodeDepType) => new DependencyTreeItem(
-            this.extensionContext,
-            nodeDepType,
-            vscode.TreeItemCollapsibleState.Collapsed,
-            nodeDepType,
-          ),
-        ),
-      );
+      itemDataList = [
+        ...this.buildQuickItems(),
+        this.buildDividerItem(),
+        ...await this.buildDepsParentItem(),
+      ];
     }
+    return itemDataList;
   }
 
-  private async getDepsInPackageJson(packageJsonPath: string, label: NodeDepTypes) {
-    if (await checkPathExists(packageJsonPath)) {
-      const packageJson = JSON.parse(await fse.readFile(packageJsonPath, 'utf-8'));
-      const workspaceDir: string = path.dirname(packageJsonPath);
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    icon = '',
+    command?: vscode.Command,
+  ): ItemData {
+    const item = new ItemData();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = label;
+    item.contextValue = 'action_button';
+    item.command = command;
+    item.icon = icon;
+    return item;
+  }
 
-      const packageDeps = packageJson[label];
-      let deps: DependencyTreeItem[] = [];
+  private buildDividerItem(): ItemData {
+    const item = this.buildActionItem('', '', 'blue-line-96.png');
+    return item;
+  }
+
+  private buildParentItem(
+    label: string,
+    tooltip: string,
+    children: ItemData[],
+    initialCollapsibleState: vscode.TreeItemCollapsibleState,
+    contextValue: string,
+    icon: string,
+  ): ItemData {
+    const item: ItemData = new ItemData();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = `${label}_title`;
+    item.contextValue = 'title_item';
+    item.children = children;
+    item.initialCollapsibleState = initialCollapsibleState;
+    item.contextValue = contextValue;
+    item.icon = icon;
+    return item;
+  }
+
+  public async buildDepsChildItems(nodeDepType: NodeDepTypes) {
+    let depItems: ItemData[] = [];
+    if (this.workspaceRoot && await checkPathExists(this.packageJsonPath)) {
+      const packageJson = await fse.readJSON(this.packageJsonPath);
+      const packageDeps = packageJson[nodeDepType];
       if (packageDeps) {
-        deps = await Promise.all(
-          Object.keys(packageDeps).map(async (dep) => {
-            const { outdated, version } = await getLocalDependencyInfo(dep, packageDeps[dep]);
-            return toDep(this.extensionContext, workspaceDir, dep, version, outdated);
+        depItems = await Promise.all(
+          Object.keys(packageDeps).map(async (moduleName) => {
+            const { outdated, version } = await getLocalDependencyInfo(moduleName, packageDeps[moduleName]);
+            const command = outdated
+              ? {
+                command: 'iceworksApp.nodeDependencies.upgrade',
+                title: upgradeDependencyCommandTitle,
+                arguments: [this.workspaceRoot, moduleName, outdated],
+              }
+              : undefined;
+            const itemData = new ItemData();
+            itemData.label = moduleName;
+            itemData.contextValue = outdated ? 'outdatedDependency' : '';
+            itemData.icon = 'dependency.svg';
+            itemData.tooltip = version;
+            itemData.description = version;
+            itemData.command = command;
+            return itemData;
           }),
         );
       }
-
-      return deps;
-    } else {
-      return [];
     }
+    return depItems;
   }
 
-  public async packageJsonExists() {
-    return await checkPathExists(this.packageJsonPath);
+  private async buildDepsParentItem(): Promise<ItemData[]> {
+    return await Promise.all(nodeDepTypes.map(
+      async (nodeDepType) => {
+        return this.buildParentItem(
+          nodeDepType,
+          nodeDepType,
+          [],
+          vscode.TreeItemCollapsibleState.Collapsed,
+          nodeDepType,
+          'dependency-entry.svg',
+        );
+      },
+    ));
   }
 
-  public async getReinstallScript() {
-    const workspaceDir: string = path.dirname(this.packageJsonPath);
-    const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-    if (await checkPathExists(nodeModulesPath)) {
-      await rimrafAsync(nodeModulesPath);
-    }
-    const command = createNpmCommand('install');
-    return {
-      title: 'Reinstall Dependencies',
-      cwd: workspaceDir,
-      command,
-    };
+  private buildQuickItems(): ItemData[] {
+    const items: ItemData[] = [];
+    const reinstallLabel = i18n.format('extension.iceworksApp.showEntriesQuickPick.reinstall.label');
+    const reinstallItem = this.buildActionItem(
+      reinstallLabel,
+      i18n.format('extension.iceworksApp.showEntriesQuickPick.reinstall.detail'),
+      'dep-reinstall.svg',
+      {
+        command: 'iceworksApp.nodeDependencies.reinstall',
+        title: reinstallLabel,
+      },
+    );
+    items.push(reinstallItem);
+
+    const addDepsLabel = i18n.format('extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.label');
+    const addDepsItem = this.buildActionItem(
+      addDepsLabel,
+      i18n.format('extension.iceworksApp.showEntriesQuickPick.addDepsAndDevDeps.detail'),
+      'install.svg',
+      {
+        command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
+        title: addDepsLabel,
+      },
+    );
+    items.push(addDepsItem);
+    return items;
   }
 
   public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
@@ -131,62 +201,38 @@ class DepNodeProvider implements vscode.TreeDataProvider<DependencyTreeItem> {
   }
 }
 
-class DependencyTreeItem extends vscode.TreeItem {
-  constructor(
-    public readonly extensionContext: vscode.ExtensionContext,
-    public readonly label: string,
-    public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly id: string,
-    public readonly command?: vscode.Command,
-    public readonly version?: string,
-    public readonly outdated?: string,
-  ) {
-    super(label, collapsibleState);
-    this.id = id;
-  }
-
-  get description(): string {
-    return this.version ? this.version : '';
-  }
-
-  get contextValue(): string {
-    if (this.version) {
-      return this.outdated ? 'outdatedDependency' : 'dependency';
-    } else {
-      return this.label;
-    }
-  }
-
-  iconPath = {
-    dark: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/dark/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
-    ),
-    light: vscode.Uri.file(
-      this.extensionContext.asAbsolutePath(`assets/light/${this.version ? 'dependency' : 'dependency-entry'}.svg`),
-    ),
-  };
-}
-
 export function createNodeDependenciesTreeView(context) {
   const nodeDependenciesProvider = new DepNodeProvider(context, projectPath);
   const treeView = vscode.window.createTreeView('nodeDependencies', { treeDataProvider: nodeDependenciesProvider });
 
   registerCommand('iceworksApp.nodeDependencies.refresh', () => nodeDependenciesProvider.refresh());
 
-  // TODO
-  registerCommand('iceworksApp.nodeDependencies.upgrade', (node: DependencyTreeItem) => {
+  registerCommand('iceworksApp.nodeDependencies.upgrade', (node: ItemData) => {
     const { command } = node;
     if (command) {
-      const [cwd, moduleName] = command?.arguments as any[];
-      const updateDependencyAction = getUpdateDependencyAction(); // `upgrade` or `update`
-      const commandScript = createNpmCommand(updateDependencyAction, moduleName);
-      runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, commandScript);
+      const [cwd, moduleName, outdated] = command?.arguments as any[];
+      const isYarn = isYarnPackageManager();
+      let updateScript = '';
+      if (isYarn) {
+        updateScript = createNpmCommand('upgrade', moduleName);
+      } else {
+        const uninstallScript = createNpmCommand('uninstall', moduleName, '--no-save');
+        const installScript = createNpmCommand('install', outdated ? `${moduleName}@${outdated}` : moduleName);
+        updateScript = `${uninstallScript} && ${installScript}`;
+      }
+      runScript(command.title || upgradeDependencyCommandTitle, cwd || projectPath, updateScript);
     }
   });
   registerCommand('iceworksApp.nodeDependencies.reinstall', async () => {
-    if (await nodeDependenciesProvider.packageJsonExists()) {
-      const { title, cwd, command } = await nodeDependenciesProvider.getReinstallScript();
-
+    if (await checkPathExists(nodeDependenciesProvider.packageJsonPath)) {
+      const workspaceDir: string = path.dirname(nodeDependenciesProvider.packageJsonPath);
+      const nodeModulesPath = path.join(workspaceDir, 'node_modules');
+      if (await checkPathExists(nodeModulesPath)) {
+        await rimrafAsync(nodeModulesPath);
+      }
+      const command = createNpmCommand('install');
+      const title = 'Reinstall Dependencies';
+      const cwd = workspaceDir;
       runScript(title, cwd, command);
     }
   });
@@ -203,28 +249,3 @@ export function createNodeDependenciesTreeView(context) {
   return treeView;
 }
 
-const upgradeDependencyCommandTitle = 'Upgrade Dependency';
-function toDep(
-  extensionContext: vscode.ExtensionContext,
-  workspaceDir: string,
-  moduleName: string,
-  version: string,
-  outdated: string,
-) {
-  const command = outdated
-    ? {
-      command: 'iceworksApp.nodeDependencies.upgrade',
-      title: upgradeDependencyCommandTitle,
-      arguments: [workspaceDir, moduleName],
-    }
-    : undefined;
-  return new DependencyTreeItem(
-    extensionContext,
-    moduleName,
-    vscode.TreeItemCollapsibleState.None,
-    `nodeDependencies-${moduleName}`,
-    command,
-    version,
-    outdated,
-  );
-}

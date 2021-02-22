@@ -2,7 +2,7 @@ import { workspace, WorkspaceFolder } from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as moment from 'moment';
-import { getInfo, Info } from '@iceworks/project-service/lib/git';
+import { getGitInfo as originGetGitInfo, GitInfo } from '@iceworks/project-utils/lib/git';
 import { UNTITLED, NO_PROJ_NAME } from '../constants';
 import { jsonSpaces } from '../config';
 import { getStorageReportsPath, getStorageDayPath, getStorageDaysDirs } from '../utils/storage';
@@ -16,12 +16,12 @@ const nodeCache = new NodeCache({ stdTTL: 120 });
 const cacheTimeoutSeconds = 60 * 30;
 
 interface ProjectResource {
-  gitRepository: PropType<Info, 'repository'>;
-  gitBranch: PropType<Info, 'branch'>;
-  gitTag?: PropType<Info, 'tag'>;
+  gitRepository: PropType<GitInfo, 'repository'>;
+  gitBranch: PropType<GitInfo, 'branch'>;
+  gitTag?: PropType<GitInfo, 'tag'>;
 }
 
-async function getGitInfo(dirPath: string): Promise<Info> {
+async function getGitInfo(dirPath: string): Promise<GitInfo> {
   const noSpacesProjDir = dirPath.replace(/^\s+/g, '');
   const cacheId = `resource-info-${noSpacesProjDir}`;
 
@@ -31,7 +31,7 @@ async function getGitInfo(dirPath: string): Promise<Info> {
     return resourceInfo;
   }
 
-  resourceInfo = await getInfo(dirPath);
+  resourceInfo = await originGetGitInfo(dirPath);
   nodeCache.set(cacheId, resourceInfo, cacheTimeoutSeconds);
   return resourceInfo;
 }

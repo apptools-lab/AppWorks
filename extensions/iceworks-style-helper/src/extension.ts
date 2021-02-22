@@ -11,6 +11,9 @@ const { name, version } = require('../package.json');
 const recorder = new Recorder(name, version);
 
 export function activate(context: vscode.ExtensionContext) {
+  console.log('Congratulations, your extension "iceworks-style-helper" is now active!');
+  recorder.recordActivate();
+
   // auto set configuration
   initExtension(context, name);
 
@@ -22,8 +25,6 @@ export function activate(context: vscode.ExtensionContext) {
   registerCommand('iceworksApp.recorder.recordCompletionItemSelect', () => {
     recordCompletionItemSelect();
   });
-
-  recorder.recordActivate();
 }
 
 export function deactivate() { }

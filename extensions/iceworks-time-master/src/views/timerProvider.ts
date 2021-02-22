@@ -19,14 +19,11 @@ import i18n from '../i18n';
 import { getGlobalSummary, GlobalSummary } from '../storages/global';
 import { AverageSummary, getAverageSummary } from '../storages/average';
 import logger from '../utils/logger';
+import { recordDAU } from '@iceworks/recorder';
+import recorder from '../utils/recorder';
 
 const NUMBER_FORMAT = '0 a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
-
-enum UIInteractionType {
-  Keyboard = 'keyboard',
-  Click = 'click',
-}
 
 class TimerItem {
   id = '';
@@ -35,37 +32,17 @@ class TimerItem {
 
   description = '';
 
-  value = '';
-
   tooltip = '';
 
-  command = '';
-
-  commandArgs: any[] = [];
-
-  type = '';
+  command;
 
   contextValue = '';
-
-  callback: any = null;
 
   icon = '';
 
   children: TimerItem[] = [];
 
-  color = '';
-
-  location = '';
-
-  name = '';
-
-  eventDescription = '';
-
   initialCollapsibleState: TreeItemCollapsibleState = TreeItemCollapsibleState.Collapsed;
-
-  interactionType: UIInteractionType = UIInteractionType.Click;
-
-  hideCTAInTracker = false;
 }
 
 class TimerTreeItem extends TreeItem {
@@ -79,10 +56,7 @@ class TimerTreeItem extends TreeItem {
     const { lightPath, darkPath } = this.getTreeItemIcon(treeItem);
 
     if (treeItem.command) {
-      this.command = {
-        command: treeItem.command,
-        title: treeItem.label,
-      };
+      this.command = treeItem.command;
     }
     if (treeItem.description) {
       this.description = treeItem.description;
@@ -132,10 +106,6 @@ class TimerTreeItem extends TreeItem {
   }
 }
 
-function createTimerTreeItem(p: TimerItem, state: TreeItemCollapsibleState, extensionContext: ExtensionContext): TimerTreeItem {
-  return new TimerTreeItem(p, state, extensionContext);
-}
-
 export class TimerProvider implements TreeDataProvider<TimerItem> {
   private _onDidChangeTreeData: EventEmitter<TimerItem | undefined> = new EventEmitter<TimerItem | undefined>();
 
@@ -179,17 +149,17 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return undefined;
   }
 
-  public getTreeItem(p: TimerItem) {
+  public getTreeItem(p: TimerItem): TimerTreeItem {
     let treeItem = null;
     if (p.children.length) {
       const collapsedState = timerCollapsedStateMap[p.label];
       if (!collapsedState) {
-        treeItem = createTimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
+        treeItem = new TimerTreeItem(p, p.initialCollapsibleState, this.extensionContext);
       } else {
-        treeItem = createTimerTreeItem(p, collapsedState, this.extensionContext);
+        treeItem = new TimerTreeItem(p, collapsedState, this.extensionContext);
       }
     } else {
-      treeItem = createTimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
+      treeItem = new TimerTreeItem(p, TreeItemCollapsibleState.None, this.extensionContext);
     }
     return treeItem;
   }
@@ -211,31 +181,59 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     return timerItems;
   }
 
-  private buildParentItem(label: string, tooltip: string, children: TimerItem[], name = '', location = 'ct_metrics_tree') {
+  private buildParentItem(
+    label: string,
+    tooltip: string,
+    children: TimerItem[],
+  ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
     item.id = `${label}_title`;
     item.contextValue = 'title_item';
     item.children = children;
-    item.eventDescription = null;
-    item.name = name;
-    item.location = location;
     return item;
   }
 
-  private buildMessageItem(label: string, tooltip = '', icon: string = null, command : string = null, commandArgs: any[] = null, name = '', location = '') {
+  private buildMessageItem(
+    label: string,
+    tooltip = '',
+    command : string = null,
+    commandArgs: any[] = null,
+    icon: string = null,
+  ) {
     const item: TimerItem = new TimerItem();
     item.label = label;
     item.tooltip = tooltip;
-    item.icon = icon;
-    item.command = command;
-    item.commandArgs = commandArgs;
     item.id = `${label}_message`;
     item.contextValue = 'message_item';
-    item.eventDescription = null;
-    item.name = name;
-    item.location = location;
+    item.icon = icon;
+    item.command = command ? {
+      command,
+      title: label,
+      arguments: commandArgs,
+    } : null;
+    return item;
+  }
+
+  private buildActionItem(
+    label: string,
+    tooltip: string,
+    command: string,
+    commandArgs: any[] = null,
+    icon = '',
+  ): TimerItem {
+    const item = new TimerItem();
+    item.label = label;
+    item.tooltip = tooltip;
+    item.id = label;
+    item.contextValue = 'action_button';
+    item.command = command ? {
+      command,
+      title: label,
+      arguments: commandArgs,
+    } : null;
+    item.icon = icon;
     return item;
   }
 
@@ -246,8 +244,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       null,
       null,
       null,
-      null,
-      'ct_top_files_by_kpm_toggle_node',
     );
     const childItem = this.buildMessageItem(i18n.format('extension.timeMaster.tree.item.today', { value: filesSummary.length }));
     parentItem.children = [childItem];
@@ -268,16 +264,19 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const kpm = sortedArray[i].kpm || 0;
       const kpmStr = kpm.toFixed(2);
       const label = `${fileName} | ${kpmStr}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [sortedArray[i].fsPath],
+        null,
+      );
       highKpmChildren.push(messageItem);
     }
     const highKpmParent = this.buildParentItem(
       i18n.format('extension.timeMaster.tree.item.topFilesByKPM.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByKPM.detail'),
       highKpmChildren,
-      'ct_top_files_by_kpm_toggle_node',
     );
     return highKpmParent;
   }
@@ -296,16 +295,19 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const keystrokes = sortedArray[i].keystrokes || 0;
       const keystrokesStr = numeral(keystrokes).format(NUMBER_FORMAT);
       const label = `${fileName} | ${keystrokesStr}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [sortedArray[i].fsPath],
+        null,
+      );
       mostEditedChildren.push(messageItem);
     }
     const mostEditedParent = this.buildParentItem(
       i18n.format('extension.timeMaster.tree.item.topFilesByKey.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByKey.detail'),
       mostEditedChildren,
-      'ct_top_files_by_keystrokes_toggle_node',
     );
     return mostEditedParent;
   }
@@ -324,16 +326,19 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       const durationMinutes = seconds2minutes(sortedArray[i].sessionSeconds);
       const codeHours = humanizeMinutes(durationMinutes);
       const label = `${fileName} | ${codeHours}`;
-      const messageItem = this.buildMessageItem(label, '', null, 'iceworks-time-master.openFileInEditor', [
-        sortedArray[i].fsPath,
-      ]);
+      const messageItem = this.buildMessageItem(
+        label,
+        '',
+        'iceworks-time-master.openFileInEditor',
+        [sortedArray[i].fsPath],
+        null,
+      );
       longestCodeTimeChildren.push(messageItem);
     }
     const longestCodeTimeParent = this.buildParentItem(
       i18n.format('extension.timeMaster.tree.item.topFilesByCT.label'),
       i18n.format('extension.timeMaster.tree.item.topFilesByCT.detail'),
       longestCodeTimeChildren,
-      'ct_top_files_by_codetime_toggle_node',
     );
     return longestCodeTimeParent;
   }
@@ -343,12 +348,10 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     tooltip: string,
     values: Array<{label?: string;tooltip?: string;icon?: string}>,
     collapsibleState: TreeItemCollapsibleState = null,
-    name = '',
-    location = 'ct_metrics_tree',
   ) {
-    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null, name, location);
+    const parent: TimerItem = this.buildMessageItem(label, tooltip, null, null, null);
     values.forEach(({ label: vLabel, tooltip: vTooltip, icon: vIcon }) => {
-      const child = this.buildMessageItem(vLabel, vTooltip, vIcon);
+      const child = this.buildMessageItem(vLabel, vTooltip, null, null, vIcon);
       parent.children.push(child);
     });
     if (collapsibleState) {
@@ -410,7 +413,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         i18n.format('extension.timeMaster.tree.item.editor.detail'),
         etValues,
         TreeItemCollapsibleState.Expanded,
-        'ct_active_editortime_toggle_node',
       ),
     );
 
@@ -442,7 +444,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         i18n.format('extension.timeMaster.tree.item.acCode.detail'),
         actValues,
         TreeItemCollapsibleState.Expanded,
-        'ct_active_codetime_toggle_node',
       ),
     );
 
@@ -470,7 +471,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.linesAdded.detail'),
       laValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_lines_added_toggle_node',
     ));
 
     // Lines removed
@@ -497,7 +497,6 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.linesRemoved.detail'),
       lrValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_lines_removed_toggle_node',
     ));
 
     // Keystrokes
@@ -524,36 +523,13 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.tree.item.keystrokes.detail'),
       kValues,
       TreeItemCollapsibleState.Collapsed,
-      'ct_keystrokes_toggle_node',
     ));
 
     return items;
   }
 
-  private buildActionItem(
-    label: string,
-    tooltip: string,
-    command: string,
-    icon = '',
-    eventDescription = '',
-    color = '',
-    location = 'ct_metrics_tree',
-  ): TimerItem {
-    const item = new TimerItem();
-    item.tooltip = tooltip;
-    item.label = label;
-    item.id = label;
-    item.command = command;
-    item.icon = icon;
-    item.contextValue = 'action_button';
-    item.eventDescription = eventDescription;
-    item.color = color;
-    item.location = location;
-    return item;
-  }
-
   private buildDividerItem() {
-    const item = this.buildActionItem('', '', '', 'blue-line-96.png');
+    const item = this.buildActionItem('', '', '', null, 'blue-line-96.png');
     return item;
   }
 
@@ -562,11 +538,9 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewProjectSummary.label'),
       i18n.format('extension.timeMaster.viewProjectSummary.detail'),
       'iceworks-time-master.generateProjectSummaryReport',
+      null,
       'folder.svg',
-      '',
-      'red',
     );
-    item.name = 'ct_project_summary_btn';
     return item;
   }
 
@@ -575,11 +549,9 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
       i18n.format('extension.timeMaster.viewUserSummary.label'),
       i18n.format('extension.timeMaster.viewUserSummary.detail'),
       'iceworks-time-master.generateUserSummaryReport',
+      null,
       'dashboard.svg',
-      'TreeViewLaunchReport',
-      'purple',
     );
-    item.name = 'ct_summary_btn';
     return item;
   }
 
@@ -657,6 +629,20 @@ export function createTimerTreeView(timerProvider: TimerProvider) {
   treeView.onDidExpandElement(async e => {
     const item: TimerItem = e.element;
     timerCollapsedStateMap[item.label] = TreeItemCollapsibleState.Expanded;
+  });
+  treeView.onDidChangeVisibility(({ visible }) => {
+    if (visible) {
+      recordDAU();
+      recorder.record({
+        module: 'treeView',
+        action: 'visible',
+      });
+    }
+
+    recorder.record({
+      module: 'treeView',
+      action: 'active',
+    });
   });
   // treeView.onDidChangeSelection(async e => {
   //   if (!e.selection || e.selection.length === 0) {

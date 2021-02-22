@@ -1,6 +1,6 @@
 const path = require('path');
 
-const tsConfigPath = path.join(__dirname, 'tsconfig.json');
+const tsConfigPath = path.join(__dirname, 'tsconfig.webpack.json');
 const config = {
   target: 'node',
   entry: './src/extension.ts',

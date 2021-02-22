@@ -6,6 +6,6 @@ export const recordKeystrokeDurationMins = ONE_MIN_MILLISECONDS * recordKeystrok
 export const checkMidnightDuration = 5;
 export const checkMidnightDurationMins = ONE_MIN_MILLISECONDS * checkMidnightDuration;
 export const sendPayloadDuration = 15;
-export const snedPayloadDurationMins = ONE_MIN_MILLISECONDS * sendPayloadDuration;
+export const sendPayloadDurationMins = ONE_MIN_MILLISECONDS * sendPayloadDuration;
 export const processUsageStatsDuration = 30;
 export const processUsageStatsDurationMins = ONE_MIN_MILLISECONDS * processUsageStatsDuration;

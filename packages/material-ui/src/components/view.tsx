@@ -10,7 +10,7 @@ import {
   IMaterialPage,
 } from '@iceworks/material-utils';
 import { MaterialType } from './type';
-import * as styles from './view.module.scss';
+import styles from './view.module.scss';
 
 const { Item } = Tab;
 

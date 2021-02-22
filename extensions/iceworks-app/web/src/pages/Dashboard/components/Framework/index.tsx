@@ -10,7 +10,7 @@ const { Row, Col } = Grid;
 function Item({ name, version, outdated }) {
   const intl = useIntl();
   function handleUpgrade() {
-    callService('common', 'executeCommand', 'iceworksApp.nodeDependencies.upgrade', { command: { arguments: ['', name] } });
+    callService('common', 'executeCommand', 'iceworksApp.nodeDependencies.upgrade', { command: { arguments: ['', name, outdated] } });
   }
   return (
     <li>

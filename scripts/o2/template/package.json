@@ -32,17 +32,10 @@
       "actions": [
         {
           "type": "button",
-          "title": "%iceworksApp.kaitianContributes.toolbar.dashboard.title%",
-          "iconPath": "./assets/dark/entry.svg",
-          "id": "iceworksApp.dashboard.start",
-          "command": "iceworksApp.dashboard.start"
-        },
-        {
-          "type": "button",
           "title": "%iceworksApp.kaitianContributes.toolbar.runDebug.title%",
           "iconPath": "./assets/dark/run.svg",
-          "id": "iceworksApp.editorMenu.runDebug",
-          "command": "iceworksApp.editorMenu.runDebug"
+          "id": "iceworksApp.scripts.runDebug",
+          "command": "iceworksApp.scripts.runDebug"
         },
         {
           "type": "button",
@@ -50,6 +43,13 @@
           "iconPath": "./assets/dark/install.svg",
           "id": "iceworksApp.nodeDependencies.reinstall",
           "command": "iceworksApp.nodeDependencies.reinstall"
+        },
+        {
+          "type": "button",
+          "title": "%iceworksApp.kaitianContributes.toolbar.DefPublish.title%",
+          "iconPath": "./assets/dark/upload.svg",
+          "id": "iceworksApp.scripts.DefPublish",
+          "command": "iceworksApp.scripts.DefPublish"
         }
       ]
     }
