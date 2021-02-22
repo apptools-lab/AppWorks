@@ -50,6 +50,7 @@ const config = {
             },
         },
       ],
+      options: { concurrency: 10 },
     }),
   ],
 };
