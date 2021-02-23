@@ -108,6 +108,7 @@ export async function addBlockCode(block: IMaterialBlock) {
 
   const pagePath = path.dirname(fsPath);
   const pageName = path.basename(pagePath);
+
   // insert code
   const blockName: string = await generateBlockName(pageName, block.name);
   await insertBlock(activeTextEditor, blockName);
