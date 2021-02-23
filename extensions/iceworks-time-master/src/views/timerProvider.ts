@@ -27,13 +27,21 @@ const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 class TimerItem {
   id = '';
+
   label = '';
+
   description = '';
+
   tooltip = '';
+
   command;
+
   contextValue = '';
+
   icon = '';
+
   children: TimerItem[] = [];
+
   initialCollapsibleState: TreeItemCollapsibleState = TreeItemCollapsibleState.Collapsed;
 }
 
@@ -201,7 +209,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.contextValue = 'message_item';
     item.icon = icon;
     item.command = command ? {
-      command: command,
+      command,
       title: label,
       arguments: commandArgs,
     } : null;
@@ -221,7 +229,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
     item.id = label;
     item.contextValue = 'action_button';
     item.command = command ? {
-      command: command,
+      command,
       title: label,
       arguments: commandArgs,
     } : null;
@@ -260,7 +268,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         label,
         '',
         'iceworks-time-master.openFileInEditor',
-        [ sortedArray[i].fsPath, ],
+        [sortedArray[i].fsPath],
         null,
       );
       highKpmChildren.push(messageItem);
@@ -291,7 +299,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         label,
         '',
         'iceworks-time-master.openFileInEditor',
-        [ sortedArray[i].fsPath, ],
+        [sortedArray[i].fsPath],
         null,
       );
       mostEditedChildren.push(messageItem);
@@ -322,7 +330,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
         label,
         '',
         'iceworks-time-master.openFileInEditor',
-        [ sortedArray[i].fsPath, ],
+        [sortedArray[i].fsPath],
         null,
       );
       longestCodeTimeChildren.push(messageItem);

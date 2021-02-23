@@ -42,6 +42,7 @@ export async function addCode(dataSource: IMaterialComponent) {
   const templateError = i18nService.format('package.component-service.index.templateError', {
     jsxFileExtnames: jsxFileExtnames.join(','),
   });
+
   const { name, source, importStatement } = dataSource;
   const { npm, version } = source;
   const activeTextEditor = getLastAcitveTextEditor();

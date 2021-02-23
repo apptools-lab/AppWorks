@@ -22,13 +22,13 @@ function checkIsValidateType(fsPath: string) {
 const srcDir = 'src';
 
 function checkIsInValidateFolder(fsPath: string): boolean {
-  return !!vscode.workspace.workspaceFolders?.find(function(workspaceFolder) {
+  return !!vscode.workspace.workspaceFolders?.find((workspaceFolder) => {
     return fsPath.includes(path.join(workspaceFolder.uri.fsPath, srcDir));
   });
 }
 
 function checkIsInComponentDir(fsPath: string) {
-  return !!vscode.workspace.workspaceFolders?.find(function(workspaceFolder) {
+  return !!vscode.workspace.workspaceFolders?.find((workspaceFolder) => {
     const srcDirPath = path.join(workspaceFolder.uri.fsPath, srcDir);
     const componentsDirPath = path.join(srcDirPath, 'components');
     const pagesDirPath = path.join(srcDirPath, 'pages');
@@ -68,9 +68,9 @@ async function filContent(fsPath: string): Promise<string> {
   return newFsPath;
 }
 
-export default function() {
-  vscode.workspace.onDidCreateFiles(async function({ files }) {
-    await Promise.all(files.map(async function(file) {
+export default function () {
+  vscode.workspace.onDidCreateFiles(async ({ files }) => {
+    await Promise.all(files.map(async (file) => {
       const { fsPath } = file;
       const isInValidateFolder = checkIsInValidateFolder(fsPath);
       if (isInValidateFolder) {
@@ -85,7 +85,7 @@ export default function() {
             const newFilename = await filContent(fsPath);
             await vscode.workspace.openTextDocument(newFilename);
           }
-        } else if(!isCreatedFolder && enableAutoFillComponentCode) {
+        } else if (!isCreatedFolder && enableAutoFillComponentCode) {
           const isValidateType = checkIsValidateType(fsPath);
           const createdDirname = path.basename(path.dirname(fsPath));
           const createdFilename = path.basename(fsPath, path.extname(fsPath));
@@ -104,7 +104,7 @@ export default function() {
    * When the file name changes, judge whether the file has been modified.
    * If not, rename the component with the latest file name.
    */
-  vscode.workspace.onDidRenameFiles(function({ files }) {
+  vscode.workspace.onDidRenameFiles(({ files }) => {
     console.log('onDidRenameFiles');
   });
 }

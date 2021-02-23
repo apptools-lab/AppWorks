@@ -44,13 +44,13 @@ const config = {
     new CopyPlugin({
       patterns: [
         {
-            from: 'src/templates/*.ejs',
-            globOptions: {
-              gitignore: true,
-            },
-            to: function() {
-              return destPath + '/[name].[ext]';
-            },
+          from: 'src/templates/*.ejs',
+          globOptions: {
+            gitignore: true,
+          },
+          to() {
+            return `${destPath }/[name].[ext]`;
+          },
         },
       ],
       options: { concurrency: 10 },

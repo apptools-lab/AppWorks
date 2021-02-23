@@ -3,13 +3,21 @@ import * as vscode from 'vscode';
 
 export class ItemData {
   label = '';
+
   id = '';
+
   description = '';
+
   tooltip = '';
+
   command;
+
   contextValue = '';
+
   icon = '';
+
   children: ItemData[] = [];
+
   initialCollapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.Collapsed;
 }
 

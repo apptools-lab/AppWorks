@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.1
+
+- feat: compatible block and component material name
+
 ## 0.7.0
 
 - feat: auto react code snippet

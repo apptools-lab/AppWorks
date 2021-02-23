@@ -104,7 +104,7 @@ class PagesProvider implements vscode.TreeDataProvider<ItemData> {
       'order.svg',
       {
         command: 'iceworks-material-helper.page-generator.start',
-        title: generatePageLabel
+        title: generatePageLabel,
       },
     );
     items.push(generatePageItem);
@@ -116,7 +116,7 @@ class PagesProvider implements vscode.TreeDataProvider<ItemData> {
       'discount.svg',
       {
         command: 'iceworks-material-helper.page-creator.start',
-        title: createPageLabel
+        title: createPageLabel,
       },
     );
     items.push(createPageItem);

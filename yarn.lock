@@ -8645,6 +8645,16 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
+findup-sync@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/findup-sync/download/findup-sync-2.0.0.tgz#9326b1488c22d1a6088650a86901b2d9a90a2cbc"
+  integrity sha1-kyaxSIwi0aYIhlCoaQGy2akKLLw=
+  dependencies:
+    detect-file "^1.0.0"
+    is-glob "^3.1.0"
+    micromatch "^3.0.4"
+    resolve-dir "^1.0.1"
+
 findup-sync@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/findup-sync/download/findup-sync-3.0.0.tgz#17b108f9ee512dfb7a5c7f3c8b27ea9e1a9c08d1"
@@ -9059,6 +9069,13 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+git-branch@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/git-branch/download/git-branch-2.0.1.tgz#442724a97574c66ede4290ded75b7430785da08f"
+  integrity sha1-RCckqXV0xm7eQpDe11t0MHhdoI8=
+  dependencies:
+    findup-sync "^2.0.0"
+
 git-raw-commits@2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/git-raw-commits/download/git-raw-commits-2.0.0.tgz?cache=0&sync_timestamp=1604539562528&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgit-raw-commits%2Fdownload%2Fgit-raw-commits-2.0.0.tgz#d92addf74440c14bcc5c83ecce3fb7f8a79118b5"
@@ -9089,6 +9106,13 @@ git-remote-origin-url@^2.0.0:
     gitconfiglocal "^1.0.0"
     pify "^2.3.0"
 
+git-remote-origin-url@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/git-remote-origin-url/download/git-remote-origin-url-3.1.0.tgz#c90c1cb0f66658566bbc900509ab093a1522d2b3"
+  integrity sha1-yQwcsPZmWFZrvJAFCasJOhUi0rM=
+  dependencies:
+    gitconfiglocal "^2.1.0"
+
 git-semver-tags@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/git-semver-tags/download/git-semver-tags-2.0.3.tgz?cache=0&sync_timestamp=1604539581477&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgit-semver-tags%2Fdownload%2Fgit-semver-tags-2.0.3.tgz#48988a718acf593800f99622a952a77c405bfa34"
@@ -9112,10 +9136,24 @@ git-url-parse@^11.1.2:
   dependencies:
     git-up "^4.0.0"
 
+git-url-parse@^11.4.4:
+  version "11.4.4"
+  resolved "https://registry.npm.taobao.org/git-url-parse/download/git-url-parse-11.4.4.tgz#5d747debc2469c17bc385719f7d0427802d83d77"
+  integrity sha1-XXR968JGnBe8OFcZ99BCeALYPXc=
+  dependencies:
+    git-up "^4.0.0"
+
 gitconfiglocal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/gitconfiglocal/download/gitconfiglocal-1.0.0.tgz#41d045f3851a5ea88f03f24ca1c6178114464b9b"
   integrity sha1-QdBF84UaXqiPA/JMocYXgRRGS5s=
+  dependencies:
+    ini "^1.3.2"
+
+gitconfiglocal@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/gitconfiglocal/download/gitconfiglocal-2.1.0.tgz#07c28685c55cc5338b27b5acbcfe34aeb92e43d1"
+  integrity sha1-B8KGhcVcxTOLJ7WsvP40rrkuQ9E=
   dependencies:
     ini "^1.3.2"
 
@@ -12437,6 +12475,11 @@ lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.npm.taobao.org/lodash.sortby/download/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
+
+lodash.startcase@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npm.taobao.org/lodash.startcase/download/lodash.startcase-4.4.0.tgz#9436e34ed26093ed7ffae1936144350915d9add8"
+  integrity sha1-lDbjTtJgk+1/+uGTYUQ1CRXZrdg=
 
 lodash.template@^4.0.2, lodash.template@^4.5.0:
   version "4.5.0"
