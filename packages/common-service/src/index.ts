@@ -5,7 +5,6 @@ import * as path from 'path';
 import * as readFiles from 'fs-readdir-recursive';
 import axios from 'axios';
 import { recordDAU, record } from '@iceworks/recorder';
-import configure from '@iceworks/configure';
 import {
   ALI_GITLABGROUPS_API,
   ALI_GITLABPROJECTS_API,
@@ -16,9 +15,6 @@ import * as upperCamelCase from 'uppercamelcase';
 import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
 import { IImportDeclarations, getImportDeclarations } from './utils/getImportDeclarations';
 import i18n from './i18n';
-
-// eslint-disable-next-line
-const co = require('co');
 
 // eslint-disable-next-line
 const NodeCache = require('node-cache');
@@ -37,19 +33,6 @@ export const CONFIGURATION_SECTION_PACKAGE_MANAGER = `${CONFIGURATION_SECTION}.$
 export const CONFIGURATION_SECTION_NPM_REGISTRY = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_NPM_REGISTRY}`;
 export const CONFIGURATION_SECTION_MATERIAL_SOURCES = `${CONFIGURATION_SECTION}.${CONFIGURATION_KEY_MATERIAL_SOURCES}`;
 export const indexFileSuffix = ['.jsx', '.js', '.tsx', '.ts', '.rml', '.vue'];
-
-let Client;
-let defClient;
-
-try {
-  /* eslint-disable */
-  Client = require('../def-login-client');
-  defClient = new Client({
-    server: 'http://def.alibaba-inc.com',
-  });
-} catch {
-  console.log('def-login-client is not found');
-}
 
 let activeTextEditorId: string;
 
@@ -91,7 +74,7 @@ export function openInExternalFinder(url) {
   vscode.env.openExternal(vscode.Uri.file(url));
 }
 
-export function saveDataToSettingJson(section: string, data: any, configurationTarget: boolean = true): void {
+export function saveDataToSettingJson(section: string, data: any, configurationTarget = true): void {
   vscode.workspace.getConfiguration(CONFIGURATION_SECTION).update(section, data, configurationTarget);
 }
 
@@ -113,7 +96,7 @@ export function registerCommand(command: string, callback: (...args: any[]) => a
       recordExecuteCommand(command, args);
       callback(...args);
     },
-    thisArg
+    thisArg,
   );
 }
 
@@ -127,7 +110,7 @@ export function getNpmRegistriesDefaultFromPckageJson(packageJsonPath: string): 
   return packageJson.contributes.configuration.properties[CONFIGURATION_SECTION_NPM_REGISTRY].enum;
 }
 
-export async function initExtension(context: vscode.ExtensionContext, extensionName: string) {
+export async function initExtension(context: vscode.ExtensionContext) {
   const { globalState } = context;
 
   await autoInitMaterialSource(globalState);
@@ -161,7 +144,7 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       if (editor) {
-        const fsPath = editor.document.uri.fsPath;
+        const { fsPath } = editor.document.uri;
         const isJSXFile = fsPath.match(/^.*\.(jsx?|tsx)$/g);
         vscode.commands.executeCommand('setContext', 'iceworks:isJSXFile', isJSXFile);
 
@@ -172,7 +155,7 @@ function onChangeActiveTextEditor(context: vscode.ExtensionContext) {
       }
     },
     null,
-    context.subscriptions
+    context.subscriptions,
   );
 }
 
@@ -191,12 +174,12 @@ async function autoInitMaterialSource(globalState: vscode.Memento) {
       ALI_FUSION_MATERIAL_URL,
     ];
     const newSources = Array.isArray(materialSources) ? materialSources.filter(
-      (materialSource) => !officalMaterialSources.includes(materialSource.source)
+      (materialSource) => !officalMaterialSources.includes(materialSource.source),
     ) : [];
     saveDataToSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES, newSources);
   }
 
-  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_MATERIAL_SOURCES);
     if (isTrue) {
       globalState.update(didSetMaterialSourceStateKey, true);
@@ -220,7 +203,7 @@ async function autoSetPackageManagerConfiguration(globalState: vscode.Memento, i
     saveDataToSettingJson(CONFIGURATION_KEY_PACKAGE_MANAGER, 'tnpm');
   }
 
-  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_PACKAGE_MANAGER);
     if (isTrue) {
       console.log('autoSetPackageManager: did change');
@@ -240,7 +223,7 @@ async function autoSetNpmRegistryConfiguration(globalState: vscode.Memento, isAl
     saveDataToSettingJson(CONFIGURATION_KEY_NPM_REGISTRY, ALI_NPM_REGISTRY);
   }
 
-  vscode.workspace.onDidChangeConfiguration(function (event: vscode.ConfigurationChangeEvent) {
+  vscode.workspace.onDidChangeConfiguration((event: vscode.ConfigurationChangeEvent) => {
     const isTrue = event.affectsConfiguration(CONFIGURATION_SECTION_NPM_REGISTRY);
     if (isTrue) {
       console.log('autoSetNpmRegistry: did change');
@@ -260,7 +243,7 @@ export function getAddDependencyAction(): 'add' | 'install' {
   return isYarnPackageManager() ? 'add' : 'install';
 }
 
-export function createNpmCommand(action: string, target: string = '', extra: string = ''): string {
+export function createNpmCommand(action: string, target = '', extra = ''): string {
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
@@ -319,7 +302,7 @@ interface IImportInfos {
 export async function getImportInfos(text: string): Promise<IImportInfos> {
   const importDeclarations: IImportDeclarations[] = await getImportDeclarations(text);
 
-  const length = importDeclarations.length;
+  const { length } = importDeclarations;
   let position;
   if (length) {
     position = new Position(importDeclarations[length - 1].loc.end.line, 0);
@@ -327,44 +310,6 @@ export async function getImportInfos(text: string): Promise<IImportInfos> {
     position = new Position(0, 0);
   }
   return { position, declarations: importDeclarations };
-}
-
-const CONFIGURE_USER_KEY = 'user';
-interface UserInfo {
-  empId: string;
-  account: string;
-  gitlabToken: string;
-}
-export async function getUserInfo(): Promise<UserInfo> {
-  const fn = co.wrap(function* () {
-    if (defClient) {
-      const user = yield defClient.user();
-      return user;
-    } else {
-      throw new Error('Error: Fail to get user info through def client.');
-    }
-  });
-
-  // get user info from setting.json
-  const userData = configure.get(CONFIGURE_USER_KEY) || {};
-  const { empId, account, gitlabToken } = userData;
-
-  if (empId && account) {
-    return userData;
-  } else {
-    try {
-      const { account, empid: empId } = await fn();
-      const result = { account, empId, gitlabToken };
-      configure.set(CONFIGURE_USER_KEY, result);
-      return result;
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  }
-}
-
-export async function saveUserInfo(value: UserInfo) {
-  configure.set(CONFIGURE_USER_KEY, value);
 }
 
 export function getLanguage() {
@@ -393,14 +338,14 @@ export const getFolderLanguageType = (templateSourceSrcPath) => {
   });
 
   return index >= 0 ? 'ts' : 'js';
-}
+};
 
 /**
  * Install materials dependencies
  */
 export const bulkInstallMaterialsDependencies = async function (
   materials: IMaterialPage[] | IMaterialBlock[],
-  projectPath: string
+  projectPath: string,
 ) {
   const projectPackageJSON = await readPackageJSON(projectPath);
 
@@ -409,7 +354,7 @@ export const bulkInstallMaterialsDependencies = async function (
   materials.forEach(({ dependencies }: any) => Object.assign(pagesDependencies, dependencies));
 
   // filter existing dependencies of project
-  const filterDependencies: { [packageName: string]: string }[] = [];
+  const filterDependencies: Array<{ [packageName: string]: string }> = [];
   Object.keys(pagesDependencies).forEach((packageName) => {
     if (projectPackageJSON.dependencies && !projectPackageJSON.dependencies.hasOwnProperty(packageName)) {
       filterDependencies.push({
@@ -432,12 +377,12 @@ export const bulkInstallMaterialsDependencies = async function (
   } else {
     return [];
   }
-}
+};
 
 export const bulkDownloadMaterials = async function (
   materials: IMaterialPage[] | IMaterialBlock[],
   tmpPath: string,
-  log?: (text: string) => void
+  log?: (text: string) => void,
 ) {
   if (!log) {
     log = (text) => console.log(text);
@@ -455,10 +400,10 @@ export const bulkDownloadMaterials = async function (
           await fse.copy(material.source.path, downloadPath, {
             filter: srcPath => {
               return !srcPath.includes('node_modules');
-            }
+            },
           });
         } catch (err) {
-          log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', { errMessage: err.message }))
+          log(i18n.format('package.common-service.downloadMaterial.debugDownloadError', { errMessage: err.message }));
         }
       } else {
         let tarballURL: string;
@@ -486,9 +431,9 @@ export const bulkDownloadMaterials = async function (
           throw error;
         }
       }
-    })
+    }),
   );
-}
+};
 
 export function openMaterialsSettings() {
   if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
@@ -517,7 +462,7 @@ export function getFolderExistsTime(folderPath: string) {
   const stat = fse.statSync(folderPath);
   const { birthtime } = stat;
   const curTime = new Date();
-  const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000))
+  const existsTime = ((curTime.getTime() - birthtime.getTime()) / (60 * 1000));
   return existsTime;
 }
 

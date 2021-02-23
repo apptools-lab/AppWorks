@@ -1,4 +1,5 @@
-import { getUserInfo, checkIsAliInternal } from '@iceworks/common-service';
+import { checkIsAliInternal } from '@iceworks/common-service';
+import { getUserInfo } from '@iceworks/user-service';
 import * as path from 'path';
 import axios from 'axios';
 import * as fse from 'fs-extra';

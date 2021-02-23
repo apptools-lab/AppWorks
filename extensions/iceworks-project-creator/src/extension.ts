@@ -24,7 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
   let projectCreatorwebviewPanel: vscode.WebviewPanel | undefined;
 
   function activeProjectCreatorWebview() {
-
     if (projectCreatorwebviewPanel) {
       projectCreatorwebviewPanel.reveal();
     } else {
