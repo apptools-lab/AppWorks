@@ -79,7 +79,7 @@
     }
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/common-service": "^0.2.0",
     "@iceworks/doctor": "^0.4.4",
     "@iceworks/project-service": "^0.1.17",
     "@iceworks/recorder": "^0.1.3",
