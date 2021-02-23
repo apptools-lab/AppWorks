@@ -24,7 +24,6 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
-import formatMaterial from '../utils/formatMaterial';
 
 const { window, Position } = vscode;
 
@@ -109,7 +108,6 @@ export async function addBlockCode(block: IMaterialBlock) {
 
   const pagePath = path.dirname(fsPath);
   const pageName = path.basename(pagePath);
-  block = formatMaterial(block);
   // insert code
   const blockName: string = await generateBlockName(pageName, block.name);
   await insertBlock(activeTextEditor, blockName);
