@@ -2,7 +2,7 @@
 
 ## 0.3.4
 
-- chore: upgrade `@iceworks/common-service` and `@iceworks/project-service` version
+- refactor: internal optimization
 
 ## 0.3.3
 

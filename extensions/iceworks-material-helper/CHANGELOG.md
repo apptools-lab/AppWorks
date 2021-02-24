@@ -3,7 +3,7 @@
 ## 0.7.1
 
 - feat: compatible block and component material name
-- chore: upgrade `@iceworks/common-service`, `@iceworks/material-engine` and `@iceworks/project-service` version
+- refactor: internal optimization
 
 ## 0.7.0
 

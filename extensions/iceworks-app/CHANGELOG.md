@@ -2,7 +2,7 @@
 
 ## 0.8.2
 
-- chore: upgrade `@iceworks/common-service` version
+- refactor: internal optimization
 
 ## 0.8.1
 

@@ -2,7 +2,7 @@
 
 ## 0.4.10
 
-- chore: upgrade `@iceworks/common-service`, `@iceworks/material-engine` and `@iceworks/project-service` version
+- refactor: internal optimization
 
 ## 0.4.9
 

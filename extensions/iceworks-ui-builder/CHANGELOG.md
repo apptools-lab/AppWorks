@@ -2,7 +2,7 @@
 
 ## 0.3.4
 
-- chore: upgrade `@iceworks/material-engine` version
+- refactor: internal optimization
 
 ## 0.3.3
 
