@@ -18,8 +18,9 @@ export default function (props: IProps) {
     const [pageUrl, setPageUrl] = useState('');
 
     useEffect(() => {
-      if (startQRCodeInfo.web.find(u => url.indexOf(u) === 0)) {
-        setPageUrl(url);
+      const newUrl = startQRCodeInfo.web.find(u => url.indexOf(u) === 0);
+      if (newUrl) {
+        setPageUrl(newUrl);
       } else {
         setPageUrl('');
       }
