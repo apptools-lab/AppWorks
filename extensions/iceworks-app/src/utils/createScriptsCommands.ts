@@ -51,7 +51,7 @@ export default async function createScriptsCommands(context: vscode.ExtensionCon
     let scripts = createNpmCommand('run', 'start');
     if (!(await checkPathExists(projectPath, dependencyDir))) {
       shouldInstall = true;
-      scripts = `${createNpmCommand('install')} && ${scripts}`
+      scripts = `${createNpmCommand('install')} && ${scripts}`;
     }
 
     // npm run start.

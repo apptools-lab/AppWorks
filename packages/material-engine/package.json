@@ -29,6 +29,7 @@
     "junk": "^3.1.0",
     "latest-version": "^5.1.0",
     "lodash.kebabcase": "^4.1.1",
+    "lodash.startcase": "^4.4.0",
     "prettier": "^2.1.2",
     "transform-ts-to-js": "0.1.0",
     "typescript": "^3.8.3",

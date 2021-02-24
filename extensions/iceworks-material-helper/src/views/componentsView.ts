@@ -114,7 +114,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ItemData> {
       'download.svg',
       {
         command: 'iceworks-material-helper.component-creator.start',
-        title: createComponentLabel
+        title: createComponentLabel,
       },
     );
     items.push(createComponentItem);
@@ -127,7 +127,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ItemData> {
         'image.svg',
         {
           command: 'iceworks-ui-builder.design-component',
-          title: generateComponentLabel
+          title: generateComponentLabel,
         },
       );
       items.push(generateComponentItem);

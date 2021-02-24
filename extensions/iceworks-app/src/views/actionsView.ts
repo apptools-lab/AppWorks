@@ -93,7 +93,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
       'runDev.svg',
       {
         command: 'iceworksApp.scripts.runDebug',
-        title: debugLabel
+        title: debugLabel,
       },
     );
     items.push(debugItem);
@@ -106,7 +106,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
         'add.svg',
         {
           command: 'iceworks-material-helper.page-generator.start',
-          title: createPageLabel
+          title: createPageLabel,
         },
       );
       items.push(createPageItem);
@@ -121,7 +121,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
         'publish.svg',
         {
           command: 'iceworksApp.scripts.DefPublish',
-          title: publishLabel
+          title: publishLabel,
         },
       );
       items.push(publishItem);
@@ -133,7 +133,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
         'build.svg',
         {
           command: 'iceworksApp.scripts.runBuild',
-          title: buildLabel
+          title: buildLabel,
         },
       );
       items.push(buildItem);
@@ -157,7 +157,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
       'package.json',
       'scripts',
       scriptItems,
-      vscode.TreeItemCollapsibleState.Expanded
+      vscode.TreeItemCollapsibleState.Expanded,
     );
     return scriptParent;
   }
@@ -195,9 +195,9 @@ export function createActionsTreeView(context: vscode.ExtensionContext) {
   const treeView = vscode.window.createTreeView('npmScripts', { treeDataProvider: npmScriptsProvider });
 
   registerCommand('iceworksApp.npmScripts.run', async (treeItem: TreeItem) => {
-    const command = treeItem?.command;
+    const { command } = treeItem;
     if (command) {
-      const {title} = command;
+      const { title } = command;
       const [cwd, scriptCommand] = command?.arguments as any[];
       if (!(await checkPathExists(projectPath, dependencyDir))) {
         runScript(title, cwd, createNpmCommand('install'));
