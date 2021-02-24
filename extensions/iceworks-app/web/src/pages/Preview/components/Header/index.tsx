@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
 import classNames from 'classnames';
+import PageSelect from './PageSelect';
 import QRCodeWrap from '../QRCodeWrap/';
 import { UrlHistory } from './url-history';
 import { BLANK_URL } from '../../config';
@@ -46,7 +47,7 @@ export default function (props: IProps) {
   const handlePhoneIconClick = () => {
     let newUrl = '';
     if (new RegExp(PHONE_NODE_QUERY).test(url)) {
-      newUrl = url.replace(PHONE_NODE_QUERY, '');
+      newUrl = url.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
     } else {
       newUrl = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
     }
@@ -87,7 +88,19 @@ export default function (props: IProps) {
       <div className={styles.icon} onClick={() => { refresh && refresh(); }}>
         <Icon type="refresh" size="xs" />
       </div>
-      <Input value={currentUrl} size="medium" hasBorder={false} onChange={(value) => { setCurrentUrl(value); }} onPressEnter={handleEnter} />
+      <Input
+        addonBefore={
+          <PageSelect
+            url={url}
+            setUrl={(newUrl: string) => { setUrl(newUrl); setCurrentUrl(newUrl); }}
+          />
+        }
+        value={currentUrl}
+        size="medium"
+        hasBorder={false}
+        onChange={(value) => { setCurrentUrl(value); }}
+        onPressEnter={handleEnter}
+      />
     </div>
   );
 }

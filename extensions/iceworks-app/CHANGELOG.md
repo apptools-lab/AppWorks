@@ -1,8 +1,9 @@
 # Change Log
-
 ## 0.8.2
 
 - refactor: internal optimization
+- fix: preview frame mobile mode switch
+- feat: preview frame add page select
 
 ## 0.8.1
 
