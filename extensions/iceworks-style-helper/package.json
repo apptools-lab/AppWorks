@@ -3,7 +3,7 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/Less/SASS).",
   "publisher": "iceworks-team",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -73,7 +73,7 @@
   "dependencies": {
     "@babel/parser": "^7.10.3",
     "@babel/traverse": "^7.10.3",
-    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/common-service": "^0.2.0",
     "@iceworks/recorder": "^0.1.6",
     "css": "^2.2.4",
     "css-flatten": "^1.0.1",

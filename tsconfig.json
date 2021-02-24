@@ -13,6 +13,7 @@
     { "path": "packages/project-utils" },
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
-    { "path": "packages/material-engine" }
+    { "path": "packages/material-engine" },
+    { "path": "packages/user-service" }
   ]
 }

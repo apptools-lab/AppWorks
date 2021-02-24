@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.2
+
+- refactor: internal optimization
+
 ## 0.8.1
 
 - feat: add actions for NODE DEPENDENCIES view

@@ -3,7 +3,7 @@
   "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -79,9 +79,9 @@
     }
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.1.14",
+    "@iceworks/common-service": "^0.2.0",
     "@iceworks/doctor": "^0.4.4",
-    "@iceworks/project-service": "^0.1.17",
+    "@iceworks/project-service": "^0.2.0",
     "@iceworks/recorder": "^0.1.3",
     "@iceworks/vscode-webview": "^0.1.5",
     "@iceworks/storage": "^0.2.0",

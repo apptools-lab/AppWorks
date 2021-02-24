@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/common-service",
-  "version": "0.1.31",
+  "version": "0.2.0",
   "description": "Iceworks common service for VSCode extension.",
   "files": [
     "lib"
@@ -14,10 +14,8 @@
     "@iceworks/constant": "^0.1.0",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-utils": "^0.1.5",
-    "@iceworks/configure": "^0.1.0",
     "@iceworks/recorder": "^0.1.0",
     "axios": "^0.19.2",
-    "co": "4.6.0",
     "fs-extra": "^9.0.0",
     "fs-readdir-recursive": "^1.1.0",
     "ice-npm-utils": "^2.0.0",
@@ -26,20 +24,11 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/vscode": "^1.45.0",
-    "adm-zip": "^0.4.16",
-    "ali-oss": "^6.10.0",
-    "cross-spawn": "^7.0.3",
-    "imports-loader": "^0.8.0",
-    "ts-loader": "^8.0.1",
-    "ts-node": "^8.10.2",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "@types/vscode": "^1.45.0"
   },
   "scripts": {
-    "build": "rm -rf lib && webpack --mode production",
-    "getDEF": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts",
-    "prepublishOnly": "npm run getDEF && npm run build"
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
   },
   "publishConfig": {
     "access": "public"

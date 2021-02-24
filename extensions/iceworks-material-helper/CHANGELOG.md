@@ -3,6 +3,7 @@
 ## 0.7.1
 
 - feat: compatible block and component material name
+- refactor: internal optimization
 
 ## 0.7.0
 

@@ -23,6 +23,7 @@ export const ALI_TASKRESULT_URL = Base64.decode(
 );
 export const ALI_APPLYREPO_URL = Base64.decode('aHR0cHM6Ly9hcGkuZGVmLmFsaWJhYmEtaW5jLmNvbS9hcGkvd29yay9yZXBvL2FwcGx5');
 export const ALI_GITLAB_URL = Base64.decode('Z2l0QGdpdGxhYi5hbGliYWJhLWluYy5jb20=');
+export const ALI_DEF_URL = Base64.decode('aHR0cDovL2RlZi5hbGliYWJhLWluYy5jb20=');
 export const ALI_DEF_BASIC_URL = Base64.decode('aHR0cHM6Ly9hcGkuZGVmLmFsaWJhYmEtaW5jLmNvbS9hcGkvd29yay9hcHAvYmFzaWM=');
 export const ALI_DEF_WORK_URL = Base64.decode('aHR0cHM6Ly93b3JrLmRlZi5hbGliYWJhLWluYy5jb20=');
 export const ALI_EMAIL = Base64.decode('YWxpYmFiYS1pbmMuY29t');

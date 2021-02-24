@@ -41,7 +41,7 @@ const CreateDEFProjectForm: React.FC<ICreateDEFProjectFormProps> = ({
 
   async function getUserInfo() {
     try {
-      const userInfo = await callService('common', 'getUserInfo');
+      const userInfo = await callService('user', 'getUserInfo');
       const { empId, account, gitlabToken } = userInfo;
       onChange({ ...value, empId, account, gitlabToken });
       return gitlabToken;
