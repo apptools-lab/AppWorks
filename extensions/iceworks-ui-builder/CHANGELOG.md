@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.4
+
+- chore: upgrade `@iceworks/material-engine` version
+
 ## 0.3.3
 
 - refactor: internal optimization

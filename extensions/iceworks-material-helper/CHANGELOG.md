@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.1
+
+- chore: upgrade `@iceworks/common-service`, `@iceworks/material-engine` and `@iceworks/project-service` version
+
 ## 0.7.0
 
 - feat: auto react code snippet

@@ -3,7 +3,7 @@
   "displayName": "Application Manager",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -335,8 +335,8 @@
   "dependencies": {
     "@iceworks/common-service": "^0.2.0",
     "@iceworks/i18n": "^0.1.0",
-    "@iceworks/material-engine": "^0.1.0",
-    "@iceworks/project-service": "^0.1.6",
+    "@iceworks/material-engine": "^0.2.0",
+    "@iceworks/project-service": "^0.2.0",
     "@iceworks/recorder": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.2",
     "comment-json": "^3.0.2",

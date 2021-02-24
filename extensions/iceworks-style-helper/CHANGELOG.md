@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.5
+
+- chore: upgrade `@iceworks/common-service` version
+
 ## 0.4.4
 
 - refactor: internal optimization

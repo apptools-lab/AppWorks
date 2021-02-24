@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.3
+
+- chore: upgrade `@iceworks/common-service` version
+
 ## 0.4.2
 
 - feat: record dau
