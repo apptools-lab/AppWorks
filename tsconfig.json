@@ -14,6 +14,7 @@
     { "path": "packages/common-service" },
     { "path": "packages/project-service" },
     { "path": "packages/material-engine" },
-    { "path": "packages/user-service" }
+    { "path": "packages/user-service" },
+    { "path": "packages/build-plugin-iceworks-dev-tools" }
   ]
 }
