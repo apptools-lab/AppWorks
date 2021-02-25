@@ -104,5 +104,8 @@
     "**/*.{js,jsx,ts,tsx}": "xima exec eslint",
     "**/*.{css,scss,less}": "xima exec stylelint",
     "**/*.md": "npm run docs:check"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.1"
   }
 }
