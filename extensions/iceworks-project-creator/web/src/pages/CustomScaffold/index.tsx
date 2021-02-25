@@ -83,7 +83,6 @@ const CustomScaffold = () => {
     setPrevBtnDisabled(true);
     const { projectPath, projectName, scaffold } = values;
     values.scaffold = scaffold;
-    console.log('CustomScaffold value.scaffold ===>', values.scaffold);
     try {
       const isPathExists = await callService('common', 'checkPathExists', projectPath, projectName);
       if (isPathExists) {
