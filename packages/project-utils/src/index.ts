@@ -19,17 +19,17 @@ export async function getProjectTypeInfo(projectPath: string): Promise<ProjectTy
 
   try {
     const packageJsonPath = join(projectPath, packageJSONFilename);
-    const { dependencies = {}, peerDependencies = {} } = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
+    const { dependencies = {}, peerDependencies = {}, devDependencies = {} } = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
 
-    if (dependencies.rax || peerDependencies.rax) {
+    if (dependencies.rax || peerDependencies.rax || devDependencies.rax) {
       type = 'rax';
-      version = dependencies.rax || peerDependencies.rax;
-    } else if (dependencies.react || peerDependencies.react) {
+      version = dependencies.rax || peerDependencies.rax || devDependencies.rax;
+    } else if (dependencies.react || peerDependencies.react || devDependencies.react) {
       type = 'react';
-      version = dependencies.react || peerDependencies.react;
-    } else if (dependencies.vue || peerDependencies.vue) {
+      version = dependencies.react || peerDependencies.react || devDependencies.react;
+    } else if (dependencies.vue || peerDependencies.vue || devDependencies.vue) {
       type = 'vue';
-      version = dependencies.vue || peerDependencies.vue;
+      version = dependencies.vue || peerDependencies.vue || devDependencies.vue;
     }
   } catch (error) {
     console.error('process projectType error:', error);
