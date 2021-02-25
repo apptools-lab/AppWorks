@@ -18,7 +18,7 @@ export default function autoOpenPreview(context: vscode.ExtensionContext, record
 
   if (!fs.existsSync(DEV_INFO_BASE_DIR)) {
     // wait for base dir created
-    watcher.add('.');
+    watcher.add(projectPath);
   } else {
     watcher.add(DEV_INFO_FILE);
   }
@@ -26,7 +26,7 @@ export default function autoOpenPreview(context: vscode.ExtensionContext, record
   // user may not install node modules and not setup temp dir
   watcher.on('addDir', (newPath) => {
     if (newPath === DEV_INFO_BASE_DIR) {
-      watcher.unwatch('.');
+      watcher.unwatch(projectPath);
       if (!fs.existsSync(DEV_INFO_FILE_DIR)) {
         fs.mkdirsSync(DEV_INFO_FILE_DIR);
         watcher.add(DEV_INFO_FILE);
