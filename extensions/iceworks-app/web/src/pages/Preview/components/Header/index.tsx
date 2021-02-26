@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
 import classNames from 'classnames';
 import PageSelect from './PageSelect';
 import QRCodeWrap from '../QRCodeWrap/';
 import { UrlHistory } from './url-history';
+import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
+
 import styles from './index.module.scss';
 import './icon.css';
 
@@ -12,17 +14,13 @@ import './icon.css';
 // H5: https://www.tmall.com/?wh_ttid=@phone
 const PHONE_NODE_QUERY = 'wh_ttid=@phone';
 
-interface IProps {
-  url: string;
-  setUrl: any;
-  refresh: any;
-}
 
 const history = new UrlHistory();
 
-export default function (props: IProps) {
-  const { url, setUrl, refresh } = props;
-  const [currentUrl, setCurrentUrl] = useState(url);
+export default function () {
+  const { url, setUrl, previewerRef } = useContext(Context);
+
+  const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
     history.push(url);
@@ -34,7 +32,7 @@ export default function (props: IProps) {
       target = `https://${newUrl}`;
     }
     setUrl(target);
-    setCurrentUrl(target);
+    setInputUrl(target);
     if (!fromHistory) {
       history.push(target);
     }
@@ -85,20 +83,15 @@ export default function (props: IProps) {
           <QRCodeWrap url={url} />
         </div>
       </Balloon>
-      <div className={styles.icon} onClick={() => { refresh && refresh(); }}>
+      <div className={styles.icon} onClick={() => { previewerRef?.current.refresh(); }}>
         <Icon type="refresh" size="xs" />
       </div>
       <Input
-        addonBefore={
-          <PageSelect
-            url={url}
-            setUrl={(newUrl: string) => { setUrl(newUrl); setCurrentUrl(newUrl); }}
-          />
-        }
-        value={currentUrl}
+        addonBefore={<PageSelect onChange={setNewUrl} />}
+        value={inputUrl}
         size="medium"
         hasBorder={false}
-        onChange={(value) => { setCurrentUrl(value); }}
+        onChange={(value) => { setInputUrl(value); }}
         onPressEnter={handleEnter}
       />
     </div>
