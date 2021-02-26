@@ -1,14 +1,17 @@
-.scaffoldScaffold {
+.scaffoldForm {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: calc(100vh - 160px);
 
   .content {
     height: calc(100vh - 220px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
     .scaffoldTemplateIframe {
       height: 100%;
-      width: 96%;
+      max-width: 96%;
     }
 
     .drawerBtn {
@@ -16,12 +19,17 @@
       justify-content: center;
       align-items: center;
       position: absolute;
-      top: 40px;
+      top: 0;
       right: -30px;
-      height: 48px;
-      width: 48px;
+      height: 40px;
+      width: 40px;
       cursor: pointer;
       background: $color-brand1-6;
+    }
+
+    .config {
+      width: 300px;
+      height: 100vh;
     }
   }
 
