@@ -7,15 +7,15 @@ export default class Timer {
 
   protected endTime: undefined | number;
 
-  constructor(timeout?: number) {
-    this.timer = null;
+  constructor() {
     this.startTime = Date.now();
+  }
 
-    if (timeout) {
-      this.timer = setTimeout(() => {
-        throw new Error('@iceworks/doctor time out!');
-      }, timeout);
-    }
+  public async raceTimeout(ms: number) {
+    await new Promise(resolve => {
+      setTimeout(resolve, ms);
+    });
+    throw new Error('@iceworks/doctor time out!');
   }
 
   public duration(): number {
