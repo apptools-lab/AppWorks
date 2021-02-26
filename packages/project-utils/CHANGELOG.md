@@ -1,4 +1,4 @@
 # changelog
 
 ## 0.3.3
-- fix: add `devDependencies` check for getProjectTypeInfo.
+- feat: add loose mode check for getProjectTypeInfo, check `devDependencies` and `keywords`.
