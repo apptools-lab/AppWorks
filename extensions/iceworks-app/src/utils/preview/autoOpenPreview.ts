@@ -1,4 +1,6 @@
-// listen dev.json file change auto open prefive frame. like only run `npm run start`
+/**
+ * listen dev.json file change auto open prefive frame. like only run `npm run start`
+ */
 
 import * as fs from 'fs-extra';
 import * as path from 'path';
