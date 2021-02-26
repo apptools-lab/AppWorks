@@ -1,16 +1,13 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 import LoadingPercent from '../LoadingPercent';
+import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
 import styles from './index.module.scss';
 
-interface IProps {
-  url: string
-}
-
 const REFRESH_TIMEOUT = 200;
 
-function Previewer(props: IProps, ref) {
-  const { url } = props;
+function Previewer(props, ref) {
+  const { url } = useContext(Context);
 
   const frameRef = useRef(null);
   const loadingPercentRef = useRef(null);

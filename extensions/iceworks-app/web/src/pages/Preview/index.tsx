@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Header from './components/Header';
 import Previewer from './components/Previewer';
+import { Context } from './context';
 import { BLANK_URL } from './config';
 import styles from './index.module.scss';
 
@@ -24,9 +25,11 @@ export default function () {
   const previewerRef = useRef(null);
 
   return (
-    <div className={styles.container} >
-      <Header url={url} setUrl={setUrl} refresh={() => { previewerRef.current.refresh(); }} />
-      <Previewer ref={previewerRef} url={url} />
-    </div>
+    <Context.Provider value={{ url, setUrl, previewerRef }}>
+      <div className={styles.container} >
+        <Header />
+        <Previewer ref={previewerRef} />
+      </div>
+    </Context.Provider>
   );
 }
