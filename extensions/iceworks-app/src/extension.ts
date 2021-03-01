@@ -7,13 +7,14 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { Recorder } from '@iceworks/recorder';
-import { initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
+import { checkIsO2, initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
 import { createActionsTreeView } from './views/actionsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
 import { createQuickEntriesTreeView } from './views/quickEntriesView';
 import services from './services';
 import { showExtensionsQuickPickCommandId, projectExistsTime } from './constants';
 import showAllQuickPick from './quickPicks/showAllQuickPick';
+import autoOpenPreview from './utils/preview/autoOpenPreview';
 import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
 import i18n from './i18n';
@@ -24,6 +25,11 @@ const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
+
+  if (checkIsO2()) {
+    // only auto open preview in O2
+    autoOpenPreview(context, recorder);
+  }
 
   console.log('Congratulations, your extension "iceworks-app" is now active!');
   recorder.recordActivate();
