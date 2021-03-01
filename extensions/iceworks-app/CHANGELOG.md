@@ -5,6 +5,7 @@
 - fix: preview frame mobile mode switch
 - feat: preview frame add page select
 - feat: auto open preview frame when `npm run start` in O2
+- feat: add custom-scaffold entry
 
 ## 0.8.1
 
