@@ -3,6 +3,7 @@
 ## 0.4.10
 
 - refactor: internal optimization
+- fix: spa description
 
 ## 0.4.9
 
