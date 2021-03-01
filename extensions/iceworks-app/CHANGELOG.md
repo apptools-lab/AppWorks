@@ -3,7 +3,7 @@
 ## 0.8.2
 
 - refactor: internal optimization
-- chore: remove package ignore
+- chore: not ignore packages (`prettier` and `@iceworks/code-generator`) when packaging extension
 
 ## 0.8.1
 
