@@ -46,7 +46,6 @@ const config = {
       patterns: [
         { from: path.join(scaffoldGeneratorLibPath, 'scaffold'), to: path.join(outputPath, 'scaffold') },
         { from: path.join(scaffoldGeneratorLibPath, 'template'), to: path.join(outputPath, 'template') },
-        { from: path.join(scaffoldGeneratorLibPath, 'configs'), to: path.join(outputPath, 'configs') },
       ],
     }),
   ],

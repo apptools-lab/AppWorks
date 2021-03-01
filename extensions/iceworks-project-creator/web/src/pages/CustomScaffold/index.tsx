@@ -119,25 +119,27 @@ const CustomScaffold = () => {
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
       </Button>
     </ScaffoldForm>,
-    <CreateProjectForm
-      value={value}
-      onOpenFolderDialog={onOpenFolderDialog}
-      onChange={onFormChange}
-      errorMsg={errorMsg}
-      loading={loading}
-    >
-      <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
-        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
-      </Button>
-      <Form.Submit
-        type="primary"
-        onClick={(values, error) => onProjectDetailSubmit(values, error)}
-        validate
+    <div className={styles.createProjectForm}>
+      <CreateProjectForm
+        value={value}
+        onOpenFolderDialog={onOpenFolderDialog}
+        onChange={onFormChange}
+        errorMsg={errorMsg}
         loading={loading}
       >
-        <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
-      </Form.Submit>
-    </CreateProjectForm>,
+        <Button onClick={goPrev} className={styles.btn} disabled={prevBtnDisabled}>
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.previous" />
+        </Button>
+        <Form.Submit
+          type="primary"
+          onClick={(values, error) => onProjectDetailSubmit(values, error)}
+          validate
+          loading={loading}
+        >
+          <FormattedMessage id="web.iceworksProjectCreator.CreateProject.complete" />
+        </Form.Submit>
+      </CreateProjectForm>
+    </div>,
   ];
 
   useEffect(() => {
