@@ -4,6 +4,7 @@ import { downloadAndGenerateProject } from '@iceworks/generate-project';
 import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
 import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework as orginCheckIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
+import { Recorder } from '@iceworks/recorder';
 import * as path from 'path';
 import { ALI_GITLAB_URL, ALI_DIP_PRO, ALI_DEF_WORK_URL } from '@iceworks/constant';
 import { projectPath, jsxFileExtnames } from './constant';
@@ -15,6 +16,10 @@ import { IDEFProjectField, IProjectField } from './types';
 
 export * from './constant';
 export * from './dependency';
+
+const { name: pkgName, version: pkgVersion } = require('../package.json');
+
+const recorder = new Recorder(pkgName, pkgVersion);
 
 export async function autoSetContext() {
   const isPegasus = await checkIsPegasusProject();
@@ -143,7 +148,8 @@ export async function getFolderPath(openLabel = 'Open'): Promise<string | undefi
 }
 
 export async function createProject(projectField: IProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, scaffold } = projectField;
+  const { projectPath: setProjectPath, projectName, scaffold, source } = projectField;
+  const { type } = source;
   let ejsOptions = {};
   if (projectField.ejsOptions) {
     ejsOptions = modifyEjsOptions(projectField.ejsOptions);
@@ -156,6 +162,14 @@ export async function createProject(projectField: IProjectField): Promise<string
   const { npm, version } = scaffold.source;
   const registry = getDataFromSettingJson(CONFIGURATION_KEY_NPM_REGISTRY);
   await downloadAndGenerateProject(projectDir, npm, version, registry, projectName, ejsOptions);
+  recorder.record({
+    module: 'project',
+    action: 'create',
+    data: {
+      type,
+      npm,
+    },
+  });
   return projectDir;
 }
 
@@ -171,7 +185,9 @@ export async function openLocalProjectFolder(projectDir: string, ...args): Promi
 }
 
 export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFProjectField): Promise<string> {
-  const { projectPath: setProjectPath, projectName, group, project } = DEFProjectField;
+  const { projectPath: setProjectPath, projectName, group, project, source, scaffold } = DEFProjectField;
+  const { type } = source;
+  const { npm } = scaffold.source;
   const projectDir = path.join(setProjectPath, projectName);
   const isProjectDirExists = await checkPathExists(projectDir);
   if (isProjectDirExists) {
@@ -179,6 +195,14 @@ export async function createDEFProjectAndCloneRepository(DEFProjectField: IDEFPr
   }
   await createDEFProject(DEFProjectField);
   await cloneRepositoryToLocal(projectDir, group, project);
+  recorder.record({
+    module: 'project',
+    action: 'create',
+    data: {
+      type,
+      npm,
+    },
+  });
   return projectDir;
 }
 
