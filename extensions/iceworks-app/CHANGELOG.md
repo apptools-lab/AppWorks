@@ -3,6 +3,7 @@
 ## 0.8.2
 
 - refactor: internal optimization
+- chore: remove package ignore
 
 ## 0.8.1
 
