@@ -334,6 +334,7 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.2.0",
+    "@iceworks/constant": "^0.1.5",
     "@iceworks/i18n": "^0.1.0",
     "@iceworks/material-engine": "^0.2.0",
     "@iceworks/project-service": "^0.2.0",

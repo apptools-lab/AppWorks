@@ -32,3 +32,4 @@ export const ALI_DIP_PRO = Base64.decode('aHR0cHM6Ly9pY2V3b3Jrcy1pZHAuZnguYWxpYm
 
 export const ALI_EXTENSION_UPLOAD_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi91cGxvYWQ=');
 export const ALI_EXTENSION_STATUS_UPDATE_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi9zdGF0dXM=');
+export const ICEWORKS_ICON_PATH = 'https://img.alicdn.com/imgextra/i4/O1CN01NMFwbL1ygVrUQgs69_!!6000000006608-2-tps-65-74.png';

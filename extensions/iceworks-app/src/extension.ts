@@ -7,6 +7,7 @@ import {
   projectPath,
 } from '@iceworks/project-service';
 import { Recorder } from '@iceworks/recorder';
+import { ICEWORKS_ICON_PATH } from '@iceworks/constant';
 import { checkIsO2, initExtension, registerCommand, getFolderExistsTime, getDataFromSettingJson } from '@iceworks/common-service';
 import { createActionsTreeView } from './views/actionsView';
 import { createNodeDependenciesTreeView } from './views/nodeDependenciesView';
@@ -67,6 +68,7 @@ export async function activate(context: vscode.ExtensionContext) {
       </script>
       `;
       configWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'confighelper', false, undefined, extraHtml);
+      configWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       configWebviewPanel.onDidDispose(
         () => {
           configWebviewPanel = undefined;
@@ -100,6 +102,7 @@ export async function activate(context: vscode.ExtensionContext) {
       );
 
       welcomeWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'welcome');
+      welcomeWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       welcomeWebviewPanel.onDidDispose(
         () => {
           welcomeWebviewPanel = undefined;
@@ -131,8 +134,8 @@ export async function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true,
         },
       );
-
       dashboardWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'dashboard');
+      dashboardWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       dashboardWebviewPanel.onDidDispose(
         () => {
           dashboardWebviewPanel = undefined;
