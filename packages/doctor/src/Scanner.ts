@@ -21,7 +21,7 @@ export default class Scanner {
 
   // Entry
   public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
-    const timer = new Timer(options?.timeout);
+    const timer = new Timer();
     const reports = {} as IScannerReports;
     const tempFileDir = options?.tempFileDir || tempDir;
     const subprocessList: any[] = [];
@@ -67,22 +67,30 @@ export default class Scanner {
       });
     }
 
-    // Check
-    await Promise.all(subprocessList);
-    // Set result
-    await Promise.all(processReportList.map(async (fn) => { await fn(); }));
+    async function process() {
+      // Check
+      await Promise.all(subprocessList);
+      // Set result
+      await Promise.all(processReportList.map(async (fn) => { await fn(); }));
 
-    // Calculate total score
-    reports.score = getFinalScore(
-      [
-        (reports.ESLint || {}).score,
-        (reports.maintainability || {}).score,
-        (reports.repeatability || {}).score,
-      ].filter((score) => !isNaN(score)),
-    );
+      // Calculate total score
+      reports.score = getFinalScore(
+        [
+          (reports.ESLint || {}).score,
+          (reports.maintainability || {}).score,
+          (reports.repeatability || {}).score,
+        ].filter((score) => !isNaN(score)),
+      );
 
-    // Duration seconds
-    reports.scanTime = timer.duration();
+      // Duration seconds
+      reports.scanTime = timer.duration();
+    }
+
+    if (options.timeout) {
+      await Promise.race([timer.raceTimeout(options.timeout), process()]);
+    } else {
+      await process();
+    }
 
     return reports;
   }
