@@ -1,10 +1,12 @@
 # Change Log
+
 ## 0.8.2
 
 - refactor: internal optimization
 - fix: preview frame mobile mode switch
 - feat: preview frame add page select
 - feat: auto open preview frame when `npm run start` in O2
+- chore: not ignore packages (`prettier` and `@iceworks/code-generator`) when packaging extension
 
 ## 0.8.1
 
