@@ -13,7 +13,7 @@ export default class Timer {
 
   public async raceTimeout(ms: number) {
     await new Promise(resolve => {
-      setTimeout(resolve, ms);
+      this.timer = setTimeout(resolve, ms);
     });
     throw new Error('@iceworks/doctor time out!');
   }
