@@ -110,19 +110,27 @@ export async function appendUsageTimePayload(usageStats: UsageStats) {
   await appendPayloadData(PlayloadType.USAGES_RECORD, playload);
 }
 
+let isSending = false;
 export async function sendPayload() {
-  logger.info('[sender][sendPayload] run');
-  const isSendable = await checkIsSendable();
-  const isSendNow = checkIsSendNow();
-  await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
-    logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
-    if (isSendable) {
-      logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
-      await sendPayloadData(TYPE);
-    } else {
-      await clearPayloadData(TYPE);
+  logger.info('[sender][sendPayload] run, isSending:', isSending);
+  if (!isSending) {
+    isSending = true;
+    const isSendable = await checkIsSendable();
+    const isSendNow = checkIsSendNow();
+    try {
+      await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
+        logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
+        if (isSendable) {
+          logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
+          await sendPayloadData(TYPE);
+        } else {
+          await clearPayloadData(TYPE);
+        }
+      }));
+    } finally {
+      isSending = false;
     }
-  }));
+  }
 }
 
 const timeout = ONE_SEC_MILLISECONDS * 5;

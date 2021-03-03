@@ -32,13 +32,17 @@ async function appendDataToPayload(data: KeystrokeStats|UsageStats) {
 // TODO async logic
 let isProcessing = false;
 export async function processData(data: KeystrokeStats|UsageStats) {
-  logger.debug('[data][processData] isProcessing', isProcessing);
+  logger.info('[data][processData] run, isProcessing:', isProcessing);
   if (!isProcessing) {
     isProcessing = true;
     await checkMidnight();
-    await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
-    isProcessing = false;
+    try {
+      await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
+    } finally {
+      isProcessing = false;
+    }
   } else {
+    logger.info('[data][processData] delay');
     await delay(1000);
     await processData(data);
   }
