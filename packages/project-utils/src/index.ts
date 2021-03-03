@@ -13,13 +13,13 @@ export type ProjectLanguageType = 'ts' | 'js';
 export type ProjectTypeInfo = { type: ProjectType, version: string };
 export type ProjectFrameworkInfo = { framework: ProjectFramework, version: string };
 
-export async function getProjectTypeInfo(projectPath: string): Promise<ProjectTypeInfo> {
+export async function getProjectTypeInfo(projectPath: string, loose?: boolean): Promise<ProjectTypeInfo> {
   let type: ProjectType = 'unknown';
   let version = 'unknown';
 
   try {
     const packageJsonPath = join(projectPath, packageJSONFilename);
-    const { dependencies = {}, peerDependencies = {} } = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
+    const { dependencies = {}, peerDependencies = {}, devDependencies = {}, keywords = [] } = JSON.parse(await readFileAsync(packageJsonPath, 'utf-8'));
 
     if (dependencies.rax || peerDependencies.rax) {
       type = 'rax';
@@ -30,6 +30,31 @@ export async function getProjectTypeInfo(projectPath: string): Promise<ProjectTy
     } else if (dependencies.vue || peerDependencies.vue) {
       type = 'vue';
       version = dependencies.vue || peerDependencies.vue;
+    }
+
+    // loose getProjectTypeInfo by devDependencies
+    if (loose && type === 'unknown') {
+      if (devDependencies.rax) {
+        type = 'rax';
+        version = devDependencies.rax;
+      } else if (devDependencies.react) {
+        type = 'react';
+        version = devDependencies.react;
+      } else if (devDependencies.vue) {
+        type = 'vue';
+        version = devDependencies.vue;
+      }
+    }
+
+    // loose getProjectTypeInfo by keywords, for cdn or other framework inject target info.
+    if (loose && type === 'unknown' && Array.isArray(keywords)) {
+      if (keywords.find(keyword => keyword === 'rax')) {
+        type = 'rax';
+      } else if (keywords.find(keyword => keyword === 'react')) {
+        type = 'react';
+      } else if (keywords.find(keyword => keyword === 'vue')) {
+        type = 'vue';
+      }
     }
   } catch (error) {
     console.error('process projectType error:', error);
@@ -91,8 +116,8 @@ export async function getProjectFrameworkInfo(projectPath: string): Promise<Proj
   return { framework, version };
 }
 
-export async function getProjectType(projectPath: string): Promise<ProjectType> {
-  const { type } = await getProjectTypeInfo(projectPath);
+export async function getProjectType(projectPath: string, loose?: boolean): Promise<ProjectType> {
+  const { type } = await getProjectTypeInfo(projectPath, loose);
   return type;
 }
 

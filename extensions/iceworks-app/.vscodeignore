@@ -8,5 +8,3 @@ src/**
 node_modules
 webpack.config.js
 web/**
-!node_modules/prettier
-!node_modules/@iceworks/code-generator
