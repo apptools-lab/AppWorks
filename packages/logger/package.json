@@ -9,13 +9,9 @@
   "license": "MIT",
   "dependencies": {
     "@iceworks/storage": "^0.2.0",
-    "egg-logger": "^2.5.0",
+    "egg-logger": "^2.4.2",
     "mkdirp": "^1.0.4",
     "utility": "^1.15.0"
-  },
-  "scripts": {
-    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
-    "prepublishOnly": "npm run compile"
   },
   "publishConfig": {
     "access": "public"
