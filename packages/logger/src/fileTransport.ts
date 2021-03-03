@@ -1,16 +1,17 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { Transport } from 'egg-logger';
 
 const mkdirp = require('mkdirp');
 const utility = require('utility');
-const { Transport } = require('egg-logger');
 
 const limitSize = 1024 * 1024 * 20;
 
-/**
- * output log into file {@link Transport}。
- */
 export default class FileTransport extends Transport {
+  private _stream: fs.WriteStream;
+
+  private options: any;
+
   /**
    * @constructor
    * @param {Object} options
@@ -24,6 +25,7 @@ export default class FileTransport extends Transport {
   }
 
   get defaults() {
+    // @ts-ignore
     return Object.assign(super.defaults, {
       file: null,
       level: 'INFO',
@@ -51,6 +53,7 @@ export default class FileTransport extends Transport {
       return;
     }
     const buf = super.log(level, args, meta);
+    // @ts-ignore
     if (buf.length) {
       this._write(`[${utility.logDate(',')}] ${buf}`);
     }
@@ -77,6 +80,7 @@ export default class FileTransport extends Transport {
    * @return {Boolean} writable
    */
   get writable() {
+    // @ts-ignore
     return this._stream && !this._stream.closed && this._stream.writable && !this._stream.destroyed;
   }
 
@@ -113,6 +117,7 @@ export default class FileTransport extends Transport {
   _closeStream() {
     if (this._stream) {
       this._stream.end();
+      // @ts-ignore
       this._stream.removeListener('error', this._stream._onError);
       this._stream = null;
     }
