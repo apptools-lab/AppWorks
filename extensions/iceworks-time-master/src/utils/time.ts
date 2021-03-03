@@ -1,4 +1,3 @@
-import configure from '@iceworks/configure';
 import * as moment from 'moment';
 import { ONE_MIN_SECONDS } from '../constants';
 import i18n from '../i18n';
@@ -7,35 +6,9 @@ import i18n from '../i18n';
  * @param num {number} The number to round
  * @param precision {number} The number of decimal places to preserve
  */
-export function roundUp(num: number, precision: number) {
+function roundUp(num: number, precision: number) {
   precision = Math.pow(10, precision);
   return Math.ceil(num * precision) / precision;
-}
-
-const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
-export function getNowDay() {
-  let currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);
-  if (!currentDay) {
-    currentDay = setNowDay();
-  }
-  return currentDay;
-}
-
-export function setNowDay() {
-  const day = getDay();
-  configure.set(CURRENT_DAY_STORAGE_KEY, day);
-  return day;
-}
-
-export function checkIsNewDay() {
-  const day = getDay();
-  const currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);
-  return currentDay !== day;
-}
-
-export function getDay(m?: moment.Moment) {
-  const time = m || moment();
-  return time.format(DAY_FORMAT);
 }
 
 export function getLastWeekDays(m?: moment.Moment): moment.Moment[] {
@@ -54,10 +27,7 @@ export function getLastWeekDays(m?: moment.Moment): moment.Moment[] {
   return [...preDays, lastWeekSameDay, ...nextDays];
 }
 
-const DAY_FORMAT = 'YYYY-MM-DD';
-const DAY_TIME_FORMAT = 'LLLL';
-
-export function getNowUTCMoment() {
+function getNowUTCMoment() {
   const utcMoment = moment.utc();
   return utcMoment;
 }
@@ -66,58 +36,6 @@ export function getNowUTCSec() {
   const utc = getNowUTCMoment();
   const nowInSec = utc.unix();
   return nowInSec;
-}
-
-export interface NowTimes {
-  /**
-   * current time in UTC (Moment object), e.g. "2020-04-08T04:48:27.120Z"
-   */
-  utcMoment: moment.Moment;
-  /**
-   * current time in UTC, unix seconds, e.g. 1586321307
-   */
-  utcSeconds: number;
-  /**
-   * current day in UTC, e.g. "2020-04-08"
-   */
-  utcDay: string;
-  /**
-   * timezone offset from UTC (sign = -420 for Pacific Time), e.g. -25200
-   */
-  offsetInSec: number;
-  /**
-   * current time in UTC plus the timezone offset, e.g. 1586296107
-   */
-  localSeconds: number;
-  /**
-   * current day in local TZ, e.g. "2020-04-07"
-   */
-  localDay: string;
-  /**
-   * current day time in local TZ, e.g. "Tuesday, April 7, 2020 9:48 PM"
-   */
-  localDayTime: string;
-}
-export function getNowTimes(): NowTimes {
-  const utcMoment = getNowUTCMoment();
-  const utcSeconds = utcMoment.unix();
-  const utcDay = getDay(utcMoment);
-
-  const nowMoment = moment();
-  const offsetInSec = nowMoment.utcOffset() * 60;
-  const localSeconds = utcSeconds + offsetInSec;
-  const localDay = getDay(nowMoment);
-  const localDayTime = nowMoment.format(DAY_TIME_FORMAT);
-
-  return {
-    utcMoment,
-    utcSeconds,
-    utcDay,
-    offsetInSec,
-    localSeconds,
-    localDay,
-    localDayTime,
-  };
 }
 
 export function humanizeMinutes(min: number) {

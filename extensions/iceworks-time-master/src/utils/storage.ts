@@ -1,8 +1,8 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as userHome from 'user-home';
+import { storagePath as iceworksStoragePath } from '@iceworks/storage';
 import { getDataFromSettingJson } from '@iceworks/common-service';
-import { getNowDay } from './time';
+import { getNowDay } from './day';
 
 const orderBy = require('lodash.orderby');
 const mkdirp = require('mkdirp');
@@ -10,7 +10,6 @@ const mkdirp = require('mkdirp');
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
-const iceworksStoragePath = path.join(userHome, '.iceworks');
 const EXTENSION_TAG = 'TimeMaster';
 
 export function getStoragePath() {
@@ -19,14 +18,6 @@ export function getStoragePath() {
     mkdirp.sync(storagePath);
   }
   return storagePath;
-}
-
-export function getLogsPath() {
-  const logsPath = path.join(iceworksStoragePath, 'logs', EXTENSION_TAG);
-  if (!fse.existsSync(logsPath)) {
-    mkdirp.sync(logsPath);
-  }
-  return logsPath;
 }
 
 export function getStorageDaysPath() {
