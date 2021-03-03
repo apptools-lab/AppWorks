@@ -7,6 +7,10 @@
     "lib"
   ],
   "license": "MIT",
+  "scripts": {
+    "compile": "rm -rf lib && tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm run compile"
+  },
   "dependencies": {
     "@iceworks/storage": "^0.2.0",
     "egg-logger": "^2.4.2",

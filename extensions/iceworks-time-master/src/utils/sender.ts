@@ -150,8 +150,9 @@ async function sendBulkCreate(type, playloadData, extra) {
       ...extra,
     })));
 
+    logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText})`);
     if (!isResponseOk(bulkCreateResponse)) {
-      logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText}), data(${bulkCreateResponse.data})`);
+      logger.info(`[sender][sendBulkCreate] data: ${bulkCreateResponse.data}`);
       throw new Error(bulkCreateResponse.data.message);
     }
   } catch (e) {
