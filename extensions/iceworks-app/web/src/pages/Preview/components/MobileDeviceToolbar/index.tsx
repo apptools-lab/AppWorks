@@ -1,5 +1,5 @@
 import { Input, Select, Icon } from '@alifd/next';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
 const TEMP_WIDTH = 'tempWidth';
@@ -13,7 +13,7 @@ function convertNumToPixel(num) {
 
 function convertPixelToNum(pixel) {
   try {
-    console.log(`conver from ${pixel} to ${pixel.slice(0, -2)}`);
+    console.log(`convert from ${pixel} to ${pixel.slice(0, -2)}`);
     return parseInt(pixel.slice(0, -2));
   } catch (e) {
     console.log(`convert ${pixel} Failed`);
@@ -21,7 +21,7 @@ function convertPixelToNum(pixel) {
   }
 }
 
-export default function PixelController({ deviceWidth, deviceHeight, setDeviceHeight, setDeviceWidth, defaultDevice, deviceData }) {
+export default function PixelController({ deviceWidth, deviceHeight, setDeviceHeight, setDeviceWidth, device, setDevice, deviceData }) {
   const [tempDeviceWidth, setTempDeviceWidth] = useState(convertPixelToNum(deviceWidth));
   const [tempDeviceHeight, setTempDeviceHeight] = useState(convertPixelToNum(deviceHeight));
   const [isDeviceSelected, setIsDeviceSelected] = useState(false);
@@ -38,16 +38,23 @@ export default function PixelController({ deviceWidth, deviceHeight, setDeviceHe
     }
   }
 
-  function handleDeviceChange(value) {
-    if (value !== 'Responsive') {
+  useEffect(() => {
+    if (device !== 'Responsive') {
       setIsDeviceSelected(true);
-      const [width, height] = value.split('*');
+      const [width, height] = deviceData[device].split('*');
       setTempDeviceWidth(width);
       setTempDeviceHeight(height);
       setDeviceWidth(convertNumToPixel(width));
       setDeviceHeight(convertNumToPixel(height));
     } else {
       setIsDeviceSelected(false);
+    }
+  }, [device]);
+  function handleDeviceChange(value) {
+    if (value === 'Edit') {
+      // add or delete device
+    } else {
+      setDevice(value);
     }
   }
 
@@ -56,9 +63,9 @@ export default function PixelController({ deviceWidth, deviceHeight, setDeviceHe
       <div className={styles.delimiter} />
       <div className={styles.toolbar}>
         <Select
+          value={device}
           className={styles.selector}
           dataSource={deviceData}
-          defaultValue={defaultDevice}
           onChange={value => handleDeviceChange(value)}
         />
         <div className={styles.pixelsContainer}>

@@ -5,6 +5,7 @@ import { Context } from './context';
 import { BLANK_URL } from './config';
 import styles from './index.module.scss';
 import callService from '../../callService';
+import { Loading } from '@alifd/next';
 
 if (!window.__PREVIEW__DATA__) {
   window.__PREVIEW__DATA__ = {};
@@ -25,27 +26,32 @@ export default function () {
   // debugComment Reset To Black URL
   const [url, setUrl] = useState(window.__PREVIEW__DATA__.startUrl || BLANK_URL);
   const [useMobileDevice, setUseMobileDevice] = useState(false);
+  const [loading, setLoading] = useState(true);
   const previewerRef = useRef(null);
 
   useEffect(() => {
     async function initPreview() {
       const { useMobileDebug } = await callService('debug', 'getDebugConfig');
       setUseMobileDevice(useMobileDebug);
+      setLoading(false);
     }
     initPreview();
   }, []);
 
-  function reverseMobileDeviceConfig() {
-    setUseMobileDevice(!useMobileDevice);
-    console.log('Reversed. now useMobileDevice is ', !useMobileDevice);
-  }
-
   return (
     <Context.Provider value={{ url, setUrl, previewerRef }}>
-      <div className={styles.container} >
-        <Header reverseMobileDeviceConfig={reverseMobileDeviceConfig} />
-        <Previewer ref={previewerRef} useMobileDevice={useMobileDevice} />
-      </div>
+      {
+        loading ?
+          <Loading /> :
+          <div className={styles.container} >
+            <Header
+              setUseMobileDevice={setUseMobileDevice}
+              useMobileDevice={useMobileDevice}
+            />
+            <Previewer ref={previewerRef} useMobileDevice={useMobileDevice} />
+          </div>
+      }
+
     </Context.Provider>
   );
 }

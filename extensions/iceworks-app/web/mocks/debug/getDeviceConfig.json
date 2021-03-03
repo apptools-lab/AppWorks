@@ -1,12 +1,8 @@
 {
-    "device": "Responsive",
-    "deviceWidth" : "300px",
-    "deviceHeight" : "640px",
+    "defaultDevice": "Responsive",
+    "defaultResponsiveHeight" : "300px",
+    "defaultResponsiveWidth" : "640px",
     "defaultDeviceData" : [
-        {
-          "label": "Responsive",
-          "value": "Responsive"
-        },
         {
           "label": "iphone X",
           "value": "375*812"

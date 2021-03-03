@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
 import classNames from 'classnames';
 import PageSelect from './PageSelect';
@@ -17,13 +17,17 @@ const PHONE_NODE_QUERY = 'wh_ttid=@phone';
 
 const history = new UrlHistory();
 
-export default function ({ reverseMobileDeviceConfig }) {
+export default function ({ setUseMobileDevice, useMobileDevice }) {
   const { url, setUrl, previewerRef } = useContext(Context);
-
+  const mobileDeviceUrl = useRef('');
+  const normalDeviceUrl = useRef('');
   const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
-    history.push(url);
+    setDeviceUrls(url);
+    /* QQQ */
+    console.log('init mobile device Config', useMobileDevice);
+    history.push(useMobileDevice ? mobileDeviceUrl.current : normalDeviceUrl.current);
   }, []);
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
@@ -32,10 +36,22 @@ export default function ({ reverseMobileDeviceConfig }) {
       target = `https://${newUrl}`;
     }
     setUrl(target);
+    setDeviceUrls(target);
     setInputUrl(target);
     if (!fromHistory) {
       history.push(target);
     }
+  };
+
+  const setDeviceUrls = (target) => {
+    if (new RegExp(PHONE_NODE_QUERY).test(target)) {
+      mobileDeviceUrl.current = target;
+      normalDeviceUrl.current = target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
+    } else {
+      normalDeviceUrl.current = target;
+      mobileDeviceUrl.current = `${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
+    }
+    console.log('creating urls', mobileDeviceUrl.current, normalDeviceUrl.current);
   };
 
   const handleEnter = (e) => {
@@ -43,14 +59,8 @@ export default function ({ reverseMobileDeviceConfig }) {
   };
 
   const handlePhoneIconClick = () => {
-    let newUrl = '';
-    if (new RegExp(PHONE_NODE_QUERY).test(url)) {
-      newUrl = url.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
-    } else {
-      newUrl = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
-    }
-    setNewUrl(newUrl);
-    reverseMobileDeviceConfig();
+    setNewUrl(useMobileDevice ? normalDeviceUrl.current : mobileDeviceUrl.current);
+    setUseMobileDevice(!useMobileDevice);
   };
 
   const getCacheUrl = (delta: number) => {
