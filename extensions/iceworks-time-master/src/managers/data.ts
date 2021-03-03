@@ -9,6 +9,7 @@ import { appendKeystrokesPayload, appendUsageTimePayload } from '../utils/sender
 import logger from '../utils/logger';
 import { delay } from '../utils/common';
 import { refreshViews } from '../views';
+import { getIsProcessingData, setIsProcessingData } from './processing';
 
 async function saveDataToDisk(data: KeystrokeStats|UsageStats) {
   const { project } = data;
@@ -29,17 +30,16 @@ async function appendDataToPayload(data: KeystrokeStats|UsageStats) {
     await appendUsageTimePayload(data);
 }
 
-// TODO async logic
-let isProcessing = false;
 export async function processData(data: KeystrokeStats|UsageStats) {
-  logger.info('[data][processData] run, isProcessing:', isProcessing);
-  if (!isProcessing) {
-    isProcessing = true;
-    await checkMidnight();
+  const isProcessingData = getIsProcessingData();
+  logger.info('[data][processData] run, isProcessingData:', isProcessingData);
+  if (!isProcessingData) {
+    setIsProcessingData(true);
     try {
+      await checkMidnight();
       await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
     } finally {
-      isProcessing = false;
+      setIsProcessingData(false);
     }
   } else {
     logger.info('[data][processData] delay');

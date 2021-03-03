@@ -1,4 +1,4 @@
-import { ExtensionContext, commands } from 'vscode';
+import { ExtensionContext, commands, window, WindowState } from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
@@ -8,6 +8,7 @@ import { generateProjectSummaryReport, generateUserSummaryReport } from './manag
 import logger from './utils/logger';
 import recorder from './utils/recorder';
 import { init as initViews } from './views';
+import { sendPayload } from './utils/sender';
 
 const keystrokeStatsRecorder = getKeystrokeStats();
 const usageStatsRecorder = getUsageStatsRecorder();
@@ -57,6 +58,18 @@ export async function activate(context: ExtensionContext) {
   });
   usageStatsRecorder.activate().catch((e) => {
     logger.error('[TimeMaster][extension] activate usageStatsRecorder got error:', e);
+  });
+
+  /**
+   * Should add event handle after recorders activated
+   * Because recorder will append playload for sender
+   */
+  window.onDidChangeWindowState((windowState: WindowState) => {
+    if (!windowState.focused) {
+      sendPayload().catch((e) => {
+        logger.error('[TimeMaster][extension] sendPayload got error:', e);
+      });
+    }
   });
 }
 

@@ -10,6 +10,8 @@ import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
+import { getIsProcessingData } from '../managers/processing';
+import { delay } from './common';
 
 // eslint-disable-next-line
 import forIn = require('lodash.forin');
@@ -112,8 +114,9 @@ export async function appendUsageTimePayload(usageStats: UsageStats) {
 
 let isSending = false;
 export async function sendPayload() {
-  logger.info('[sender][sendPayload] run, isSending:', isSending);
-  if (!isSending) {
+  const isProcessingData = getIsProcessingData();
+  logger.info(`[sender][sendPayload] run, isSending(${isSending}), isProcessingData(${isProcessingData})`);
+  if (!isSending && !isProcessingData) {
     isSending = true;
     const isSendable = await checkIsSendable();
     const isSendNow = checkIsSendNow();
@@ -130,6 +133,9 @@ export async function sendPayload() {
     } finally {
       isSending = false;
     }
+  } else {
+    await delay(3000);
+    await sendPayload();
   }
 }
 
@@ -151,22 +157,22 @@ function isResponseOk(response) {
 }
 
 async function sendBulkCreate(type, playloadData, extra) {
-  logger.info(`[sender][sendBulkCreate] run, ${type}'s playloadData: ${playloadData.length}`);
+  logger.info(`[sender][sendBulkCreate] ${type} run, playloadData: ${playloadData.length}`);
   try {
     const bulkCreateResponse = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
       ...record,
       ...extra,
     })));
 
-    logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText})`);
+    logger.info(`[sender][sendBulkCreate] ${type} gotResponse, info: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText})`);
     if (!isResponseOk(bulkCreateResponse)) {
-      logger.info(`[sender][sendBulkCreate] data: ${bulkCreateResponse.data}`);
+      logger.info(`[sender][sendBulkCreate] ${type} gotResponse, data: ${bulkCreateResponse.data}`);
       throw new Error(bulkCreateResponse.data.message);
     }
   } catch (e) {
     // if got error, write back the data and resend it in the next cycle
     await appendPayloadData(type, playloadData);
-    logger.error('[sender][sendBulkCreate] got error:', e);
+    logger.error(`[sender][sendBulkCreate] ${type} gotError, error:`, e);
     throw e;
   }
 }
