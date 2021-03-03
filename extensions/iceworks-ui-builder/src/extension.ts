@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
+import { ICEWORKS_ICON_PATH } from '@iceworks/constant';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import i18n from './i18n';
@@ -42,6 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
     </script>
     `;
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentgenerator', true, cdnUrl, extraHtml);
+    webviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(

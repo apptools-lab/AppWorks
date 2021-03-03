@@ -6,7 +6,7 @@
 - fix: preview frame mobile mode switch
 - feat: preview frame add page select
 - feat: auto open preview frame when `npm run start` in O2
-- chore: not ignore packages (`prettier` and `@iceworks/code-generator`) when packaging extension
+- chore: add icon for WebviewPanel
 
 ## 0.8.1
 
