@@ -7,43 +7,17 @@ import styles from './index.module.scss';
 import MobileDeviceToolbar from '../MobileDeviceToolbar';
 
 const REFRESH_TIMEOUT = 200;
-const RESPONSIVE = 'Responsive';
-
-const responsiveItem = {
-  label: RESPONSIVE,
-  value: RESPONSIVE,
-};
-
-const editItem = {
-  label: 'Edit',
-  value: 'Edit',
-};
 
 function Previewer({ useMobileDevice }, ref) {
   const { url } = useContext(Context);
-
   const frameRef = useRef(null);
-  const isResponsiveDataSaved = useRef(false);
   const loadingPercentRef = useRef(null);
-  const [device, setDevice] = useState(RESPONSIVE);
-  const [deviceWidth, setDeviceWidth] = useState('100%');
-  const [deviceHeight, setDeviceHeight] = useState('100%');
-  const [loadingDevice, setLoadingDevice] = useState(true);
-  const [deviceData, setDeviceData] = useState([]);
-
+  const [iframeWidth, setIframeWidth] = useState('100%');
+  const [iframeHeight, setIframeHeight] = useState('100%');
 
   const startLoading = async () => {
     if (url !== BLANK_URL) {
       loadingPercentRef.current.start();
-      if (useMobileDevice) {
-        const { defaultDevice, defaultResponsiveHeight, defaultResponsiveWidth, defaultDeviceData }
-        = await callService('debug', 'getDeviceConfig');
-        setDevice(defaultDevice);
-        setDeviceWidth(defaultResponsiveWidth);
-        setDeviceHeight(defaultResponsiveHeight);
-        setDeviceData([responsiveItem, ...defaultDeviceData, editItem]);
-        setLoadingDevice(false);
-      }
     }
   };
 
@@ -59,28 +33,16 @@ function Previewer({ useMobileDevice }, ref) {
   useEffect(() => {
     async function switchDebugModel() {
       if (!useMobileDevice) {
-        callService('debug', 'setDevice', { device });
-        console.log('save Device');
-        setDeviceHeight('100%');
-        setDeviceWidth('100%');
+        setIframeHeight('100%');
+        setIframeWidth('100%');
       } else {
         const { defaultResponsiveHeight, defaultResponsiveWidth } = await callService('debug', 'getDeviceConfig');
-        setDeviceWidth(defaultResponsiveWidth);
-        setDeviceHeight(defaultResponsiveHeight);
+        setIframeWidth(`${defaultResponsiveWidth}px`);
+        setIframeHeight(`${defaultResponsiveHeight}px`);
       }
     }
-    console.log('deviceChanged, mobileDevice:', useMobileDevice);
     switchDebugModel();
   }, [useMobileDevice]);
-
-  useEffect(() => {
-    if (useMobileDevice && device === RESPONSIVE) {
-      isResponsiveDataSaved.current = false;
-    } else if ((!useMobileDevice && device === RESPONSIVE) || (!isResponsiveDataSaved.current && device !== RESPONSIVE)) {
-      callService('debug', 'setResponsiveData', { deviceWidth, deviceHeight });
-      isResponsiveDataSaved.current = true;
-    }
-  }, [device, useMobileDevice]);
 
   useImperativeHandle(ref, () => ({
     getFrameRef: () => {
@@ -103,19 +65,20 @@ function Previewer({ useMobileDevice }, ref) {
   return (
     <div className={styles.container}>
       <LoadingPercent ref={loadingPercentRef} />
-      { !loadingDevice && useMobileDevice ?
-        <MobileDeviceToolbar
-          device={device}
-          setDevice={setDevice}
-          deviceHeight={deviceHeight}
-          deviceWidth={deviceWidth}
-          setDeviceHeight={setDeviceHeight}
-          setDeviceWidth={setDeviceWidth}
-          deviceData={deviceData}
+      <MobileDeviceToolbar
+        deviceHeight={iframeHeight}
+        deviceWidth={iframeWidth}
+        setDeviceHeight={setIframeHeight}
+        setDeviceWidth={setIframeWidth}
+        useMobileDevice={useMobileDevice}
+      />
+      <div className={styles.frameContainer}>
+        <iframe
+          className={styles.frame}
+          style={{ height: iframeHeight, width: iframeWidth, margin: 'auto' }}
+          ref={frameRef}
+          src={url}
         />
-        : null}
-      <div style={{ height: deviceHeight, width: deviceWidth, margin: 'auto' }}>
-        <iframe className={styles.frame} ref={frameRef} src={url} />
       </div>
     </div>
   );
