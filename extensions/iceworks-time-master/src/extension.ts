@@ -1,6 +1,5 @@
 import { ExtensionContext, commands } from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
-import { createTimerTreeView, TimerProvider, createTimerStatusBar, autoSetEnableViewsConfig } from './views';
 import { openFileInEditor } from './utils/common';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
 import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
@@ -8,25 +7,18 @@ import { activate as activateWalkClock, deactivate as deactivateWalkClock } from
 import { generateProjectSummaryReport, generateUserSummaryReport } from './managers/data';
 import logger from './utils/logger';
 import recorder from './utils/recorder';
+import { init as initViews } from './views';
 
 const keystrokeStatsRecorder = getKeystrokeStats();
 const usageStatsRecorder = getUsageStatsRecorder();
 
 export async function activate(context: ExtensionContext) {
-  const { subscriptions, globalState } = context;
+  const { subscriptions } = context;
 
   console.log('Congratulations, your extension "iceworks-time-master" is now active!');
   recorder.recordActivate();
 
-  autoSetEnableViewsConfig(globalState);
-
-  // create views
-  const timerProvider = new TimerProvider(context);
-  const timerTreeView = createTimerTreeView(timerProvider);
-  timerProvider.bindView(timerTreeView);
-
-  const timerStatusBar = await createTimerStatusBar();
-  timerStatusBar.activate();
+  await initViews(context);
 
   subscriptions.push(
     commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
@@ -35,20 +27,6 @@ export async function activate(context: ExtensionContext) {
       recorder.record({
         module: 'command',
         action: 'openFileInEditor',
-      });
-    }),
-    commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
-      timerProvider.refresh();
-    }),
-    commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
-      timerStatusBar.refresh();
-    }),
-    commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
-      timerProvider.revealTreeView();
-      recordDAU();
-      recorder.record({
-        module: 'command',
-        action: 'displayTimerTree',
       });
     }),
     commands.registerCommand('iceworks-time-master.generateProjectSummaryReport', () => {

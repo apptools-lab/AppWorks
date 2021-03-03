@@ -31,7 +31,7 @@ interface UserInfo {
   userId: string;
 }
 
-export interface KeystrokesPayload extends
+interface KeystrokesPayload extends
   ProjectParams,
   EditorInfo,
   ExtensionInfo,
@@ -40,7 +40,7 @@ export interface KeystrokesPayload extends
   Omit<FileChangeInfo, keyof FileEventInfo> {
 }
 
-export interface UsagePayload extends
+interface UsagePayload extends
   ProjectParams,
   EditorInfo,
   ExtensionInfo,
@@ -139,7 +139,7 @@ async function send(api: string, data: any) {
   return response;
 }
 
-export function isResponseOk(response) {
+function isResponseOk(response) {
   return response.status === 200 && response.data && response.data.success;
 }
 

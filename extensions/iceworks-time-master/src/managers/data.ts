@@ -3,11 +3,12 @@ import { KeystrokeStats, updateFilesSummary as updateFilesSummaryByKeystrokeStat
 import { UsageStats, updateFilesSummary as updateFilesSummaryByUsageStats } from '../recorders/usageStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
-import { checkMidnight, refreshViews } from './walkClock';
+import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
 import { appendKeystrokesPayload, appendUsageTimePayload } from '../utils/sender';
 import logger from '../utils/logger';
 import { delay } from '../utils/common';
+import { refreshViews } from '../views';
 
 async function saveDataToDisk(data: KeystrokeStats|UsageStats) {
   const { project } = data;

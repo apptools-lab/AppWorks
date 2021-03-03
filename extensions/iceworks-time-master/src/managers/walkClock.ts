@@ -1,4 +1,3 @@
-import { commands, window, WindowState } from 'vscode';
 import { setNowDay, checkIsNewDay } from '../utils/time';
 import { sendPayload, checkPayloadIsLimited } from '../utils/sender';
 import { checkStorageDaysIsLimited } from '../utils/storage';
@@ -39,12 +38,6 @@ export async function activate() {
     });
   }, sendPayloadDurationMins);
 
-  window.onDidChangeWindowState((windowState: WindowState) => {
-    if (windowState.focused) {
-      refreshViews();
-    }
-  });
-
   await checkMidnight();
   await sendPayload();
 }
@@ -59,10 +52,4 @@ export async function deactivate() {
     clearInterval(sendPayloadTimer);
   }
   await sendPayload(true);
-}
-
-export function refreshViews() {
-  logger.debug('[walkClock][refreshViews] run');
-  commands.executeCommand('iceworks-time-master.refreshTimerTree');
-  commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
 }
