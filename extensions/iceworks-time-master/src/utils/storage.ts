@@ -29,15 +29,6 @@ export function getStorageDaysPath() {
   return storageDaysPath;
 }
 
-export function getStoragePayloadsPath() {
-  const storagePath = getStoragePath();
-  const storagePayloadsPath = path.join(storagePath, 'payloads');
-  if (!fse.existsSync(storagePayloadsPath)) {
-    mkdirp.sync(storagePayloadsPath);
-  }
-  return storagePayloadsPath;
-}
-
 export function getStorageReportsPath() {
   const storagePath = getStoragePath();
   const storagePayloadsPath = path.join(storagePath, 'reports');
@@ -82,7 +73,10 @@ export async function checkStorageDaysIsLimited() {
   if (isExcess) {
     const storageDaysPath = getStorageDaysPath();
     await Promise.all(storageDaysDirs.splice(0, excess).map(async (dayDir) => {
-      await fse.remove(path.join(storageDaysPath, dayDir));
+      const dayPath = path.join(storageDaysPath, dayDir);
+      if (await fse.pathExists(dayPath)) {
+        await fse.remove(dayPath);
+      }
     }));
   }
 }
