@@ -1,0 +1,19 @@
+{
+    "device": "Responsive",
+    "deviceWidth" : "300px",
+    "deviceHeight" : "640px",
+    "defaultDeviceData" : [
+        {
+          "label": "Responsive",
+          "value": "Responsive"
+        },
+        {
+          "label": "iphone X",
+          "value": "375*812"
+        },
+        {
+          "label": "Galaxy S5",
+          "value": "360*640"
+        }
+      ]
+}

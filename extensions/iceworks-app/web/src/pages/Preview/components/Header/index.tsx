@@ -17,7 +17,7 @@ const PHONE_NODE_QUERY = 'wh_ttid=@phone';
 
 const history = new UrlHistory();
 
-export default function () {
+export default function ({ reverseMobileDeviceConfig }) {
   const { url, setUrl, previewerRef } = useContext(Context);
 
   const [inputUrl, setInputUrl] = useState(url);
@@ -50,6 +50,7 @@ export default function () {
       newUrl = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
     }
     setNewUrl(newUrl);
+    reverseMobileDeviceConfig();
   };
 
   const getCacheUrl = (delta: number) => {

@@ -15,4 +15,10 @@ export default {
       return report;
     },
   },
+  debug: {
+    async getDebugConfig() {
+      const isDebugInMobileDevice = await common.getDataFromSettingJson('debugInMobileDevice', false);
+      return isDebugInMobileDevice;
+    },
+  },
 };

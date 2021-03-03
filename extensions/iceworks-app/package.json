@@ -307,6 +307,16 @@
           "type": "boolean",
           "default": true,
           "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
+        },
+        "iceworks.debugInMobileDevice": {
+          "type": "boolean",
+          "default": false,
+          "description": "%iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description%"
+        },
+        "iceworks.mobileDeviceConfig": {
+          "type": "string",
+          "default": "375x812",
+          "description": "%iceworksApp.configuration.properties.iceworks.mobileDeviceResolution.description%"
         }
       }
     }

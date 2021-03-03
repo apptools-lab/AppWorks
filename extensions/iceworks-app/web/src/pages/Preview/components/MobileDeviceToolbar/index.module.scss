@@ -1,0 +1,45 @@
+.container {
+  height: 40px;
+  background: #35363a;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  // padding: 0 30% 0 30%;
+}
+
+.delimiter {
+  height: 2px;
+  background: #050505;
+  width: 100%;
+}
+
+.toolbar {
+  width: 350px;
+  display: flex;
+}
+
+.pixelsContainer {
+  margin: auto;
+}
+
+.selector {
+  margin: auto;
+  background: rgba(0,0,0,0%);
+}
+
+.icon {
+  margin: auto;
+}
+
+.pixelsInput {
+  margin: 0 20px 0 20px;
+  border: 0 ;
+  background: rgba(0,0,0,0%);
+  width: 50px;
+  color: white;
+  outline: none;
+}
+
+.pixelsContainer > input :focus {
+  background: rgba(0,0,0,0%);
+}
