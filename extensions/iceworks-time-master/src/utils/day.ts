@@ -2,7 +2,7 @@ import configure from '@iceworks/configure';
 import * as moment from 'moment';
 
 const DAY_FORMAT = 'YYYY-MM-DD';
-const CURRENT_DAY_STORAGE_KEY = 'currentDay';
+const CURRENT_DAY_STORAGE_KEY = 'timeMasterCurrentDay';
 
 export function getNowDay() {
   let currentDay = configure.get(CURRENT_DAY_STORAGE_KEY);

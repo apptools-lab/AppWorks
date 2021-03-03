@@ -109,17 +109,15 @@ export async function appendUsageTimePayload(usageStats: UsageStats) {
   await appendPayloadData(USAGES_RECORD, playload);
 }
 
-export async function sendPayload(force?: boolean) {
-  logger.info('[sender][sendPayload] run, force:', force);
+export async function sendPayload() {
+  logger.info('[sender][sendPayload] run');
   const isSendable = await checkIsSendable();
   const isSendNow = checkIsSendNow();
   await Promise.all([KEYSTROKES_RECORD, USAGES_RECORD].map(async (TYPE) => {
     logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
     if (isSendable) {
       logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
-      if (isSendNow || force) {
-        await sendPayloadData(TYPE);
-      }
+      await sendPayloadData(TYPE);
     } else {
       await clearPayloadData(TYPE);
     }
