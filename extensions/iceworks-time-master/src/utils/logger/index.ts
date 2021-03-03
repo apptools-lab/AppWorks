@@ -45,9 +45,9 @@ async function getLogDaysDirs() {
     const fileIsExists = await fse.pathExists(filePath);
 
     // TODO more rigorous
-    return fileIsExists ?
-      ((await fse.stat(filePath)).isDirectory() ? fileName : undefined) :
-      undefined;
+    if (fileIsExists) {
+      return (await fse.stat(filePath)).isDirectory() ? fileName : undefined;
+    }
   }))).filter((isDirectory) => isDirectory));
   return logDaysDirs;
 }

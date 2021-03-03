@@ -73,9 +73,9 @@ export async function getStorageDaysDirs() {
     const fileIsExists = await fse.pathExists(filePath);
 
     // TODO more rigorous
-    return fileIsExists ?
-      ((await fse.stat(filePath)).isDirectory() ? fileName : undefined) :
-      undefined;
+    if (fileIsExists) {
+      return (await fse.stat(filePath)).isDirectory() ? fileName : undefined;
+    }
   }))).filter((isDirectory) => isDirectory));
   return dayDirPaths;
 }
