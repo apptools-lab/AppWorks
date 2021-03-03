@@ -134,6 +134,7 @@ export async function sendPayload() {
       isSending = false;
     }
   } else {
+    logger.info('[sender][sendPayload] delay');
     await delay(3000);
     await sendPayload();
   }

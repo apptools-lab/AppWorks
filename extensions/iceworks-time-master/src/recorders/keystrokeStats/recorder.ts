@@ -22,7 +22,7 @@ export class KeystrokeStatsRecorder {
   }
 
   public async deactivate() {
-    await this.sendData();
+    await this.processData();
   }
 
   /**
@@ -32,14 +32,14 @@ export class KeystrokeStatsRecorder {
    * - The time interval between keystrokes, control by "recordKeystrokeDurationMins"
    * - extension deactivate
    */
-  private async sendData() {
+  private async processData() {
     for (const projectPath in keystrokeStatsMap) {
       if (Object.prototype.hasOwnProperty.call(keystrokeStatsMap, projectPath)) {
         // clear other sending instructions and prevent multiple sending
         if (this.keystrokeStatsTimeouts[projectPath]) {
           clearTimeout(this.keystrokeStatsTimeouts[projectPath]);
         }
-        await this.sendKeystrokeStats(projectPath);
+        await this.processKeystrokeStats(projectPath);
       }
     }
 
@@ -141,7 +141,7 @@ export class KeystrokeStatsRecorder {
     const { focused } = windowState;
     logger.debug('[KeystrokeStatsRecorder][onDidChangeWindowState][focused]', focused);
     if (!focused) {
-      await this.sendData();
+      await this.processData();
     }
   }
 
@@ -229,10 +229,10 @@ export class KeystrokeStatsRecorder {
     };
   }
 
-  private async sendKeystrokeStats(projectPath: string) {
+  private async processKeystrokeStats(projectPath: string) {
     const keystrokeStats = keystrokeStatsMap[projectPath];
     if (keystrokeStats) {
-      await keystrokeStats.sendData();
+      await keystrokeStats.processData();
       delete keystrokeStatsMap[projectPath];
     }
   }
@@ -247,7 +247,7 @@ export class KeystrokeStatsRecorder {
       keystrokeStats.activate();
       this.keystrokeStatsTimeouts[projectPath] = setTimeout(() => {
         logger.debug('[KeystrokeStatsRecorder][createKeystrokeStats][keystrokeStatsTimeouts] run');
-        this.sendKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
+        this.processKeystrokeStats(projectPath).catch(() => { /* ignore error */ });
       }, recordKeystrokeDurationMins);
     }
 

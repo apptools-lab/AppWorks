@@ -113,7 +113,7 @@ export class UsageStats {
     this.end = time || getNowUTCSec();
   }
 
-  async sendData() {
+  async processData() {
     const isHasData = this.hasData();
     if (isHasData) {
       this.deactivate();
