@@ -4,6 +4,7 @@ import * as fsExtra from 'fs-extra';
 import generateBuildConfig from './utils/generateBuildConfig';
 import generateLayoutConfig from './utils/generateLayoutConfig';
 import generateMenuConfig from './utils/generateMenuConfig';
+import formatFilename from './utils/formatFilename';
 
 const Generator = require('ice-scaffold-generator');
 
@@ -58,6 +59,8 @@ export async function generate(scaffoldField) {
     useLocalBlocks: false,
   });
   await scaffoldGenerator.init();
+
+  formatFilename(projectDir);
 
   return projectDir;
 }

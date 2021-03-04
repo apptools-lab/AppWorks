@@ -5,4 +5,4 @@
 web/**
 node_modules
 !node_modules/prettier
-!node_modules/@iceworks/code-generator
+

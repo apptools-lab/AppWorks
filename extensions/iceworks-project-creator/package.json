@@ -72,12 +72,12 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.2.0",
+    "@iceworks/common-service": "beta",
     "@iceworks/constant": "^0.1.5",
     "@iceworks/i18n": "^0.1.0",
-    "@iceworks/material-engine": "^0.2.0",
+    "@iceworks/material-engine": "beta",
     "@iceworks/pegasus-service": "^0.1.2",
-    "@iceworks/project-service": "^0.2.0",
+    "@iceworks/project-service": "beta",
     "@iceworks/recorder": "^0.1.6",
     "@iceworks/user-service": "^0.1.0",
     "@iceworks/vscode-webview": "^0.1.1",
