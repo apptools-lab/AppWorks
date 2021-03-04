@@ -3,7 +3,7 @@ const { Logger, ConsoleTransport } = require('egg-logger');
 const { storagePath } = require('@iceworks/storage');
 const FileTransport = require('./fileTransport');
 
-function getLogger(namespace) {
+function createLogger(namespace) {
   const logger = new Logger();
   logger.set('file', new FileTransport({
     file: path.join(storagePath, 'logs', `${namespace}.log`),
@@ -16,4 +16,4 @@ function getLogger(namespace) {
   return logger;
 }
 
-exports.default = getLogger;
+exports.default = createLogger;
