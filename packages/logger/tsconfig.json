@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.settings.json",
+  "compilerOptions": {
+    "target": "es6",
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "lib",
+    "allowJs": true
+  },
+  "exclude": ["src/__tests__", "lib"]
+}

@@ -26,7 +26,7 @@ export class UsageStatsRecorder {
 
     this.processUsageStatsTimmer = setInterval(() => {
       if (window.state.focused) {
-        this.sendData().catch((e) => {
+        this.processData().catch((e) => {
           logger.error('[UsageStatsRecorder][activate][setInterval]got error:', e);
         });
       }
@@ -37,7 +37,7 @@ export class UsageStatsRecorder {
     if (this.processUsageStatsTimmer) {
       clearInterval(this.processUsageStatsTimmer);
     }
-    await this.sendData();
+    await this.processData();
   }
 
   /**
@@ -47,7 +47,7 @@ export class UsageStatsRecorder {
    * - A certain time interval, control by "processUsageStatsDurationMins"
    * - extension deactivate
    */
-  private async sendData() {
+  private async processData() {
     const usageStatsMapKeys = Object.keys(usageStatsMap);
     logger.debug('[UsageStatsRecorder][endRecord][usageStatsMapKeys]', usageStatsMapKeys);
 
@@ -55,7 +55,7 @@ export class UsageStatsRecorder {
     for (const projectPath in usageStatsMap) {
       if (Object.prototype.hasOwnProperty.call(usageStatsMap, projectPath)) {
         const usageStats = usageStatsMap[projectPath];
-        await usageStats.sendData();
+        await usageStats.processData();
         delete usageStatsMap[projectPath];
       }
     }
@@ -90,7 +90,7 @@ export class UsageStatsRecorder {
   }
 
   private async endRecord() {
-    await this.sendData();
+    await this.processData();
   }
 
   private async onDidChangeWindowState(windowState: WindowState) {

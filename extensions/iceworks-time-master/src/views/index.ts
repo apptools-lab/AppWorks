@@ -1,9 +1,11 @@
-import { extensions, Memento, workspace, ConfigurationChangeEvent } from 'vscode';
+import { commands, extensions, Memento, workspace, ConfigurationChangeEvent, window, WindowState } from 'vscode';
 import { checkIsO2, saveDataToSettingJson } from '@iceworks/common-service';
+import { recordDAU } from '@iceworks/recorder';
 import { CONFIG_KEY_SECTION_ENABLE_VIEW, CONFIG_KEY_SECTION_ENABLE_STATUS_BAR, CONFIG_KEY_ICEWORKS_ENABLE_VIEW, CONFIG_KEY_ICEWORKS_ENABLE_STATUS_BAR } from '../constants';
-
-export * from './timerProvider';
-export * from './timerStatusBar';
+import logger from '../utils/logger';
+import { createTimerTreeView, TimerProvider } from './timerProvider';
+import { createTimerStatusBar } from './timerStatusBar';
+import recorder from '../utils/recorder';
 
 function checkIsDisableViews(): boolean {
   const isO2 = checkIsO2();
@@ -14,7 +16,7 @@ function checkIsDisableViews(): boolean {
 
 const didManualSetEnableViewStateKey = 'iceworks.timeMaster.enableView';
 const didManualSetEnableStatusBarStateKey = 'iceworks.timeMaster.enableStatusBar';
-export function autoSetEnableViewsConfig(globalState: Memento) {
+function autoSetEnableViewsConfig(globalState: Memento) {
   const didManualSetEnableView = globalState.get(didManualSetEnableViewStateKey);
   if (!didManualSetEnableView) {
     const isDisableViews = checkIsDisableViews();
@@ -36,6 +38,48 @@ export function autoSetEnableViewsConfig(globalState: Memento) {
     }
     if (!didManualSetEnableStatusBar && event.affectsConfiguration(CONFIG_KEY_ICEWORKS_ENABLE_STATUS_BAR)) {
       globalState.update(didManualSetEnableStatusBarStateKey, true);
+    }
+  });
+}
+
+export function refreshViews() {
+  logger.debug('[walkClock][refreshViews] run');
+  commands.executeCommand('iceworks-time-master.refreshTimerTree');
+  commands.executeCommand('iceworks-time-master.refreshTimerStatusBar');
+}
+
+export async function init(context) {
+  const { subscriptions, globalState } = context;
+  autoSetEnableViewsConfig(globalState);
+
+  // create views
+  const timerProvider = new TimerProvider(context);
+  const timerTreeView = createTimerTreeView(timerProvider);
+  timerProvider.bindView(timerTreeView);
+
+  const timerStatusBar = await createTimerStatusBar();
+  timerStatusBar.activate();
+
+  subscriptions.push(
+    commands.registerCommand('iceworks-time-master.refreshTimerTree', () => {
+      timerProvider.refresh();
+    }),
+    commands.registerCommand('iceworks-time-master.refreshTimerStatusBar', () => {
+      timerStatusBar.refresh();
+    }),
+    commands.registerCommand('iceworks-time-master.displayTimerTree', () => {
+      timerProvider.revealTreeView();
+      recordDAU();
+      recorder.record({
+        module: 'command',
+        action: 'displayTimerTree',
+      });
+    }),
+  );
+
+  window.onDidChangeWindowState((windowState: WindowState) => {
+    if (windowState.focused) {
+      refreshViews();
     }
   });
 }

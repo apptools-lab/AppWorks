@@ -1,20 +1,21 @@
 {
-  "name": "@iceworks/storage",
-  "version": "0.2.1",
-  "description": "Storage for Iceworks",
+  "name": "@iceworks/logger",
+  "version": "0.1.0",
+  "description": "Logger for Iceworks",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "license": "MIT",
-  "dependencies": {
-    "fs-extra": "^9.0.1",
-    "mkdirp": "^1.0.4",
-    "user-home": "^2.0.0"
-  },
   "scripts": {
     "compile": "rm -rf lib && tsc -p ./tsconfig.json",
     "prepublishOnly": "npm run compile"
+  },
+  "dependencies": {
+    "@iceworks/storage": "^0.2.0",
+    "egg-logger": "^2.4.2",
+    "mkdirp": "^1.0.4",
+    "utility": "^1.15.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,24 +1,27 @@
 import { checkIsAliInternal } from '@iceworks/common-service';
 import { getUserInfo } from '@iceworks/user-service';
-import * as path from 'path';
 import axios from 'axios';
-import * as fse from 'fs-extra';
 import { ALI_DIP_PRO } from '@iceworks/constant';
 import { KeystrokeStats, FileChange } from '../recorders/keystrokeStats';
 import { FileChangeInfo, FileEventInfo, FileUsageInfo } from '../storages/file';
-import { getStoragePayloadsPath } from './storage';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
 import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
+import { getIsProcessingData } from '../managers/processing';
+import { delay } from './common';
 
 // eslint-disable-next-line
 import forIn = require('lodash.forin');
 
-const KEYSTROKES_RECORD = 'keystrokes';
-const USAGES_RECORD = 'usages';
+enum PlayloadType {
+  KEYSTROKES_RECORD = 'keystrokes',
+  USAGES_RECORD = 'usages',
+}
+
+type PlayloadData = UsagePayload[]|KeystrokesPayload[];
 
 const url = `${ALI_DIP_PRO}/api`;
 
@@ -31,7 +34,7 @@ interface UserInfo {
   userId: string;
 }
 
-export interface KeystrokesPayload extends
+interface KeystrokesPayload extends
   ProjectParams,
   EditorInfo,
   ExtensionInfo,
@@ -40,7 +43,7 @@ export interface KeystrokesPayload extends
   Omit<FileChangeInfo, keyof FileEventInfo> {
 }
 
-export interface UsagePayload extends
+interface UsagePayload extends
   ProjectParams,
   EditorInfo,
   ExtensionInfo,
@@ -100,30 +103,41 @@ Array<KeystrokesPayload|UsagePayload> {
 export async function appendKeystrokesPayload(keystrokeStats: KeystrokeStats) {
   const playload = transformDataToPayload(keystrokeStats);
   logger.info('[sender][appendKeystrokesPayload] playload length:', playload.length);
-  await appendPayloadData(KEYSTROKES_RECORD, playload);
+  await appendPayloadData(PlayloadType.KEYSTROKES_RECORD, playload);
 }
 
 export async function appendUsageTimePayload(usageStats: UsageStats) {
   const playload = transformDataToPayload(usageStats);
   logger.info('[sender][appendUsageTimePayload] playload length:', playload.length);
-  await appendPayloadData(USAGES_RECORD, playload);
+  await appendPayloadData(PlayloadType.USAGES_RECORD, playload);
 }
 
-export async function sendPayload(force?: boolean) {
-  logger.info('[sender][sendPayload] run, force:', force);
-  const isSendable = await checkIsSendable();
-  const isSendNow = checkIsSendNow();
-  await Promise.all([KEYSTROKES_RECORD, USAGES_RECORD].map(async (TYPE) => {
-    logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
-    if (isSendable) {
-      logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
-      if (isSendNow || force) {
-        await sendPayloadData(TYPE);
-      }
-    } else {
-      await clearPayloadData(TYPE);
+let isSending = false;
+export async function sendPayload() {
+  const isProcessingData = getIsProcessingData();
+  logger.info(`[sender][sendPayload] run, isSending(${isSending}), isProcessingData(${isProcessingData})`);
+  if (!isSending && !isProcessingData) {
+    isSending = true;
+    const isSendable = await checkIsSendable();
+    const isSendNow = checkIsSendNow();
+    try {
+      await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
+        logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
+        if (isSendable) {
+          logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
+          await sendPayloadData(TYPE);
+        } else {
+          await clearPayloadData(TYPE);
+        }
+      }));
+    } finally {
+      isSending = false;
     }
-  }));
+  } else {
+    logger.info('[sender][sendPayload] delay');
+    await delay(3000);
+    await sendPayload();
+  }
 }
 
 const timeout = ONE_SEC_MILLISECONDS * 5;
@@ -139,59 +153,39 @@ async function send(api: string, data: any) {
   return response;
 }
 
-export function isResponseOk(response) {
+function isResponseOk(response) {
   return response.status === 200 && response.data && response.data.success;
 }
 
-/**
- * If payload is too large, may be a large number of requests errors
- */
-export async function checkPayloadIsLimited() {
-  const playloadLimit = 1024 * 1024 * 10; // mb
-  await Promise.all([KEYSTROKES_RECORD, USAGES_RECORD].map(async (TYPE) => {
-    const file = getPayloadFile(TYPE);
-    const fileIsExists = await fse.pathExists(file);
-    if (fileIsExists) {
-      const { size } = await fse.stat(file);
-      if (size > playloadLimit) {
-        await clearPayloadData(TYPE);
-        logger.error('[sender][checkPayloadIsLimited]payload is limited, size: ', size);
-      }
-    }
-  }));
-}
-
 async function sendBulkCreate(type, playloadData, extra) {
-  logger.info(`[sender][sendBulkCreate] run, ${type}'s playloadData: ${playloadData.length}`);
+  logger.info(`[sender][sendBulkCreate] ${type} run, playloadData: ${playloadData.length}`);
   try {
     const bulkCreateResponse = await send(`/${type}/_bulkCreate`, playloadData.map((record: any) => ({
       ...record,
       ...extra,
     })));
 
+    logger.info(`[sender][sendBulkCreate] ${type} gotResponse, info: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText})`);
     if (!isResponseOk(bulkCreateResponse)) {
-      logger.info(`[sender][sendBulkCreate] response: status(${bulkCreateResponse.status}), statusText(${bulkCreateResponse.statusText}), data(${bulkCreateResponse.data})`);
+      logger.info(`[sender][sendBulkCreate] ${type} gotResponse, data: ${bulkCreateResponse.data}`);
       throw new Error(bulkCreateResponse.data.message);
     }
   } catch (e) {
     // if got error, write back the data and resend it in the next cycle
     await appendPayloadData(type, playloadData);
-    logger.error('[sender][sendBulkCreate] got error:', e);
+    logger.error(`[sender][sendBulkCreate] ${type} gotError, error:`, e);
     throw e;
   }
 }
 
-async function sendPayloadData(type: string) {
+async function sendPayloadData(type: PlayloadType) {
   // TODO get user info may fail
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
   logger.info(`[sender][sendPayloadData] run, ${type}'s playloadLength: ${playloadLength}`);
-  if (Array.isArray(playload) && playloadLength) {
-    // clear first to prevent duplicate sending when concurrent
-    await clearPayloadData(type);
-
+  if (playloadLength) {
     const editorInfo = getEditorInfo();
     const extensionInfo = getExtensionInfo();
     const systemInfo = await getSystemInfo();
@@ -216,32 +210,27 @@ async function sendPayloadData(type: string) {
   }
 }
 
-async function getPayloadData(type: string) {
-  const file = getPayloadFile(type);
-  let playload = [];
-  try {
-    playload = await fse.readJson(file);
-  } catch (e) {
-    // ignore error
-  }
-  return playload;
+const playloadData: any = {
+  [PlayloadType.KEYSTROKES_RECORD]: [],
+  [PlayloadType.USAGES_RECORD]: [],
+};
+async function getPayloadData(type: PlayloadType): Promise<PlayloadData> {
+  return playloadData[type].splice(0);
+}
+async function clearPayloadData(type: PlayloadType) {
+  playloadData[type] = [];
+}
+async function appendPayloadData(type: PlayloadType, data: PlayloadData) {
+  playloadData[type] = playloadData[type].concat(data);
 }
 
-async function clearPayloadData(type: string) {
-  await fse.remove(getPayloadFile(type));
-}
-
-async function savePayloadData(type: string, playload: UsagePayload[]|KeystrokesPayload[]) {
-  const file = getPayloadFile(type);
-  await fse.writeJson(file, playload);
-}
-
-async function appendPayloadData(type: string, data: UsagePayload[]|KeystrokesPayload[]) {
-  const playload = await getPayloadData(type);
-  const nextData = playload.concat(data);
-  await savePayloadData(type, nextData);
-}
-
-function getPayloadFile(type: string) {
-  return path.join(getStoragePayloadsPath(), `${type}.json`);
+/**
+ * If payload is too large, may be a large number of requests errors
+ */
+export async function checkPayloadIsLimited() {
+  await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
+    if (playloadData[TYPE].length > 1000) {
+      await clearPayloadData(TYPE);
+    }
+  }));
 }
