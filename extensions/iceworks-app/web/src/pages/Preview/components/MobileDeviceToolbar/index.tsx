@@ -2,6 +2,7 @@ import { Input, Select, Drawer } from '@alifd/next';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.scss';
 import callService from '../../../../callService';
+import MobileDeviceManager from '../MobileDeviceManager';
 
 const TEMP_WIDTH = 'tempWidth';
 const TEMP_HEIGHT = 'tempHeight';
@@ -15,6 +16,18 @@ const responsiveItem = {
   label: RESPONSIVE,
   value: RESPONSIVE,
 };
+
+const defaultDeviceData = [
+  {
+    label: 'iphone X',
+    value: '375*812',
+  },
+  {
+    label: 'Galaxy S5',
+    value: '360*640',
+  },
+];
+
 
 const editItem = {
   label: 'Edit',
@@ -39,8 +52,8 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
   const saveResponsiveData = useRef(true);
   const responsiveWidthCache = useRef(RESPONSIVE_DEFAULT_WIDTH);
   const responsiveHeightCache = useRef(RESPONSIVE_DEFAULT_HEIGHT);
-  const [inputDeviceWidth, setInputDeviceWidth] = useState(deviceWidth);
-  const [inputDeviceHeight, setInputDeviceHeight] = useState(deviceHeight);
+  const [inputDeviceWidth, setInputDeviceWidth] = useState(RESPONSIVE_DEFAULT_WIDTH);
+  const [inputDeviceHeight, setInputDeviceHeight] = useState(RESPONSIVE_DEFAULT_HEIGHT);
   const [isDeviceSelected, setIsDeviceSelected] = useState(false);
   const [device, setDevice] = useState(RESPONSIVE);
   const [deviceData, setDeviceData] = useState([]);
@@ -92,6 +105,11 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     setInputDeviceHeight(inputDeviceWidth);
   }
 
+  function setFullDeviceData(devices) {
+    setDeviceData([responsiveItem, ...defaultDeviceData, ...devices, editItem]);
+    callService('debug', 'setUserDevices', { devices });
+  }
+
   useEffect(() => {
     if ((!useMobileDevice && device === RESPONSIVE) || (useMobileDevice && device !== RESPONSIVE)) {
       saveResponsiveData.current = false;
@@ -106,21 +124,24 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
   }, [scrollingRatio, deviceWidth, deviceHeight, useMobileDevice]);
 
   useEffect(() => {
+    if (useMobileDevice) {
+      setDeviceConfig(inputDeviceWidth, inputDeviceHeight, resizable.current);
+    }
+  }, [useMobileDevice]);
+
+  useEffect(() => {
     async function loadMobileToolBar() {
-      if (useMobileDevice) {
-        const { defaultDevice, defaultDeviceData }
-        = await callService('debug', 'getDeviceConfig');
-        setDevice(defaultDevice);
-        setInputDeviceWidth(RESPONSIVE_DEFAULT_WIDTH);
-        setInputDeviceHeight(RESPONSIVE_DEFAULT_HEIGHT);
-        setDeviceConfig(
-          RESPONSIVE_DEFAULT_WIDTH,
-          RESPONSIVE_DEFAULT_HEIGHT,
-          resizable.current,
-        );
-        setDeviceData([responsiveItem, ...defaultDeviceData, editItem]);
-        setLoading(false);
-      }
+      const { userDevices } = await callService('debug', 'getUserDevices');
+      setDevice(RESPONSIVE);
+      setInputDeviceWidth(RESPONSIVE_DEFAULT_WIDTH);
+      setInputDeviceHeight(RESPONSIVE_DEFAULT_HEIGHT);
+      setDeviceConfig(
+        RESPONSIVE_DEFAULT_WIDTH,
+        RESPONSIVE_DEFAULT_HEIGHT,
+        resizable.current,
+      );
+      setFullDeviceData(userDevices);
+      setLoading(false);
     }
     loadMobileToolBar();
   }, []);
@@ -173,10 +194,12 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
               <Select
                 value={scrollingRatioItem.label}
                 dataSource={[scrollingRatioItem]}
+                className={styles.scroll}
               />
             </div>
-            <div onClick={handleReverseIconClick} >
-              <i className={styles.iconReverse} />
+
+            <div className={styles.iconReverseContainer}>
+              <i className={styles.iconReverse} onClick={handleReverseIconClick} />
             </div>
 
             <Drawer
@@ -184,7 +207,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
               placement={'right'}
               onClose={() => { setShowDeviceDrawer(false); }}
             >
-              Edit Devices Here
+              <MobileDeviceManager deviceData={deviceData.slice(1, -1)} setDeviceData={setFullDeviceData} />
             </Drawer>
           </div>
         </div> : <></>

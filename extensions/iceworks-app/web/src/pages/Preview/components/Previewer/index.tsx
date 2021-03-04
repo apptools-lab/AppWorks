@@ -89,7 +89,7 @@ function Previewer({ useMobileDevice }, ref) {
 
   const getIframeTranslateCSS = () => {
     const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;
-    console.log('gettin Iframe CSS ...', scalingRatio, offsetRatio);
+    console.log('getting Iframe CSS ...', scalingRatio, offsetRatio);
     return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
   };
 
@@ -103,13 +103,17 @@ function Previewer({ useMobileDevice }, ref) {
   }, []);
 
   useEffect(() => {
+    startLoading();
+  }, [url]);
+
+  useEffect(() => {
     console.log('Updating Data ... ==> ', useMobileDevice, iframeContainerWidth, iframeContainerHeight);
     async function switchDebugModel() {
       if (!useMobileDevice) {
         setIframeContainerHeight(FULL_SCREEN);
         setIframeContainerWidth(FULL_SCREEN);
-        setIframeContainerWidth(FULL_SCREEN);
-        setIframeContainerHeight(FULL_SCREEN);
+        setIframeWidth(FULL_SCREEN);
+        setIframeHeight(FULL_SCREEN);
       } else if (iframeContainerWidth !== FULL_SCREEN && iframeContainerHeight !== FULL_SCREEN) {
         setIframeWidth(
           convertNumToPixel(convertPixelToNum(iframeContainerWidth) / scalingRatio),
@@ -135,10 +139,6 @@ function Previewer({ useMobileDevice }, ref) {
       }, REFRESH_TIMEOUT);
     },
   }));
-
-  useEffect(() => {
-    startLoading();
-  }, [url]);
 
   return (
     <div className={styles.container}>

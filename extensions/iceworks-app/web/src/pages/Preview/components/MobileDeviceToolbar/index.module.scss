@@ -31,11 +31,15 @@
 .iconReverse {
   font-size: 18px;
   font-style: normal;
+  margin: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   &::before {
     content: "\e64d";
   }
+}
+.iconReverseContainer {
+  margin: auto;
 }
 
 .Reverse {
@@ -59,4 +63,8 @@
 .ratio {
   font-size: 5px;
   color: white;
+}
+
+.scroll {
+  width: 10px;
 }
