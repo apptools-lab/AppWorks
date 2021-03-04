@@ -1,41 +1,23 @@
 import { getDataFromSettingJson, saveDataToSettingJson } from '@iceworks/common-service';
-
-const defaultDeviceConfig = {
-  defaultDevice: 'Responsive',
-  defaultResponsiveHeight: '640',
-  defaultResponsiveWidth: '300',
-  defaultDeviceData: [
-    {
-      label: 'iphone X',
-      value: '375*812',
-    },
-    {
-      label: 'Galaxy S5',
-      value: '360*640',
-    },
-  ],
-};
+import { projectPath } from '@iceworks/project-service';
+import { getDevInfo } from '../utils/getDevServerStartInfo';
 
 const debugServices = {
   async getDebugConfig() {
-    const useMobileDebug = await getDataFromSettingJson('debugInMobileDevice', false);
-    return { useMobileDebug };
+    const debugConfig = await getDataFromSettingJson('debugConfig', 'auto');
+    console.log('debugConfig ===>', debugConfig);
+    return { debugConfig };
   },
-  async getDeviceConfig() {
-    const userDeviceConfig = await getDataFromSettingJson('userDebugConfig', false);
-    if (!userDeviceConfig) {
-      await saveDataToSettingJson('userDebugConfig', defaultDeviceConfig);
-      return defaultDeviceConfig;
-    } else {
-      return userDeviceConfig;
-    }
+  async getUserDevices() {
+    const userDevices = await getDataFromSettingJson('userDevices', []);
+    return { userDevices };
   },
-  async setDeviceConfig({ device }) {
+  async setUserDevices({ device }) {
     await saveDataToSettingJson('userDebugConfig.defaultDevice', device);
   },
-  async setResponsiveConfig({ width, height }) {
-    await saveDataToSettingJson('userDebugConfig.defaultResponsiveWidth', width);
-    await saveDataToSettingJson('userDebugConfig.defaultResponsiveHeight', height);
+  async autoSwitchDebugModel() {
+    const devInfo = getDevInfo(projectPath) || { framework: 'unkown' };
+    return devInfo.framework === 'icejs';
   },
 };
 

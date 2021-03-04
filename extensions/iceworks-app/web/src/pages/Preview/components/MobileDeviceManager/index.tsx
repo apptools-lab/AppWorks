@@ -1,32 +1,36 @@
 import { Button, List, Input } from '@alifd/next';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
-
-export default function MobileDeviceManager({ deviceData, setDeviceData }) {
+export default function MobileDeviceManager({ deviceData, setDeviceData, numberOfDefaultDevices }) {
   const [mobileDeviceData, setMobileDeviceData] = useState(deviceData);
-  const valueState = useRef([]);
+  const [valueState] = useState([]);
   function addMobileDevice() {
     setMobileDeviceData([...mobileDeviceData, { label: 'New Device', value: '', customizeDevice: true }]);
   }
 
   function handleNewDeviceNameChange(value, index) {
-    mobileDeviceData[index].label = value;
+    const tempData = [...mobileDeviceData];
+    tempData[index].label = value;
+    setMobileDeviceData(tempData);
   }
 
   function handleNewDeviceValueChange(value, index) {
-    mobileDeviceData[index].value = value;
-    if (!/d*\*d*/.test(value)) {
-      valueState.current[index] = 'error';
+    const tempData = [...mobileDeviceData];
+    tempData[index].value = value;
+    setMobileDeviceData(tempData);
+    if (/d*\*d*/.test(value)) {
+      valueState[index] = 'success';
+      setDeviceData(tempData.slice(numberOfDefaultDevices));
     } else {
-      valueState.current[index] = 'success';
+      valueState[index] = 'error';
     }
-    setDeviceData(mobileDeviceData);
   }
 
   function handleDeleteDevice(index) {
     const newMobileData = Array.prototype.concat(mobileDeviceData.slice(0, index), mobileDeviceData.slice(index + 1));
     setMobileDeviceData(newMobileData);
     setDeviceData(newMobileData);
+    valueState[index] = undefined;
   }
 
   return (
@@ -51,13 +55,15 @@ export default function MobileDeviceManager({ deviceData, setDeviceData }) {
               state={valueState[index]}
               onChange={value => handleNewDeviceValueChange(value, index)}
             />
-            <Button
-              disabled={!item.customizeDevice}
-              onClick={() => handleDeleteDevice(index)}
-            > Delete
-            </Button>
+            <div>
+              <Button
+                disabled={!item.customizeDevice}
+                onClick={() => handleDeleteDevice(index)}
+              > Delete
+              </Button>
+            </div>
           </List.Item>))
-                }
+        }
       </List>
     </div>
   );

@@ -21,13 +21,16 @@ const defaultDeviceData = [
   {
     label: 'iphone X',
     value: '375*812',
+    customizeDevice: false,
   },
   {
     label: 'Galaxy S5',
     value: '360*640',
+    customizeDevice: false,
   },
 ];
 
+const NUMBERS_OF_DEFAULT_DEVICES = defaultDeviceData.length;
 
 const editItem = {
   label: 'Edit',
@@ -80,6 +83,9 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
   async function handleDeviceChange(value, type, currentDeviceData) {
     const currentDevice = currentDeviceData.label;
     let [width, height] = value.split('*');
+    width = isNaN(width) || width === undefined ? RESPONSIVE_DEFAULT_WIDTH : width;
+    height = isNaN(width) || height === undefined ? RESPONSIVE_DEFAULT_HEIGHT : height;
+
     if (value === 'Edit') {
       setShowDeviceDrawer(true);
     } else {
@@ -207,7 +213,11 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
               placement={'right'}
               onClose={() => { setShowDeviceDrawer(false); }}
             >
-              <MobileDeviceManager deviceData={deviceData.slice(1, -1)} setDeviceData={setFullDeviceData} />
+              <MobileDeviceManager
+                deviceData={deviceData.slice(1, -1)}
+                setDeviceData={setFullDeviceData}
+                numberOfDefaultDevices={NUMBERS_OF_DEFAULT_DEVICES}
+              />
             </Drawer>
           </div>
         </div> : <></>

@@ -29,17 +29,13 @@ export default function () {
   const [loading, setLoading] = useState(true);
   const previewerRef = useRef(null);
 
-  function autoSwitchDebugModel() {
-    return false;
-  }
-
   useEffect(() => {
     async function initPreview() {
       console.log('init Preview... ===>');
       const { debugConfig } = await callService('debug', 'getDebugConfig');
       console.log('debugConfig', debugConfig);
       switch (debugConfig) {
-        case 'auto': setUseMobileDevice(autoSwitchDebugModel()); break;
+        case 'auto': setUseMobileDevice(await callService('debug', 'autoSwitchDebugModel')); break;
         case 'mobile': setUseMobileDevice(true); break;
         case 'PC': setUseMobileDevice(false); break;
       }

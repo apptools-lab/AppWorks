@@ -308,15 +308,20 @@
           "default": true,
           "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
         },
-        "iceworks.debugInMobileDevice": {
-          "type": "boolean",
-          "default": false,
+        "iceworks.debugConfig": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "PC",
+            "mobile"
+          ],
+          "default": "auto",
           "description": "%iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description%"
         },
-        "iceworks.mobileDeviceConfig": {
-          "type": "string",
-          "default": "375x812",
-          "description": "%iceworksApp.configuration.properties.iceworks.mobileDeviceResolution.description%"
+        "iceworks.customizeDevices": {
+          "type": "array",
+          "default": "[]",
+          "description": "%iceworksApp.configuration.properties.iceworks.customizeDevices.description%"
         }
       }
     }

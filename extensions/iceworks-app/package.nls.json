@@ -27,7 +27,7 @@
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
   "iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description": "Debug In mobile device",
-  "iceworksApp.configuration.properties.iceworks.mobileDeviceResolution.description": "Mobile device resolution, for example: 375x812",
+  "iceworksApp.configuration.properties.iceworks.customizeDevices.description": "Customize devices",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Debug",
   "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall",
   "iceworksApp.kaitianContributes.toolbar.DefPublish.title": "Publish"
