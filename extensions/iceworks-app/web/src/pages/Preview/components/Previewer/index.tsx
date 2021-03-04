@@ -48,7 +48,8 @@ function Previewer({ useMobileDevice }, ref) {
    * 对 iframe 进行赋值时，为了保证显示效果
    * 应当使其长度不超过展示页面最大长度的83.33%、
    * 宽度不超过83.33%，
-   * 对于设备，响应式布局可伸缩不可缩放，其余设备可不可伸缩
+   * 对于设备，响应式布局可伸缩不可缩放，其余设备不可伸缩，
+   * 因此在移动端设备中，伸缩和缩放属性是互斥的
    * @param newWidth Number iframe 宽度
    * @param newHeight Number iframe 高度
    */
@@ -84,9 +85,10 @@ function Previewer({ useMobileDevice }, ref) {
   };
 
   /**
-   * 例如：在 100*100 页面中，放置了一个 125*125 的iframe 那么首先需要将其缩放 80%
-   * 由于 125*125 的中心为 72.5，72，5 我们需要将其缩放到 50，50上， 因此需要向左上角移动 22.5
-   * 这个偏移量的偏移系数计算公式为：（(1 - 缩放量) / 2 ）/ 缩放脸
+   * 例如：在 100*100 容器中，放置了一个 125*125 的iframe
+   * 那么首先需要将其缩放 80%
+   * 由于 125*125 的中心为 72.5，72.5 我们需要将其缩放到 50，50 上， 因此需要向左上角移动 22.5
+   * 这个偏移量的偏移系数计算公式为：（(1 - 缩放量) / 2 ）/ 缩放量
    */
   const getIframeTranslateCSS = () => {
     const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;

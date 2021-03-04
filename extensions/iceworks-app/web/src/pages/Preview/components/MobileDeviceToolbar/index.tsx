@@ -95,10 +95,10 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       } else {
         setIsDeviceSelected(true);
       }
+      resizable.current = currentDevice === RESPONSIVE;
       setDevice(currentDevice);
       setInputDeviceWidth(width);
       setInputDeviceHeight(height);
-      resizable.current = currentDevice === RESPONSIVE;
       setDeviceConfig(width, height, resizable.current);
     }
   }

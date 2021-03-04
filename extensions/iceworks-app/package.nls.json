@@ -26,7 +26,7 @@
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm package manager.",
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm registry.",
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "Show welcome page",
-  "iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description": "Debug In mobile device",
+  "iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description": "Switch debug devices",
   "iceworksApp.configuration.properties.iceworks.customizeDevices.description": "Customize devices",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "Debug",
   "iceworksApp.kaitianContributes.toolbar.reinstall.title": "Reinstall",

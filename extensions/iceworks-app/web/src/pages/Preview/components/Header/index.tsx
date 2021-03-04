@@ -20,14 +20,12 @@ const history = new UrlHistory();
 export default function ({ setUseMobileDevice, useMobileDevice }) {
   const { url, setUrl, previewerRef } = useContext(Context);
   const mobileDeviceUrl = useRef('');
-  const normalDeviceUrl = useRef('');
+  const PCUrl = useRef('');
   const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
     setDeviceUrls(url);
-    /* QQQ */
-    console.log('init mobile device Config', useMobileDevice);
-    history.push(useMobileDevice ? mobileDeviceUrl.current : normalDeviceUrl.current);
+    history.push(useMobileDevice ? mobileDeviceUrl.current : PCUrl.current);
   }, []);
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
@@ -46,12 +44,12 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
   const setDeviceUrls = (target) => {
     if (new RegExp(PHONE_NODE_QUERY).test(target)) {
       mobileDeviceUrl.current = target;
-      normalDeviceUrl.current = target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
+      PCUrl.current = target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
     } else {
-      normalDeviceUrl.current = target;
+      PCUrl.current = target;
       mobileDeviceUrl.current = `${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
     }
-    console.log('creating urls', mobileDeviceUrl.current, normalDeviceUrl.current);
+    console.log('creating urls', mobileDeviceUrl.current, PCUrl.current);
   };
 
   const handleEnter = (e) => {
@@ -59,7 +57,7 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
   };
 
   const handlePhoneIconClick = () => {
-    setNewUrl(useMobileDevice ? normalDeviceUrl.current : mobileDeviceUrl.current);
+    setNewUrl(useMobileDevice ? PCUrl.current : mobileDeviceUrl.current);
     setUseMobileDevice(!useMobileDevice);
   };
 
