@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { LocaleProvider } from '@/i18n';
 import Header from './components/Header';
 import Previewer from './components/Previewer';
 import { Context } from './context';
@@ -31,9 +32,7 @@ export default function () {
 
   useEffect(() => {
     async function initPreview() {
-      console.log('init Preview... ===>');
       const { debugConfig } = await callService('debug', 'getDebugConfig');
-      console.log('debugConfig', debugConfig);
       switch (debugConfig) {
         case 'auto': setUseMobileDevice(await callService('debug', 'autoSwitchDebugModel')); break;
         case 'mobile': setUseMobileDevice(true); break;
@@ -45,19 +44,21 @@ export default function () {
   }, []);
 
   return (
-    <Context.Provider value={{ url, setUrl, previewerRef }}>
-      {
-        loading ?
-          <Loading /> :
-          <div className={styles.container} >
-            <Header
-              setUseMobileDevice={setUseMobileDevice}
-              useMobileDevice={useMobileDevice}
-            />
-            <Previewer ref={previewerRef} useMobileDevice={useMobileDevice} />
-          </div>
-      }
+    <LocaleProvider>
+      <Context.Provider value={{ url, setUrl, previewerRef }}>
+        {
+          loading ?
+            <Loading /> :
+            <div className={styles.container} >
+              <Header
+                setUseMobileDevice={setUseMobileDevice}
+                useMobileDevice={useMobileDevice}
+              />
+              <Previewer ref={previewerRef} useMobileDevice={useMobileDevice} />
+            </div>
+        }
 
-    </Context.Provider>
+      </Context.Provider>
+    </LocaleProvider>
   );
 }

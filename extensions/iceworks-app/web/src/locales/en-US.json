@@ -68,5 +68,6 @@
   "web.iceworksApp.Dashboard.doctor.reportProblem": " report your problem",
   "web.iceworksApp.Dashboard.doctor.projectScale": "Project Scale",
   "web.iceworksApp.Dashboard.doctor.filesNumber": "Files Number",
-  "web.iceworksApp.Dashboard.doctor.LoC": "LoC/Average LoC"
+  "web.iceworksApp.Dashboard.doctor.LoC": "LoC/Average LoC",
+  "web.iceworksApp.Preview.mobileDeviceManager.delete": "Delete"
 }

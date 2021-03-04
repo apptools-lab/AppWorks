@@ -1,5 +1,6 @@
 import { Button, List, Input } from '@alifd/next';
 import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 export default function MobileDeviceManager({ deviceData, setDeviceData, numberOfDefaultDevices }) {
   const [mobileDeviceData, setMobileDeviceData] = useState(deviceData);
@@ -59,7 +60,8 @@ export default function MobileDeviceManager({ deviceData, setDeviceData, numberO
               <Button
                 disabled={!item.customizeDevice}
                 onClick={() => handleDeleteDevice(index)}
-              > Delete
+              >
+                <FormattedMessage id="web.iceworksApp.Preview.mobileDeviceManager.delete" />
               </Button>
             </div>
           </List.Item>))

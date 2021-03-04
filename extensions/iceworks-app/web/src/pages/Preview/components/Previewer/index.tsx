@@ -18,7 +18,6 @@ const throttle = (fn, delay = RESIZE_DELAY) => {
       return;
     }
     const args = arguments;
-    console.log('throttle arguments', arguments);
     timer = setTimeout(function () {
       fn.apply(this, args);
       timer = null;
@@ -56,7 +55,6 @@ function Previewer({ useMobileDevice }, ref) {
   const setIframe = (newWidth, newHeight, currentResizable = true) => {
     const scalable = !currentResizable;
     setResizable(currentResizable);
-    console.log('set Iframe===> ', newWidth, newHeight);
     const width = newWidth !== undefined ? newWidth : convertPixelToNum(iframeContainerWidth);
     const height = newHeight !== undefined ? newHeight : convertPixelToNum(iframeContainerWidth);
     const currentScalingRatio = scalable ?
@@ -68,7 +66,6 @@ function Previewer({ useMobileDevice }, ref) {
     setIframeContainerWidth(convertNumToPixel(width * currentScalingRatio));
     setIframeContainerHeight(convertNumToPixel(height * currentScalingRatio));
     setScalingRatio(currentScalingRatio);
-    console.log('ScalingRatio ===>', currentScalingRatio);
   };
 
   const handleRndResizeStart = () => {
@@ -79,7 +76,6 @@ function Previewer({ useMobileDevice }, ref) {
 
   const handleRndResize = (...args) => {
     const delta = args[3];
-    console.log('resizeArguments', delta);
     const { width, height } = delta;
     setIframe(
       (containerBaseWidth.current + (width * 2)) / scalingRatio,
@@ -87,9 +83,13 @@ function Previewer({ useMobileDevice }, ref) {
     );
   };
 
+  /**
+   * 例如：在 100*100 页面中，放置了一个 125*125 的iframe 那么首先需要将其缩放 80%
+   * 由于 125*125 的中心为 72.5，72，5 我们需要将其缩放到 50，50上， 因此需要向左上角移动 22.5
+   * 这个偏移量的偏移系数计算公式为：（(1 - 缩放量) / 2 ）/ 缩放脸
+   */
   const getIframeTranslateCSS = () => {
     const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;
-    console.log('getting Iframe CSS ...', scalingRatio, offsetRatio);
     return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
   };
 
@@ -107,7 +107,6 @@ function Previewer({ useMobileDevice }, ref) {
   }, [url]);
 
   useEffect(() => {
-    console.log('Updating Data ... ==> ', useMobileDevice, iframeContainerWidth, iframeContainerHeight);
     async function switchDebugModel() {
       if (!useMobileDevice) {
         setIframeContainerHeight(FULL_SCREEN);

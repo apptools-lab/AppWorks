@@ -9,6 +9,7 @@ const TEMP_HEIGHT = 'tempHeight';
 const DEVICE_WIDHT = 'deviceWidth';
 const DEVICE_HEIGHT = 'deviceHeight';
 const RESPONSIVE = 'Responsive';
+const EDIT = 'Edit';
 const RESPONSIVE_DEFAULT_WIDTH = '300';
 const RESPONSIVE_DEFAULT_HEIGHT = '640';
 
@@ -33,8 +34,8 @@ const defaultDeviceData = [
 const NUMBERS_OF_DEFAULT_DEVICES = defaultDeviceData.length;
 
 const editItem = {
-  label: 'Edit',
-  value: 'Edit',
+  label: EDIT,
+  value: EDIT,
 };
 
 export function convertNumToPixel(num) {
@@ -45,7 +46,6 @@ export function convertPixelToNum(pixel, returnInteger = true) {
   try {
     return returnInteger ? parseInt(pixel.slice(0, -2)) : parseFloat(pixel.slice(0, -2));
   } catch (e) {
-    console.log(`convert ${pixel} Failed`);
     return 100;
   }
 }
@@ -69,7 +69,6 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
   };
 
   function handlePixelChange(type, value?) {
-    console.log(type, value);
     if (/d*/.test(value)) {
       switch (type) {
         case TEMP_WIDTH: setInputDeviceWidth(value); return;
@@ -86,7 +85,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     width = isNaN(width) || width === undefined ? RESPONSIVE_DEFAULT_WIDTH : width;
     height = isNaN(width) || height === undefined ? RESPONSIVE_DEFAULT_HEIGHT : height;
 
-    if (value === 'Edit') {
+    if (value === EDIT) {
       setShowDeviceDrawer(true);
     } else {
       if (currentDevice === RESPONSIVE) {
@@ -101,7 +100,6 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       setInputDeviceHeight(height);
       resizable.current = currentDevice === RESPONSIVE;
       setDeviceConfig(width, height, resizable.current);
-      console.log('switching Device ===> ', currentDevice);
     }
   }
 
@@ -124,7 +122,6 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       setInputDeviceHeight(deviceHeight);
       responsiveWidthCache.current = deviceWidth;
       responsiveHeightCache.current = deviceHeight;
-      console.log('save Res Config ===> ', deviceWidth, deviceHeight);
       saveResponsiveData.current = true;
     }
   }, [scrollingRatio, deviceWidth, deviceHeight, useMobileDevice]);
@@ -157,7 +154,6 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     if (autoAdjustDevice) {
       window.onresize = function () {
         if (useMobileDevice) {
-          console.log('Window Changed ...', inputDeviceWidth, inputDeviceHeight);
           setDeviceConfig(
             inputDeviceWidth,
             inputDeviceHeight,

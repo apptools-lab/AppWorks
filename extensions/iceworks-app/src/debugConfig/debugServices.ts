@@ -5,7 +5,6 @@ import { getDevInfo } from '../utils/getDevServerStartInfo';
 const debugServices = {
   async getDebugConfig() {
     const debugConfig = await getDataFromSettingJson('debugConfig', 'auto');
-    console.log('debugConfig ===>', debugConfig);
     return { debugConfig };
   },
   async getUserDevices() {
@@ -17,7 +16,7 @@ const debugServices = {
   },
   async autoSwitchDebugModel() {
     const devInfo = getDevInfo(projectPath) || { framework: 'unkown' };
-    return devInfo.framework === 'icejs';
+    return devInfo.framework === 'rax';
   },
 };
 
