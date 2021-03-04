@@ -8,6 +8,8 @@ const TEMP_HEIGHT = 'tempHeight';
 const DEVICE_WIDHT = 'deviceWidth';
 const DEVICE_HEIGHT = 'deviceHeight';
 const RESPONSIVE = 'Responsive';
+const RESPONSIVE_DEFAULT_WIDTH = '300';
+const RESPONSIVE_DEFAULT_HEIGHT = '640';
 
 const responsiveItem = {
   label: RESPONSIVE,
@@ -33,9 +35,12 @@ export function convertPixelToNum(pixel, returnInteger = true) {
 }
 
 export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDeviceConfig, useMobileDevice, scrollingRatio }) {
-  const resizable = useRef(false);
-  const [tempDeviceWidth, setTempDeviceWidth] = useState(deviceWidth);
-  const [tempDeviceHeight, setTempDeviceHeight] = useState(deviceHeight);
+  const resizable = useRef(true);
+  const saveResponsiveData = useRef(true);
+  const responsiveWidthCache = useRef(RESPONSIVE_DEFAULT_WIDTH);
+  const responsiveHeightCache = useRef(RESPONSIVE_DEFAULT_HEIGHT);
+  const [inputDeviceWidth, setInputDeviceWidth] = useState(deviceWidth);
+  const [inputDeviceHeight, setInputDeviceHeight] = useState(deviceHeight);
   const [isDeviceSelected, setIsDeviceSelected] = useState(false);
   const [device, setDevice] = useState(RESPONSIVE);
   const [deviceData, setDeviceData] = useState([]);
@@ -43,6 +48,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
   const [showDeviceDrawer, setShowDeviceDrawer] = useState(false);
 
   const scrollingRatioItem = {
+    // @ts-ignore
     label: `fit: ${parseInt(scrollingRatio * 100)}%`,
   };
 
@@ -50,10 +56,10 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     console.log(type, value);
     if (/d*/.test(value)) {
       switch (type) {
-        case TEMP_WIDTH: setTempDeviceWidth(value); return;
-        case TEMP_HEIGHT: setTempDeviceHeight(value); return;
-        case DEVICE_WIDHT: setDeviceConfig(tempDeviceWidth, undefined, resizable.current); return;
-        case DEVICE_HEIGHT: setDeviceConfig(undefined, tempDeviceHeight, resizable.current);
+        case TEMP_WIDTH: setInputDeviceWidth(value); return;
+        case TEMP_HEIGHT: setInputDeviceHeight(value); return;
+        case DEVICE_WIDHT: setDeviceConfig(inputDeviceWidth, undefined, resizable.current); return;
+        case DEVICE_HEIGHT: setDeviceConfig(undefined, inputDeviceHeight, resizable.current);
       }
     }
   }
@@ -65,47 +71,51 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       setShowDeviceDrawer(true);
     } else {
       if (currentDevice === RESPONSIVE) {
-        const DeviceConfig = await callService('debug', 'getDeviceConfig');
-        width = DeviceConfig.defaultResponsiveWidth;
-        height = DeviceConfig.defaultResponsiveHeight;
+        width = responsiveWidthCache.current;
+        height = responsiveHeightCache.current;
         setIsDeviceSelected(false);
       } else {
         setIsDeviceSelected(true);
       }
       setDevice(currentDevice);
-      setTempDeviceWidth(width);
-      setTempDeviceHeight(height);
+      setInputDeviceWidth(width);
+      setInputDeviceHeight(height);
       resizable.current = currentDevice === RESPONSIVE;
       setDeviceConfig(width, height, resizable.current);
-      console.log('switching Deivce ===> ', currentDevice);
+      console.log('switching Device ===> ', currentDevice);
     }
   }
 
   function handleReverseIconClick() {
-    setDeviceConfig(deviceHeight / scrollingRatio, deviceWidth / scrollingRatio, resizable.current, resizable.current);
-    setTempDeviceWidth(tempDeviceHeight / scrollingRatio);
-    setTempDeviceHeight(tempDeviceWidth / scrollingRatio);
+    setDeviceConfig(deviceHeight, deviceWidth, resizable.current);
+    setInputDeviceWidth(inputDeviceHeight);
+    setInputDeviceHeight(inputDeviceWidth);
   }
 
   useEffect(() => {
-    if (useMobileDevice && device === RESPONSIVE) {
-      console.log('Width & Height ===>', deviceHeight, deviceWidth, scrollingRatio);
-      setTempDeviceWidth(deviceWidth / scrollingRatio);
-      setTempDeviceHeight(deviceHeight / scrollingRatio);
+    if ((!useMobileDevice && device === RESPONSIVE) || (useMobileDevice && device !== RESPONSIVE)) {
+      saveResponsiveData.current = false;
+    } else if (useMobileDevice && device === RESPONSIVE) {
+      setInputDeviceWidth(deviceWidth);
+      setInputDeviceHeight(deviceHeight);
+      responsiveWidthCache.current = deviceWidth;
+      responsiveHeightCache.current = deviceHeight;
+      console.log('save Res Config ===> ', deviceWidth, deviceHeight);
+      saveResponsiveData.current = true;
     }
-  }, [scrollingRatio, deviceWidth, deviceHeight]);
+  }, [scrollingRatio, deviceWidth, deviceHeight, useMobileDevice]);
 
   useEffect(() => {
     async function loadMobileToolBar() {
       if (useMobileDevice) {
-        const { defaultDevice, defaultResponsiveHeight, defaultResponsiveWidth, defaultDeviceData }
+        const { defaultDevice, defaultDeviceData }
         = await callService('debug', 'getDeviceConfig');
         setDevice(defaultDevice);
-        setTempDeviceHeight(defaultResponsiveWidth);
-        setTempDeviceWidth(defaultResponsiveHeight);
+        setInputDeviceWidth(RESPONSIVE_DEFAULT_WIDTH);
+        setInputDeviceHeight(RESPONSIVE_DEFAULT_HEIGHT);
         setDeviceConfig(
-          defaultResponsiveWidth,
-          defaultResponsiveHeight,
+          RESPONSIVE_DEFAULT_WIDTH,
+          RESPONSIVE_DEFAULT_HEIGHT,
           resizable.current,
         );
         setDeviceData([responsiveItem, ...defaultDeviceData, editItem]);
@@ -114,6 +124,23 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     }
     loadMobileToolBar();
   }, []);
+
+  useEffect(() => {
+    const autoAdjustDevice = !resizable.current;
+    if (autoAdjustDevice) {
+      window.onresize = function () {
+        if (useMobileDevice) {
+          console.log('Window Changed ...', inputDeviceWidth, inputDeviceHeight);
+          setDeviceConfig(
+            inputDeviceWidth,
+            inputDeviceHeight,
+            resizable.current,
+          );
+        }
+      };
+    }
+  }, [inputDeviceHeight, inputDeviceWidth, resizable.current]);
+
 
   return (
     <>
@@ -130,7 +157,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
             <div className={styles.pixelsContainer}>
               <Input
                 className={styles.pixelsInput}
-                value={tempDeviceWidth}
+                value={inputDeviceWidth}
                 disabled={isDeviceSelected}
                 onChange={pixel => handlePixelChange(TEMP_WIDTH, pixel)}
                 onPressEnter={() => handlePixelChange(DEVICE_WIDHT)}
@@ -138,7 +165,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
               x
               <Input
                 className={styles.pixelsInput}
-                value={tempDeviceHeight}
+                value={inputDeviceHeight}
                 disabled={isDeviceSelected}
                 onChange={pixel => handlePixelChange(TEMP_HEIGHT, pixel)}
                 onPressEnter={() => handlePixelChange(DEVICE_HEIGHT)}

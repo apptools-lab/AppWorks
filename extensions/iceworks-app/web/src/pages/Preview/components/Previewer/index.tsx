@@ -3,12 +3,12 @@ import { Rnd } from 'react-rnd';
 import LoadingPercent from '../LoadingPercent';
 import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
-import callService from '../../../../callService';
 import styles from './index.module.scss';
 import MobileDeviceToolbar, { convertNumToPixel, convertPixelToNum } from '../MobileDeviceToolbar';
 
 const REFRESH_TIMEOUT = 50;
 const RESIZE_DELAY = 100;
+const FULL_SCREEN = '100%';
 
 const throttle = (fn, delay = RESIZE_DELAY) => {
   let timer;
@@ -29,11 +29,13 @@ const throttle = (fn, delay = RESIZE_DELAY) => {
 function Previewer({ useMobileDevice }, ref) {
   const { url } = useContext(Context);
   const frameRef = useRef(null);
-  const iframeBaseWidth = useRef(100);
-  const iframeBaseHeight = useRef(100);
+  const containerBaseWidth = useRef(100);
+  const containerBaseHeight = useRef(100);
   const loadingPercentRef = useRef(null);
-  const [iframeWidth, setIframeWidth] = useState('100%');
-  const [iframeHeight, setIframeHeight] = useState('100%');
+  const [iframeWidth, setIframeWidth] = useState(FULL_SCREEN);
+  const [iframeHeight, setIframeHeight] = useState(FULL_SCREEN);
+  const [iframeContainerWidth, setIframeContainerWidth] = useState(FULL_SCREEN);
+  const [iframeContainerHeight, setIframeContainerHeight] = useState(FULL_SCREEN);
   const [scalingRatio, setScalingRatio] = useState(1);
   const [resizable, setResizable] = useState(true);
 
@@ -54,24 +56,24 @@ function Previewer({ useMobileDevice }, ref) {
   const setIframe = (newWidth, newHeight, currentResizable = true) => {
     const scalable = !currentResizable;
     setResizable(currentResizable);
-    console.log('set Resizable && scalable ===> ', currentResizable, scalable);
-    const width = newWidth !== undefined ? newWidth : convertPixelToNum(iframeWidth);
-    const height = newHeight !== undefined ? newHeight : convertPixelToNum(iframeWidth);
+    console.log('set Iframe===> ', newWidth, newHeight);
+    const width = newWidth !== undefined ? newWidth : convertPixelToNum(iframeContainerWidth);
+    const height = newHeight !== undefined ? newHeight : convertPixelToNum(iframeContainerWidth);
     const currentScalingRatio = scalable ?
       Math.min(
         window.innerWidth / (width * 1.2),
         (window.innerHeight - 50) / (height * 1.2),
         1,
       ) : 1;
-    setIframeWidth(convertNumToPixel(width * currentScalingRatio));
-    setIframeHeight(convertNumToPixel(height * currentScalingRatio));
+    setIframeContainerWidth(convertNumToPixel(width * currentScalingRatio));
+    setIframeContainerHeight(convertNumToPixel(height * currentScalingRatio));
     setScalingRatio(currentScalingRatio);
     console.log('ScalingRatio ===>', currentScalingRatio);
   };
 
   const handleRndResizeStart = () => {
-    iframeBaseWidth.current = convertPixelToNum(iframeWidth, false);
-    iframeBaseHeight.current = convertPixelToNum(iframeHeight,
+    containerBaseWidth.current = convertPixelToNum(iframeContainerWidth, false);
+    containerBaseHeight.current = convertPixelToNum(iframeContainerHeight,
       false);
   };
 
@@ -80,9 +82,15 @@ function Previewer({ useMobileDevice }, ref) {
     console.log('resizeArguments', delta);
     const { width, height } = delta;
     setIframe(
-      (iframeBaseWidth.current + (width * 2)) / scalingRatio,
-      (iframeBaseHeight.current + (height * 2)) / scalingRatio,
+      (containerBaseWidth.current + (width * 2)) / scalingRatio,
+      (containerBaseHeight.current + (height * 2)) / scalingRatio,
     );
+  };
+
+  const getIframeTranslateCSS = () => {
+    const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;
+    console.log('gettin Iframe CSS ...', scalingRatio, offsetRatio);
+    return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
   };
 
   useEffect(() => {
@@ -95,18 +103,24 @@ function Previewer({ useMobileDevice }, ref) {
   }, []);
 
   useEffect(() => {
+    console.log('Updating Data ... ==> ', useMobileDevice, iframeContainerWidth, iframeContainerHeight);
     async function switchDebugModel() {
       if (!useMobileDevice) {
-        setIframeHeight('100%');
-        setIframeWidth('100%');
-      } else {
-        const { defaultResponsiveHeight, defaultResponsiveWidth } = await callService('debug', 'getDeviceConfig');
-        setIframeWidth(convertNumToPixel(defaultResponsiveWidth));
-        setIframeHeight(convertNumToPixel(defaultResponsiveHeight));
+        setIframeContainerHeight(FULL_SCREEN);
+        setIframeContainerWidth(FULL_SCREEN);
+        setIframeContainerWidth(FULL_SCREEN);
+        setIframeContainerHeight(FULL_SCREEN);
+      } else if (iframeContainerWidth !== FULL_SCREEN && iframeContainerHeight !== FULL_SCREEN) {
+        setIframeWidth(
+          convertNumToPixel(convertPixelToNum(iframeContainerWidth) / scalingRatio),
+        );
+        setIframeHeight(
+          convertNumToPixel(convertPixelToNum(iframeContainerHeight) / scalingRatio),
+        );
       }
     }
     switchDebugModel();
-  }, [useMobileDevice]);
+  }, [useMobileDevice, iframeContainerWidth, iframeContainerHeight]);
 
   useImperativeHandle(ref, () => ({
     getFrameRef: () => {
@@ -130,15 +144,15 @@ function Previewer({ useMobileDevice }, ref) {
     <div className={styles.container}>
       <LoadingPercent ref={loadingPercentRef} />
       <MobileDeviceToolbar
-        deviceHeight={convertPixelToNum(iframeHeight)}
-        deviceWidth={convertPixelToNum(iframeWidth)}
+        deviceHeight={convertPixelToNum(iframeContainerHeight)}
+        deviceWidth={convertPixelToNum(iframeContainerWidth)}
         setDeviceConfig={setIframe}
         useMobileDevice={useMobileDevice}
         scrollingRatio={scalingRatio}
       />
       <div className={styles.frameContainer}>
         <Rnd
-          size={{ width: iframeWidth, height: iframeHeight }}
+          size={{ width: iframeContainerWidth, height: iframeContainerHeight }}
           disableDragging
           style={{ position: 'relative', margin: 'auto' }}
           enableResizing={useMobileDevice && resizable && {
@@ -158,11 +172,10 @@ function Previewer({ useMobileDevice }, ref) {
             className={styles.frame}
             ref={frameRef}
             src={url}
-            // style={{ height: iframeHeight, width: iframeWidth, margin: 'auto' }}
-            // style = {{
-            //   width: (useMobileDevice? convertPixelToNum(iframeWidth) / scalingRatio : '100%'),
-            //   height: (use MobileDevice? convertPixelToNum(iframeHeight)/ scalingRatio : '100%'),
-            //   transform: `scale(${scalingRatio})`}}
+            style={{
+              width: iframeWidth,
+              height: iframeHeight,
+              transform: getIframeTranslateCSS() }}
           />
         </Rnd>
       </div>
