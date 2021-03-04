@@ -20,6 +20,7 @@
   "icon": "assets/logo.png",
   "activationEvents": [
     "onCommand:iceworks-project-creator.create-project.start",
+    "onCommand:iceworks-project-creator.custom-scaffold.start",
     "onStartupFinished"
   ],
   "main": "./build/extension.js",
@@ -28,6 +29,10 @@
       {
         "command": "iceworks-project-creator.create-project.start",
         "title": "%iceworksProjectCreator.create-project.commands.start.title%"
+      },
+      {
+        "command": "iceworks-project-creator.custom-scaffold.start",
+        "title": "%iceworksProjectCreator.custom-scaffold.commands.start.title%"
       }
     ],
     "configuration": {
@@ -61,6 +66,7 @@
   "devDependencies": {
     "@types/node": "^13.11.0",
     "@types/vscode": "^1.41.0",
+    "copy-webpack-plugin": "^6.4.1",
     "ts-loader": "^7.0.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
