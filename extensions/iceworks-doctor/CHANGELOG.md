@@ -3,6 +3,7 @@
 ## 0.3.4
 
 - refactor: internal optimization
+- chore: add icon for WebviewPanel
 
 ## 0.3.3
 

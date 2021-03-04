@@ -80,14 +80,15 @@
   },
   "dependencies": {
     "@iceworks/common-service": "^0.2.0",
+    "@iceworks/constant": "^0.1.5",
     "@iceworks/doctor": "^0.4.4",
     "@iceworks/project-service": "^0.2.0",
     "@iceworks/recorder": "^0.1.3",
-    "@iceworks/vscode-webview": "^0.1.5",
     "@iceworks/storage": "^0.2.0",
+    "@iceworks/vscode-webview": "^0.1.5",
     "fs-extra": "^9.0.1",
-    "mkdirp": "^1.0.4",
-    "git-repo-info": "^2.1.1"
+    "git-repo-info": "^2.1.1",
+    "mkdirp": "^1.0.4"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",

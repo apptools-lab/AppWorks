@@ -41,6 +41,7 @@ const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
             key={item.name}
             extra={
               <CustomSwitch
+                size="small"
                 checked={layout[item.name]}
                 onChange={(checked: boolean) => handleChange(item.name, checked)}
               />
@@ -50,7 +51,7 @@ const LayoutConfig = ({ value, onChange: onScaffoldConfigChange }) => {
         )}
       />
       <HeaderTitle title={intl.formatMessage({ id: 'web.iceworksProjectCreator.customScaffold.layoutStyle.title' })} />
-      <Button.Group className={styles.btns}>
+      <Button.Group className={styles.btns} size="small">
         {
           layoutStyleDataSource.map(item => (
             <Button

@@ -16,6 +16,14 @@ export default [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
+    command: 'iceworks-project-creator.custom-scaffold.start',
+    async condition() {
+      return vscode.extensions.getExtension('iceworks-team.iceworks-project-creator');
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.detail'),
     command: 'iceworksApp.dashboard.start',
