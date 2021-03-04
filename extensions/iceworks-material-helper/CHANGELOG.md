@@ -4,6 +4,7 @@
 
 - feat: compatible block and component material name
 - refactor: internal optimization
+- chore: add icon for WebviewPanel
 
 ## 0.7.0
 

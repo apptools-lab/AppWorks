@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
+import { ICEWORKS_ICON_PATH } from '@iceworks/constant';
 import { Recorder } from '@iceworks/recorder';
 import services from './services/index';
 import { Base64 } from 'js-base64';
@@ -37,6 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
         },
       );
       projectCreatorwebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'createproject', false);
+      projectCreatorwebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       projectCreatorwebviewPanel.onDidDispose(
         () => {
           projectCreatorwebviewPanel = undefined;
@@ -88,6 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
         </script>
       `;
       customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', false, undefined, extraCustomScaffoldHtml);
+      customScaffoldWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       customScaffoldWebviewPanel.onDidDispose(
         () => {
           customScaffoldWebviewPanel = undefined;
