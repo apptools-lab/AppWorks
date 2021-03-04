@@ -24,11 +24,12 @@
     "history": "^4.10.0",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
-    "qrcode.react": "^1.0.0",
     "prop-types": "^15.7.2",
+    "qrcode.react": "^1.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-intl": "^5.3.2",
+    "react-rnd": "^10.2.4",
     "throttle-debounce": "^2.2.1"
   },
   "scripts": {

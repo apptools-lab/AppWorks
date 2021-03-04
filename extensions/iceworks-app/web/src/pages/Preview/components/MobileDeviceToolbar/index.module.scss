@@ -14,8 +14,9 @@
 }
 
 .toolbar {
-  width: 350px;
+  width: 450px;
   display: flex;
+  height: 39px;
 }
 
 .pixelsContainer {
@@ -27,8 +28,19 @@
   background: rgba(0,0,0,0%);
 }
 
-.icon {
-  margin: auto;
+.iconReverse {
+  font-size: 18px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  &::before {
+    content: "\e64d";
+  }
+}
+
+.Reverse {
+  position: relative;
+  margin: -14px;
 }
 
 .pixelsInput {
@@ -42,4 +54,9 @@
 
 .pixelsContainer > input :focus {
   background: rgba(0,0,0,0%);
+}
+
+.ratio {
+  font-size: 5px;
+  color: white;
 }

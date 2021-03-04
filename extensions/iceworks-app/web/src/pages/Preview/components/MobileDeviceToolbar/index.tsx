@@ -1,4 +1,4 @@
-import { Input, Select, Icon } from '@alifd/next';
+import { Input, Select, Drawer } from '@alifd/next';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.scss';
 import callService from '../../../../callService';
@@ -19,27 +19,32 @@ const editItem = {
   value: 'Edit',
 };
 
-function convertNumToPixel(num) {
+export function convertNumToPixel(num) {
   return `${num}px`;
 }
 
-function convertPixelToNum(pixel) {
+export function convertPixelToNum(pixel, returnInteger = true) {
   try {
-    return parseInt(pixel.slice(0, -2));
+    return returnInteger ? parseInt(pixel.slice(0, -2)) : parseFloat(pixel.slice(0, -2));
   } catch (e) {
     console.log(`convert ${pixel} Failed`);
     return 100;
   }
 }
 
-export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDeviceHeight, setDeviceWidth, useMobileDevice }) {
-  const isResponsiveDataSaved = useRef(false);
-  const [tempDeviceWidth, setTempDeviceWidth] = useState(convertPixelToNum(deviceWidth));
-  const [tempDeviceHeight, setTempDeviceHeight] = useState(convertPixelToNum(deviceHeight));
+export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDeviceConfig, useMobileDevice, scrollingRatio }) {
+  const resizable = useRef(false);
+  const [tempDeviceWidth, setTempDeviceWidth] = useState(deviceWidth);
+  const [tempDeviceHeight, setTempDeviceHeight] = useState(deviceHeight);
   const [isDeviceSelected, setIsDeviceSelected] = useState(false);
   const [device, setDevice] = useState(RESPONSIVE);
   const [deviceData, setDeviceData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDeviceDrawer, setShowDeviceDrawer] = useState(false);
+
+  const scrollingRatioItem = {
+    label: `fit: ${parseInt(scrollingRatio * 100)}%`,
+  };
 
   function handlePixelChange(type, value?) {
     console.log(type, value);
@@ -47,8 +52,8 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       switch (type) {
         case TEMP_WIDTH: setTempDeviceWidth(value); return;
         case TEMP_HEIGHT: setTempDeviceHeight(value); return;
-        case DEVICE_WIDHT: setDeviceWidth(convertNumToPixel(tempDeviceWidth)); return;
-        case DEVICE_HEIGHT: setDeviceHeight(convertNumToPixel(tempDeviceHeight));
+        case DEVICE_WIDHT: setDeviceConfig(tempDeviceWidth, undefined, resizable.current); return;
+        case DEVICE_HEIGHT: setDeviceConfig(undefined, tempDeviceHeight, resizable.current);
       }
     }
   }
@@ -57,7 +62,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
     const currentDevice = currentDeviceData.label;
     let [width, height] = value.split('*');
     if (value === 'Edit') {
-      // add or delete device
+      setShowDeviceDrawer(true);
     } else {
       if (currentDevice === RESPONSIVE) {
         const DeviceConfig = await callService('debug', 'getDeviceConfig');
@@ -70,17 +75,25 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
       setDevice(currentDevice);
       setTempDeviceWidth(width);
       setTempDeviceHeight(height);
-      setDeviceWidth(convertNumToPixel(width));
-      setDeviceHeight(convertNumToPixel(height));
+      resizable.current = currentDevice === RESPONSIVE;
+      setDeviceConfig(width, height, resizable.current);
+      console.log('switching Deivce ===> ', currentDevice);
     }
   }
 
   function handleReverseIconClick() {
-    setDeviceHeight(deviceWidth);
-    setDeviceWidth(deviceHeight);
-    setTempDeviceWidth(tempDeviceHeight);
-    setTempDeviceHeight(tempDeviceWidth);
+    setDeviceConfig(deviceHeight / scrollingRatio, deviceWidth / scrollingRatio, resizable.current, resizable.current);
+    setTempDeviceWidth(tempDeviceHeight / scrollingRatio);
+    setTempDeviceHeight(tempDeviceWidth / scrollingRatio);
   }
+
+  useEffect(() => {
+    if (useMobileDevice && device === RESPONSIVE) {
+      console.log('Width & Height ===>', deviceHeight, deviceWidth, scrollingRatio);
+      setTempDeviceWidth(deviceWidth / scrollingRatio);
+      setTempDeviceHeight(deviceHeight / scrollingRatio);
+    }
+  }, [scrollingRatio, deviceWidth, deviceHeight]);
 
   useEffect(() => {
     async function loadMobileToolBar() {
@@ -90,29 +103,17 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
         setDevice(defaultDevice);
         setTempDeviceHeight(defaultResponsiveWidth);
         setTempDeviceWidth(defaultResponsiveHeight);
-        setDeviceWidth(convertNumToPixel(defaultResponsiveWidth));
-        setDeviceHeight(convertNumToPixel(defaultResponsiveHeight));
+        setDeviceConfig(
+          defaultResponsiveWidth,
+          defaultResponsiveHeight,
+          resizable.current,
+        );
         setDeviceData([responsiveItem, ...defaultDeviceData, editItem]);
         setLoading(false);
       }
     }
     loadMobileToolBar();
   }, []);
-
-  useEffect(() => {
-    console.log('device ==>', device);
-    if (!useMobileDevice) {
-      callService('debug', 'setDevice', { device });
-      console.log('save Device...');
-    }
-    if (useMobileDevice && device === RESPONSIVE) {
-      isResponsiveDataSaved.current = false;
-    } else if ((!useMobileDevice && device === RESPONSIVE) || (!isResponsiveDataSaved.current && device !== RESPONSIVE)) {
-      callService('debug', 'setResponsiveData', { deviceWidth, deviceHeight });
-      isResponsiveDataSaved.current = true;
-      console.log('save Responsive Info...');
-    }
-  }, [device, useMobileDevice]);
 
   return (
     <>
@@ -142,13 +143,26 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, setDevi
                 onChange={pixel => handlePixelChange(TEMP_HEIGHT, pixel)}
                 onPressEnter={() => handlePixelChange(DEVICE_HEIGHT)}
               />
+              <Select
+                value={scrollingRatioItem.label}
+                dataSource={[scrollingRatioItem]}
+              />
             </div>
-            <Icon type="loading" onClick={handleReverseIconClick} className={styles.icon} />
+            <div onClick={handleReverseIconClick} >
+              <i className={styles.iconReverse} />
+            </div>
+
+            <Drawer
+              visible={showDeviceDrawer}
+              placement={'right'}
+              onClose={() => { setShowDeviceDrawer(false); }}
+            >
+              Edit Devices Here
+            </Drawer>
           </div>
         </div> : <></>
       }
     </>
-
   );
 }
 
