@@ -41,8 +41,6 @@ export const defaultDeviceData = [
   },
 ];
 
-export const NUMBERS_OF_DEFAULT_DEVICES = defaultDeviceData.length;
-
 export const responsiveItem = {
   label: RESPONSIVE_DEVICE,
   value: RESPONSIVE_DEVICE,

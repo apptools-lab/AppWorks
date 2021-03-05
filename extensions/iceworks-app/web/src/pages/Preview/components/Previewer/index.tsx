@@ -21,7 +21,6 @@ function Previewer(props, ref) {
   const [deviceWidth, setDeviceWidth] = useState(FULL_SCREEN);
   const [deviceHeight, setDeviceHeight] = useState(FULL_SCREEN);
   const [scalingRatio, setScalingRatio] = useState(1);
-  const [resizable, setResizable] = useState(true);
   const [device, setDevice] = useState(RESPONSIVE_DEVICE);
 
   const startLoading = async () => {
@@ -46,7 +45,6 @@ function Previewer(props, ref) {
     } else {
       const currentResizable = (currentDevice || device) === RESPONSIVE_DEVICE;
       const scalable = !currentResizable;
-      setResizable(currentResizable);
       const width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
       const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceWidth);
       const currentScalingRatio = scalable ?
@@ -142,7 +140,7 @@ function Previewer(props, ref) {
             size={{ width: deviceWidth, height: deviceHeight }}
             disableDragging
             style={{ position: 'relative', margin: 'auto' }}
-            enableResizing={useMobileDevice && resizable && {
+            enableResizing={useMobileDevice && (device === RESPONSIVE_DEVICE) && {
               bottom: true,
               bottomLeft: false,
               bottomRight: true,
