@@ -4,11 +4,11 @@ import { getDevInfo } from '../utils/getDevServerStartInfo';
 
 const debugServices = {
   async getDebugConfig() {
-    const debugConfig = await getDataFromSettingJson('debugConfig', 'auto');
+    const debugConfig = await getDataFromSettingJson('previewConfig', 'auto');
     return { debugConfig };
   },
   async getUserDevices() {
-    const userDevices = await getDataFromSettingJson('userDevices', []);
+    const userDevices = await getDataFromSettingJson('customizePreviewDevices', []);
     return { userDevices };
   },
   async setUserDevices({ device }) {

@@ -308,7 +308,7 @@
           "default": true,
           "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
         },
-        "iceworks.debugConfig": {
+        "iceworks.previewConfig": {
           "type": "string",
           "enum": [
             "auto",
@@ -318,10 +318,11 @@
           "default": "auto",
           "description": "%iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description%"
         },
-        "iceworks.customizeDevices": {
+        "iceworks.customizePreviewDevices": {
           "type": "array",
-          "default": "[]",
-          "description": "%iceworksApp.configuration.properties.iceworks.customizeDevices.description%"
+          "default": [],
+          "description": "%iceworksApp.configuration.properties.iceworks.customizeDevices.description%",
+          "examples": "[{label: \"iphoneX\",value: \"375*812\"}]"
         }
       }
     }

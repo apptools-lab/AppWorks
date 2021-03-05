@@ -5,7 +5,7 @@ import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
 import styles from './index.module.scss';
 import MobileDeviceToolbar from './components/MobileDeviceToolbar';
-import { RESPONSIVE_DEVICE, FULL_SCREEN } from '../../../../constants';
+import { RESPONSIVE_DEVICE, FULL_SCREEN, DEVICE_PREVIEW_MARGIN } from '../../../../constants';
 import { convertNumToPixel, convertPixelToNum, throttle } from '../../utils';
 
 const REFRESH_TIMEOUT = 50;
@@ -13,7 +13,6 @@ const RESIZE_DELAY = 100;
 
 function Previewer(props, ref) {
   const { url, useMobileDevice, deviceData } = useContext(Context);
-  console.log('useMobileDevice ===> ', useMobileDevice);
   const frameRef = useRef(null);
   const loadingPercentRef = useRef(null);
   // 用于计算缩放
@@ -40,20 +39,20 @@ function Previewer(props, ref) {
    * @param newWidth Number iframe 宽度
    * @param newHeight Number iframe 高度
    */
-  const autoSetDeviceConfig = (newWidth, newHeight) => {
+  const autoSetDeviceConfig = (newWidth, newHeight, currentDevice?) => {
     if (newWidth === FULL_SCREEN && newHeight === FULL_SCREEN) {
       setDeviceWidth(FULL_SCREEN);
       setDeviceHeight(FULL_SCREEN);
     } else {
-      const currentResizable = device === RESPONSIVE_DEVICE;
+      const currentResizable = (currentDevice || device) === RESPONSIVE_DEVICE;
       const scalable = !currentResizable;
       setResizable(currentResizable);
       const width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
       const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceWidth);
       const currentScalingRatio = scalable ?
         Math.min(
-          window.innerWidth / (width * 1.2),
-          (window.innerHeight - 50) / (height * 1.2),
+          window.innerWidth / (width * (1 + DEVICE_PREVIEW_MARGIN * 2)),
+          (window.innerHeight - 40) / (height * (1 + DEVICE_PREVIEW_MARGIN * 2)),
           1,
         ) : 1;
       setDeviceWidth(convertNumToPixel(width * currentScalingRatio));
@@ -83,14 +82,22 @@ function Previewer(props, ref) {
    * 这个偏移量的偏移系数计算公式为：（(1 - 缩放量) / 2 ）/ 缩放量
    */
   const getIframeTranslateCSS = () => {
-    const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;
-    return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
+    if (deviceWidth === FULL_SCREEN && deviceHeight === FULL_SCREEN) {
+      return '';
+    } else {
+      const offsetRatio = -(1 - scalingRatio) / 2 / scalingRatio * 100;
+      return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
+    }
   };
 
   const getIframePixelFromContainer = (containerPixel) => {
     return containerPixel === FULL_SCREEN ?
       FULL_SCREEN :
       convertNumToPixel(convertPixelToNum(containerPixel) / scalingRatio);
+  };
+
+  const getDeviceContainerHeight = () => {
+    return `calc(100vh - ${useMobileDevice ? '70px' : '30px'})`;
   };
 
   useEffect(() => {
@@ -130,7 +137,7 @@ function Previewer(props, ref) {
           useMobileDevice={useMobileDevice}
           scrollingRatio={scalingRatio}
         />
-        <div className={styles.frameContainer}>
+        <div className={styles.frameContainer} style={{ height: getDeviceContainerHeight() }}>
           <Rnd
             size={{ width: deviceWidth, height: deviceHeight }}
             disableDragging

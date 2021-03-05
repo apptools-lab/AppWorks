@@ -32,7 +32,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobi
       setDevice(currentDevice);
       setInputWidth(width);
       setInputHeight(height);
-      autoSetDeviceConfig(width, height);
+      autoSetDeviceConfig(width, height, currentDevice);
     }
   }
 
@@ -43,7 +43,6 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobi
   }
 
   useEffect(() => {
-    console.log('switch Devices... ==> ', useMobileDevice, inputWidth, inputHeight);
     if (useMobileDevice) {
       autoSetDeviceConfig(inputWidth, inputHeight);
     } else {
@@ -60,6 +59,14 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobi
     }
     loadMobileToolBar();
   }, []);
+
+  useEffect(() => {
+    window.onresize = function () {
+      if (useMobileDevice) {
+        autoSetDeviceConfig(inputWidth, inputHeight);
+      }
+    };
+  }, [inputWidth, inputHeight]);
 
   return (
     <Context.Provider value={{ ...useContext(Context), deviceWidth, deviceHeight }}>

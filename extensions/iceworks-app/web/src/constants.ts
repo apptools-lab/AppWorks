@@ -54,3 +54,5 @@ export const editItem = {
 };
 
 export const FULL_SCREEN = '100%';
+
+export const DEVICE_PREVIEW_MARGIN = 0.1;

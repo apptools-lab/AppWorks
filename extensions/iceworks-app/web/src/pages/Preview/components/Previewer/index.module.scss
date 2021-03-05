@@ -2,7 +2,7 @@
   position: relative;
   flex: 1;
   background-color: #fafafa;
-  // min-height: calc(100vh);
+  min-height: calc(100vh);
 }
 
 iframe ::-webkit-scrollbar {
@@ -22,7 +22,7 @@ iframe ::-webkit-scrollbar {
   display: flex;
   align-items: center;
   justify-items: center;
-  height: calc(100vh - 40px);
+  height: 100%;
   width: 100%;
 }
 

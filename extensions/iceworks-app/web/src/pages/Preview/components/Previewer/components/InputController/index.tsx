@@ -24,7 +24,6 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
   useEffect(() => {
     if (device === RESPONSIVE_DEVICE) {
       if (!saveCache.current) {
-        console.log('reset Data ...');
         setInputWidth(responsiveWidthCache.current);
         setInputHeight(responsiveHeightCache.current);
         autoSetDeviceConfig(responsiveWidthCache.current, responsiveHeightCache.current);
