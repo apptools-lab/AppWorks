@@ -1,10 +1,10 @@
 import axios from 'axios';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
+import { formatScaffoldToProject } from '@iceworks/generate-project';
 import generateBuildConfig from './utils/generateBuildConfig';
 import generateLayoutConfig from './utils/generateLayoutConfig';
 import generateMenuConfig from './utils/generateMenuConfig';
-import formatFilename from './utils/formatFilename';
 
 const Generator = require('ice-scaffold-generator');
 
@@ -60,7 +60,7 @@ export async function generate(scaffoldField) {
   });
   await scaffoldGenerator.init();
 
-  formatFilename(projectDir);
+  formatScaffoldToProject(projectDir);
 
   return projectDir;
 }
