@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   let projectCreatorwebviewPanel: vscode.WebviewPanel | undefined;
 

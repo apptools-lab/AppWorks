@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   function activeComponentGeneratorWebview() {
     const webviewPanel: vscode.WebviewPanel = window.createWebviewPanel(

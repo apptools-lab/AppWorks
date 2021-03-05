@@ -13,8 +13,6 @@ import { registerDebugCommand } from './utils/debugMaterials';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 
-const { name } = require('../package.json');
-
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -24,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
   autoSetContextByProject();
 
   // set material importer

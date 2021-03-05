@@ -13,7 +13,7 @@ function activate(context: vscode.ExtensionContext) {
   const { extensionPath } = context;
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   let webviewPanel: vscode.WebviewPanel | undefined;
 

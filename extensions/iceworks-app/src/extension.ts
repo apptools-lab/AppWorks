@@ -36,7 +36,7 @@ export async function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration & context
-  initExtension(context, name);
+  initExtension(context);
   autoSetContextByProject();
 
   // init statusBarItem

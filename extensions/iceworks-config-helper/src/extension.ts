@@ -31,7 +31,7 @@ export async function activate(context: vscode.ExtensionContext) {
   await setJsonValidationUrl();
 
 
-  initExtension(context, name);
+  initExtension(context);
 
   let configWebviewPanel: vscode.WebviewPanel | undefined;
 

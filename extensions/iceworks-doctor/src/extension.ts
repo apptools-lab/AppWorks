@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
   const useEn = vscode.env.language !== 'zh-cn';
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   let reportWebviewPanel: vscode.WebviewPanel | undefined;
 

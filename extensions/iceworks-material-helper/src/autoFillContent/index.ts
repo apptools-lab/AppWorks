@@ -104,7 +104,7 @@ export default function () {
    * When the file name changes, judge whether the file has been modified.
    * If not, rename the component with the latest file name.
    */
-  vscode.workspace.onDidRenameFiles(({ files }) => {
+  vscode.workspace.onDidRenameFiles(() => {
     console.log('onDidRenameFiles');
   });
 }
