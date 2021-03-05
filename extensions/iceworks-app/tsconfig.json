@@ -4,7 +4,7 @@
     "outDir": "build",
     "rootDir": "./",
     "noImplicitAny": false,
-    "resolveJsonModule": true·
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": [".vscode-test"]

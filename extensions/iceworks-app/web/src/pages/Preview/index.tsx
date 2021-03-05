@@ -7,6 +7,7 @@ import { BLANK_URL } from './config';
 import styles from './index.module.scss';
 import callService from '../../callService';
 import { Loading } from '@alifd/next';
+import { defaultDeviceData } from '../../constants';
 
 if (!window.__PREVIEW__DATA__) {
   window.__PREVIEW__DATA__ = {};
@@ -27,6 +28,7 @@ export default function () {
   // debugComment Reset To Black URL
   const [url, setUrl] = useState(window.__PREVIEW__DATA__.startUrl || BLANK_URL);
   const [useMobileDevice, setUseMobileDevice] = useState(false);
+  const [deviceData, setDeviceData] = useState([]);
   const [loading, setLoading] = useState(true);
   const previewerRef = useRef(null);
 
@@ -38,6 +40,8 @@ export default function () {
         case 'mobile': setUseMobileDevice(true); break;
         case 'PC': setUseMobileDevice(false); break;
       }
+      const { userDevices } = await callService('debug', 'getUserDevices');
+      setDeviceData([...defaultDeviceData, ...userDevices]);
       setLoading(false);
     }
     initPreview();
@@ -45,7 +49,7 @@ export default function () {
 
   return (
     <LocaleProvider>
-      <Context.Provider value={{ url, setUrl, previewerRef }}>
+      <Context.Provider value={{ url, useMobileDevice, deviceData, setDeviceData, setUrl, previewerRef }}>
         {
           loading ?
             <Loading /> :
@@ -54,7 +58,7 @@ export default function () {
                 setUseMobileDevice={setUseMobileDevice}
                 useMobileDevice={useMobileDevice}
               />
-              <Previewer ref={previewerRef} useMobileDevice={useMobileDevice} />
+              <Previewer ref={previewerRef} />
             </div>
         }
 

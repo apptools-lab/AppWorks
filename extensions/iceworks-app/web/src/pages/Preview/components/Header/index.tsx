@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
 import classNames from 'classnames';
 import PageSelect from './PageSelect';
@@ -19,13 +19,13 @@ const history = new UrlHistory();
 
 export default function ({ setUseMobileDevice, useMobileDevice }) {
   const { url, setUrl, previewerRef } = useContext(Context);
-  const mobileDeviceUrl = useRef('');
-  const PCUrl = useRef('');
+  const [mobileDeviceUrl, setMobileDeviceUrl] = useState('');
+  const [PCUrl, setPCUrl] = useState('');
   const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
     setDeviceUrls(url);
-    history.push(useMobileDevice ? mobileDeviceUrl.current : PCUrl.current);
+    history.push(useMobileDevice ? mobileDeviceUrl : PCUrl);
   }, []);
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
@@ -43,21 +43,21 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
 
   const setDeviceUrls = (target) => {
     if (new RegExp(PHONE_NODE_QUERY).test(target)) {
-      mobileDeviceUrl.current = target;
-      PCUrl.current = target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
+      setMobileDeviceUrl(target);
+      setPCUrl(target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]*$/, ''));
     } else {
-      PCUrl.current = target;
-      mobileDeviceUrl.current = `${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
+      setMobileDeviceUrl(target);
+      setPCUrl(`${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`);
     }
-    console.log('creating urls', mobileDeviceUrl.current, PCUrl.current);
   };
 
   const handleEnter = (e) => {
     setNewUrl(e.target.value);
+    setDeviceUrls(e.target.value);
   };
 
   const handlePhoneIconClick = () => {
-    setNewUrl(useMobileDevice ? PCUrl.current : mobileDeviceUrl.current);
+    setNewUrl(useMobileDevice ? PCUrl : mobileDeviceUrl);
     setUseMobileDevice(!useMobileDevice);
   };
 

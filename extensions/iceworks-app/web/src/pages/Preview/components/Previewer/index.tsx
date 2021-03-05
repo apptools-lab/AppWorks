@@ -4,39 +4,26 @@ import LoadingPercent from '../LoadingPercent';
 import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
 import styles from './index.module.scss';
-import MobileDeviceToolbar, { convertNumToPixel, convertPixelToNum } from '../MobileDeviceToolbar';
+import MobileDeviceToolbar from './components/MobileDeviceToolbar';
+import { RESPONSIVE_DEVICE, FULL_SCREEN } from '../../../../constants';
+import { convertNumToPixel, convertPixelToNum, throttle } from '../../utils';
 
 const REFRESH_TIMEOUT = 50;
 const RESIZE_DELAY = 100;
-const FULL_SCREEN = '100%';
 
-const throttle = (fn, delay = RESIZE_DELAY) => {
-  let timer;
-
-  return function () {
-    if (timer) {
-      return;
-    }
-    const args = arguments;
-    timer = setTimeout(function () {
-      fn.apply(this, args);
-      timer = null;
-    }, delay);
-  };
-};
-
-function Previewer({ useMobileDevice }, ref) {
-  const { url } = useContext(Context);
+function Previewer(props, ref) {
+  const { url, useMobileDevice, deviceData } = useContext(Context);
+  console.log('useMobileDevice ===> ', useMobileDevice);
   const frameRef = useRef(null);
+  const loadingPercentRef = useRef(null);
+  // 用于计算缩放
   const containerBaseWidth = useRef(100);
   const containerBaseHeight = useRef(100);
-  const loadingPercentRef = useRef(null);
-  const [iframeWidth, setIframeWidth] = useState(FULL_SCREEN);
-  const [iframeHeight, setIframeHeight] = useState(FULL_SCREEN);
-  const [iframeContainerWidth, setIframeContainerWidth] = useState(FULL_SCREEN);
-  const [iframeContainerHeight, setIframeContainerHeight] = useState(FULL_SCREEN);
+  const [deviceWidth, setDeviceWidth] = useState(FULL_SCREEN);
+  const [deviceHeight, setDeviceHeight] = useState(FULL_SCREEN);
   const [scalingRatio, setScalingRatio] = useState(1);
   const [resizable, setResizable] = useState(true);
+  const [device, setDevice] = useState(RESPONSIVE_DEVICE);
 
   const startLoading = async () => {
     if (url !== BLANK_URL) {
@@ -53,32 +40,37 @@ function Previewer({ useMobileDevice }, ref) {
    * @param newWidth Number iframe 宽度
    * @param newHeight Number iframe 高度
    */
-  const setIframe = (newWidth, newHeight, currentResizable = true) => {
-    const scalable = !currentResizable;
-    setResizable(currentResizable);
-    const width = newWidth !== undefined ? newWidth : convertPixelToNum(iframeContainerWidth);
-    const height = newHeight !== undefined ? newHeight : convertPixelToNum(iframeContainerWidth);
-    const currentScalingRatio = scalable ?
-      Math.min(
-        window.innerWidth / (width * 1.2),
-        (window.innerHeight - 50) / (height * 1.2),
-        1,
-      ) : 1;
-    setIframeContainerWidth(convertNumToPixel(width * currentScalingRatio));
-    setIframeContainerHeight(convertNumToPixel(height * currentScalingRatio));
-    setScalingRatio(currentScalingRatio);
+  const autoSetDeviceConfig = (newWidth, newHeight) => {
+    if (newWidth === FULL_SCREEN && newHeight === FULL_SCREEN) {
+      setDeviceWidth(FULL_SCREEN);
+      setDeviceHeight(FULL_SCREEN);
+    } else {
+      const currentResizable = device === RESPONSIVE_DEVICE;
+      const scalable = !currentResizable;
+      setResizable(currentResizable);
+      const width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
+      const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceWidth);
+      const currentScalingRatio = scalable ?
+        Math.min(
+          window.innerWidth / (width * 1.2),
+          (window.innerHeight - 50) / (height * 1.2),
+          1,
+        ) : 1;
+      setDeviceWidth(convertNumToPixel(width * currentScalingRatio));
+      setDeviceHeight(convertNumToPixel(height * currentScalingRatio));
+      setScalingRatio(currentScalingRatio);
+    }
   };
 
   const handleRndResizeStart = () => {
-    containerBaseWidth.current = convertPixelToNum(iframeContainerWidth, false);
-    containerBaseHeight.current = convertPixelToNum(iframeContainerHeight,
-      false);
+    containerBaseWidth.current = convertPixelToNum(deviceWidth, false);
+    containerBaseHeight.current = convertPixelToNum(deviceHeight, false);
   };
 
   const handleRndResize = (...args) => {
     const delta = args[3];
     const { width, height } = delta;
-    setIframe(
+    autoSetDeviceConfig(
       (containerBaseWidth.current + (width * 2)) / scalingRatio,
       (containerBaseHeight.current + (height * 2)) / scalingRatio,
     );
@@ -95,6 +87,12 @@ function Previewer({ useMobileDevice }, ref) {
     return `scale(${scalingRatio}) translateX(${offsetRatio}%) translateY(${offsetRatio}%)`;
   };
 
+  const getIframePixelFromContainer = (containerPixel) => {
+    return containerPixel === FULL_SCREEN ?
+      FULL_SCREEN :
+      convertNumToPixel(convertPixelToNum(containerPixel) / scalingRatio);
+  };
+
   useEffect(() => {
     startLoading();
     frameRef.current.addEventListener('load', (e) => {
@@ -107,25 +105,6 @@ function Previewer({ useMobileDevice }, ref) {
   useEffect(() => {
     startLoading();
   }, [url]);
-
-  useEffect(() => {
-    async function switchDebugModel() {
-      if (!useMobileDevice) {
-        setIframeContainerHeight(FULL_SCREEN);
-        setIframeContainerWidth(FULL_SCREEN);
-        setIframeWidth(FULL_SCREEN);
-        setIframeHeight(FULL_SCREEN);
-      } else if (iframeContainerWidth !== FULL_SCREEN && iframeContainerHeight !== FULL_SCREEN) {
-        setIframeWidth(
-          convertNumToPixel(convertPixelToNum(iframeContainerWidth) / scalingRatio),
-        );
-        setIframeHeight(
-          convertNumToPixel(convertPixelToNum(iframeContainerHeight) / scalingRatio),
-        );
-      }
-    }
-    switchDebugModel();
-  }, [useMobileDevice, iframeContainerWidth, iframeContainerHeight]);
 
   useImperativeHandle(ref, () => ({
     getFrameRef: () => {
@@ -142,45 +121,46 @@ function Previewer({ useMobileDevice }, ref) {
   }));
 
   return (
-    <div className={styles.container}>
-      <LoadingPercent ref={loadingPercentRef} />
-      <MobileDeviceToolbar
-        deviceHeight={convertPixelToNum(iframeContainerHeight)}
-        deviceWidth={convertPixelToNum(iframeContainerWidth)}
-        setDeviceConfig={setIframe}
-        useMobileDevice={useMobileDevice}
-        scrollingRatio={scalingRatio}
-      />
-      <div className={styles.frameContainer}>
-        <Rnd
-          size={{ width: iframeContainerWidth, height: iframeContainerHeight }}
-          disableDragging
-          style={{ position: 'relative', margin: 'auto' }}
-          enableResizing={useMobileDevice && resizable && {
-            bottom: true,
-            bottomLeft: false,
-            bottomRight: true,
-            left: false,
-            right: true,
-            top: false,
-            topLeft: false,
-            topRight: false,
-          }}
-          onResizeStart={handleRndResizeStart}
-          onResize={throttle(handleRndResize)}
-        >
-          <iframe
-            className={styles.frame}
-            ref={frameRef}
-            src={url}
-            style={{
-              width: iframeWidth,
-              height: iframeHeight,
-              transform: getIframeTranslateCSS() }}
-          />
-        </Rnd>
+    <Context.Provider value={{ ...useContext(Context), deviceData, autoSetDeviceConfig, device, setDevice }}>
+      <div className={styles.container}>
+        <LoadingPercent ref={loadingPercentRef} />
+        <MobileDeviceToolbar
+          deviceHeight={convertPixelToNum(deviceHeight)}
+          deviceWidth={convertPixelToNum(deviceWidth)}
+          useMobileDevice={useMobileDevice}
+          scrollingRatio={scalingRatio}
+        />
+        <div className={styles.frameContainer}>
+          <Rnd
+            size={{ width: deviceWidth, height: deviceHeight }}
+            disableDragging
+            style={{ position: 'relative', margin: 'auto' }}
+            enableResizing={useMobileDevice && resizable && {
+              bottom: true,
+              bottomLeft: false,
+              bottomRight: true,
+              left: false,
+              right: true,
+              top: false,
+              topLeft: false,
+              topRight: false,
+            }}
+            onResizeStart={handleRndResizeStart}
+            onResize={throttle(handleRndResize, RESIZE_DELAY)}
+          >
+            <iframe
+              className={styles.frame}
+              ref={frameRef}
+              src={url}
+              style={{
+                width: getIframePixelFromContainer(deviceWidth),
+                height: getIframePixelFromContainer(deviceHeight),
+                transform: getIframeTranslateCSS() }}
+            />
+          </Rnd>
+        </div>
       </div>
-    </div>
+    </Context.Provider>
   );
 }
 

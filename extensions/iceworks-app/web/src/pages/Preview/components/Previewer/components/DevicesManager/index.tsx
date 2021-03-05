@@ -1,35 +1,36 @@
 import { Button, List, Input } from '@alifd/next';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Context } from '../../../../context';
 
-export default function MobileDeviceManager({ deviceData, setDeviceData, numberOfDefaultDevices }) {
-  const [mobileDeviceData, setMobileDeviceData] = useState(deviceData);
+export default function DeviceManager() {
+  const { deviceData, setDeviceData } = useContext(Context);
   const [valueState] = useState([]);
   function addMobileDevice() {
-    setMobileDeviceData([...mobileDeviceData, { label: 'New Device', value: '', customizeDevice: true }]);
+    setDeviceData([...deviceData, { label: 'New Device', value: '', customizeDevice: true }]);
   }
 
   function handleNewDeviceNameChange(value, index) {
-    const tempData = [...mobileDeviceData];
+    const tempData = [...deviceData];
     tempData[index].label = value;
-    setMobileDeviceData(tempData);
+    setDeviceData(tempData);
   }
 
   function handleNewDeviceValueChange(value, index) {
-    const tempData = [...mobileDeviceData];
+    const tempData = [...deviceData];
     tempData[index].value = value;
-    setMobileDeviceData(tempData);
+    setDeviceData(tempData);
     if (/d*\*d*/.test(value)) {
       valueState[index] = 'success';
-      setDeviceData(tempData.slice(numberOfDefaultDevices));
+      setDeviceData(tempData);
     } else {
       valueState[index] = 'error';
     }
   }
 
   function handleDeleteDevice(index) {
-    const newMobileData = Array.prototype.concat(mobileDeviceData.slice(0, index), mobileDeviceData.slice(index + 1));
-    setMobileDeviceData(newMobileData);
+    const newMobileData = Array.prototype.concat(deviceData.slice(0, index), deviceData.slice(index + 1));
+    setDeviceData(newMobileData);
     setDeviceData(newMobileData);
     valueState[index] = undefined;
   }
@@ -43,7 +44,7 @@ export default function MobileDeviceManager({ deviceData, setDeviceData, numberO
       </Button>
       <List size="small">
         {
-        mobileDeviceData.map((item, index) => (
+        deviceData.map((item, index) => (
           <List.Item key={index}>
             <Input
               value={item.label}

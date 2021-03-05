@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  // padding: 0 30% 0 30%;
+  margin: auto;
 }
 
 .delimiter {
@@ -17,10 +17,7 @@
   width: 450px;
   display: flex;
   height: 39px;
-}
-
-.pixelsContainer {
-  margin: auto;
+  align-items: center;
 }
 
 .selector {
@@ -46,24 +43,6 @@
 .Reverse {
   position: relative;
   margin: -14px;
-}
-
-.pixelsInput {
-  margin: 0 20px 0 20px;
-  border: 0 ;
-  background: rgba(0,0,0,0%);
-  width: 50px;
-  color: white;
-  outline: none;
-}
-
-.pixelsContainer > input :focus {
-  background: rgba(0,0,0,0%);
-}
-
-.ratio {
-  font-size: 5px;
-  color: white;
 }
 
 .scroll {
