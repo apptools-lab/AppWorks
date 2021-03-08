@@ -12,7 +12,7 @@ export const INPUT_WIDTH = 'inputWidth';
 
 export const INPUT_HEIGHT = 'inputHeight';
 
-export const DEVICE_WIDHT = 'deviceWidth';
+export const DEVICE_WIDTH = 'deviceWidth';
 
 export const DEVICE_HEIGHT = 'deviceHeight';
 

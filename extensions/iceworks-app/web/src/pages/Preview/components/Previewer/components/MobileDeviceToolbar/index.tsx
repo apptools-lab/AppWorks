@@ -74,18 +74,20 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobi
         <div className={styles.container}>
           <div className={styles.delimiter} />
           <div className={styles.toolbar}>
-            <Select
-              value={device}
-              className={styles.selector}
-              dataSource={selectDeviceItems}
-              onChange={handleDeviceChange}
-            />
-            <InputController
-              inputWidth={inputWidth}
-              inputHeight={inputHeight}
-              setInputWidth={setInputWidth}
-              setInputHeight={setInputHeight}
-            />
+            <div className={styles.miniToolBar}>
+              <Select
+                value={device}
+                className={styles.selector}
+                dataSource={selectDeviceItems}
+                onChange={handleDeviceChange}
+              />
+              <InputController
+                inputWidth={inputWidth}
+                inputHeight={inputHeight}
+                setInputWidth={setInputWidth}
+                setInputHeight={setInputHeight}
+              />
+            </div>
             <Select
               value={scrollingRatioItem.label}
               dataSource={[scrollingRatioItem]}

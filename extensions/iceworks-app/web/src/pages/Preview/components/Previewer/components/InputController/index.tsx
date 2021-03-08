@@ -1,7 +1,8 @@
 import React, { useRef, useContext, useEffect } from 'react';
 import { Input } from '@alifd/next';
 import { Context } from '../../../../context';
-import { RESPONSIVE_DEFAULT_HEIGHT, RESPONSIVE_DEFAULT_WIDTH, INPUT_HEIGHT, INPUT_WIDTH, DEVICE_WIDHT, DEVICE_HEIGHT, RESPONSIVE_DEVICE } from '../../../../../../constants';
+import { RESPONSIVE_DEFAULT_HEIGHT, RESPONSIVE_DEFAULT_WIDTH, INPUT_HEIGHT, INPUT_WIDTH, DEVICE_WIDTH, DEVICE_HEIGHT, RESPONSIVE_DEVICE } from '../../../../../../constants';
+import classNames from 'classnames';
 import styles from './index.module.scss';
 
 export default function InputController({ setInputWidth, setInputHeight, inputWidth, inputHeight }) {
@@ -15,7 +16,7 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
       switch (type) {
         case INPUT_WIDTH: setInputWidth(value); return;
         case INPUT_HEIGHT: setInputHeight(value); return;
-        case DEVICE_WIDHT: autoSetDeviceConfig(inputWidth, undefined); return;
+        case DEVICE_WIDTH: autoSetDeviceConfig(inputWidth, undefined); return;
         case DEVICE_HEIGHT: autoSetDeviceConfig(undefined, inputHeight);
       }
     }
@@ -41,18 +42,22 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
   return (
     <>
       <Input
-        className={styles.pixelsInput}
+        className={classNames(styles.pixelsInput, styles.pixelsInputLeft)}
         value={inputWidth}
         disabled={device !== RESPONSIVE_DEVICE}
         onChange={pixel => handlePixelChange(INPUT_WIDTH, pixel)}
-        onPressEnter={() => handlePixelChange(DEVICE_WIDHT)}
+        onBlur={() => handlePixelChange(DEVICE_WIDTH)}
+        onPressEnter={() => handlePixelChange(DEVICE_WIDTH)}
       />
-      x
+      <span className={styles.iconTimesContainer}>
+        <i className={styles.iconTimes} />
+      </span>
       <Input
-        className={styles.pixelsInput}
+        className={classNames(styles.pixelsInput, styles.pixelsInputRight)}
         value={inputHeight}
         disabled={device !== RESPONSIVE_DEVICE}
         onChange={pixel => handlePixelChange(INPUT_HEIGHT, pixel)}
+        onBlur={() => handlePixelChange(DEVICE_HEIGHT)}
         onPressEnter={() => handlePixelChange(DEVICE_HEIGHT)}
       />
     </>

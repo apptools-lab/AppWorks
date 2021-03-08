@@ -14,10 +14,16 @@
 }
 
 .toolbar {
-  width: 450px;
+  width: 380px;
   display: flex;
   height: 39px;
   align-items: center;
+}
+
+.miniToolBar {
+  width: 260px;
+  margin: auto;
+  justify-content: center;
 }
 
 .selector {
@@ -47,4 +53,14 @@
 
 .scroll {
   width: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .scroll {
+    display: none;
+  }
+  .iconReverseContainer {
+    display: none;
+  }
+
 }
