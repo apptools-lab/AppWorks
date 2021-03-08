@@ -40,7 +40,7 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
   }, [device, deviceWidth, deviceHeight]);
 
   return (
-    <>
+    <div className={styles.inputController}>
       <Input
         className={classNames(styles.pixelsInput, styles.pixelsInputLeft)}
         value={inputWidth}
@@ -60,6 +60,6 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
         onBlur={() => handlePixelChange(DEVICE_HEIGHT)}
         onPressEnter={() => handlePixelChange(DEVICE_HEIGHT)}
       />
-    </>
+    </div>
   );
 }

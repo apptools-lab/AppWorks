@@ -23,6 +23,7 @@
 .miniToolBar {
   width: 260px;
   margin: auto;
+  display: flex;
   justify-content: center;
 }
 
@@ -69,5 +70,11 @@
 @media screen and (min-width: 450px) {
   .selector {
     max-width: 150px;
+  }
+  .miniToolBar {
+    width: 310px;
+  }
+  .toolbar {
+    width: 450px;
   }
 }
