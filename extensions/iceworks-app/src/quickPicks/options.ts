@@ -69,6 +69,15 @@ export default [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.imgcook.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.imgcook.detail'),
+    command: 'imgcook.showPanel',
+    args: { fromIceworks: true },
+    async condition() {
+      return vscode.extensions.getExtension('imgcook.imgcook');
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.generatePage.detail'),
     command: 'iceworks-material-helper.page-generator.start',
