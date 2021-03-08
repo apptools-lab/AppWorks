@@ -35,6 +35,7 @@ function Previewer(props, ref) {
    * 宽度不超过83.33%，
    * 对于设备，响应式布局可伸缩不可缩放，其余设备不可伸缩，
    * 因此在移动端设备中，伸缩和缩放属性是互斥的
+   * 此外，最大支持100000px的输入
    * @param newWidth Number iframe 宽度
    * @param newHeight Number iframe 高度
    */
@@ -45,8 +46,10 @@ function Previewer(props, ref) {
     } else {
       const currentResizable = (currentDevice || device) === RESPONSIVE_DEVICE;
       const scalable = !currentResizable;
-      const width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
-      const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceHeight);
+      let width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
+      let height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceHeight);
+      width = Math.min(width, 100000);
+      height = Math.min(height, 100000);
       const currentScalingRatio = scalable ?
         Math.min(
           window.innerWidth / (width * (1 + DEVICE_PREVIEW_MARGIN * 2)),

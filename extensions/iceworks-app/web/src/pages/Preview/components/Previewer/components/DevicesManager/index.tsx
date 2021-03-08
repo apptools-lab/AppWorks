@@ -20,7 +20,7 @@ export default function DeviceManager() {
     const tempData = [...deviceData];
     tempData[index].value = value;
     setDeviceData(tempData);
-    if (/d*\*d*/.test(value)) {
+    if (/^[0-9]{1,5}\*[0-9]{1,5}$/.test(value)) {
       valueState[index] = 'success';
       setDeviceData(tempData);
     } else {
