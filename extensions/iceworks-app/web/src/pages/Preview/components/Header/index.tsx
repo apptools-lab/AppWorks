@@ -24,7 +24,7 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
   const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
-    setDeviceUrls(url);
+    setTtidUrls(url);
     history.push(useMobileDevice ? mobileDeviceUrl : PCUrl);
   }, []);
 
@@ -34,14 +34,14 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
       target = `https://${newUrl}`;
     }
     setUrl(target);
-    setDeviceUrls(target);
+    setTtidUrls(target);
     setInputUrl(target);
     if (!fromHistory) {
       history.push(target);
     }
   };
 
-  const setDeviceUrls = (target) => {
+  const setTtidUrls = (target) => {
     if (new RegExp(PHONE_NODE_QUERY).test(target)) {
       setMobileDeviceUrl(target);
       setPCUrl(target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]*$/, ''));
@@ -53,7 +53,7 @@ export default function ({ setUseMobileDevice, useMobileDevice }) {
 
   const handleEnter = (e) => {
     setNewUrl(e.target.value);
-    setDeviceUrls(e.target.value);
+    setTtidUrls(e.target.value);
   };
 
   const handlePhoneIconClick = () => {

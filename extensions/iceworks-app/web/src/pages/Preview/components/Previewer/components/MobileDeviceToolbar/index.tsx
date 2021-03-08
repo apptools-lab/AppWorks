@@ -3,7 +3,7 @@ import { Select, Drawer } from '@alifd/next';
 import DeviceManager from '../DevicesManager';
 import { Context } from '../../../../context';
 import InputController from '../InputController';
-import { editItem, Edit_DEVICE, FULL_SCREEN, responsiveItem, RESPONSIVE_DEFAULT_HEIGHT, RESPONSIVE_DEFAULT_WIDTH, RESPONSIVE_DEVICE } from '../../../../../../constants';
+import { editItem, EDIT_DEVICE, FULL_SCREEN, responsiveItem, RESPONSIVE_DEFAULT_HEIGHT, RESPONSIVE_DEFAULT_WIDTH, RESPONSIVE_DEVICE } from '../../../../../../constants';
 import styles from './index.module.scss';
 
 export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobileDevice, scrollingRatio }) {
@@ -26,7 +26,7 @@ export default function MobileDeviceToolbar({ deviceWidth, deviceHeight, useMobi
     width = isNaN(width) || width === undefined ? RESPONSIVE_DEFAULT_WIDTH : width;
     height = isNaN(width) || height === undefined ? RESPONSIVE_DEFAULT_HEIGHT : height;
 
-    if (value === Edit_DEVICE) {
+    if (value === EDIT_DEVICE) {
       setShowDeviceDrawer(true);
     } else {
       setDevice(currentDevice);
