@@ -46,7 +46,7 @@ function Previewer(props, ref) {
       const currentResizable = (currentDevice || device) === RESPONSIVE_DEVICE;
       const scalable = !currentResizable;
       const width = newWidth !== undefined ? newWidth : convertPixelToNum(deviceWidth);
-      const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceWidth);
+      const height = newHeight !== undefined ? newHeight : convertPixelToNum(deviceHeight);
       const currentScalingRatio = scalable ?
         Math.min(
           window.innerWidth / (width * (1 + DEVICE_PREVIEW_MARGIN * 2)),
