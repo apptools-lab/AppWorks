@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import AddIcon from '@/assets/add.svg';
 import styles from './index.module.scss';
 
@@ -9,6 +10,11 @@ const AddScaffoldCard = ({ onClick }) => {
       onClick={onClick}
     >
       <img src={AddIcon} alt="addIcon" className={styles.addIcon} />
+      <div className={styles.mark}>
+        <div className={styles.content}>
+          <FormattedMessage id="web.iceworksProjectCreator.customScaffold.title" />
+        </div>
+      </div>
     </div>
   );
 };

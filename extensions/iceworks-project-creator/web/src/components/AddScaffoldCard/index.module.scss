@@ -13,4 +13,28 @@
     width: 40px;
     height: 40px;
   }
+
+  .mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background-color: black;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+
+    .content {
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+
+  &:hover .mark {
+    opacity: 0.8;
+  }
 }
