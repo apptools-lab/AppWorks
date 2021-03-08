@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.18.0
+
+- feat: add icon for webview
+- feat: custom scaffold to create project
+- feat: upgrade browser preview
+- refactor: optimization Time Master
+- refactor: internal optimization
+- fix: name compatibility handling when adding blocks and components to code
+- chore: typo
+
 ## 0.17.2
 
 - feat: auto fill React/Rax Code to File
