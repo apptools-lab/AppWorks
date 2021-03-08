@@ -28,8 +28,10 @@ export default function InputController({ setInputWidth, setInputHeight, inputWi
         setInputHeight(responsiveHeightCache.current);
         autoSetDeviceConfig(responsiveWidthCache.current, responsiveHeightCache.current);
       }
-      responsiveWidthCache.current = inputWidth;
-      responsiveHeightCache.current = inputHeight;
+      setInputWidth(deviceWidth);
+      setInputHeight(deviceHeight);
+      responsiveWidthCache.current = deviceWidth;
+      responsiveHeightCache.current = deviceHeight;
       saveCache.current = true;
     } else {
       saveCache.current = false;
