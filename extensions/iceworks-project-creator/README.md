@@ -30,8 +30,6 @@ Create a Universal Application(React/Rax/Vue, etc) quickly.
 
 ### Activate Extension
 
-在选择模板创建应用面板中点击 `+` 图标，以激活自定义模板创建应用：
-
 Cick the `+` Icon in the `Select Scaffold to Create Application` panel to activate it.
 
 ![activate](https://img.alicdn.com/imgextra/i1/O1CN01HopvJI1tZ7OLc432p_!!6000000005915-2-tps-2048-1536.png)
