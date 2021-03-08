@@ -68,5 +68,6 @@
   "web.iceworksApp.Dashboard.doctor.reportProblem": " 反馈",
   "web.iceworksApp.Dashboard.doctor.projectScale": "项目规模",
   "web.iceworksApp.Dashboard.doctor.filesNumber": "文件总数：",
-  "web.iceworksApp.Dashboard.doctor.LoC": "总行数/平均行数"
+  "web.iceworksApp.Dashboard.doctor.LoC": "总行数/平均行数",
+  "web.iceworksApp.Preview.mobileDeviceManager.delete": "删除"
 }

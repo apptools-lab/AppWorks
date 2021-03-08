@@ -3,7 +3,7 @@
   "displayName": "Application Manager",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -307,6 +307,22 @@
           "type": "boolean",
           "default": true,
           "description": "%iceworksApp.configuration.properties.iceworks.showWelcomePage.description%"
+        },
+        "iceworks.previewConfig": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "PC",
+            "mobile"
+          ],
+          "default": "auto",
+          "description": "%iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description%"
+        },
+        "iceworks.customizePreviewDevices": {
+          "type": "array",
+          "default": [],
+          "description": "%iceworksApp.configuration.properties.iceworks.customizeDevices.description%",
+          "examples": "[{label: \"iphoneX\",value: \"375*812\"}]"
         }
       }
     }

@@ -17,13 +17,15 @@ const PHONE_NODE_QUERY = 'wh_ttid=@phone';
 
 const history = new UrlHistory();
 
-export default function () {
+export default function ({ setUseMobileDevice, useMobileDevice }) {
   const { url, setUrl, previewerRef } = useContext(Context);
-
+  const [mobileDeviceUrl, setMobileDeviceUrl] = useState('');
+  const [PCUrl, setPCUrl] = useState('');
   const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
-    history.push(url);
+    setTtidUrls(url);
+    history.push(useMobileDevice ? mobileDeviceUrl : PCUrl);
   }, []);
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
@@ -32,24 +34,31 @@ export default function () {
       target = `https://${newUrl}`;
     }
     setUrl(target);
+    setTtidUrls(target);
     setInputUrl(target);
     if (!fromHistory) {
       history.push(target);
     }
   };
 
+  const setTtidUrls = (target) => {
+    if (new RegExp(PHONE_NODE_QUERY).test(target)) {
+      setMobileDeviceUrl(target);
+      setPCUrl(target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]*$/, ''));
+    } else {
+      setMobileDeviceUrl(target);
+      setPCUrl(`${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`);
+    }
+  };
+
   const handleEnter = (e) => {
     setNewUrl(e.target.value);
+    setTtidUrls(e.target.value);
   };
 
   const handlePhoneIconClick = () => {
-    let newUrl = '';
-    if (new RegExp(PHONE_NODE_QUERY).test(url)) {
-      newUrl = url.replace(PHONE_NODE_QUERY, '').replace(/[?|&]$/, '');
-    } else {
-      newUrl = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
-    }
-    setNewUrl(newUrl);
+    setNewUrl(useMobileDevice ? PCUrl : mobileDeviceUrl);
+    setUseMobileDevice(!useMobileDevice);
   };
 
   const getCacheUrl = (delta: number) => {

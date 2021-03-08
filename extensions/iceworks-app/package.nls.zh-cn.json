@@ -26,6 +26,8 @@
   "iceworksApp.configuration.properties.iceworks.packageManager.description": "Iceworks npm 包管理工具",
   "iceworksApp.configuration.properties.iceworks.npmRegistry.description": "Iceworks npm 镜像源",
   "iceworksApp.configuration.properties.iceworks.showWelcomePage.description": "是否显示欢迎页",
+  "iceworksApp.configuration.properties.iceworks.debugInMobileDevice.description": "选择在哪种设备中调试",
+  "iceworksApp.configuration.properties.iceworks.customizeDevices.description": "自定义移动设备",
   "iceworksApp.kaitianContributes.toolbar.runDebug.title": "启动调试",
   "iceworksApp.kaitianContributes.toolbar.reinstall.title": "重装依赖",
   "iceworksApp.kaitianContributes.toolbar.DefPublish.title": "DEF 发布"
