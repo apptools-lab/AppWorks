@@ -1,8 +1,8 @@
 {
   "extension.iceworksApp.showEntriesQuickPick.projectCreator.label": "选择模板创建应用",
   "extension.iceworksApp.showEntriesQuickPick.projectCreator.detail": "选择模板快速创建多端应用（例如：React/Rax/Vue...）",
-  "extension.iceworksApp.showEntriesQuickPick.customScaffold.label": "配置模板创建应用",
-  "extension.iceworksApp.showEntriesQuickPick.customScaffold.detail": "配置模板快速创建 React 应用",
+  "extension.iceworksApp.showEntriesQuickPick.customScaffold.label": "自定义模板创建应用",
+  "extension.iceworksApp.showEntriesQuickPick.customScaffold.detail": "自定义模板快速创建 React 应用",
   "extension.iceworksApp.showEntriesQuickPick.generatePage.label": "使用区块组装页面",
   "extension.iceworksApp.showEntriesQuickPick.generatePage.detail": "通过区块组装的方式生成页面",
   "extension.iceworksApp.showEntriesQuickPick.createPage.label": "使用模板生成页面",

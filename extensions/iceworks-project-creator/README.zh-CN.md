@@ -26,6 +26,22 @@
 2. 输入应用信息
 3. 创建应用并自动打开应用
 
+## 自定义模板创建应用
+
+### 激活
+
+在选择模板创建应用面板中点击 `+` 图标，以激活自定义模板创建应用：
+
+![激活](https://img.alicdn.com/imgextra/i1/O1CN01HopvJI1tZ7OLc432p_!!6000000005915-2-tps-2048-1536.png)
+
+### 使用
+
+1. 选择模板配置
+2. 输入应用信息
+3. 创建应用并自动打开应用
+
+![使用示例](https://img.alicdn.com/imgextra/i1/O1CN01hZXkG11QoZu7XPRtS_!!6000000002023-1-tps-2048-1536.gif)
+
 ## 更多
 
 本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。
