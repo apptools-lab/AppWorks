@@ -1,0 +1,46 @@
+.pixelsInput {
+  border: 0 ;
+  background: rgba(0,0,0,0%);
+  width: 50px;
+  color: white;
+  outline: none;
+  height: 30px;
+  line-height: 30px;
+
+}
+
+.pixelsInput > input {
+  text-align: center;
+}
+
+.pixelsInputLeft {
+  margin-left: 20px;
+}
+
+.pixelsInputRight {
+  margin-right: 20px;
+}
+
+.iconTimesContainer {
+  margin: auto;
+  height: 30px;
+}
+
+.iconTimes {
+  font-family: "header-icon" !important;
+  font-size: 15px;
+  vertical-align: middle;
+  font-style: normal;
+  margin: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  &::before {
+    content: "\e619";
+  }
+}
+
+.inputController {
+  width: 160px;
+  margin: auto;
+  height: 100%;
+}

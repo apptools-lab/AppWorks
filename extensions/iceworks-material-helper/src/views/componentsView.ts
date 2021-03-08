@@ -12,6 +12,15 @@ const { window, commands } = vscode;
 
 const addComponentTypeOptions = [
   {
+    label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.label'),
+    detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.detail'),
+    command: 'imgcook.showPanel',
+    args: { fromIceworks: true },
+    async condition() {
+      return vscode.extensions.getExtension('imgcook.imgcook');
+    },
+  },
+  {
     label: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.label'),
     detail: i18n.format('extension.iceworksMaterialHelper.showEntriesQuickPick.generateComponent.detail'),
     command: 'iceworks-ui-builder.design-component',
@@ -32,8 +41,11 @@ async function showAddComponentQuickPick() {
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
       const currentExtension = addComponentTypeOptions.find((option) => option.label === selection[0].label)!;
-      commands.executeCommand(currentExtension.command);
-      quickPick.dispose();
+      if (currentExtension) {
+        const { command, args } = currentExtension;
+        commands.executeCommand(command, args);
+        quickPick.dispose();
+      }
     }
   });
   quickPick.onDidHide(() => quickPick.dispose());
@@ -114,7 +126,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ItemData> {
       'download.svg',
       {
         command: 'iceworks-material-helper.component-creator.start',
-        title: createComponentLabel
+        title: createComponentLabel,
       },
     );
     items.push(createComponentItem);
@@ -127,7 +139,7 @@ class ComponentsProvider implements vscode.TreeDataProvider<ItemData> {
         'image.svg',
         {
           command: 'iceworks-ui-builder.design-component',
-          title: generateComponentLabel
+          title: generateComponentLabel,
         },
       );
       items.push(generateComponentItem);

@@ -1,0 +1,80 @@
+.container {
+  height: 40px;
+  background: #35363a;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.delimiter {
+  height: 1px;
+  background: #050505;
+  width: 100%;
+}
+
+.toolbar {
+  width: 400px;
+  display: flex;
+  height: 39px;
+  align-items: center;
+}
+
+.miniToolBar {
+  width: 260px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.selector {
+  margin: auto;
+  background: rgba(0,0,0,0%);
+  max-width: 100px;
+}
+
+.iconReverse {
+  font-family: "header-icon" !important;
+  font-size: 18px;
+  font-style: normal;
+  margin: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  &::before {
+    content: "\e64d";
+  }
+}
+.iconReverseContainer {
+  margin: auto;
+  margin-left: 20px;
+}
+
+.Reverse {
+  position: relative;
+  margin: -14px;
+}
+
+.scroll {
+  width: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .scroll {
+    display: none;
+  }
+  .iconReverseContainer {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .selector {
+    max-width: 150px;
+  }
+  .miniToolBar {
+    width: 310px;
+  }
+  .toolbar {
+    width: 450px;
+  }
+}

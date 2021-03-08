@@ -95,7 +95,6 @@ export default function BasicLayout({
 
   useEffect(() => {
     window.addEventListener('message', handleMessageReceiver, true);
-
     return () => {
       window.removeEventListener('message', handleMessageReceiver, true);
     };

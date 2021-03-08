@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/constant",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "constants for iceworks",
   "main": "lib/index.js",
   "scripts": {

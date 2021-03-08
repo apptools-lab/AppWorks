@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.5
+
+- refactor: internal optimization
+
 ## 0.4.4
 
 - refactor: internal optimization

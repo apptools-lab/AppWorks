@@ -6,13 +6,14 @@
 
   :global {
     .next-card-content-container {
-      padding: 0 30px;
+      padding: 0 0 16px 0;
     }
   }
   .header {
     display: flex;
     justify-content: space-between;
     margin: 30px 0 50px;
+    padding: 0 30px;
 
     .title {
       font-size: 24px;
@@ -30,4 +31,9 @@
 
 .btn {
   margin-right: 10px;
+}
+
+.createProjectForm {
+  margin: 0 30px;
+  width: 100%;
 }

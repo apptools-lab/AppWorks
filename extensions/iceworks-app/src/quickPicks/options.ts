@@ -16,6 +16,14 @@ export default [
     },
   },
   {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.customScaffold.detail'),
+    command: 'iceworks-project-creator.custom-scaffold.start',
+    async condition() {
+      return vscode.extensions.getExtension('iceworks-team.iceworks-project-creator');
+    },
+  },
+  {
     label: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.label'),
     detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.dashboard.detail'),
     command: 'iceworksApp.dashboard.start',
@@ -58,6 +66,15 @@ export default [
     command: 'iceworksApp.scripts.DefPublish',
     async condition() {
       return (await checkIsAliInternal()) && await checkIsTargetProjectType();
+    },
+  },
+  {
+    label: i18n.format('extension.iceworksApp.showEntriesQuickPick.imgcook.label'),
+    detail: i18n.format('extension.iceworksApp.showEntriesQuickPick.imgcook.detail'),
+    command: 'imgcook.showPanel',
+    args: { fromIceworks: true },
+    async condition() {
+      return vscode.extensions.getExtension('imgcook.imgcook');
     },
   },
   {

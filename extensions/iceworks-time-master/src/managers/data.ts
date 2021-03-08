@@ -3,11 +3,13 @@ import { KeystrokeStats, updateFilesSummary as updateFilesSummaryByKeystrokeStat
 import { UsageStats, updateFilesSummary as updateFilesSummaryByUsageStats } from '../recorders/usageStats';
 import { updateProjectSummary, generateProjectReport } from '../storages/project';
 import { updateUserSummary, generateUserReport } from '../storages/user';
-import { checkMidnight, refreshViews } from './walkClock';
+import { checkMidnight } from './walkClock';
 import { Progress } from '../utils/progress';
 import { appendKeystrokesPayload, appendUsageTimePayload } from '../utils/sender';
 import logger from '../utils/logger';
 import { delay } from '../utils/common';
+import { refreshViews } from '../views';
+import { getIsProcessingData, setIsProcessingData } from './processing';
 
 async function saveDataToDisk(data: KeystrokeStats|UsageStats) {
   const { project } = data;
@@ -28,16 +30,19 @@ async function appendDataToPayload(data: KeystrokeStats|UsageStats) {
     await appendUsageTimePayload(data);
 }
 
-// TODO async logic
-let isProcessing = false;
 export async function processData(data: KeystrokeStats|UsageStats) {
-  logger.debug('[data][processData] isProcessing', isProcessing);
-  if (!isProcessing) {
-    isProcessing = true;
-    await checkMidnight();
-    await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
-    isProcessing = false;
+  const isProcessingData = getIsProcessingData();
+  logger.info('[data][processData] run, isProcessingData:', isProcessingData);
+  if (!isProcessingData) {
+    setIsProcessingData(true);
+    try {
+      await checkMidnight();
+      await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
+    } finally {
+      setIsProcessingData(false);
+    }
   } else {
+    logger.info('[data][processData] delay');
     await delay(1000);
     await processData(data);
   }

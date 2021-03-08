@@ -3,7 +3,7 @@
   "displayName": "UI Designer",
   "description": "Build UI by visual way",
   "publisher": "iceworks-team",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -60,8 +60,9 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@iceworks/constant": "^0.1.5",
     "@iceworks/i18n": "^0.1.0",
-    "@iceworks/material-engine": "^0.1.0",
+    "@iceworks/material-engine": "^0.2.0",
     "@iceworks/recorder": "^0.1.6",
     "@iceworks/vscode-webview": "^0.1.1"
   },

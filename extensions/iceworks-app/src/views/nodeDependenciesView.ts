@@ -146,7 +146,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
           [],
           vscode.TreeItemCollapsibleState.Collapsed,
           nodeDepType,
-          'dependency-entry.svg'
+          'dependency-entry.svg',
         );
       },
     ));
@@ -161,7 +161,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
       'dep-reinstall.svg',
       {
         command: 'iceworksApp.nodeDependencies.reinstall',
-        title: reinstallLabel
+        title: reinstallLabel,
       },
     );
     items.push(reinstallItem);
@@ -173,7 +173,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
       'install.svg',
       {
         command: 'iceworksApp.nodeDependencies.addDepsAndDevDeps',
-        title: addDepsLabel
+        title: addDepsLabel,
       },
     );
     items.push(addDepsItem);
@@ -248,6 +248,4 @@ export function createNodeDependenciesTreeView(context) {
 
   return treeView;
 }
-
-
 

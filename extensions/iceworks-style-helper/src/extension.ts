@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   cssClassAutoCompete(context);
   inlineStyleAutoComplete(context);

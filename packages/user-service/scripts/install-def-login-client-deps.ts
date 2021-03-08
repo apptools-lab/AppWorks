@@ -18,7 +18,7 @@ import * as spawn from 'cross-spawn';
       stdio: 'inherit',
       cwd,
     });
-  } catch {
-    // ignore
+  } catch (e) {
+    console.log(e);
   }
 })();

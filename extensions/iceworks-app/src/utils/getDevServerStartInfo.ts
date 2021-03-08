@@ -26,7 +26,7 @@ const READER_INTERVAL = 100;
 // Temp file valid time(compare to the 'compiledTime'). If over 5 minutes might read the old file.
 const MAX_VALID_INTERVAL = 300000;
 
-function getDevInfo(root: string) {
+export function getDevInfo(root: string) {
   let devInfo = null;
   const tempFilePath = path.join(root, DEV_INFO_FILE);
   try {

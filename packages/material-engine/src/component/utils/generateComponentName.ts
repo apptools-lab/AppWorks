@@ -1,5 +1,5 @@
-import * as upperCamelCase from 'uppercamelcase';
+import formatMaterialName from '../../utils/formatMaterialName';
 
 export default function generateComponentName(name: string): string {
-  return upperCamelCase(name);
+  return formatMaterialName(name);
 }

@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.8.3
+- feat: support preview in mobile device
+
+## 0.8.2
+
+- refactor: internal optimization
+- fix: preview frame mobile mode switch
+- feat: preview frame add page select
+- feat: auto open preview frame when `npm run start` in O2
+- feat: add custom-scaffold entry
+- chore: add icon for WebviewPanel
+
 ## 0.8.1
 
 - feat: add actions for NODE DEPENDENCIES view

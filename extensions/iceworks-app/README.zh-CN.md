@@ -80,6 +80,22 @@
 
 ![使用示例](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
+#### 使用移动端预览
+
+![使用示例](https://img.alicdn.com/imgextra/i2/O1CN01xHrOWW1yl5pIYtMJ1_!!6000000006618-1-tps-1024-768.gif)
+
+1. 单击手机图标打开手机调试模式
+2. 选择不同的设备进行调试
+3. 在响应式设备中，可以编辑设备尺寸，或使用拖拽调整设备
+
+#### 添加调试设别
+
+![使用示例](https://img.alicdn.com/imgextra/i4/O1CN019qlxQR21Mldeemi9g_!!6000000006971-1-tps-1024-768.gif)
+
+1. 在设备选项中选择`Edit`编辑设备选项
+2. 添加或删除设备信息
+3. 选择自定义的设备进行调试
+
 更多请看[参考文档](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.md)
 
 ### 依赖信息视图

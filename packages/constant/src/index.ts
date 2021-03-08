@@ -23,6 +23,7 @@ export const ALI_TASKRESULT_URL = Base64.decode(
 );
 export const ALI_APPLYREPO_URL = Base64.decode('aHR0cHM6Ly9hcGkuZGVmLmFsaWJhYmEtaW5jLmNvbS9hcGkvd29yay9yZXBvL2FwcGx5');
 export const ALI_GITLAB_URL = Base64.decode('Z2l0QGdpdGxhYi5hbGliYWJhLWluYy5jb20=');
+export const ALI_DEF_URL = Base64.decode('aHR0cDovL2RlZi5hbGliYWJhLWluYy5jb20=');
 export const ALI_DEF_BASIC_URL = Base64.decode('aHR0cHM6Ly9hcGkuZGVmLmFsaWJhYmEtaW5jLmNvbS9hcGkvd29yay9hcHAvYmFzaWM=');
 export const ALI_DEF_WORK_URL = Base64.decode('aHR0cHM6Ly93b3JrLmRlZi5hbGliYWJhLWluYy5jb20=');
 export const ALI_EMAIL = Base64.decode('YWxpYmFiYS1pbmMuY29t');
@@ -31,3 +32,4 @@ export const ALI_DIP_PRO = Base64.decode('aHR0cHM6Ly9pY2V3b3Jrcy1pZHAuZnguYWxpYm
 
 export const ALI_EXTENSION_UPLOAD_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi91cGxvYWQ=');
 export const ALI_EXTENSION_STATUS_UPDATE_URL = Base64.decode('aHR0cHM6Ly9tYXJrZXRwbGFjZS5hbnRmaW4taW5jLmNvbS9vcGVuYXBpL2V4dGVuc2lvbi9zdGF0dXM=');
+export const ICEWORKS_ICON_PATH = 'https://img.alicdn.com/imgextra/i4/O1CN01NMFwbL1ygVrUQgs69_!!6000000006608-2-tps-65-74.png';

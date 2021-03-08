@@ -1,8 +1,8 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as userHome from 'user-home';
+import { storagePath as iceworksStoragePath } from '@iceworks/storage';
 import { getDataFromSettingJson } from '@iceworks/common-service';
-import { getNowDay } from './time';
+import { getNowDay } from './day';
 
 const orderBy = require('lodash.orderby');
 const mkdirp = require('mkdirp');
@@ -10,7 +10,6 @@ const mkdirp = require('mkdirp');
 const CONFIGURATION_KEY_TIME_STORAGE_LIMIT = 'timeLimit';
 const DEFAULT_TIME_STORAGE_LIMIT = 7;
 
-const iceworksStoragePath = path.join(userHome, '.iceworks');
 const EXTENSION_TAG = 'TimeMaster';
 
 export function getStoragePath() {
@@ -21,14 +20,6 @@ export function getStoragePath() {
   return storagePath;
 }
 
-export function getLogsPath() {
-  const logsPath = path.join(iceworksStoragePath, 'logs', EXTENSION_TAG);
-  if (!fse.existsSync(logsPath)) {
-    mkdirp.sync(logsPath);
-  }
-  return logsPath;
-}
-
 export function getStorageDaysPath() {
   const storagePath = getStoragePath();
   const storageDaysPath = path.join(storagePath, 'days');
@@ -36,15 +27,6 @@ export function getStorageDaysPath() {
     mkdirp.sync(storageDaysPath);
   }
   return storageDaysPath;
-}
-
-export function getStoragePayloadsPath() {
-  const storagePath = getStoragePath();
-  const storagePayloadsPath = path.join(storagePath, 'payloads');
-  if (!fse.existsSync(storagePayloadsPath)) {
-    mkdirp.sync(storagePayloadsPath);
-  }
-  return storagePayloadsPath;
 }
 
 export function getStorageReportsPath() {
@@ -73,9 +55,9 @@ export async function getStorageDaysDirs() {
     const fileIsExists = await fse.pathExists(filePath);
 
     // TODO more rigorous
-    return fileIsExists ?
-      ((await fse.stat(filePath)).isDirectory() ? fileName : undefined) :
-      undefined;
+    if (fileIsExists) {
+      return (await fse.stat(filePath)).isDirectory() ? fileName : undefined;
+    }
   }))).filter((isDirectory) => isDirectory));
   return dayDirPaths;
 }
@@ -91,7 +73,10 @@ export async function checkStorageDaysIsLimited() {
   if (isExcess) {
     const storageDaysPath = getStorageDaysPath();
     await Promise.all(storageDaysDirs.splice(0, excess).map(async (dayDir) => {
-      await fse.remove(path.join(storageDaysPath, dayDir));
+      const dayPath = path.join(storageDaysPath, dayDir);
+      if (await fse.pathExists(dayPath)) {
+        await fse.remove(dayPath);
+      }
     }));
   }
 }

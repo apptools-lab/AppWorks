@@ -1,14 +1,13 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
+const path = require('path');
+const fs = require('fs');
 const mkdirp = require('mkdirp');
 const utility = require('utility');
 const { Transport } = require('egg-logger');
 
-/**
- * output log into file {@link Transport}。
- */
-export default class FileTransport extends Transport {
+const limitSize = 1024 * 1024 * 20;
+
+class FileTransport extends Transport {
+
   /**
    * @constructor
    * @param {Object} options
@@ -85,6 +84,12 @@ export default class FileTransport extends Transport {
    */
   _createStream() {
     mkdirp.sync(path.dirname(this.options.file));
+    if (fs.existsSync(this.options.file)) {
+      const { size } = fs.statSync(this.options.file);
+      if (size > limitSize) {
+        fs.unlinkSync(this.options.file);
+      }
+    }
     const stream = fs.createWriteStream(this.options.file, { flags: 'a' });
 
     const onError = err => {
@@ -110,3 +115,5 @@ export default class FileTransport extends Transport {
     }
   }
 }
+
+module.exports = FileTransport;

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Balloon, Icon, Input } from '@alifd/next';
 import classNames from 'classnames';
+import PageSelect from './PageSelect';
 import QRCodeWrap from '../QRCodeWrap/';
 import { UrlHistory } from './url-history';
+import { Context } from '../../context';
 import { BLANK_URL } from '../../config';
+
 import styles from './index.module.scss';
 import './icon.css';
 
@@ -11,20 +14,18 @@ import './icon.css';
 // H5: https://www.tmall.com/?wh_ttid=@phone
 const PHONE_NODE_QUERY = 'wh_ttid=@phone';
 
-interface IProps {
-  url: string;
-  setUrl: any;
-  refresh: any;
-}
 
 const history = new UrlHistory();
 
-export default function (props: IProps) {
-  const { url, setUrl, refresh } = props;
-  const [currentUrl, setCurrentUrl] = useState(url);
+export default function ({ setUseMobileDevice, useMobileDevice }) {
+  const { url, setUrl, previewerRef } = useContext(Context);
+  const [mobileDeviceUrl, setMobileDeviceUrl] = useState('');
+  const [PCUrl, setPCUrl] = useState('');
+  const [inputUrl, setInputUrl] = useState(url);
 
   useEffect(() => {
-    history.push(url);
+    setTtidUrls(url);
+    history.push(useMobileDevice ? mobileDeviceUrl : PCUrl);
   }, []);
 
   const setNewUrl = (newUrl: string, fromHistory = false) => {
@@ -33,24 +34,31 @@ export default function (props: IProps) {
       target = `https://${newUrl}`;
     }
     setUrl(target);
-    setCurrentUrl(target);
+    setTtidUrls(target);
+    setInputUrl(target);
     if (!fromHistory) {
       history.push(target);
     }
   };
 
+  const setTtidUrls = (target) => {
+    if (new RegExp(PHONE_NODE_QUERY).test(target)) {
+      setMobileDeviceUrl(target);
+      setPCUrl(target.replace(PHONE_NODE_QUERY, '').replace(/[?|&]*$/, ''));
+    } else {
+      setPCUrl(target);
+      setMobileDeviceUrl(`${target}${target.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`);
+    }
+  };
+
   const handleEnter = (e) => {
     setNewUrl(e.target.value);
+    setTtidUrls(e.target.value);
   };
 
   const handlePhoneIconClick = () => {
-    let newUrl = '';
-    if (new RegExp(PHONE_NODE_QUERY).test(url)) {
-      newUrl = url.replace(PHONE_NODE_QUERY, '');
-    } else {
-      newUrl = `${url}${url.indexOf('?') === -1 ? '?' : '&'}${PHONE_NODE_QUERY}`;
-    }
-    setNewUrl(newUrl);
+    setNewUrl(useMobileDevice ? PCUrl : mobileDeviceUrl);
+    setUseMobileDevice(!useMobileDevice);
   };
 
   const getCacheUrl = (delta: number) => {
@@ -84,10 +92,17 @@ export default function (props: IProps) {
           <QRCodeWrap url={url} />
         </div>
       </Balloon>
-      <div className={styles.icon} onClick={() => { refresh && refresh(); }}>
+      <div className={styles.icon} onClick={() => { previewerRef?.current.refresh(); }}>
         <Icon type="refresh" size="xs" />
       </div>
-      <Input value={currentUrl} size="medium" hasBorder={false} onChange={(value) => { setCurrentUrl(value); }} onPressEnter={handleEnter} />
+      <Input
+        addonBefore={<PageSelect onChange={setNewUrl} />}
+        value={inputUrl}
+        size="medium"
+        hasBorder={false}
+        onChange={(value) => { setInputUrl(value); }}
+        onPressEnter={handleEnter}
+      />
     </div>
   );
 }

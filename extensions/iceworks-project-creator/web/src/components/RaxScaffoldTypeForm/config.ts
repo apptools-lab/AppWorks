@@ -19,7 +19,7 @@ export const webAppTypes: IAppType[] = [
     title: 'SPA',
     pubType: 'web',
     icon: 'https://gw.alicdn.com/tfs/TB1Qx3Feq61gK0jSZFlXXXDKFXa-200-200.svg',
-    description: '将 App 工程变成多页面工程，每个页面会构建出独立的资源文件。',
+    description: '单页应用(Single Page Application)，相比多页应用它具有更好的页面切换体验和更一致的状态管理模式。',
   },
 ];
 

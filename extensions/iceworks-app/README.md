@@ -73,6 +73,22 @@ Welcome interface provides video tutorial of using Iceworks.
 
 ![debug-demo](https://img.alicdn.com/tfs/TB1vCixhP39YK4jSZPcXXXrUFXa-1200-695.gif)
 
+#### Debug in mobile device
+
+![Debug In Mobile Device](https://img.alicdn.com/imgextra/i2/O1CN01xHrOWW1yl5pIYtMJ1_!!6000000006618-1-tps-1024-768.gif)
+
+1. Click the `phone icon` to open the phone debug mode
+2. Select different devices for debugging
+3. In responsive device, you can edit the device sizes, or drop the device to adjust sizes.
+
+#### Add customize mobile devices
+
+![Add Customize Devices](https://img.alicdn.com/imgextra/i4/O1CN019qlxQR21Mldeemi9g_!!6000000006971-1-tps-1024-768.gif)
+
+1. Select `Edit` from the device options to edit
+2. Add a customize device or delete devices
+3. Select the custom device for debugging
+
 For more information, please see [Reference Document](https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-app/docs/debug.en.md)
 
 ### Node Dependencies

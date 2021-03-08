@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
 import { initExtension, registerCommand } from '@iceworks/common-service';
 import { autoSetContext as autoSetContextByProject } from '@iceworks/project-service';
+import { ICEWORKS_ICON_PATH } from '@iceworks/constant';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import autoFillContent from './autoFillContent';
@@ -12,8 +13,6 @@ import { registerDebugCommand } from './utils/debugMaterials';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 
-const { name } = require('../package.json');
-
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -23,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
   recorder.recordActivate();
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
   autoSetContextByProject();
 
   // set material importer
@@ -50,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
         },
       );
       materialImporterWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'materialimporter');
+      materialImporterWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       materialImporterWebviewPanel.onDidDispose(
         () => {
           materialImporterWebviewPanel = undefined;
@@ -85,6 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
       },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'componentcreator');
+    webviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -104,6 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
       },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagegenerator');
+    webviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(
@@ -123,6 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
       },
     );
     webviewPanel.webview.html = getHtmlForWebview(extensionPath, 'pagecreator');
+    webviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
     connectService(webviewPanel, context, { services, recorder });
   }
   subscriptions.push(

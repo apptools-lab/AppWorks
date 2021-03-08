@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
+import { ICEWORKS_ICON_PATH } from '@iceworks/constant';
 import { registerCommand, initExtension, getDataFromSettingJson } from '@iceworks/common-service';
 import recorder from './recorder';
 import getScanReport from './getScanReport';
@@ -23,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
   const useEn = vscode.env.language !== 'zh-cn';
 
   // auto set configuration
-  initExtension(context, name);
+  initExtension(context);
 
   let reportWebviewPanel: vscode.WebviewPanel | undefined;
 
@@ -94,6 +95,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     reportWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'dashboard', false, '', extraHtml);
+    reportWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
     reportWebviewPanel.onDidDispose(
       () => {
         reportWebviewPanel = undefined;

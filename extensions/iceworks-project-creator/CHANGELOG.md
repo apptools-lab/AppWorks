@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.10
+
+- refactor: internal optimization
+- fix: spa description
+- chore: add icon for WebviewPanel
+
 ## 0.4.9
 
 - refactor: internal optimization

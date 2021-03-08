@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.3
+
+- refactor: internal optimization
+
 ## 0.4.2
 
 - feat: record dau
