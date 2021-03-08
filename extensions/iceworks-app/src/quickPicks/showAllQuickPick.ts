@@ -11,8 +11,11 @@ export default async function showAllQuickPick() {
   quickPick.onDidChangeSelection((selection) => {
     if (selection[0]) {
       const currentExtension = entryOptions.find((option) => option.label === selection[0].label)!;
-      commands.executeCommand(currentExtension.command);
-      quickPick.dispose();
+      if (currentExtension) {
+        const { command, args } = currentExtension;
+        commands.executeCommand(command, args);
+        quickPick.dispose();
+      }
     }
   });
   quickPick.onDidHide(() => quickPick.dispose());
