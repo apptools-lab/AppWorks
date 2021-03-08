@@ -20,7 +20,6 @@ const config = {
   externals: {
     vscode: 'commonjs vscode',
     prettier: 'commonjs prettier',
-    '@iceworks/code-generator': 'commonjs @iceworks/code-generator',
   },
   resolve: {
     extensions: ['.ts', '.js'],

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import classnames from 'classnames';
 import { Icon } from '@alifd/next';
 import LayoutConfig from '../LayoutConfig';
 import { Base64 } from 'js-base64';
@@ -35,10 +34,11 @@ const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
     <div className={styles.scaffoldForm}>
       <div className={styles.content}>
         <iframe ref={iframeRef} className={styles.scaffoldTemplateIframe} frameBorder="0" name="scaffoldTemplate" />
-        <div onClick={() => onToggle()} className={classnames(styles.configBtn, { [styles.closeConfigBtn]: configVisible })}><Icon type={configVisible ? 'arrow-right' : 'set'} size="large" /></div>
+        <div onClick={() => onToggle()} className={styles.configBtn}><Icon type="set" size="large" /></div>
         {
           configVisible && (
           <div className={styles.config}>
+            <div onClick={() => onToggle()} className={styles.closeConfigBtn}><Icon type="arrow-right" size="large" /></div>
             <LayoutConfig value={scaffoldValue} onChange={onChange} />
           </div>
           )

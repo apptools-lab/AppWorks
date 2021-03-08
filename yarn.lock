@@ -1811,14 +1811,15 @@
     require-all "^3.0.0"
     semver "^7.3.2"
 
-"@iceworks/generate-project@^1.0.7":
-  version "1.1.6"
-  resolved "https://registry.npm.taobao.org/@iceworks/generate-project/download/@iceworks/generate-project-1.1.6.tgz#3a312a6081b2d66d46a71ba3e6cd8a09fefd9288"
-  integrity sha1-OjEqYIGy1m1Gpxuj5s2KCf79kog=
+"@iceworks/generate-project@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iceworks/generate-project/-/generate-project-1.2.2.tgz#9eb44d295baacd706ee40357fe3c5ff3c99d3829"
+  integrity sha512-xJTgDQu3kNOhyQ52wqh7l3+/g6Vlmo8V84K7tMSgFi6DOoWvhH2PWFdExo+/6FFmPGnPEiUQOsPJLpTHzCFxKg==
   dependencies:
     "@iceworks/constant" "^0.1.0"
     ejs "^3.1.3"
     fs-extra "^8.1.0"
+    fs-readdir-recursive "^1.1.0"
     glob "^7.1.6"
     ice-npm-utils "^2.0.0"
     ora "^4.0.3"

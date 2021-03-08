@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
+import { formatScaffoldToProject } from '@iceworks/generate-project';
 import generateBuildConfig from './utils/generateBuildConfig';
 import generateLayoutConfig from './utils/generateLayoutConfig';
 import generateMenuConfig from './utils/generateMenuConfig';
@@ -58,6 +59,8 @@ export async function generate(scaffoldField) {
     useLocalBlocks: false,
   });
   await scaffoldGenerator.init();
+
+  formatScaffoldToProject(projectDir);
 
   return projectDir;
 }
