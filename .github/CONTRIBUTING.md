@@ -71,7 +71,7 @@ $ code ./extensions/iceworks-app
 
 > Please see [VS Code Extension](https://code.visualstudio.com/api) for more details.
 
-#### Publish Extension
+### Publish Extension
 
 ```bash
 # Install CLI package
@@ -88,6 +88,15 @@ $ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN
 # <publisherID>.iceworks-app published to VS Code Marketplace
 ```
 
+#### Auto Publish
+
+- When your PR has been merged into `beta` branch, changed packages and VS Code Extensions will be auto published their beta versions.
+
+  You can download the beta version of extensions from the following link, only the extensions to be published will be in the package:
+
+  https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/beta/Iceworks.zip
+- When your PR has been merged into `master` branch, changed packages and VS Code Extensions will be auto published.
+
 ## Pull Request Guidelines
 
 - Only code that's ready for release should be committed to the master branch. All development should be done in dedicated branches.
@@ -103,11 +112,6 @@ $ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN
 - Make sure includes following changes:
   - Update extension or package `version` of package.json
   - Update `CHANGLOG.md` for extensions
-
-### Auto Publish
-
-- When your PR has been merged into `master`, changed packages and VS Code Extensions will be auto published.
-- When your PR has been merged into `beta`, changed packages will be auto published their beta versions.
 
 ## Issue Reporting Guidelines
 
