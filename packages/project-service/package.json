@@ -9,7 +9,7 @@
   "typings": "lib/index.d.ts",
   "dependencies": {
     "@iceworks/common-service": "^0.2.0",
-    "@iceworks/generate-project": "^1.0.7",
+    "@iceworks/generate-project": "^1.2.2",
     "@iceworks/material-utils": "^0.1.3",
     "@iceworks/project-utils": "^0.3.0",
     "@iceworks/recorder": "^0.1.0",
