@@ -29,6 +29,7 @@
 .selector {
   margin: auto;
   background: rgba(0,0,0,0%);
+  max-width: 100px;
 }
 
 .iconReverse {
@@ -62,5 +63,10 @@
   .iconReverseContainer {
     display: none;
   }
+}
 
+@media screen and (min-width: 450px) {
+  .selector {
+    max-width: 150px;
+  }
 }

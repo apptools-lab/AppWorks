@@ -82,7 +82,7 @@
 
 #### 使用移动端预览
 
-![使用示例](https://img.alicdn.com/imgextra/i4/O1CN012dDmJ81zv00cmWoXn_!!6000000006775-1-tps-1024-768.gif)
+![使用示例](https://img.alicdn.com/imgextra/i2/O1CN01xHrOWW1yl5pIYtMJ1_!!6000000006618-1-tps-1024-768.gif)
 
 1. 单击手机图标打开手机调试模式
 2. 选择不同的设备进行调试
@@ -90,7 +90,7 @@
 
 #### 添加调试设别
 
-![使用示例](https://img.alicdn.com/imgextra/i1/O1CN01OmgfkY1DxCM3s4ONw_!!6000000000282-1-tps-1024-768.gif)
+![使用示例](https://img.alicdn.com/imgextra/i4/O1CN019qlxQR21Mldeemi9g_!!6000000006971-1-tps-1024-768.gif)
 
 1. 在设备选项中选择`Edit`编辑设备选项
 2. 添加或删除设备信息
