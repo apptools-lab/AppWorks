@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.8.3
+- feat: support preview in mobile device
+
 ## 0.8.2
 
 - refactor: internal optimization
