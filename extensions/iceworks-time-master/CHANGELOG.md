@@ -3,6 +3,7 @@
 ## 0.4.4
 
 - fix: delay should limit times
+- fix: set timeout for getUserInfo 
 
 ## 0.4.3
 
