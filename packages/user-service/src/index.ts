@@ -34,6 +34,21 @@ const getUserInfoFromCommand = async function() {
   return { account: nick, empId: emp_id };
 }
 
+const promiseWithTimeout = <T>(timeoutMs: number, promise: () => Promise<T>, failureMessage?: string) => {
+  let timeoutHandle: NodeJS.Timeout;
+  const timeoutPromise = new Promise<never>((resolve, reject) => {
+    timeoutHandle = setTimeout(() => reject(new Error(failureMessage)), timeoutMs);
+  });
+
+  return Promise.race([
+    promise(),
+    timeoutPromise,
+  ]).then((result) => {
+    clearTimeout(timeoutHandle);
+    return result;
+  });
+}
+
 export async function getUserInfo(): Promise<IUserInfo> {
   // get user info from setting.json
   const userData = configure.get(CONFIGURE_USER_KEY) || {};
@@ -44,7 +59,7 @@ export async function getUserInfo(): Promise<IUserInfo> {
   } else {
     try {
       const fn = isO2 ? getUserInfoFromCommand : getUserInfoFromDefClient;
-      const { account, empid: empId } = await fn();
+      const { account, empid: empId } = await promiseWithTimeout(60000, fn, 'Timeout!!!');
       const result = { account, empId, gitlabToken };
       configure.set(CONFIGURE_USER_KEY, result);
       return result;
