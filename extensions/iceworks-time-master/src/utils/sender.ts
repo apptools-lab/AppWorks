@@ -6,7 +6,6 @@ import { KeystrokeStats, FileChange } from '../recorders/keystrokeStats';
 import { FileChangeInfo, FileEventInfo, FileUsageInfo } from '../storages/file';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
-import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
@@ -64,11 +63,6 @@ async function checkIsSendable() {
   return isAliInternal;
 }
 
-function checkIsSendNow(): boolean {
-  // Prevent multi window resource competition
-  return window.state.focused;
-}
-
 function transformDataToPayload(keystrokeStats: KeystrokeStats|UsageStats):
 Array<KeystrokesPayload|UsagePayload> {
   const data: Array<KeystrokesPayload|UsagePayload> = [];
@@ -113,30 +107,30 @@ export async function appendUsageTimePayload(usageStats: UsageStats) {
 }
 
 let isSending = false;
-export async function sendPayload() {
+export async function sendPayload(delayTimes?: number) {
+  delayTimes = Number.isInteger(delayTimes) ? delayTimes : 0;
   const isProcessingData = getIsProcessingData();
   logger.info(`[sender][sendPayload] run, isSending(${isSending}), isProcessingData(${isProcessingData})`);
   if (!isSending && !isProcessingData) {
     isSending = true;
     const isSendable = await checkIsSendable();
-    const isSendNow = checkIsSendNow();
     try {
       await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
         logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
         if (isSendable) {
-          logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
           await sendPayloadData(TYPE);
         } else {
           await clearPayloadData(TYPE);
         }
       }));
     } finally {
+      logger.info('[sender][sendPayload] set isSending to false');
       isSending = false;
     }
-  } else {
-    logger.info('[sender][sendPayload] delay');
+  } else if (delayTimes < 10) {
+    logger.info(`[sender][sendPayload] delay: delayTimes(${delayTimes})`);
     await delay(3000);
-    await sendPayload();
+    await sendPayload(delayTimes + 1);
   }
 }
 
