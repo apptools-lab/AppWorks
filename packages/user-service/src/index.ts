@@ -49,7 +49,7 @@ export async function getUserInfo(): Promise<IUserInfo> {
       configure.set(CONFIGURE_USER_KEY, result);
       return result;
     } catch (e) {
-      throw new Error(e.message);
+      throw e;
     }
   }
 }

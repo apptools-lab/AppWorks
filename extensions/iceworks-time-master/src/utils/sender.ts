@@ -114,9 +114,10 @@ export async function sendPayload(delayTimes?: number) {
   if (!isSending && !isProcessingData) {
     isSending = true;
     const isSendable = await checkIsSendable();
+    logger.info(`[sender][sendPayload] run all sendPayloadData: isSendable(${isSendable})`);
     try {
       await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
-        logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
+        logger.info(`[sender][sendPayload] run sendPayloadData(${TYPE}) `);
         if (isSendable) {
           await sendPayloadData(TYPE);
         } else {
@@ -124,7 +125,7 @@ export async function sendPayload(delayTimes?: number) {
         }
       }));
     } finally {
-      logger.info('[sender][sendPayload] set isSending to false');
+      logger.info('[sender][sendPayload] set isSending as false');
       isSending = false;
     }
   } else if (delayTimes < 10) {
