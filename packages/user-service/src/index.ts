@@ -30,7 +30,8 @@ const getUserInfoFromDefClient = co.wrap(function* () {
 });
 
 const getUserInfoFromCommand = async function() {
-  return await vscode.commands.executeCommand('core.account.get');
+  const { emp_id, nick } = await vscode.commands.executeCommand('core.account.get');
+  return { account: nick, empId: emp_id };
 }
 
 export async function getUserInfo(): Promise<IUserInfo> {
