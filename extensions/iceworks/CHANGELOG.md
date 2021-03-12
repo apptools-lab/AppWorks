@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.18.1
+
+- fix: Time Master 
+
 ## 0.18.0
 
 - feat: add icon for webview
