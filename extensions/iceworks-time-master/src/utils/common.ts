@@ -46,21 +46,6 @@ export async function wrapExecPromise(cmd: string, cwd: string) {
   return result;
 }
 
-export function promiseWithTimeout<T>(timeoutMs: number, promise: () => Promise<T>, failureMessage?: string) {
-  let timeoutHandle: NodeJS.Timeout;
-  const timeoutPromise = new Promise<never>((resolve, reject) => {
-    timeoutHandle = setTimeout(() => reject(new Error(failureMessage)), timeoutMs);
-  });
-
-  return Promise.race([
-    promise(),
-    timeoutPromise,
-  ]).then((result) => {
-    clearTimeout(timeoutHandle);
-    return result;
-  });
-}
-
 function execPromise(command: string, opts: any): Promise<string> {
   return new Promise(((resolve, reject) => {
     exec(command, opts, (error, stdout) => {

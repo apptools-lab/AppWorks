@@ -10,7 +10,7 @@ import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
 import { getIsProcessingData } from '../managers/processing';
-import { delay, promiseWithTimeout } from './common';
+import { delay } from './common';
 
 // eslint-disable-next-line
 import forIn = require('lodash.forin');
@@ -173,9 +173,8 @@ async function sendBulkCreate(type, playloadData, extra) {
   }
 }
 
-const getUserInfoTimeoutMs = timeout * 12 * 3; // 3 minutes
 async function sendPayloadData(type: PlayloadType) {
-  const { empId } = await promiseWithTimeout(getUserInfoTimeoutMs, getUserInfo, 'getUserInfo timeout!!!');
+  const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 

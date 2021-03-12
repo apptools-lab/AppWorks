@@ -3,6 +3,7 @@
 ## 0.1.1
 
 - refactor: getUserInfo from command in O2
+- fix: set timeout for getUserInfoFromDefClient
 
 ## 0.1.0
 
