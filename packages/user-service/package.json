@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/user-service",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Iceworks user service for VSCode extension.",
   "files": [
     "lib"
@@ -15,6 +15,7 @@
     "fs-extra": "^9.0.0"
   },
   "devDependencies": {
+    "@types/vscode": "^1.45.0",
     "adm-zip": "^0.4.16",
     "ali-oss": "^6.10.0",
     "cross-spawn": "^7.0.3",
