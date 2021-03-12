@@ -10,7 +10,7 @@ import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
 import { getIsProcessingData } from '../managers/processing';
-import { delay } from './common';
+import { delay, promiseWithTimeout } from './common';
 
 // eslint-disable-next-line
 import forIn = require('lodash.forin');
@@ -23,6 +23,7 @@ enum PlayloadType {
 type PlayloadData = UsagePayload[]|KeystrokesPayload[];
 
 const url = `${ALI_DIP_PRO}/api`;
+const timeout = ONE_SEC_MILLISECONDS * 5;
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
@@ -130,12 +131,11 @@ export async function sendPayload(delayTimes?: number) {
     }
   } else if (delayTimes < 10) {
     logger.info(`[sender][sendPayload] delay: delayTimes(${delayTimes})`);
-    await delay(3000);
+    await delay(timeout);
     await sendPayload(delayTimes + 1);
   }
 }
 
-const timeout = ONE_SEC_MILLISECONDS * 5;
 async function send(api: string, data: any) {
   const response = await axios({
     method: 'post',
@@ -173,9 +173,9 @@ async function sendBulkCreate(type, playloadData, extra) {
   }
 }
 
+const getUserInfoTimeoutMs = timeout * 12 * 3; // 3 minutes
 async function sendPayloadData(type: PlayloadType) {
-  // TODO get user info may fail
-  const { empId } = await getUserInfo();
+  const { empId } = await promiseWithTimeout(getUserInfoTimeoutMs, getUserInfo, 'getUserInfo timeout!!!');
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
