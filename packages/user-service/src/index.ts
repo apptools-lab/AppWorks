@@ -1,5 +1,6 @@
 import { ALI_DEF_URL } from '@iceworks/constant';
 import configure from '@iceworks/configure';
+import { checkAliInternal } from 'ice-npm-utils';
 import * as vscode from 'vscode';
 import { IUserInfo } from './types';
 
@@ -51,21 +52,26 @@ function promiseWithTimeout<T>(timeoutMs: number, promise: () => Promise<T>, fai
 
 const timeoutMs = 3 * 60 * 1000;
 export async function getUserInfo(): Promise<IUserInfo> {
-  // get user info from setting.json
+  const isAliInternal = await checkAliInternal();
   const userData = configure.get(CONFIGURE_USER_KEY) || {};
   const { empId, account, gitlabToken } = userData;
+  const gotDataInConfig = empId && account;
 
-  if (empId && account) {
+  if (gotDataInConfig) {
     return userData;
   } else {
-    try {
-      const fn = isO2 ? getUserInfoFromCommand : getUserInfoFromDefClient;
-      const { account, empid: empId } = await promiseWithTimeout(timeoutMs, fn, 'Timeout!!!');
-      const result = { account, empId, gitlabToken };
-      configure.set(CONFIGURE_USER_KEY, result);
-      return result;
-    } catch (e) {
-      throw e;
+    if (isAliInternal) {
+      try {
+        const fn = isO2 ? getUserInfoFromCommand : getUserInfoFromDefClient;
+        const { account, empid: empId } = await promiseWithTimeout(timeoutMs, fn, 'Timeout!');
+        const result = { account, empId, gitlabToken };
+        configure.set(CONFIGURE_USER_KEY, result);
+        return result;
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      return userData;
     }
   }
 }

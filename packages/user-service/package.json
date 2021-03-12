@@ -12,7 +12,8 @@
     "@iceworks/configure": "^0.1.0",
     "@iceworks/constant": "^0.1.5",
     "co": "4.6.0",
-    "fs-extra": "^9.0.0"
+    "fs-extra": "^9.0.0",
+    "ice-npm-utils": "^2.1.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.45.0",
