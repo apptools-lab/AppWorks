@@ -6,7 +6,6 @@ import { KeystrokeStats, FileChange } from '../recorders/keystrokeStats';
 import { FileChangeInfo, FileEventInfo, FileUsageInfo } from '../storages/file';
 import { getEditorInfo, getExtensionInfo, getSystemInfo, SystemInfo, EditorInfo, ExtensionInfo } from './env';
 import { ProjectInfo } from '../storages/project';
-import { window } from 'vscode';
 import logger from './logger';
 import { ONE_SEC_MILLISECONDS } from '../constants';
 import { FileUsage, UsageStats } from '../recorders/usageStats';
@@ -24,6 +23,7 @@ enum PlayloadType {
 type PlayloadData = UsagePayload[]|KeystrokesPayload[];
 
 const url = `${ALI_DIP_PRO}/api`;
+const timeout = ONE_SEC_MILLISECONDS * 5;
 
 interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
@@ -62,11 +62,6 @@ async function checkIsSendable() {
   // but he works at home does not connect to the intranet.
   const isAliInternal = await checkIsAliInternal();
   return isAliInternal;
-}
-
-function checkIsSendNow(): boolean {
-  // Prevent multi window resource competition
-  return window.state.focused;
 }
 
 function transformDataToPayload(keystrokeStats: KeystrokeStats|UsageStats):
@@ -113,34 +108,34 @@ export async function appendUsageTimePayload(usageStats: UsageStats) {
 }
 
 let isSending = false;
-export async function sendPayload() {
+export async function sendPayload(delayTimes?: number) {
+  delayTimes = Number.isInteger(delayTimes) ? delayTimes : 0;
   const isProcessingData = getIsProcessingData();
   logger.info(`[sender][sendPayload] run, isSending(${isSending}), isProcessingData(${isProcessingData})`);
   if (!isSending && !isProcessingData) {
     isSending = true;
     const isSendable = await checkIsSendable();
-    const isSendNow = checkIsSendNow();
+    logger.info(`[sender][sendPayload] run all sendPayloadData: isSendable(${isSendable})`);
     try {
       await Promise.all([PlayloadType.KEYSTROKES_RECORD, PlayloadType.USAGES_RECORD].map(async (TYPE) => {
-        logger.info(`[sender][sendPayload] ${TYPE} isSendable: ${isSendable}`);
+        logger.info(`[sender][sendPayload] run sendPayloadData(${TYPE}) `);
         if (isSendable) {
-          logger.info(`[sender][sendPayload] ${TYPE} isSendNow: ${isSendNow}`);
           await sendPayloadData(TYPE);
         } else {
           await clearPayloadData(TYPE);
         }
       }));
     } finally {
+      logger.info('[sender][sendPayload] set isSending as false');
       isSending = false;
     }
-  } else {
-    logger.info('[sender][sendPayload] delay');
-    await delay(3000);
-    await sendPayload();
+  } else if (delayTimes < 10) {
+    logger.info(`[sender][sendPayload] delay: delayTimes(${delayTimes})`);
+    await delay(timeout);
+    await sendPayload(delayTimes + 1);
   }
 }
 
-const timeout = ONE_SEC_MILLISECONDS * 5;
 async function send(api: string, data: any) {
   const response = await axios({
     method: 'post',
@@ -179,7 +174,6 @@ async function sendBulkCreate(type, playloadData, extra) {
 }
 
 async function sendPayloadData(type: PlayloadType) {
-  // TODO get user info may fail
   const { empId } = await getUserInfo();
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;

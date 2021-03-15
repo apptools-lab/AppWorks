@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.4
+
+- fix: delay should limit times
+
 ## 0.4.3
 
 - refactor: internal optimization

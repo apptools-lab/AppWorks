@@ -30,7 +30,9 @@ async function appendDataToPayload(data: KeystrokeStats|UsageStats) {
     await appendUsageTimePayload(data);
 }
 
-export async function processData(data: KeystrokeStats|UsageStats) {
+export async function processData(data: KeystrokeStats|UsageStats, delayTimes?: number) {
+  delayTimes = Number.isInteger(delayTimes) ? delayTimes : 0;
+
   const isProcessingData = getIsProcessingData();
   logger.info('[data][processData] run, isProcessingData:', isProcessingData);
   if (!isProcessingData) {
@@ -39,12 +41,13 @@ export async function processData(data: KeystrokeStats|UsageStats) {
       await checkMidnight();
       await Promise.all([saveDataToDisk(data), appendDataToPayload(data)]);
     } finally {
+      logger.info('[data][processData] set isProcessingData as false');
       setIsProcessingData(false);
     }
-  } else {
-    logger.info('[data][processData] delay');
+  } else if (delayTimes < 10) {
+    logger.info(`[data][processData] delay: delayTimes(${delayTimes})`);
     await delay(1000);
-    await processData(data);
+    await processData(data, delayTimes + 1);
   }
 }
 
