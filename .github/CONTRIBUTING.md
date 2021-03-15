@@ -102,9 +102,9 @@ $ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN
 Get a Personal Access Token:
 
 1. From organization's home page(`https://dev.azure.com/iceworksteam`) open the User settings dropdown menu next to your profile image and select **Personal access tokens**: 
-    ![](https://img.alicdn.com/imgextra/i4/O1CN01g6uKB51MBPZcyaVc7_!!6000000001396-2-tps-746-429.png)
+    ![](https://img.alicdn.com/imgextra/i4/O1CN01g6uKB51MBPZcyaVc7_!!6000000001396-2-tps-746-429.png_790x10000.jpg)
 2. On the Personal Access Tokens page, select New Token to create a new Personal Access Token and set the following details:
-    ![](https://img.alicdn.com/imgextra/i4/O1CN01yKsJ7u27siyDzSHYv_!!6000000007853-2-tps-1216-820.png)
+    ![](https://img.alicdn.com/imgextra/i4/O1CN01yKsJ7u27siyDzSHYv_!!6000000007853-2-tps-1216-820.png_790x10000.jpg)
 
     1. Give it a Name
     2. Set Organization to All accessible organizations
@@ -116,7 +116,7 @@ Set Personal Access Token for Github Actions:
 
 1. Visit [Actions secrets](https://github.com/ice-lab/iceworks/settings/secrets/actions)
 2. Update `VSCE_TOKEN`:
-    ![](https://img.alicdn.com/imgextra/i2/O1CN01NpeNCf2558rTm9812_!!6000000007474-2-tps-2880-1754.png)
+    ![](https://img.alicdn.com/imgextra/i2/O1CN01NpeNCf2558rTm9812_!!6000000007474-2-tps-2880-1754.png_790x10000.jpg)
 
 ## Pull Request Guidelines
 
