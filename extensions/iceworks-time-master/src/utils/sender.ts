@@ -174,7 +174,15 @@ async function sendBulkCreate(type, playloadData, extra) {
 }
 
 async function sendPayloadData(type: PlayloadType) {
-  const { empId } = await getUserInfo();
+  // TODO Pop up input box for user to input manually
+  let empId;
+  try {
+    const userInfo = await getUserInfo();
+    empId = userInfo.empId;
+  } catch (e) {
+    logger.error('[sender][sendPayloadData] getUserInfo got error:', e);
+    return;
+  }
   const playload = await getPayloadData(type);
   const playloadLength = playload.length;
 
