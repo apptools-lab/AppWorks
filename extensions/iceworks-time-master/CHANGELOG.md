@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.5
+
+- fix: AliInternal auto login
+
 ## 0.4.4
 
 - fix: delay should limit times

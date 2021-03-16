@@ -23,8 +23,12 @@ try {
 
 const getUserInfoFromDefClient = co.wrap(function* () {
   if (defClient) {
-    const user = yield defClient.user();
-    return user;
+    const token = yield defClient._readToken();
+    if (!token) {
+      throw new Error('Error: No def token found, please login');
+    }
+    const res = yield defClient._ensureToken({ token }, defClient._loadUser);
+    return res.body.data;
   } else {
     throw new Error('Error: Fail to get user info through def client.');
   }
