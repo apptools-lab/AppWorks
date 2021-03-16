@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.11
+
+- fix: select project path undefined
+
 ## 0.4.10
 
 - refactor: internal optimization
