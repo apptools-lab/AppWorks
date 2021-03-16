@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.4.11 
+
+- fix: save user config data in template preview.
 ## 0.4.10
 
 - refactor: internal optimization
