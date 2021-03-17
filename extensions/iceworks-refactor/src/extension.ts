@@ -1,13 +1,23 @@
-import * as vscode from 'vscode';
-import { registerCommand, initExtension } from '@iceworks/common-service';
+import { ExtensionContext, commands, TextEditor, window } from 'vscode';
+import { initExtension } from '@iceworks/common-service';
 
-function activate(context: vscode.ExtensionContext) {
+function activate(context: ExtensionContext) {
   // auto set configuration
   initExtension(context);
 
-  registerCommand('iceworks-refactor.hello', () => {
-    vscode.window.showInformationMessage('Hello World!');
-  });
+  const deleteCodeAndReferenceCommand = commands.registerTextEditorCommand(
+    'iceworks-refactor.delete',
+    (textEditor: TextEditor) => {
+      const { document, selection } = textEditor;
+      const word = document.getText(selection);
+
+      console.log(word);
+
+      window.showInformationMessage(word);
+    },
+  );
+
+  context.subscriptions.push(deleteCodeAndReferenceCommand);
 }
 
 exports.activate = activate;

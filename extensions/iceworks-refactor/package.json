@@ -17,8 +17,25 @@
     "iceworks-refactor"
   ],
   "activationEvents": [
-    "onCommand:iceworks-refactor.hello"
+    "onCommand:iceworks-refactor.delete"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks-refactor.delete",
+        "title": "%iceworks-refactor.delete.title%"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "iceworks-refactor.delete",
+          "group": "iceworks",
+          "when": "iceworks:isJSXFile"
+        }
+      ]
+    }
+  },
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
@@ -33,14 +50,6 @@
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
     "compile": "tsc -p ./tsconfig.json"
-  },
-  "contributes": {
-    "commands": [
-      {
-        "command": "iceworks-refactor.hello",
-        "title": "%commands.hello.title%"
-      }
-    ]
   },
   "dependencies": {
     "@iceworks/common-service": "^0.2.0"
