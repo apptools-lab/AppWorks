@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/user-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Iceworks user service for VSCode extension.",
   "files": [
     "lib"
