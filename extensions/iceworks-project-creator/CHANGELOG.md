@@ -1,7 +1,8 @@
 # Change Log
 
-## 0.4.11
+## 0.4.11 
 
+- fix: save user config data in template preview.
 - fix: select project path undefined
 
 ## 0.4.10
