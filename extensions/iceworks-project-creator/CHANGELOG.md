@@ -1,9 +1,13 @@
 # Change Log
 
-## 0.4.11 
+## 0.4.12 
 
 - fix: save user config data in template preview.
 - fix: select project path undefined
+
+## 0.4.11
+
+- fix: AliInternal auto login
 
 ## 0.4.10
 
