@@ -43,8 +43,8 @@ export default class Scanner {
 
     // Run ESLint
     if (!options || options.disableESLint !== true) {
-      // Example: react react-ts rax rax-ts
-      const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`;
+      // Example: react react-ts rax rax-ts, support common and common-ts
+      const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(/^unknown/, 'common');
       subprocessList.push(execa.node(path.join(__dirname, './workers/eslint/index.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
       processReportList.push(async () => {
         reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
