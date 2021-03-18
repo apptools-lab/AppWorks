@@ -10,7 +10,7 @@ function activate(context: ExtensionContext) {
     (textEditor: TextEditor) => {
       const { document, selection } = textEditor;
       const word = document.getText(selection);
-
+      // console.log(selection);
       console.log(word);
 
       window.showInformationMessage(word);
