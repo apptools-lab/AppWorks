@@ -1,0 +1,68 @@
+{
+  "name": "iceworks-codemod",
+  "displayName": "CodeMod",
+  "description": "Code modify for front-end projects.",
+  "publisher": "iceworks-team",
+  "version": "0.1.0",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "React",
+    "CodeMod",
+    "Code modify"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onCommand:iceworks-codemod.start"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks-codemod.start",
+        "title": "%iceworksCodeMod.commands.start.title%"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "main": "./build/extension.js",
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/vscode": "^1.41.0",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@iceworks/common-service": "^0.2.0",
+    "@iceworks/constant": "^0.1.6",
+    "@iceworks/recorder": "^0.1.9",
+    "@iceworks/vscode-webview": "^0.1.9",
+    "fs-extra": "^9.1.0",
+    "icejs-codemod": "^0.1.0",
+    "js-codemod": "^7.0.0",
+    "jscodeshift": "^0.11.0",
+    "rax-codemod": "^1.0.1",
+    "react-codemod": "^5.4.3"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-codemod/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
+}
