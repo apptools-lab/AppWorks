@@ -13,6 +13,15 @@
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
       "outFiles": ["${workspaceFolder}/build/*.js"],
       "preLaunchTask": "npm: watch:extension"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Debug Refactor Source Code",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/build/refactor/index.js"
     }
   ]
 }
