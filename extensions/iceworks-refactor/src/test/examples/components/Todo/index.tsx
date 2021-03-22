@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Todo = ({ text, name }) => {
   return (
     <div>Todo: {text} {name}</div>

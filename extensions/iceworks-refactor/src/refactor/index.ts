@@ -1,34 +1,27 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as t from '@babel/types';
-import traverse from '@babel/traverse';
+import babelTraverse from '@babel/traverse';
 import generate from './generate';
 import parse from './parse';
+import { jsxFileExtnames } from '@iceworks/project-service';
 import removeIdentifier from './removeIdentifier';
 import updateIdentifierMap from './updateIdentifierMap';
+import prettierFormat from '../utils/prettierFormat';
 
-const jsxFileExtnames = ['.js', '.jsx', '.tsx'];
+// const jsxFileExtnames = ['.js', '.jsx', '.tsx'];
 
-const testPath = path.resolve('./test/examples/');
-const componentName = 'TodoWithChildren';
-const componentPath = path.join(testPath, 'components', componentName, 'index.tsx');
-const pagesPath = path.join(testPath, 'pages');
-const pagePath = path.join(pagesPath, 'FunctionComponent', 'index.tsx');
-
-refactorCode(pagePath, componentPath);
-
-function refactorCode(refactoredSourcePath: string, removeComponentName: string) {
+export function removeComponentCode(refactoredSourcePath: string, componentSourcePath: string) {
   const source = fs.readFileSync(refactoredSourcePath, { encoding: 'utf-8' });
   const sourceAST = parse(source);
-  traverseCode(sourceAST, refactoredSourcePath, removeComponentName);
+  traverse(sourceAST, refactoredSourcePath, componentSourcePath);
   const code = generate(sourceAST);
-  console.log('code: ', code);
-  return code;
+  const formattedCode = prettierFormat(code);
+  console.log(formattedCode);
+  return prettierFormat(formattedCode);
 }
 
-function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePath: string) {
-  // const refactoredSourceDir = path.dirname(refactoredSourcePath);
-  // const importSourcePath: string = path.relative(refactoredSourceDir, removedSourcePath);
+function traverse(ast: t.File, refactoredSourcePath: string, componentSourcePath: string) {
   const componentNameList: string[] = [];
   let isSelectionTraversing = false;
 
@@ -56,7 +49,7 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePa
     },
   };
 
-  traverse(ast, {
+  babelTraverse(ast, {
     ImportDeclaration(nodePath) {
       const { node } = nodePath;
       const sourceValue = node.source.value;
@@ -64,7 +57,7 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePa
       if (/^\./.test(sourceValue)) {
         // relative path
         const refactoredSourceDir = path.dirname(refactoredSourcePath);
-        const importSourcePath: string = path.relative(refactoredSourceDir, removedSourcePath);
+        const importSourcePath: string = path.relative(refactoredSourceDir, componentSourcePath);
         const importSourceDir: string = path.dirname(importSourcePath);
         const ext = jsxFileExtnames.find(jsxExt => {
           return importSourcePath.includes(jsxExt);
@@ -91,7 +84,6 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePa
     },
     JSXElement: {
       enter(nodePath) {
-        console.log('enter');
         const { node } = nodePath;
         const { openingElement } = node;
         if (
@@ -103,13 +95,11 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePa
         const elementName = openingElement.name.name;
 
         if (componentNameList.includes(elementName)) {
-          console.log('target enter');
           isSelectionTraversing = true;
           nodePath.traverse(removeReferenceVisitor);
         }
       },
       exit(nodePath) {
-        console.log('exited');
         const { node } = nodePath;
         const { openingElement } = node;
         if (
@@ -121,7 +111,6 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, removedSourcePa
         if (isSelectionTraversing && componentNameList.includes(openingElement.name.name)) {
           nodePath.remove();
           isSelectionTraversing = false;
-          console.log('target exit');
         }
       },
     },

@@ -22,6 +22,19 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/build/refactor/index.js"
+    },
+    {
+      "name": "Extension Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/build/test/suite/index"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/build/test/**/*.js"
+      ],
+      "preLaunchTask": "npm: watch"
     }
   ]
 }

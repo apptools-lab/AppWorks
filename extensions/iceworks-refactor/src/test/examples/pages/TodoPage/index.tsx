@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Todo, { Todo2 } from '../../components/Todo';
 
-export default class Tab extends Component {
+export default class TodoComponent extends Component {
   text1: number;
 
   name2: string;

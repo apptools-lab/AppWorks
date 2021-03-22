@@ -1,12 +1,14 @@
 import React from 'react';
-import TodoWithChildren from '../../components/TodoWithChildren/index';
+import Detail from '../../components/Detail';
 
 const Ele1 = ({ text }) => <div>{text}</div>;
 const name2 = 2;
 
 const Tab = () => {
   const text1 = 1;
-  const name3 = 3;
+  const age1 = 10;
+  const name = 'you';
+  const name3 = 'me';
   const name4 = 4;
   const tabs = [1, 2, 3];
   const ele = <div>111</div>;
@@ -19,7 +21,7 @@ const Tab = () => {
 
   return (
     <div key={name3}>
-      <TodoWithChildren age={text1} handleClick={handleClick}>
+      <Detail age={text1} name={name} handleClick={handleClick}>
         {
           tabs.map((tab) => {
             return (
@@ -27,16 +29,16 @@ const Tab = () => {
             );
           })
         }
-      </TodoWithChildren>
+      </Detail>
       {ele}
-      <TodoWithChildren age={name2}>
+      <Detail age={age1} name={name}>
         {ele}
-      </TodoWithChildren>
+      </Detail>
       {ele}
-      <TodoWithChildren age={name2}>
+      <Detail age={age1} name={name3}>
         <span>111</span>
         <Ele1 text={name2} />
-      </TodoWithChildren>
+      </Detail>
       <div>{abc}</div>
     </div>
   );
