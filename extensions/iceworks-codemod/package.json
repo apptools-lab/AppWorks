@@ -57,6 +57,7 @@
     "icejs-codemod": "^0.1.0",
     "js-codemod": "^7.0.0",
     "jscodeshift": "^0.11.0",
+    "lodash.clonedeep": "^4.5.0",
     "rax-codemod": "^1.0.1",
     "react-codemod": "^5.4.3"
   },

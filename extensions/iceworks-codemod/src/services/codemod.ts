@@ -46,14 +46,14 @@ enum FileStatus {
   OK = 'ok',
 }
 
+interface FileReport {
+  path: string;
+  status: FileStatus,
+}
+
 interface TransformsReport {
   name: string;
-  files: {
-    [FileStatus.ERROR]: string[];
-    [FileStatus.NO_CHANGE]: string[];
-    [FileStatus.SKIP]: string[];
-    [FileStatus.OK]: string[];
-  }
+  files: FileReport[]
 }
 interface CodeModReport {
   name: CodeModNames;
@@ -67,25 +67,23 @@ export async function getReports(codeMods: CodeMod[]): Promise<CodeModReport[]> 
       return new Promise<TransformsReport>(resolve => {
         const { name: tName, filePath: tFilePath } = transform;
         const work = getWork([tFilePath, 'babel']);
-        const fileCounters = {
-          [FileStatus.ERROR]: [],
-          [FileStatus.NO_CHANGE]: [],
-          [FileStatus.SKIP]: [],
-          [FileStatus.OK]: [],
-        };
+        const files: FileReport[] = [];
         const options = { dry: true };
         work.send({ files: projectFiles, options });
         work.on('message', ({ action, status, msg }) => {
           const [file] = msg.split(' ')[0];
           switch (action) {
             case 'status':
-              fileCounters[status].push(file);
+              files.push({
+                path: file,
+                status,
+              });
               break;
             default:
           }
         });
         work.on('free', () => {
-          resolve({ name: tName, files: fileCounters });
+          resolve({ name: tName, files });
         });
       });
     }));

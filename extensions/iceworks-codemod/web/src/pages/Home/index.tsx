@@ -1,16 +1,20 @@
 import React from 'react';
-import { ResponsiveGrid } from '@alifd/next';
 import { LocaleProvider } from '@/i18n';
-
-const { Cell } = ResponsiveGrid;
+import CodeMods from './components/CodeMods';
 
 const Dashboard = () => {
   return (
-    <ResponsiveGrid gap={20}>
-      <Cell colSpan={12}>
-        Hi
-      </Cell>
-    </ResponsiveGrid>
+    <div>
+      <div>
+        <h1>
+          Code Modify
+        </h1>
+        <p>
+          A collection of codemod scripts that help update APIs.
+        </p>
+      </div>
+      <CodeMods />
+    </div>
   );
 };
 

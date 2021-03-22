@@ -12,12 +12,7 @@
       {
         "themePackage": [
           {
-            "name": "@alifd/theme-iceworks-dark",
- "default": true
-          },
-          {
-            "name": "@alifd/theme-design-pro",
-            "default": true
+            "name": "@alifd/theme-iceworks-dark"
           }
         ]
       }

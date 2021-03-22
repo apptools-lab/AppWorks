@@ -4,7 +4,6 @@
   "description": "轻量级模板，使用 TypeScript，仅包含基础的 Layout。",
   "dependencies": {
     "@alifd/next": "^1.21.8",
-    "@alifd/theme-design-pro": "^0.6.2",
     "@alifd/theme-iceworks-dark": "^1.1.0",
     "@iceworks/i18n": "^0.1.1",
     "@iceworks/vscode-webview": "^0.1.1",
