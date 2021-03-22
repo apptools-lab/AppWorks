@@ -1,7 +1,7 @@
 {
   "name": "@iceworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "keywords": [
     "doctor",
     "analysis",
