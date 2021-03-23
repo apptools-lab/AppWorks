@@ -1,13 +1,12 @@
 import * as path from 'path';
 import * as t from '@babel/types';
 import babelTraverse from '@babel/traverse';
-// import { jsxFileExtnames } from '@iceworks/project-service';
+import { jsxFileExtnames } from '@iceworks/project-service';
 import removeReference from './removeReference';
 import updateIdentifierMap from './updateIdentifierMap';
 
-const jsxFileExtnames = ['.js', '.jsx', '.tsx'];
-
 function traverseCode(ast: t.File, refactoredSourcePath: string, componentSourcePath: string) {
+  let hasImportedComponent = false;
   const componentNameList: string[] = [];
 
   const identifierMap = new Map();
@@ -54,13 +53,17 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, componentSource
 
         if (regexp.test(sourceValue)) {
           match = true;
+          hasImportedComponent = true;
         }
+      } else {
+        // TODO alias path
       }
       if (match) {
         const { specifiers } = node;
         specifiers.forEach(specifier => {
           const { local } = specifier;
           const { name } = local;
+          // record component specifiers
           componentNameList.push(name);
         });
         // remove import declaration
@@ -98,6 +101,8 @@ function traverseCode(ast: t.File, refactoredSourcePath: string, componentSource
       },
     },
   });
+
+  return hasImportedComponent;
 }
 
 export default traverseCode;

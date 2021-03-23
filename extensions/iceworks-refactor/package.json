@@ -17,21 +17,21 @@
     "iceworks-refactor"
   ],
   "activationEvents": [
-    "onCommand:iceworks-refactor.delete"
+    "onCommand:iceworks-refactor.component.remove"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-refactor.delete",
-        "title": "%iceworks-refactor.delete.title%"
+        "command": "iceworks-refactor.component.remove",
+        "title": "%iceworks-refactor.component.remove.title%"
       }
     ],
     "menus": {
-      "editor/context": [
+      "explorer/context": [
         {
-          "command": "iceworks-refactor.delete",
+          "command": "iceworks-refactor.component.remove",
           "group": "iceworks",
-          "when": "iceworks:isJSXFile"
+          "when": "explorerResourceIsFolder"
         }
       ]
     }
@@ -61,6 +61,7 @@
     "@babel/types": "^7.13.0",
     "@iceworks/common-service": "^0.2.0",
     "@iceworks/project-service": "^0.2.0",
+    "fs-readdir-recursive": "^1.1.0",
     "prettier": "^2.2.1"
   },
   "devDependencies": {
