@@ -15,9 +15,9 @@
       "preLaunchTask": "npm: watch:extension"
     },
     {
+      "name": "Debug Source Code",
       "type": "pwa-node",
       "request": "launch",
-      "name": "Debug Refactor Source Code",
       "skipFiles": [
         "<node_internals>/**"
       ],

@@ -1,29 +1,29 @@
 import updateIdentifierMap from './updateIdentifierMap';
 
-const removeIdentifierInFunctionVisitor = {
+const removeReferenceInFunctionVisitor = {
   Identifier(nodePath) {
     const { node, scope } = nodePath;
     const identifierName = node.name;
     // @ts-ignore
-    const identifierCount = updateIdentifierMap(identifierName, this.identifierMap);
+    const identifierNum = updateIdentifierMap(identifierName, this.identifierMap);
     // @ts-ignore
-    removeIdentifier(scope, identifierName, identifierCount, this.identifierMap);
+    removeReference(scope, identifierName, identifierNum, this.identifierMap);
   },
 };
 
-function removeIdentifier(
+function removeReference(
   scope: any,
-  identifierName: string,
-  identifierNums: number,
+  referenceName: string,
+  referenceNum: number,
   identifierMap: Map<string, number>,
 ) {
   if (scope && scope.bindings) {
     if (
-      scope.bindings[identifierName] &&
-      scope.bindings[identifierName].referenced &&
-      scope.bindings[identifierName].references === identifierNums
+      scope.bindings[referenceName] &&
+      scope.bindings[referenceName].referenced &&
+      scope.bindings[referenceName].references === referenceNum
     ) {
-      const { path } = scope.bindings[identifierName];
+      const { path } = scope.bindings[referenceName];
       const { type, parentPath, node } = path;
       if (
         type === 'ImportDefaultSpecifier' ||
@@ -33,7 +33,7 @@ function removeIdentifier(
           parentPath.node &&
           parentPath.node.specifiers &&
           parentPath.node.specifiers.length === 1 &&
-          parentPath.node.specifiers[0].local.name === identifierName
+          parentPath.node.specifiers[0].local.name === referenceName
         ) {
           // remove ImportDeclaration
           parentPath.remove();
@@ -43,18 +43,18 @@ function removeIdentifier(
         type === 'FunctionDeclaration' ||
         (type === 'VariableDeclarator' && node.init.type === 'ArrowFunctionExpression')
       ) {
-        // remove Identifier in the function
-        path.traverse(removeIdentifierInFunctionVisitor, { identifierMap });
+        // remove reference in the function
+        path.traverse(removeReferenceInFunctionVisitor, { identifierMap });
       }
 
       if (path.node) {
-        // remove identifier
+        // remove reference
         path.remove();
       }
     } else {
-      removeIdentifier(scope.parent, identifierName, identifierNums, identifierMap);
+      removeReference(scope.parent, referenceName, referenceNum, identifierMap);
     }
   }
 }
 
-export default removeIdentifier;
+export default removeReference;

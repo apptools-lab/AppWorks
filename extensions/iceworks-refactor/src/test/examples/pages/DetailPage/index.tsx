@@ -14,6 +14,9 @@ const Tab = () => {
   const ele = <div>111</div>;
   const abc = 123;
   const d = 23;
+  const o = {
+    a: 1,
+  };
   function handleClick() {
     console.log(d);
     console.log('handleClick');
@@ -36,7 +39,7 @@ const Tab = () => {
       </Detail>
       {ele}
       <Detail age={age1} name={name3}>
-        <span>111</span>
+        <span>{o.a}</span>
         <Ele1 text={name2} />
       </Detail>
       <div>{abc}</div>

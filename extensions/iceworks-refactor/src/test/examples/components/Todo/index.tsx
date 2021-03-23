@@ -1,6 +1,6 @@
-const Todo = ({ text, name }) => {
+const Todo = ({ text, name, onClick }) => {
   return (
-    <div>Todo: {text} {name}</div>
+    <div onClick={onClick}>Todo: {text} {name}</div>
   );
 };
 
