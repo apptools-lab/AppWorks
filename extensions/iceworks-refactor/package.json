@@ -61,8 +61,10 @@
     "@babel/types": "^7.13.0",
     "@iceworks/common-service": "^0.2.0",
     "@iceworks/project-service": "^0.2.0",
+    "fs-extra": "^9.1.0",
     "fs-readdir-recursive": "^1.1.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "rimraf": "^2.7.1"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",

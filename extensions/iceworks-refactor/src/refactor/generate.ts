@@ -1,5 +1,7 @@
 import generate from '@babel/generator';
 
-export default (ast) => {
+function generateCode(ast) {
   return generate(ast).code;
-};
+}
+
+export default generateCode;

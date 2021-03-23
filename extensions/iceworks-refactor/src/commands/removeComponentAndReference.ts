@@ -1,5 +1,5 @@
 import { Uri } from 'vscode';
-import * as fs from 'fs';
+import rimraf from 'rimraf';
 import * as path from 'path';
 import readdir from 'fs-readdir-recursive';
 import { pagesPath, jsxFileExtnames } from '@iceworks/project-service';
@@ -24,7 +24,7 @@ function removeComponentAndReference(uri: Uri) {
     });
   });
   // remove component
-  fs.rmdirSync(componentPath);
+  rimraf.sync(componentPath);
 }
 
 export default removeComponentAndReference;

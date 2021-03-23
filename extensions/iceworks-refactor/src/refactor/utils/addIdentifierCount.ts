@@ -1,5 +1,6 @@
-function updateIdentifierMap(identifierName: string, identifierMap: Map<string, number>) {
+function addOneIdentifierCount(identifierName: string, identifierMap: Map<string, number>) {
   const identifierCount: number | undefined = identifierMap.get(identifierName);
+
   if (!identifierCount) {
     identifierMap.set(identifierName, 1);
   } else {
@@ -8,4 +9,4 @@ function updateIdentifierMap(identifierName: string, identifierMap: Map<string, 
   return identifierMap.get(identifierName) as number;
 }
 
-export default updateIdentifierMap;
+export default addOneIdentifierCount;
