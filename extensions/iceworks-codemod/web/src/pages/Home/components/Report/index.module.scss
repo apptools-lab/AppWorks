@@ -1,0 +1,82 @@
+.wrap {
+  background-color: #333646;
+  margin-top: 20px;
+
+  > .header {
+    > div {
+      font-size: 18px;
+    }
+    button {
+      background-color: $color-data1-2!important;
+      border: 0 none;
+      color: #fff;
+    }
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    > div {
+      flex: 1;
+      padding-right: 24px;
+
+      p {
+        margin: 0;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .transformList {
+    .transformItem {
+      display: flex;
+      flex-direction: column;
+      >.header {
+        background-color: $color-fill1-4;
+        > div {
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+
+      .fileList {
+        margin: 12px 0;
+        .fileItem {
+          margin-top: 10px;
+          padding: 0 16px;
+          display: flex;
+          .path {
+            color: $color-link-3;
+            font-size: 14px;
+            flex: 1;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          .updated {
+            flex: none;
+            padding: 2px 4px;
+
+            &.success {
+              background-color: green;
+            }
+            &.error {
+              background-color: red;
+            }
+          }
+
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+      }
+
+      .noFiles {
+        padding: 12px;
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+[
+  {
+    "name": "icejs",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "filePath": "create-element-to-jsx.js",
+        "checked": false
+      },
+      {
+        "name": "findDOMNode",
+        "filePath": "findDOMNode.js"
+      },
+      {
+        "name": "Pure Component",
+        "filePath": "pure-component.js"
+      }
+    ]
+  },
+  {
+    "name": "react",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "filePath": "create-element-to-jsx.js",
+        "checked": false
+      },
+      {
+        "name": "findDOMNode",
+        "filePath": "findDOMNode.js"
+      },
+      {
+        "name": "Pure Component",
+        "filePath": "pure-component.js"
+      }
+    ]
+  },
+  {
+    "name": "js",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "filePath": "create-element-to-jsx.js",
+        "checked": false
+      },
+      {
+        "name": "findDOMNode",
+        "filePath": "findDOMNode.js"
+      },
+      {
+        "name": "Pure Component",
+        "filePath": "pure-component.js"
+      }
+    ]
+  }
+]

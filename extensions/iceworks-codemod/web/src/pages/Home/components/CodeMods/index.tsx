@@ -1,30 +1,20 @@
-import React, { useState } from 'react';
-import { Tab, Icon } from '@alifd/next';
+import React, { useState, useEffect } from 'react';
+import { Tab, Icon, Loading } from '@alifd/next';
 import * as cloneDeep from 'lodash.clonedeep';
+import { useRequest } from 'ahooks';
+import callService from '@/callService';
 import CodeMod from '../CodeMod';
-
-const defaultTransforms = [
-  {
-    name: 'Create Element to JSX',
-    filePath: 'create-element-to-jsx.js',
-    checked: false,
-  },
-  {
-    name: 'findDOMNode',
-    filePath: 'findDOMNode.js',
-  },
-  {
-    name: 'Pure Component',
-    filePath: 'pure-component.js',
-  },
-];
+import ServerError from '@/components/ServerError';
+import NotFound from '@/components/NotFound';
+import styles from './index.module.scss';
 
 const CodeMods = () => {
-  const [codeMods, setCodeMods] = useState([
-    { name: 'icejs', transforms: defaultTransforms },
-    { name: 'React', transforms: defaultTransforms },
-    { name: 'JS', transforms: defaultTransforms },
-  ]);
+  const [codeMods, setCodeMods] = useState([]);
+  const { data, loading, error } = useRequest(() => callService('codemod', 'getCodeMods'), { initialData: [] });
+
+  useEffect(() => {
+    setCodeMods(data);
+  }, [data]);
 
   function onChangeAll(checked, cname) {
     const newCodeMods = cloneDeep(codeMods);
@@ -47,29 +37,42 @@ const CodeMods = () => {
   }
 
   return (
-    <div>
-      <Tab shape="pure">
-        {
-          codeMods.map((codeMod) => {
-            const { name: cname, transforms = [] } = codeMod;
-            const hasChecked = transforms.findIndex(({ checked }) => checked === true) > -1;
-            return (
-              <Tab.Item
-                title={
-                  <div>
-                    {hasChecked && <Icon type="success-filling" />}
-                    {cname}
+    <Loading visible={loading} className={styles.wrap}>
+      {(!loading && codeMods.length > 0) &&
+        <Tab shape="pure">
+          {
+            codeMods.map((codeMod) => {
+              const { name: cname, description, transforms = [] } = codeMod;
+              const hasChecked = transforms.findIndex(({ checked }) => checked === true) > -1;
+              return (
+                <Tab.Item
+                  title={
+                    <div className={styles.title}>
+                      {hasChecked && <Icon type="success-filling" />}
+                      <span>{cname}</span>
+                    </div>
+                  }
+                  key={cname}
+                >
+                  <div className={styles.content}>
+                    <div className={styles.description}>
+                      {description}
+                    </div>
+                    <CodeMod
+                      codeMod={codeMod}
+                      onChangeAll={onChangeAll}
+                      onChangeOne={onChangeOne}
+                    />
                   </div>
-                }
-                key={cname}
-              >
-                <CodeMod codeMod={codeMod} onChangeAll={onChangeAll} onChangeOne={onChangeOne} />
-              </Tab.Item>
-            );
-          })
-        }
-      </Tab>
-    </div>
+                </Tab.Item>
+              );
+            })
+          }
+        </Tab>
+      }
+      {(!loading && !codeMods.length) && <NotFound />}
+      { error && <ServerError /> }
+    </Loading>
   );
 };
 

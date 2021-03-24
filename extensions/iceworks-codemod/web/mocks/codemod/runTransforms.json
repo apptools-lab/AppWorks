@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Create Element to JSX",
+    "description": "Converts calls to `React.createElement` into JSX elements.",
+    "files": [
+      {
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-codemod/index.jsx",
+        "updated": true
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-app/index.jsx",
+        "updated": true
+      }
+    ]
+  },
+  {
+    "name": "findDOMNode",
+    "description": "Updates `this.getDOMNode()` or `this.refs.foo.getDOMNode()` calls inside of `React.createClass` components to `React.findDOMNode(foo)`. Note that it will only look at code inside of `React.createClass` calls and only update calls on the component instance or its refs. You can use this script to update most calls to `getDOMNode` and then manually go through the remaining calls.",
+    "files": [
+      {
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-test/index.jsx",
+        "updated": true
+      }
+    ]
+  },
+  {
+    "name": "Testing",
+    "description": "Just a testing.",
+    "files": [
+    ]
+  },
+  {
+    "name": "Pure Component",
+    "description": "Converts ES6 classes that only have a render method, only have safe properties (statics and props), and do not have refs to Functional Components.",
+    "files": [
+      {
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/eindex.jsx",
+        "updated": true
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/Documents/exindex.jsx",
+        "updated": false
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
+        "updated": false
+      }
+    ]
+  }
+]

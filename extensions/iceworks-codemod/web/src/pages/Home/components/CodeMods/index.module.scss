@@ -1,0 +1,17 @@
+.wrap {
+  width: 100%;
+  .title {
+    :global {
+      .next-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+  .content {
+    padding: 15px 12px;
+
+    .description {
+      margin-bottom: 12px;
+    }
+  }
+}

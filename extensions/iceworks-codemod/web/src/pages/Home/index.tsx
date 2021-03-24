@@ -1,11 +1,12 @@
 import React from 'react';
 import { LocaleProvider } from '@/i18n';
 import CodeMods from './components/CodeMods';
+import styles from './index.module.scss';
 
-const Dashboard = () => {
+const Home = () => {
   return (
-    <div>
-      <div>
+    <div className={styles.wrap}>
+      <div className={styles.header}>
         <h1>
           Code Modify
         </h1>
@@ -13,7 +14,9 @@ const Dashboard = () => {
           A collection of codemod scripts that help update APIs.
         </p>
       </div>
-      <CodeMods />
+      <div className={styles.codeMods}>
+        <CodeMods />
+      </div>
     </div>
   );
 };
@@ -21,7 +24,7 @@ const Dashboard = () => {
 const IntlCreateProject = () => {
   return (
     <LocaleProvider>
-      <Dashboard />
+      <Home />
     </LocaleProvider>
   );
 };
