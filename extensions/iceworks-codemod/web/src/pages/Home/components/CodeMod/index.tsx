@@ -3,7 +3,7 @@ import * as cloneDeep from 'lodash.clonedeep';
 import { Button, Checkbox, Loading } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import callService from '@/callService';
-import Report from '../Report';
+import CodeModReport from '../CodeModReport';
 import ServerError from '@/components/ServerError';
 import Exception from '@/components/Exception';
 import styles from './index.module.scss';
@@ -11,20 +11,20 @@ import styles from './index.module.scss';
 const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
-  const [transformReports, setTransformReports] = useState([]);
-  const { loading, run, error } = useRequest(() => callService('codemod', 'getReports'), { initialData: [], manual: true });
+  const [transformsReport, setTransformsReport] = useState([]);
+  const { loading, error, run } = useRequest(() => callService('codemod', 'getTransformsReport'), { initialData: [], manual: true });
 
-  async function getReports() {
+  async function getTransformsReport() {
     const data = await run();
     initCon.current = true;
-    setTransformReports(data);
+    setTransformsReport(data);
   }
 
   async function setTransformReport(tname, files) {
-    const newData = cloneDeep(transformReports);
-    const fIndex = newData.findIndex(({ name }) => tname === name);
-    newData[fIndex].files = files;
-    setTransformReports(newData);
+    const data = cloneDeep(transformsReport);
+    const fIndex = data.findIndex(({ name }) => tname === name);
+    data[fIndex].files = files;
+    setTransformsReport(data);
   }
 
   return (
@@ -57,14 +57,21 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </div>
         </div>
         <div className={styles.submit}>
-          <Button type="primary" onClick={getReports}>
+          <Button type="primary" onClick={getTransformsReport}>
             Scan
           </Button>
         </div>
       </div>
       <Loading visible={loading} className={styles.report}>
-        {(!loading && transformReports.length > 0) && <Report name={cname} transforms={transformReports} setTransformReport={setTransformReport} setTransformReports={setTransformReports} />}
-        {(initCon.current && !transformReports.length) &&
+        {(!loading && transformsReport.length > 0) &&
+          <CodeModReport
+            name={cname}
+            transforms={transformsReport}
+            setTransformReport={setTransformReport}
+            setTransformsReport={setTransformsReport}
+          />
+        }
+        {(initCon.current && !transformsReport.length) &&
           <Exception
             statusCode="404"
             image="https://img.alicdn.com/tfs/TB11TaSopY7gK0jSZKzXXaikpXa-200-200.png"

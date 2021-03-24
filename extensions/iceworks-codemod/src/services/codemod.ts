@@ -48,23 +48,27 @@ enum FileStatus {
 
 interface FileReport {
   path: string;
-  status: FileStatus,
+  status: FileStatus;
+  updated?: boolean;
 }
 
-interface TransformsReport {
+interface TransformReport {
   name: string;
   files: FileReport[]
 }
+
+type TransformsReport = TransformReport[];
+
 interface CodeModReport {
   name: CodeModNames;
-  transforms: TransformsReport[];
+  transforms: TransformsReport;
 }
 
 export async function getReports(codeMods: CodeMod[]): Promise<CodeModReport[]> {
   const projectFiles = [];
   const reports = await Promise.all(codeMods.map(async ({ name, transforms }) => {
     const results = await Promise.all(transforms.map((transform) => {
-      return new Promise<TransformsReport>(resolve => {
+      return new Promise<TransformReport>(resolve => {
         const { name: tName, filePath: tFilePath } = transform;
         const work = getWork([tFilePath, 'babel']);
         const files: FileReport[] = [];

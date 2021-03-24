@@ -78,35 +78,4 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
   );
 };
 
-const Report = ({ name, transforms = [], setTransformReport, setTransformReports }) => {
-  const { loading, run } = useRequest((c, f) => callService('codemod', 'runTransforms', [c, f]), { initialData: [], manual: true });
-  async function runTransforms() {
-    const data = await run(name, transforms);
-    setTransformReports(data);
-  }
-
-  return (
-    <div className={styles.wrap}>
-      <div
-        className={classNames({
-          [styles.title]: true,
-          [styles.header]: true,
-        })}
-      >
-        <div>
-          {name}
-        </div>
-        <Button type="secondary" className={styles.btn} onClick={runTransforms}>
-          Update All
-        </Button>
-      </div>
-      <Loading visible={loading} className={styles.transformList}>
-        {
-          transforms.map((transform) => <TransformReport key={transform.name} name={name} transformReport={transform} setTransformReport={setTransformReport} />)
-        }
-      </Loading>
-    </div>
-  );
-};
-
-export default Report;
+export default TransformReport;
