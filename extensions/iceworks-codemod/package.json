@@ -55,14 +55,14 @@
     "@iceworks/recorder": "^0.1.9",
     "@iceworks/vscode-webview": "^0.1.9",
     "fs-extra": "^9.1.0",
-    "icejs-codemod": "^0.1.0",
-    "js-codemod": "^7.0.0",
+    "glob": "^7.1.6",
+    "icejs-codemod": "0.1.0",
+    "js-codemod": "7.0.0",
     "jscodeshift": "^0.11.0",
     "lodash.clonedeep": "^4.5.0",
     "prop-types": "^15.7.2",
-    "rax-codemod": "^1.0.1",
-    "react-codemod": "^5.4.3",
-    "uppercamelcase": "^3.0.0"
+    "rax-codemod": "1.0.1",
+    "react-codemod": "5.4.3"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-codemod/README.md",
   "bugs": {

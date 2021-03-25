@@ -5,11 +5,13 @@
     "files": [
       {
         "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-codemod/index.jsx",
-        "updated": true
+        "updated": true,
+        "status": "ok"
       },
       {
         "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-app/index.jsx",
-        "updated": true
+        "updated": true,
+        "status": "ok"
       }
     ]
   },
@@ -19,7 +21,8 @@
     "files": [
       {
         "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-test/index.jsx",
-        "updated": true
+        "updated": true,
+        "status": "ok"
       }
     ]
   },
@@ -35,15 +38,18 @@
     "files": [
       {
         "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/eindex.jsx",
-        "updated": true
+        "updated": true,
+        "status": "ok"
       },
       {
         "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/Documents/exindex.jsx",
-        "updated": false
+        "updated": false,
+        "status": "ok"
       },
       {
         "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
-        "updated": false
+        "updated": false,
+        "status": "ok"
       }
     ]
   }

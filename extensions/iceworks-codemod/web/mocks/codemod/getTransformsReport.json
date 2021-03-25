@@ -4,10 +4,12 @@
     "description": "Converts calls to `React.createElement` into JSX elements.",
     "files": [
       {
-        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-codemod/index.jsx"
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-codemod/index.jsx",
+        "status": "ok"
       },
       {
-        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-app/index.jsx"
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-app/index.jsx",
+        "status": "ok"
       }
     ]
   },
@@ -16,7 +18,8 @@
     "description": "Updates `this.getDOMNode()` or `this.refs.foo.getDOMNode()` calls inside of `React.createClass` components to `React.findDOMNode(foo)`. Note that it will only look at code inside of `React.createClass` calls and only update calls on the component instance or its refs. You can use this script to update most calls to `getDOMNode` and then manually go through the remaining calls.",
     "files": [
       {
-        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-test/index.jsx"
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-test/index.jsx",
+        "status": "ok"
       }
     ]
   },
@@ -31,13 +34,30 @@
     "description": "Converts ES6 classes that only have a render method, only have safe properties (statics and props), and do not have refs to Functional Components.",
     "files": [
       {
-        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/eindex.jsx"
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/eindex.jsx",
+        "status": "ok"
       },
       {
-        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/Documents/exindex.jsx"
+        "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/Documents/exindex.jsx",
+        "status": "ok"
       },
       {
-        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx"
+        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
+        "status": "error",
+        "message": "xxx message!!!!"
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
+        "status": "error",
+        "message": "Updates `this.getDOMNode()` or `this.refs.foo.getDOMNode()` calls inside of `React.createClass` components to `React.findDOMNode(foo)`. Note that it will only look at code inside of `React.createClass` calls and only update calls on the component instance or its refs. You can use this script to update most calls to `getDOMNode` and then manually go through the remaining calls."
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
+        "status": "nochange"
+      },
+      {
+        "path": "/Users/xuwentao/Documents/www/gitest/index.jsx",
+        "status": "skip"
       }
     ]
   }

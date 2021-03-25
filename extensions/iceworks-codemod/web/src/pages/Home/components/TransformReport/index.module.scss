@@ -15,6 +15,21 @@
       margin-top: 10px;
       padding: 0 16px;
       display: flex;
+      .status {
+        flex: none;
+        padding: 2px 4px;
+        margin-right: 6px;
+        &.green {
+          background-color: transparent;
+          color: greenyellow;
+          border: 1px solid greenyellow;
+        }
+        &.red {
+          background-color: transparent;
+          color: red;
+          border: 1px solid red;
+        }
+      }
       .path {
         color: $color-link-3;
         font-size: 14px;
@@ -27,13 +42,6 @@
       .updated {
         flex: none;
         padding: 2px 4px;
-
-        &.success {
-          background-color: green;
-        }
-        &.error {
-          background-color: red;
-        }
       }
 
       &:first-child {
@@ -44,6 +52,32 @@
 
   .noFiles {
     padding: 12px;
+  }
+
+  .summary {
+    padding: 12px 0 0 12px;
+    .green {
+      background-color: transparent;
+      color: greenyellow;
+    }
+    .red {
+      background-color: transparent;
+      color: red;
+    }
+    .yellow {
+      background-color: transparent;
+      color: yellow;
+    }
+  }
+
+  .green {
+    background-color: greenyellow;
+  }
+  .red {
+    background-color: red;
+  }
+  .yellow {
+    background-color: yellow;
   }
 
   .title {
@@ -60,5 +94,9 @@
         font-size: 12px;
       }
     }
+  }
+
+  .loading {
+    width: 100%;
   }
 }

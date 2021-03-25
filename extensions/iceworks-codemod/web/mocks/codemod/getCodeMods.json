@@ -5,15 +5,15 @@
     "transforms": [
       {
         "name": "Create Element to JSX",
-        "filePath": "create-element-to-jsx.js"
+        "filename": "create-element-to-jsx.js"
       },
       {
         "name": "findDOMNode",
-        "filePath": "findDOMNode.js"
+        "filename": "findDOMNode.js"
       },
       {
         "name": "Pure Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       }
     ]
   },
@@ -23,35 +23,35 @@
     "transforms": [
       {
         "name": "Create Element to JSX",
-        "filePath": "create-element-to-jsx.js"
+        "filename": "create-element-to-jsx.js"
       },
       {
         "name": "findDOMNode",
-        "filePath": "findDOMNode.js"
+        "filename": "findDOMNode.js"
       },
       {
         "name": "Test Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       },
       {
         "name": "ABC Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       },
       {
         "name": "XXX Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       },
       {
         "name": "TTT Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       },
       {
         "name": "GGG Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       },
       {
         "name": "VVVV CompoCompo nentnent",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       }
     ]
   },
@@ -61,15 +61,15 @@
     "transforms": [
       {
         "name": "Create Element to JSX",
-        "filePath": "create-element-to-jsx.js"
+        "filename": "create-element-to-jsx.js"
       },
       {
         "name": "findDOMNode",
-        "filePath": "findDOMNode.js"
+        "filename": "findDOMNode.js"
       },
       {
         "name": "Pure Component",
-        "filePath": "pure-component.js"
+        "filename": "pure-component.js"
       }
     ]
   }

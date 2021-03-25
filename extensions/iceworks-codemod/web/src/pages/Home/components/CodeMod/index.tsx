@@ -12,10 +12,10 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
   const [transformsReport, setTransformsReport] = useState([]);
-  const { loading, error, run } = useRequest(() => callService('codemod', 'getTransformsReport'), { initialData: [], manual: true });
+  const { loading, error, run } = useRequest((t) => callService('codemod', 'getTransformsReport', t), { initialData: [], manual: true });
 
   async function getTransformsReport() {
-    const data = await run();
+    const data = await run(transforms.filter(({ checked }) => checked));
     initCon.current = true;
     setTransformsReport(data);
   }
@@ -39,12 +39,12 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </label>
           <div className={styles.selects}>
             {
-              transforms.map(({ name: tname, filePath, checked }) => {
+              transforms.map(({ name: tname, filename, checked }) => {
                 return (
                   <label className={styles.label} key={tname}>
                     <Checkbox
-                      value={filePath}
-                      onChange={(v) => onChangeOne(v, cname, filePath)}
+                      value={filename}
+                      onChange={(v) => onChangeOne(v, cname, filename)}
                       checked={checked}
                     />
                     <span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Tab, Icon, Loading } from '@alifd/next';
 import * as cloneDeep from 'lodash.clonedeep';
 import { useRequest } from 'ahooks';
@@ -10,11 +10,18 @@ import styles from './index.module.scss';
 
 const CodeMods = () => {
   const [codeMods, setCodeMods] = useState([]);
-  const { data, loading, error } = useRequest(() => callService('codemod', 'getCodeMods'), { initialData: [] });
+  const initCon = useRef(false);
+  const { loading, error, run } = useRequest(() => callService('codemod', 'getCodeMods'), { initialData: [], manual: true });
 
   useEffect(() => {
-    setCodeMods(data);
-  }, [data]);
+    async function init() {
+      const data = await run();
+      initCon.current = true;
+      setCodeMods(data);
+    }
+
+    init();
+  }, []);
 
   function onChangeAll(checked, cname) {
     const newCodeMods = cloneDeep(codeMods);
@@ -30,7 +37,7 @@ const CodeMods = () => {
   function onChangeOne(checked, cname, value) {
     const newCodeMods = cloneDeep(codeMods);
     const cIndex = codeMods.findIndex(({ name }) => name === cname);
-    const tIndex = codeMods[cIndex].transforms.findIndex(({ filePath }) => filePath === value);
+    const tIndex = codeMods[cIndex].transforms.findIndex(({ filename }) => filename === value);
     newCodeMods[cIndex].transforms = cloneDeep(newCodeMods[cIndex].transforms);
     newCodeMods[cIndex].transforms[tIndex].checked = checked;
     setCodeMods(newCodeMods);
@@ -70,7 +77,7 @@ const CodeMods = () => {
           }
         </Tab>
       }
-      {(!loading && !codeMods.length) && <NotFound />}
+      {(initCon.current && !codeMods.length) && <NotFound />}
       { error && <ServerError /> }
     </Loading>
   );
