@@ -39,7 +39,8 @@
     "watch:web": "cd web && npm run start",
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
-    "compile": "tsc -p ./tsconfig.json"
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/node": "^13.11.0",
@@ -60,7 +61,8 @@
     "lodash.clonedeep": "^4.5.0",
     "prop-types": "^15.7.2",
     "rax-codemod": "^1.0.1",
-    "react-codemod": "^5.4.3"
+    "react-codemod": "^5.4.3",
+    "uppercamelcase": "^3.0.0"
   },
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-codemod/README.md",
   "bugs": {

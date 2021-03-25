@@ -15,6 +15,11 @@
       .selects {
         margin-top: 12px;
         display: flex;
+        flex-wrap: wrap;
+
+        .label {
+          margin-bottom: 8px;
+        }
       }
     }
     .submit {

@@ -1,3 +1,4 @@
-import * as codemod from './codemod';
+import * as common from '@iceworks/common-service';
+import * as codemod from './codeMod';
 
-export default { codemod };
+export default { common, codemod };

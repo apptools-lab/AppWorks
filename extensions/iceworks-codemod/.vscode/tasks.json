@@ -5,11 +5,7 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "watch:extension",
-      "problemMatcher": [
-        "$ts-webpack",
-        "$ts-webpack-watch"
-      ],
+      "script": "watch",
       "isBackground": true,
       "presentation": {
         "reveal": "never"
@@ -18,6 +14,6 @@
         "kind": "build",
         "isDefault": true
       }
-    }
+    },
   ]
 }

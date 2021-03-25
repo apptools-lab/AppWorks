@@ -8,8 +8,8 @@
     {
       "name": "Debug Extension",
       "configurations": [
-        "Watch And Launch Extension",
-        "Watch Webview"
+        "Watch Webview",
+        "Watch Extension"
       ],
       "presentation": {
         "order": 0
@@ -24,13 +24,12 @@
       "preLaunchTask": "npm: watch:web"
     },
     {
-      "name": "Watch And Launch Extension",
-      "type": "extensionHost",
-      "request": "launch",
-      "runtimeExecutable": "${execPath}",
+			"name": "Watch Extension",
+			"type": "extensionHost",
+			"request": "launch",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
       "outFiles": ["${workspaceFolder}/build/*.js"],
-      "preLaunchTask": "npm: watch:extension"
-    }
+			"preLaunchTask": "npm: watch"
+		},
   ]
 }

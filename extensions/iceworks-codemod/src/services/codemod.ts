@@ -6,7 +6,7 @@ enum CodeModNames {
   JS = 'js-codemod',
   REACT = 'react-codemod',
   ICE_JS = 'icejs-codemod',
-  RAX = 'rax-codemod',
+  // RAX = 'rax-codemod',
 }
 
 interface TransForm {
@@ -21,9 +21,10 @@ interface CodeMod {
 
 export async function getCodeMods(): Promise<CodeMod[]> {
   const codeMods = await Promise.all(
-    [CodeModNames.JS, CodeModNames.REACT, CodeModNames.ICE_JS, CodeModNames.RAX]
+    [CodeModNames.JS, CodeModNames.REACT, CodeModNames.ICE_JS]
       .map(async (name) => {
-        const transformFilePaths = await fs.readdir(path.join(__dirname, '..', 'node_modules', name, 'transforms'));
+        const dir = path.join(__dirname, '..', '..', 'node_modules', name, 'transforms');
+        const transformFilePaths = await fs.readdir(dir);
         return {
           name,
           transforms: transformFilePaths.map((transformFilePath) => {
