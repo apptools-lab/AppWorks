@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import * as cloneDeep from 'lodash.clonedeep';
-import { Button, Checkbox, Loading } from '@alifd/next';
+import { Button, Checkbox, Loading, Balloon } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import callService from '@/callService';
 import CodeModReport from '../CodeModReport';
@@ -39,7 +39,12 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </label>
           <div className={styles.selects}>
             {
-              transforms.map(({ name: tname, filename, checked }) => {
+              transforms.map(({ name: tname, description, filename, checked }) => {
+                const nameEle = (
+                  <span>
+                    {tname}
+                  </span>
+                );
                 return (
                   <label className={styles.label} key={tname}>
                     <Checkbox
@@ -47,9 +52,9 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
                       onChange={(v) => onChangeOne(v, cname, filename)}
                       checked={checked}
                     />
-                    <span>
-                      {tname}
-                    </span>
+                    <Balloon align="t" trigger={nameEle} closable={false}>
+                      {description || 'None'}
+                    </Balloon>
                   </label>
                 );
               })
@@ -62,7 +67,7 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </Button>
         </div>
       </div>
-      <Loading visible={loading} className={styles.report}>
+      <Loading visible={loading} className={styles.report} tip="Scanning...">
         {(!loading && transformsReport.length > 0) &&
           <CodeModReport
             name={cname}

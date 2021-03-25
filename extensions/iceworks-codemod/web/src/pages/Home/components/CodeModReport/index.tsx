@@ -3,11 +3,12 @@ import { Button, Loading } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import classNames from 'classnames';
 import callService from '@/callService';
+import ServerError from '@/components/ServerError';
 import TransformReport from '../TransformReport';
 import styles from './index.module.scss';
 
 const CodeModReport = ({ name, transforms = [], setTransformReport, setTransformsReport }) => {
-  const { loading, run } = useRequest((c, f) => callService('codemod', 'runTransforms', [c, f]), { initialData: [], manual: true });
+  const { loading, run, error } = useRequest((c, f) => callService('codemod', 'runTransforms', [c, f]), { initialData: [], manual: true });
   async function runTransforms() {
     const data = await run(name, transforms);
     setTransformsReport(data);
@@ -28,7 +29,7 @@ const CodeModReport = ({ name, transforms = [], setTransformReport, setTransform
           Update All
         </Button>
       </div>
-      <Loading visible={loading} className={styles.transformList}>
+      <Loading visible={loading} className={styles.transformList} tip="Updating...">
         {
           transforms.map((transform) => {
             return (
@@ -41,6 +42,7 @@ const CodeModReport = ({ name, transforms = [], setTransformReport, setTransform
             );
           })
         }
+        { error && <ServerError /> }
       </Loading>
     </div>
   );

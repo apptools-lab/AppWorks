@@ -6,7 +6,7 @@ export default function Forbidden() {
     <Exception
       statusCode="403"
       image="https://img.alicdn.com/tfs/TB11TaSopY7gK0jSZKzXXaikpXa-200-200.png"
-      description="服务器好像挂了你要等会了"
+      description="执行失败，请联系插件维护者反馈问题"
     />
   );
 }

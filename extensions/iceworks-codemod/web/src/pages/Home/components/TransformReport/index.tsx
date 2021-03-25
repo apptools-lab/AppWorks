@@ -2,13 +2,13 @@ import React from 'react';
 import { Button, Loading, Balloon } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import classNames from 'classnames';
+import ServerError from '@/components/ServerError';
 import callService from '@/callService';
 import styles from './index.module.scss';
 
 const TransformReport = ({ name, transformReport, setTransformReport }) => {
   const { name: tname, description, files = [] } = transformReport;
-  const { loading, run } = useRequest((c, n, f) => callService('codemod', 'runTransform', [c, n, f]), { initialData: [], manual: true });
-
+  const { loading, run, error } = useRequest((c, n, f) => callService('codemod', 'runTransform', [c, n, f]), { initialData: [], manual: true });
   async function runTransform() {
     const data = await run(name, tname, getWantUpdateFiles());
     setTransformReport(tname, data);
@@ -55,7 +55,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
           </Button>
         }
       </div>
-      <Loading visible={loading} className={styles.loading}>
+      <Loading visible={loading} className={styles.loading} tip="Updating...">
         {
           !loading && files.length > 0 &&
           <div className={styles.summary}>
@@ -119,6 +119,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
               No match files.
             </div>
         }
+        { error && <ServerError /> }
       </Loading>
     </div>
   );

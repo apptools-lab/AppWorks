@@ -5,6 +5,7 @@
     "transforms": [
       {
         "name": "Create Element to JSX",
+        "description": "Converts calls to `React.createElement` into JSX elements.",
         "filename": "create-element-to-jsx.js"
       },
       {
