@@ -1,19 +1,20 @@
 import * as fse from 'fs-extra';
+import { projectPath } from '@iceworks/project-service';
 import { join } from 'path';
 
-const configJsonFiles = ['jsconfig.json', 'tsconfig.json'];
-
-function getProjectAliasEntries(projectPath: string) {
+function getProjectAliasEntries(projectLanguageType: 'ts' | 'js') {
+  let configJsonFile;
+  if (projectLanguageType === 'js') {
+    configJsonFile = 'jsconfig.json';
+  } else {
+    configJsonFile = 'tsconfig.json';
+  }
   const aliasEntries = {};
-  configJsonFiles.forEach(jsonFile => {
-    const content = fse.readJSONSync(join(projectPath, jsonFile));
-    const { compileOptions } = content;
-    if (compileOptions && compileOptions.paths && compileOptions.paths instanceof Object) {
-      Object.keys(compileOptions.paths).forEach(path => {
-        aliasEntries[path] = compileOptions.paths[path][0];
-      });
-    }
-  });
+  const content = fse.readJSONSync(join(projectPath, configJsonFile));
+  const { compilerOptions } = content;
+  if (compilerOptions && compilerOptions.paths && compilerOptions.paths instanceof Object) {
+    return compilerOptions.paths;
+  }
   return aliasEntries;
 }
 

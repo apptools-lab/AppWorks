@@ -1,7 +1,7 @@
 import traverse from '@babel/traverse';
-import isTargetResource from '../utils/isTargetResource';
+import checkHasResourcePath from '../utils/checkHasResourcePath';
 
-function findImportSpecifiers(ast, sourcePath, resourcePath, aliasEntries = {}) {
+function findImportSpecifiers(ast, sourcePath, resourcePath, projectLanguageType) {
   const importSpecifiers: string[] = [];
 
   traverse(ast, {
@@ -11,8 +11,8 @@ function findImportSpecifiers(ast, sourcePath, resourcePath, aliasEntries = {}) 
       if (!Array.isArray(specifiers)) return;
 
       const sourceValue = source.value;
-      const isTarget = isTargetResource(sourcePath, resourcePath, sourceValue, aliasEntries);
-      if (isTarget) {
+      const hasResourcePath = checkHasResourcePath(sourcePath, resourcePath, sourceValue, projectLanguageType);
+      if (hasResourcePath) {
         specifiers.forEach(specifier => {
           const localName = specifier.local.name;
 
@@ -29,7 +29,8 @@ function findImportSpecifiers(ast, sourcePath, resourcePath, aliasEntries = {}) 
 
 export default {
   parse(parsed, options) {
-    const importSpecifiers = findImportSpecifiers(parsed.ast, options.sourcePath, options.resourcePath);
+    const { sourcePath, resourcePath, projectLanguageType } = options;
+    const importSpecifiers = findImportSpecifiers(parsed.ast, sourcePath, resourcePath, projectLanguageType);
     parsed.done = importSpecifiers.length === 0;
     options.importSpecifiers = importSpecifiers;
   },

@@ -11,7 +11,11 @@ import {
 } from './parsers';
 import executeModules from './utils/executeModules';
 
-export function removeComponentCode(sourcePath: string, resourcePath: string) {
+export function removeComponentCode(
+  sourcePath: string,
+  resourcePath: string,
+  projectLanguageType: string,
+) {
   const removeElementsModules = [
     findUnreferencedIdentifiers,
     findImportSpecifiers,
@@ -24,6 +28,7 @@ export function removeComponentCode(sourcePath: string, resourcePath: string) {
   const options = {
     sourcePath,
     resourcePath,
+    projectLanguageType,
   };
   const executeTasks = [
     removeElementsModules,
