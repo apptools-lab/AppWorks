@@ -3,9 +3,12 @@ import rimraf from 'rimraf';
 import * as path from 'path';
 import readdir from 'fs-readdir-recursive';
 import { pagesPath, jsxFileExtnames, getProjectFramework, getProjectLanguageType } from '@iceworks/project-service';
-import { removeComponentCode } from '../refactor';
+import { removeComponent } from '../refactor';
 
-async function removeComponentAndReference(uri: Uri) {
+/**
+ * remove the component dir and the references
+ */
+async function removeCompAndRef(uri: Uri) {
   const projectFramework = await getProjectFramework();
   const projectLanguageType = await getProjectLanguageType();
   if (!(projectFramework === 'icejs' || projectFramework === 'rax-app')) {
@@ -26,11 +29,11 @@ async function removeComponentAndReference(uri: Uri) {
 
     pageFiles.forEach(async pageFile => {
       const pageFilePath = path.join(pagesPath, pageFile);
-      removeComponentCode(pageFilePath, componentFilePath, projectLanguageType);
+      removeComponent(pageFilePath, componentFilePath, projectLanguageType);
     });
   });
   // remove component
   rimraf.sync(componentPath);
 }
 
-export default removeComponentAndReference;
+export default removeCompAndRef;

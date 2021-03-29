@@ -17,21 +17,33 @@
     "iceworks-refactor"
   ],
   "activationEvents": [
-    "onCommand:iceworks-refactor.component.remove"
+    "onCommand:iceworks-refactor.component.dir-and-reference.remove",
+    "onCommand:iceworks-refactor.component.snippet-and-reference.remove"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "iceworks-refactor.component.remove",
-        "title": "%iceworks-refactor.component.remove.title%"
+        "command": "iceworks-refactor.component.dir-and-reference.remove",
+        "title": "%iceworks-refactor.component.dir-and-reference.remove.title%"
+      },
+      {
+        "command": "iceworks-refactor.component.snippet-and-reference.remove",
+        "title": "%iceworks-refactor.component.snippet-and-reference.remove.title%"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "iceworks-refactor.component.remove",
-          "group": "iceworks",
+          "command": "iceworks-refactor.component.dir-and-reference.remove",
+          "group": "iceworks-refactor",
           "when": "explorerResourceIsFolder"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "iceworks-refactor.component.snippet-and-reference.remove",
+          "group": "iceworks-refactor",
+          "when": "iceworks:isJSXFile"
         }
       ]
     }

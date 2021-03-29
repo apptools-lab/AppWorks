@@ -5,8 +5,8 @@ import getProjectAliasEntries from './getProjectAliasEntries';
 /**
  * Checking if has resource path in the source code
  *
- * @param sourcePath string of source path
- * @param resourcePath string of original file path
+ * @param sourcePath source path
+ * @param resourcePath original file path
  * @param importSourceValue the source value in import declaration
  */
 function checkHasResourcePath(
@@ -31,6 +31,7 @@ function checkHasResourcePath(
       match = true;
     }
   } else {
+    // alias path
     const aliasEntries = getProjectAliasEntries(projectLanguageType);
 
     const aliasKey = Object.keys(aliasEntries).find(key => {
@@ -41,19 +42,15 @@ function checkHasResourcePath(
       const entries = aliasEntries[aliasKey];
       if (Array.isArray(entries)) {
         for (const entry of entries) {
-          // const entryRegExp = new RegExp(entry);
-          // @/components/Logo
           const absoluteEntryPath = path.join(projectPath, entry, importSourceValue.replace(new RegExp(aliasKey), ''));
-          console.log();
           const regexp = new RegExp(`${absoluteEntryPath}(\\/${basename})?`);
           if (regexp.test(resourcePath)) {
             match = true;
+            break;
           }
         }
       }
     }
-
-    console.log('aliasEntries', aliasEntries);
   }
 
   return match;

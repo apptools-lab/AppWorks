@@ -13,10 +13,7 @@ function removeDeadReferences(ast: any, originUnrefIdentifiers: string[]) {
         node.declarations.forEach(declaration => {
           removeReference(path, scope, declaration.id, originUnrefIdentifiers, identifierMap);
         });
-      } else if (
-        t.isClassDeclaration(node) ||
-        t.isFunctionDeclaration(node)
-      ) {
+      } else if (t.isClassDeclaration(node) || t.isFunctionDeclaration(node)) {
         if (node.id) {
           removeReference(path, scope, node.id, originUnrefIdentifiers, identifierMap);
         }
