@@ -4,14 +4,16 @@ import { useRequest } from 'ahooks';
 import classNames from 'classnames';
 import ServerError from '@/components/ServerError';
 import callService from '@/callService';
+import { updateTransformReportFiles } from '@/util';
 import styles from './index.module.scss';
 
-const TransformReport = ({ name, transformReport, setTransformReport }) => {
-  const { name: tname, description, files = [] } = transformReport;
-  const { loading, run, error } = useRequest((c, n, f) => callService('codemod', 'runTransform', [c, n, f]), { initialData: [], manual: true });
-  async function runTransform() {
-    const data = await run(name, tname, getWantUpdateFiles());
-    setTransformReport(tname, data);
+const TransformReport = ({ transformReport, setTransformReport }) => {
+  const { name, filePath, description, files = [] } = transformReport;
+  const { loading, run, error } = useRequest((n, f) => callService('codemod', 'runTransformUpdate', n, f), { initialData: [], manual: true });
+  async function runTransformUpdate() {
+    const updatedFiles = await run(filePath, getWantUpdateFiles().map(({ path }) => path));
+    const newTransformReport = updateTransformReportFiles(files, updatedFiles);
+    setTransformReport(name, newTransformReport);
   }
 
   function getWantUpdateFiles() {
@@ -45,7 +47,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
   const infoFiles = okFiles;
 
   return (
-    <div key={tname} className={styles.transformItem}>
+    <div key={name} className={styles.transformItem}>
       <div
         className={classNames({
           [styles.title]: true,
@@ -53,12 +55,12 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
         })}
       >
         <div>
-          <span>{tname}</span>
+          <span>{name}</span>
           <p>{description}</p>
         </div>
         {
           okFiles.length > 0 && getWantUpdateFiles().length > 0 &&
-          <Button type="secondary" className={styles.btn} onClick={runTransform}>
+          <Button type="secondary" className={styles.btn} onClick={runTransformUpdate}>
             Update
           </Button>
         }
@@ -95,7 +97,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
           infoFiles.length > 0 ?
             <ul className={styles.fileList}>
               {
-                infoFiles.map(({ path, updated, message }) => {
+                infoFiles.map(({ path, updated, updateMessage }) => {
                   // const StatusEle = (
                   //   <div
                   //     className={classNames({
@@ -140,7 +142,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
                             }
                             closable={false}
                           >
-                            {message || 'Done'}
+                            {updateMessage || 'Done'}
                           </Balloon>
                       }
                     </li>

@@ -15,7 +15,9 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
   const { loading, error, run } = useRequest((t) => callService('codemod', 'getTransformsReport', t), { initialData: [], manual: true });
 
   async function getTransformsReport() {
-    const data = await run(transforms.filter(({ checked }) => checked));
+    // 赛选出所有勾选了的转换器
+    const checkedTransforms = transforms.filter(({ checked }) => checked);
+    const data = await run(checkedTransforms);
     initCon.current = true;
     setTransformsReport(data);
   }
@@ -71,7 +73,7 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
         {(!loading && transformsReport.length > 0) &&
           <CodeModReport
             name={cname}
-            transforms={transformsReport}
+            transformsReport={transformsReport}
             setTransformReport={setTransformReport}
             setTransformsReport={setTransformsReport}
           />

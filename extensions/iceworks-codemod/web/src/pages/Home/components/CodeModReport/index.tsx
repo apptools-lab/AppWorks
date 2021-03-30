@@ -4,14 +4,23 @@ import { useRequest } from 'ahooks';
 import classNames from 'classnames';
 import callService from '@/callService';
 import ServerError from '@/components/ServerError';
+import { updateTransformReportFiles } from '@/util';
 import TransformReport from '../TransformReport';
 import styles from './index.module.scss';
 
-const CodeModReport = ({ name, transforms = [], setTransformReport, setTransformsReport }) => {
-  const { loading, run, error } = useRequest((c, f) => callService('codemod', 'runTransforms', [c, f]), { initialData: [], manual: true });
+const CodeModReport = ({ name, transformsReport = [], setTransformReport, setTransformsReport }) => {
+  const { loading, run, error } = useRequest((f) => callService('codemod', 'runTransformsUpdate', f), { initialData: [], manual: true });
   async function runTransforms() {
-    const data = await run(name, transforms);
-    setTransformsReport(data);
+    const updatedReports = await run(transformsReport);
+    const newTransformsReports = transformsReport.map(transformReport => {
+      const updatedReport = updatedReports.find(({ filePath }) => filePath === transformReport.filePath);
+      const newFiles = updatedReport ? updateTransformReportFiles(transformReport.files, updatedReport.files) : transformReport.files;
+      return {
+        ...transformReport,
+        files: newFiles,
+      };
+    });
+    setTransformsReport(newTransformsReports);
   }
 
   return (
@@ -31,12 +40,11 @@ const CodeModReport = ({ name, transforms = [], setTransformReport, setTransform
       </div>
       <Loading visible={loading} className={styles.transformList} tip="Updating...">
         {
-          transforms.map((transform) => {
+          transformsReport.map((transformReport) => {
             return (
               <TransformReport
-                key={transform.name}
-                name={name}
-                transformReport={transform}
+                key={transformReport.name}
+                transformReport={transformReport}
                 setTransformReport={setTransformReport}
               />
             );

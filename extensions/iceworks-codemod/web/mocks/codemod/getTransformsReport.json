@@ -1,6 +1,7 @@
 [
   {
     "name": "Create Element to JSX",
+    "filePath": "1",
     "description": "Converts calls to `React.createElement` into JSX elements.",
     "files": [
       {
@@ -15,6 +16,7 @@
   },
   {
     "name": "findDOMNode",
+    "filePath": "2",
     "description": "Updates `this.getDOMNode()` or `this.refs.foo.getDOMNode()` calls inside of `React.createClass` components to `React.findDOMNode(foo)`. Note that it will only look at code inside of `React.createClass` calls and only update calls on the component instance or its refs. You can use this script to update most calls to `getDOMNode` and then manually go through the remaining calls.",
     "files": [
       {
@@ -25,12 +27,14 @@
   },
   {
     "name": "Testing",
+    "filePath": "3",
     "description": "Just a testing.",
     "files": [
     ]
   },
   {
     "name": "Pure Component",
+    "filePath": "4",
     "description": "Converts ES6 classes that only have a render method, only have safe properties (statics and props), and do not have refs to Functional Components.",
     "files": [
       {

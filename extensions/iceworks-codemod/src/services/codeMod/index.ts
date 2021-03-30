@@ -60,11 +60,9 @@ interface FileReport {
   path: string;
   status: FileStatus;
   message: string;
-  updated?: boolean;
 }
 
-interface TransformReport {
-  name: string;
+interface TransformReport extends TransForm {
   files: FileReport[]
 }
 
@@ -75,10 +73,10 @@ interface CodeModReport {
   transforms: TransformsReport;
 }
 
-export async function getTransformsReport(transforms: TransForm[]) {
+export async function getTransformsReport(transforms: TransForm[]): Promise<TransformReport[]> {
   const projectPath = vscode.workspace.rootPath;
   if (projectPath) {
-    const filesNeedBeTransform = await glob('**', {
+    const needUpdateFiles = await glob('**', {
       cwd: projectPath,
       ignore: [
         'node_modules/**',
@@ -89,36 +87,44 @@ export async function getTransformsReport(transforms: TransForm[]) {
       dot: true,
       realpath: true,
     });
-    console.log('[getTransformsReport] filesNeedBeTransform:', filesNeedBeTransform);
-    const results = await Promise.all(transforms.map((transform) => {
-      return new Promise<TransformReport>(resolve => {
-        const { name: tName, filePath } = transform;
-        const work = getWork([filePath, 'babel']);
-        const files: FileReport[] = [];
-        const options = { dry: true };
-        work.send({ files: filesNeedBeTransform, options });
-        work.on('message', (message) => {
-          const { action, status, msg } = message;
-          const ms = msg ? msg.split(' ') : [];
-          console.log('[getTransformsReport] onMessage:', message);
-          switch (action) {
-            case 'status':
-              files.push({
-                path: ms[0],
-                message: ms[1],
-                status,
-              });
-              break;
-            case 'free':
-              resolve({ name: tName, files });
-              break;
-            default:
-              console.log('default');
-          }
-        });
-      });
+    const results = await Promise.all(transforms.map(async (transform) => {
+      const { filePath } = transform;
+      const files = await runTransform(filePath, needUpdateFiles, { dry: true });
+      return { ...transform, files };
     }));
     return results;
   }
   return [];
+}
+
+export async function runTransformUpdate(transformFsPath: string, needUpdateFiles: string[]): Promise<FileReport[]> {
+  const updatedFiles = await runTransform(transformFsPath, needUpdateFiles);
+  return updatedFiles;
+}
+
+async function runTransform(transformFsPath: string, needUpdateFiles: string[], options?: any): Promise<FileReport[]> {
+  return new Promise<FileReport[]>(resolve => {
+    const work = getWork([transformFsPath, 'babel']);
+    const files: FileReport[] = [];
+    work.send({ files: needUpdateFiles, options });
+    work.on('message', (message) => {
+      const { action, status, msg } = message;
+      const ms = msg ? msg.split(' ') : [];
+      console.log('[getTransformsReport] onMessage:', message);
+      switch (action) {
+        case 'status':
+          files.push({
+            path: ms[0],
+            message: ms[1],
+            status,
+          });
+          break;
+        case 'free':
+          resolve(files);
+          break;
+        default:
+          console.log('default');
+      }
+    });
+  });
 }
