@@ -3,6 +3,9 @@
   "vendor": false,
   "publicPath": "./",
   "outputDir": "../build",
+  "devServer": {
+    "writeToDisk": true
+  },
   "plugins": [
     [
       "build-plugin-fusion",
