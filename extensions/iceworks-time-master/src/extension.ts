@@ -1,6 +1,6 @@
 import { ExtensionContext, commands, window, WindowState } from 'vscode';
 import { recordDAU } from '@iceworks/recorder';
-import { openFileInEditor } from './utils/common';
+import { openFileInEditor } from '@iceworks/common-service';
 import { getInterface as getKeystrokeStats } from './recorders/keystrokeStats';
 import { getInterface as getUsageStatsRecorder } from './recorders/usageStats';
 import { activate as activateWalkClock, deactivate as deactivateWalkClock } from './managers/walkClock';
@@ -22,8 +22,13 @@ export async function activate(context: ExtensionContext) {
   await initViews(context);
 
   subscriptions.push(
-    commands.registerCommand('iceworks-time-master.openFileInEditor', (fsPath: string) => {
-      openFileInEditor(fsPath);
+    commands.registerCommand('iceworks-time-master.openFileInEditor', async (fsPath: string) => {
+      try {
+        await openFileInEditor(fsPath);
+      } catch (e) {
+        window.showErrorMessage(e.message);
+      }
+
       recordDAU();
       recorder.record({
         module: 'command',

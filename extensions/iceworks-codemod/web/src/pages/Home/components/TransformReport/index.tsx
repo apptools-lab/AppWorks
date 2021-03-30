@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Loading, Icon, Balloon } from '@alifd/next';
+import { Button, Loading, Icon, Balloon, Notification } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import classNames from 'classnames';
 import ServerError from '@/components/ServerError';
@@ -16,6 +16,14 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
 
   function getWantUpdateFiles() {
     return files.filter(({ updated }) => !updated);
+  }
+
+  async function handleOpenFile(fsPath) {
+    try {
+      await callService('common', 'openFileInEditor', fsPath);
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
   }
 
   const errorFiles = [];
@@ -114,7 +122,7 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
                           </Balloon> :
                           StatusEle
                       } */}
-                      <div className={styles.path}>{path}</div>
+                      <div className={styles.path} onClick={() => handleOpenFile(path)}>{path}</div>
                       {
                         typeof updated === 'boolean' &&
                           <Balloon
