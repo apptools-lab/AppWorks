@@ -44,7 +44,7 @@ const CodeMods = () => {
   }
 
   return (
-    <Loading visible={loading} className={styles.wrap} tip="Fetching...">
+    <Loading visible={loading} className={styles.wrap} tip="Fetching, it takes a few seconds or more...">
       {(!loading && codeMods.length > 0) &&
         <Tab shape="pure">
           {

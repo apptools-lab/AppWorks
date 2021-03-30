@@ -53,7 +53,7 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
                       checked={checked}
                     />
                     <Balloon align="t" trigger={nameEle} closable={false}>
-                      {description || 'None'}
+                      {description || tname}
                     </Balloon>
                   </label>
                 );
@@ -67,7 +67,7 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </Button>
         </div>
       </div>
-      <Loading visible={loading} className={styles.report} tip="Scanning...">
+      <Loading visible={loading} className={styles.report} tip={(<div>Scanning, this may take a few minutes or more...<br />(depending on the number of files in the project)</div>)}>
         {(!loading && transformsReport.length > 0) &&
           <CodeModReport
             name={cname}

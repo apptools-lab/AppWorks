@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Loading, Balloon } from '@alifd/next';
+import { Button, Loading, Icon, Balloon } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import classNames from 'classnames';
 import ServerError from '@/components/ServerError';
@@ -59,7 +59,24 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
         {
           !loading && files.length > 0 &&
           <div className={styles.summary}>
-            Results:&nbsp;
+            Results&nbsp;
+            <Balloon align="r" trigger={<Icon type="help" size="xs" />} closable={false}>
+              <ul className={styles.statusDes}>
+                <li>
+                  error: 解析失败的文件
+                </li>
+                <li>
+                  unmodified: 无需更新的文件
+                </li>
+                <li>
+                  skipped: 跳过检测的文件
+                </li>
+                <li>
+                  ok: 需要更新的文件
+                </li>
+              </ul>
+            </Balloon>
+            &nbsp;:&nbsp;&nbsp;
             <span className={styles.red}>{errorFiles.length} errors</span>,&nbsp;
             <span className={styles.yellow}>{unmodifiedFileLength} unmodified</span>,&nbsp;
             <span className={styles.yellow}>{skippedFileLength} skipped</span>,&nbsp;
@@ -70,18 +87,18 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
           infoFiles.length > 0 ?
             <ul className={styles.fileList}>
               {
-                infoFiles.map(({ path, updated, status, message }) => {
-                  const StatusEle = (
-                    <div
-                      className={classNames({
-                        [styles.status]: true,
-                        [styles.green]: status === 'ok',
-                        [styles.red]: status === 'error',
-                      })}
-                    >
-                      {status}
-                    </div>
-                  );
+                infoFiles.map(({ path, updated, message }) => {
+                  // const StatusEle = (
+                  //   <div
+                  //     className={classNames({
+                  //       [styles.status]: true,
+                  //       [styles.green]: status === 'ok',
+                  //       [styles.red]: status === 'error',
+                  //     })}
+                  //   >
+                  //     {status}
+                  //   </div>
+                  // );
                   return (
                     <li
                       key={path}
@@ -90,25 +107,33 @@ const TransformReport = ({ name, transformReport, setTransformReport }) => {
                         [styles.fileItem]: true,
                       })}
                     >
-                      {
+                      {/* {
                         message ?
                           <Balloon align="t" trigger={StatusEle} closable={false}>
                             {message}
                           </Balloon> :
                           StatusEle
-                      }
+                      } */}
                       <div className={styles.path}>{path}</div>
                       {
                         typeof updated === 'boolean' &&
-                          <div
-                            className={classNames({
-                              [styles.updated]: true,
-                              [styles.green]: updated,
-                              [styles.red]: !updated,
-                            })}
+                          <Balloon
+                            align="t"
+                            trigger={
+                              <div
+                                className={classNames({
+                                  [styles.updated]: true,
+                                  [styles.green]: updated,
+                                  [styles.red]: !updated,
+                                })}
+                              >
+                                {updated ? 'Success' : 'Fail'}
+                              </div>
+                            }
+                            closable={false}
                           >
-                            {updated ? 'Success' : 'Fail'}
-                          </div>
+                            {message || 'Done'}
+                          </Balloon>
                       }
                     </li>
                   );
