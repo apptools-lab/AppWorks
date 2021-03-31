@@ -110,7 +110,6 @@ async function runTransform(transformFsPath: string, needUpdateFiles: string[], 
     work.on('message', (message) => {
       const { action, status, msg } = message;
       const ms = msg ? msg.split(' ') : [];
-      console.log('[getTransformsReport] onMessage:', message);
       switch (action) {
         case 'status':
           files.push({
@@ -120,6 +119,7 @@ async function runTransform(transformFsPath: string, needUpdateFiles: string[], 
           });
           break;
         case 'free':
+          console.log('files:', files);
           resolve(files);
           break;
         default:

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Tab, Icon, Loading } from '@alifd/next';
+import { Tab, Loading } from '@alifd/next';
 import * as cloneDeep from 'lodash.clonedeep';
 import { useRequest } from 'ahooks';
 import callService from '@/callService';
@@ -49,13 +49,11 @@ const CodeMods = () => {
         <Tab shape="pure">
           {
             codeMods.map((codeMod) => {
-              const { name: cname, description, transforms = [] } = codeMod;
-              const hasChecked = transforms.findIndex(({ checked }) => checked === true) > -1;
+              const { name: cname, description } = codeMod;
               return (
                 <Tab.Item
                   title={
                     <div className={styles.title}>
-                      {hasChecked && <Icon type="success-filling" />}
                       <span>{cname}</span>
                     </div>
                   }

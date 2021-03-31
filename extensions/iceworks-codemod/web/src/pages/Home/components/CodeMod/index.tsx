@@ -69,7 +69,17 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
           </Button>
         </div>
       </div>
-      <Loading visible={loading} className={styles.report} tip={(<div>Scanning, this may take a few minutes or more...<br />(depending on the number of files in the project)</div>)}>
+      <Loading
+        visible={loading}
+        className={styles.report}
+        tip={(
+          <div>
+            Scanning, this may take a few minutes or more...
+            <br />
+            (depending on the number of files in the project)
+          </div>
+        )}
+      >
         {(!loading && transformsReport.length > 0) &&
           <CodeModReport
             name={cname}
