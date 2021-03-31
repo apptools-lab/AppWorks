@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.6
+
+- chore: update readme
+
 ## 0.4.5
 
 - refactor: internal optimization
