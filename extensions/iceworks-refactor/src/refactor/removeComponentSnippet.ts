@@ -9,53 +9,45 @@ import {
 } from './parsers';
 import executeModules from './utils/executeModules';
 
-export default function removeComponentSnippet(
-  removeSnippetCode: string,
+export default async function removeComponentSnippet(
+  removedSnippetCode: string,
   sourcePath: string,
+  placeholder: string,
 ) {
-  const options = { sourcePath };
-
   const removeSnippetTask = {
     sourceCode: fse.readFileSync(sourcePath, { encoding: 'utf-8' }),
-    module: [findUnreferencedIdentifiers],
+    modules: [findUnreferencedIdentifiers],
   };
   const removeDeadReferencesTask = {
-    sourceCode: removeSnippetCode,
-    module: [removeDeadReferences],
+    sourceCode: removedSnippetCode,
+    modules: [removeDeadReferences],
   };
-
   const executeTasks = [
     removeSnippetTask,
     removeDeadReferencesTask,
   ];
 
   let code;
+  const options = { sourcePath, removedNodePaths: [] };
   for (const task of executeTasks) {
-    const { sourceCode, module } = task;
+    const { sourceCode, modules } = task;
     const ast = parse(sourceCode);
     const ret = { ast };
-    executeModules(module, 'parse', ret, options);
+    executeModules(modules, 'parse', ret, options);
     code = generate(ast);
   }
 
-  const formattedCode = prettierFormat(code);
+  const formattedCode = prettierFormat(code).replace(placeholder, '');
   const uri = Uri.file(sourcePath);
-  workspace.openTextDocument(uri).then(document => {
-    // get current file content range
-    const firstLine = document.lineAt(0);
-    const lastLine = document.lineAt(document.lineCount - 1);
-    const textRange = new Range(firstLine.range.start, lastLine.range.end);
 
-    const edit = new WorkspaceEdit();
-    edit.replace(uri, textRange, formattedCode);
+  const document = await workspace.openTextDocument(uri);
+  const firstLine = document.lineAt(0);
+  const lastLine = document.lineAt(document.lineCount - 1);
+  const textRange = new Range(firstLine.range.start, lastLine.range.end);
 
-    return workspace.applyEdit(edit).then(success => {
-      if (success) {
-        window.showTextDocument(document);
-      } else {
-        fse.writeFileSync(sourcePath, code);
-        console.log(`Fail to write code to ${sourcePath}.`);
-      }
-    });
-  });
+  const edit = new WorkspaceEdit();
+  edit.replace(uri, textRange, formattedCode);
+  // show the unsaved code
+  await workspace.applyEdit(edit);
+  window.showTextDocument(document);
 }

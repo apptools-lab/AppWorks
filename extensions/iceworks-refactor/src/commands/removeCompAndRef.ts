@@ -10,11 +10,12 @@ import { removeComponent } from '../refactor';
  */
 async function removeCompAndRef(uri: Uri) {
   const projectFramework = await getProjectFramework();
-  const projectLanguageType = await getProjectLanguageType();
-  if (!(projectFramework === 'icejs' || projectFramework === 'rax-app')) {
-    window.showErrorMessage(`iceworks-refactor: Not support in ${projectFramework} project. Only support in react and rax-app project.`);
+  const supportedProjectFrameWork = ['icejs', 'rax-app'];
+  if (!supportedProjectFrameWork.includes(projectFramework)) {
+    window.showErrorMessage(`iceworks-refactor: Not support in ${projectFramework} project. Only support ${supportedProjectFrameWork.join(', ')} project.`);
     return;
   }
+  const projectLanguageType = await getProjectLanguageType();
   const { path: componentPath } = uri;
 
   const componentFiles: string[] = readdir(componentPath);
@@ -29,7 +30,7 @@ async function removeCompAndRef(uri: Uri) {
 
     pageFiles.forEach(async pageFile => {
       const pageFilePath = path.join(pagesPath, pageFile);
-      removeComponent(pageFilePath, componentFilePath, projectLanguageType);
+      await removeComponent(pageFilePath, componentFilePath, projectLanguageType);
     });
   });
   // remove component

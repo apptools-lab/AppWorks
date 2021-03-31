@@ -1,12 +1,15 @@
-function addOneIdentifierCount(identifierName: string, identifierMap: Map<string, number>) {
-  const identifierCount: number | undefined = identifierMap.get(identifierName);
+/**
+ * record identifier
+ */
+function addOneIdentifierCount(name: string, map: Map<string, number>) {
+  const identifierCount: number | undefined = map.get(name);
 
   if (!identifierCount) {
-    identifierMap.set(identifierName, 1);
+    map.set(name, 1);
   } else {
-    identifierMap.set(identifierName, identifierCount + 1);
+    map.set(name, identifierCount + 1);
   }
-  return identifierMap.get(identifierName) as number;
+  return map.get(name) as number;
 }
 
 export default addOneIdentifierCount;

@@ -12,20 +12,20 @@ suite('Refactor: remove component in page', () => {
   test('Remove component in function component', (done) => {
     const componentPath = path.join(examplesPath, 'components', 'Detail', 'index.tsx');
     const pagePath = path.join(examplesPath, 'pages', 'DetailPage', 'index.tsx');
-    const code = removeComponent(pagePath, componentPath, 'ts');
-    const expectCode = prettierFormat(fs.readFileSync(path.join(expectsPath, 'DetailPage.tsx'), { encoding: 'utf-8' }));
-
-    assert.strictEqual(code, expectCode);
-    done();
+    removeComponent(pagePath, componentPath, 'ts').then(code => {
+      const expectCode = prettierFormat(fs.readFileSync(path.join(expectsPath, 'DetailPage.tsx'), { encoding: 'utf-8' }));
+      assert.strictEqual(code, expectCode);
+      assert.strictEqual(code, expectCode);
+      done();
+    });
   });
 
-  test('Remove component in class component', (done) => {
+  test('Remove component in class component', async () => {
     const componentPath = path.join(examplesPath, 'components', 'Todo', 'index.tsx');
     const pagePath = path.join(examplesPath, 'pages', 'TodoPage', 'index.tsx');
-    const code = removeComponent(pagePath, componentPath, 'ts');
+    const code = await removeComponent(pagePath, componentPath, 'ts');
     const expectCode = prettierFormat(fs.readFileSync(path.join(expectsPath, 'TodoPage.tsx'), { encoding: 'utf-8' }));
 
     assert.strictEqual(code, expectCode);
-    done();
   });
 });
