@@ -1,14 +1,14 @@
 import * as fse from 'fs-extra';
 import { Uri, workspace, WorkspaceEdit, window, Range } from 'vscode';
 import prettierFormat from '../utils/prettierFormat';
-import generate from './utils/generate';
-import parse from './utils/parse';
+import generate from './generateCode';
+import parse from './parser';
 import {
   findImportSpecifiers,
   removeDeadReferences,
   removeElement,
   findUnreferencedIdentifiers,
-} from './parsers';
+} from './modules';
 import executeModules from './utils/executeModules';
 
 export default async function removeComponent(
@@ -38,7 +38,7 @@ export default async function removeComponent(
   for (const task of executeTasks) {
     const ast = parse(sourceCode);
     const ret = { ast };
-    const { done } = executeModules(task, 'parse', ret, options);
+    const { done } = executeModules(task, ret, options);
     if (done) {
       shouldRemoveCode = false;
       break;

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2019",
+    "jsx":"react",
     "lib": ["ES2019"],
     "sourceMap": true,
     "strict": true,
@@ -13,5 +14,5 @@
     "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", ".vscode-test", "src/test/examples", "src/test/expects"]
+  "exclude": ["node_modules", ".vscode-test", "src/__tests__/examples"]
 }

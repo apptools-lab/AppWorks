@@ -1,6 +1,6 @@
 import * as parser from '@babel/parser';
 
-const options: parser.ParserOptions = {
+const defaultOptions: parser.ParserOptions = {
   sourceType: 'module',
   plugins: [
     'jsx',
@@ -11,7 +11,7 @@ const options: parser.ParserOptions = {
   ],
 };
 
-function parse(code) {
+function parse(code, options = defaultOptions) {
   return parser.parse(code, options);
 }
 

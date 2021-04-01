@@ -1,7 +1,7 @@
 import traverse from '@babel/traverse';
 import checkHasResourcePath from '../utils/checkHasResourcePath';
 
-function findImportSpecifiers(ast, sourcePath, resourcePath, projectLanguageType) {
+export function findImportSpecifiers(ast, sourcePath, resourcePath, projectLanguageType) {
   const importSpecifiers: string[] = [];
 
   traverse(ast, {
@@ -27,13 +27,10 @@ function findImportSpecifiers(ast, sourcePath, resourcePath, projectLanguageType
   return importSpecifiers;
 }
 
-export default {
-  parse(parsed, options) {
-    const { sourcePath, resourcePath, projectLanguageType } = options;
-    const importSpecifiers = findImportSpecifiers(parsed.ast, sourcePath, resourcePath, projectLanguageType);
-    parsed.done = importSpecifiers.length === 0;
-    options.importSpecifiers = importSpecifiers;
-  },
-  // for test export
-  _findImportSpecifiers: findImportSpecifiers,
-};
+export default function parse(parsed, options) {
+  const { sourcePath, resourcePath, projectLanguageType } = options;
+  const importSpecifiers = findImportSpecifiers(parsed.ast, sourcePath, resourcePath, projectLanguageType);
+  parsed.done = importSpecifiers.length === 0;
+  options.importSpecifiers = importSpecifiers;
+}
+

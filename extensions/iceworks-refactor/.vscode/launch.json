@@ -15,24 +15,15 @@
       "preLaunchTask": "npm: watch:extension"
     },
     {
-      "name": "Debug Source Code",
-      "type": "pwa-node",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/build/refactor/index.js"
-    },
-    {
       "name": "Extension Tests",
       "type": "extensionHost",
       "request": "launch",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/build/test/suite/index"
+        "--extensionTestsPath=${workspaceFolder}/build/__tests__/suite/index"
       ],
       "outFiles": [
-        "${workspaceFolder}/build/test/**/*.js"
+        "${workspaceFolder}/build/__tests__/**/*.js"
       ],
       "preLaunchTask": "npm: watch"
     }

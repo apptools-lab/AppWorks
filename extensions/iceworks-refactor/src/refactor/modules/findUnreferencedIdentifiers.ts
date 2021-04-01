@@ -1,7 +1,7 @@
 import traverse, { NodePath, Scope } from '@babel/traverse';
 import * as t from '@babel/types';
 
-function findUnreferencedIdentifiers(ast) {
+export function findUnreferencedIdentifiers(ast) {
   const unreferencedIdentifiers = [];
 
   traverse(ast, {
@@ -47,11 +47,8 @@ function collectUnrefIdentifiers(
   }
 }
 
-export default {
-  parse(parsed, options) {
-    const unreferencedIdentifiers = findUnreferencedIdentifiers(parsed.ast);
-    options.unreferencedIdentifiers = unreferencedIdentifiers;
-  },
-  // for test export
-  _findUnreferencedIdentifier: findUnreferencedIdentifiers,
-};
+export default function parse(parsed, options) {
+  const unreferencedIdentifiers = findUnreferencedIdentifiers(parsed.ast);
+  options.unreferencedIdentifiers = unreferencedIdentifiers;
+}
+

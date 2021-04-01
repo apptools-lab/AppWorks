@@ -1,14 +1,15 @@
 import traverse from '@babel/traverse';
 import * as t from '@babel/types';
 
-function removeElement(ast: any, importSpecifiers: string[]) {
+export function removeElement(ast: any, importSpecifiers: string[]) {
   traverse(ast, {
     JSXElement(path) {
       const { openingElement } = path.node;
       const elementName = getElementName(openingElement);
       if (importSpecifiers.includes(elementName)) {
-        if (t.isConditionalExpression(path.parent)) {
+        if (t.isConditionalExpression(path.parent) || t.isJSXExpressionContainer(path.parent)) {
           // {true ? <Detail /> : <div />}
+          // <Detail comp={<Page />}></Detail>
           path.replaceWith(t.nullLiteral());
         } else {
           path.remove();
@@ -29,10 +30,6 @@ function getElementName(openingElement) {
   return elementName;
 }
 
-export default {
-  parse(parsed, options) {
-    removeElement(parsed.ast, options.importSpecifiers);
-  },
-  // for test export
-  _removeElement: removeElement,
-};
+export default function parse(parsed, options) {
+  removeElement(parsed.ast, options.importSpecifiers);
+}

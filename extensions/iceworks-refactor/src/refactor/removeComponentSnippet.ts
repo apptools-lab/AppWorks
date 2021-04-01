@@ -1,12 +1,12 @@
 import * as fse from 'fs-extra';
 import { Uri, workspace, WorkspaceEdit, window, Range } from 'vscode';
 import prettierFormat from '../utils/prettierFormat';
-import generate from './utils/generate';
-import parse from './utils/parse';
+import generate from './generateCode';
+import parse from './parser';
 import {
   removeDeadReferences,
   findUnreferencedIdentifiers,
-} from './parsers';
+} from './modules';
 import executeModules from './utils/executeModules';
 
 export default async function removeComponentSnippet(
@@ -33,7 +33,7 @@ export default async function removeComponentSnippet(
     const { sourceCode, modules } = task;
     const ast = parse(sourceCode);
     const ret = { ast };
-    executeModules(modules, 'parse', ret, options);
+    executeModules(modules, ret, options);
     code = generate(ast);
   }
 
