@@ -58,7 +58,7 @@
     "email": "iceworksteam@163.com"
   },
   "scripts": {
-    "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
+    "vscode:prepublish": "rm -rf build && npm run build:extension",
     "build:extension": "webpack --mode production",
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
     "compile": "tsc -p ./",

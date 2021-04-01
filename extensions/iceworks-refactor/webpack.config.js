@@ -13,6 +13,7 @@ const config = {
   },
   externals: {
     vscode: 'commonjs vscode',
+    prettier: 'commonjs prettier',
   },
   resolve: {
     extensions: ['.ts', '.js'],
