@@ -1,9 +1,9 @@
 {
   "name": "iceworks-style-helper",
   "displayName": "React Style Helper",
-  "description": "Easily write styles(CSS/Less/SASS).",
+  "description": "Easily write styles(CSS/LESS/SASS).",
   "publisher": "iceworks-team",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "engines": {
     "vscode": "^1.41.0"
   },
