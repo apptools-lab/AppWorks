@@ -1,9 +1,9 @@
 {
   "name": "iceworks-refactor",
-  "displayName": "",
-  "description": "",
+  "displayName": "React Component Refactor",
+  "description": "Easily refactor Component in React/Rax.",
   "publisher": "iceworks-team",
-  "icon": "",
+  "icon": "assets/logo.png",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.41.0"
