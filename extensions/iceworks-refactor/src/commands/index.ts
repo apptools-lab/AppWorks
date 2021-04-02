@@ -1,2 +1,2 @@
 export { default as removeCompAndRef } from './removeCompAndRef';
-export { default as removeCompSnippetAndRef } from './removeCompSnippetAndRef';
+export { default as removeCompSelectionAndRef } from './removeCompSelectionAndRef';

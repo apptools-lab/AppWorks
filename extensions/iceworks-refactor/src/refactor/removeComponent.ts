@@ -5,7 +5,7 @@ import generate from './generateCode';
 import parse from './parser';
 import {
   findImportSpecifiers,
-  removeDeadReferences,
+  removeUselessReferences,
   removeElement,
   findUnreferencedIdentifiers,
 } from './modules';
@@ -23,10 +23,10 @@ export default async function removeComponent(
     findImportSpecifiers,
     removeElement,
   ];
-  const removeDeadReferencesModules = [removeDeadReferences];
+  const removeUselessReferencesModules = [removeUselessReferences];
   const executeTasks = [
     removeElementsModules,
-    removeDeadReferencesModules,
+    removeUselessReferencesModules,
   ];
 
   let shouldRemoveCode = true;

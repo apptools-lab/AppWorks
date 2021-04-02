@@ -1,4 +1,4 @@
-import { removeDeadReferences } from '../../../refactor/modules/removeDeadReferences';
+import { removeUselessReferences } from '../../../refactor/modules/removeUselessReferences';
 import parse from '../../../refactor/parser';
 import generateCode from '../../../refactor/generateCode';
 import * as assert from 'assert';
@@ -7,7 +7,7 @@ function generate(ast) {
   return generateCode(ast, {});
 }
 
-suite('removeDeadReferences module', () => {
+suite('removeUselessReferences module', () => {
   suite('remove dead import specifiers', () => {
     test('import default specifier', () => {
       const sourceCode = `
@@ -16,7 +16,7 @@ suite('removeDeadReferences module', () => {
         return;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default function Home() {
   return;
 }`);
@@ -28,7 +28,7 @@ suite('removeDeadReferences module', () => {
         return;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default function Home() {
   return;
 }`);
@@ -40,7 +40,7 @@ suite('removeDeadReferences module', () => {
         return;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default function Home() {
   return;
 }`);
@@ -53,7 +53,7 @@ suite('removeDeadReferences module', () => {
         return;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `import { name } from "@/components/Detail";
 export default function Home() {
   console.log(name);
@@ -66,7 +66,7 @@ export default function Home() {
     test('class declaration should be removed', () => {
       const sourceCode = 'class A {}';
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), '');
     });
     test('class declaration should not be removed', () => {
@@ -76,7 +76,7 @@ export default function Home() {
           return <A></A>;
         }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `class A {}
 
 export default function Home() {
@@ -89,7 +89,7 @@ export default function Home() {
     test('function declaration should be removed', () => {
       const sourceCode = 'function fn() {}';
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), '');
     });
     test('function declaration should not be removed', () => {
@@ -101,7 +101,7 @@ export default function Home() {
           return <Fn></Fn>;
         }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `function Fn() {
   return <div>1</div>;
 }
@@ -116,7 +116,7 @@ export default function Home() {
     test('variable declaration should be removed', () => {
       const sourceCode = 'var a = 1;';
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), '');
     });
 
@@ -127,7 +127,7 @@ export default function Home() {
         return <div key={a}></div>;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `var a = '1';
 export default function Home() {
   return <div key={a}></div>;
@@ -144,7 +144,7 @@ export default function Home() {
         return <div></div>;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default function Home() {
   return <div></div>;
 }`);
@@ -168,7 +168,7 @@ export default function Home() {
         return <div></div>;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, ['b']);
+      removeUselessReferences(ast, ['b']);
       assert.strictEqual(generate(ast), `const a = 1;
 const b = a + 1;
 export default function Home() {
@@ -193,7 +193,7 @@ export default function Home() {
         return <div></div>;
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, ['b']);
+      removeUselessReferences(ast, ['b']);
       assert.strictEqual(generate(ast), `const a = 1;
 const b = a + 1;
 export default function Home() {
@@ -213,7 +213,7 @@ export default function Home() {
         }
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default class Home extends React.Component {
   render() {
     return <div></div>;
@@ -234,7 +234,7 @@ export default function Home() {
         }
       }`;
       const ast = parse(sourceCode);
-      removeDeadReferences(ast, []);
+      removeUselessReferences(ast, []);
       assert.strictEqual(generate(ast), `export default class Home extends React.Component {
   constructor() {
     this.a = a;

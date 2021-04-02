@@ -1,12 +1,12 @@
 import { getProjectFramework, jsxFileExtnames } from '@iceworks/project-service';
 import { Range, TextEditor, window } from 'vscode';
 import * as path from 'path';
-import { removeComponentSnippet } from '../refactor';
+import { removeComponentSelection } from '../refactor';
 
 /**
- * remove component snippet and the references
+ * remove component selection and the references
  */
-async function removeCompSnippetAndRef(textEditor: TextEditor) {
+async function removeCompSelectionAndRef(textEditor: TextEditor) {
   const projectFramework = await getProjectFramework();
   const supportedProjectFrameWork = ['icejs', 'rax-app'];
   if (!supportedProjectFrameWork.includes(projectFramework)) {
@@ -35,9 +35,9 @@ async function removeCompSnippetAndRef(textEditor: TextEditor) {
    * function () { return <View /> }.
    */
   const placeholder = 'ICEWROKS_REFACTOR_PLACEHODER';
-  const removedSnippetCode = preCode + placeholder + postCode;
+  const removedSelectionCode = preCode + placeholder + postCode;
 
-  await removeComponentSnippet(removedSnippetCode, sourcePath, placeholder);
+  await removeComponentSelection(removedSelectionCode, sourcePath, placeholder);
 }
 
-export default removeCompSnippetAndRef;
+export default removeCompSelectionAndRef;

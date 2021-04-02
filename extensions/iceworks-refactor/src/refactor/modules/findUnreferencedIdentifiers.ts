@@ -1,6 +1,15 @@
 import traverse, { NodePath, Scope } from '@babel/traverse';
 import * as t from '@babel/types';
 
+/**
+ * return the unreferenced identifiers in the source code
+ * e.g.:
+ * import { name, About } from '@/components/About';
+ * var b = 2;
+ * console.log(name);
+ *
+ * the function will return ['About', 'b']
+ */
 export function findUnreferencedIdentifiers(ast) {
   const unreferencedIdentifiers = [];
 

@@ -1,6 +1,18 @@
 import traverse from '@babel/traverse';
 import checkHasResourcePath from '../utils/checkHasResourcePath';
 
+/**
+ * return the import specifiers which imported from the resourcePath
+ *
+ * e.g.:
+ * sourcePath: /Users/src/pages/Home/index.tsx
+ * resourcePath: /Users/src/pages/components/Detail/index.tsx
+ * find the Detail Component specifiers in the sourcecode
+ * import {UserDetail, TeacherDetail} from '../../components/Detail';
+ * import {UserAbout, TeacherAbout} from '../../components/About';
+ *
+ * the function will returns ['UserDetail', 'TeacherDetail']
+ */
 export function findImportSpecifiers(ast, sourcePath, resourcePath, projectLanguageType) {
   const importSpecifiers: string[] = [];
 

@@ -1,6 +1,13 @@
 import traverse from '@babel/traverse';
 import * as t from '@babel/types';
 
+/**
+ * remove JSX Element from source code
+ *
+ * e.g.:
+ * remove <Text> component: <View><Text></Text></View> -> <View></View>
+ * remove <Text> component: <View>{true ? <Text /> : <About />}</View> -> <View>{true ? null : <About />}</View>
+ */
 export function removeElement(ast: any, importSpecifiers: string[]) {
   traverse(ast, {
     JSXElement(path) {

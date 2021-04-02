@@ -4,7 +4,17 @@ import addIdentifierCount from '../utils/addIdentifierCount';
 import handleValidIdentifier from '../utils/handleValidIdentifier';
 import handleValidJSXIdentifier from '../utils/handleValidJSXIdentifier';
 
-export function removeDeadReferences(ast: any, originUnrefIdentifiers: string[]) {
+/**
+ * remove useless references from code
+ * e.g.:
+ * before:
+ * const uri = 'uri', b = 2;
+ * <View uri={uri}></View>
+ * after:
+ * const uri = 'uri';
+ * <View uri={uri}></View>
+ */
+export function removeUselessReferences(ast: any, originUnrefIdentifiers: string[]) {
   // collect Identifier occurs times
   const identifierMap = new Map<string, number>();
   // collect JSXIdentifier occurs times
@@ -163,5 +173,5 @@ function isUnreferencedNode(scope: Scope, name: string) {
 }
 
 export default function parse(parsed, options) {
-  removeDeadReferences(parsed.ast, options.unreferencedIdentifiers);
+  removeUselessReferences(parsed.ast, options.unreferencedIdentifiers);
 }

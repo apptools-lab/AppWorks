@@ -4,27 +4,27 @@ import prettierFormat from '../utils/prettierFormat';
 import generate from './generateCode';
 import parse from './parser';
 import {
-  removeDeadReferences,
+  removeUselessReferences,
   findUnreferencedIdentifiers,
 } from './modules';
 import executeModules from './utils/executeModules';
 
-export default async function removeComponentSnippet(
-  removedSnippetCode: string,
+export default async function removeComponentSelection(
+  removedSelectionCode: string,
   sourcePath: string,
   placeholder: string,
 ) {
-  const removeSnippetTask = {
+  const removeSelectionTask = {
     sourceCode: fse.readFileSync(sourcePath, { encoding: 'utf-8' }),
     modules: [findUnreferencedIdentifiers],
   };
-  const removeDeadReferencesTask = {
-    sourceCode: removedSnippetCode,
-    modules: [removeDeadReferences],
+  const removeUselessReferencesTask = {
+    sourceCode: removedSelectionCode,
+    modules: [removeUselessReferences],
   };
   const executeTasks = [
-    removeSnippetTask,
-    removeDeadReferencesTask,
+    removeSelectionTask,
+    removeUselessReferencesTask,
   ];
 
   let code;
