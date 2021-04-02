@@ -6,7 +6,7 @@ import ServerError from '@/components/ServerError';
 import TransformReport from '../TransformReport';
 import styles from './index.module.scss';
 
-const CodeModReport = ({ transformsReport = [], setTransformReport }) => {
+const CodeModReport = ({ name, transformsReport = [], setTransformReport }) => {
   const { loading, error } = useRequest((f) => callService('codemod', 'runTransformsUpdate', f), { initialData: [], manual: true });
   // async function runTransforms() {
   //   const updatedReports = await run(transformsReport);
@@ -41,6 +41,7 @@ const CodeModReport = ({ transformsReport = [], setTransformReport }) => {
           transformsReport.map((transformReport) => {
             return (
               <TransformReport
+                name={name}
                 key={transformReport.name}
                 transformReport={transformReport}
                 setTransformReport={setTransformReport}

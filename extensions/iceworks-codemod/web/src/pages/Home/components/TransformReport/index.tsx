@@ -7,12 +7,12 @@ import callService from '@/callService';
 import { updateTransformReportFiles } from '@/util';
 import styles from './index.module.scss';
 
-const TransformReport = ({ transformReport, setTransformReport }) => {
+const TransformReport = ({ name: cname, transformReport, setTransformReport }) => {
   const { name, filePath, description, files = [] } = transformReport;
   const wantUpdateFiles = files.filter(({ updated, status }) => !updated && status === 'ok');
-  const { loading, run, error } = useRequest((n, f) => callService('codemod', 'runTransformUpdate', n, f), { initialData: [], manual: true });
+  const { loading, run, error } = useRequest((n, c, f) => callService('codemod', 'runTransformUpdate', n, c, f), { initialData: [], manual: true });
   async function runTransformUpdate() {
-    const updatedFiles = await run(filePath, wantUpdateFiles.map(({ path }) => path));
+    const updatedFiles = await run(filePath, cname, wantUpdateFiles.map(({ path }) => path));
     const newTransformReport = updateTransformReportFiles(files, updatedFiles);
     setTransformReport(name, newTransformReport);
   }

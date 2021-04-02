@@ -12,12 +12,12 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
   const [transformsReport, setTransformsReport] = useState([]);
-  const { loading, error, run } = useRequest((t) => callService('codemod', 'getTransformsReport', t), { initialData: [], manual: true });
+  const { loading, error, run } = useRequest((t, c) => callService('codemod', 'getTransformsReport', t, c), { initialData: [], manual: true });
 
   async function getTransformsReport() {
     // 赛选出所有勾选了的转换器
     const checkedTransforms = transforms.filter(({ checked }) => checked);
-    const data = await run(checkedTransforms);
+    const data = await run(checkedTransforms, cname);
     initCon.current = true;
     setTransformsReport(data);
   }
