@@ -25,7 +25,8 @@
       "outFiles": [
         "${workspaceFolder}/build/__tests__/**/*.js"
       ],
-      "preLaunchTask": "npm: watch"
+      "preLaunchTask": "npm: watch",
+      "console": "integratedTerminal"
     }
   ]
 }

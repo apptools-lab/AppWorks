@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es2019",
+    "target": "es6",
     "jsx":"react",
-    "lib": ["ES2019"],
+    "lib": ["es6"],
     "sourceMap": true,
     "strict": true,
     "outDir": "build",

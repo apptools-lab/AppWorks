@@ -64,7 +64,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc --watch -p ./",
     "pretest": "npm run compile",
-    "test": "node ./build/test/runTest.js"
+    "test": "node ./build/__tests__/runTest.js"
   },
   "dependencies": {
     "@babel/generator": "^7.13.9",
@@ -83,8 +83,11 @@
     "@types/mocha": "^8.2.2",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
+    "decache": "^4.6.0",
     "glob": "^7.1.6",
+    "istanbul": "^0.4.5",
     "mocha": "^8.3.2",
+    "remap-istanbul": "^0.13.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.8.3",
     "vscode-test": "^1.5.2",
