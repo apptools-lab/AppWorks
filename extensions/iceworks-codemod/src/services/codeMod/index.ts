@@ -7,6 +7,7 @@ import * as globSync from 'glob';
 import icejs from './icejs';
 import react from './react';
 import js from './js';
+import logger from '../../logger';
 
 const glob = util.promisify(globSync);
 
@@ -127,8 +128,10 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
     const pattern = `**${extensions}`;
     const needUpdateFiles = await glob(pattern, {
       cwd: projectPath,
+      // TODO customizable
       ignore: [
         '**/node_modules/**',
+        '**/build/**',
         '**/.ice/**',
         '**/.rax/**',
       ],
@@ -166,9 +169,6 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
     const files: FileReport[] = [];
     const setOptions = { parser, ...options };
 
-    console.log('setOptions', setOptions);
-    console.log('needUpdateFiles', needUpdateFiles.length);
-
     work.send({ files: needUpdateFiles, options: setOptions });
     work.on('message', (message) => {
       const { action, status, msg } = message;
@@ -183,11 +183,11 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
           });
           break;
         case 'free':
-          console.log('result files:', files);
+          logger.info('result files:', files);
           resolve(files);
           break;
         default:
-          console.log('default');
+          logger.info('default');
       }
     });
   });
