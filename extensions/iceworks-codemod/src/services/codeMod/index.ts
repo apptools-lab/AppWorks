@@ -28,6 +28,7 @@ interface CodeMod {
 }
 
 const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'node_modules');
+// const nodeModulesPath = path.join(__dirname, '..', 'node_modules');
 
 /**
  * TODO: Dynamic loading

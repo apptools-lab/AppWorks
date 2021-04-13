@@ -3,9 +3,4 @@
 .gitignore
 **/*.map
 web/**
-node_modules
-!node_modules/js-codemod
-!node_modules/react-codemod
-!node_modules/icejs-codemod
-!node_modules/rax-codemod
 
