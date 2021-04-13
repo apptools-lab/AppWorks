@@ -8,7 +8,7 @@ import ServerError from '@/components/ServerError';
 import Exception from '@/components/Exception';
 import styles from './index.module.scss';
 
-const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
+const CodeMod = ({ codeMod, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
   const [transformsReport, setTransformsReport] = useState([]);
@@ -33,12 +33,12 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
     <div className={styles.wrap}>
       <div className={styles.opts}>
         <div className={styles.selectWrap}>
-          <label className={styles.label}>
+          {/* <label className={styles.label}>
             <Checkbox onChange={(v) => onChangeAll(v, cname)} />
             <span>
               Select All
             </span>
-          </label>
+          </label> */}
           <div className={styles.selects}>
             {
               transforms.map(({ name: tname, description, filename, checked }) => {
@@ -85,7 +85,7 @@ const CodeMod = ({ codeMod, onChangeAll, onChangeOne }) => {
             name={cname}
             transformsReport={transformsReport}
             setTransformReport={setTransformReport}
-            setTransformsReport={setTransformsReport}
+            // setTransformsReport={setTransformsReport}
           />
         }
         {(initCon.current && !transformsReport.length) &&

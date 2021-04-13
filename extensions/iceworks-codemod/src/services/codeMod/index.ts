@@ -1,14 +1,17 @@
 import * as path from 'path';
 import * as util from 'util';
+import * as child_process from 'child_process';
+import * as os from 'os';
 import * as vscode from 'vscode';
+import * as flatten from 'lodash.flatten';
 import { getProjectLanguageType, getProjectFramework, getProjectType } from '@iceworks/project-utils';
-import * as getWork from 'jscodeshift/src/Worker';
 import * as globSync from 'glob';
 import icejs from './icejs';
 import react from './react';
-import js from './js';
 import logger from '../../logger';
 
+const availableCpus = Math.max(os.cpus().length - 1, 1);
+const CHUNK_SIZE = 50;
 const glob = util.promisify(globSync);
 
 type CodeModNames = string;
@@ -29,7 +32,7 @@ const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'node_modules');
 /**
  * TODO: Dynamic loading
  */
-const codeMods = [icejs, react, js]
+const codeMods = [icejs, react]
   .map((codeMod) => {
     const { packageName, transforms } = codeMod;
     return {
@@ -155,11 +158,14 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
       dot: true,
       realpath: true,
     });
-    const results = await Promise.all(transforms.map(async (transform) => {
+
+    const results: TransformReport[] = [];
+    for (let index = 0; index < transforms.length; index++) {
+      const transform = transforms[index];
       const { filePath } = transform;
       const files = await runTransform(filePath, codeModName, needUpdateFiles, { dry: true });
-      return { ...transform, files };
-    }));
+      results.push({ ...transform, files });
+    }
     return results;
   }
   return [];
@@ -170,9 +176,6 @@ export async function runTransformUpdate(transformFsPath: string, codeModName: C
   return updatedFiles;
 }
 
-/**
- * TODO: Multi process, file batch
- */
 async function runTransform(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[], options?: any): Promise<FileReport[]> {
   const projectPath = vscode.workspace.rootPath;
   if (!projectPath) {
@@ -180,31 +183,62 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   }
 
   const parser = await getCodeModParser(codeModName, projectPath);
-  return new Promise<FileReport[]>(resolve => {
-    const work = getWork([transformFsPath, 'babel']);
-    const files: FileReport[] = [];
-    const setOptions = { parser, ...options };
+  const setOptions = { parser, ...options };
 
-    work.send({ files: needUpdateFiles, options: setOptions });
-    work.on('message', (message) => {
-      const { action, status, msg } = message;
-      const splitStr = ' ';
-      const [filepath, ...msgs] = msg ? msg.split(splitStr) : ['', []];
-      switch (action) {
-        case 'status':
-          files.push({
-            path: filepath,
-            message: msgs.join(splitStr),
-            status,
-          });
-          break;
-        case 'free':
-          logger.info('result files:', files);
-          resolve(files);
-          break;
-        default:
-          logger.info('default');
-      }
+  const cpus = setOptions.cpus ? Math.min(availableCpus, setOptions.cpus) : availableCpus;
+  const numFiles = needUpdateFiles.length;
+  const processes = setOptions.runInBand ? 1 : Math.min(numFiles, cpus);
+
+  logger.info('[runTransform]processes:', processes);
+
+  const args = [transformFsPath, 'babel'];
+  const workers: any[] = [];
+  for (let i = 0; i < processes; i++) {
+    workers.push(
+      setOptions.runInBand ?
+        require('jscodeshift/src/Worker')(args) :
+        child_process.fork(require.resolve(`${nodeModulesPath}/jscodeshift/src/Worker`), args),
+    );
+  }
+
+  const chunkSize = processes > 1 ?
+    Math.min(Math.ceil(numFiles / processes), CHUNK_SIZE) :
+    numFiles;
+  let index = 0;
+  function next() {
+    const files = needUpdateFiles.slice(index, index += chunkSize);
+    return files;
+  }
+
+  const results = await Promise.all(workers.map(work => {
+    return new Promise<FileReport[]>(resolve => {
+      const files: FileReport[] = [];
+      work.send({ files: next(), options: setOptions });
+      work.on('message', (message) => {
+        const { action, status, msg } = message;
+        const splitStr = ' ';
+        const [filepath, ...msgs] = msg ? msg.split(splitStr) : ['', []];
+        switch (action) {
+          case 'status':
+            files.push({
+              path: filepath,
+              message: msgs.join(splitStr),
+              status,
+            });
+            break;
+          case 'free':
+            work.send({ files: next(), options: setOptions });
+            break;
+          default:
+            logger.info('default');
+        }
+      });
+      work.on('disconnect', () => {
+        logger.info('[runTransform]result files:', files);
+        resolve(files);
+      });
     });
-  });
+  }));
+
+  return flatten(results);
 }

@@ -61,7 +61,7 @@ const CodeMods = () => {
                 >
                   <div className={styles.content}>
                     <div className={styles.description}>
-                      {description}
+                      {'>'} {description}
                     </div>
                     <CodeMod
                       codeMod={codeMod}
