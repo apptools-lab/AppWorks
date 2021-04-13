@@ -1,7 +1,7 @@
 import React, { SFC } from 'react';
 import { Card } from '@alifd/next';
+import { useIntl } from 'react-intl';
 import styles from './index.module.scss';
-
 
 export interface ExceptionProps {
   statusCode: string;
@@ -10,9 +10,10 @@ export interface ExceptionProps {
 }
 
 const Exception: SFC<ExceptionProps> = (props: ExceptionProps) => {
+  const intl = useIntl();
   const {
     statusCode = '404',
-    description = '服务器好像挂了你要等会了',
+    description = intl.formatMessage({ id: 'web.codemod.exception' }),
     image = 'https://img.alicdn.com/tfs/TB14c1VoET1gK0jSZFhXXaAtVXa-200-200.png',
   } = props;
 

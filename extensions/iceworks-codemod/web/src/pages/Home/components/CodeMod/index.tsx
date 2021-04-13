@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import * as cloneDeep from 'lodash.clonedeep';
 import { Button, Checkbox, Loading, Balloon } from '@alifd/next';
 import { useRequest } from 'ahooks';
+import { useIntl } from 'react-intl';
 import callService from '@/callService';
 import CodeModReport from '../CodeModReport';
 import ServerError from '@/components/ServerError';
@@ -11,6 +12,7 @@ import styles from './index.module.scss';
 const CodeMod = ({ codeMod, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
+  const intl = useIntl();
   const [transformsReport, setTransformsReport] = useState([]);
   const { loading, error, run } = useRequest((t, c) => callService('codemod', 'getTransformsReport', t, c), { initialData: [], manual: true });
 
@@ -65,7 +67,7 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
         </div>
         <div className={styles.submit}>
           <Button type="primary" onClick={getTransformsReport}>
-            Scan
+            {intl.formatMessage({ id: 'web.codemod.main.scan' })}
           </Button>
         </div>
       </div>
@@ -74,9 +76,9 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
         className={styles.report}
         tip={(
           <div>
-            Scanning, this may take a few minutes or more...
+            {intl.formatMessage({ id: 'web.codemod.main.scan.title' })}
             <br />
-            (depending on the number of files in the project)
+            {intl.formatMessage({ id: 'web.codemod.main.scan.content' })}
           </div>
         )}
       >
@@ -92,7 +94,7 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
           <Exception
             statusCode="404"
             image="https://img.alicdn.com/tfs/TB11TaSopY7gK0jSZKzXXaikpXa-200-200.png"
-            description="没有需要更新的文件"
+            description={intl.formatMessage({ id: 'web.codemod.main.scan.notfound' })}
           />
         }
         { error && <ServerError /> }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Loading, Balloon, Notification } from '@alifd/next';
 import { useRequest } from 'ahooks';
+import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import ServerError from '@/components/ServerError';
 import callService from '@/callService';
@@ -8,6 +9,7 @@ import { updateTransformReportFiles } from '@/util';
 import styles from './index.module.scss';
 
 const TransformReport = ({ name: cname, transformReport, setTransformReport }) => {
+  const intl = useIntl();
   const { name, filePath, description, files = [] } = transformReport;
   const wantUpdateFiles = files.filter(({ updated, status }) => !updated && status === 'ok');
   const { loading, run, error } = useRequest((n, c, f) => callService('codemod', 'runTransformUpdate', n, c, f), { initialData: [], manual: true });
@@ -45,16 +47,16 @@ const TransformReport = ({ name: cname, transformReport, setTransformReport }) =
         {
           okFiles.length > 0 && wantUpdateFiles.length > 0 &&
           <Button type="secondary" className={styles.btn} onClick={runTransformUpdate}>
-            Update
+            {intl.formatMessage({ id: 'web.codemod.update' })}
           </Button>
         }
       </div>
-      <Loading visible={loading} className={styles.loading} tip="Updating...">
+      <Loading visible={loading} className={styles.loading} tip={intl.formatMessage({ id: 'web.codemod.updating' })}>
         {
           !loading && files.length > 0 &&
           <div className={styles.summary}>
-            Results:&nbsp;
-            <span className={styles.green}>{okFiles.length} files match</span>.
+            {intl.formatMessage({ id: 'web.codemod.result' })}&nbsp;
+            <span className={styles.green}>{okFiles.length} {intl.formatMessage({ id: 'web.codemod.fileMatch' })}</span>.
           </div>
         }
         {
@@ -97,7 +99,7 @@ const TransformReport = ({ name: cname, transformReport, setTransformReport }) =
               }
             </ul> :
             <div className={styles.noFiles}>
-              No match files.
+              {intl.formatMessage({ id: 'web.codemod.scan.notfound' })}.
             </div>
         }
         { error && <ServerError /> }

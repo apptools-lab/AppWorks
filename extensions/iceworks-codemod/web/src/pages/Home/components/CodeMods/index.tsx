@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tab, Loading } from '@alifd/next';
+import { useIntl } from 'react-intl';
 import * as cloneDeep from 'lodash.clonedeep';
 import { useRequest } from 'ahooks';
 import callService from '@/callService';
@@ -9,6 +10,7 @@ import NotFound from '@/components/NotFound';
 import styles from './index.module.scss';
 
 const CodeMods = () => {
+  const intl = useIntl();
   const [codeMods, setCodeMods] = useState([]);
   const initCon = useRef(false);
   const { loading, error, run } = useRequest(() => callService('codemod', 'getCodeMods'), { initialData: [], manual: true });
@@ -23,17 +25,17 @@ const CodeMods = () => {
     init();
   }, []);
 
-  function onChangeAll(checked, cname) {
-    const newCodeMods = cloneDeep(codeMods);
-    const cIndex = codeMods.findIndex(({ name }) => name === cname);
-    newCodeMods[cIndex].transforms = codeMods[cIndex].transforms.map((transform) => {
-      return {
-        ...transform,
-        checked,
-      };
-    });
-    setCodeMods(newCodeMods);
-  }
+  // function onChangeAll(checked, cname) {
+  //   const newCodeMods = cloneDeep(codeMods);
+  //   const cIndex = codeMods.findIndex(({ name }) => name === cname);
+  //   newCodeMods[cIndex].transforms = codeMods[cIndex].transforms.map((transform) => {
+  //     return {
+  //       ...transform,
+  //       checked,
+  //     };
+  //   });
+  //   setCodeMods(newCodeMods);
+  // }
   function onChangeOne(checked, cname, value) {
     const newCodeMods = cloneDeep(codeMods);
     const cIndex = codeMods.findIndex(({ name }) => name === cname);
@@ -44,7 +46,7 @@ const CodeMods = () => {
   }
 
   return (
-    <Loading visible={loading} className={styles.wrap} tip="Fetching, it takes a few seconds or more...">
+    <Loading visible={loading} className={styles.wrap} tip={intl.formatMessage({ id: 'web.codemod.fetching' })}>
       {(!loading && codeMods.length > 0) &&
         <Tab shape="pure">
           {
@@ -65,7 +67,6 @@ const CodeMods = () => {
                     </div>
                     <CodeMod
                       codeMod={codeMod}
-                      onChangeAll={onChangeAll}
                       onChangeOne={onChangeOne}
                     />
                   </div>

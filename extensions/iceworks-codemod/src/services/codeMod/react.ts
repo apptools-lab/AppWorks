@@ -40,7 +40,7 @@ export default {
     {
       name: 'React PropTypes to prop-types',
       filename: 'React-PropTypes-to-prop-types',
-      description: 'Replaces `React.PropTypes` references with prop-types.',
+      description: 'Replaces `React.PropTypes` references with `prop-types` and adds the appropriate `import` or `require` statement.',
     },
     {
       name: 'Rename unsafe lifecycles',
@@ -51,6 +51,16 @@ export default {
       name: 'Manual bind to Arrow',
       filename: 'manual-bind-to-arrow',
       description: 'Converts manual function bindings in a class (e.g., `this.f = this.f.bind(this)`) to arrow property initializer functions (e.g., `f = () => {}`).',
+    },
+    {
+      name: 'findDOMNode',
+      filename: 'findDOMNode',
+      description: 'Updates `this.getDOMNode()` or `this.refs.foo.getDOMNode()` calls inside of `React.createClass` components to `React.findDOMNode(foo)`. Note that it will only look at code inside of `React.createClass` calls and only update calls on the component instance or its refs. You can use this script to update most calls to `getDOMNode` and then manually go through the remaining calls..',
+    },
+    {
+      name: 'sort-comp',
+      filename: 'sort-comp',
+      description: 'Reorders React component methods to match the ESLint react/sort-comp rule. (Defaults to ordering of the Airbnb style guide.',
     },
     // {
     //   name: 'Pure Component',
