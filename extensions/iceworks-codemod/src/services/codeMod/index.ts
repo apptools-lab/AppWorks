@@ -116,6 +116,12 @@ async function getCodeModParser(name: string, projectPath: string) {
   return value;
 }
 
+async function getCodeModOptions(name: string) {
+  const codeMod = findCodeMod(name);
+  // @ts-ignore
+  return codeMod?.options;
+}
+
 enum FileStatus {
   ERROR = 'error',
   NO_CHANGE = 'nochange',
@@ -183,7 +189,8 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   }
 
   const parser = await getCodeModParser(codeModName, projectPath);
-  const setOptions = { parser, ...options };
+  const preSetOptions = await getCodeModOptions(codeModName);
+  const setOptions = { ...preSetOptions, parser, ...options };
 
   const cpus = setOptions.cpus ? Math.min(availableCpus, setOptions.cpus) : availableCpus;
   const numFiles = needUpdateFiles.length;
