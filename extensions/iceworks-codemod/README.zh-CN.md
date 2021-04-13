@@ -7,7 +7,7 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-short/iceworks-team.iceworks-codemod.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-codemod)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-一个帮助您进行大规模代码库重构的工具，这些重构是自动化的，但也提供了人为的监督和偶尔的干预方式。
+一个帮助您进行大规模代码库重构的工具，这些重构是自动化的，但也提供了人为监督和偶尔干预的方式。
 
 ## 激活
 
