@@ -8,10 +8,10 @@ const Home = () => {
     <div className={styles.wrap}>
       <div className={styles.header}>
         <h1>
-          Code Modify
+          Codemod(Code Modify)
         </h1>
         <p>
-          A collection of codemod scripts that help update APIs.
+          Codemod is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.
         </p>
       </div>
       <div className={styles.codeMods}>

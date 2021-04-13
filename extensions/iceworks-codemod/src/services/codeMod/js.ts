@@ -1,5 +1,5 @@
 export default {
-  name: 'Generation JS',
+  name: 'Next Generation JS',
   packageName: 'js-codemod',
   description: 'Codemod scripts to transform code to next generation JS.',
   transforms: [
@@ -17,6 +17,21 @@ export default {
       name: 'Object Shorthand',
       filename: 'object-shorthand',
       description: 'Transforms object literals to use ES6 shorthand for properties and methods.',
+    },
+    {
+      name: 'Remove Object.assign',
+      filename: 'rm-object-assign',
+      description: 'Replace Object.assign to Destructuring.',
+    },
+    {
+      name: 'Remove requires',
+      filename: 'rm-requires',
+      description: 'Removes any requires where the imported value is not referenced. Additionally if any module is required more than once the two requires will be merged.',
+    },
+    {
+      name: 'Template Literals',
+      filename: 'template-literals',
+      description: 'Replaces string concatenation with template literals.',
     },
   ],
 };
