@@ -1,7 +1,7 @@
 {
   "name": "iceworks-codemod",
   "displayName": "CodeMod",
-  "description": "Code modify for front-end projects.",
+  "description": "CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.",
   "publisher": "iceworks-team",
   "version": "0.1.0",
   "preview": true,
