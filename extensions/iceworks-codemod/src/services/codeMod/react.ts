@@ -2,6 +2,7 @@ export default {
   name: 'React',
   packageName: 'react-codemod',
   description: 'A collection of codemod scripts that help update React APIs.',
+  applyTypes: ['react'],
   parserMap: [
     {
       languageType: 'js',

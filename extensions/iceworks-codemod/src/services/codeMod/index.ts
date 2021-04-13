@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as util from 'util';
 import * as vscode from 'vscode';
-import { getProjectLanguageType } from '@iceworks/project-utils';
+import { getProjectLanguageType, getProjectFramework, getProjectType } from '@iceworks/project-utils';
 import * as getWork from 'jscodeshift/src/Worker';
 import * as globSync from 'glob';
 import icejs from './icejs';
@@ -45,7 +45,23 @@ const codeMods = [icejs, react, js]
   });
 
 export async function getCodeMods(): Promise<CodeMod[]> {
-  return codeMods;
+  const projectPath = vscode.workspace.rootPath;
+  if (projectPath) {
+    const type = await getProjectType(projectPath);
+    const framework = await getProjectFramework(projectPath);
+    // @ts-ignore
+    return codeMods.filter(({ applyTypes, applyFrameworks }) => {
+      if (applyTypes) {
+        return applyTypes.indexOf(type) > -1;
+      }
+      if (applyFrameworks) {
+        return applyFrameworks.indexOf(framework) > -1;
+      }
+      return true;
+    });
+  }
+
+  return [];
 }
 
 function findCodeMod(value: string) {

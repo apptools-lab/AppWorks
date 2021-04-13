@@ -2,6 +2,7 @@ export default {
   name: 'icejs',
   packageName: 'icejs-codemod',
   description: 'A collection of codemod scripts for update icejs APIs.',
+  applyFrameworks: ['icejs'],
   transforms: [
     {
       name: 'createApp to runApp',
