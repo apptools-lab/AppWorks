@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as cloneDeep from 'lodash.clonedeep';
-import { Button, Checkbox, Loading, Balloon } from '@alifd/next';
+import { Button, Checkbox, Balloon } from '@alifd/next';
 import { useRequest } from 'ahooks';
 import { useIntl } from 'react-intl';
 import callService from '@/callService';
@@ -12,12 +12,15 @@ import styles from './index.module.scss';
 const CodeMod = ({ codeMod, onChangeOne }) => {
   const { name: cname, transforms = [] } = codeMod;
   const initCon = useRef(false);
+  const logEl = useRef(null);
   const intl = useIntl();
   const [transformsReport, setTransformsReport] = useState([]);
+  const [logs, setLogs] = useState([]);
   const { loading, error, run } = useRequest((t, c) => callService('codemod', 'getTransformsReport', t, c), { initialData: [], manual: true });
 
   async function getTransformsReport() {
     // 赛选出所有勾选了的转换器
+    setLogs([]);
     const checkedTransforms = transforms.filter(({ checked }) => checked);
     const data = await run(checkedTransforms, cname);
     initCon.current = true;
@@ -30,6 +33,18 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
     data[fIndex].files = files;
     setTransformsReport(data);
   }
+
+  useEffect(() => {
+    window.addEventListener('message', ({ data }) => {
+      const { eventId, text } = data;
+      if (eventId === 'codemodMessage') {
+        setLogs((ls) => {
+          return ls.concat(text);
+        });
+        logEl.current.scrollTop = logEl.current.scrollHeight;
+      }
+    });
+  }, []);
 
   return (
     <div className={styles.wrap}>
@@ -71,17 +86,21 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
           </Button>
         </div>
       </div>
-      <Loading
-        visible={loading}
-        className={styles.report}
-        tip={(
+      <div className={styles.report}>
+        {loading &&
+        <div className={styles.logs} ref={logEl}>
           <div>
-            {intl.formatMessage({ id: 'web.codemod.main.scan.title' })}
-            <br />
-            {intl.formatMessage({ id: 'web.codemod.main.scan.content' })}
+            <div>
+              {intl.formatMessage({ id: 'web.codemod.main.scan.title' })}
+              {intl.formatMessage({ id: 'web.codemod.main.scan.content' })}
+            </div>
           </div>
-        )}
-      >
+          {
+            logs.map((log, idx) => {
+              return (<p key={idx}>{'> ' + log}</p>);
+            })
+          }
+        </div>}
         {(!loading && transformsReport.length > 0) &&
           <CodeModReport
             name={cname}
@@ -98,7 +117,7 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
           />
         }
         { error && <ServerError /> }
-      </Loading>
+      </div>
     </div>
   );
 };

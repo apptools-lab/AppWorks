@@ -8,7 +8,6 @@ import { getProjectLanguageType, getProjectFramework, getProjectType } from '@ic
 import * as globSync from 'glob';
 import icejs from './icejs';
 import react from './react';
-import logger from '../../logger';
 
 const availableCpus = Math.max(os.cpus().length - 1, 1);
 const CHUNK_SIZE = 50;
@@ -30,6 +29,8 @@ interface CodeMod {
 // const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'jscodeshift', 'node_modules');
 const nodeModulesPath = path.join(__dirname, '..', 'jscodeshift', 'node_modules');
 
+const transformFileExtension = '.js';
+
 /**
  * TODO: Dynamic loading
  */
@@ -39,7 +40,7 @@ const codeMods = [icejs, react]
     return {
       ...codeMod,
       transforms: transforms.map((transform) => {
-        const filePath = path.join(nodeModulesPath, packageName, 'transforms', `${transform.filename}.js`);
+        const filePath = path.join(nodeModulesPath, packageName, 'transforms', `${transform.filename}${transformFileExtension}`);
         return {
           ...transform,
           filePath,
@@ -147,7 +148,7 @@ interface CodeModReport {
   transforms: TransformsReport;
 }
 
-export async function getTransformsReport(transforms: TransForm[], codeModName: CodeModNames): Promise<TransformReport[]> {
+export async function getTransformsReport(transforms: TransForm[], codeModName: CodeModNames, ...args): Promise<TransformReport[]> {
   const projectPath = vscode.workspace.rootPath;
   if (projectPath) {
     const extensions = await getCodeModExtensions(codeModName, projectPath);
@@ -170,7 +171,7 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
     for (let index = 0; index < transforms.length; index++) {
       const transform = transforms[index];
       const { filePath } = transform;
-      const files = await runTransform(filePath, codeModName, needUpdateFiles, { dry: true });
+      const files = await runTransform(filePath, codeModName, needUpdateFiles, { dry: true }, args[1]);
       results.push({ ...transform, files });
     }
     return results;
@@ -178,20 +179,24 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
   return [];
 }
 
-export async function runTransformUpdate(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[]): Promise<FileReport[]> {
-  const updatedFiles = await runTransform(transformFsPath, codeModName, needUpdateFiles, { runInBand: true });
+export async function runTransformUpdate(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[], ...args): Promise<FileReport[]> {
+  const updatedFiles = await runTransform(transformFsPath, codeModName, needUpdateFiles, { runInBand: true }, args[1]);
   return updatedFiles;
 }
 
-async function runTransform(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[], options?: any): Promise<FileReport[]> {
+async function runTransform(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[], options: any, webviewPanel: vscode.WebviewPanel): Promise<FileReport[]> {
   const projectPath = vscode.workspace.rootPath;
   const numFiles = needUpdateFiles.length;
+  const { webview } = webviewPanel;
+  function log(text) {
+    webview.postMessage({ eventId: 'codemodMessage', text });
+  }
 
-  const transformName = path.basename(transformFsPath, '.js');
-  logger.info(`Start run [${transformName}].`);
+  const transformName = path.basename(transformFsPath, transformFileExtension);
+  log(`Start run [${transformName}].`);
 
   if (!projectPath || numFiles === 0) {
-    logger.info('No files selected, nothing to do.');
+    log('No files selected, nothing to do.');
     return [];
   }
 
@@ -203,9 +208,9 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const cpus = setOptions.cpus ? Math.min(availableCpus, setOptions.cpus) : availableCpus;
   const processes = setOptions.runInBand ? 1 : Math.min(numFiles, cpus);
 
-  logger.info(`Processing ${needUpdateFiles.length} files...`);
+  log(`Processing ${needUpdateFiles.length} files...`);
   if (!options.runInBand) {
-    logger.info(`Spawning ${processes} workers...`);
+    log(`Spawning ${processes} workers...`);
   }
 
   const args = [transformFsPath, 'babel'];
@@ -220,7 +225,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   let index = 0;
   function next() {
     if (!options.runInBand && index < numFiles) {
-      logger.info(`Sending ${Math.min(chunkSize, numFiles - index)} files to free worker...`);
+      log(`Sending ${Math.min(chunkSize, numFiles - index)} files to free worker...`);
     }
     const files = needUpdateFiles.slice(index, index += chunkSize);
     return files;
@@ -234,6 +239,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
         const { action, status, msg } = message;
         const splitStr = ' ';
         const [filepath, ...msgs] = msg ? msg.split(splitStr) : ['', []];
+        const text = `[${status}] ${msg}`;
         switch (action) {
           case 'status':
             files.push({
@@ -241,13 +247,13 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
               message: msgs.join(splitStr),
               status,
             });
-            logger.info(`[${status}] ${msg}`);
+            log(text);
             break;
           case 'free':
             work.send({ files: next(), options: setOptions });
             break;
           default:
-            logger.info('Default message');
+            log('Default message');
         }
       });
       work.on('disconnect', () => {
@@ -259,8 +265,8 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const endTime = process.hrtime(startTime);
   const timeElapsed = (endTime[0] + endTime[1] / 1e9).toFixed(3);
 
-  logger.info(`All done for [${transformName}].`);
-  logger.info(`Time elapsed: ${timeElapsed} seconds.`);
+  log(`All done for [${transformName}].`);
+  log(`Time elapsed: ${timeElapsed} seconds.`);
 
   return flatten(results);
 }
