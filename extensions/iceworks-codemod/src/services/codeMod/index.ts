@@ -185,19 +185,25 @@ export async function runTransformUpdate(transformFsPath: string, codeModName: C
 
 async function runTransform(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[], options?: any): Promise<FileReport[]> {
   const projectPath = vscode.workspace.rootPath;
-  if (!projectPath) {
+  const numFiles = needUpdateFiles.length;
+
+  if (!projectPath || numFiles === 0) {
+    logger.info('No files selected, nothing to do.');
     return [];
   }
 
+  const startTime = process.hrtime();
   const parser = await getCodeModParser(codeModName, projectPath);
   const preSetOptions = await getCodeModOptions(codeModName);
   const setOptions = { ...preSetOptions, parser, ...options };
 
   const cpus = setOptions.cpus ? Math.min(availableCpus, setOptions.cpus) : availableCpus;
-  const numFiles = needUpdateFiles.length;
   const processes = setOptions.runInBand ? 1 : Math.min(numFiles, cpus);
 
-  logger.info('[runTransform]processes:', processes);
+  logger.info(`Processing ${needUpdateFiles.length} files...`);
+  if (!options.runInBand) {
+    logger.info(`Spawning ${processes} workers...`);
+  }
 
   const args = [transformFsPath, 'babel'];
   const workers: any[] = [];
@@ -210,6 +216,9 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
     numFiles;
   let index = 0;
   function next() {
+    if (!options.runInBand && index < numFiles) {
+      logger.info(`Sending ${Math.min(chunkSize, numFiles - index)} files to free worker...`);
+    }
     const files = needUpdateFiles.slice(index, index += chunkSize);
     return files;
   }
@@ -229,6 +238,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
               message: msgs.join(splitStr),
               status,
             });
+            logger.info(`[${status}] ${msg}`);
             break;
           case 'free':
             work.send({ files: next(), options: setOptions });
@@ -238,11 +248,16 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
         }
       });
       work.on('disconnect', () => {
-        logger.info('[runTransform]result files:', files);
         resolve(files);
       });
     });
   }));
+
+  const endTime = process.hrtime(startTime);
+  const timeElapsed = (endTime[0] + endTime[1] / 1e9).toFixed(3);
+
+  logger.info('All done.');
+  logger.info(`Time elapsed: ${timeElapsed} seconds.`);
 
   return flatten(results);
 }
