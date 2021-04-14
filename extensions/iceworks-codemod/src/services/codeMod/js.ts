@@ -1,7 +1,18 @@
 export default {
   name: 'Next Generation JS',
-  packageName: 'js-codemod',
+  packageName: 'next-js-codemod',
   description: 'Codemod scripts to transform code to next generation JS.',
+  applyTypes: ['react', 'rax'],
+  parserMap: [
+    {
+      languageType: 'js',
+      value: 'babel',
+    },
+    {
+      languageType: 'ts',
+      value: 'tsx',
+    },
+  ],
   transforms: [
     {
       name: 'No vars',

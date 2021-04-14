@@ -3,6 +3,16 @@ export default {
   packageName: 'icejs-codemod',
   description: 'A collection of codemod scripts for update icejs APIs.',
   applyFrameworks: ['icejs'],
+  parserMap: [
+    {
+      languageType: 'js',
+      value: 'babel',
+    },
+    {
+      languageType: 'ts',
+      value: 'tsx',
+    },
+  ],
   transforms: [
     {
       name: 'createApp to runApp',

@@ -8,6 +8,7 @@ import { getProjectLanguageType, getProjectFramework, getProjectType } from '@ic
 import * as globSync from 'glob';
 import icejs from './icejs';
 import react from './react';
+import nextJs from './js';
 
 const availableCpus = Math.max(os.cpus().length - 1, 1);
 const CHUNK_SIZE = 50;
@@ -34,7 +35,7 @@ const transformFileExtension = '.js';
 /**
  * TODO: Dynamic loading
  */
-const codeMods = [icejs, react]
+const codeMods = [icejs, react, nextJs]
   .map((codeMod) => {
     const { packageName, transforms } = codeMod;
     return {
