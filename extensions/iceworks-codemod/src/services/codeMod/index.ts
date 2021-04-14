@@ -9,6 +9,8 @@ import * as globSync from 'glob';
 import icejs from './icejs';
 import react from './react';
 import nextJs from './js';
+import logger from '../../logger';
+import WebViewTransport from '../../logger/webview';
 
 const availableCpus = Math.max(os.cpus().length - 1, 1);
 const CHUNK_SIZE = 50;
@@ -189,15 +191,19 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const projectPath = vscode.workspace.rootPath;
   const numFiles = needUpdateFiles.length;
   const { webview } = webviewPanel;
-  function log(text) {
-    webview.postMessage({ eventId: 'codemodMessage', text });
-  }
+
+  // post logs to webview
+  const transportName = 'webview';
+  logger.set(transportName, new WebViewTransport({
+    level: 'DEBUG',
+    webview,
+  }));
 
   const transformName = path.basename(transformFsPath, transformFileExtension);
-  log(`Start run [${transformName}].`);
+  logger.debug(`Start run [${transformName}].`);
 
   if (!projectPath || numFiles === 0) {
-    log('No files selected, nothing to do.');
+    logger.debug('No files selected, nothing to do.');
     return [];
   }
 
@@ -209,9 +215,9 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const cpus = setOptions.cpus ? Math.min(availableCpus, setOptions.cpus) : availableCpus;
   const processes = setOptions.runInBand ? 1 : Math.min(numFiles, cpus);
 
-  log(`Processing ${needUpdateFiles.length} files...`);
+  logger.debug(`Processing ${needUpdateFiles.length} files...`);
   if (!options.runInBand) {
-    log(`Spawning ${processes} workers...`);
+    logger.debug(`Spawning ${processes} workers...`);
   }
 
   const args = [transformFsPath, 'babel'];
@@ -226,7 +232,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   let index = 0;
   function next() {
     if (!options.runInBand && index < numFiles) {
-      log(`Sending ${Math.min(chunkSize, numFiles - index)} files to free worker...`);
+      logger.debug(`Sending ${Math.min(chunkSize, numFiles - index)} files to free worker...`);
     }
     const files = needUpdateFiles.slice(index, index += chunkSize);
     return files;
@@ -248,13 +254,13 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
               message: msgs.join(splitStr),
               status,
             });
-            log(text);
+            logger.debug(text);
             break;
           case 'free':
             work.send({ files: next(), options: setOptions });
             break;
           default:
-            log('Default message');
+            logger.debug('Default message');
         }
       });
       work.on('disconnect', () => {
@@ -266,8 +272,9 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const endTime = process.hrtime(startTime);
   const timeElapsed = (endTime[0] + endTime[1] / 1e9).toFixed(3);
 
-  log(`All done for [${transformName}].`);
-  log(`Time elapsed: ${timeElapsed} seconds.`);
+  logger.debug(`All done for [${transformName}].`);
+  logger.debug(`Time elapsed: ${timeElapsed} seconds.`);
+  logger.disable(transportName);
 
   return flatten(results);
 }
