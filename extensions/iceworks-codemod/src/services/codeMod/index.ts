@@ -187,6 +187,9 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const projectPath = vscode.workspace.rootPath;
   const numFiles = needUpdateFiles.length;
 
+  const transformName = path.basename(transformFsPath, '.js');
+  logger.info(`Start run [${transformName}].`);
+
   if (!projectPath || numFiles === 0) {
     logger.info('No files selected, nothing to do.');
     return [];
@@ -244,7 +247,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
             work.send({ files: next(), options: setOptions });
             break;
           default:
-            logger.info('default');
+            logger.info('Default message');
         }
       });
       work.on('disconnect', () => {
@@ -256,7 +259,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const endTime = process.hrtime(startTime);
   const timeElapsed = (endTime[0] + endTime[1] / 1e9).toFixed(3);
 
-  logger.info('All done.');
+  logger.info(`All done for [${transformName}].`);
   logger.info(`Time elapsed: ${timeElapsed} seconds.`);
 
   return flatten(results);
