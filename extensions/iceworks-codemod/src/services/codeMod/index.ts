@@ -202,7 +202,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const args = [transformFsPath, 'babel'];
   const workers: any[] = [];
   for (let i = 0; i < processes; i++) {
-    workers.push(child_process.fork(require.resolve(`${nodeModulesPath}/jscodeshift/src/Worker.js`), args));
+    workers.push(child_process.fork(path.join(nodeModulesPath, 'jscodeshift', 'src', 'Worker.js'), args));
   }
 
   const chunkSize = processes > 1 ?
