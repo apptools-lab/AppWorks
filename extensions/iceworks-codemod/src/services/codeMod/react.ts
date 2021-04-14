@@ -68,7 +68,7 @@ export default {
       description: 'Converts calls like `React.DOM.div(...)` to `React.createElement(\'div\', ...)`.',
     },
     {
-      name: 'sort-comp',
+      name: 'Sort Component methods',
       filename: 'sort-comp',
       description: 'Reorders React component methods to match the ESLint react/sort-comp rule. (Defaults to ordering of the Airbnb style guide.',
     },

@@ -29,9 +29,7 @@ interface CodeMod {
   transforms: TransForm[];
 }
 
-// const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'jscodeshift', 'node_modules');
 const nodeModulesPath = path.join(__dirname, '..', 'jscodeshift', 'node_modules');
-
 const transformFileExtension = '.js';
 
 /**
