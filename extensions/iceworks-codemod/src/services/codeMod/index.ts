@@ -179,7 +179,7 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
 }
 
 export async function runTransformUpdate(transformFsPath: string, codeModName: CodeModNames, needUpdateFiles: string[]): Promise<FileReport[]> {
-  const updatedFiles = await runTransform(transformFsPath, codeModName, needUpdateFiles);
+  const updatedFiles = await runTransform(transformFsPath, codeModName, needUpdateFiles, { runInBand: true });
   return updatedFiles;
 }
 
