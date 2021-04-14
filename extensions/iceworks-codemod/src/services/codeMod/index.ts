@@ -27,8 +27,8 @@ interface CodeMod {
   transforms: TransForm[];
 }
 
-const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'node_modules');
-// const nodeModulesPath = path.join(__dirname, '..', 'node_modules');
+// const nodeModulesPath = path.join(__dirname, '..', '..', '..', 'jscodeshift', 'node_modules');
+const nodeModulesPath = path.join(__dirname, '..', 'jscodeshift', 'node_modules');
 
 /**
  * TODO: Dynamic loading
@@ -202,11 +202,7 @@ async function runTransform(transformFsPath: string, codeModName: CodeModNames, 
   const args = [transformFsPath, 'babel'];
   const workers: any[] = [];
   for (let i = 0; i < processes; i++) {
-    workers.push(
-      setOptions.runInBand ?
-        require('jscodeshift/src/Worker')(args) :
-        child_process.fork(require.resolve(`${nodeModulesPath}/jscodeshift/src/Worker`), args),
-    );
+    workers.push(child_process.fork(require.resolve(`${nodeModulesPath}/jscodeshift/src/Worker.js`), args));
   }
 
   const chunkSize = processes > 1 ?

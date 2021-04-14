@@ -4,6 +4,9 @@ const tsConfigPath = path.join(__dirname, 'tsconfig.webpack.json');
 const config = {
   target: 'node',
   entry: './src/extension.ts',
+  node: {
+    __dirname: false,
+  },
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'extension.js',
