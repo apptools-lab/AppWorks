@@ -20,7 +20,7 @@
 3. 点击「扫描」
 4. 确认文件，点击「更新」
 
-![示例](https://img.alicdn.com/imgextra/i3/O1CN01gVi5yT1VpYqHZS6Jg_!!6000000002702-2-tps-2880-1754.png)
+![示例](https://img.alicdn.com/imgextra/i2/O1CN014VajzE1LoyAteMDup_!!6000000001347-1-tps-1446-906.gif)
 
 ## 更多
 

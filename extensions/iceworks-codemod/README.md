@@ -20,7 +20,7 @@ Activate VS Code command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows
 3. Click on "Scan"
 4. Check Files, Click "Update"
 
-![示例](https://img.alicdn.com/imgextra/i3/O1CN01gVi5yT1VpYqHZS6Jg_!!6000000002702-2-tps-2880-1754.png)
+![示例](https://img.alicdn.com/imgextra/i2/O1CN014VajzE1LoyAteMDup_!!6000000001347-1-tps-1446-906.gif)
 
 ## More
 
