@@ -25,7 +25,17 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "*"
+    "onCommand:iceworks-doctor.fix",
+    "onCommand:iceworks-doctor.scan",
+    "onCommand:iceworks-doctor.dashboard",
+    "onLanguage:json",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:scss"
   ],
   "main": "./build/extension.js",
   "repository": {
