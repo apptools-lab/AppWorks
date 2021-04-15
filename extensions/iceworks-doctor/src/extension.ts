@@ -14,6 +14,11 @@ import { services } from './services';
 // eslint-disable-next-line
 const { name } = require('../package.json');
 
+interface IWebvieOptions {
+  autoScan?: boolean;
+  autoFix?: boolean;
+}
+
 export function activate(context: vscode.ExtensionContext) {
   const { window, workspace } = vscode;
 
@@ -59,8 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions,
   );
 
-
-  const openWebview = (autoScan?: boolean) => {
+  const openWebview = (options?: IWebvieOptions) => {
     if (!fse.existsSync(path.join(workspace.rootPath || '', 'package.json'))) {
       window.showErrorMessage(
         useEn
@@ -86,10 +90,16 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     let extraHtml = '';
-    if (autoScan) {
+    if (options?.autoScan) {
       extraHtml = `
       <script>
         window.AUTO_SCAN = true;
+      </script>
+      `;
+    } else if (options?.autoFix) {
+      extraHtml = `
+      <script>
+        window.AUTO_FIX = true;
       </script>
       `;
     }
@@ -114,7 +124,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Scan project
   registerCommand('iceworks-doctor.scan', () => {
-    openWebview(true);
+    openWebview({ autoScan: true });
+  });
+
+  // Fix project
+  registerCommand('iceworks-doctor.fix', () => {
+    openWebview({ autoFix: true });
   });
 }
 
