@@ -162,6 +162,7 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
         '**/build/**',
         '**/.ice/**',
         '**/.rax/**',
+        '**/.faas_debug_tmp/**',
       ],
       nodir: true,
       dot: true,

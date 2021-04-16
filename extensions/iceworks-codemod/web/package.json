@@ -1,7 +1,6 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "description": "轻量级模板，使用 TypeScript，仅包含基础的 Layout。",
   "dependencies": {
     "@alifd/next": "^1.21.8",
     "@alifd/theme-iceworks-dark": "^1.1.0",
@@ -28,10 +27,5 @@
     "start": "icejs start --disable-reload",
     "build": "icejs build"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alibaba-fusion/materials/tree/master/scaffolds/scaffold-lite"
-  },
-  "private": true,
-  "originTemplate": "@alifd/scaffold-lite"
+  "private": true
 }
