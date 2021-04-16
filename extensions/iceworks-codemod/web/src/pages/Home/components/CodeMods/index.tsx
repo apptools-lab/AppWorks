@@ -25,17 +25,6 @@ const CodeMods = () => {
     init();
   }, []);
 
-  // function onChangeAll(checked, cname) {
-  //   const newCodeMods = cloneDeep(codeMods);
-  //   const cIndex = codeMods.findIndex(({ name }) => name === cname);
-  //   newCodeMods[cIndex].transforms = codeMods[cIndex].transforms.map((transform) => {
-  //     return {
-  //       ...transform,
-  //       checked,
-  //     };
-  //   });
-  //   setCodeMods(newCodeMods);
-  // }
   function onChangeOne(checked, cname, value) {
     const newCodeMods = cloneDeep(codeMods);
     const cIndex = codeMods.findIndex(({ name }) => name === cname);

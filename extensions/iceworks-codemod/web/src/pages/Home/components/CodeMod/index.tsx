@@ -106,7 +106,6 @@ const CodeMod = ({ codeMod, onChangeOne }) => {
             name={cname}
             transformsReport={transformsReport}
             setTransformReport={setTransformReport}
-            // setTransformsReport={setTransformsReport}
           />
         }
         {(initCon.current && !transformsReport.length) &&
