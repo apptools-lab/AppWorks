@@ -9,11 +9,9 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.
 
-## Activate
+## Usage
 
 Activate VS Code command palette by `⇧⌘P` (MacOS) or `Ctrl+Shift+p` (Windows), and input `Iceworks: CodeMod` to activate the extension.
-
-## Usage
 
 1. Select a CodeMod
 2. Select Transforms
