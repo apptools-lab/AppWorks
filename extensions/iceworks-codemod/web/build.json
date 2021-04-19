@@ -1,0 +1,33 @@
+{
+  "devServer": {
+    "writeToDisk": true
+  },
+  "mpa": true,
+  "vendor": false,
+  "publicPath": "./",
+  "outputDir": "../build",
+  "plugins": [
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": [
+          {
+            "name": "@alifd/theme-iceworks-dark"
+          }
+        ]
+      }
+    ],
+    [
+      "build-plugin-moment-locales",
+      {
+        "locales": ["zh-cn"]
+      }
+    ],
+    [
+      "build-plugin-css-assets-local",
+      {
+        "activeInDev": true
+      }
+    ]
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "iceworks-codemod",
+  "displayName": "CodeMod",
+  "description": "CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.",
+  "publisher": "iceworks-team",
+  "version": "0.1.0",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "React",
+    "CodeMod",
+    "Code modify"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onCommand:iceworks-codemod.start"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "iceworks-codemod.start",
+        "title": "%iceworksCodeMod.commands.start.title%"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ice-lab/iceworks.git"
+  },
+  "main": "./build/extension.js",
+  "scripts": {
+    "postinstall": "cd jscodeshift && npm install",
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/vscode": "^1.41.0",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@iceworks/common-service": "^0.2.0",
+    "@iceworks/constant": "^0.1.6",
+    "@iceworks/i18n": "^0.1.1",
+    "@iceworks/logger": "^0.1.0",
+    "@iceworks/project-utils": "^0.3.3",
+    "@iceworks/recorder": "^0.1.9",
+    "@iceworks/vscode-webview": "^0.1.9",
+    "egg-logger": "^2.6.1",
+    "fs-extra": "^9.1.0",
+    "glob": "^7.1.6",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.flatten": "^4.4.0"
+  },
+  "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks-codemod/README.md",
+  "bugs": {
+    "url": "https://github.com/ice-lab/iceworks/issues",
+    "email": "iceworksteam@163.com"
+  }
+}

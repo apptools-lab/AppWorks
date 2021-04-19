@@ -1,0 +1,107 @@
+.transformItem {
+  display: flex;
+  flex-direction: column;
+  >.header {
+    background-color: $color-fill1-4;
+    > div {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .fileList {
+    margin: 12px 0;
+    .fileItem {
+      margin-top: 10px;
+      padding: 0 16px;
+      display: flex;
+      .status {
+        flex: none;
+        padding: 2px 4px;
+        margin-right: 6px;
+        &.green {
+          background-color: transparent;
+          color: greenyellow;
+          border: 1px solid greenyellow;
+        }
+        &.red {
+          background-color: transparent;
+          color: red;
+          border: 1px solid red;
+        }
+      }
+      .path {
+        color: $color-link-3;
+        font-size: 14px;
+        flex: 1;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .updated {
+        flex: none;
+        padding: 2px 4px;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .noFiles {
+    padding: 12px;
+  }
+
+  .summary {
+    padding: 12px 0 0 12px;
+    .green {
+      background-color: transparent;
+      color: greenyellow;
+    }
+    .red {
+      background-color: transparent;
+      color: red;
+    }
+    .yellow {
+      background-color: transparent;
+      color: yellow;
+    }
+  }
+
+  .green {
+    background-color: greenyellow;
+  }
+  .red {
+    background-color: red;
+  }
+  .yellow {
+    background-color: yellow;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    > div {
+      flex: 1;
+      padding-right: 24px;
+
+      p {
+        margin: 0;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .loading {
+    width: 100%;
+  }
+}
+
+.statusDes {
+  list-style: disc;
+  margin-left: 6px;
+}

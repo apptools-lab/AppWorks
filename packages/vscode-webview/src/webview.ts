@@ -9,7 +9,7 @@ export const callService = function (service: string, method: string, ...args) {
 
     const handler = (event) => {
       const message = event.data;
-      console.log('webview receive vscode message:', message);
+      console.log('webview receive vscode message:', message.eventId);
       if (message.eventId === eventId) {
         window.removeEventListener('message', handler);
         message.errorMessage ? reject(new Error(message.errorMessage)) : resolve(message.result);

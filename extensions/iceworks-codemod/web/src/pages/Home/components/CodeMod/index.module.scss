@@ -1,0 +1,54 @@
+.wrap {
+  .opts {
+    .selectWrap {
+      :global {
+        .next-checkbox-wrapper {
+          margin-right: 4px;
+        }
+      }
+      .label {
+        margin-right: 14px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      .selects {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .label {
+          margin-bottom: 8px;
+        }
+      }
+    }
+    .submit {
+      margin-top: 14px;
+      overflow: hidden;
+
+      // :global {
+      //   .next-btn {
+      //     float: right;
+      //   }
+      // }
+    }
+  }
+  .report {
+    width: 100%;
+    min-height: 100px;
+
+    .logs {
+      margin-top: 20px;
+      width: 100%;
+      height: 300px;
+      overflow-y: auto;
+      background-color: #a5a2a2;
+      padding: 12px;
+
+      p {
+        margin: 0;
+        font-size: 12px;
+      }
+    }
+  }
+}

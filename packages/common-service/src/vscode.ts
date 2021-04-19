@@ -26,3 +26,26 @@ export function showInformationMessage(...args) {
 export function getLanguage() {
   return vscode.env.language;
 }
+
+export async function openFileInEditor(filePath: string) {
+  try {
+    const doc = await vscode.workspace.openTextDocument(filePath);
+    try {
+      await vscode.window.showTextDocument(doc, 1, false);
+    } catch (e) {
+      // ignore error
+    }
+  } catch (error) {
+    let reason = '';
+    if (
+      error.message &&
+      error.message.toLowerCase().includes('file not found')
+    ) {
+      reason = 'file not found';
+    } else {
+      reason = 'unknown error';
+    }
+
+    throw new Error(`Cannot open ${filePath}: ${reason}.`);
+  }
+}
