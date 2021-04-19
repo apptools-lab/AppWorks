@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.5
+- feat: add `Iceworks: Fix Your Project` command.
+- chore: use `*` activationEvents 
+
 ## 0.3.4
 
 - refactor: internal optimization

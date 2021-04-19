@@ -1,4 +1,5 @@
 {
   "iceworksDoctor.commands.doctor.title": "Iceworks: Doctor.",
-  "iceworksDoctor.commands.scan.title": "Iceworks: Scan Your Project."
+  "iceworksDoctor.commands.scan.title": "Iceworks: Scan Your Project.",
+  "iceworksDoctor.commands.fix.title": "Iceworks: Scan and Fix Your Project."
 }
