@@ -1,6 +1,6 @@
 {
   "name": "iceworks-refactor",
-  "displayName": "React Component Refactor",
+  "displayName": "React Refactor",
   "description": "Easily refactor Component in React/Rax.",
   "publisher": "iceworks-team",
   "icon": "assets/logo.png",
@@ -14,7 +14,7 @@
   "keywords": [
     "iceworks",
     "React",
-    "iceworks-refactor"
+    "refactor"
   ],
   "activationEvents": [
     "onCommand:iceworks-refactor.component.dir-and-reference.remove",
@@ -29,6 +29,13 @@
       {
         "command": "iceworks-refactor.component.selection-and-reference.remove",
         "title": "%iceworks-refactor.component.selection-and-reference.remove.title%"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "iceworks-refactor.component.selection-and-reference.remove",
+        "key": "shift+d",
+        "when": "iceworks:isJSXFile"
       }
     ],
     "menus": {
@@ -73,6 +80,7 @@
     "@babel/types": "^7.13.0",
     "@iceworks/common-service": "^0.2.0",
     "@iceworks/project-service": "^0.2.0",
+    "@iceworks/project-utils": "^0.3.3",
     "fs-extra": "^9.1.0",
     "fs-readdir-recursive": "^1.1.0",
     "prettier": "^2.2.1",

@@ -1,18 +1,16 @@
-import { Uri, window } from 'vscode';
+import { Uri } from 'vscode';
 import rimraf from 'rimraf';
 import * as path from 'path';
 import readdir from 'fs-readdir-recursive';
-import { pagesPath, jsxFileExtnames, getProjectFramework, getProjectLanguageType } from '@iceworks/project-service';
+import { pagesPath, jsxFileExtnames, getProjectLanguageType } from '@iceworks/project-service';
 import { removeComponent } from '../refactor';
+import isSupportiveProjectType from '../utils/isSupportiveProjectType';
 
 /**
  * remove the component dir and the references
  */
 async function removeCompAndRef(uri: Uri) {
-  const projectFramework = await getProjectFramework();
-  const supportedProjectFrameWork = ['icejs', 'rax-app'];
-  if (!supportedProjectFrameWork.includes(projectFramework)) {
-    window.showErrorMessage(`iceworks-refactor: Not support in ${projectFramework} project. Only support ${supportedProjectFrameWork.join(', ')} project.`);
+  if (!isSupportiveProjectType()) {
     return;
   }
   const projectLanguageType = await getProjectLanguageType();

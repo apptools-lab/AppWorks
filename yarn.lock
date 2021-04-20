@@ -5864,6 +5864,11 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+circular-json-for-egg@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.nlark.com/circular-json-for-egg/download/circular-json-for-egg-1.0.0.tgz#eacb71b57af28b4822cabc52a5961cd2f0817fc5"
+  integrity sha1-6stxtXryi0giyrxSpZYc0vCBf8U=
+
 cjs-module-lexer@^0.6.0:
   version "0.6.0"
   resolved "https://registry.npm.taobao.org/cjs-module-lexer/download/cjs-module-lexer-0.6.0.tgz?cache=0&sync_timestamp=1604331805325&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcjs-module-lexer%2Fdownload%2Fcjs-module-lexer-0.6.0.tgz#4186fcca0eae175970aee870b9fe2d6cf8d5655f"
@@ -7251,6 +7256,11 @@ delegates@^1.0.0:
   resolved "https://registry.npm.taobao.org/delegates/download/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
   integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
 
+depd@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/depd/download/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
+  integrity sha1-tpYWPMdXVg0JzyLMj60Vcbeedt8=
+
 depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/depd/download/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
@@ -7589,6 +7599,25 @@ ee-first@1.1.1, ee-first@~1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
+
+egg-errors@^2.2.0:
+  version "2.2.2"
+  resolved "https://registry.nlark.com/egg-errors/download/egg-errors-2.2.2.tgz#5e6f40cde7244dd5f3cd4d976db80c0033195557"
+  integrity sha1-Xm9AzeckTdXzzU2XbbgMADMZVVc=
+
+egg-logger@^2.4.2:
+  version "2.6.1"
+  resolved "https://registry.nlark.com/egg-logger/download/egg-logger-2.6.1.tgz#dd457fc98bb83ed73fd30f548bb2ba053d4064c5"
+  integrity sha1-3UV/yYu4Ptc/0w9Ui7K6BT1AZMU=
+  dependencies:
+    chalk "^2.4.1"
+    circular-json-for-egg "^1.0.0"
+    debug "^2.6.9"
+    depd "^2.0.0"
+    egg-errors "^2.2.0"
+    iconv-lite "^0.4.24"
+    mkdirp "^0.5.1"
+    utility "^1.15.0"
 
 ejs@^2.6.2, ejs@^2.7.2:
   version "2.7.4"
@@ -9882,6 +9911,21 @@ ice-npm-utils@^2.0.0, ice-npm-utils@^2.0.1:
   resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-2.0.1.tgz#472587a0d09170a46e9b7ea26ad568eea7242044"
   integrity sha1-RyWHoNCRcKRum36iatVo7qckIEQ=
   dependencies:
+    fs-extra "^8.1.0"
+    mkdirp "^0.5.1"
+    request "^2.88.0"
+    request-progress "^3.0.0"
+    request-promise "^4.2.4"
+    semver "^6.0.0"
+    tar "^4.4.8"
+    url-join "^4.0.1"
+
+ice-npm-utils@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/ice-npm-utils/download/ice-npm-utils-2.1.1.tgz#77321c35250198c3f1d869dfa7fa8c01d0c0e3a4"
+  integrity sha1-dzIcNSUBmMPx2Gnfp/qMAdDA46Q=
+  dependencies:
+    "@iceworks/constant" "^0.1.0"
     fs-extra "^8.1.0"
     mkdirp "^0.5.1"
     request "^2.88.0"
@@ -19566,6 +19610,17 @@ utility@0.1.11:
   integrity sha1-/eYM+bTkdRlHoM9dEEzik2ciZxU=
   dependencies:
     address ">=0.0.1"
+
+utility@^1.15.0:
+  version "1.17.0"
+  resolved "https://registry.nlark.com/utility/download/utility-1.17.0.tgz#60819f712a6e0ce774f52fb1d691992a5f59d362"
+  integrity sha1-YIGfcSpuDOd09S+x1pGZKl9Z02I=
+  dependencies:
+    copy-to "^2.0.1"
+    escape-html "^1.0.3"
+    mkdirp "^0.5.1"
+    mz "^2.7.0"
+    unescape "^1.0.1"
 
 utility@^1.16.1, utility@^1.8.0:
   version "1.16.3"

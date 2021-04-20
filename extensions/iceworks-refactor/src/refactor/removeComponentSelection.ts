@@ -1,6 +1,5 @@
 import * as fse from 'fs-extra';
 import { Uri, workspace, WorkspaceEdit, window, Range } from 'vscode';
-import prettierFormat from '../utils/prettierFormat';
 import generate from './generateCode';
 import parse from './parser';
 import {
@@ -8,13 +7,14 @@ import {
   findUnreferencedIdentifiers,
 } from './modules';
 import executeModules from './utils/executeModules';
+import prettierFormat from '../utils/prettierFormat';
 
 export default async function removeComponentSelection(
   removedSelectionCode: string,
   sourcePath: string,
   placeholder: string,
 ) {
-  const removeSelectionTask = {
+  const findSourceUnreferencedIdentifiersTask = {
     sourceCode: fse.readFileSync(sourcePath, { encoding: 'utf-8' }),
     modules: [findUnreferencedIdentifiers],
   };
@@ -23,16 +23,17 @@ export default async function removeComponentSelection(
     modules: [removeUselessReferences],
   };
   const executeTasks = [
-    removeSelectionTask,
+    findSourceUnreferencedIdentifiersTask,
     removeUselessReferencesTask,
   ];
 
   let code;
   const options = { sourcePath, removedNodePaths: [] };
+  let ret = {};
   for (const task of executeTasks) {
     const { sourceCode, modules } = task;
     const ast = parse(sourceCode);
-    const ret = { ast };
+    ret = { ...ret, ast };
     executeModules(modules, ret, options);
     code = generate(ast);
   }

@@ -56,8 +56,8 @@ function collectUnrefIdentifiers(
   }
 }
 
-export default function parse(parsed, options) {
+export default function parse(parsed) {
   const unreferencedIdentifiers = findUnreferencedIdentifiers(parsed.ast);
-  options.unreferencedIdentifiers = unreferencedIdentifiers;
+  parsed.unreferencedIdentifiers = unreferencedIdentifiers;
 }
 

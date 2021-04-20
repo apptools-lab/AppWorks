@@ -37,6 +37,6 @@ function getElementName(openingElement) {
   return elementName;
 }
 
-export default function parse(parsed, options) {
-  removeElement(parsed.ast, options.importSpecifiers);
+export default function parse(parsed) {
+  removeElement(parsed.ast, parsed.importSpecifiers);
 }

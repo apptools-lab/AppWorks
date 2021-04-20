@@ -10,7 +10,11 @@ function getProjectAliasEntries(projectLanguageType: 'ts' | 'js') {
     configJsonFile = 'tsconfig.json';
   }
   const aliasEntries = {};
-  const content = fse.readJSONSync(join(projectPath, configJsonFile));
+  const configJsonPath = join(projectPath, configJsonFile);
+  if (!fse.pathExistsSync(configJsonPath)) {
+    return aliasEntries;
+  }
+  const content = fse.readJSONSync(configJsonPath);
   const { compilerOptions } = content;
   if (compilerOptions && compilerOptions.paths && compilerOptions.paths instanceof Object) {
     return compilerOptions.paths;

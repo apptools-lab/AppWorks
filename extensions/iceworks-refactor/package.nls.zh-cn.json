@@ -1,4 +1,4 @@
 {
   "iceworks-refactor.component.dir-and-reference.remove.title": "Iceworks: 删除组件及其引用",
-  "iceworks-refactor.component.selection-and-reference.remove.title": "Iceworks: 删除选中的组件及其引用"
+  "iceworks-refactor.component.selection-and-reference.remove.title": "Iceworks: 删除选中的组件及其导入声明"
 }

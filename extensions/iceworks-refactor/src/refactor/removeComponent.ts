@@ -1,6 +1,5 @@
 import * as fse from 'fs-extra';
 import { Uri, workspace, WorkspaceEdit, window, Range } from 'vscode';
-import prettierFormat from '../utils/prettierFormat';
 import generate from './generateCode';
 import parse from './parser';
 import {
@@ -10,6 +9,7 @@ import {
   findUnreferencedIdentifiers,
 } from './modules';
 import executeModules from './utils/executeModules';
+import prettierFormat from '../utils/prettierFormat';
 
 export default async function removeComponent(
   sourcePath: string,
@@ -19,34 +19,40 @@ export default async function removeComponent(
   let sourceCode = fse.readFileSync(sourcePath, { encoding: 'utf-8' });
 
   const removeElementsModules = [
-    findUnreferencedIdentifiers,
     findImportSpecifiers,
+    findUnreferencedIdentifiers,
     removeElement,
   ];
+  /**
+   * removeUselessReferences should in the next task
+   * because after elements was removed, the reference relation won't be updated in ast object
+   * only when generating new ast again, it will.
+   */
   const removeUselessReferencesModules = [removeUselessReferences];
   const executeTasks = [
     removeElementsModules,
     removeUselessReferencesModules,
   ];
 
-  let shouldRemoveCode = true;
   const options = {
     sourcePath,
     resourcePath,
     projectLanguageType,
   };
+  let ret = { };
+  let index = 0;
   for (const task of executeTasks) {
     const ast = parse(sourceCode);
-    const ret = { ast };
-    const { done } = executeModules(task, ret, options);
-    if (done) {
-      shouldRemoveCode = false;
+    ret = { ...ret, ast };
+    const { skip } = executeModules(task, ret, options);
+    if (skip) {
       break;
     }
+    index += 1;
     sourceCode = generate(ast);
   }
-
-  if (shouldRemoveCode) {
+  // execute all tasks
+  if (index === executeTasks.length) {
     const formattedCode = prettierFormat(sourceCode);
     const uri = Uri.file(sourcePath);
     const document = await workspace.openTextDocument(uri);

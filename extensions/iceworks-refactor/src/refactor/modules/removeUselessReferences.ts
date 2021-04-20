@@ -172,6 +172,6 @@ function isUnreferencedNode(scope: Scope, name: string) {
   }
 }
 
-export default function parse(parsed, options) {
-  removeUselessReferences(parsed.ast, options.unreferencedIdentifiers);
+export default function parse(parsed) {
+  removeUselessReferences(parsed.ast, parsed.unreferencedIdentifiers);
 }

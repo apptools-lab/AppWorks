@@ -42,7 +42,7 @@ export function findImportSpecifiers(ast, sourcePath, resourcePath, projectLangu
 export default function parse(parsed, options) {
   const { sourcePath, resourcePath, projectLanguageType } = options;
   const importSpecifiers = findImportSpecifiers(parsed.ast, sourcePath, resourcePath, projectLanguageType);
-  parsed.done = importSpecifiers.length === 0;
-  options.importSpecifiers = importSpecifiers;
+  parsed.skip = importSpecifiers.length === 0;
+  parsed.importSpecifiers = importSpecifiers;
 }
 
