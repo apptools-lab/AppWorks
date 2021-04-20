@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.0
+
+- feat: support remove component and its references
+
 ## 0.7.1
 
 - feat: compatible block and component material name

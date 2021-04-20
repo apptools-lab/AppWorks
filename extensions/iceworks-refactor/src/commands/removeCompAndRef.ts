@@ -2,7 +2,7 @@ import { Uri } from 'vscode';
 import rimraf from 'rimraf';
 import * as path from 'path';
 import readdir from 'fs-readdir-recursive';
-import { pagesPath, jsxFileExtnames, getProjectLanguageType } from '@iceworks/project-service';
+import { jsxFileExtnames, getProjectLanguageType, projectPath } from '@iceworks/project-service';
 import { removeComponent } from '../refactor';
 import isSupportiveProjectType from '../utils/isSupportiveProjectType';
 
@@ -17,17 +17,18 @@ async function removeCompAndRef(uri: Uri) {
   const { path: componentPath } = uri;
 
   const componentFiles: string[] = readdir(componentPath);
-  const pageFiles: string[] = readdir(pagesPath).filter(pageFile => {
+  const srcPath = path.join(projectPath, 'src');
+  const files: string[] = readdir(srcPath).filter((file: string) => {
     return jsxFileExtnames.find(jsxExt => {
-      return pageFile.includes(jsxExt);
+      return file.includes(jsxExt);
     });
   });
 
   componentFiles.forEach(componentFile => {
     const componentFilePath = path.join(componentPath, componentFile);
 
-    pageFiles.forEach(async pageFile => {
-      const pageFilePath = path.join(pagesPath, pageFile);
+    files.forEach(async file => {
+      const pageFilePath = path.join(srcPath, file);
       await removeComponent(pageFilePath, componentFilePath, projectLanguageType);
     });
   });

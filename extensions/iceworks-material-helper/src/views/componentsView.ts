@@ -189,7 +189,17 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
   });
   registerCommand('iceworks-material-helper.components.refresh', () => componentsProvider.refresh());
   registerCommand('iceworks-material-helper.components.openFile', (componentPath) => openEntryFile(componentPath));
-  registerCommand('iceworks-material-helper.components.delete', async (component) => await fse.remove(component.fsPath));
+  registerCommand('iceworks-material-helper.components.delete', async (component) => {
+    const confirmTitle = i18n.format('extension.iceworksMaterialHelper.confirm');
+    const choice = await vscode.window.showInformationMessage(
+      i18n.format('extension.iceworksMaterialHelper.removeComponentAndReferences.title'),
+      confirmTitle,
+      i18n.format('extension.iceworksMaterialHelper.cancel'),
+    );
+    if (choice === confirmTitle) {
+      await vscode.commands.executeCommand('iceworks-refactor.component.dir-and-reference.remove', { path: component.fsPath });
+    }
+  });
 
   const pattern = new vscode.RelativePattern(componentsPath, '**');
   const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern, false, false, false);
