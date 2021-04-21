@@ -25,7 +25,7 @@ function checkHasResourcePath(
   const basename: string = path.basename(importSourcePath, ext);
   if (/^\./.test(importSourceValue)) {
     // relative path
-    const regexp = new RegExp(`${importSourceDir}(\\/${basename})${basename === 'index' ? '?' : ''}`);
+    const regexp = new RegExp(`${importSourceDir}/(\\/${basename})${basename === 'index' ? '?' : ''}`);
     if (regexp.test(importSourceValue)) {
       match = true;
     }
@@ -42,7 +42,7 @@ function checkHasResourcePath(
       if (Array.isArray(entries)) {
         for (const entry of entries) {
           const absoluteEntryPath = path.join(projectPath, entry, importSourceValue.replace(new RegExp(aliasKey), ''));
-          const regexp = new RegExp(`${absoluteEntryPath}(\\/${basename})${basename === 'index' ? '?' : ''}`);
+          const regexp = new RegExp(`${absoluteEntryPath}/(\\/${basename})${basename === 'index' ? '?' : ''}`);
           if (regexp.test(resourcePath)) {
             match = true;
             break;

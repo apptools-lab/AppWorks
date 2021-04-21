@@ -26,7 +26,8 @@ async function removeCompAndRef(uri: Uri) {
   });
   if (stat.isDirectory()) {
     // only include .js/.jsx/.tsx file
-    const componentFiles: string[] = readdir(componentPath);
+    // TODO: support remove other files e.g.: .css/.scss/.less
+    const componentFiles: string[] = readdir(componentPath, (name) => jsxFileExtnames.includes(path.extname(name)));
     componentFiles.forEach(componentFile => {
       const componentFilePath = path.join(componentPath, componentFile);
       removeComponentFromSrcDir({ componentFilePath, files, srcPath, projectLanguageType });
@@ -34,7 +35,7 @@ async function removeCompAndRef(uri: Uri) {
   } else {
     const extname = path.extname(componentPath);
     if (!jsxFileExtnames.includes(extname)) {
-      window.showErrorMessage(`Not support remove ${extname} file.`);
+      window.showErrorMessage(`Not support remove ${extname} file. Only support ${jsxFileExtnames.join(', ')} file.`);
       return;
     }
     removeComponentFromSrcDir({ componentFilePath: componentPath, files, srcPath, projectLanguageType });
