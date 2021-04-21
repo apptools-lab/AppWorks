@@ -13,10 +13,10 @@ Recommend Extensions for Development by [FED Team](https://fed.taobao.org/).
 
 Based on：
 
-- In line with the popular, mature front-end technology stack
-- High stability: updated recently, famous authors or supported by sponsors
-- High reliability: high install volume and many referenced Packs
-- Good experience: easy to use, high quality documents
+- **Popular**: mature front-end technology stack
+- **High stability**: updated recently, famous authors or supported by sponsors
+- **High reliability**: high install volume and many referenced Packs
+- **Good experience**: easy to use, high quality documents
 
 ## Extensions
 
