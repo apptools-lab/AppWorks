@@ -1,0 +1,7 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+**/*.map
+web/**
+node_modules
+!jscodeshift/node_modules

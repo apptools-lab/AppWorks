@@ -41,6 +41,7 @@
     "iceworks-team.iceworks-config-helper",
     "iceworks-team.iceworks-doctor",
     "iceworks-team.iceworks-time-master",
+    "iceworks-team.iceworks-codemod",
     "iceworks-team.iceworks-refactor"
   ],
   "homepage": "https://github.com/ice-lab/iceworks/blob/master/extensions/iceworks/README.md",

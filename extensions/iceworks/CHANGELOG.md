@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.18.2
+
+- fix: AliInternal auto login
+
 ## 0.18.1
 
 - fix: Time Master 

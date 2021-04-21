@@ -36,9 +36,10 @@ const ScanCard = () => {
   }
 
   useEffect(() => {
-    // @ts-ignore
-    if (window.AUTO_SCAN) {
+    if ((window as any).AUTO_SCAN) {
       getData();
+    } else if ((window as any).AUTO_FIX) {
+      getData({ fix: true });
     }
   }, []);
 

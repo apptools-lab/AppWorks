@@ -1,0 +1,10 @@
+[
+  {
+    "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-codemod/index.jsx",
+    "status": "ok"
+  },
+  {
+    "path": "/Users/xuwentao/Documents/www/github/ice-lab/iceworks/extensions/iceworks-app/index.jsx",
+    "status": "error"
+  }
+]

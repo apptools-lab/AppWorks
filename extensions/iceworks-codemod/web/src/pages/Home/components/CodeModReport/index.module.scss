@@ -1,0 +1,35 @@
+.wrap {
+  background-color: #333646;
+  margin-top: 20px;
+
+  > .header {
+    > div {
+      font-size: 18px;
+    }
+    button {
+      background-color: $color-data1-2!important;
+      border: 0 none;
+      color: #fff;
+    }
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    > div {
+      flex: 1;
+      padding-right: 24px;
+
+      p {
+        margin: 0;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .transformList {
+    width: 100%;
+  }
+}

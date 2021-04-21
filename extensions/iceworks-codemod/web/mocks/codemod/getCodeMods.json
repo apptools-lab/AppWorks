@@ -1,0 +1,77 @@
+[
+  {
+    "name": "icejs",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "description": "Converts calls to `React.createElement` into JSX elements.",
+        "filename": "create-element-to-jsx.js"
+      },
+      {
+        "name": "findDOMNode",
+        "filename": "findDOMNode.js"
+      },
+      {
+        "name": "Pure Component",
+        "filename": "pure-component.js"
+      }
+    ]
+  },
+  {
+    "name": "react",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "filename": "create-element-to-jsx.js"
+      },
+      {
+        "name": "findDOMNode",
+        "filename": "findDOMNode.js"
+      },
+      {
+        "name": "Test Component",
+        "filename": "pure-component.js"
+      },
+      {
+        "name": "ABC Component",
+        "filename": "pure-component.js"
+      },
+      {
+        "name": "XXX Component",
+        "filename": "pure-component.js"
+      },
+      {
+        "name": "TTT Component",
+        "filename": "pure-component.js"
+      },
+      {
+        "name": "GGG Component",
+        "filename": "pure-component.js"
+      },
+      {
+        "name": "VVVV CompoCompo nentnent",
+        "filename": "pure-component.js"
+      }
+    ]
+  },
+  {
+    "name": "js",
+    "description": "This repository contains a collection of codemod scripts for use with JSCodeshift that help update icejs APIs.",
+    "transforms": [
+      {
+        "name": "Create Element to JSX",
+        "filename": "create-element-to-jsx.js"
+      },
+      {
+        "name": "findDOMNode",
+        "filename": "findDOMNode.js"
+      },
+      {
+        "name": "Pure Component",
+        "filename": "pure-component.js"
+      }
+    ]
+  }
+]

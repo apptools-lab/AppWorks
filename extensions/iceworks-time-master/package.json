@@ -3,7 +3,7 @@
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "0.4.4",
+  "version": "0.4.6",
   "preview": true,
   "engines": {
     "vscode": "^1.41.0"
@@ -99,7 +99,7 @@
     "@iceworks/project-utils": "^0.3.0",
     "@iceworks/recorder": "^0.1.0",
     "@iceworks/storage": "^0.2.0",
-    "@iceworks/user-service": "^0.1.0",
+    "@iceworks/user-service": "^0.1.2",
     "axios": "^0.21.0",
     "fs-extra": "^9.0.1",
     "lodash.forin": "^4.4.0",

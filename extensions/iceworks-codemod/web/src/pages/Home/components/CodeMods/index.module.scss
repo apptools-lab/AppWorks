@@ -1,0 +1,19 @@
+.wrap {
+  width: 100%;
+  .title {
+    :global {
+      .next-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+  .content {
+    padding: 15px 12px;
+
+    .description {
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: rgba(204, 204, 204, 0.9);
+    }
+  }
+}

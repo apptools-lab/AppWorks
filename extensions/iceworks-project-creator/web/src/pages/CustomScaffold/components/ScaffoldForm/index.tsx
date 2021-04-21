@@ -21,6 +21,9 @@ const Scaffoldform = ({ children, onChange, scaffoldValue }) => {
     iframeRef.current.contentWindow.document.open();
     iframeRef.current.contentWindow.document.write(Base64.decode(window.iframeContent));
     iframeRef.current.contentWindow.document.close();
+    iframeRef.current.onload = () => {
+      sendMessage(JSON.stringify(scaffoldValue));
+    };
   };
 
   useEffect(() => {

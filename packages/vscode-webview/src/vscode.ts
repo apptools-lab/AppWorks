@@ -85,7 +85,7 @@ export function connectService(
           webview.postMessage({ eventId, errorMessage: err.message });
         }
       } else {
-        vscode.window.showErrorMessage(`invalid command ${message}`);
+        webview.postMessage({ eventId, errorMessage: 'No responsive API was found' });
       }
     },
     undefined,

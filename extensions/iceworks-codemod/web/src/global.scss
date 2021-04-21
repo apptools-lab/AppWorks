@@ -1,0 +1,16 @@
+// 引入默认全局样式
+@import "@alifd/next/reset.scss";
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: $color-brand1-1;
+  color: $color-text1-4;
+
+  // the `mask-background` css variables can't be parsed
+  // so update modal component overlay background
+  .next-overlay-wrapper {
+    .next-overlay-backdrop {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
