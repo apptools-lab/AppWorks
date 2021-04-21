@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "jsx":"react",
+    "lib": ["es6"],
+    "sourceMap": true,
+    "strict": true,
+    "outDir": "build",
+    "rootDir": "src",
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", ".vscode-test", "src/__tests__/examples"]
+}
