@@ -11,6 +11,12 @@ import {
 import executeModules from './utils/executeModules';
 import prettierFormat from '../utils/prettierFormat';
 
+/**
+ * Remove component in sourcePath
+ * @param sourcePath the file path which will be removed code
+ * @param resourcePath the file path of the component
+ * @param projectLanguageType ts | js
+ */
 export default async function removeComponent(
   sourcePath: string,
   resourcePath: string,

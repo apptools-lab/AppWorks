@@ -1,7 +1,8 @@
 import { jsxFileExtnames } from '@iceworks/project-service';
 import { Range, TextEditor, window } from 'vscode';
 import * as path from 'path';
-import { removeComponentSelection } from '../refactor';
+import * as fse from 'fs-extra';
+import { removeUnreferencedCode } from '../refactor';
 import isSupportiveProjectType from '../utils/isSupportiveProjectType';
 
 /**
@@ -20,7 +21,7 @@ async function removeCompSelectionAndRef(textEditor: TextEditor) {
   if (!isSupportiveProjectType()) {
     return;
   }
-
+  const originSourceCode = fse.readFileSync(sourcePath, { encoding: 'utf-8' });
   const firstLine = document.lineAt(0);
   const lastLine = document.lineAt(document.lineCount - 1);
   const { start, end } = selection;
@@ -35,9 +36,9 @@ async function removeCompSelectionAndRef(textEditor: TextEditor) {
    * the code can't be parsed to ast because it has syntax error
    */
   const placeholder = 'REFACTOR_PLACEHODER';
-  const removedSelectionCode = preCode + placeholder + postCode;
+  const modifiedSourceCode = preCode + placeholder + postCode;
 
-  await removeComponentSelection(removedSelectionCode, sourcePath, placeholder);
+  await removeUnreferencedCode(sourcePath, originSourceCode, modifiedSourceCode, placeholder);
 }
 
 export default removeCompSelectionAndRef;

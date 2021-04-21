@@ -1,4 +1,3 @@
-import * as fse from 'fs-extra';
 import { Uri, workspace, WorkspaceEdit, window, Range } from 'vscode';
 import generate from './generateCode';
 import parse from './parser';
@@ -9,17 +8,36 @@ import {
 import executeModules from './utils/executeModules';
 import prettierFormat from '../utils/prettierFormat';
 
-export default async function removeComponentSelection(
-  removedSelectionCode: string,
+/**
+ * remove the unreferenced code depends on the origin code and the modified code
+ * e.g.:
+ *  originSourceCode:
+ *  `function App() {
+ *    const name = 1;
+ *    return { <View>{name}</View> }
+ *  }`
+ *  modifiedSourceCode:
+ *  `function App() {
+ *    const name = 1;
+ *    return { }
+ *  }`
+ * after call this function:
+ *  `function App() {
+ *    return { }
+ *  }`
+ */
+export default async function removeUnreferencedCode(
   sourcePath: string,
+  originSourceCode: string,
+  modifiedSourceCode: string,
   placeholder: string,
 ) {
   const findSourceUnreferencedIdentifiersTask = {
-    sourceCode: fse.readFileSync(sourcePath, { encoding: 'utf-8' }),
+    sourceCode: originSourceCode,
     modules: [findUnreferencedIdentifiers],
   };
   const removeUselessReferencesTask = {
-    sourceCode: removedSelectionCode,
+    sourceCode: modifiedSourceCode,
     modules: [removeUselessReferences],
   };
   const executeTasks = [

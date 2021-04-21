@@ -6,7 +6,7 @@ function activate(context: ExtensionContext) {
   // auto set configuration
   initExtension(context);
 
-  commands.registerCommand('iceworks-refactor.component.dir-and-reference.remove', removeCompAndRef);
+  commands.registerCommand('iceworks-refactor.component.file-and-reference.remove', removeCompAndRef);
   commands.registerTextEditorCommand('iceworks-refactor.component.selection-and-reference.remove', removeCompSelectionAndRef);
 }
 
