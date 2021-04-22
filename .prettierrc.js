@@ -1,7 +1,4 @@
-module.exports = {
-  printWidth: 100,
-  tabWidth: 2,
-  semi: true,
-  singleQuote: true,
-  trailingComma: 'all',
-};
+const { getPrettierConfig } = require('@iceworks/spec');
+
+// getPrettierConfig(rule: 'rax'|'react'|'vue', customConfig?);
+module.exports = getPrettierConfig('react');
