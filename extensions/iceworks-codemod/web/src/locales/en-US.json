@@ -11,5 +11,5 @@
   "web.codemod.main.scan": "Scan",
   "web.codemod.main.scan.title": "Scanning, this may take a few minutes or more...",
   "web.codemod.main.scan.content": "(depending on the number of files in the project)",
-  "web.codemod.scan.notfound": "There is no match to the file that needs to be updated"
+  "web.codemod.main.scan.notfound": "There is no match to the file that needs to be updated"
 }

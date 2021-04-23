@@ -11,5 +11,5 @@
   "web.codemod.main.scan": "扫描",
   "web.codemod.main.scan.title": "扫描中，大概需要几分钟或者更长时间。。。",
   "web.codemod.main.scan.content": "扫描时间取决于项目的文件数目",
-  "web.codemod.scan.notfound": "没有匹配到需要更新的文件"
+  "web.codemod.main.scan.notfound": "没有匹配到需要更新的文件"
 }
