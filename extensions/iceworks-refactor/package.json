@@ -34,7 +34,7 @@
     "keybindings": [
       {
         "command": "iceworks-refactor.component.selection-and-reference.remove",
-        "key": "shift+d",
+        "key": "ctrl+alt+d",
         "when": "iceworks:isJSXFile"
       }
     ],
