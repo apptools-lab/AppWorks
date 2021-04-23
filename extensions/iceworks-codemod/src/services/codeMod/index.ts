@@ -151,6 +151,10 @@ interface CodeModReport {
 
 export async function getTransformsReport(transforms: TransForm[], codeModName: CodeModNames, ...args): Promise<TransformReport[]> {
   const projectPath = vscode.workspace.rootPath;
+  const transformsLength = transforms.length;
+
+  logger.info(`[getTransformsReport] start: projectPath(${projectPath}), transformsLength(${transformsLength})`);
+
   if (projectPath) {
     const extensions = await getCodeModExtensions(codeModName, projectPath);
     const pattern = `**${extensions}`;
@@ -170,7 +174,7 @@ export async function getTransformsReport(transforms: TransForm[], codeModName: 
     });
 
     const results: TransformReport[] = [];
-    for (let index = 0; index < transforms.length; index++) {
+    for (let index = 0; index < transformsLength; index++) {
       const transform = transforms[index];
       const { filePath } = transform;
       const files = await runTransform(filePath, codeModName, needUpdateFiles, { dry: true }, args[1]);
