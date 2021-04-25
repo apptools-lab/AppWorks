@@ -1,0 +1,15 @@
+{
+  "web.codemod.exception": "服务器好像挂了你要等会了",
+  "web.codemod.forbidden": "执行失败，请联系插件维护者反馈问题",
+  "web.codemod.notfound": "没有找到内容",
+  "web.codemod.updating": "更新中。。。",
+  "web.codemod.update": "更新",
+  "web.codemod.result": "扫描结果：",
+  "web.codemod.fetching": "执行中，大概需要几分钟或者更长时间。。。",
+  "web.codemod.fileMatch": "个匹配文件",
+  "web.codemod.main.description": "CodeMod(Code Modify) 是一个帮助您进行大规模代码库重构的工具，这些重构是自动化的，但也提供了人为监督和偶尔干预的方式。",
+  "web.codemod.main.scan": "扫描",
+  "web.codemod.main.scan.title": "扫描中，大概需要几分钟或者更长时间。。。",
+  "web.codemod.main.scan.content": "扫描时间取决于项目的文件数目",
+  "web.codemod.main.scan.notfound": "没有匹配到需要更新的文件"
+}

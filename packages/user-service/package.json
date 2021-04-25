@@ -27,6 +27,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
+    "install": "npm run getDEFLoginClient",
     "build": "rm -rf lib && webpack --mode production",
     "getDEFLoginClient": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts",
     "prepublishOnly": "npm run getDEFLoginClient && npm run build"

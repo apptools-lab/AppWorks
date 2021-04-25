@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.6
+
+- refactor: internal optimization
+
 ## 0.4.5
 
 - fix: AliInternal auto login

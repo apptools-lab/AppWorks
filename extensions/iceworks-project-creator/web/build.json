@@ -35,7 +35,5 @@
       }
     ],
     "./build.plugin.js"
-  ],
-  "mpa": true,
-  "vendor": false
+  ]
 }

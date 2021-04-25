@@ -27,5 +27,8 @@
   "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label": "Download Materials",
   "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail": "Download component materials to local",
   "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.label": "Design to code",
-  "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.detail": "Intelligently generate component code according to the uploaded image"
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.detail": "Intelligently generate component code according to the uploaded image",
+  "extension.iceworksMaterialHelper.confirm": "Confirm",
+  "extension.iceworksMaterialHelper.cancel": "Cancel",
+  "extension.iceworksMaterialHelper.removeComponentAndReferences.title": "Are you sure remove this component and its references?"
 }

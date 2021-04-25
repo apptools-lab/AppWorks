@@ -1,0 +1,15 @@
+{
+  "web.codemod.exception": "The server seems to be down",
+  "web.codemod.forbidden": "Failed to execute. Please contact the Extension maintainer for feedback",
+  "web.codemod.notfound": "No Content",
+  "web.codemod.updating": "Updating...",
+  "web.codemod.update": "Update",
+  "web.codemod.result": "Result:",
+  "web.codemod.fetching": "Fetching, it takes a few seconds or more...",
+  "web.codemod.fileMatch": "files match",
+  "web.codemod.main.description": "CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.",
+  "web.codemod.main.scan": "Scan",
+  "web.codemod.main.scan.title": "Scanning, this may take a few minutes or more...",
+  "web.codemod.main.scan.content": "(depending on the number of files in the project)",
+  "web.codemod.main.scan.notfound": "There is no match to the file that needs to be updated"
+}

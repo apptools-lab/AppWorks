@@ -27,5 +27,8 @@
   "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.label": "下载区块到本地",
   "extension.iceworksMaterialHelper.showEntriesQuickPick.createComponent.detail": "下载远程区块代码创建本地组件",
   "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.label": "图片智能生成代码",
-  "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.detail": "根据上传的图片智能生成前端组件代码"
+  "extension.iceworksMaterialHelper.showEntriesQuickPick.imgcook.detail": "根据上传的图片智能生成前端组件代码",
+  "extension.iceworksMaterialHelper.confirm": "确认",
+  "extension.iceworksMaterialHelper.cancel": "取消",
+  "extension.iceworksMaterialHelper.removeComponentAndReferences.title": "是否删除该组件及其相关引用？"
 }

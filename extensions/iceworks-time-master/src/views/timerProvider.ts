@@ -198,7 +198,7 @@ export class TimerProvider implements TreeDataProvider<TimerItem> {
   private buildMessageItem(
     label: string,
     tooltip = '',
-    command : string = null,
+    command: string = null,
     commandArgs: any[] = null,
     icon: string = null,
   ) {

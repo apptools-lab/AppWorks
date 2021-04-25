@@ -1,28 +1,8 @@
 import { exec } from 'child_process';
-import { window, workspace, TextDocument } from 'vscode';
+import { workspace, TextDocument } from 'vscode';
 import logger from './logger';
 
 export const delay = (time) => new Promise((resolve) => setTimeout(() => resolve(true), time));
-
-export async function openFileInEditor(file: string) {
-  try {
-    const doc = await workspace.openTextDocument(file);
-    try {
-      await window.showTextDocument(doc, 1, false);
-    } catch (e) {
-      // ignore error
-    }
-  } catch (error) {
-    if (
-      error.message &&
-      error.message.toLowerCase().includes('file not found')
-    ) {
-      window.showErrorMessage(`Cannot open ${file}. File not found.`);
-    } else {
-      logger.error('[utils][common][openFileInEditor] got error:', error);
-    }
-  }
-}
 
 export function isFileActive(file: string): boolean {
   if (workspace.textDocuments) {

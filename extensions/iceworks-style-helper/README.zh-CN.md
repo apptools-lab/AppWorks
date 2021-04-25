@@ -32,7 +32,6 @@
 
 跳转：通过 cmd + 左键点击（ Windows: ctrl + 左键点击 ）进行变量的定义代码跳转
 
-
 ## 更多
 
 本插件由 [Iceworks Team](https://marketplace.visualstudio.com/publishers/iceworks-team) 开发，是 Iceworks 套件的一部分，访问 [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks) 获取更多功能。

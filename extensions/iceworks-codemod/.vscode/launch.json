@@ -1,0 +1,35 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+// Use IntelliSense to learn about possible attributes.
+// Hover to view descriptions of existing attributes.
+// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+{
+  "version": "0.2.0",
+   "compounds": [
+    {
+      "name": "Debug Extension",
+      "configurations": [
+        "Watch Webview",
+        "Watch Extension"
+      ],
+      "presentation": {
+        "order": 0
+      }
+    }
+  ],
+  "configurations": [
+    {
+      "name": "Watch Webview",
+      "request": "attach",
+      "type": "node",
+      "preLaunchTask": "npm: watch:web"
+    },
+    {
+      "name": "Watch Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
+      "outFiles": ["${workspaceFolder}/build/*.js"],
+      "preLaunchTask": "npm: watch"
+    },
+  ]
+}

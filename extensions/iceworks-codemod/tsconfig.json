@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.extension.json",
+  "compilerOptions": {
+    "outDir": "build",
+    "noImplicitAny": false,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [".vscode-test"]
+}

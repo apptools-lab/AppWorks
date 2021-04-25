@@ -6,10 +6,7 @@
     {
       "type": "npm",
       "script": "watch:extension",
-      "problemMatcher": [
-        "$ts-webpack",
-        "$ts-webpack-watch"
-      ],
+      "problemMatcher": [ "$tsc"],
       "isBackground": true,
       "presentation": {
         "reveal": "never"

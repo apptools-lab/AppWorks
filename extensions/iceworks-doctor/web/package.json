@@ -21,7 +21,7 @@
     "ice.js": "^1.0.0"
   },
   "scripts": {
-    "start": "icejs start",
+    "start": "icejs start --disable-reload",
     "build": "icejs build"
   },
   "ideMode": {

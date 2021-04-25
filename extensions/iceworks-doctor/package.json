@@ -3,7 +3,7 @@
   "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -25,6 +25,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
+    "onCommand:iceworks-doctor.fix",
     "onCommand:iceworks-doctor.scan",
     "onCommand:iceworks-doctor.dashboard",
     "onLanguage:json",
@@ -63,6 +64,10 @@
       {
         "command": "iceworks-doctor.scan",
         "title": "%iceworksDoctor.commands.scan.title%"
+      },
+      {
+        "command": "iceworks-doctor.fix",
+        "title": "%iceworksDoctor.commands.fix.title%"
       }
     ],
     "configuration": {

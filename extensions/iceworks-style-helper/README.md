@@ -11,7 +11,7 @@ Write styles easier in [JSX](https://reactjs.org/docs/introducing-jsx.html), pro
 
 Which supports:
 
-* Autocomplete 
+* Autocomplete
 * Go to definition
 * Create JSX/TSX inline CSS styles
 * Preview style and variable values
