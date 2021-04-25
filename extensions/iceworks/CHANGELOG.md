@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.19.0
+
+- feat: add CodeMod
+- feat: add React Refactor
+- feat: add `Iceworks: Fix Your Project` command
+- feat: support remove component and its references
+
 ## 0.18.2
 
 - fix: AliInternal auto login
