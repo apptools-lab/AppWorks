@@ -77,7 +77,7 @@ export function connectService(
               const [context, webviewPanel] = args;
              }
           */
-          const result = await api(context, webviewPanel, ...newArgs);
+          const result = await api(...newArgs, context, webviewPanel);
           console.log('invoke service result', result);
           webview.postMessage({ eventId, result });
         } catch (err) {
