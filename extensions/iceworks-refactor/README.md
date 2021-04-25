@@ -17,7 +17,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 ![demo](https://img.alicdn.com/imgextra/i3/O1CN01DTRMWN20NOZWVuGTa_!!6000000006837-1-tps-1020-762.gif)
 
-What's more, you can press `shift + D` to remove component and their references.
+What's more, you can press `Ctrl + Alt + D` to remove component and their references.
 
 ## More
 
