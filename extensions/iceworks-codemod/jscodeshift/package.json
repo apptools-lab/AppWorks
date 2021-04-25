@@ -4,7 +4,7 @@
     "@babel/preset-env": "^7.13.15",
     "acorn": "^8.1.1",
     "icejs-codemod": "0.1.2",
-    "next-js-codemod": "1.0.1",
+    "next-js-codemod": "1.0.2",
     "jscodeshift": "^0.11.0",
     "react-codemod": "5.4.3"
   }
