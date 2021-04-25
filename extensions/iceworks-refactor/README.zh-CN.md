@@ -17,7 +17,7 @@ English | [简体中文](https://github.com/ice-lab/iceworks/blob/master/extensi
 
 ![demo](https://img.alicdn.com/imgextra/i3/O1CN01DTRMWN20NOZWVuGTa_!!6000000006837-1-tps-1020-762.gif)
 
-可以使用 `shift + D` 快捷键快速删除组件片段及其引用。
+可以使用 `Ctrl + Alt + D` 快捷键快速删除组件片段及其引用。
 
 ## 更多
 
