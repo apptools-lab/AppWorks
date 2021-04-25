@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.1
+
+- fix: `React Refactor` command not found
+
 ## 0.8.0
 
 - feat: support remove component and its references
