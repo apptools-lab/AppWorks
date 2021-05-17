@@ -67,7 +67,7 @@ Extension | Description | State
 [Time Master](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master) | Metrics, insights, and time tracking automatically generated from your programming activity | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [React Refactor](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor) | Easily refactor Component in React/Rax | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-refactor.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-refactor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor)
 
-AppWorks Pack extension installs these Recommend Extensions:
+AppWorks Pack extension installs these recommend extensions:
 
 - [Chinese (Simplified) Language Pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans)：Language pack extension for Chinese (Simplified).
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens): Supercharge the Git capabilities built into Visual Studio Code.
