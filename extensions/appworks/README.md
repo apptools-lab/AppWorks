@@ -80,7 +80,6 @@ AppWorks Pack extension installs these recommend extensions:
 - [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets): The essential collection of React Snippets and commands.
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome): Debug your JavaScript code in the Chrome browser, or any other target that supports the Chrome Debugger protocol.
 - [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks): It helps you to navigate in your code, moving between important positions easily and quickly.
-- [Iceworks](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks): Visual Intelligent Development Pack, provide visualization and intelligent technology to build Universal Application faster and better.
 
 ## Help
 
