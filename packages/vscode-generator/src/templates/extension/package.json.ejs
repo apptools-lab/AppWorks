@@ -20,10 +20,10 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ice-lab/iceworks.git"
+    "url": "https://github.com/appworks-lab/pack.git"
   },
   "bugs": {
-    "url": "https://github.com/ice-lab/iceworks/issues"
+    "url": "https://github.com/appworks-lab/pack/issues"
   },
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build:web && webpack --mode production",
@@ -42,9 +42,9 @@
     ]
   },
   "dependencies": {
-    "@iceworks/common-service": "^0.2.0",
-    "@iceworks/project-service": "^0.2.0",
-    "@iceworks/vscode-webview": "^0.1.5"
+    "@appworks/common-service": "^0.2.0",
+    "@appworks/project-service": "^0.2.0",
+    "@appworks/connector": "^0.1.5"
   },
   "devDependencies": {
     "@types/node": "^12.11.7",

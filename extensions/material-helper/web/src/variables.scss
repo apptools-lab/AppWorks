@@ -1,0 +1,118 @@
+// base
+$light: #fff;
+$dark: #000;
+$primary-color: #333;
+$body-background: #161616;
+$component-background: #161d22;
+
+// text
+$text-color: rgba(255, 255, 255, 0.8);
+$text-color-secondary: rgba(153, 153, 153, 0.8);
+
+// link
+$link-color: #1b73fe;
+
+// message
+$info-color: #313133;
+$warning-color: #613400;
+$highlight-color: #a8071a;
+
+// header
+$heading-color: #e3e3e3;
+
+// border
+$border-color-base: rgba(153, 153, 153, 0.25);
+$border-color-split: #363636;
+
+// disable
+$disabled-color: rgba(153, 153, 153, 0.25);
+
+// background
+$background-color-light: #272733;
+$background-color-base: #262626;
+
+// layout
+$layout-body-background: #171717;
+$layout-header-background: #161d22;
+$layout-sider-background: #161d22;
+$layout-trigger-background: #313232;
+$layout-trigger-color: fade(#fff, 80%);
+
+// item
+$item-active-bg: #272733;
+$item-hover-bg: #383847;
+
+// menu
+$menu-highlight-color: $light;
+
+// button
+$btn-default-bg: #262626;
+$btn-default-border: #444457;
+
+// input
+$input-bg: #313133;
+
+// popover
+$popover-bg: #262629;
+
+// menu
+$menu-dark-bg: #001529;
+$menu-dark-submenu-bg: #161d22;
+
+// tabs
+$tabs-active-color: #fff;
+$tabs-highlight-color: #fff;
+$tabs-hover-color: #fff;
+
+// Radio buttons
+$radio-button-checked-bg: #fff;
+
+// table
+$table-header-bg: #3a3a3b;
+$table-row-hover-bg: #3a3a3b;
+$table-selected-row-bg: #3a3a3a;
+$table-expanded-row-bg: #3b3b3b;
+
+// tag
+$tag-default-bg: #262628;
+
+// collapse
+$collapse-header-bg: #262629;
+
+// zIndex: notification > popover > toolt;
+$zindex-notification: 1063;
+$zindex-popover: 1061;
+$zindex-tooltip: 1060;
+
+// width
+$anchor-border-width: 1px;
+
+// margin
+$form-item-margin-bottom: 24px;
+$menu-item-vertical-margin: 0;
+$menu-item-boundary-margin: 0;
+
+// size
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$screen-xl: 1208px;
+$screen-lg: 1024px;
+$screen-md: 768px;
+
+// 移动
+$screen-sm: 767.9px;
+// 超小屏
+$screen-xs: 375px;
+$alert-message-color: $popover-bg;
+$background-color-light: $popover-bg;
+$layout-header-background: $menu-dark-bg;
+
+// =============================== end from @appworks/theme ===============================
+
+$panel-bg: $component-background;
+$text-color-secondary: #b1b1b8;
+$text-color-inverse: #e4e4e4;
+$text-color-primary: #767682;
+
+$brand-color-primary: #6b6f83;
+$brand-color-secondary: #4d4f61;

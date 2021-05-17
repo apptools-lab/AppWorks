@@ -2,15 +2,15 @@
 
 O2 is a Ali internal editor, if you are a community developer, **PLEASE IGNORE** this document.
 
-Iceworks converts VS Code Pack to O2 Pack, this document describes the develop, debug, and publish of the O2 Pack.
+AppWorks converts VS Code Pack to O2 Pack, this document describes the develop, debug, and publish of the O2 Pack.
 
 ## General O2 Pack 
 
 General O2 pack by following commands:
 
 ```bash
-$ git clone git@github.com:ice-lab/iceworks.git
-$ cd iceworks/
+$ git clone git@github.com:appworks-lab/pack.git
+$ cd appworks/
 $ npm install
 $ npm run o2:general
 ```
@@ -21,7 +21,7 @@ $ npm run o2:general
 
 ```bash
 $ tnpm install @ali/kaitian-cli -g
-$ cd extensions/iceworks
+$ cd extensions/appworks
 $ tnpm install
 $ npm run compile
 $ kaitian dev
@@ -30,14 +30,14 @@ $ kaitian dev
 ## Publish O2 Pack
 
 ```bash
-# iceworks.zip generated
+# appworks.zip generated
 $ npm run o2:package
 
 # test
-$ kaitian install extensions/iceworks/iceworks-team-iceworks-x.x.x.zip # install Pack to o2
+$ kaitian install extensions/appworks/iceworks-team-iceworks-x.x.x.zip # install Pack to o2
 $ o2 # open o2 by CLI
 
-# upload iceworks.zip to OSS
+# upload appworks.zip to OSS
 $ ACCESS_KEY_ID=xxx ACCESS_KEY_SECRET=xxx npm run o2:upload
 
 # O2.icework-kit published to Ali Marketplace

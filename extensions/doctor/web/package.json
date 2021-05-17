@@ -1,0 +1,38 @@
+{
+  "name": "webview",
+  "version": "0.1.0",
+  "dependencies": {
+    "@alifd/next": "^1.19.4",
+    "@alifd/theme-dark-pro": "^0.1.0",
+    "@appworks/doctor-ui": "^0.1.0",
+    "@appworks/connector": "^0.1.0",
+    "classnames": "^2.2.6",
+    "moment": "^2.24.0",
+    "react": "^16.4.1",
+    "react-code-space": "^0.2.0",
+    "react-dom": "^16.4.1",
+    "react-scroll": "^1.8.0"
+  },
+  "devDependencies": {
+    "@ice/spec": "^1.0.0",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "ice.js": "^1.0.0"
+  },
+  "scripts": {
+    "start": "icejs start --disable-reload",
+    "build": "icejs build"
+  },
+  "ideMode": {
+    "name": "ice-react"
+  },
+  "iceworks": {
+    "type": "react",
+    "adapter": "adapter-react-v3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "private": true,
+  "originTemplate": "@alifd/scaffold-lite"
+}

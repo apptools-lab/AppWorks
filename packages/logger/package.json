@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/logger",
+  "name": "@appworks/logger",
   "version": "0.1.0",
-  "description": "Logger for Iceworks",
+  "description": "Logger for AppWorks",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -12,7 +12,7 @@
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
-    "@iceworks/storage": "^0.2.0",
+    "@appworks/storage": "^0.1.0",
     "egg-logger": "^2.4.2",
     "mkdirp": "^1.0.4",
     "utility": "^1.15.0"

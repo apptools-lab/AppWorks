@@ -31,8 +31,8 @@ const Dashboard = (props: Props) => {
           <Tooltip delay={100} align="t" trigger={<p className={styles.title}>{locale.projectRating} <Icon type="prompt" size="small" /></p>}>
             <p>
               {locale.haveProblem}
-              <a href="https://github.com/ice-lab/iceworks/issues" target="_blank">
-                https://github.com/ice-lab/iceworks/issues
+              <a href="https://github.com/appworks-lab/pack/issues" target="_blank">
+                https://github.com/appworks-lab/pack/issues
               </a>
               {locale.reportProblem}
             </p>

@@ -1,7 +1,6 @@
 {
-  "name": "@iceworks/constant",
-  "version": "0.1.6",
-  "description": "constants for iceworks",
+  "name": "@appworks/constant",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && tsc -p ./tsconfig.json",

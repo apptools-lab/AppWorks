@@ -1,0 +1,91 @@
+{
+  "name": "iceworks-project-creator",
+  "displayName": "Application Creator",
+  "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
+  "publisher": "iceworks-team",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "Low-code",
+    "appworks"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onCommand:project-creator.create-project.start",
+    "onCommand:project-creator.custom-scaffold.start",
+    "onStartupFinished"
+  ],
+  "main": "./build/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "project-creator.create-project.start",
+        "title": "%iceworksProjectCreator.create-project.commands.start.title%"
+      },
+      {
+        "command": "project-creator.custom-scaffold.start",
+        "title": "%iceworksProjectCreator.custom-scaffold.commands.start.title%"
+      }
+    ],
+    "configuration": {
+      "title": "AppWorks Application Creator",
+      "properties": {
+        "appworks.materialSources": {
+          "type": "array",
+          "default": [],
+          "description": "AppWorks materialSources"
+        },
+        "appworks.workspace": {
+          "type": "string",
+          "default": "",
+          "description": "AppWorks workspace"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/pack.git"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/vscode": "^1.41.0",
+    "copy-webpack-plugin": "^6.4.1",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/constant": "^0.1.0",
+    "@appworks/i18n": "^0.1.0",
+    "@appworks/material-engine": "^0.1.0",
+    "@iceworks/pegasus-service": "^0.1.0",
+    "@appworks/project-service": "^0.1.0",
+    "@appworks/recorder": "^0.1.0",
+    "@appworks/user-service": "^0.1.0",
+    "@appworks/connector": "^0.1.0",
+    "js-base64": "^3.6.0"
+  },
+  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/project-creator/README.md",
+  "bugs": {
+    "url": "https://github.com/appworks-lab/pack/issues",
+    "email": "iceworksteam@163.com"
+  }
+}

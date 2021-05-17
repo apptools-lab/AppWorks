@@ -6,7 +6,7 @@ import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
 import * as upperCamelCase from 'uppercamelcase';
-import { getProjectLanguageType, getProjectType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY, appJSONFileName } from '@iceworks/project-service';
+import { getProjectLanguageType, getProjectType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY, appJSONFileName } from '@appworks/project-service';
 
 interface IRouter {
   /**

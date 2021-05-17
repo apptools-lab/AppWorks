@@ -2,7 +2,7 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as userHome from 'user-home';
 
-let configPath: string = path.join(userHome || __dirname, '.iceworks/cli-config.json');
+let configPath: string = path.join(userHome || __dirname, '.appworks/cli-config.json');
 
 export interface IMaterialCollection {
   url: string;

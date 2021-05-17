@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { recordDAU, record } from '@iceworks/recorder';
+import { recordDAU, record } from '@appworks/recorder';
 import { getDataFromSettingJson } from './vscode';
 
 const { name: namespace } = require('../package.json');

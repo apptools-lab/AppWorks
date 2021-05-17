@@ -1,7 +1,6 @@
 {
-  "name": "@iceworks/i18n",
-  "version": "0.1.1",
-  "description": "I18nService for iceworks",
+  "name": "@appworks/i18n",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && tsc -p ./tsconfig.json",

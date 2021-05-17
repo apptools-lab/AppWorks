@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { connectService, getHtmlForWebview } from '@iceworks/vscode-webview/lib/vscode';
-import { registerCommand, initExtension } from '@iceworks/common-service';
+import { connectService, getHtmlForWebview } from '@appworks/connector/lib/vscode';
+import { registerCommand, initExtension } from '@appworks/common-service';
 
 import { services } from './services';
 
@@ -24,7 +24,7 @@ function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    webviewPanel = window.createWebviewPanel('iceworks', 'Webview Title', vscode.ViewColumn.Two, {
+    webviewPanel = window.createWebviewPanel('appworks', 'Webview Title', vscode.ViewColumn.Two, {
       enableScripts: true,
       retainContextWhenHidden: true,
     });

@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/configure",
+  "name": "@appworks/configure",
   "version": "0.1.0",
-  "description": "Configure for Iceworks",
+  "description": "Configure for AppWorks",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -9,7 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "conf": "^7.1.1",
-    "@iceworks/storage": "^0.2.0"
+    "@appworks/storage": "^0.1.0"
   },
   "scripts": {
     "compile": "rm -rf lib && tsc -p ./tsconfig.json",

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export function getIceworksTerminal(terminalName = 'Iceworks') {
+export function getIceworksTerminal(terminalName = 'AppWorks') {
   const { terminals } = vscode.window;
   let terminal: vscode.Terminal;
   const targetTerminal = terminals.find((item) => item.name === terminalName);

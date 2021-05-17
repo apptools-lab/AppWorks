@@ -1,16 +1,17 @@
 {
-  "name": "@iceworks/user-service",
-  "version": "0.1.2",
-  "description": "Iceworks user service for VSCode extension.",
+  "name": "@appworks/user-service",
+  "version": "0.1.1",
+  "description": "AppWorks user service for VSCode extension.",
   "files": [
-    "lib"
+    "lib",
+    "scripts"
   ],
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@iceworks/configure": "^0.1.0",
-    "@iceworks/constant": "^0.1.5",
+    "@appworks/configure": "^0.1.0",
+    "@appworks/constant": "^0.1.0",
     "co": "4.6.0",
     "fs-extra": "^9.0.0",
     "ice-npm-utils": "^2.1.0"
@@ -27,7 +28,7 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "install": "npm run getDEFLoginClient",
+    "postinstall": "npm run getDEFLoginClient",
     "build": "rm -rf lib && webpack --mode production",
     "getDEFLoginClient": "ts-node ./scripts/get-def-login-client.ts && ts-node ./scripts/install-def-login-client-deps.ts",
     "prepublishOnly": "npm run getDEFLoginClient && npm run build"

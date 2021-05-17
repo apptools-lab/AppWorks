@@ -1,6 +1,6 @@
 {
-  "name": "@iceworks/doctor-ui",
-  "version": "1.0.1",
+  "name": "@appworks/doctor-ui",
+  "version": "0.1.0",
   "description": "intro component",
   "files": [
     "demo/",
@@ -48,5 +48,5 @@
     "access": "public"
   },
   "license": "MIT",
-  "homepage": "https://unpkg.com/@iceworks/doctor-ui@1.0.1/build/index.html"
+  "homepage": "https://unpkg.com/@appworks/doctor-ui@0.1.0/build/index.html"
 }

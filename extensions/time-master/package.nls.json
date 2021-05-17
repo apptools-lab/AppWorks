@@ -1,0 +1,9 @@
+{
+  "timeMaster.views.iceworksTimeMaster.timeMaster.name": "Time Master",
+  "timeMaster.configuration.properties.appworks.timeLimit.title": "How long (days) the statistics are saved",
+  "timeMaster.configuration.properties.appworks.timeLimit.description": "The longer the time, the more local disk capacity",
+  "timeMaster.configuration.properties.appworks.enableView.title": "Enable View",
+  "timeMaster.configuration.properties.appworks.enableView.description": "Display programming activity in the sidebar",
+  "timeMaster.configuration.properties.appworks.enableStatusBar.title": "Enable Status Bar",
+  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "Display the editor usage time in the status bar"
+}

@@ -1,4 +1,4 @@
-import { ALI_GITLABGROUPS_API, ALI_GITLABPROJECTS_API } from '@iceworks/constant';
+import { ALI_GITLABGROUPS_API, ALI_GITLABPROJECTS_API } from '@appworks/constant';
 import axios from 'axios';
 import * as path from 'path';
 import * as fse from 'fs-extra';

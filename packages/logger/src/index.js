@@ -1,6 +1,6 @@
 const path = require('path');
 const { Logger, ConsoleTransport } = require('egg-logger');
-const { storagePath } = require('@iceworks/storage');
+const { storagePath } = require('@appworks/storage');
 const FileTransport = require('./fileTransport');
 
 function createLogger(namespace) {

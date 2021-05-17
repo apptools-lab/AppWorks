@@ -1,14 +1,14 @@
 {
-  "name": "@iceworks/recorder",
-  "version": "0.1.9",
-  "description": "Recorder for Iceworks",
+  "name": "@appworks/recorder",
+  "version": "0.1.0",
+  "description": "Recorder for AppWorks",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "license": "MIT",
   "dependencies": {
-    "@iceworks/configure": "^0.1.0",
+    "@appworks/configure": "^0.1.0",
     "axios": "^0.19.2",
     "ice-npm-utils": "^2.0.0",
     "is-electron": "^2.2.0"

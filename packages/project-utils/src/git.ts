@@ -8,10 +8,10 @@ const gitRemoteOriginUrl = require('git-remote-origin-url');
 
 export interface GitInfo {
   branch: string; // master
-  repository: string; // git@github.com:ice-lab/iceworks.git
-  remoteUrl: string; // https://github.com/ice-lab/iceworks
-  group: string; // ice-lab
-  project: string; // iceworks
+  repository: string; // git@github.com:appworks-lab/pack.git
+  remoteUrl: string; // https://github.com/appworks-lab/pack
+  group: string; // appworks-lab
+  project: string; // pack
   tag?: string;
   isGit?: boolean;
 }

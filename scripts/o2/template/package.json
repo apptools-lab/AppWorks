@@ -6,7 +6,7 @@
   },
   "contributes": {
     "configuration": {
-      "title": "Iceworks"
+      "title": "AppWorks"
     }
   },
   "dependencies": {
@@ -32,24 +32,24 @@
       "actions": [
         {
           "type": "button",
-          "title": "%iceworksApp.kaitianContributes.toolbar.runDebug.title%",
+          "title": "%applicationManager.kaitianContributes.toolbar.runDebug.title%",
           "iconPath": "./assets/dark/run.svg",
-          "id": "iceworksApp.scripts.runDebug",
-          "command": "iceworksApp.scripts.runDebug"
+          "id": "applicationManager.scripts.runDebug",
+          "command": "applicationManager.scripts.runDebug"
         },
         {
           "type": "button",
-          "title": "%iceworksApp.kaitianContributes.toolbar.reinstall.title%",
+          "title": "%applicationManager.kaitianContributes.toolbar.reinstall.title%",
           "iconPath": "./assets/dark/install.svg",
-          "id": "iceworksApp.nodeDependencies.reinstall",
-          "command": "iceworksApp.nodeDependencies.reinstall"
+          "id": "applicationManager.nodeDependencies.reinstall",
+          "command": "applicationManager.nodeDependencies.reinstall"
         },
         {
           "type": "button",
-          "title": "%iceworksApp.kaitianContributes.toolbar.DefPublish.title%",
+          "title": "%applicationManager.kaitianContributes.toolbar.DefPublish.title%",
           "iconPath": "./assets/dark/upload.svg",
-          "id": "iceworksApp.scripts.DefPublish",
-          "command": "iceworksApp.scripts.DefPublish"
+          "id": "applicationManager.scripts.DefPublish",
+          "command": "applicationManager.scripts.DefPublish"
         }
       ]
     }

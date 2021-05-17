@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
-import configure, { recordKey } from '@iceworks/configure';
+import configure, { recordKey } from '@appworks/configure';
 
 function checkIsO2() {
   const O2Version = process.env.O2_VERSION;

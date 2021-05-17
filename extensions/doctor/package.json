@@ -1,0 +1,106 @@
+{
+  "name": "iceworks-doctor",
+  "displayName": "Doctor",
+  "description": "A free security and quality audit tool for modern DevOps teams",
+  "publisher": "iceworks-team",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "eslint",
+    "checker",
+    "fixer",
+    "scan",
+    "quality",
+    "repeatability",
+    "maintainability",
+    "dashboard",
+    "appworks"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onCommand:doctor.fix",
+    "onCommand:doctor.scan",
+    "onCommand:doctor.dashboard",
+    "onLanguage:json",
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescriptreact",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:scss"
+  ],
+  "main": "./build/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/pack.git"
+  },
+  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/doctor/README.md",
+  "bugs": {
+    "url": "https://github.com/appworks-lab/pack/issues",
+    "email": "iceworksteam@163.com"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:web && npm run compile && node scripts/minifyNodeModules.js",
+    "build:extension": "tsc -p ./",
+    "watch:extension": "tsc -watch -p ./tsconfig.json",
+    "build:web": "cd web && npm run build",
+    "watch:web": "cd web && npm run start",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "doctor.dashboard",
+        "title": "%iceworksDoctor.commands.doctor.title%"
+      },
+      {
+        "command": "doctor.scan",
+        "title": "%iceworksDoctor.commands.scan.title%"
+      },
+      {
+        "command": "doctor.fix",
+        "title": "%iceworksDoctor.commands.fix.title%"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "AppWorks Doctor",
+      "properties": {
+        "appworks.enableCheckSecurityPracticesOnSave": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Check security practices when file saved."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/constant": "^0.1.0",
+    "@appworks/doctor": "^0.1.0",
+    "@appworks/project-service": "^0.1.0",
+    "@appworks/recorder": "^0.1.0",
+    "@appworks/storage": "^0.1.0",
+    "@appworks/connector": "^0.1.0",
+    "fs-extra": "^9.0.1",
+    "git-repo-info": "^2.1.1",
+    "mkdirp": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.158",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "glob": "^7.1.6",
+    "terser": "^5.3.2",
+    "typescript": "^3.8.3"
+  }
+}

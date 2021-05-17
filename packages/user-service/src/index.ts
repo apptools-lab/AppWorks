@@ -1,5 +1,5 @@
-import { ALI_DEF_URL } from '@iceworks/constant';
-import configure from '@iceworks/configure';
+import { ALI_DEF_URL } from '@appworks/constant';
+import configure from '@appworks/configure';
 import { checkAliInternal } from 'ice-npm-utils';
 import * as vscode from 'vscode';
 import { IUserInfo } from './types';

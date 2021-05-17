@@ -1,4 +1,4 @@
-import I18nService from '@iceworks/i18n';
+import I18nService from '@appworks/i18n';
 import zhCNTextMap from './locales/zh-CN.json';
 import enUSTextMap from './locales/en-US.json';
 

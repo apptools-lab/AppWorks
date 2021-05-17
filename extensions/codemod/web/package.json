@@ -1,0 +1,31 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "dependencies": {
+    "@alifd/next": "^1.21.8",
+    "@alifd/theme-iceworks-dark": "^1.1.0",
+    "@appworks/i18n": "^0.1.0",
+    "@appworks/connector": "^0.1.0",
+    "ahooks": "^2.9.6",
+    "classnames": "^2.2.6",
+    "moment": "^2.24.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-intl": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "build-plugin-css-assets-local": "^0.1.0",
+    "build-plugin-fusion": "^0.1.3",
+    "build-plugin-moment-locales": "^0.1.0",
+    "ice.js": "^1.0.0",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "start": "icejs start --disable-reload",
+    "build": "icejs build"
+  },
+  "private": true
+}

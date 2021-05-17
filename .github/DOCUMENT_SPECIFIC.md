@@ -12,7 +12,7 @@
 [插件版本徽标]: https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg
 [插件下载徽标]: https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg
 
-# Iceworks XXX 插件
+# AppWorks XXX 插件
 
 概括介绍该插件。
 
@@ -42,11 +42,11 @@
 
 ## 更多
 
-访问 [Iceworks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
+访问 [AppWorks 套件](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)获取更多功能。
 
 ## License
 
-[MIT](https://github.com/ice-lab/iceworks/blob/master/LICENSE)
+[MIT](https://github.com/appworks-lab/pack/blob/master/LICENSE)
 ```
 
 - When there is only one function, there is no need for a three-level title

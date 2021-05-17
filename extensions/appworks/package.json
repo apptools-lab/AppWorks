@@ -1,0 +1,50 @@
+{
+  "name": "iceworks",
+  "displayName": "AppWorks",
+  "description": "Application Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
+  "publisher": "iceworks-team",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Extension Packs",
+    "Programming Languages",
+    "Visualization",
+    "Debuggers",
+    "Notebooks"
+  ],
+  "keywords": [
+    "React",
+    "Low Code",
+    "Visual",
+    "Intelli Code",
+    "AI",
+    "Autocomplete",
+    "JavaScript",
+    "TypeScript",
+    "ICE",
+    "Rax",
+    "小程序"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/pack.git"
+  },
+  "icon": "public/logo.png",
+  "extensionPack": [
+    "iceworks-team.iceworks-app",
+    "iceworks-team.iceworks-project-creator",
+    "iceworks-team.iceworks-style-helper",
+    "iceworks-team.iceworks-material-helper",
+    "iceworks-team.iceworks-doctor",
+    "iceworks-team.iceworks-time-master",
+    "iceworks-team.iceworks-codemod",
+    "iceworks-team.iceworks-refactor"
+  ],
+  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/appworks/README.md",
+  "bugs": {
+    "url": "https://github.com/appworks-lab/pack/issues",
+    "email": "iceworksteam@163.com"
+  }
+}

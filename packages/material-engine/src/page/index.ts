@@ -2,13 +2,13 @@ import * as path from 'path';
 import * as fse from 'fs-extra';
 import * as prettier from 'prettier';
 import * as glob from 'glob';
-import { IMaterialBlock, IMaterialPage } from '@iceworks/material-utils';
+import { IMaterialBlock, IMaterialPage } from '@appworks/material-utils';
 import {
   findIndexFile,
   bulkDownloadMaterials,
   bulkInstallMaterialsDependencies,
   getFolderLanguageType,
-} from '@iceworks/common-service';
+} from '@appworks/common-service';
 import {
   pagesPath,
   COMPONENT_DIR_NAME,
@@ -17,7 +17,7 @@ import {
   projectPath,
   getProjectType,
   getFolderPath,
-} from '@iceworks/project-service';
+} from '@appworks/project-service';
 import { bulkGenerate } from '../block';
 import * as upperCamelCase from 'uppercamelcase';
 import * as ejs from 'ejs';

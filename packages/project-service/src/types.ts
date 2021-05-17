@@ -1,4 +1,4 @@
-import { IMaterialScaffold, IMaterialSource } from '@iceworks/material-utils';
+import { IMaterialScaffold, IMaterialSource } from '@appworks/material-utils';
 import { IEjsOptions } from '@iceworks/generate-project';
 
 export interface IProjectField {

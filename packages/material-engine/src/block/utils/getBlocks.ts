@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { pagesPath, COMPONENT_DIR_NAME } from '@iceworks/project-service';
+import { pagesPath, COMPONENT_DIR_NAME } from '@appworks/project-service';
 import { scanDirectory } from './scanDirectory';
 
 export interface IBlock {

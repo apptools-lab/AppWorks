@@ -17,7 +17,7 @@ import { isBeta, pushExtension2Npm, npmRegistry, innerExtensions4pack, otherExte
 const renderFile = util.promisify(ejs.renderFile);
 const glob = util.promisify(globSync);
 
-const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@iceworks/extension' : '@ali/ide-extensions';
+const EXTENSION_NPM_NAME_PREFIX = !isBeta ? '@appworks/extension' : '@ali/ide-extensions';
 const PACK_TEMPLATE_DIR = join(__dirname, 'template');
 const OTHER_EXTENSIONS_DIRECTORY = join(__dirname, 'tmp');
 

@@ -5,9 +5,9 @@ import {
   saveDataToSettingJson,
   getDataFromSettingJson,
   CONFIGURATION_KEY_MATERIAL_SOURCES,
-} from '@iceworks/common-service';
-import { IMaterialSource, IMaterialData, IMaterialBase } from '@iceworks/material-utils';
-import { getProjectType } from '@iceworks/project-service';
+} from '@appworks/common-service';
+import { IMaterialSource, IMaterialData, IMaterialBase } from '@appworks/material-utils';
+import { getProjectType } from '@appworks/project-service';
 import i18n from './i18n';
 import generateDebugMaterialData from './generateDebugMaterialData';
 

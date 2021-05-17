@@ -51,7 +51,7 @@ async function start() {
       console.log(`--- ${name}@${localVersion} ---`);
 
       packExtension(name, directory, localVersion);
-      publishedExtensions.push(`${name}:${localVersion}`);
+      publishedExtensions.push(`${name}:${localVersion}:${directory}`);
     }
     uploadExtesions(publishedExtensions);
     console.log(`[PUBLISH EXTENSION BETA] Complete (count=${publishedCount}):`);

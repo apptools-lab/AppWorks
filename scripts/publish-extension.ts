@@ -62,7 +62,7 @@ async function start() {
       const { name, directory, localVersion } = shouldPublishExtensions[i];
       // Production publish should zip all extensions.
       // Pack extension first.
-      extensions.push(`${name}:${localVersion}`);
+      extensions.push(`${name}:${localVersion}:${directory}`);
       packExtension(name, directory, localVersion);
       publishedCount++;
       console.log(`--- ${name}@${localVersion} ---`);

@@ -1,9 +1,9 @@
-import { getProjectFramework } from '@iceworks/project-utils';
+import { getProjectFramework } from '@appworks/project-utils';
 import { getPackageLocalVersion } from 'ice-npm-utils';
 import latestVersion from 'latest-version';
 // import * as fsExtra from 'fs-extra';
 // import * as path from 'path';
-import { getDataFromSettingJson } from '@iceworks/common-service';
+import { getDataFromSettingJson } from '@appworks/common-service';
 import packageJSON from 'package-json';
 import { projectPath } from './constant';
 import { getProjectPackageJSON } from './utils';

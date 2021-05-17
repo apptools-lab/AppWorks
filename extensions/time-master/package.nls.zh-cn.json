@@ -1,0 +1,9 @@
+{
+  "timeMaster.views.iceworksTimeMaster.timeMaster.name": "时间管理",
+  "timeMaster.configuration.properties.appworks.timeLimit.title": "统计数据的保存时长（天数）",
+  "timeMaster.configuration.properties.appworks.timeLimit.description": "时间越长，占用本地磁盘容量越多",
+  "timeMaster.configuration.properties.appworks.enableView.title": "是否显示视图",
+  "timeMaster.configuration.properties.appworks.enableView.description": "在侧边栏显示编程活动数据",
+  "timeMaster.configuration.properties.appworks.enableStatusBar.title": "是否显示状态栏",
+  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "在窗口右下角的状态栏显示编辑器使用时间"
+}

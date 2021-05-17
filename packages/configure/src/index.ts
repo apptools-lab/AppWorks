@@ -1,4 +1,4 @@
-import { Storage } from '@iceworks/storage';
+import { Storage } from '@appworks/storage';
 
 // Note: why not use `import`
 // ref: https://github.com/sindresorhus/conf

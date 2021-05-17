@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   testPathIgnorePatterns: ['lib/', '__tests__/tmp/', '.tmp/', '/node_modules/'],
   modulePathIgnorePatterns: [
-    '<rootDir>/extensions/iceworks-refactor/',
+    '<rootDir>/extensions/react-refactor/',
   ],
   preset: 'ts-jest',
   setupFilesAfterEnv: ['jest-extended'],

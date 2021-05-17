@@ -1,15 +1,15 @@
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import { downloadAndGenerateProject } from '@iceworks/generate-project';
-import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@iceworks/common-service';
-import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework as orginCheckIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@iceworks/project-utils';
+import { checkPathExists, getDataFromSettingJson, CONFIGURATION_KEY_NPM_REGISTRY } from '@appworks/common-service';
+import { checkIsTargetProjectType as orginCheckIsTargetProjectType, checkIsTargetProjectFramework as orginCheckIsTargetProjectFramework, getProjectType as originGetProjectType, getProjectFramework as originGetProjectFramework } from '@appworks/project-utils';
 import * as simpleGit from 'simple-git/promise';
-import { Recorder } from '@iceworks/recorder';
+import { Recorder } from '@appworks/recorder';
 import * as path from 'path';
-import { ALI_GITLAB_URL, ALI_DIP_PRO, ALI_DEF_WORK_URL } from '@iceworks/constant';
+import { ALI_GITLAB_URL, ALI_DIP_PRO, ALI_DEF_WORK_URL } from '@appworks/constant';
 import { projectPath, jsxFileExtnames } from './constant';
 import { generatorCreatetask, getGeneratorTaskStatus, applyRepository, getBasicInfo } from './def';
-import { getGitInfo } from '@iceworks/project-utils/lib/git';
+import { getGitInfo } from '@appworks/project-utils/lib/git';
 import i18n from './i18n';
 import { getProjectPackageJSON } from './utils';
 import { IDEFProjectField, IProjectField } from './types';
@@ -28,12 +28,12 @@ export async function autoSetContext() {
   const framework = await getProjectFramework();
   const isNotTargetType = !await checkIsTargetProjectType();
   const isNotTargetFramework = !await checkIsTargetProjectFramework();
-  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetType', isNotTargetType);
-  vscode.commands.executeCommand('setContext', 'iceworks:projectIsNotTargetFramework', isNotTargetFramework);
-  vscode.commands.executeCommand('setContext', 'iceworks:projectIsPegasus', isPegasus);
-  vscode.commands.executeCommand('setContext', 'iceworks:projectLanguageType', languageType);
-  vscode.commands.executeCommand('setContext', 'iceworks:projectType', type);
-  vscode.commands.executeCommand('setContext', 'iceworks:projectFramework', framework);
+  vscode.commands.executeCommand('setContext', 'appworks:projectIsNotTargetType', isNotTargetType);
+  vscode.commands.executeCommand('setContext', 'appworks:projectIsNotTargetFramework', isNotTargetFramework);
+  vscode.commands.executeCommand('setContext', 'appworks:projectIsPegasus', isPegasus);
+  vscode.commands.executeCommand('setContext', 'appworks:projectLanguageType', languageType);
+  vscode.commands.executeCommand('setContext', 'appworks:projectType', type);
+  vscode.commands.executeCommand('setContext', 'appworks:projectFramework', framework);
 }
 
 export async function checkIsTargetProjectType() {

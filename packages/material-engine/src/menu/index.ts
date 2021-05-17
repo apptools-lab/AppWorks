@@ -5,7 +5,7 @@ import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
-import { layoutsPath, getProjectLanguageType } from '@iceworks/project-service';
+import { layoutsPath, getProjectLanguageType } from '@appworks/project-service';
 import { IMenuData } from './types';
 
 const HEADER_MENU_CONFIG_VARIABLES = 'headerMenuConfig';
