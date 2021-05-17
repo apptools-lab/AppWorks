@@ -9,6 +9,16 @@ English | [简体中文](https://github.com/appworks-lab/pack/blob/master/extens
 
 Use Component and Write Props easier, friendly for React/Vue/[Rax](https://rax.js.org/).
 
+## JS Project Automatic Completion
+
+* React: Automatic completion for your custom component props in JS Project.
+
+![img01](https://img.alicdn.com/imgextra/i4/O1CN01VVzQRF1NkVYGN3rrg_!!6000000001608-1-tps-900-513.gif)
+
+* Rax: Automatic completion for your custom component and [rax-components](https://github.com/raxjs/rax-components/) props in JS Project.
+
+![img02](https://img.alicdn.com/imgextra/i2/O1CN01D6Zb3r1b7wpFzjWyk_!!6000000003419-1-tps-900-513.gif)
+
 ## Pages and Components
 
 ![demo](https://img.alicdn.com/imgextra/i3/O1CN01UnlYme22ks5npf5u2_!!6000000007159-2-tps-2880-1754.png)

@@ -9,6 +9,16 @@
 
 在 [JSX](https://zh-hans.reactjs.org/docs/introducing-jsx.html) 中更快更好地添加组件、编写组件属性、查找组件文档，对 React 和 [Rax](https://rax.js.org/) 应用友好。
 
+## JS 项目组件属性自动补全
+
+* React: 自动补全业务组件 props。
+
+![img01](https://img.alicdn.com/imgextra/i4/O1CN01VVzQRF1NkVYGN3rrg_!!6000000001608-1-tps-900-513.gif)
+
+* Rax: 自动补全业务组件 和 [rax-components](https://github.com/raxjs/rax-components/) 的 props。
+
+![img02](https://img.alicdn.com/imgextra/i2/O1CN01D6Zb3r1b7wpFzjWyk_!!6000000003419-1-tps-900-513.gif)
+
 ## 页面和组件视窗
 
 ![示例](https://img.alicdn.com/imgextra/i2/O1CN01Ut9Fzk1fJB09qh8Xk_!!6000000003985-2-tps-2048-1536.png)

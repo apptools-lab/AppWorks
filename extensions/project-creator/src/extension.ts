@@ -81,15 +81,28 @@ export function activate(context: vscode.ExtensionContext) {
         </style>
       `;
 
-      const iframeContent = getHtmlForWebview(extensionPath, 'scaffoldtemplate', false, undefined, extraScaffoldTemplateHtml, (resourceUrl) => {
-        return customScaffoldWebviewPanel!.webview.asWebviewUri(vscode.Uri.file(resourceUrl));
-      });
+      const iframeContent = getHtmlForWebview(
+        extensionPath,
+        'scaffoldtemplate',
+        false,
+        undefined,
+        extraScaffoldTemplateHtml,
+        (resourceUrl) => {
+          return customScaffoldWebviewPanel!.webview.asWebviewUri(vscode.Uri.file(resourceUrl));
+        },
+      );
       const extraCustomScaffoldHtml = `
         <script>
           window.iframeContent = '${Base64.encode(iframeContent)}'
         </script>
       `;
-      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(extensionPath, 'customscaffold', false, undefined, extraCustomScaffoldHtml);
+      customScaffoldWebviewPanel.webview.html = getHtmlForWebview(
+        extensionPath,
+        'customscaffold',
+        false,
+        undefined,
+        extraCustomScaffoldHtml,
+      );
       customScaffoldWebviewPanel.iconPath = vscode.Uri.parse(ICEWORKS_ICON_PATH);
       customScaffoldWebviewPanel.onDidDispose(
         () => {
@@ -115,4 +128,4 @@ export function activate(context: vscode.ExtensionContext) {
   }
 }
 
-export function deactivate() { }
+export function deactivate() {}

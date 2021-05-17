@@ -15,6 +15,7 @@ export const DEBUG_PREFIX = 'DEBUG:';
 export { generateDebugMaterialData };
 
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
+const ANTD_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/antd-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
 // const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
@@ -26,11 +27,18 @@ const RAX_BASE_COMPONENTS_SOURCE = 'http://ice.alicdn.com/assets/rax-base-compon
 
 const OFFICAL_MATERIAL_SOURCES = [
   {
-    name: 'PC Web',
+    name: i18n.format('package.materialService.index.webTitle'),
     type: 'react',
     client: 'pc',
     source: ICE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.webDescription'),
+  },
+  {
+    name: i18n.format('package.materialService.index.antdTitle'),
+    type: 'react',
+    client: 'pc',
+    source: ANTD_MATERIAL_SOURCE,
+    description: i18n.format('package.materialService.index.antdDescription'),
   },
   {
     name: i18n.format('package.materialService.index.raxTitle'),

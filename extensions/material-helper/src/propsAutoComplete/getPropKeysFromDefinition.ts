@@ -15,8 +15,21 @@ export default function getPropKeysFromDefinition(componentPath): string[] {
       // If this ts component project not contain d.ts or types.ts, Don‘t show propKeys.
       componentTypesPath = `${path.dirname(componentPath)}/types.ts`;
     }
+
+    let definitionFileContent = '';
+
     if (fs.existsSync(componentTypesPath)) {
-      const ast = parse(fs.readFileSync(componentTypesPath, 'utf-8'), {
+      definitionFileContent += fs.readFileSync(componentTypesPath, 'utf-8');
+    }
+
+    // For rax-components https://github.com/raxjs/rax-components/
+    const raxComponentTypesPath = `${path.dirname(componentPath)}/types.d.ts`;
+    if (fs.existsSync(raxComponentTypesPath)) {
+      definitionFileContent += fs.readFileSync(raxComponentTypesPath, 'utf-8');
+    }
+
+    if (definitionFileContent) {
+      const ast = parse(definitionFileContent, {
         sourceType: 'module',
         plugins: getBabelParserPlugins('ts'),
       });

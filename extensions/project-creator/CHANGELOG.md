@@ -1,10 +1,11 @@
-# Change Log
+# Changelog
 
 ## 1.0.0
 
-Release 1.0.0
+- chore: release 1.0.0, Rename to Appworks
+- feat: add antd material
 
-## 0.4.12 
+## 0.4.12
 
 - fix: save user config data in template preview.
 - fix: select project path undefined
@@ -50,7 +51,7 @@ Release 1.0.0
 
 # 0.4.2
 
-- feat: add configure scaffold to create application 
+- feat: add configure scaffold to create application
 
 # 0.4.1
 
@@ -63,16 +64,16 @@ Release 1.0.0
 # 0.3.18
 
 - refactor: material source card
-- feat: add custom scaffold 
+- feat: add custom scaffold
 
 # 0.3.17
 
-- fix: build error 
+- fix: build error
 
 ## 0.3.16
 
 - chore: change extension name
-- chore: publish material-engine package 
+- chore: publish material-engine package
 
 ## 0.3.15
 
@@ -112,7 +113,7 @@ Release 1.0.0
 ## 0.3.7
 
 - docs: add more badges.
-- feat: support create pegasus project 
+- feat: support create pegasus project
 
 ## 0.3.6
 
@@ -177,7 +178,7 @@ Release 1.0.0
 
 - style: better styles of the webview
 - feat: Support select GitLab group and check the GitLab Repo name
- 
+
 ## 0.1.2
 
 - refactor: Spelling of unified brand name: AppWorks.
