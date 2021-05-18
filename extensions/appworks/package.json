@@ -40,7 +40,18 @@
     "iceworks-team.iceworks-doctor",
     "iceworks-team.iceworks-time-master",
     "iceworks-team.iceworks-codemod",
-    "iceworks-team.iceworks-refactor"
+    "iceworks-team.iceworks-refactor",
+    "MS-CEINTL.vscode-language-pack-zh-hans",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-complete-tag",
+    "xabikos.JavaScriptSnippets",
+    "burkeholland.simple-react-snippets",
+    "msjsdiag.debugger-for-chrome",
+    "alefragnani.Bookmarks"
   ],
   "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/appworks/README.md",
   "bugs": {

@@ -2,7 +2,9 @@
 
 ## 1.0.0
 
-Rename to AppWorks.
+- Rename to AppWorks.
+- Remove same extensions.
+- Add recommend extensions.
 
 ## 0.19.0
 

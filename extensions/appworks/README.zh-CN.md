@@ -54,7 +54,7 @@ AppWorks 编码质效当前提供了两个基本功能：质量检查修复和�
 
 ## 插件列表
 
-AppWorks 套件内包含以下插件：
+AppWorks 套件内包含以下自研插件：
 
 插件 | 简介 | 徽标
 --------- | ------- | ---------
@@ -66,6 +66,20 @@ AppWorks 套件内包含以下插件：
 [质量检测](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-doctor) | 安全和质量审核工具，快速检测到应用程序和基础库代码中的各种安全漏洞和质量问题 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.doctor.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.doctor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.doctor)
 [时间管理](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master) | 通过自动跟踪您的编程活动从而度量您的编程效率 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [代码重构](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor) | 更简单地重构你的 React / Rax 组件 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-refactor.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-refactor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor)
+
+AppWorks 套件内包含以下推荐的三方插件：
+
+- [Chinese (Simplified) Language Pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans)：为 VS Code 提供中文（简体）本地化界面
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens): 增强 VS Code 中内置的 Git 功能
+- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker): 英文拼写检查器
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): [ESLint](https://eslint.org/) 配套的检查器
+- [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint): [stylelint](https://stylelint.io/) 配套的检查器
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): 代码格式化工具
+- [Auto Complete Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag): 自动闭合和重命名标签
+- [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets): ES6 语法的 JavaScript 代码片段
+- [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets): React 代码片段
+- [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome): 在 Chrome 浏览器或任何其他支持 Chrome Debugger 协议的目标中调试 JavaScript 代码
+- [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks): 源码阅读神器
 
 ## 获取帮助
 
