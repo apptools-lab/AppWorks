@@ -1,12 +1,12 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import traverse from '@babel/traverse';
-import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
 import * as upperCamelCase from 'uppercamelcase';
 import { getProjectLanguageType, getProjectType, projectPath, PAGE_DIRECTORY, LAYOUT_DIRECTORY, appJSONFileName } from '@appworks/project-service';
+import getASTByCode from '../utils/getASTByCode';
 
 interface IRouter {
   /**
@@ -134,14 +134,6 @@ async function getRouterConfigAST(targetProjectPath) {
   const routerConfigString = await fse.readFile(routeConfigPath, 'utf-8');
   const routerConfigAST = getASTByCode(routerConfigString);
   return routerConfigAST;
-}
-
-function getASTByCode(code) {
-  return parser.parse(code, {
-    allowImportExportEverywhere: true,
-    sourceType: 'module',
-    plugins: ['dynamicImport'],
-  });
 }
 
 function parseRoute(elements) {
