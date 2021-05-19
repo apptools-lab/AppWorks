@@ -2,7 +2,7 @@
 
 ## 1.0.0
 
-Release 1.0.0
+- fix: make sure that the start & end fields exist
 
 ## 0.4.6
 
