@@ -25,7 +25,7 @@ AppWorks 的代码自动补全能力基于语言语义和源代码分析，完�
 
 ### 可视化开发
 
-AppWorks 提供海量物料和可视化消费物料的方式提升多端应用的开发效率。
+AppWorks 提供海量的物料和可视化消费物料的方式提升多端应用的开发效率。
 
 例如，你可以使用模板快速创建项目；可以使用物料面板，将一些精品物料添加到项目当中。
 
@@ -38,7 +38,7 @@ AppWorks 提供海量物料和可视化消费物料的方式提升多端应用�
 AppWorks 编码质效当前提供了两个基本功能：质量检查修复和编程时间管理。
 
 我们基于大量的企业级项目实践，产出了质量评估模型，它能够为项目生成质量报告，并提供了修复相关质量问题的方法。
-编程时间管理则是通过自动跟踪开发者的编程活动从而度量开发者编程效率的功能，它能够帮助开发者回顾自己的编程活动，生成编程效率报告并给予相关的提效建议。
+编程时间管理则是通过自动跟踪开发者的编码活动从而度量开发者编码效率的功能，它能够帮助开发者回顾自己的编码活动，生成编码效率报告并给予相关的提效建议。
 
 ![Doctor](https://img.alicdn.com/imgextra/i4/O1CN01FNcqIN1orpTya1lj8_!!6000000005279-2-tps-746-387.png)
 
@@ -64,7 +64,7 @@ AppWorks 套件内包含以下插件：
 [组件开发辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper) | 更快更好地添加组件、编写组件属性 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-material-helper.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-material-helper.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-material-helper)
 [代码更新辅助](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-codemod) | 一个帮助您进行大规模代码库重构的工具，这些重构是自动化的，但也提供了人为监督和偶尔干预的方式。 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-codemod.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-codemod.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-codemod)
 [质量检测](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-doctor) | 安全和质量审核工具，快速检测到应用程序和基础库代码中的各种安全漏洞和质量问题 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.doctor.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.doctor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.doctor)
-[时间管理](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master) | 通过自动跟踪您的编程活动从而度量您的编程效率 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
+[时间管理](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master) | 通过自动跟踪您的编码活动从而度量您的编码效率 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-time-master.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-time-master.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-time-master)
 [代码重构](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor) | 更简单地重构你的 React / Rax 组件 | ![Version](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-refactor.svg) [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-refactor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor)
 
 ## 获取帮助
