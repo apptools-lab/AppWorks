@@ -1,12 +1,12 @@
 import * as path from 'path';
 import * as fse from 'fs-extra';
 import traverse from '@babel/traverse';
-import * as parser from '@babel/parser';
 import * as t from '@babel/types';
 import generate from '@babel/generator';
 import * as prettier from 'prettier';
 import { layoutsPath, getProjectLanguageType } from '@appworks/project-service';
 import { IMenuData } from './types';
+import getASTByCode from '../utils/getASTByCode';
 
 const HEADER_MENU_CONFIG_VARIABLES = 'headerMenuConfig';
 const ASIDE_MENU_CONFIG_VARIABLES = 'asideMenuConfig';
@@ -83,14 +83,6 @@ async function getConfigAST(menuConfigPath: string) {
   const menuConfigString = await fse.readFile(menuConfigPath, 'utf-8');
   const menuConfigAST = getASTByCode(menuConfigString);
   return menuConfigAST;
-}
-
-function getASTByCode(code: string) {
-  return parser.parse(code, {
-    allowImportExportEverywhere: true,
-    sourceType: 'module',
-    plugins: ['dynamicImport'],
-  });
 }
 
 function parseConfig(elements: any[]) {
