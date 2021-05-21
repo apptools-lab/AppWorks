@@ -29,7 +29,7 @@
   "extension.timeMaster.linesRemoved": "删除的代码行数",
   "extension.timeMaster.keystrokes": "总的键入数",
   "extension.timeMaster.separator": "：",
-  "extension.timeMaster.viewUserSummary.label": "查看编程活动报告",
+  "extension.timeMaster.viewUserSummary.label": "查看编码活动报告",
   "extension.timeMaster.viewUserSummary.detail": "",
   "extension.timeMaster.viewProjectSummary.label": "查看项目开发报告",
   "extension.timeMaster.viewProjectSummary.detail": ""
