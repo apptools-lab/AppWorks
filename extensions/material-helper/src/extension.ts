@@ -12,7 +12,7 @@ import recorder from './utils/recorder';
 import { registerDebugCommand } from './utils/debugMaterials';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
-
+import mtopAutoComplete from './mtopAutoComplete';
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -20,7 +20,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   console.log('Congratulations, your extension "material-helper" is now active!');
   recorder.recordActivate();
-
   // auto set configuration
   initExtension(context);
   autoSetContextByProject();
@@ -117,9 +116,9 @@ export function activate(context: vscode.ExtensionContext) {
   registerDebugCommand(subscriptions);
 
   propsAutoComplete();
+  mtopAutoComplete();
   registerComponentDocSupport();
   autoFillContent();
-
   // views
   createComponentsTreeView(context);
   createPagesTreeView(context);
