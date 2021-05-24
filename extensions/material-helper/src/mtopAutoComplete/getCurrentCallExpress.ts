@@ -2,6 +2,7 @@ import { parse } from '@babel/parser';
 import traverse, { NodePath } from '@babel/traverse';
 import { isObjectExpression, CallExpression } from '@babel/types';
 import isLibMtopRequestAPI from './isLibMtopRequestAPI';
+
 function isCursorInObjectExpression(callExpression: CallExpression, cursorPosition: number): boolean {
   const callArguments = callExpression.arguments;
   const node = callArguments?.[0];
@@ -11,6 +12,7 @@ function isCursorInObjectExpression(callExpression: CallExpression, cursorPositi
 function conditionOfCompletion(callExpression: CallExpression, cursorPosition: number): boolean {
   return isCursorInObjectExpression(callExpression, cursorPosition) && isLibMtopRequestAPI(callExpression);
 }
+
 /**
  * 解析code，根据条件判断是否返回CallExpression
  * @param code
@@ -21,7 +23,7 @@ function conditionOfCompletion(callExpression: CallExpression, cursorPosition: n
 function originGetCurrentCallExpress(
   code: string,
   cursorPosition: number,
-  conditionOfComplete: (callExpression: CallExpression, cursorPostion: number) => boolean
+  conditionOfComplete: (callExpression: CallExpression, cursorPostion: number) => boolean,
 ): CallExpression | null {
   let callExpression: CallExpression = null;
   try {

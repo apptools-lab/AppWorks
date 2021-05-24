@@ -1,4 +1,4 @@
-import { CallExpression, isObjectExpression, ObjectExpression, isObjectProperty } from '@babel/types';
+import { Identifier, CallExpression, isObjectExpression, ObjectExpression, isObjectProperty } from '@babel/types';
 
 
 function getObjectPropertiesKey(node: ObjectExpression): string[] {
