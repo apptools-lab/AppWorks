@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.2
+
+- fix: fail to create page by block
+
 ## 0.8.1
 
 - fix: `React Refactor` command not found
