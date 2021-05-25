@@ -2,7 +2,7 @@
  * Scripts to check unpublished version and run publish
  */
 import * as path from 'path';
-import { spawnSync } from 'child_process';
+import { spawnSyncWithCatch } from './fn/spawnSyncWithCatch';
 import uploadExtesions, { SKIP_PACK_EXTENSION_LIST } from './fn/upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './fn/getExtensionInfos';
 import sleep from './fn/sleep';
@@ -15,19 +15,13 @@ function packExtension(extension: string, directory: string, version: string) {
     return;
   }
   console.log('[VSCE] PACK: ', `${extension}@${version}`);
-  spawnSync('vsce', ['package'], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
+  spawnSyncWithCatch('vsce', ['package'], directory);
 }
 
 function publish(extension: string, directory: string, version: string): void {
   // vsce publish
   console.log('[VSCE] PUBLISH: ', `${extension}@${version}`);
-  spawnSync('vsce', ['publish', '-p', process.env.VSCE_TOKEN], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
+  spawnSyncWithCatch('vsce', ['publish', '-p', process.env.VSCE_TOKEN], directory);
 }
 
 async function start() {

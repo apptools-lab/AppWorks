@@ -4,6 +4,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { spawnSync } from 'child_process';
+import { spawnSyncWithCatch } from './fn/spawnSyncWithCatch';
 import { setPublishedPackages } from './fn/published-info';
 import { IPackageInfo, getPackageInfos } from './fn/getPackageInfos';
 
@@ -63,10 +64,7 @@ function updatePackageJson(betaPackageInfos: IBetaPackageInfo[]): void {
 
 function publish(pkg: string, betaVersion: string, directory: string): void {
   console.log('[PUBLISH BETA]', `${pkg}@${betaVersion}`);
-  spawnSync('npm', ['publish', '--tag=beta'], {
-    stdio: 'inherit',
-    cwd: directory,
-  });
+  spawnSyncWithCatch('npm', ['publish', '--tag=beta'], directory);
 }
 
 // Entry

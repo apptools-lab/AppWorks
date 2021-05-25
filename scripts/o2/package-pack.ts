@@ -1,24 +1,24 @@
-import { spawnSync } from 'child_process';
+import { spawnSyncWithCatch } from '../fn/spawnSyncWithCatch';
 import { PACK_DIR, PACKAGE_MANAGER } from './constant';
 
 async function installPackDeps() {
-  spawnSync(
+  spawnSyncWithCatch(
     PACKAGE_MANAGER,
     ['install'],
-    { stdio: 'inherit', cwd: PACK_DIR },
+    PACK_DIR,
   );
 }
 
 async function buildPack() {
-  spawnSync(
+  spawnSyncWithCatch(
     PACKAGE_MANAGER,
     ['install', '@ali/kaitian-cli', '-g'],
-    { stdio: 'inherit', cwd: process.cwd() },
+    process.cwd(),
   );
-  spawnSync(
+  spawnSyncWithCatch(
     'kaitian',
     ['package', '--yarn'],
-    { stdio: 'inherit', cwd: PACK_DIR },
+    PACK_DIR,
   );
 }
 
