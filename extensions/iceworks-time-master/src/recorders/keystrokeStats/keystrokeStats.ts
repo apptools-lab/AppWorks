@@ -172,8 +172,12 @@ export class KeystrokeStats {
 
   deactivate() {
     this.setEnd();
-    forIn(this.files, (fileChange: FileChange) => {
-      fileChange.deactivate();
+    forIn(this.files, (fileChange: FileChange, key: string) => {
+      if (fileChange.start && fileChange.end) {
+        fileChange.deactivate();
+      } else {
+        delete this.files[key];
+      }
     });
   }
 }
