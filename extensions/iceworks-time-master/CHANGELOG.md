@@ -3,6 +3,7 @@
 ## 0.5.0
 
 - refactor: update DIP link
+- fix: make sure that the start & end fields exist
 
 ## 0.4.6
 
