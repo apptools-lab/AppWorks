@@ -2,7 +2,7 @@
  * Scripts to check unpublished version and run beta publish
  */
 import * as path from 'path';
-import { spawnSync } from 'child_process';
+import { execSync } from 'child_process';
 import uploadExtesions from './fn/upload-extensions';
 import { IExtensionInfo, getExtensionInfos } from './fn/getExtensionInfos';
 import sleep from './fn/sleep';
@@ -13,7 +13,7 @@ import updateExtensionDependencies from './fn/updateExtensionDependencies';
 function packExtension(extension: string, directory: string, version: string): void {
   // vsce package
   console.log('[VSCE] PACKAGE: ', `${extension}@${version}`);
-  spawnSync('vsce', ['package'], {
+  execSync('vsce package', {
     stdio: 'inherit',
     cwd: directory,
   });
