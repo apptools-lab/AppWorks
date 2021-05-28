@@ -15,7 +15,7 @@ const Information = () => {
       title: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.doc.title' }),
       description: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.doc.desc' }),
       linkName: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.doc.link' }),
-      link: 'https://appworks.github.io',
+      link: 'https://appworks.site',
     },
     {
       image: DingtalkIcon,
