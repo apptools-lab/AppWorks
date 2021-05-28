@@ -1,7 +1,7 @@
 简体中文 | [English](./README.md)
 
 <p align="center">
-  <a href="https://ice.work">
+  <a href="https://appworks.site">
     <img alt="AppWorks" src="https://img.alicdn.com/imgextra/i4/O1CN01jLRijt1SPxrlCRSEJ_!!6000000002240-2-tps-258-258.png" width="96">
   </a>
 </p>
@@ -62,8 +62,8 @@
 [icestore-package]: https://npmjs.com/package/@ice/store
 [formily-package]: https://npmjs.com/package/@formily/react
 
-[icejs-docs]: https://ice.work/docs/guide/intro
-[icestark-docs]: https://ice.work/docs/icestark/guide/about
+[icejs-docs]: https://ice.work
+[icestark-docs]: https://micro-frontends.ice.work
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
 
