@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://ice.work">
-    <img alt="AppWorks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
+    <img alt="AppWorks" src="https://img.alicdn.com/imgextra/i4/O1CN01jLRijt1SPxrlCRSEJ_!!6000000002240-2-tps-258-258.png" width="96">
   </a>
 </p>
 
@@ -38,7 +38,7 @@
 
 如果对 `AppWorks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## ICE 生态
+## 相关推荐
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
@@ -66,15 +66,6 @@
 [icestark-docs]: https://ice.work/docs/icestark/guide/about
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
-
-## 社区
-
-| 钉钉群	                             | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
-
-[issues]: https://github.com/alibaba/ice/issues
-[gitter]: https://gitter.im/alibaba/ice
 
 ## License
 
