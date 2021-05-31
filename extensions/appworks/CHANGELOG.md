@@ -3,7 +3,8 @@
 
 ## 1.0.1
 
-- Remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
+- Fix [#848](https://github.com/appworks-lab/pack/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
+
 
 ## 1.0.0
 
