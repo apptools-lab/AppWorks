@@ -28,7 +28,7 @@
 - 点击第一个「appworks」选项上的「安装」按钮；
 - 安装成功后，点击 VS Code 界面左侧活动栏上的「AppWorks 图标」，开始使用。
 
-![示例](https://img.alicdn.com/imgextra/i1/O1CN01BbUeFs1gkUEh5tawi_!!6000000004180-2-tps-3000-877.png)
+![示例](https://img.alicdn.com/imgextra/i4/O1CN010dwNp41NjalPbE65O_!!6000000001606-2-tps-2048-738.png)
 
 [查看套件文档](extensions/appworks/README.md)，了解更多功能。
 
