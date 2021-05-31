@@ -83,9 +83,4 @@ AppWorks Pack extension installs these recommend extensions:
 
 ## Help
 
-- Join [Dingtalk](https://www.dingtalk.com/) Group
-
-  ![qrcode](https://img.alicdn.com/tfs/TB1oDJzTeL2gK0jSZFmXXc7iXXa-379-378.png_220x10000.jpg)
-- Open an [issue](https://github.com/appworks-lab/pack/issues/new)
-
-  We will respond quickly to the submitted issues.
+Open an [issue](https://github.com/appworks-lab/pack/issues/new), We will respond quickly to the submitted issues.
