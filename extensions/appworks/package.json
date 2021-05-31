@@ -3,7 +3,7 @@
   "displayName": "AppWorks",
   "description": "Application Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -41,7 +41,6 @@
     "iceworks-team.iceworks-time-master",
     "iceworks-team.iceworks-codemod",
     "iceworks-team.iceworks-refactor",
-    "MS-CEINTL.vscode-language-pack-zh-hans",
     "eamodio.gitlens",
     "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",

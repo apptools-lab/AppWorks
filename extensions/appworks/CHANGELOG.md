@@ -1,5 +1,10 @@
 # Change Log
 
+
+## 1.0.1
+
+- Remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
+
 ## 1.0.0
 
 - Rename to AppWorks.
