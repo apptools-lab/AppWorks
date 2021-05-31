@@ -30,7 +30,7 @@ Use AppWorks to develop Universal Application quickly:
 - Click the Install button on the first appworks option
 - After installation is successful, click the "AppWorks icon" on Activity Bar of VS Code to start
 
-![demo](https://img.alicdn.com/imgextra/i2/O1CN018zKsMr230RYUOdLja_!!6000000007193-2-tps-2208-768.png)
+![demo](https://img.alicdn.com/imgextra/i1/O1CN01BbUeFs1gkUEh5tawi_!!6000000004180-2-tps-3000-877.png)
 
 [See the Pack for more details](extensions/appworks/README.md).
 
