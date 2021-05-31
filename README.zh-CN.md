@@ -1,44 +1,44 @@
 简体中文 | [English](./README.md)
 
 <p align="center">
-  <a href="https://ice.work">
-    <img alt="Iceworks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
+  <a href="https://appworks.site">
+    <img alt="AppWorks" src="https://img.alicdn.com/imgextra/i4/O1CN01jLRijt1SPxrlCRSEJ_!!6000000002240-2-tps-258-258.png" width="96">
   </a>
 </p>
 
-<h1 align="center">Iceworks</h1>
+<h1 align="center">AppWorks</h1>
 
-<p align="center">可视化智能开发套件</p>
+<p align="center">多端研发套件</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg" /></a>
-  <a href="https://github.com/ice-lab/iceworks/actions"><img src="https://github.com/ice-lab/iceworks/workflows/ci/badge.svg" /></a>
-  <a href="https://codecov.io/gh/ice-lab/iceworks"><img src="https://img.shields.io/codecov/c/github/ice-lab/iceworks/master.svg" alt="Test Coverage" /></a>
-  <a href="https://github.com/ice-lab/iceworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
+  <a href="https://github.com/appworks-lab/pack/actions"><img src="https://github.com/appworks-lab/pack/workflows/ci/badge.svg" /></a>
+  <a href="https://codecov.io/gh/appworks-lab/pack"><img src="https://img.shields.io/codecov/c/github/appworks-lab/pack/master.svg" alt="Test Coverage" /></a>
+  <a href="https://github.com/appworks-lab/pack/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
 
 ## 快速开始
 
 - 点击 VS Code 活动栏上的「插件商店图标」；
-- 在输入框中输入「iceworks」进行搜索；
-- 点击第一个「iceworks」选项上的「安装」按钮；
-- 安装成功后，点击 VS Code 界面左侧活动栏上的「Iceworks 图标」，开始使用。
+- 在输入框中输入「appworks」进行搜索；
+- 点击第一个「appworks」选项上的「安装」按钮；
+- 安装成功后，点击 VS Code 界面左侧活动栏上的「AppWorks 图标」，开始使用。
 
 ![示例](https://img.alicdn.com/imgextra/i1/O1CN0134fC4y1TwJQoZvsOr_!!6000000002446-2-tps-2208-768.png)
 
-[查看套件文档](extensions/iceworks/README.md)，了解更多功能。
+[查看套件文档](extensions/appworks/README.md)，了解更多功能。
 
 ## 参与贡献
 
-欢迎通过 [issue](https://github.com/ice-lab/iceworks/issues/new) 反馈问题。
+欢迎通过 [issue](https://github.com/appworks-lab/pack/issues/new) 反馈问题。
 
-如果对 `Iceworks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
+如果对 `AppWorks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
-## ICE 生态
+## 相关推荐
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
@@ -62,19 +62,10 @@
 [icestore-package]: https://npmjs.com/package/@ice/store
 [formily-package]: https://npmjs.com/package/@formily/react
 
-[icejs-docs]: https://ice.work/docs/guide/intro
-[icestark-docs]: https://ice.work/docs/icestark/guide/about
+[icejs-docs]: https://ice.work
+[icestark-docs]: https://micro-frontends.ice.work
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org/
-
-## 社区
-
-| 钉钉群	                             | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
-
-[issues]: https://github.com/alibaba/ice/issues
-[gitter]: https://gitter.im/alibaba/ice
 
 ## License
 

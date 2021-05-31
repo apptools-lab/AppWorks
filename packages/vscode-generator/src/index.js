@@ -49,5 +49,5 @@ module.exports = function (targetDir, options) {
     easyfile.write(path.resolve(targetDir, file.name), file.content, { force: true });
   });
 
-  console.log('iceworks-generator done!');
+  console.log('appworks-generator done!');
 };

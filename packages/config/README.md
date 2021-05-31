@@ -1,7 +1,7 @@
-# `@iceworks/config`
+# `@appworks/config`
 
 ```js
-import * as iceworksConfig from '@iceworks/config';
+import * as iceworksConfig from '@appworks/config';
 
 iceworksConfig.get();
 ```

@@ -8,7 +8,7 @@ order: 1
 ```jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import DoctorDashboard from '@iceworks/doctor-ui';
+import DoctorDashboard from '@appworks/doctor-ui';
 
 class App extends Component {
   render() {

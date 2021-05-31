@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ALI_EMAIL } from '@iceworks/constant';
+import { ALI_EMAIL } from '@appworks/constant';
 import {
   generatorCreatetaskUrl,
   generatorTaskResultUrl,

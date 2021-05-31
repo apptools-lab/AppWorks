@@ -1,26 +1,26 @@
-# @iceworks/vscode-generator
+# @appworks/vscode-generator
 
-Iceworks extension and package generator.
+AppWorks extension and package generator.
 
 ## Install
 
 ```shell
-$npm install @iceworks/vscode-generator -g
+$npm install @appworks/vscode-generator -g
 ```
 
 ## Usage
 
 ```shell
 # help
-iceworks-generator -v
-iceworks-generator -h
+appworks-generator -v
+appworks-generator -h
 
 # init project
 
 # Use current dir name as project name
-iceworks-generator init 
+appworks-generator init 
 # Or set your project name
-iceworks-generator init <your-project-name>
+appworks-generator init <your-project-name>
 
 ```
 
@@ -30,5 +30,5 @@ iceworks-generator init <your-project-name>
 ? What's your project type? (Use arrow keys)
 ❯ VS Code Extension
 # in construction
-❯ Iceworks project service
+❯ AppWorks project service
 ```

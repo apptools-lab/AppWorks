@@ -1,3 +1,3 @@
 # Project Uitls
 
-General tool library for Iceworks Project.
+General tool library for AppWorks Project.

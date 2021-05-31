@@ -8,7 +8,7 @@ import {
   IMaterialComponent,
   IMaterialBase,
   IMaterialPage,
-} from '@iceworks/material-utils';
+} from '@appworks/material-utils';
 import { MaterialType } from './type';
 import styles from './view.module.scss';
 

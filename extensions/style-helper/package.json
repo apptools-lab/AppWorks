@@ -1,0 +1,90 @@
+{
+  "name": "iceworks-style-helper",
+  "displayName": "React Style Helper",
+  "description": "Easily write styles(CSS/LESS/SASS).",
+  "publisher": "iceworks-team",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ICE",
+    "Rax",
+    "React",
+    "JSX",
+    "CSS in JS",
+    "Inline Style",
+    "Style",
+    "SASS",
+    "Less",
+    "CSS",
+    "ClassName",
+    "appworks"
+  ],
+  "icon": "assets/logo.png",
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:sass",
+    "onLanguage:scss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/pack.git"
+  },
+  "main": "./build/extension.js",
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && webpack --mode production",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "compile": "tsc -p ./tsconfig.json"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "title": "recordCompletionItemSelect",
+        "command": "style-helper.recordCompletionItemSelect"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "style-helper.recordCompletionItemSelect",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "typescript": "^3.6.4",
+    "ts-loader": "^7.0.5",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.10.3",
+    "@babel/traverse": "^7.10.3",
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/recorder": "^0.1.0",
+    "css": "^2.2.4",
+    "css-flatten": "^1.0.1",
+    "datauri": "^2.0.0",
+    "line-column": "^1.0.2",
+    "tinycolor2": "^1.4.1",
+    "vscode-web-custom-data": "^0.1.4"
+  },
+  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/style-helper/README.md",
+  "bugs": {
+    "url": "https://github.com/appworks-lab/pack/issues",
+    "email": "iceworksteam@163.com"
+  }
+}

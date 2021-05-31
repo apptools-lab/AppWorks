@@ -1,6 +1,6 @@
-# Iceworks Common Service
+# AppWorks Common Service
 
-Iceworks common service for VSCode extension.
+AppWorks common service for VSCode extension.
 
 > Use these APIs only in VSCode extension, not in Node.js.
 > Because we rely on the APIs of VSCode extension.

@@ -4,7 +4,7 @@
 import * as urllib from 'urllib';
 import * as chalk from 'chalk';
 import { EXTENSION_ZIP_FILE_PATH } from './constant';
-import { ALI_EXTENSION_UPLOAD_URL, ALI_EXTENSION_STATUS_UPDATE_URL } from '@iceworks/constant';
+import { ALI_EXTENSION_UPLOAD_URL, ALI_EXTENSION_STATUS_UPDATE_URL } from '@appworks/constant';
 
 const PRIVATE_TOKEN = process.argv[2];
 const EXTENSION_NAME = 'icework-kit';

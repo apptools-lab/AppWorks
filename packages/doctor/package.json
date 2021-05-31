@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/doctor",
+  "name": "@appworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.4.8",
+  "version": "0.1.0",
   "keywords": [
     "doctor",
     "analysis",
@@ -10,7 +10,7 @@
     "troubleshooting"
   ],
   "bin": {
-    "iceworks-doctor": "bin/iceworks-doctor"
+    "appworks-doctor": "bin/appworks-doctor"
   },
   "files": [
     "bin/",

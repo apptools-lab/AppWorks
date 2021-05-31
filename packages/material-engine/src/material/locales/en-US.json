@@ -1,11 +1,12 @@
 {
-  "package.materialService.index.webDescription": "Offical Materials Based On Fusion Component And  ICE CLI",
+  "package.materialService.index.webTitle": "Fusion Materials",
+  "package.materialService.index.webDescription": "Based On React, Fusion Design and icejs Framework",
+  "package.materialService.index.antdTitle": "Antd Materials",
+  "package.materialService.index.antdDescription": "Based On React, Ant Design and icejs Framework",
   "package.materialService.index.raxTitle": "Mobile Apps",
-  "package.materialService.index.raxDescription": "Offical Materials Based On Rax Components Rax CLI",
+  "package.materialService.index.raxDescription": "Based On Rax Components and Rax App",
   "package.materialService.index.vueTitle": "Vue materials",
-  "package.materialService.index.vueDescription": "Offical Materials Based On Element And Vue CLI ",
-  "package.materialService.index.miniProgramTitle": "Mini Program",
-  "package.materialService.index.miniProgramDescription": "This is an ice material project for Mini Program App",
+  "package.materialService.index.vueDescription": "Based On Vue, Element and Vue CLI ",
   "package.materialService.index.materialSourceExistError": "Material source already exists.",
   "package.materialService.index.materialNameExistError": "Material name s already exists.",
   "package.materialService.index.materialDataError": "Incorrect material source "

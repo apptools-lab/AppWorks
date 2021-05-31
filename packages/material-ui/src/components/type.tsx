@@ -9,7 +9,7 @@ import {
   IMaterialBase,
   CUSTOM_CATEGORY,
   IMaterialPage,
-} from '@iceworks/material-utils';
+} from '@appworks/material-utils';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
 import { MaterialComponent } from './component';

@@ -1,16 +1,16 @@
 {
-  "name": "@iceworks/vscode-generator",
-  "description": "Iceworks vscode extension and package generator.",
-  "version": "0.1.1",
+  "name": "@appworks/vscode-generator",
+  "description": "AppWorks vscode extension and package generator.",
+  "version": "0.1.0",
   "keywords": [
-    "iceworks",
+    "appworks",
     "vscode",
     "package",
     "extension",
     "generator"
   ],
   "bin": {
-    "iceworks-generator": "bin/iceworks-generator"
+    "appworks-generator": "bin/appworks-generator"
   },
   "files": [
     "bin/",

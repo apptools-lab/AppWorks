@@ -15,7 +15,7 @@ export default class Timer {
     await new Promise(resolve => {
       this.timer = setTimeout(resolve, ms);
     });
-    throw new Error('@iceworks/doctor time out!');
+    throw new Error('@appworks/doctor time out!');
   }
 
   public duration(): number {

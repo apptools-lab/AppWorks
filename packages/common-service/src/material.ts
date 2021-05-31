@@ -1,4 +1,4 @@
-import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@iceworks/material-utils';
+import { getTarballURLByMaterielSource, IMaterialPage, IMaterialBlock } from '@appworks/material-utils';
 import * as upperCamelCase from 'uppercamelcase';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -69,9 +69,9 @@ export const bulkDownloadMaterials = async function (
 
 export function openMaterialsSettings() {
   if (vscode.extensions.getExtension('iceworks-team.iceworks-app')) {
-    executeCommand('iceworksApp.configHelper.start', 'iceworks.materialSources');
+    executeCommand('applicationManager.configHelper.start', 'appworks.materialSources');
   } else {
-    executeCommand('workbench.action.openSettings', 'iceworks.materialSources');
+    executeCommand('workbench.action.openSettings', 'appworks.materialSources');
   }
 }
 

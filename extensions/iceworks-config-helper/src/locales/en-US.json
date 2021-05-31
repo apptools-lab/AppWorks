@@ -1,7 +1,0 @@
-{
-  "extension.iceworksConfigHelper.index.webviewTitle": "Config Helper - Iceworks",
-  "extension.iceworksConfigHelper.loadJson.JsonErr": "Cannot parse <%= editingJsonFile %>.json, please fix it",
-  "extension.iceworksConfigHelper.loadJson.cannotEditInPanel": "Please do not use the panel to edit <%= editingJsonBaseName %>",
-  "extension.iceworksConfigHelper.showSource.error": "Can not open: <%= uri %>",
-  "extension.iceworksConfigHelper.start.error": "The source file does not conform to the specification"
-}

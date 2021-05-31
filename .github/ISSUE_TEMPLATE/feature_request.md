@@ -1,6 +1,6 @@
 ---
 name: "🚀 Feature Request"
-about: 给 Iceworks 提一个需求
+about: 给 AppWorks 提一个需求
 labels: 'enhancement'
 
 ---

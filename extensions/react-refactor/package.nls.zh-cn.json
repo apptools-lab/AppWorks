@@ -1,0 +1,4 @@
+{
+  "react-refactor.file-and-reference.remove.title": "AppWorks: 删除组件及其引用",
+  "react-refactor.selection-and-reference.remove.title": "AppWorks: 删除选中的组件及其导入声明"
+}

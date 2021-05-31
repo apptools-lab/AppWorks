@@ -32,6 +32,6 @@ import { run } from './fn/shell';
 async function removeIceworks(cwd: string) {
   const cwdStat = await fse.stat(cwd);
   if (cwdStat.isDirectory()) {
-    await run(`rm -rf ${path.join(cwd, 'node_modules', '@iceworks')}`);
+    await run(`rm -rf ${path.join(cwd, 'node_modules', '@appworks')}`);
   }
 }

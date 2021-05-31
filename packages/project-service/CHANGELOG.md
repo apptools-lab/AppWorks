@@ -2,4 +2,4 @@
 
 ## 0.2.0
 
-- chore: upgrade @iceworks/common-service version
+- chore: upgrade @appworks/common-service version

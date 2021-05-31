@@ -1,6 +1,6 @@
 # Doctor Dashboard
 
-@iceworks/doctor-dashboard
+@appworks/doctor-dashboard
 
 intro component
 

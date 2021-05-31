@@ -7,7 +7,7 @@ import {
   IMaterialComponent,
   IMaterialBase,
   convertMaterialData,
-} from '@iceworks/material-utils';
+} from '@appworks/material-utils';
 import { MaterialView } from './components/view';
 
 const Index: React.FC<{
@@ -77,7 +77,7 @@ const Index: React.FC<{
   }, []);
 
   return (
-    <Loading visible={isLoadingSources} className="iceworks-material">
+    <Loading visible={isLoadingSources} className="appworks-material">
       <MaterialView
         sources={sources}
         currentSource={currentSource}

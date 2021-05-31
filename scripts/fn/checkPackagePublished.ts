@@ -29,7 +29,7 @@ export default function checkPackagePublished(isBeta?: boolean) {
     publishedPackages.map((publishedPackage) => {
       return new Promise((resolve, retject) => {
         const info = publishedPackage.split(':');
-        // Example: @iceworks/project-service:0.1.8
+        // Example: @appworks/project-service:0.1.8
         const name = info[0];
         const version = info[1];
 

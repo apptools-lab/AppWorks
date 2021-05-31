@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getImportTemplate, getTagTemplate, getImportInfos } from '@iceworks/common-service';
+import { getImportTemplate, getTagTemplate, getImportInfos } from '@appworks/common-service';
 import generateComponentName from './generateComponentName';
 
 const { Position } = vscode;

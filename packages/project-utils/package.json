@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/project-utils",
-  "version": "0.3.3",
-  "description": "General tool library for Iceworks Project.",
+  "name": "@appworks/project-utils",
+  "version": "0.1.0",
+  "description": "General tool library for AppWorks Project.",
   "files": [
     "lib"
   ],

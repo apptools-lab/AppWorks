@@ -3,7 +3,7 @@ import * as mkdirp from 'mkdirp';
 import * as fse from 'fs-extra';
 import * as userHome from 'user-home';
 
-export const storagePath = path.join(userHome, '.iceworks');
+export const storagePath = path.join(userHome, '.appworks');
 
 export class Storage {
   static path: string = storagePath;

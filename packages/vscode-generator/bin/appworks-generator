@@ -1,0 +1,89 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const argv = require('argv-parse');
+const inquirer = require('inquirer');
+const options = require('./options.json');
+const pkg = require('../package.json');
+const generator = require('../src/index');
+
+const config = require('./config');
+
+const args = argv(options);
+
+// Show version
+if (args.version) {
+  console.log(pkg.version);
+  process.exit();
+}
+
+// Show help text
+if (args.help) {
+  console.log('\nUsage appworks-generator:  [options]');
+  Object.keys(options).forEach((key) => {
+    const option = options[key];
+    console.log(
+      option.alias ? `  -${option.alias},` : '',
+      `  --${key}`,
+      option.type !== 'boolean' ? ` : ${option.type}` : '',
+      option.required ? ' *required*' : '',
+    );
+    console.log(`      ${option.desc}`);
+  });
+  console.log(`\nCommands:\n init <project-name>?`);
+  console.log(`      generate project directory based on templates`);
+  process.exit();
+}
+
+// Check whether contains conflict files
+const conflictFiles = ['src', 'build.json', 'package.json'];
+const containConflictFile = (targetDir) => {
+  return conflictFiles.some(filename => fs.existsSync(path.join(targetDir, filename)));
+};
+
+// Init project
+if (Array.isArray(args._) && args._[0] === 'init') {
+  let projectName = args._[1];
+  let targetDir = path.resolve(projectName || '');
+
+  let prompts = config.getPromptQuestion();
+  if (containConflictFile(targetDir)) {
+    prompts = [
+      {
+        type: 'confirm',
+        name: 'shouldInputNewProjectName',
+        message: `The directory ${projectName || process.cwd().split(path.sep).pop()} contains files that could conflict:\n\n${conflictFiles.join('\n')}\n\nEither try using a new directory name, or still use the directory ${projectName}.`,
+        default: true
+      },
+      {
+        type: 'input',
+        name: 'projectName',
+        message: 'Please input a new directory name.',
+        when(answers) {
+          return answers.shouldInputNewProjectName;
+        },
+        validate: (newName) => {
+          targetDir = path.resolve(newName);
+          if (newName === projectName) {
+            return 'Same as the original name, please change another name.';
+          } else if (containConflictFile(targetDir)) {
+            return 'This directory also contains files that could conflict, please change another name.';
+          } else if (!newName) {
+            return 'Please enter a name that cannot be empty.';
+          }
+          projectName = newName;
+          return true;
+        }
+      }
+    ].concat(prompts);
+  }
+
+  inquirer.prompt(prompts).then((answers) => {
+    generator(targetDir, { ...answers, projectName });
+  }).catch((e) => {
+    console.log(e);
+  })
+}

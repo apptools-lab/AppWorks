@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
-import { IMaterialComponent } from '@iceworks/material-utils';
+import { IMaterialComponent } from '@appworks/material-utils';
 import {
   getLastAcitveTextEditor,
   getTagTemplate,
@@ -11,7 +11,7 @@ import {
   showTextDocument,
   getAddDependencyAction,
   createNpmCommand,
-} from '@iceworks/common-service';
+} from '@appworks/common-service';
 import {
   jsxFileExtnames,
   projectPath,
@@ -22,7 +22,7 @@ import {
   getProjectLanguageType,
   getFolderPath,
   getProjectType,
-} from '@iceworks/project-service';
+} from '@appworks/project-service';
 import CodeGenerator, {
   IBasicSchema,
   IContainerNodeItem,

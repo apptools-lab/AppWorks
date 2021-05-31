@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as common from '@iceworks/common-service';
+import * as common from '@appworks/common-service';
 
 const openFile = (filePath: string) => {
   const { commands, Uri, ViewColumn } = vscode;

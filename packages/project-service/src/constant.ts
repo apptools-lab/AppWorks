@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { getDataFromSettingJson, CONFIGURATION_KEY_GENERATE_PAGE_PATH, CONFIGURATION_KEY_GENERATE_COMPONENT_PATH } from '@iceworks/common-service';
-import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL, ALI_DEF_BASIC_URL } from '@iceworks/constant';
+import { getDataFromSettingJson, CONFIGURATION_KEY_GENERATE_PAGE_PATH, CONFIGURATION_KEY_GENERATE_COMPONENT_PATH } from '@appworks/common-service';
+import { ALI_CREATETASK_URL, ALI_TASKRESULT_URL, ALI_APPLYREPO_URL, ALI_DEF_BASIC_URL } from '@appworks/constant';
 
 const { workspace } = vscode;
 

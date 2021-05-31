@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IMaterialComponent } from '@iceworks/material-utils';
+import { IMaterialComponent } from '@appworks/material-utils';
 import classnames from 'classnames';
 import styles from './component.module.scss';
 

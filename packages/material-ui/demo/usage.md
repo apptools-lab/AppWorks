@@ -6,7 +6,7 @@ order: 1
 ````jsx
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Material from '@iceworks/material-ui';
+import Material from '@appworks/material-ui';
 
 async function wait(time) {
   await new Promise((resolve) => setTimeout(resolve, time));

@@ -2,9 +2,9 @@ import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
 import * as BluebirdPromise from 'bluebird';
-import { IMaterialData } from '@iceworks/material-utils';
+import { IMaterialData } from '@appworks/material-utils';
 import { DEBUG_PREFIX } from './index';
-import { getProjectLanguageType } from '@iceworks/project-service';
+import { getProjectLanguageType } from '@appworks/project-service';
 import * as imageToBase64 from 'image-to-base64';
 
 export default async function generateDebugMaterialData(materialPath: string): Promise<IMaterialData> {

@@ -1,7 +1,7 @@
 {
-  "name": "@iceworks/storage",
-  "version": "0.2.1",
-  "description": "Storage for Iceworks",
+  "name": "@appworks/storage",
+  "version": "0.1.0",
+  "description": "Storage for AppWorks",
   "main": "lib/index.js",
   "files": [
     "lib"

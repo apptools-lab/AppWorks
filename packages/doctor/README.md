@@ -1,4 +1,4 @@
-# Iceworks Doctor
+# AppWorks Doctor
 
 Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors.  
 ## 1. Code Scanner
@@ -6,19 +6,19 @@ Analyse and running codemods over react/rax projects, troubleshooting and automa
 ### Installation
 
 ```shell
-$ npm i @iceworks/doctor --save-dev
+$ npm i @appworks/doctor --save-dev
 ```
 
 or
 
 ```shell
-$ npm install -g @iceworks/doctor
+$ npm install -g @appworks/doctor
 ```
 
 ### Usage
 
 ```js
-const { Doctor } = require('@iceworks/doctor');
+const { Doctor } = require('@appworks/doctor');
 
 const doctor = new Doctor(options);
 doctor.scan('/yourProjectPath').then((result) => {
@@ -29,16 +29,16 @@ doctor.scan('/yourProjectPath').then((result) => {
 
 ### Usage(CLI)
 
-Use `$ iceworks-doctor -h` for help.
+Use `$ appworks-doctor -h` for help.
 
 Scan
 ```shell
-$ iceworks-doctor -s ./
+$ appworks-doctor -s ./
 ```
 
 Options
 ```shell
-$ iceworks-doctor -s ./ --ignore types mock
+$ appworks-doctor -s ./ --ignore types mock
 ```
 
 ### Options
@@ -52,7 +52,7 @@ $ iceworks-doctor -s ./ --ignore types mock
 * fix?: boolean, whether fix ESLint fixable problems.
 * framework?: string, target project framework, default is `react`.
 * languageType?: 'js'|'ts', target project languageType, default is `js`.
-* tempFileDir?: string, set temp reporters file directory, default is `node_modules/@iceworks/doctor/tmp/`.
+* tempFileDir?: string, set temp reporters file directory, default is `node_modules/@appworks/doctor/tmp/`.
 * disableESLint?: boolean, whether disable ESLint part reports.
 * disableMaintainability?: boolean, whether disable maintainability part reports.
 * disableRepeatability?: boolean, whether disable repeatability part reports.
@@ -90,15 +90,15 @@ This repository also contains a collection of codemod scripts that help update R
 
 ### Installation
 
-Install [jscodeshift](https://www.npmjs.com/package/jscodeshift) and @iceworks/doctor.
+Install [jscodeshift](https://www.npmjs.com/package/jscodeshift) and @appworks/doctor.
 
 ```shell
-$ npm i -g jscodeshift @iceworks/doctor 
+$ npm i -g jscodeshift @appworks/doctor 
 ```
 
 ### Usage (CLI)
 
-`iceworks-doctor -c <transform> <path?> [...options?]`
+`appworks-doctor -c <transform> <path?> [...options?]`
 
    * `transform` - name of transform, see available transforms below.
    * `path?` - files or directory to transform. 
@@ -116,7 +116,7 @@ Update `plugin-rax-component` to `plugin-component`.
 See: https://rax.js.org/docs/guide/com-migration
 
 ```shell
-iceworks-doctor -c plugin-rax-component-to-component ./
+appworks-doctor -c plugin-rax-component-to-component ./
 ```
 
 Enjoy!

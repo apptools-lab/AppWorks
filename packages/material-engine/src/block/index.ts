@@ -2,14 +2,14 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fsExtra from 'fs-extra';
 import * as glob from 'glob';
-import { IMaterialBlock } from '@iceworks/material-utils';
+import { IMaterialBlock } from '@appworks/material-utils';
 import {
   getProjectLanguageType,
   COMPONENT_DIR_NAME,
   jsxFileExtnames,
   checkIsTemplate,
   projectPath,
-} from '@iceworks/project-service';
+} from '@appworks/project-service';
 import {
   getTagTemplate,
   getImportInfos,
@@ -19,7 +19,7 @@ import {
   bulkInstallMaterialsDependencies,
   bulkDownloadMaterials,
   findIndexFile,
-} from '@iceworks/common-service';
+} from '@appworks/common-service';
 import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';

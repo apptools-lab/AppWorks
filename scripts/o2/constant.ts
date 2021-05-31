@@ -1,10 +1,10 @@
 import { join } from 'path';
 import { isBeta } from './config';
 
-const { version: iceworksVersion, publisher, name } = require('../../extensions/iceworks/package.json');
+const { version: iceworksVersion, publisher, name } = require('../../extensions/appworks/package.json');
 
 export const INNER_EXTENSIONS_DIRECTORY = join(__dirname, '..', '..', 'extensions');
-export const PACK_NAME = 'iceworks';
+export const PACK_NAME = 'appworks';
 export const PACKAGE_JSON_NAME = 'package.json';
 export const NODE_MODULES_DIR_NAME = 'node_modules';
 export const PACK_DIR = join(INNER_EXTENSIONS_DIRECTORY, PACK_NAME);

@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Hi! I’m really excited that you are interested in contributing to Iceworks. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
+Hi! I’m really excited that you are interested in contributing to AppWorks. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
 ## Develop Guidelines
 
@@ -21,11 +21,11 @@ Hi! I’m really excited that you are interested in contributing to Iceworks. Be
 Clone repo and initialize the setup environment：
 
 ```bash
-$ git clone git@github.com:ice-lab/iceworks.git
-$ cd iceworks && npm run setup # This will take about 20 minutes
+$ git clone git@github.com:appworks-lab/pack.git
+$ cd appworks && npm run setup # This will take about 20 minutes
 
 # add dep to some package
-$ yarn workspace iceworks add <npmName>
+$ yarn workspace appworks add <npmName>
 
 # add dep to project
 $ yarn add <npmName> -D -W
@@ -41,7 +41,7 @@ $ npm run publish:package # or npm run publish-beta:package
 
 ### Develop Extensions
 
-You can add the VS Code Extension of Iceworks to the directory `extension`.
+You can add the VS Code Extension of AppWorks to the directory `extension`.
 
 #### Create a new Extension
 
@@ -64,9 +64,9 @@ Use the VS Code to develop the extension project.
 Open a new window and set `/extensions/xxx` as workspace, enable extension debugging through `F5`:
 
 ```bash
-# Take iceworks-app for example
+# Take application-manager for example
 
-$ code ./extensions/iceworks-app
+$ code ./extensions/application-manager
 ```
 
 > Please see [VS Code Extension](https://code.visualstudio.com/api) for more details.
@@ -77,12 +77,12 @@ $ code ./extensions/iceworks-app
 # Install CLI package
 $ npm install -g vsce
 
-$ cd ./extensions/iceworks-app
+$ cd ./extensions/application-manager
 $ vsce package 
 # iceworks-app.vsix generated
 
 # Test extension
-$ code --install-extension ./extensions/iceworks-app/iceworks-app-x.x.x.vsix
+$ code --install-extension ./extensions/application-manager/iceworks-app-x.x.x.vsix
 
 $ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN 
 # <publisherID>.iceworks-app published to VS Code Marketplace
@@ -94,7 +94,7 @@ $ vsce publish -p YOUR_PERSONAL_ACCESS_TOKEN
 
   You can download the beta version of extensions from the following link, only the extensions to be published will be in the package:
 
-  https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/beta/Iceworks.zip
+  https://iceworks.oss-cn-hangzhou.aliyuncs.com/vscode-extensions/beta/AppWorks.zip
 - When your PR has been merged into `master` branch, changed packages and VS Code Extensions will be auto published.
 
 #### Personal Access Token
@@ -114,7 +114,7 @@ Get a Personal Access Token:
 
 Set Personal Access Token for Github Actions: 
 
-1. Visit [Actions secrets](https://github.com/ice-lab/iceworks/settings/secrets/actions)
+1. Visit [Actions secrets](https://github.com/appworks-lab/pack/settings/secrets/actions)
 2. Update `VSCE_TOKEN`:
     ![](https://img.alicdn.com/imgextra/i2/O1CN01NpeNCf2558rTm9812_!!6000000007474-2-tps-2880-1754.png_790x10000.jpg)
 
