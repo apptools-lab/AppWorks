@@ -1,14 +1,14 @@
 English | [简体中文](./README.zh-CN.md)
 
 <p align="center">
-  <a href="https://ice.work">
-    <img alt="AppWorks" src="https://img.alicdn.com/tfs/TB1kDZlXBBh1e4jSZFhXXcC9VXa-256-256.png" width="96">
+  <a href="https://appworks.site">
+    <img alt="AppWorks" src="https://img.alicdn.com/imgextra/i4/O1CN01jLRijt1SPxrlCRSEJ_!!6000000002240-2-tps-258-258.png" width="96">
   </a>
 </p>
 
 <h1 align="center">AppWorks</h1>
 
-<p align="center">Visual Intelligent Development Pack</p>
+<p align="center">Application Development Pack</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
@@ -40,7 +40,7 @@ Feel free to report any questions as an [issue](https://github.com/appworks-lab/
 
 If you're interested in AppWorks, see [CONTRIBUTING.md](./.github/CONTRIBUTING.md) for more information to learn how to get started.
 
-## ICE Ecosystem
+## Recommends
 
 |    Project         |    Version      |     Docs    |   Description       |
 |----------------|------------------|--------------|-----------|
@@ -64,19 +64,10 @@ If you're interested in AppWorks, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 [icestore-package]: https://npmjs.com/package/@ice/store
 [formily-package]: https://npmjs.com/package/@formily/react
 
-[icejs-docs]: https://ice.work/docs/guide/intro
-[icestark-docs]: https://ice.work/docs/icestark/guide/about
+[icejs-docs]: https://ice.work
+[icestark-docs]: https://micro-frontends.ice.work
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
-[formily-docs]: https://formilyjs.org/
-
-## Community
-
-| DingTalk community                               | GitHub issues |  Gitter |
-|-------------------------------------|--------------|---------|
-| <a href="https://ice.alicdn.com/assets/images/qrcode.png"><img src="https://ice.alicdn.com/assets/images/qrcode.png" width="150" /></a> | [issues]     | [gitter]|
-
-[issues]: https://github.com/alibaba/ice/issues
-[gitter]: https://gitter.im/alibaba/ice
+[formily-docs]: https://formilyjs.org
 
 ## License
 
