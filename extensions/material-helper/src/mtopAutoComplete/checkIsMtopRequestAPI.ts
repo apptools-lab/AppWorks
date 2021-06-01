@@ -41,8 +41,8 @@ export default (callExpression: CallExpression): boolean => {
   }
   const { callee } = callExpression;
   const libMtopRequestStack = ['request', 'mtop', 'lib'];
-  const MtopRequestStack = ['request', 'Mtop'];
+  const mtopRequestStack = ['request', 'Mtop'];
   const calleeStack: string[] = [];
   getCalleeStack(callee as Expression, calleeStack);
-  return checkIsEqualArray(libMtopRequestStack, calleeStack) || checkIsEqualArray(MtopRequestStack, calleeStack);
+  return checkIsEqualArray(libMtopRequestStack, calleeStack) || checkIsEqualArray(mtopRequestStack, calleeStack);
 };
