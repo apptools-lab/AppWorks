@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.1
+
+- docs: README.md
+
 ## 1.0.0
 
 - Rename to AppWorks.
