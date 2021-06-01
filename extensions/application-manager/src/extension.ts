@@ -18,6 +18,7 @@ import showAllQuickPick from './quickPicks/showAllQuickPick';
 import autoOpenPreview from './utils/preview/autoOpenPreview';
 import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
+import typesRaxSupport from './typesRaxSupport';
 import i18n from './i18n';
 
 // eslint-disable-next-line
@@ -189,6 +190,9 @@ export async function activate(context: vscode.ExtensionContext) {
       // globalState.update(didShowWelcomePageBySidebarStateKey, true);
     }
   }
+
+  // if rax-ts project is uninstalled @types/tax, install it;
+  typesRaxSupport();
 }
 
 export function deactivate() { }
