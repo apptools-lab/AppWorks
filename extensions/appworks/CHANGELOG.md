@@ -7,7 +7,6 @@
 ## 1.0.1
 
 - docs: README.md
->>>>>>> master
 
 ## 1.0.0
 
