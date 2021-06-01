@@ -31,7 +31,7 @@ function checkIsEqualArray<T>(sourceArray: T[], targetArray: T[]): boolean {
 }
 
 /**
- * 判断函数表达式是否是 lib.mtop.request
+ * 判断函数表达式是否为 lib.mtop.request 或  Mtop.request
  * @param callExpression
  * @returns
  */
