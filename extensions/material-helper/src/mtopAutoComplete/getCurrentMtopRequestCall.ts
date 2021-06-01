@@ -1,16 +1,18 @@
 import { parse } from '@babel/parser';
 import traverse, { NodePath } from '@babel/traverse';
 import { isObjectExpression, CallExpression } from '@babel/types';
-import isLibMtopRequestAPI from './isLibMtopRequestAPI';
+import checkIsMtopRequestAPI from './checkIsMtopRequestAPI';
+import getBabelParserPlugins from '../utils/getBabelParserPlugins';
 
 function isCursorInObjectExpression(callExpression: CallExpression, cursorPosition: number): boolean {
   const callArguments = callExpression.arguments;
   const node = callArguments?.[0];
+
   return isObjectExpression(node) && (node.start < cursorPosition && cursorPosition < node.end);
 }
 
 function conditionOfCompletion(callExpression: CallExpression, cursorPosition: number): boolean {
-  return isCursorInObjectExpression(callExpression, cursorPosition) && isLibMtopRequestAPI(callExpression);
+  return isCursorInObjectExpression(callExpression, cursorPosition) && checkIsMtopRequestAPI(callExpression);
 }
 
 /**
@@ -20,15 +22,16 @@ function conditionOfCompletion(callExpression: CallExpression, cursorPosition: n
  * @param conditionOfComplete
  * @returns
  */
-function originGetCurrentCallExpress(
+function getOriginCurrentCallExpress(
   code: string,
   cursorPosition: number,
   conditionOfComplete: (callExpression: CallExpression, cursorPostion: number) => boolean,
 ): CallExpression | null {
-  let callExpression: CallExpression = null;
+  let callExpression: CallExpression | null = null;
   try {
     const ast = parse(code, {
       sourceType: 'module',
+      plugins: getBabelParserPlugins('jsx'),
     });
     traverse(ast, {
       CallExpression(path: NodePath<CallExpression>) {
@@ -39,11 +42,11 @@ function originGetCurrentCallExpress(
       },
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
   return callExpression;
 }
 
 export default function getCurrentCallExpress(code: string, cursorPosition: number): CallExpression | null {
-  return originGetCurrentCallExpress(code, cursorPosition, conditionOfCompletion);
+  return getOriginCurrentCallExpress(code, cursorPosition, conditionOfCompletion);
 }

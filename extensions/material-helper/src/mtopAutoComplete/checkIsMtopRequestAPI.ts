@@ -17,7 +17,7 @@ function getCalleeStack(expression: Expression, calleeStack: string[]): void {
   }
 }
 
-function equalArray<T>(sourceArray: T[], targetArray: T[]): boolean {
+function checkIsEqualArray<T>(sourceArray: T[], targetArray: T[]): boolean {
   if (sourceArray.length !== targetArray.length) {
     return false;
   }
@@ -35,13 +35,14 @@ function equalArray<T>(sourceArray: T[], targetArray: T[]): boolean {
  * @param callExpression
  * @returns
  */
-export default function isLibMtopRequestAPI(callExpression: CallExpression): boolean {
+export default (callExpression: CallExpression): boolean => {
   if (!isCallExpression(callExpression)) {
     return false;
   }
   const { callee } = callExpression;
   const libMtopRequestStack = ['request', 'mtop', 'lib'];
+  const MtopRequestStack = ['request', 'Mtop'];
   const calleeStack: string[] = [];
   getCalleeStack(callee as Expression, calleeStack);
-  return equalArray(libMtopRequestStack, calleeStack);
-}
+  return checkIsEqualArray(libMtopRequestStack, calleeStack) || checkIsEqualArray(MtopRequestStack, calleeStack);
+};

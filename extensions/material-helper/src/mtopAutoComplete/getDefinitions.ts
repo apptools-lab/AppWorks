@@ -8,7 +8,7 @@ function getCompleteItem(itemText: string): vscode.CompletionItem {
   return completionItem;
 }
 
-export default function getDefinitions(existKeys: string[] = []): vscode.CompletionItem[] {
+export default (existKeys: string[] = []): vscode.CompletionItem[] => {
   const existKeysHashMap: {
     [index: string]: number;
   } = {};
@@ -46,4 +46,4 @@ export default function getDefinitions(existKeys: string[] = []): vscode.Complet
     return existKeysHashMap[item.label] === undefined;
   });
   return definitionItems;
-}
+};

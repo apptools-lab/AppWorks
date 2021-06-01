@@ -13,12 +13,14 @@ import { registerDebugCommand } from './utils/debugMaterials';
 import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 import mtopAutoComplete from './mtopAutoComplete';
+
 const { window, ViewColumn } = vscode;
 
 export function activate(context: vscode.ExtensionContext) {
   const { extensionPath, subscriptions } = context;
 
   console.log('Congratulations, your extension "material-helper" is now active!');
+
   recorder.recordActivate();
   // auto set configuration
   initExtension(context);
