@@ -69,7 +69,6 @@ AppWorks 套件内包含以下自研插件：
 
 AppWorks 套件内包含以下推荐的三方插件：
 
-- [Chinese (Simplified) Language Pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans)：为 VS Code 提供中文（简体）本地化界面
 - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens): 增强 VS Code 中内置的 Git 功能
 - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker): 英文拼写检查器
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): [ESLint](https://eslint.org/) 配套的检查器
