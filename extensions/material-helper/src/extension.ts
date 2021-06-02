@@ -121,6 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
   mtopAutoComplete();
   registerComponentDocSupport();
   autoFillContent();
+  
   // views
   createComponentsTreeView(context);
   createPagesTreeView(context);
