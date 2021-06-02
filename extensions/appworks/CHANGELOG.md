@@ -2,7 +2,7 @@
 
 ## 1.0.3
 
-- Update slogan to "前端研发工具集".
+- Update slogan to "前端研发套件".
 
 ## 1.0.2
 
