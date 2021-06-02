@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.0.2
+
+- Fix [#848](https://github.com/appworks-lab/pack/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
+
+## 1.0.1
+
+- docs: README.md
+
 ## 1.0.0
 
 - Rename to AppWorks.
@@ -19,7 +27,7 @@
 
 ## 0.18.1
 
-- fix: Time Master 
+- fix: Time Master
 
 ## 0.18.0
 
@@ -123,7 +131,7 @@
 ## 0.13.0
 
 - feat: support O2
-- refactor: update rax and ice config schema 
+- refactor: update rax and ice config schema
 - fix: material debug can not clean source
 
 ## 0.12.0
@@ -178,7 +186,7 @@
 ## 0.1.5
 
 - docs: project rename to application
-- docs: add homepage and repository 
+- docs: add homepage and repository
 
 ## 0.1.4
 
