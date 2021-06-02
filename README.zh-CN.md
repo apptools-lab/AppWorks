@@ -8,7 +8,7 @@
 
 <h1 align="center">AppWorks</h1>
 
-<p align="center">多端研发套件</p>
+<p align="center">前端研发套件</p>
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/version/iceworks-team.iceworks.svg?logo=visual-studio-code" /></a>
