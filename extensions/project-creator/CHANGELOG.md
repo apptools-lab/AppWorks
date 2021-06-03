@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- chore: update webview icon
+
 ## 1.0.0
 
 - chore: release 1.0.0, Rename to Appworks
