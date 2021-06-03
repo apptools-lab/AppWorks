@@ -1,10 +1,15 @@
 # Change Log
 
+## 1.0.1
+
+- chore: update webview icon
+
 ## 1.0.0
 
 Release 1.0.0
 
 ## 0.8.3
+
 - feat: support preview in mobile device
 
 ## 0.8.2
@@ -74,7 +79,7 @@ Release 1.0.0
 
 ## 0.5.8
 
-- fix: material sources edit form dialog will disappear before error 
+- fix: material sources edit form dialog will disappear before error
 - fix: material sources list display order
 - feat: add create custom scaffold entry
 
@@ -85,7 +90,7 @@ Release 1.0.0
 ## 0.5.6
 
 - chore: change extension name
-- chore: publish material-engine package 
+- chore: publish material-engine package
 
 ## 0.5.5
 
@@ -125,6 +130,7 @@ Release 1.0.0
 - fix: build error
 
 ## 0.4.7
+
 - feat: auto focus field
 - chore: quick entries title and detail
 - feat: hide some entries and treeview in pegasus project
@@ -157,12 +163,12 @@ Release 1.0.0
 
 ## 0.4.0
 
-- refactor: auto start status bar and editor title 
+- refactor: auto start status bar and editor title
 - feat: delete page & component
 
 ## 0.3.0
 
-- feat: support en-US 
+- feat: support en-US
 
 ## 0.2.1
 
@@ -171,7 +177,7 @@ Release 1.0.0
 
 ## 0.2.0
 
-- feat: install dependencies automatically when node_modules  does not exist
+- feat: install dependencies automatically when node_modules does not exist
 - feat: refresh dependencies list、pages list and components list automatically
 - feat: support stopping scripts
 
