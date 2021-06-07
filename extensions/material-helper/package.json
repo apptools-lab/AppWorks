@@ -23,7 +23,6 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-
     "onStartupFinished"
   ],
   "contributes": {
