@@ -1,8 +1,12 @@
 # Change Log
 
+## 1.0.2
+
+- feat: change activationEvents to `onStartupFinished`.
+
 ## 1.0.1
 
-- chore: update icon
+- chore: update icon.
 ## 1.0.0
 
 - fix: Rax Components props automatic completion.
