@@ -3,7 +3,7 @@
   "displayName": "CodeMod",
   "description": "CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.",
   "publisher": "iceworks-team",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.41.0"
   },
