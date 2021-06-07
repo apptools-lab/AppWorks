@@ -38,7 +38,7 @@ async function installTypesRax(value: string | undefined) {
 export default async () => {
   if (await checkIsShowTip()) {
     recorder.record({
-      action: 'showTipInstall',
+      action: 'showInstallTip',
       module: 'hintInstallTypesRax',
     });
     vscode.window
