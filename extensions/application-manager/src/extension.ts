@@ -18,12 +18,12 @@ import showAllQuickPick from './quickPicks/showAllQuickPick';
 import autoOpenPreview from './utils/preview/autoOpenPreview';
 import createScriptsCommands from './utils/createScriptsCommands';
 import createExtensionsStatusBar from './statusBar/createExtensionsStatusBar';
-import hintTypesRaxInstall from './hintTypesRaxInstall';
+import hintInstallTypesRax from './hintInstallTypesRax';
 import i18n from './i18n';
 
 // eslint-disable-next-line
 const { name, version } = require('../package.json');
-const recorder = new Recorder(name, version);
+export const recorder = new Recorder(name, version);
 
 export async function activate(context: vscode.ExtensionContext) {
   const { subscriptions, extensionPath } = context;
@@ -192,7 +192,7 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 
   // if rax-ts project is uninstalled @types/rax, hint user install it;
-  hintTypesRaxInstall();
+  hintInstallTypesRax();
 }
 
 export function deactivate() { }

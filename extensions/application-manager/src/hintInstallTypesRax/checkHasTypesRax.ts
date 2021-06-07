@@ -1,7 +1,7 @@
 function hasTypesRaxInObject(object: Object): boolean {
-  const _TYPESRAX = '@types/rax';
+  const TYPES_RAX = '@types/rax';
   for (const key in object) {
-    if (key === _TYPESRAX) {
+    if (key === TYPES_RAX) {
       return true;
     }
   }

@@ -5,6 +5,8 @@ import checkHasTypesRax from './checkHasTypesRax';
 import checkIsRaxTsProject from './checkIsRaxTsProject';
 import { projectPath } from '@appworks/project-service';
 import { createNpmCommand, getAddDependencyAction } from '@appworks/common-service';
+import { recorder } from '../extension';
+import i18n from '../i18n';
 
 /**
  * 检测是否需要提示用户安装 @types/rax
@@ -20,20 +22,31 @@ async function checkIsShowTip(): Promise<boolean> {
  * @param value
  */
 async function installTypesRax(value: string | undefined) {
-  if (value === '安装') {
+  if (value === i18n.format('extension.applicationManager.hintInstallTypesrax.message.install')) {
     const terminalName = 'install @typesRax';
     const npmCommandAction = getAddDependencyAction();
 
     const script = createNpmCommand(npmCommandAction, '@types/rax', '--save-dev');
     runScript(terminalName, projectPath, script);
+    recorder.record({
+      action: 'actualInstall',
+      module: 'hintInstallTypesRax',
+    });
   }
 }
 
 export default async () => {
   if (await checkIsShowTip()) {
-    vscode.window.showInformationMessage('检测到您未安装 @types/rax。为获得更好的代码提示，建议您安装。', '安装', '忽略').then(
-      (value) => installTypesRax(value),
-    );
+    recorder.record({
+      action: 'showTipInstall',
+      module: 'hintInstallTypesRax',
+    });
+    vscode.window
+      .showInformationMessage(
+        i18n.format('extension.applicationManager.hintInstallTypesrax.message'),
+        i18n.format('extension.applicationManager.hintInstallTypesrax.message.install'),
+        i18n.format('extension.applicationManager.hintInstallTypesrax.message.ignore'),
+      )
+      .then((value) => installTypesRax(value));
   }
 };
-

@@ -48,5 +48,8 @@
   "extension.applicationManager.configHelper.extension.webviewTitle": "Settings - AppWorks",
   "extension.applicationManager.welcome.extension.webviewTitle": "Welcome - AppWorks",
   "extension.applicationManager.dashboard.extension.webviewTitle": "Dashboard - AppWorks",
-  "extension.applicationManager.extension.emptyWorkplace": "Current workspace is empty, please open or create an application."
+  "extension.applicationManager.extension.emptyWorkplace": "Current workspace is empty, please open or create an application.",
+  "extension.applicationManager.hintInstallTypesrax.message": "Detected that you did not have @types/rax installed. For better code tips, it is recommended that you install.",
+  "extension.applicationManager.hintInstallTypesrax.message.install": "Install",
+  "extension.applicationManager.hintInstallTypesrax.message.ignore": "Ignore"
 }

@@ -47,5 +47,8 @@
   "extension.applicationManager.openEntryFile.ErrorMessage": "没有找到入口",
   "extension.applicationManager.configHelper.extension.webviewTitle": "设置 - AppWorks",
   "extension.applicationManager.welcome.extension.webviewTitle": "欢迎 - AppWorks",
-  "extension.applicationManager.dashboard.extension.webviewTitle": "项目仪表盘 - AppWorks"
+  "extension.applicationManager.dashboard.extension.webviewTitle": "项目仪表盘 - AppWorks",
+  "extension.applicationManager.hintInstallTypesrax.message": "检测到您未安装 @types/rax。为获得更好的代码提示，建议您安装。",
+  "extension.applicationManager.hintInstallTypesrax.message.install": "安装",
+  "extension.applicationManager.hintInstallTypesrax.message.ignore": "忽略"
 }
