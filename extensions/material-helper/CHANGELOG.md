@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.3
+
+- chore: rebuild change activationEvents to `onStartupFinished`
+
 ## 1.0.2
 
 - feat: change activationEvents to `onStartupFinished`.
