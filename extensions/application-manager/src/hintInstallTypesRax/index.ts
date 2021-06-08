@@ -5,7 +5,7 @@ import checkHasTypesRax from './checkHasTypesRax';
 import checkIsRaxTsProject from './checkIsRaxTsProject';
 import { projectPath } from '@appworks/project-service';
 import { createNpmCommand, getAddDependencyAction } from '@appworks/common-service';
-import { recorder } from '../extension';
+import { Recorder } from '@appworks/recorder';
 import i18n from '../i18n';
 
 /**
@@ -21,7 +21,7 @@ async function checkIsShowTip(): Promise<boolean> {
  * 根据用户的选择，自动安装@types/rax
  * @param value
  */
-async function installTypesRax(value: string | undefined) {
+async function installTypesRax(value: string | undefined, recorder: Recorder) {
   if (value === i18n.format('extension.applicationManager.hintInstallTypesrax.message.install')) {
     recorder.record({
       action: 'actualInstall',
@@ -35,7 +35,7 @@ async function installTypesRax(value: string | undefined) {
   }
 }
 
-export default async () => {
+export default async (recorder: Recorder) => {
   if (await checkIsShowTip()) {
     recorder.record({
       action: 'showInstallTip',
@@ -47,6 +47,6 @@ export default async () => {
         i18n.format('extension.applicationManager.hintInstallTypesrax.message.install'),
         i18n.format('extension.applicationManager.hintInstallTypesrax.message.ignore'),
       )
-      .then((value) => installTypesRax(value));
+      .then((value) => installTypesRax(value, recorder));
   }
 };
