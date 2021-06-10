@@ -3,7 +3,7 @@
   "displayName": "Application Creator",
   "description": "Quick create a Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -77,7 +77,7 @@
     "@appworks/i18n": "^0.1.0",
     "@appworks/material-engine": "^0.1.0",
     "@iceworks/pegasus-service": "^0.1.0",
-    "@appworks/project-service": "^0.1.0",
+    "@appworks/project-service": "^0.1.1",
     "@appworks/recorder": "^0.1.0",
     "@appworks/user-service": "^0.1.0",
     "@appworks/connector": "^0.1.0",
