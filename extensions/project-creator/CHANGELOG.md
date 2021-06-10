@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- fix: rax-spa project targets null problem. [#861](https://github.com/appworks-lab/pack/issues/861)
+
 ## 1.0.1
 
 - chore: update webview icon
