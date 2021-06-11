@@ -65,7 +65,7 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.DefPublish.detail'),
     command: 'applicationManager.scripts.DefPublish',
     async condition() {
-      return (await checkIsAliInternal()) && await checkIsTargetProjectType();
+      return (await checkIsAliInternal()) && (await checkIsTargetProjectType());
     },
   },
   {
@@ -82,7 +82,11 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.generatePage.detail'),
     command: 'material-helper.page-generator.start',
     async condition() {
-      return (await checkIsTargetProjectType()) && !(await checkIsPegasusProject()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
+      return (
+        (await checkIsTargetProjectType()) &&
+        !(await checkIsPegasusProject()) &&
+        vscode.extensions.getExtension('iceworks-team.iceworks-material-helper')
+      );
     },
   },
   {
@@ -90,7 +94,9 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.materialImport.detail'),
     command: 'material-helper.material-importer.start',
     async condition() {
-      return (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
+      return (
+        (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper')
+      );
     },
   },
   {
@@ -98,7 +104,11 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.createComponent.detail'),
     command: 'material-helper.component-creator.start',
     async condition() {
-      return (await checkIsTargetProjectType()) && !(await checkIsPegasusProject()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
+      return (
+        (await checkIsTargetProjectType()) &&
+        !(await checkIsPegasusProject()) &&
+        vscode.extensions.getExtension('iceworks-team.iceworks-material-helper')
+      );
     },
   },
   {
@@ -106,7 +116,9 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.showMaterialDocs.detail'),
     command: 'material-helper.showMaterialDocs',
     async condition() {
-      return (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper');
+      return (
+        (await checkIsTargetProjectType()) && vscode.extensions.getExtension('iceworks-team.iceworks-material-helper')
+      );
     },
   },
   {
