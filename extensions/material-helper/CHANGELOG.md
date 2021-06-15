@@ -1,15 +1,7 @@
 # Change Log
-## 1.0.4
-
-- chore: rebuild
-
-## 1.0.3
-
-- chore: rebuild change activationEvents to `onStartupFinished`
-
 ## 1.0.3 ~ 1.0.5
 
-- fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
+- fix: rebuild and fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
 
 ## 1.0.2
 
