@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.1.0
+
+- feat: hint user install types/rax [#854](https://github.com/appworks-lab/pack/pull/854)
+- fix: rax-spa project targets null [#862](https://github.com/appworks-lab/pack/pull/862)
+- Chore: update webview icon [#856](https://github.com/appworks-lab/pack/pull/856) [#846](https://github.com/appworks-lab/pack/pull/846)
+- feat: add recommend extensions [#837](https://github.com/appworks-lab/pack/pull/837)
+- fix: only exit process when prepublishOnly [#836](https://github.com/appworks-lab/pack/pull/836)
+- fix: make sure that the start & end fields exist [#838](https://github.com/appworks-lab/pack/pull/838)
+- fix: vsce [#576](https://github.com/microsoft/vscode-vsce/issues/576) .vscodeignore configuration
+
 ## 1.0.2
 
 - Fix [#848](https://github.com/appworks-lab/pack/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).

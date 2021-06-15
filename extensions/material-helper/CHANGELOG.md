@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.3 ~ 1.0.5
+
+- fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
+
 ## 1.0.2
 
 - chore: update webview icon
