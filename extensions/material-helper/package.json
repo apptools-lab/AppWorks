@@ -23,18 +23,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact",
-    "onCommand:material-helper.material-importer.start",
-    "onCommand:material-helper.component-creator.start",
-    "onCommand:material-helper.page-generator.start",
-    "onCommand:material-helper.showMaterialDocs",
-    "onCommand:material-helper.showMaterialDocsForCurrentFile",
-    "onView:pages",
-    "onView:components",
-    "onView:folders"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [

@@ -1,4 +1,11 @@
 # Change Log
+## 1.0.4
+
+- chore: rebuild
+
+## 1.0.3
+
+- chore: rebuild change activationEvents to `onStartupFinished`
 
 ## 1.0.3 ~ 1.0.5
 
@@ -6,11 +13,11 @@
 
 ## 1.0.2
 
-- chore: update webview icon
+- feat: change activationEvents to `onStartupFinished`.
 
 ## 1.0.1
 
-- chore: update icon
+- chore: update icon.
 
 ## 1.0.0
 
