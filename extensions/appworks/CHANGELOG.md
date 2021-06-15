@@ -9,6 +9,7 @@
 - fix: only exit process when prepublishOnly [#836](https://github.com/appworks-lab/pack/pull/836)
 - fix: make sure that the start & end fields exist [#838](https://github.com/appworks-lab/pack/pull/838)
 - fix: vsce [#576](https://github.com/microsoft/vscode-vsce/issues/576) .vscodeignore configuration
+
 ## 1.0.3
 
 - Update slogan to "前端研发套件".
