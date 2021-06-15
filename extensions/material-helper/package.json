@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -23,18 +23,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact",
-    "onCommand:material-helper.material-importer.start",
-    "onCommand:material-helper.component-creator.start",
-    "onCommand:material-helper.page-generator.start",
-    "onCommand:material-helper.showMaterialDocs",
-    "onCommand:material-helper.showMaterialDocsForCurrentFile",
-    "onView:pages",
-    "onView:components",
-    "onView:folders"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [

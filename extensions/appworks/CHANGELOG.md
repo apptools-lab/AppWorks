@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.3
+
+- Update slogan to "前端研发套件".
+
 ## 1.0.2
 
 - Fix [#848](https://github.com/appworks-lab/pack/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
