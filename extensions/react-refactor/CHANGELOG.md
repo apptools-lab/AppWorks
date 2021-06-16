@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.1
+
+- fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
+
 ## 1.0.0
 
 Release 1.0.0
