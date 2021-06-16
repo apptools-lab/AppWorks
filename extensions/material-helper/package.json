@@ -10,6 +10,7 @@
   },
   "categories": [
     "Programming Languages",
+    "Snippets",
     "Other"
   ],
   "keywords": [
@@ -335,7 +336,25 @@
           "description": "%iceworksMaterialHelper.configuration.properties.appworks.generateComponentPath.description%"
         }
       }
-    }
+    },
+    "snippets": [
+      {
+        "language": "javascript",
+        "path": "./snippets/helper.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./snippets/helper.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./snippets/helper.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./snippets/helper.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
