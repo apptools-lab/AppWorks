@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as babelParser from '@babel/parser';
 import traverse from '@babel/traverse';
 
-const supportFiles = ['css', 'scss', 'sass'];
+const supportFiles = ['css', 'scss', 'sass', 'less'];
 
 // import styles from './xxx.css'; -> { source: './xxx.css', identifier: 'styles' }
 // import './xxx.css'; -> { source: './xxx.css', identifier: null }
