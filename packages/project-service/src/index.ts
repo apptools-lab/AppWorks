@@ -227,7 +227,7 @@ async function cloneRepositoryToLocal(projectDir, group, project): Promise<void>
 function modifyEjsOptions(ejsOptions) {
   let enableMPA = false;
   let enablePHA = false;
-  let targets = [];
+  let targets = ['web']; // rax project targets config can't be null.
 
   const { appType } = ejsOptions;
 

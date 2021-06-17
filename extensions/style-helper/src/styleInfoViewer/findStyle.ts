@@ -37,14 +37,13 @@ export function findStyle(
     const fileContent = fs.readFileSync(file, 'utf-8');
     let cssContent = fileContent;
 
+    // Remove media and keyframes, it will cause css.parse error
+    cssContent = cssContent.replace(/@[media|keyframes][^{]+\{([\s\S]+?})\s*}/g, '');
+
     if (
-      // SASS file
-      /s(c|a)ss$/.test(file) &&
-      // Not contain media and keyframes
-      fileContent.indexOf('@media') === -1 &&
-      fileContent.indexOf(' @keyframes') === -1
+      // Flattens nested SASS LESS string
+      /s(c|a)ss$|\.less$/.test(file)
     ) {
-      // Flattens nested SASS string
       // https://www.npmjs.com/package/css-flatten
       // Before:
       // .foo {
@@ -60,7 +59,7 @@ export function findStyle(
       // .foo .bar {
       //   color: blue;
       // }
-      cssContent = flatten(fs.readFileSync(file, 'utf-8'));
+      cssContent = flatten(cssContent);
     }
 
     const { stylesheet } = css.parse(cssContent);

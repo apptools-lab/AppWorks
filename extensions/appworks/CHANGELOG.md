@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.1.0
+
+- feat: hint user install types/rax [#854](https://github.com/appworks-lab/pack/pull/854)
+- fix: rax-spa project targets null [#862](https://github.com/appworks-lab/pack/pull/862)
+- Chore: update webview icon [#856](https://github.com/appworks-lab/pack/pull/856) [#846](https://github.com/appworks-lab/pack/pull/846)
+- feat: add recommend extensions [#837](https://github.com/appworks-lab/pack/pull/837)
+- fix: only exit process when prepublishOnly [#836](https://github.com/appworks-lab/pack/pull/836)
+- fix: make sure that the start & end fields exist [#838](https://github.com/appworks-lab/pack/pull/838)
+- fix: vsce [#576](https://github.com/microsoft/vscode-vsce/issues/576) .vscodeignore configuration
+
 ## 1.0.3
 
 - Update slogan to "前端研发套件".
@@ -31,7 +41,7 @@
 
 ## 0.18.1
 
-- fix: Time Master 
+- fix: Time Master
 
 ## 0.18.0
 
@@ -135,7 +145,7 @@
 ## 0.13.0
 
 - feat: support O2
-- refactor: update rax and ice config schema 
+- refactor: update rax and ice config schema
 - fix: material debug can not clean source
 
 ## 0.12.0
@@ -190,7 +200,7 @@
 ## 0.1.5
 
 - docs: project rename to application
-- docs: add homepage and repository 
+- docs: add homepage and repository
 
 ## 0.1.4
 

@@ -1,12 +1,7 @@
 # Change Log
+## 1.0.3 ~ 1.0.5
 
-## 1.0.4
-
-- chore: rebuild
-
-## 1.0.3
-
-- chore: rebuild change activationEvents to `onStartupFinished`
+- fix: rebuild and fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
 
 ## 1.0.2
 
@@ -15,6 +10,7 @@
 ## 1.0.1
 
 - chore: update icon.
+
 ## 1.0.0
 
 - fix: Rax Components props automatic completion.
@@ -42,7 +38,7 @@
 ## 0.6.0
 
 - feat: add "importer material" and "show material doc" to editor title
-- feat: add sidebar 
+- feat: add sidebar
 
 ## 0.5.6
 
@@ -69,8 +65,8 @@
 # 0.5.1
 
 - feat: support generate route to app.json in rax application
-- fix: `<div>` to `<View>` rax page template 
-- refactor: find comopnent logic  
+- fix: `<div>` to `<View>` rax page template
+- refactor: find comopnent logic
 
 # 0.5.0
 
@@ -88,7 +84,7 @@
 
 ## 0.4.0
 
-- feat: migrate component-creator, page-creator, page-generator 
+- feat: migrate component-creator, page-creator, page-generator
 
 ## 0.3.11
 
