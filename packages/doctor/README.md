@@ -51,12 +51,13 @@ $ appworks-doctor -s ./ --ignore types mock
 
 * fix?: boolean, whether fix ESLint fixable problems.
 * framework?: string, target project framework, default is `react`.
+* transforms?: string[], you want to run code transform keys, from [@appworks/codemod](https://github.com/appworks-lab/codemod/)
 * languageType?: 'js'|'ts', target project languageType, default is `js`.
 * tempFileDir?: string, set temp reporters file directory, default is `node_modules/@appworks/doctor/tmp/`.
 * disableESLint?: boolean, whether disable ESLint part reports.
 * disableMaintainability?: boolean, whether disable maintainability part reports.
 * disableRepeatability?: boolean, whether disable repeatability part reports.
-
+* disableCodemod?: boolean, whether disable codemod part reports.
 ### Result
 
 #### ESLint
@@ -84,39 +85,8 @@ Use [typhonjs-escomplex](https://www.npmjs.com/package/typhonjs-escomplex) calcu
 
 Use [jscpd](https://www.npmjs.com/package/jscpd) calculate repeatability reports.
 
-## 2. Codemod
+#### Codemod
 
-This repository also contains a collection of codemod scripts that help update React([ICE](https://ice.work/)) and [Rax](https://rax.js.org/) APIs.
-
-### Installation
-
-Install [jscodeshift](https://www.npmjs.com/package/jscodeshift) and @appworks/doctor.
-
-```shell
-$ npm i -g jscodeshift @appworks/doctor 
-```
-
-### Usage (CLI)
-
-`appworks-doctor -c <transform> <path?> [...options?]`
-
-   * `transform` - name of transform, see available transforms below.
-   * `path?` - files or directory to transform. 
-   * `options?` - some rule's options.
-
-This will start an interactive wizard, and then run the specified transform.
-
-PS: You can also clone this repository then use [jscodeshift](https://www.npmjs.com/package/jscodeshift)'s CLI API.
-
-### Included Transforms
-
-#### `plugin-rax-component-to-component`
-
-Update `plugin-rax-component` to `plugin-component`.
-See: https://rax.js.org/docs/guide/com-migration
-
-```shell
-appworks-doctor -c plugin-rax-component-to-component ./
-```
+Use [@appworks/codemod](https://www.npmjs.com/package/@appworks/codemod) check and update Rax and React deprecated usages.
 
 Enjoy!

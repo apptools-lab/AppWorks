@@ -7,12 +7,14 @@ export interface IScannerOptions {
 export interface IScanOptions {
   fix?: boolean;
   framework?: string;
+  transforms?: string[];
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
   timeout?: number;
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
+  disableCodemod?: boolean;
   maxRepeatabilityCheckLines?: number;
 }
 
@@ -51,6 +53,21 @@ export interface IEslintReports {
   customConfig: any;
 }
 
+export interface ICodemodReport {
+  transform: string;
+  title: string;
+  message: string;
+  severity: 0 | 1 | 2;
+  docs: string;
+  'npm-deprecate'?: string;
+}
+
+export interface ICodemodReports {
+  score: number;
+  reports: ICodemodReport[];
+  output: string;
+}
+
 export interface IScannerReports {
   filesInfo: {
     count: number;
@@ -61,4 +78,5 @@ export interface IScannerReports {
   ESLint?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
+  codemod?: ICodemodReports;
 }
