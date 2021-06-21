@@ -57,6 +57,7 @@ export interface ICodemodReport {
   transform: string;
   title: string;
   message: string;
+  mode: 'run' | 'check';
   severity: 0 | 1 | 2;
   docs: string;
   'npm-deprecate'?: string;
