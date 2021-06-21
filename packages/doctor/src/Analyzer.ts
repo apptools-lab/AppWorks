@@ -20,13 +20,13 @@ const LANGUAGE_MAP = {
 const UNKNOWN_LANGUAGE = 'Other';
 
 export default class Analyzer {
-  public options: IAnalyzerOptions;
+  options: IAnalyzerOptions;
 
   constructor(options: IAnalyzerOptions) {
     this.options = options;
   }
 
-  public analyse(directory: string): IAnalyzerReport {
+  analyse(directory: string): IAnalyzerReport {
     const report = { languages: [] } as IAnalyzerReport;
     const languageCache = {};
     const files: IFileInfo[] = getFiles(directory, this.options.ignore);

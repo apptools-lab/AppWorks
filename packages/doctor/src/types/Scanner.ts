@@ -60,12 +60,12 @@ export interface ICodemodReport {
   severity: 0 | 1 | 2;
   docs: string;
   'npm-deprecate'?: string;
+  output: string;
 }
 
 export interface ICodemodReports {
   score: number;
   reports: ICodemodReport[];
-  output: string;
 }
 
 export interface IScannerReports {

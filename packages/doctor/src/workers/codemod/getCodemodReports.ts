@@ -10,8 +10,8 @@ const WARNING_WEIGHT = -2;
 const ERROR_WEIGHT = -5;
 
 export default async function getCodemodReports(directory: string, files: IFileInfo[], transforms: string[]): Promise<ICodemodReports> {
-  let output = '';
   let reports = [];
+  const runResults = [];
 
   const scorer = new Scorer();
   const filesPathArr = files.map((file) => file.path);
@@ -19,7 +19,7 @@ export default async function getCodemodReports(directory: string, files: IFileI
   try {
     // Run codemod first
     for (let i = 0, l = transforms.length; i < l; i++) {
-      output += await run(directory, filesPathArr, transforms[i]);
+      runResults.push(await run(directory, filesPathArr, transforms[i]));
     }
 
     // Check recommended codemod
@@ -32,6 +32,9 @@ export default async function getCodemodReports(directory: string, files: IFileI
         scorer.plus(ERROR_WEIGHT);
       }
     });
+
+    // concat `run` results
+    reports = reports.concat(runResults);
   } catch (e) {
     // ignore
     console.log(e);
@@ -40,6 +43,5 @@ export default async function getCodemodReports(directory: string, files: IFileI
   return {
     score: scorer.getScore(),
     reports,
-    output,
   };
 }
