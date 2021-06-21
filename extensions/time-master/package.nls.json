@@ -5,5 +5,7 @@
   "timeMaster.configuration.properties.appworks.enableView.title": "Enable View",
   "timeMaster.configuration.properties.appworks.enableView.description": "Display programming activity in the sidebar",
   "timeMaster.configuration.properties.appworks.enableStatusBar.title": "Enable Status Bar",
-  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "Display the editor usage time in the status bar"
+  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "Display the editor usage time in the status bar",
+  "timeMaster.configuration.properties.appworks.enableDataAnalysisServices.title": "Enable Data Analysis Services",
+  "timeMaster.configuration.properties.appworks.enableDataAnalysisServices.description": "[Only For Ali Internal User] Data Analysis Services"
 }

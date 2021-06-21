@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2
+
+- feat: add `enableDataAnalysisServices` configuration 
+
 ## 1.0.1
 
 - docs: remove remarks

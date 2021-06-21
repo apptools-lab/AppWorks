@@ -3,7 +3,7 @@
   "displayName": "Time Master",
   "description": "Metrics, insights, and time tracking automatically generated from your programming activity.",
   "publisher": "iceworks-team",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -61,6 +61,12 @@
           "default": true,
           "title": "timeMaster.configuration.properties.appworks.enableStatusBar.title",
           "description": "%timeMaster.configuration.properties.appworks.enableStatusBar.description%"
+        },
+        "appworks.enableDataAnalysisServices": {
+          "type": "boolean",
+          "default": true,
+          "title": "timeMaster.configuration.properties.appworks.enableDataAnalysisServices.title",
+          "description": "%timeMaster.configuration.properties.appworks.enableDataAnalysisServices.description%"
         }
       }
     }
