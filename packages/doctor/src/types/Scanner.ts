@@ -56,11 +56,13 @@ export interface IEslintReports {
 export interface ICodemodReport {
   transform: string;
   title: string;
+  title_en: string;
   message: string;
+  message_en: string;
   mode: 'run' | 'check';
   severity: 0 | 1 | 2;
   docs: string;
-  'npm-deprecate'?: string;
+  npm_deprecate?: string;
   output: string;
 }
 
