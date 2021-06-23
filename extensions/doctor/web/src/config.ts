@@ -6,6 +6,11 @@ export interface IReportKeys {
 
 export const reportKeys: IReportKeys[] = [
   {
+    name: 'Codemod',
+    nameEn: 'Codemod',
+    key: 'codemod',
+  },
+  {
     name: 'Ali ESLint',
     nameEn: 'Ali ESLint',
     key: 'ESLint',
