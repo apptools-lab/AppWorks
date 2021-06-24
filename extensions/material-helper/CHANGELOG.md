@@ -1,4 +1,8 @@
 # Change Log
+
+## 1.0.6
+
+- fix: command `Find Components In Current File` not working.
 ## 1.0.3 ~ 1.0.5
 
 - fix: rebuild and fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
