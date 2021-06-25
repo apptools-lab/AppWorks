@@ -1,0 +1,1 @@
+const{Doctor:Doctor}=require("./lib/index"),DEMO_PROJECT="/Users/yangfan/Workspace/ice-test/demo-js",doctor=new Doctor({});doctor.scan(DEMO_PROJECT,{framework:"rax"}).then((o=>{console.log(o),console.log(o.codemod.reports)}));

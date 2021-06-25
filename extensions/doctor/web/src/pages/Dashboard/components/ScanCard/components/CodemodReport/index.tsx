@@ -60,12 +60,18 @@ const CodemodReport = (props) => {
                   <a target="_blank" href={codemod.docs} rel="noreferrer">{window.USE_EN ? ' [docs] ' : '【文档】'}</a>
                 </p>
                 <div className={styles.right}>
-                  {!status[codemod.transform] ? (
-                    <a className={styles.button} onClick={() => { handleClick(codemod.transform); }}>
-                      {window.USE_EN ? 'Running a Codemod' : '运行 Codemod'}
-                    </a>
+                  {codemod.mode === 'run' ? (
+                    <p>{window.USE_EN ? STATUS.done_en : STATUS.done}</p>
                   ) : (
-                    <p>{status[codemod.transform]}</p>
+                    <div>
+                      {!status[codemod.transform] ? (
+                        <a className={styles.button} onClick={() => { handleClick(codemod.transform); }}>
+                          {window.USE_EN ? 'Running a Codemod' : '运行 Codemod'}
+                        </a>
+                      ) : (
+                        <p>{status[codemod.transform]}</p>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
