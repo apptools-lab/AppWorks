@@ -74,7 +74,7 @@ AppWorks Pack extension installs these recommend extensions:
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): Integrates [ESLint](https://eslint.org/) JavaScript into VS Code.
 - [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint): Lint CSS/SCSS/Less with [stylelint](https://stylelint.io/).
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): An opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
-- [Auto Complete Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag): Combine the functions of Auto Close Tag and Auto Rename Tag.
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag): Auto rename paired HTML/XML tag.
 - [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets): Code snippets for JavaScript in ES6 syntax.
 - [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets): The essential collection of React Snippets and commands.
 - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome): Debug your JavaScript code in the Chrome browser, or any other target that supports the Chrome Debugger protocol.
