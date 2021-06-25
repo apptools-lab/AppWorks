@@ -14,7 +14,7 @@ import i18n from '../i18n';
  */
 async function checkIsShowTip(): Promise<boolean> {
   const projectPackageJSON = await getProjectPackageJSON();
-  return checkIsRaxTsProject() && !checkHasTypesRax(projectPackageJSON);
+  return await checkIsRaxTsProject() && !checkHasTypesRax(projectPackageJSON);
 }
 
 /**
