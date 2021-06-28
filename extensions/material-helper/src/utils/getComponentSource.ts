@@ -11,20 +11,22 @@ function getComponentSource(
     plugins: getBabelParserPlugins('jsx'),
   });
 
-  let source = '';
+  const result = { source: '', importedComponent: '' };
 
   traverse(ast, {
     ImportDeclaration(path) {
       const specifiers = path.get('specifiers');
       const targetSpecifier = specifiers.find(specifier => specifier.node.local.name === tagName);
       if (targetSpecifier) {
-        source = path.node.source.value;
+        result.source = path.node.source.value;
+        // @ts-ignore
+        result.importedComponent = targetSpecifier.node.imported.name;
         path.stop();
       }
     }
   })
 
-  return source;
+  return result;
 }
 
 export default getComponentSource;

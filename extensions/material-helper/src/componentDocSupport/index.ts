@@ -13,8 +13,8 @@ async function provideHover(document, position): Promise<vscode.Hover | undefine
   const currentJsxElement: any = getCurrentJsxElement(documentText, cursorPosition);
   const currentJsxElementTagName = currentJsxElement ? currentJsxElement.name.name : '';
   if (currentJsxElementTagName) {
-    const componentSource = getComponentSource(documentText, currentJsxElementTagName);
-    return getHoverItem(currentJsxElementTagName, componentSource);
+    const { source, importedComponent } = getComponentSource(documentText, currentJsxElementTagName);
+    return getHoverItem(importedComponent, source);
   }
 }
 
