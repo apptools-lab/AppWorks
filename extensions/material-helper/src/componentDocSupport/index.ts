@@ -26,7 +26,10 @@ export default function registerComponentDocSupport() {
     showComponentDocQuickPicks();
   });
   services.common.registerCommand('material-helper.showMaterialDocsForCurrentFile', (uri: vscode.Uri) => {
-    showUsedComponentDocQuickPicks(uri);
+    const currentFileUri = uri || vscode.window.activeTextEditor?.document.uri;
+    if (currentFileUri) {
+      showUsedComponentDocQuickPicks(currentFileUri);
+    }
   });
   initDocInfos();
 }
