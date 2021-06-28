@@ -3,7 +3,7 @@ export interface IComponentDocInfo {
   detail: string;
   description: string;
   url: string;
-  source: ISource;
+  source?: ISource;
   command?: string;
 }
 
