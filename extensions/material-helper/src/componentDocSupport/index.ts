@@ -4,6 +4,7 @@ import getHoverItem from './getHoverItem';
 import { showUsedComponentDocQuickPicks, showComponentDocQuickPicks } from './componentQuickPicks';
 import { initDocInfos } from './docInfoCache';
 import services from '../services';
+import getComponentSource from '../utils/getComponentSource';
 
 async function provideHover(document, position): Promise<vscode.Hover | undefined> {
   // const { Position } = vscode;
@@ -11,9 +12,9 @@ async function provideHover(document, position): Promise<vscode.Hover | undefine
   const cursorPosition = document.offsetAt(position);
   const currentJsxElement: any = getCurrentJsxElement(documentText, cursorPosition);
   const currentJsxElementTagName = currentJsxElement ? currentJsxElement.name.name : '';
-
-  if (currentJsxElement && getHoverItem(currentJsxElementTagName) !== undefined) {
-    return getHoverItem(currentJsxElementTagName);
+  if (currentJsxElementTagName) {
+    const componentSource = getComponentSource(documentText, currentJsxElementTagName);
+    return getHoverItem(currentJsxElementTagName, componentSource);
   }
 }
 
