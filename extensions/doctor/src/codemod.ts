@@ -1,4 +1,7 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as vscode from 'vscode';
+import * as semver from 'semver';
 import { Doctor } from '@appworks/doctor';
 import { projectPath } from '@appworks/project-service';
 import parse from 'parse-package-name';
@@ -29,17 +32,24 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
   const deprecatedPackageConfig = {};
 
   const reports = await doctor.scan(projectPath, SCAN_OPTIONS);
+  const packageFile = path.join(projectPath, 'package.json');
+  const packageJSON = fs.existsSync(packageFile) ? JSON.parse(fs.readFileSync(packageFile, 'utf-8')) : {};
 
   // Show notifaction
   (reports.codemod?.reports || []).forEach((codemod) => {
     const action = 'Running a Codemod';
 
     if (codemod.npm_deprecate) {
-      const pkg = parse(codemod.npm_deprecate);
-      deprecatedPackageConfig[pkg.name] = {
-        ...codemod,
-        ...pkg,
-      };
+      const { name, version } = parse(codemod.npm_deprecate);
+      const dependence = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
+
+      if (dependence && semver.satisfies(semver.coerce(dependence), version || '*')) {
+        deprecatedPackageConfig[name] = {
+          ...codemod,
+          name,
+          version,
+        };
+      }
     }
     const message =
       `${isEn ? codemod.title_en : codemod.title}: ` +
