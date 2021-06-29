@@ -66,7 +66,7 @@ const CodemodReport = (props) => {
                     <div>
                       {!status[codemod.transform] ? (
                         <a className={styles.button} onClick={() => { handleClick(codemod.transform); }}>
-                          {window.USE_EN ? 'Running a Codemod' : '运行 Codemod'}
+                          {window.USE_EN ? 'Run a Codemod' : '运行 Codemod'}
                         </a>
                       ) : (
                         <p>{status[codemod.transform]}</p>

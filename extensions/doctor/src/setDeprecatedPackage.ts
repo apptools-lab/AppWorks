@@ -48,7 +48,7 @@ export default function (deprecatedPackageConfig: IConfig) {
         `# ${isEn ? 'Codemod Suggestion' : 'Codemod 建议'}  \n  ` +
         `${isEn ? config.title_en : config.title}: ${isEn ? config.message_en : config.message} ` +
         `( [${isEn ? 'docs' : '文档'}](${config.docs}) )  \n\n  ` +
-        `[Running a Codemod](${vscode.Uri.parse(
+        `[Run a Codemod](${vscode.Uri.parse(
           `command:doctor.codemod?${encodeURIComponent(JSON.stringify([{ transform: config.transform }]))}`,
         )})`,
       );

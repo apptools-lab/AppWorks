@@ -37,7 +37,7 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
 
   // Show notifaction
   (reports.codemod?.reports || []).forEach((codemod) => {
-    const action = 'Running a Codemod';
+    const action = 'Run a Codemod';
 
     if (codemod.npm_deprecate) {
       const { name, version } = parse(codemod.npm_deprecate);

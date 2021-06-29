@@ -2,5 +2,5 @@
   "iceworksDoctor.commands.doctor.title": "AppWorks: Doctor.",
   "iceworksDoctor.commands.scan.title": "AppWorks: Scan Your Project.",
   "iceworksDoctor.commands.fix.title": "AppWorks: Scan and Fix Your Project.",
-  "iceworksDoctor.commands.codemod.title": "AppWorks: Running a Codemod."
+  "iceworksDoctor.commands.codemod.title": "AppWorks: Run a Codemod."
 }
