@@ -12,54 +12,56 @@ const { Tooltip } = Balloon;
 
 const reportKey = getReportKey('maintainability');
 
-const Description = (
-  <div className={styles.description}>
-    <p className={styles.title}>
-      {window.USE_EN ? 'Use' : '使用'}
-      <a href="https://www.npmjs.com/package/typhonjs-escomplex" target="_blank">
-        typhonjs-escomplex
-      </a>
-      {window.USE_EN ? 'scan your code' : '扫描代码'}
-    </p>
-    <div className={styles.message}>
-      {window.USE_EN ? 'Explanation: ' : '指标：'}
-      <Tooltip
-        delay={100}
-        align="t"
-        trigger={
-          <p className={styles.info}>
-            <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity ' : '圈复杂度 '}
+const Description = () => {
+  return (
+    <div className={styles.description}>
+      <p className={styles.title}>
+        {window.USE_EN ? 'Use ' : '使用 '}
+        <a href="https://www.npmjs.com/package/typhonjs-escomplex" target="_blank" rel="noreferrer">
+          typhonjs-escomplex
+        </a>
+        {window.USE_EN ? 'scan your code ' : '扫描代码 '}
+      </p>
+      <div className={styles.message}>
+        {window.USE_EN ? 'Explanation: ' : '指标：'}
+        <Tooltip
+          delay={100}
+          align="t"
+          trigger={
+            <p className={styles.info}>
+              <Icon type="prompt" size="xs" /> {window.USE_EN ? 'Cyclomatic Complexity ' : '圈复杂度 '}
+            </p>
+          }
+        >
+          <p>
+            {window.USE_EN
+              ? 'This metric counts the number of distinct paths through a block of code. Lower values are better.'
+              : '此指标计算通过代码块的不同路径的数量。值越低越好。'}
+            <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity" target="_blank" rel="noreferrer">
+              https://en.wikipedia.org/wiki/Cyclomatic_complexity
+            </a>
           </p>
-        }
-      >
-        <p>
-          {window.USE_EN
-            ? 'This metric counts the number of distinct paths through a block of code. Lower values are better.'
-            : '此指标计算通过代码块的不同路径的数量。值越低越好。'}
-          <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity" target="_blank">
-            https://en.wikipedia.org/wiki/Cyclomatic_complexity
-          </a>
-        </p>
-      </Tooltip>
-      <Tooltip
-        delay={100}
-        align="t"
-        trigger={
-          <p className={styles.info}>
-            <Icon type="prompt" size="xs" />
-            {window.USE_EN ? 'Difficulty ' : '可读性 '}
+        </Tooltip>
+        <Tooltip
+          delay={100}
+          align="t"
+          trigger={
+            <p className={styles.info}>
+              <Icon type="prompt" size="xs" />
+              {window.USE_EN ? 'Difficulty ' : '可读性 '}
+            </p>
+          }
+        >
+          <p>
+            {window.USE_EN
+              ? 'The difficulty measure is related to the difficulty of the program to write or understand. Lower values are better.'
+              : '难度测量与程序编写或理解的难度有关。值越低越好。'}
           </p>
-        }
-      >
-        <p>
-          {window.USE_EN
-            ? 'The difficulty measure is related to the difficulty of the program to write or understand. Lower values are better.'
-            : '难度测量与程序编写或理解的难度有关。值越低越好。'}
-        </p>
-      </Tooltip>
+        </Tooltip>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const MaintainabilityReport = (props) => {
   const { data = {} } = props;
@@ -76,7 +78,7 @@ const MaintainabilityReport = (props) => {
         number={(data.reports || []).length}
         reportKey={reportKey}
         score={data.score}
-        Description={Description}
+        Description={<Description />}
       />
       {data.score === 100 ? (
         <Appreciate />

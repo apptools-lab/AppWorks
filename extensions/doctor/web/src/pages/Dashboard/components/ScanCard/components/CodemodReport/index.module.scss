@@ -1,0 +1,45 @@
+.description {
+  margin: 0;
+  font-size: 12px;
+  line-height: 12px;
+  color: $color-text1-3;
+}
+
+.codemod {
+  position: relative;
+  padding: 10px 10px 10px 20px;
+  background-color: $color-fill1-3;
+
+  &:hover {
+    background-color: $color-fill1-1;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .message {
+    padding-right: 150px;
+    color: $color-text1-3;
+  }
+
+  .right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background-color: #199ed8;
+      color: #fff;
+    }
+  }
+}

@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const { minify } = require('terser');
+const { execSync } = require('child_process');
 
 function unlinkSync(file) {
   try {
@@ -10,6 +11,13 @@ function unlinkSync(file) {
   } catch (e) {
     // ignore error
   }
+}
+
+// Remove devDependencies
+try {
+  execSync('npm prune --production');
+} catch (e) {
+  // ignore error
 }
 
 // ESLint has its own loader specification and cannot use webpack to build the entire package.
