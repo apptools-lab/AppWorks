@@ -1,4 +1,5 @@
 import { IClone } from '@jscpd/core';
+import { IResult } from '@appworks/codemod';
 
 export interface IScannerOptions {
   ignore: string[];
@@ -53,22 +54,9 @@ export interface IEslintReports {
   customConfig: any;
 }
 
-export interface ICodemodReport {
-  transform: string;
-  title: string;
-  title_en: string;
-  message: string;
-  message_en: string;
-  mode: 'run' | 'check';
-  severity: 0 | 1 | 2;
-  docs: string;
-  npm_deprecate?: string;
-  output: string;
-}
-
 export interface ICodemodReports {
   score: number;
-  reports: ICodemodReport[];
+  reports: IResult[];
 }
 
 export interface IScannerReports {

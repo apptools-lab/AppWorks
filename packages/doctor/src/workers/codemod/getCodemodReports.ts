@@ -1,7 +1,7 @@
 
-import { check, run } from '@appworks/codemod';
+import { check, run, IResult } from '@appworks/codemod';
 import Scorer from '../../Scorer';
-import { ICodemodReport, ICodemodReports } from '../../types/Scanner';
+import { ICodemodReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
 
 // level waring minus 2 point
@@ -10,8 +10,8 @@ const WARNING_WEIGHT = -2;
 const ERROR_WEIGHT = -5;
 
 export default async function getCodemodReports(directory: string, files: IFileInfo[], transforms: string[]): Promise<ICodemodReports> {
-  let reports = [];
-  const runResults = [];
+  let reports: IResult[] = [];
+  const runResults: IResult[] = [];
 
   const scorer = new Scorer();
   const filesPathArr = files.map((file) => file.path);
@@ -25,7 +25,7 @@ export default async function getCodemodReports(directory: string, files: IFileI
     // Check recommended codemod
     reports = await check(directory, filesPathArr);
 
-    reports.forEach((report: ICodemodReport) => {
+    reports.forEach((report) => {
       if (report.severity === 1) {
         scorer.plus(WARNING_WEIGHT);
       } else if (report.severity === 2) {
