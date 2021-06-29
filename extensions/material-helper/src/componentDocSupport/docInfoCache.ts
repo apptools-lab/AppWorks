@@ -26,19 +26,20 @@ export async function initDocInfos() {
 
 async function originGetDocInfos() {
   const getDocInfoFromMaterial = (sourceJson: IMaterialData) => {
-    return [...sourceJson.components, ...(sourceJson.bases || [])].map((e: IMaterialComponent | IMaterialBase) => {
+    return [...sourceJson.components, ...(sourceJson.bases || [])].map(({ name, title, homepage, source, ...rest }: IMaterialComponent | IMaterialBase) => {
       return {
-        label: e.name,
-        detail: e.title,
-        description: e['description'] || '',
-        url: e.homepage,
+        label: name,
+        detail: title,
+        description: rest['description'] || '',
+        url: homepage,
+        source,
       };
     });
   };
 
   const projectSource = await getSourcesByProjectType();
-  const componentInfos = Promise.all(projectSource.map(({ source }) => getData(source)));
-  return (await componentInfos).reduce((componentDocInfos, materialInfo) => {
+  const componentInfos = await Promise.all(projectSource.map(({ source }) => getData(source)));
+  return componentInfos.reduce((componentDocInfos, materialInfo) => {
     return componentDocInfos.concat(getDocInfoFromMaterial(materialInfo));
   }, [] as IComponentDocInfo[]);
 }
