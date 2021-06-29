@@ -13,14 +13,14 @@ import getFinalScore from './getFinalScore';
 const tempDir = path.join(__dirname, 'tmp/');
 
 export default class Scanner {
-  public options: IScannerOptions;
+  options: IScannerOptions;
 
   constructor(options: IScannerOptions) {
     this.options = options;
   }
 
   // Entry
-  public async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
+  async scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
     const timer = new Timer();
     const reports = {} as IScannerReports;
     const tempFileDir = options?.tempFileDir || tempDir;
@@ -67,6 +67,14 @@ export default class Scanner {
       });
     }
 
+    // Run Codemod
+    if (!options || options.disableCodemod !== true) {
+      subprocessList.push(execa.node(path.join(__dirname, './workers/codemod/index.js'), [`${directory} ${tempFileDir} ${options?.transforms}`]));
+      processReportList.push(async () => {
+        reports.codemod = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.codemod));
+      });
+    }
+
     async function process() {
       // Check
       await Promise.all(subprocessList);
@@ -79,6 +87,7 @@ export default class Scanner {
           (reports.ESLint || {}).score,
           (reports.maintainability || {}).score,
           (reports.repeatability || {}).score,
+          (reports.codemod || {}).score,
         ].filter((score) => !isNaN(score)),
       );
 

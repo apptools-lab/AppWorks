@@ -1,6 +1,6 @@
 {
   "extension.iceworksMaterialHelper.materailImporter.title": "Import Component - AppWorks",
-  "extension.iceworksMaterialHelper.getAllDocsInfo.sourceLoading": "Source Loading... Please try again later。",
+  "extension.iceworksMaterialHelper.getAllDocsInfo.sourceLoading": "Source Loading... Please try again later.",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.noMaterial": "No material matching this project。",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.label": "More",
   "extension.iceworksMaterialHelper.getComponentQuickPicks.more.detail": "Display All Components",

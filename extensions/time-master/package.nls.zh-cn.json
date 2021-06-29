@@ -5,5 +5,7 @@
   "timeMaster.configuration.properties.appworks.enableView.title": "是否显示视图",
   "timeMaster.configuration.properties.appworks.enableView.description": "在侧边栏显示编码活动数据",
   "timeMaster.configuration.properties.appworks.enableStatusBar.title": "是否显示状态栏",
-  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "在窗口右下角的状态栏显示编辑器使用时间"
+  "timeMaster.configuration.properties.appworks.enableStatusBar.description": "在窗口右下角的状态栏显示编辑器使用时间",
+  "timeMaster.configuration.properties.appworks.enableDataAnalysisServices.title": "数据分析服务",
+  "timeMaster.configuration.properties.appworks.enableDataAnalysisServices.description": "[仅适用于阿里内部用户] 开启数据分析服务"
 }

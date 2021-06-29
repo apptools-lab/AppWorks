@@ -4,6 +4,7 @@ import traverse, { NodePath } from '@babel/traverse';
 import getBabelParserPlugins from './getBabelParserPlugins';
 
 type CurrentJsxElement = JSXOpeningElement | null;
+
 export default function getCurrentJsxElement(
   documentText: string,
   cursorPosition,

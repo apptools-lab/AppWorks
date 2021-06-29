@@ -10,15 +10,17 @@ import styles from './index.module.scss';
 
 const reportKey = getReportKey('repeatability');
 
-const Description = (
-  <p className={styles.description}>
-    {window.USE_EN ? 'Use' : '使用'}
-    <a href="https://www.npmjs.com/package/@jscpd/core" target="_blank">
-      jscpd
-    </a>
-    {window.USE_EN ? 'scan your code' : '扫描代码'}
-  </p>
-);
+const Description = () => {
+  return (
+    <p className={styles.description}>
+      {window.USE_EN ? 'Use ' : '使用 '}
+      <a href="https://www.npmjs.com/package/@jscpd/core" target="_blank" rel="noreferrer">
+        jscpd
+      </a>
+      {window.USE_EN ? ' scan your code' : ' 扫描代码'}
+    </p>
+  );
+};
 
 const RepeatabilityReport = (props) => {
   const { data = {} } = props;
@@ -40,7 +42,7 @@ const RepeatabilityReport = (props) => {
         number={(data.clones || []).length}
         reportKey={reportKey}
         score={data.score}
-        Description={Description}
+        Description={<Description />}
       />
 
       {data.score === 100 ? (

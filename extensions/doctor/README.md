@@ -10,7 +10,7 @@ English | [简体中文](https://github.com/appworks-lab/pack/blob/master/extens
 Doctor is a free security and quality audit tool for modern DevOps teams. With an integrated multi-scanner based design, Doctor can detect various kinds of security flaws in your application and infrastructure code in a single fast [@appworks/doctor](https://www.npmjs.com/package/@appworks/doctor) scanner without the need for any remote server!
 Navigate to the source code and remediate the results by interacting with the scan results.
 
-![demo](https://img.alicdn.com/imgextra/i3/O1CN01RQ3EyU1f5tVx2KIS5_!!6000000003956-1-tps-900-577.gif)
+![demo](https://img.alicdn.com/imgextra/i1/O1CN01WnHYn11qxRbaZYfDB_!!6000000005562-1-tps-1080-647.gif)
 
 1. Open vscode command palette  through `Ctrl+Shift+P` or `⇧⌘P`.
 2. Enter `AppWorks: Doctor` or `AppWorks: Scan Your Project` to activate the extension.
