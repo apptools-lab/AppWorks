@@ -1,4 +1,4 @@
-import { checkIsAliInternal } from '@appworks/common-service';
+import { checkIsAliInternal, getDataFromSettingJson } from '@appworks/common-service';
 import { getUserInfo } from '@appworks/user-service';
 import axios from 'axios';
 import { ALI_DIP_PRO } from '@appworks/constant';
@@ -20,12 +20,12 @@ enum PlayloadType {
   USAGES_RECORD = 'usages',
 }
 
-type PlayloadData = UsagePayload[]|KeystrokesPayload[];
+type PlayloadData = UsagePayload[] | KeystrokesPayload[];
 
 const url = `${ALI_DIP_PRO}/api`;
 const timeout = ONE_SEC_MILLISECONDS * 5;
 
-interface ProjectParams extends Omit<ProjectInfo, 'name'|'directory'> {
+interface ProjectParams extends Omit<ProjectInfo, 'name' | 'directory'> {
   projectName: PropType<ProjectInfo, 'name'>;
   projectDirectory: PropType<ProjectInfo, 'directory'>;
 }
@@ -61,12 +61,12 @@ async function checkIsSendable() {
   // There is a situation: the user is a member of Alibaba,
   // but he works at home does not connect to the intranet.
   const isAliInternal = await checkIsAliInternal();
-  return isAliInternal;
+  return getDataFromSettingJson('enableDataAnalysisServices') !== false && isAliInternal;
 }
 
-function transformDataToPayload(keystrokeStats: KeystrokeStats|UsageStats):
-Array<KeystrokesPayload|UsagePayload> {
-  const data: Array<KeystrokesPayload|UsagePayload> = [];
+function transformDataToPayload(keystrokeStats: KeystrokeStats | UsageStats):
+Array<KeystrokesPayload | UsagePayload> {
+  const data: Array<KeystrokesPayload | UsagePayload> = [];
   const { files, project } = keystrokeStats;
   const { name: projectName, directory: projectDirectory, gitRepository, gitBranch, gitTag } = project;
   const defaultValues = {
@@ -86,7 +86,7 @@ Array<KeystrokesPayload|UsagePayload> {
     hostname: '',
     timezone: '',
   };
-  forIn(files, (file: FileChange|FileUsage) => {
+  forIn(files, (file: FileChange | FileUsage) => {
     data.push({
       ...file,
       ...defaultValues,

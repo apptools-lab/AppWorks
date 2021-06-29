@@ -8,9 +8,9 @@ import { IFileInfo } from './types/File';
 // Ignore directories
 const defaultignore = ['.faas_debug_tmp', '.ice', '.rax', 'build', 'es', 'dist', 'lib', 'mocks', 'logs', 'coverage', 'node_modules', 'demo', 'examples', 'public', 'test', '__tests__'];
 class Doctor {
-  public options: any;
+  options: any;
 
-  public ignore: string[];
+  ignore: string[];
 
   private scanner: any;
 

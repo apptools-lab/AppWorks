@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.0
+
+- fix: auto-complete-tag confused typescript coding [#877](https://github.com/appworks-lab/pack/issues/877)
+
 ## 1.1.0
 
 - feat: hint user install types/rax [#854](https://github.com/appworks-lab/pack/pull/854)
