@@ -1,5 +1,6 @@
 import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
+import * as t from '@babel/types';
 import getBabelParserPlugins from './getBabelParserPlugins';
 
 function getComponentSource(
@@ -16,15 +17,16 @@ function getComponentSource(
   traverse(ast, {
     ImportDeclaration(path) {
       const specifiers = path.get('specifiers');
-      const targetSpecifier = specifiers.find(specifier => specifier.node.local.name === tagName);
+      const targetSpecifier = specifiers.find((specifier) => specifier.node.local.name === tagName);
       if (targetSpecifier) {
         result.source = path.node.source.value;
         // @ts-ignore
-        result.importedComponent = targetSpecifier.node.imported.name;
+        const { node: { local, imported } } = targetSpecifier;
+        result.importedComponent = t.isImportDefaultSpecifier(targetSpecifier) ? local.name : imported.name;
         path.stop();
       }
-    }
-  })
+    },
+  });
 
   return result;
 }

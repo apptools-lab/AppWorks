@@ -7,6 +7,7 @@ import {
   getDataFromSettingJson,
   CONFIGURATION_KEY_MATERIAL_SOURCES,
 } from '@appworks/common-service';
+import { FUSION_MOBILE_MATERIAL_BASE_HOME_URL } from '@appworks/constant';
 import { IMaterialSource, IMaterialData, IMaterialBase } from '@appworks/material-utils';
 import { getProjectType } from '@appworks/project-service';
 import i18n from './i18n';
@@ -23,11 +24,10 @@ const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materia
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
 // base component source
 const FUSION_PC_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/base-components-1.x.json';
-const RAX_BASE_COMPONENTS_SOURCE = 'http://ice.alicdn.com/assets/rax-base-components.json';
+const RAX_BASE_COMPONENTS_SOURCE = 'https://ice.alicdn.com/assets/rax-base-components.json';
 const ANTD_PC_COMPONENTS_SOURCE = 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/assets/antd-components.json';
 // base home url
 const FUSION_PC_MATERIAL_BASE_HOME_URL = 'https://fusion.design/pc/component';
-const FUSION_MOBILE_MATERIAL_BASE_HOME_URL = 'https://fusion.alibaba-inc.com/mobile';
 const ANTD_PC_MATERIAL_BASE_HOME_URL = 'https://ant.design/components';
 // base repository url
 const FUSION_PC_MATERIAL_BASE_REPOSITORY_URL = 'https://github.com/alibaba-fusion/next/tree/master/src';
@@ -38,20 +38,20 @@ const componentSourceDetails = [
     npm: '@alifd/next',
     homeUrl: FUSION_PC_MATERIAL_BASE_HOME_URL,
     componentNameFormatFunc: kebabCase,
-    repositoryUrl: FUSION_PC_MATERIAL_BASE_REPOSITORY_URL
+    repositoryUrl: FUSION_PC_MATERIAL_BASE_REPOSITORY_URL,
   },
   {
     npm: '@alifd/meet',
     homeUrl: FUSION_MOBILE_MATERIAL_BASE_HOME_URL,
-    componentNameFormatFunc: kebabCase
+    componentNameFormatFunc: kebabCase,
   },
   {
     npm: 'antd',
     homeUrl: ANTD_PC_MATERIAL_BASE_HOME_URL,
     componentNameFormatFunc: lowerCase,
-    repositoryUrl: ANTD_PC_MATERIAL_BASE_REPOSITORY_URL
-  }
-]
+    repositoryUrl: ANTD_PC_MATERIAL_BASE_REPOSITORY_URL,
+  },
+];
 
 const OFFICAL_MATERIAL_SOURCES = [
   {
@@ -100,7 +100,7 @@ const isIceMaterial = (source: string) => {
 
 const isAntdMaterial = (source: string) => {
   return source === ANTD_MATERIAL_SOURCE;
-}
+};
 
 const isRaxMaterial = (source: string) => {
   return source === RAX_MATERIAL_SOURCE;
@@ -197,7 +197,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 };
 
 function getBaseMaterials(data, npm?, version?) {
-  const componentSourceDetail = componentSourceDetails.find(item => item.npm === npm) || {} as any;
+  const componentSourceDetail = componentSourceDetails.find((item) => item.npm === npm) || {} as any;
   const { homeUrl, repositoryUrl, componentNameFormatFunc } = componentSourceDetail;
 
   return data.map((base: any) => {
@@ -207,13 +207,13 @@ function getBaseMaterials(data, npm?, version?) {
       title,
       categories: [type],
       importStatement,
-      homepage: homeUrl ? `${homeUrl}/${componentNameFormatFunc(name)}`: '',
+      homepage: homeUrl ? `${homeUrl}/${componentNameFormatFunc(name)}` : '',
       repository: repositoryUrl ? `${repositoryUrl}/${componentNameFormatFunc(name)}` : '',
       source: source || {
         type: 'npm',
         npm,
         version,
-        registry: 'http://registry.npmjs.com',
+        registry: 'https://registry.npmjs.com',
       },
     };
   });
