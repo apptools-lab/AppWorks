@@ -15,7 +15,7 @@ function unlinkSync(file) {
 
 // Remove devDependencies
 try {
-  execSync('npm prune --production');
+  execSync('npm prune --production', { stdio: 'inherit' });
 } catch (e) {
   // ignore error
 }
