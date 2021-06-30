@@ -78,6 +78,7 @@
     }
   },
   "dependencies": {
+    "@babel/preset-env": "^7.1.6",
     "@appworks/common-service": "^0.1.0",
     "@appworks/connector": "^0.1.0",
     "@appworks/constant": "^0.1.0",
