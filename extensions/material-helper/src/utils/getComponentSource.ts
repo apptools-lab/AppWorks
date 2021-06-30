@@ -1,6 +1,6 @@
 import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
-import * as t from '@babel/types';
+import { isImportDefaultSpecifier } from '@babel/types';
 import getBabelParserPlugins from './getBabelParserPlugins';
 
 function getComponentSource(
@@ -22,7 +22,7 @@ function getComponentSource(
         result.source = path.node.source.value;
         // @ts-ignore
         const { node: { local, imported } } = targetSpecifier;
-        result.importedComponent = t.isImportDefaultSpecifier(targetSpecifier) ? local.name : imported.name;
+        result.importedComponent = isImportDefaultSpecifier(targetSpecifier) ? local.name : imported.name;
         path.stop();
       }
     },
