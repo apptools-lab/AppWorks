@@ -3,6 +3,6 @@
 .gitignore
 **/*.map
 web/**
-node_modules/*
+node_modules/**
 !node_modules/prettier
 

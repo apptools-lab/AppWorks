@@ -17,17 +17,17 @@ export default class Scanner {
     this.currentScore = options.start || this.highestScore;
   }
 
-  public plus(score: number): number {
+  plus(score: number): number {
     this.currentScore += score;
     return this.getScore();
   }
 
-  public minus(score: number): number {
+  minus(score: number): number {
     this.currentScore -= score;
     return this.getScore();
   }
 
-  public getAverage(list: number[]): number {
+  getAverage(list: number[]): number {
     if (list.length) {
       let sum = 0;
 
@@ -46,7 +46,7 @@ export default class Scanner {
     return this.getScore();
   }
 
-  public getScore(): number {
+  getScore(): number {
     if (this.currentScore > this.highestScore) {
       return this.highestScore;
     } else if (this.currentScore < this.lowestScore) {

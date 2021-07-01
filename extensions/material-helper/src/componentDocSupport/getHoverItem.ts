@@ -2,10 +2,10 @@ import * as vscode from 'vscode';
 import { getDocInfos } from './docInfoCache';
 import i18n from '../i18n';
 
-export default function getHoverItem(tagName: string) {
+export default function getHoverItem(tagName: string, source: string) {
   const docInfos = getDocInfos();
   const tagInfo = docInfos.find((info) => {
-    return info.label === tagName;
+    return info.label === tagName && info.source.npm === source
   });
   if (tagInfo) {
     const docsLink = new vscode.MarkdownString(

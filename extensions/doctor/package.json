@@ -3,7 +3,7 @@
   "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -25,17 +25,7 @@
   ],
   "icon": "assets/logo.png",
   "activationEvents": [
-    "onCommand:doctor.fix",
-    "onCommand:doctor.scan",
-    "onCommand:doctor.dashboard",
-    "onLanguage:json",
-    "onLanguage:typescript",
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescriptreact",
-    "onLanguage:css",
-    "onLanguage:less",
-    "onLanguage:scss"
+    "onStartupFinished"
   ],
   "main": "./build/extension.js",
   "repository": {
@@ -68,6 +58,10 @@
       {
         "command": "doctor.fix",
         "title": "%iceworksDoctor.commands.fix.title%"
+      },
+      {
+        "command": "doctor.codemod",
+        "title": "%iceworksDoctor.commands.codemod.title%"
       }
     ],
     "configuration": {
@@ -84,16 +78,19 @@
     }
   },
   "dependencies": {
+    "@babel/preset-env": "^7.1.6",
     "@appworks/common-service": "^0.1.0",
+    "@appworks/connector": "^0.1.0",
     "@appworks/constant": "^0.1.0",
-    "@appworks/doctor": "^0.1.0",
+    "@appworks/doctor": "^0.2.0",
     "@appworks/project-service": "^0.1.0",
     "@appworks/recorder": "^0.1.0",
     "@appworks/storage": "^0.1.0",
-    "@appworks/connector": "^0.1.0",
     "fs-extra": "^9.0.1",
     "git-repo-info": "^2.1.1",
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^1.0.4",
+    "parse-package-name": "^0.1.0",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",

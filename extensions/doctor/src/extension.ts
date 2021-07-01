@@ -4,6 +4,7 @@ import * as path from 'path';
 import { connectService, getHtmlForWebview } from '@appworks/connector/lib/vscode';
 import { ICEWORKS_ICON_PATH } from '@appworks/constant';
 import { registerCommand, initExtension, getDataFromSettingJson } from '@appworks/common-service';
+import { activateCodemod, runCodemod } from './codemod';
 import recorder from './recorder';
 import getScanReport from './getScanReport';
 import setDiagnostics from './setDiagnostics';
@@ -130,6 +131,14 @@ export function activate(context: vscode.ExtensionContext) {
   // Fix project
   registerCommand('doctor.fix', () => {
     openWebview({ autoFix: true });
+  });
+
+  // Codemod
+  activateCodemod(context);
+  registerCommand('doctor.codemod', (options) => {
+    if (options?.transform) {
+      runCodemod(options.transform);
+    }
   });
 }
 

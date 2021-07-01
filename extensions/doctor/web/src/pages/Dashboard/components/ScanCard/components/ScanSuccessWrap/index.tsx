@@ -4,6 +4,7 @@ import { animateScroll as scroll } from 'react-scroll';
 import { reportKeys, IReportKeys } from '@/config';
 import DoctorDashboard from '@appworks/doctor-ui';
 import ScoreBoard from '../ScoreBoard';
+import CodemodReport from '../CodemodReport';
 import AliEslintReport from '../AliEslintReport';
 import MaintainabilityReport from '../MaintainabilityReport';
 import RepeatabilityReport from '../RepeatabilityReport';
@@ -38,6 +39,8 @@ const ScanSuccessWrap = (props) => {
         {reportKeys.map((reportKey: IReportKeys) => {
           const { key } = reportKey;
           switch (key) {
+            case 'codemod':
+              return <CodemodReport key={key} data={data[key]} />;
             case 'ESLint':
               return <AliEslintReport key={key} data={data[key]} />;
             case 'maintainability':

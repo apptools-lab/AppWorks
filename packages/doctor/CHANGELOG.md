@@ -1,10 +1,10 @@
 # changelog
 
-## 0.4.8
-- update eslint to version 7.0
+## 0.2.0
 
-## 0.4.7
-- support scan `unknown` framework project
+- Remove codemod CLI usage.
+- Add codemod check and fix reports to `scan`.
 
-## 0.4.6
-- fix can't catch timeout error
+## 0.1.0
+
+- Init

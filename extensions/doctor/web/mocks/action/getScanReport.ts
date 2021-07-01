@@ -448,5 +448,28 @@ export default {
       },
     ],
   },
+  codemod: {
+    score: 98,
+    reports: [
+      {
+        title: 'Rax 组件工程升级',
+        title_en: 'Rax component project upgrade',
+        message: '从 plugin-rax-component 升级到 plugin-component',
+        message_en: 'upgrade from plugin-rax-component to plugin-component',
+        severity: 1,
+        npm_deprecate: 'build-plugin-rax-component',
+        transform: 'plugin-rax-component-to-component',
+        docs: 'https://github.com/appworks-lab/codemod/tree/master/transforms/docs/plugin-rax-component-to-component.md',
+        mode: 'check',
+        output: 'Processing 20 files... \nSpawning 7 workers...\nRunning in dry mode, no ' +
+          'files will be written! \nSending 3 files to free worker...\nSending 3 ' +
+          'files to free worker...\nSending 3 files to free worker...\nSending 3 ' +
+          'files to free worker...\nSending 3 files to free worker...\nSending 3 ' +
+          'files to free worker...\nSending 2 files to free worker...\nAll done. \n' +
+          'Results: \n0 errors\n18 unmodified\n1 skipped\n1 ok\nTime elapsed: ' +
+          '1.014seconds '
+      }
+    ]
+  },
   score: 88.95,
 };

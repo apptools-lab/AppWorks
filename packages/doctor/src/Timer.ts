@@ -11,14 +11,14 @@ export default class Timer {
     this.startTime = Date.now();
   }
 
-  public async raceTimeout(ms: number) {
-    await new Promise(resolve => {
+  async raceTimeout(ms: number) {
+    await new Promise((resolve) => {
       this.timer = setTimeout(resolve, ms);
     });
     throw new Error('@appworks/doctor time out!');
   }
 
-  public duration(): number {
+  duration(): number {
     if (this.timer) {
       clearTimeout(this.timer);
     }

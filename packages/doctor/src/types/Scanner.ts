@@ -1,4 +1,5 @@
 import { IClone } from '@jscpd/core';
+import { IResult } from '@appworks/codemod';
 
 export interface IScannerOptions {
   ignore: string[];
@@ -7,12 +8,14 @@ export interface IScannerOptions {
 export interface IScanOptions {
   fix?: boolean;
   framework?: string;
+  transforms?: string[];
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
   timeout?: number;
   disableESLint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
+  disableCodemod?: boolean;
   maxRepeatabilityCheckLines?: number;
 }
 
@@ -51,6 +54,11 @@ export interface IEslintReports {
   customConfig: any;
 }
 
+export interface ICodemodReports {
+  score: number;
+  reports: IResult[];
+}
+
 export interface IScannerReports {
   filesInfo: {
     count: number;
@@ -61,4 +69,5 @@ export interface IScannerReports {
   ESLint?: IEslintReports;
   maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
+  codemod?: ICodemodReports;
 }

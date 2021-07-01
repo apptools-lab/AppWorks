@@ -3,16 +3,11 @@
 'use strict';
 
 const argv = require('argv-parse');
-const fs = require('fs');
-const path = require('path');
-const { spawnSync } = require('child_process');
 const options = require('./options.json');
 const pkg = require('../package.json');
 const { Doctor } = require('../lib/index');
 
 const args = argv(options);
-
-const transformerDirectory = path.join(__dirname, '../lib/', 'transforms');
 
 // Show version
 if (args.version) {
@@ -50,7 +45,7 @@ if (args.scan) {
       },
       score: result.score || 0,
     };
-    ['ESLint', 'maintainability', 'repeatability'].forEach(key => {
+    ['ESLint', 'maintainability', 'repeatability'].forEach((key) => {
       if (result[key]) {
         report[key] = result[key].score;
       }
@@ -61,34 +56,4 @@ if (args.scan) {
     console.log('Error!');
     console.error(err);
   });
-}
-
-// codemod
-if (args.codemod) {
-  args.supportExts = (args.supportExts || []).concat(['json']);
-  const [transformer, targetPath = process.cwd()] = args.codemod;
-
-  const doctor = new Doctor(args);
-  doctor.ignore = doctor.ignore.filter(i => i !== 'demo');
-  const files = doctor.getFiles(targetPath).map(file => file.path);
-
-  let transformerArgs = ['-p'];
-  const transformerPath = path.join(transformerDirectory, `${transformer}.js`);
-
-  if (!files.length) {
-    console.log(`No files found matching ${targetPath}`);
-  } else if (!fs.existsSync(transformerPath)) {
-    console.log(`No transformer found matching ${transformer}`);
-  } else {
-    transformerArgs = transformerArgs.concat(['--transform', transformerPath]);
-    transformerArgs = transformerArgs.concat(files);
-
-    // jscodeshift has too large size as node dependencies and better use in CLI env.
-    // Suggest user to install jscodeshift in codemod case.
-    spawnSync('jscodeshift', transformerArgs,
-      {
-        stdio: 'inherit',
-        stripEof: false,
-      });
-  }
 }

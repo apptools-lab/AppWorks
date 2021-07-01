@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.0
+
+- feat: Add codemod check
+- feat: Add deprecate package tips
+
 ## 1.0.1
 
 - chore: update webview icon

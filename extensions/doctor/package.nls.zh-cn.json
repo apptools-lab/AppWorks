@@ -1,5 +1,6 @@
 {
   "iceworksDoctor.commands.doctor.title": "AppWorks: 打开质量检测仪",
   "iceworksDoctor.commands.scan.title": "AppWorks: 扫描代码",
-  "iceworksDoctor.commands.fix.title": "AppWorks: 扫描并修复代码"
+  "iceworksDoctor.commands.fix.title": "AppWorks: 扫描并修复代码",
+  "iceworksDoctor.commands.codemod.title": "AppWorks: 运行 Codemod"
 }

@@ -47,7 +47,7 @@ async function getUsedComponentDocInfos(documentText = ''): Promise<IComponentDo
   const usedComponentDocInfos: Set<IComponentDocInfo> = new Set();
   const docInfos = getDocInfos();
 
-  const componentNames = getDocInfos().map((docInfo) => docInfo.label);
+  const componentNames = docInfos.map((docInfo) => docInfo.label);
   const usedComponentJsxElements = getJsxElements(documentText, (element) => {
     return componentNames.includes(element.name['name'] || '');
   });
