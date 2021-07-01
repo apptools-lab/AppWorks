@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2
+
+- fix: build error when in macos platform
+
 ## 1.0.1
 
 - chore: update webview icon
