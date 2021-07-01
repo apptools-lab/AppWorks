@@ -125,14 +125,14 @@ export async function record(originParam: IGoldlogParam) {
   await recordUV(originParam);
 }
 
-export function recordDAU() {
+export function recordDAU(locale = vscodeEnv ? vscodeEnv.language : 'zh-CN') {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
     action: 'dau',
     data: {
       platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+      locale,
     },
   });
 }

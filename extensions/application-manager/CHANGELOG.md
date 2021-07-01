@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.2
+
+- chore: update @appworks/recorder version
+
 ## 1.0.1
 
 - chore: update webview icon
