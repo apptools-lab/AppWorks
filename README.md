@@ -69,6 +69,6 @@ If you're interested in AppWorks, see [CONTRIBUTING.md](./.github/CONTRIBUTING.m
 [icestore-docs]: https://github.com/ice-lab/icestore#icestore
 [formily-docs]: https://formilyjs.org
 
-## License
+## License1
 
 [MIT](LICENSE)
