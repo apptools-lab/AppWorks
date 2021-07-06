@@ -11,6 +11,7 @@ interface IMobileScaffoldCardProps {
   style?: Record<string, unknown>;
   onClick?: any;
   media?: string;
+  onDoubleClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({
@@ -20,9 +21,10 @@ const MobileScaffoldCard: React.FC<IMobileScaffoldCardProps> = ({
   onClick,
   media,
   style,
+  onDoubleClick = () => {},
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onDoubleClick={onDoubleClick}>
       <Card
         free
         style={{ ...style }}

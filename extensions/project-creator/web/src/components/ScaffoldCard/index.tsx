@@ -10,11 +10,12 @@ interface IScaffoldCardProps {
   selected: boolean;
   onClick?: any;
   media?: string;
+  onDoubleClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media }) => {
+const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media, onDoubleClick = () => {} }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onDoubleClick={onDoubleClick}>
       <Card
         free
         className={classnames(styles.card, { [styles.active]: selected })}

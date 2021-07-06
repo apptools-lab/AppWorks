@@ -33,6 +33,7 @@ const CreateProject: React.FC = () => {
       curProjectField={curProjectField}
       onOpenConfigPanel={onOpenConfigPanel}
       materialSources={materialSources}
+      onScaffoldSubmit={onScaffoldSubmit}
     >
       <Button type="primary" onClick={onScaffoldSubmit}>
         <FormattedMessage id="web.iceworksProjectCreator.CreateProject.nextStep" />
