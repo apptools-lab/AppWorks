@@ -2,6 +2,7 @@
 
 ## 1.0.2
 
+- feat: add loading status when reinstalling dependencies
 - chore: update @appworks/recorder version
 
 ## 1.0.1
