@@ -1,8 +1,22 @@
 # Change Log
 
-## 1.2.0
+## [1.2.1](https://github.com/appworks-lab/pack/releases/tag/v1.2.1)
 
+- feat: support double click to select scaffold [#895](https://github.com/appworks-lab/pack/pull/895)
+- feat: loading status when reinstalling deps [#896](https://github.com/appworks-lab/pack/pull/896)
+- fix: build error in macos platform [#891](https://github.com/appworks-lab/pack/pull/891)
+- fix: empty project wrong CodeMod notice [#894](https://github.com/appworks-lab/pack/pull/894)
+
+## [1.2.0](https://github.com/appworks-lab/pack/releases/tag/v1.2.0)
+
+- feat: remove Auto Complete Tag Feat remove Auto Complete Tag [#878](https://github.com/appworks-lab/pack/pull/878)
+- feat: add time master configuration enableDataAnalysisServices Feat add time master configuration [#871](https://github.com/appworks-lab/pack/pull/871)
+- feat: update vscodeignore Feat update vscodeignore [#883](https://github.com/appworks-lab/pack/pull/883)
+- feat: add codemod check to doctor package Feat add codemod check to doctor package [#870](https://github.com/appworks-lab/pack/pull/870)
+- feat: doctor extension add codemod Feat doctor extension add codemod [#873](https://github.com/appworks-lab/pack/pull/873)
 - fix: auto-complete-tag confused typescript coding [#877](https://github.com/appworks-lab/pack/issues/877)
+- fix: command Find Components In Current File not working Fix command Find Components In Current File not working [#876](https://github.com/appworks-lab/pack/pull/876)
+- fix: component docs link fix: component link [#884](https://github.com/appworks-lab/pack/pull/884)
 
 ## 1.1.0
 
