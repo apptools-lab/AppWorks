@@ -65,7 +65,7 @@ async function publishExtensionsToNpm() {
       const innerExtension4pack = innerExtensions4pack.find(({ packageName }) => packageName === `${publisher}.${name}`);
       if (innerExtension4pack) {
         const newPackageName = getExtensionNpmName(name);
-        if (pushExtension2Npm) {
+        if (pushExtension2Npm) { // modify `pushExtension2Npm` param which is in `./config.ts` to true when publish to tnpm
           // compatible package.json
           let latestVersion = version;
           try {

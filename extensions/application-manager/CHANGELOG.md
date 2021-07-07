@@ -2,6 +2,7 @@
 
 ## 1.0.2
 
+- fix: build error when in macos platform
 - chore: update @appworks/recorder version
 
 ## 1.0.1
