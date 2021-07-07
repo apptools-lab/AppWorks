@@ -1,7 +1,7 @@
 import * as camelCase from 'lodash.camelcase';
 
 export const isBeta = !process.env.CI; // CI is true when running in GitHub action
-export const pushExtension2Npm = false;
+export const pushExtension2Npm = false; // modify it to true when publish to tnpm
 export const innerExtensions4pack = [
   {
     packageName: 'iceworks-team.iceworks-app',

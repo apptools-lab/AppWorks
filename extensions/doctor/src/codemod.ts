@@ -36,39 +36,41 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
   const packageJSON = fs.existsSync(packageFile) ? JSON.parse(fs.readFileSync(packageFile, 'utf-8')) : {};
 
   // Show notifaction
-  (reports.codemod?.reports || []).forEach((codemod) => {
-    const action = 'Run a Codemod';
+  if (projectPath) {
+    (reports.codemod?.reports || []).forEach((codemod) => {
+      const action = 'Run a Codemod';
 
-    if (codemod.npm_deprecate) {
-      const { name, version } = parse(codemod.npm_deprecate);
-      const dependence = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
+      if (codemod.npm_deprecate) {
+        const { name, version } = parse(codemod.npm_deprecate);
+        const dependence = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
 
-      if (dependence && semver.satisfies(semver.coerce(dependence), version || '*')) {
-        deprecatedPackageConfig[name] = {
-          ...codemod,
-          name,
-          version,
-        };
-      }
-    }
-    const message =
-      `${isEn ? codemod.title_en : codemod.title}: ` +
-      `${isEn ? codemod.message_en : codemod.message} ` +
-      `( [${isEn ? 'docs' : '文档'}](${codemod.docs}) )`;
-    const showMessage = codemod.severity === 2 ? window.showErrorMessage : window.showWarningMessage;
-
-    showMessage(message, action).then(async (item) => {
-      // Run codemod
-      if (item === action) {
-        const result = await runCodemod(codemod.transform);
-
-        // Remove fixed deprecated package
-        if (result.codemod?.reports[0].npm_deprecate) {
-          delete deprecatedPackageConfig[result.codemod?.reports[0].npm_deprecate];
+        if (dependence && semver.satisfies(semver.coerce(dependence), version || '*')) {
+          deprecatedPackageConfig[name] = {
+            ...codemod,
+            name,
+            version,
+          };
         }
       }
+      const message =
+        `${isEn ? codemod.title_en : codemod.title}: ` +
+        `${isEn ? codemod.message_en : codemod.message} ` +
+        `( [${isEn ? 'docs' : '文档'}](${codemod.docs}) )`;
+      const showMessage = codemod.severity === 2 ? window.showErrorMessage : window.showWarningMessage;
+
+      showMessage(message, action).then(async (item) => {
+        // Run codemod
+        if (item === action) {
+          const result = await runCodemod(codemod.transform);
+
+          // Remove fixed deprecated package
+          if (result.codemod?.reports[0].npm_deprecate) {
+            delete deprecatedPackageConfig[result.codemod?.reports[0].npm_deprecate];
+          }
+        }
+      });
     });
-  });
+  }
 
   // Show deprecate package
   setDeprecatedPackage(deprecatedPackageConfig);
