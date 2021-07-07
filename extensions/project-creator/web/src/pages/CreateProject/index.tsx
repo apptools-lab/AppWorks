@@ -187,7 +187,7 @@ const CreateProject: React.FC = () => {
         ...curProjectField,
         clientToken: CLIENT_TOKEN,
       });
-      await callService('common', 'saveUserInfo', { empId, account, gitlabToken });
+      await callService('user', 'saveUserInfo', { empId, account, gitlabToken });
       await callService('common', 'saveDataToSettingJson', 'workspace', projectPath);
       await callService('project', 'openLocalProjectFolder', projectDir);
     } catch (e) {

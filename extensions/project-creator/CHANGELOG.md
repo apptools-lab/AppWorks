@@ -3,6 +3,7 @@
 ## 1.0.3
 
 - feat: support double click to select scaffold. [#872](https://github.com/appworks-lab/pack/issues/872)
+- fix: service api(setUserInfo) not found
 
 ## 1.0.2
 
