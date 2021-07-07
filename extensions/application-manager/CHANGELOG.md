@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.0.2
+
+- feat: add loading status when reinstalling dependencies
+- fix: build error when in macos platform
+- chore: update @appworks/recorder version
+
 ## 1.0.1
 
 - chore: update webview icon

@@ -34,7 +34,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
 
   readonly onDidChangeTreeData: vscode.Event<ItemData | undefined> = this.onDidChange.event;
 
-  public packageJsonPath: string;
+  packageJsonPath: string;
 
   constructor(context: vscode.ExtensionContext, workspaceRoot: string) {
     this.extensionContext = context;
@@ -106,7 +106,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
     return item;
   }
 
-  public async buildDepsChildItems(nodeDepType: NodeDepTypes) {
+  async buildDepsChildItems(nodeDepType: NodeDepTypes) {
     let depItems: ItemData[] = [];
     if (this.workspaceRoot && await checkPathExists(this.packageJsonPath)) {
       const packageJson = await fse.readJSON(this.packageJsonPath);
@@ -180,7 +180,7 @@ class DepNodeProvider implements vscode.TreeDataProvider<ItemData> {
     return items;
   }
 
-  public getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
+  getAddDependencyScript(depType: NodeDepTypes, packageName: string) {
     const workspaceDir: string = path.dirname(this.packageJsonPath);
     const isYarn = isYarnPackageManager();
     const isDevDep = depType === 'devDependencies';
@@ -227,8 +227,19 @@ export function createNodeDependenciesTreeView(context) {
     if (await checkPathExists(nodeDependenciesProvider.packageJsonPath)) {
       const workspaceDir: string = path.dirname(nodeDependenciesProvider.packageJsonPath);
       const nodeModulesPath = path.join(workspaceDir, 'node_modules');
-      if (await checkPathExists(nodeModulesPath)) {
-        await rimrafAsync(nodeModulesPath);
+      const nodeModulesExists = await checkPathExists(nodeModulesPath);
+      if (nodeModulesExists) {
+        await vscode.window.withProgress({
+          location: vscode.ProgressLocation.Notification,
+          title: i18n.format('extension.applicationManager.nodeDependencies.delete.title', { nodeModulesPath }),
+        }, async () => {
+          try {
+            await rimrafAsync(nodeModulesPath);
+          } catch (error) {
+            vscode.window.showErrorMessage(`Fail to delete ${nodeModulesPath}. Error: ${error.message}.`);
+          }
+          return Promise.resolve();
+        });
       }
       const command = createNpmCommand('install');
       const title = 'Reinstall Dependencies';

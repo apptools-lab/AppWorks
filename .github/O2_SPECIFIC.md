@@ -12,6 +12,7 @@ General O2 pack by following commands:
 $ git clone git@github.com:appworks-lab/pack.git
 $ cd appworks/
 $ npm install
+# before run this script, modify `pushExtension2Npm` param which is in `./config.ts` to true when publish to tnpm
 $ npm run o2:general
 ```
 

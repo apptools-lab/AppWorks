@@ -28,6 +28,7 @@ const ScaffoldMarket = ({
   children,
   onOpenConfigPanel,
   materialSources,
+  onScaffoldSubmit,
 }) => {
   const intl = useIntl();
   const [selectedSource, setSelectedSource] = useState<any>({});
@@ -207,6 +208,7 @@ const ScaffoldMarket = ({
                               media={item.screenshot}
                               selected={curProjectField.scaffold && curProjectField.scaffold.name === item.name}
                               onClick={() => onScaffoldClick(item)}
+                              onDoubleClick={onScaffoldSubmit}
                             />
                           );
                         })}

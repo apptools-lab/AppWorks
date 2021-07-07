@@ -1,35 +1,8 @@
 import axios from 'axios';
 import { checkAliInternal } from 'ice-npm-utils';
 import configure, { recordKey } from '@appworks/configure';
-
-function checkIsO2() {
-  const O2Version = process.env.O2_VERSION;
-  return O2Version;
-}
-
 // eslint-disable-next-line
 const checkIsElectron = require('is-electron');
-let vscodeEnv;
-try {
-  // eslint-disable-next-line
-  const vscode = require('vscode');
-  vscodeEnv = vscode.env;
-} catch (error) {
-  // ignore
-}
-
-const isElectron = checkIsElectron();
-const isO2 = checkIsO2();
-let logCode = 'pack_app';
-if (isO2) {
-  if (isElectron) { // Client
-    logCode = 'pack_o2';
-  } else { // WebIDE
-    logCode = 'pack_web';
-  }
-}
-const outside = '_outside';
-let isAlibaba: boolean;
 
 interface ILogParam {
   module: string;
@@ -43,13 +16,58 @@ interface IGoldlogParam extends ILogParam {
 
 type RecordType = 'PV' | 'UV';
 
-const MAIN_KEY = 'main';
+let vscodeEnv;
+let isAlibaba: boolean;
 
+const outside = '_outside';
+const MAIN_KEY = 'main';
 // Compatible with old logic
 const RECORD_MODULE_KEY = 'logger';
 
-async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
+try {
+  // eslint-disable-next-line
+  const vscode = require('vscode');
+  vscodeEnv = vscode.env;
+} catch (error) {
+  console.error(error);
+}
+
+function checkIsO2() {
+  const O2Version = process.env.O2_VERSION;
+  return O2Version;
+}
+
+function getLogCode() {
+  const isElectron = checkIsElectron();
+  const isO2 = checkIsO2();
+
+  let logCode = 'pack_app';
+  if (isO2) {
+    if (isElectron) { // Client
+      logCode = 'pack_o2';
+    } else { // WebIDE
+      logCode = 'pack_web';
+    }
+  }
+
+  return logCode;
+}
+
+export async function recordPV(originParam: IGoldlogParam, recordType?: RecordType, url?: string) {
   recordType = recordType || 'PV';
+
+  if (!url) {
+    const logCode = getLogCode();
+    if (typeof isAlibaba === 'undefined') {
+      try {
+        isAlibaba = await checkAliInternal();
+      } catch (error) {
+      // ignore error
+      }
+    }
+    url = `http://gm.mmstat.com/iceteam.iceworks.${logCode}${!isAlibaba ? outside : ''}`;
+  }
+
   const param = {
     ...originParam,
     // eslint-disable-next-line
@@ -64,15 +82,6 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
       return `${finalStr}${currentKey}=${currentData}${dataKeyArray.length - 1 === index ? '' : '&'}`;
     }, '');
 
-    if (typeof isAlibaba === 'undefined') {
-      try {
-        isAlibaba = await checkAliInternal();
-      } catch (error) {
-        // ignore error
-      }
-    }
-
-    const url = `http://gm.mmstat.com/iceteam.iceworks.${logCode}${!isAlibaba ? outside : ''}`;
     const data = {
       gmkey: 'CLK',
       gokey: encodeURIComponent(gokey),
@@ -99,15 +108,15 @@ async function recordPV(originParam: IGoldlogParam, recordType?: RecordType) {
   }
 }
 
-async function recordUV(originParam: IGoldlogParam) {
+export async function recordUV(originParam: IGoldlogParam, storeInstance = configure, storeRecordKey = recordKey, url?: string) {
   const nowtDate = new Date().toDateString();
   const dauKey = `${JSON.stringify(originParam)}`;
-  const records = configure.get(recordKey);
+  const records = storeInstance.get(storeRecordKey);
   const lastDate = records[dauKey];
   if (nowtDate !== lastDate) {
     records[dauKey] = nowtDate;
-    configure.set(recordKey, records);
-    return await recordPV(originParam, 'UV');
+    storeInstance.set(storeRecordKey, records);
+    return await recordPV(originParam, 'UV', url);
   }
 }
 
@@ -116,14 +125,14 @@ export async function record(originParam: IGoldlogParam) {
   await recordUV(originParam);
 }
 
-export function recordDAU() {
+export function recordDAU(locale = vscodeEnv ? vscodeEnv.language : 'zh-CN') {
   return recordUV({
     namespace: MAIN_KEY,
     module: RECORD_MODULE_KEY,
     action: 'dau',
     data: {
       platform: process.platform,
-      locale: vscodeEnv ? vscodeEnv.language : 'zh-CN',
+      locale,
     },
   });
 }
@@ -186,28 +195,28 @@ export class Recorder {
     this.version = version;
   }
 
-  public record(param: ILogParam) {
+  record(param: ILogParam) {
     return record({
       namespace: this.namespace,
       ...param,
     });
   }
 
-  public recordPV(param: ILogParam) {
+  recordPV(param: ILogParam) {
     return recordPV({
       namespace: this.namespace,
       ...param,
     });
   }
 
-  public recordUV(param: ILogParam) {
+  recordUV(param: ILogParam) {
     return recordUV({
       namespace: this.namespace,
       ...param,
     });
   }
 
-  public recordActivate() {
+  recordActivate() {
     recordActivate({
       extension: this.namespace,
       version: this.version,
