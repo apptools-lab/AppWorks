@@ -231,7 +231,7 @@ export function createNodeDependenciesTreeView(context) {
       if (nodeModulesExists) {
         await vscode.window.withProgress({
           location: vscode.ProgressLocation.Notification,
-          title: `Deleting ${nodeModulesPath}`,
+          title: i18n.format('extension.applicationManager.nodeDependencies.delete.title', { nodeModulesPath }),
         }, async () => {
           try {
             await rimrafAsync(nodeModulesPath);
