@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.1
+
+- fix: empty project show wrong CodeMod notice.
+
 ## 1.1.0
 
 - feat: Add codemod check
