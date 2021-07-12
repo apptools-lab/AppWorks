@@ -5,16 +5,16 @@ import * as vscode from 'vscode';
 
 
 export default (code: string, uri: vscode.Uri): string => {
-  let defaultPropTypes = 'PropTypes';
+  let defaultPropTypesDependentName = 'PropTypes';
   try {
     const ast = parse(code, {
       sourceType: 'module',
       plugins: getBabelParserPlugins('jsx'),
     });
 
-    const result = getImportDependent(ast, 'prop-types');
-    if (result) {
-      defaultPropTypes = result;
+    const propTypesDependentName = getImportDependent(ast, 'prop-types');
+    if (propTypesDependentName) {
+      defaultPropTypesDependentName = propTypesDependentName;
     } else {
       // register a commend for insert `import PropTypes from 'prop-types';` code;
       const Disposable = vscode.commands.registerCommand('material-helper.auto-import-prop-types', () => {
@@ -36,5 +36,5 @@ export default (code: string, uri: vscode.Uri): string => {
   } catch (e) {
     // ignore
   }
-  return defaultPropTypes;
+  return defaultPropTypesDependentName;
 };

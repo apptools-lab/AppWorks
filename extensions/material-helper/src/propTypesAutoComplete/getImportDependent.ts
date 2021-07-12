@@ -11,5 +11,5 @@ export default (ast: File, dependent: string): string => {
       }
     },
   });
-  return importDependent;
+  return importDependent || '';
 };
