@@ -1,6 +1,6 @@
 import { parse } from '@babel/parser';
 import getBabelParserPlugins from '../utils/getBabelParserPlugins';
-import getImportDependent from './getImportDependent';
+import getImportDependentName from './getImportDependentName';
 import * as vscode from 'vscode';
 
 
@@ -12,7 +12,7 @@ export default (code: string, uri: vscode.Uri): string => {
       plugins: getBabelParserPlugins('jsx'),
     });
 
-    const propTypesDependentName = getImportDependent(ast, 'prop-types');
+    const propTypesDependentName = getImportDependentName(ast, 'prop-types');
     if (propTypesDependentName) {
       defaultPropTypesDependentName = propTypesDependentName;
     } else {
