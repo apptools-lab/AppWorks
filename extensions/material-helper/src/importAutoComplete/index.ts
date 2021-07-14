@@ -1,11 +1,15 @@
 import * as vscode from 'vscode';
-import getAlreadyImportItems from './getAlreadyImportItems';
+import getAlreadyImportSet from './getAlreadyImportSet';
 import getCompletionItemsFromDirectory from './getCompletionItemsFromDirectory';
+import getCompletionItemsFromProjectType from './getCompletionItemsFromProjectType';
+import getCompletionItemsFromFilename from './getCompletionItemsFromFilename';
 
 async function provideCompletionItems(document: vscode.TextDocument): Promise<vscode.CompletionItem[]> {
   const items: vscode.CompletionItem[] = [];
-  const alreadyImportItems = getAlreadyImportItems(document);
-  items.push(...await getCompletionItemsFromDirectory(document, alreadyImportItems));
+  const alreadyImportSet = getAlreadyImportSet(document);
+  items.push(...await getCompletionItemsFromDirectory(document, alreadyImportSet));
+  items.push(...await getCompletionItemsFromProjectType(alreadyImportSet));
+  items.push(...await getCompletionItemsFromFilename(document, alreadyImportSet));
   return items;
 }
 

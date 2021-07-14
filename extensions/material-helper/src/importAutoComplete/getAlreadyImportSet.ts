@@ -3,9 +3,10 @@ import getBabelParserPlugins from '../utils/getBabelParserPlugins';
 import { parse } from '@babel/parser';
 import traverse, { NodePath } from '@babel/traverse';
 import { ImportDeclaration } from '@babel/types';
+import { join } from 'path';
 
-export default (doc: vscode.TextDocument): string[] => {
-  const importItems: string[] = [];
+export default (doc: vscode.TextDocument): Set<string> => {
+  const importSet: Set<string> = new Set();
   const documentText = doc.getText();
   try {
     const ast = parse(documentText, {
@@ -16,12 +17,12 @@ export default (doc: vscode.TextDocument): string[] => {
       ImportDeclaration(path: NodePath<ImportDeclaration>) {
         const { node } = path;
         const moduleName = node.source.value;
-        importItems.push(moduleName);
+        importSet.add(join(moduleName));
       },
     });
   } catch (e) {
     // ignore
   }
 
-  return importItems;
+  return importSet;
 };
