@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { getProjectFramework } from '@appworks/project-service';
 import getFilenameWithoutExtname from '../getFilenameWithoutExtname';
 import getCompletionItem from '../getCompletionItem';
+import * as path from 'path';
 
 export default async (
   filePath: string,
@@ -9,17 +9,17 @@ export default async (
 ): Promise<vscode.CompletionItem[]> => {
   const items: vscode.CompletionItem[] = [];
   try {
-    if (['icejs', 'rax-app'].includes(await getProjectFramework())) {
-      const modelsDirectoryUri = vscode.Uri.parse(filePath);
-      const files = await vscode.workspace.fs.readDirectory(modelsDirectoryUri);
-      for (const file of files) {
-        if (!alreadyImportSet.has(file[0])) {
-          items.push(getCompletionItem(`./models/${getFilenameWithoutExtname(file[0])}`));
-        }
+    const modelsDirectoryPath = path.resolve(filePath, 'models');
+    const modelsDirectoryUri = vscode.Uri.parse(modelsDirectoryPath);
+    // if modelsDirectoryUri is not exist, the error will be thrown and this complete is not work.
+    const files = await vscode.workspace.fs.readDirectory(modelsDirectoryUri);
+    for (const file of files) {
+      const importSourceValue = `./models/${getFilenameWithoutExtname(file[0])}`;
+      if (!alreadyImportSet.has(path.join(importSourceValue))) {
+        items.push(getCompletionItem(importSourceValue));
       }
     }
   } catch (e) {
-    console.error(e);
     // ignore
   }
   return items;

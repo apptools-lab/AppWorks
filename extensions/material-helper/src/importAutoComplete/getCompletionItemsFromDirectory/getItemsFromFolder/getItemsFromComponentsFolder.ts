@@ -3,9 +3,9 @@ import * as path from 'path';
 import getCompletionItem from '../../getCompletionItem';
 import getFilenameWithoutExtname from '../../getFilenameWithoutExtname';
 
-function checkIsProvideItems(currentFileName: string, alreadyImportSet: Set<string>): boolean {
+function checkIsValidateOfReactComponent(currentFilename: string, alreadyImportSet: Set<string>): boolean {
   return (
-    ['.jsx', '.tsx'].includes(path.extname(currentFileName)) ||
+    ['.jsx', '.tsx'].includes(path.extname(currentFilename)) ||
     alreadyImportSet.has('react')
   );
 }
@@ -17,12 +17,13 @@ export default async (
 ): Promise<vscode.CompletionItem[]> => {
   const items: vscode.CompletionItem[] = [];
   try {
-    if (checkIsProvideItems(currentFileName, alreadyImportSet)) {
+    if (checkIsValidateOfReactComponent(currentFileName, alreadyImportSet)) {
       const componentsDirectoryUri = vscode.Uri.parse(componentsDirectoryPath);
       const files = await vscode.workspace.fs.readDirectory(componentsDirectoryUri);
       files.forEach((file) => {
-        if (!alreadyImportSet.has(file[0])) {
-          items.push(getCompletionItem(`./components/${getFilenameWithoutExtname(file[0])}`));
+        const importSourceValue = `./components/${getFilenameWithoutExtname(file[0])}`;
+        if (!alreadyImportSet.has(path.join(importSourceValue))) {
+          items.push(getCompletionItem(importSourceValue));
         }
       });
     }
