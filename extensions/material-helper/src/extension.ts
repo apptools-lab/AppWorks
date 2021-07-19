@@ -14,6 +14,7 @@ import { createComponentsTreeView } from './views/componentsView';
 import { createPagesTreeView } from './views/pagesView';
 import mtopAutoComplete from './mtopAutoComplete';
 import importAutoComplete from './importAutoComplete';
+import propTypesAutoComplete from './propTypesAutoComplete';
 
 const { window, ViewColumn } = vscode;
 
@@ -128,6 +129,8 @@ export function activate(context: vscode.ExtensionContext) {
   createPagesTreeView(context);
 
   importAutoComplete();
+  // help user complete React Component's propTypes; 
+  propTypesAutoComplete();
 }
 
 export function deactivate() { }
