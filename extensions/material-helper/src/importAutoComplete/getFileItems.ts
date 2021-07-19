@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import getCompletionItem from '../../getCompletionItem';
-import getFilenameWithoutExtname from '../../getFilenameWithoutExtname';
+import getCompletionItem from './getCompletionItem';
+import getFilenameWithoutExtname from './getFilenameWithoutExtname';
 
 interface IValidateRule {
   validateCallback: Function;
@@ -32,12 +32,11 @@ const checkIsValidate = (validateRules: IValidateRule[]) => {
   });
 };
 
-
-export default (
-  currentFilename: string,
+function getItemsFromFile(
+  filename: string,
   importFilename: string,
   alreadyImportSet: Set<string>,
-): vscode.CompletionItem[] => {
+): vscode.CompletionItem[] {
   const items: vscode.CompletionItem[] = [];
   const importSourceValue = `./${getFilenameWithoutExtname(importFilename)}`;
   const validateRules: IValidateRule[] = [
@@ -55,11 +54,34 @@ export default (
     },
     {
       validateCallback: checkValidateOfCurrentFile,
-      args: [importFilename, currentFilename],
+      args: [importFilename, filename],
     },
   ];
   if (checkIsValidate(validateRules)) {
     items.push(getCompletionItem(importSourceValue));
   }
   return items;
+}
+
+
+export default async (
+  filename: string,
+  directoryPath: string,
+  alreadyImportSet: Set<string>,
+): Promise<vscode.CompletionItem[]> => {
+  const items: vscode.CompletionItem[] = [];
+  try {
+    const directoryUri = vscode.Uri.parse(directoryPath);
+    const files = await vscode.workspace.fs.readDirectory(directoryUri);
+    for (const file of files) {
+      const [importFilename, fileType] = [file[0], file[1]];
+      if (fileType === vscode.FileType.File) {
+        items.push(...getItemsFromFile(filename, importFilename, alreadyImportSet));
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return items;
 };
+

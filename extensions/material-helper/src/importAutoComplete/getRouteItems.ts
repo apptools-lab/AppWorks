@@ -1,8 +1,13 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import getFilenameWithoutExtname from '../getFilenameWithoutExtname';
-import getCompletionItem from '../getCompletionItem';
+import getFilenameWithoutExtname from './getFilenameWithoutExtname';
+import getCompletionItem from './getCompletionItem';
 
+function checkIsValidate(filename: string, projectFramework: string): boolean {
+  const validateStoreFilenames = ['routes.ts', 'routes.js'];
+  const validateFramework = ['icejs'];
+  return validateStoreFilenames.includes(filename) && validateFramework.includes(projectFramework);
+}
 
 /**
  * check the file is layouts or pages directory
@@ -31,19 +36,34 @@ async function getItemsFromDirectory(
   return items;
 }
 
+
 export default async (
+  filename: string,
   filePath: string,
+  projectFramework: string,
   alreadyImportSet: Set<string>,
 ): Promise<vscode.CompletionItem[]> => {
   const items: vscode.CompletionItem[] = [];
-  const uri = vscode.Uri.parse(filePath);
-  const files = await vscode.workspace.fs.readDirectory(uri);
-  for (const file of files) {
-    const filename = file[0];
-    if (checkValidateOfIsDirectory(file)) {
-      items.push(...await getItemsFromDirectory(path.resolve(filePath, filename), filename, alreadyImportSet));
+  if (checkIsValidate(filename, projectFramework)) {
+    try {
+      const uri = vscode.Uri.parse(filePath);
+      const files = await vscode.workspace.fs.readDirectory(uri);
+      for (const file of files) {
+        const filenameInDirectory = file[0];
+        if (checkValidateOfIsDirectory(file)) {
+          /* eslint-disable no-await-in-loop */
+          items.push(
+            ...await getItemsFromDirectory(
+              path.resolve(filePath, filenameInDirectory),
+              filenameInDirectory,
+              alreadyImportSet,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // ignore
     }
   }
-
   return items;
 };
