@@ -10,6 +10,12 @@ function checkIsValidateOfReactComponent(currentFilename: string, alreadyImportS
   );
 }
 
+/**
+ * get items from Components folder
+ * it take effect only when user type in react file;
+ * Example:
+ *  import xxx from './components'
+ */
 export default async (
   filename: string,
   filePath: string,

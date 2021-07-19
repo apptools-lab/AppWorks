@@ -1,6 +1,11 @@
 import * as vscode from 'vscode';
 import getCompletionItem from './getCompletionItem';
 
+/**
+ * get items from project Framework
+ * if project is ICE project, help import 'ice'
+ * if project is Rax project, help import 'rax'
+ */
 export default (
   projectFramework: string,
   alreadyImportSet: Set<string>,

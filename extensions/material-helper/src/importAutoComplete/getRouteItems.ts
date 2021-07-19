@@ -36,7 +36,12 @@ async function getItemsFromDirectory(
   return items;
 }
 
-
+/**
+ * get items in route.[t|j]s from layouts & pages directory
+ * Example:
+ *  import xxx from './pages/xxx';
+ *  import xxx from './layouts/xxx';
+ */
 export default async (
   filename: string,
   filePath: string,
@@ -62,7 +67,7 @@ export default async (
         }
       }
     } catch (e) {
-      // ignore
+      console.log(e);
     }
   }
   return items;

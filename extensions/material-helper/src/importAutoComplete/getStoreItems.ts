@@ -9,6 +9,11 @@ function checkIsValidate(filename: string, projectFramework: string): boolean {
   return validateStoreFilenames.includes(filename) && validateFramework.includes(projectFramework);
 }
 
+/**
+ * get items in store.[j|t]s from models folder
+ * Example:
+ *  import xxx from './models/xxx';
+ */
 export default async (
   filename: string,
   filePath: string,

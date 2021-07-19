@@ -13,7 +13,6 @@ function checkValidateOfIndexFile(importFileName: string): boolean {
   const filenameWithoutExtname = path.basename(importFileName, path.extname(importFileName));
   return !(filenameWithoutExtname === indexFilename);
 }
-
 function checkValidateOfTsDeclarationFile(importFileName: string): boolean {
   return !importFileName.endsWith('.d.ts');
 }
@@ -63,7 +62,14 @@ function getItemsFromFile(
   return items;
 }
 
-
+/**
+ * get file's items from current directory
+ * Example:
+ *  current directory has index.module.scss, utils.ts, ...
+ *  import xxx from './index.module.scss';
+ *  import xxx from './utils';
+ *  import xxx from './xxx';
+ */
 export default async (
   filename: string,
   directoryPath: string,
