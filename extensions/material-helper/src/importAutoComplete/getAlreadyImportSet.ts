@@ -21,7 +21,7 @@ export default (doc: vscode.TextDocument): Set<string> => {
       },
     });
   } catch (e) {
-    // ignore
+    console.log(e);
   }
 
   return importSet;
