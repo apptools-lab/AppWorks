@@ -12,7 +12,7 @@
     "body": "const { data, error, loading, request } = useRequest(${1:service});"
   },
   "mtop.request": {
-    "prefix": "mtop.request",
+    "prefix": "mtopRequest",
     "body": [
       "Mtop.request({",
       "\tapi: '${1:api}',",
@@ -26,7 +26,7 @@
     ]
   },
   "mtop.config": {
-    "prefix": "mtop.config",
+    "prefix": "mtopConfig",
     "body": "Mtop.config('${1:configKey}', '${2:configValue}')"
   }
 }
