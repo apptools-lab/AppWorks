@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.3.0](https://github.com/appworks-lab/pack/releases/tag/v1.3.0)
+
+- feat: add jsx files propTypes auto complete [#902](https://github.com/appworks-lab/pack/pull/902) 
+- feat: add code snippets [#903](https://github.com/appworks-lab/pack/pull/903) 
+- feat: auto fill content in store's files when create [#908](https://github.com/appworks-lab/pack/pull/908) 
+- feat: add auto complete when import modules [#905](https://github.com/appworks-lab/pack/pull/905) 
+- fix: dashboard show 404 and 500 error [#911](https://github.com/appworks-lab/pack/pull/911) 
+- fix: eslint config `overrides` not work [#901](https://github.com/appworks-lab/pack/pull/901) 
+
 ## [1.2.1](https://github.com/appworks-lab/pack/releases/tag/v1.2.1)
 
 - feat: support double click to select scaffold [#895](https://github.com/appworks-lab/pack/pull/895)
