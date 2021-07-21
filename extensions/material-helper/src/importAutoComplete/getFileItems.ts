@@ -37,6 +37,8 @@ function getItemsFromFile(
   alreadyImportSet: Set<string>,
 ): vscode.CompletionItem[] {
   const items: vscode.CompletionItem[] = [];
+  // special deal with css file
+  const importModuleCssRegExp = /\.module\.(less|css|scss)$/;
   const importSourceValue = `./${getFilenameWithoutExtname(importFilename)}`;
   const validateRules: IValidateRule[] = [
     {
@@ -57,7 +59,11 @@ function getItemsFromFile(
     },
   ];
   if (checkIsValidate(validateRules)) {
-    items.push(getCompletionItem(importSourceValue));
+    if (importModuleCssRegExp.test(importSourceValue)) {
+      items.push(getCompletionItem(importSourceValue, 'styles'));
+    } else {
+      items.push(getCompletionItem(importSourceValue));
+    }
   }
   return items;
 }
@@ -66,8 +72,8 @@ function getItemsFromFile(
  * get file's items from current directory
  * Example:
  *  current directory has index.module.scss, utils.ts, ...
- *  import xxx from './index.module.scss';
- *  import xxx from './utils';
+ *  import styles from './index.module.scss';
+ *  import utils from './utils';
  *  import xxx from './xxx';
  */
 export default async (
