@@ -12,9 +12,9 @@ export default (
 ): vscode.CompletionItem[] => {
   const items: vscode.CompletionItem[] = [];
   if (projectFramework === 'icejs' && !alreadyImportSet.has('ice')) {
-    items.push(getCompletionItem('ice', '{ ${1} }'));
+    items.push(getCompletionItem('ice', '{  }'));
   } else if (['rax-app', 'rax-component'].includes(projectFramework) && !alreadyImportSet.has('rax')) {
-    items.push(getCompletionItem('rax', '{ ${1} }'));
+    items.push(getCompletionItem('rax', '{  }'));
   }
   return items;
 };
