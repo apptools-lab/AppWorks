@@ -11,7 +11,7 @@
     "prefix": "useRequest",
     "body": "const { data, error, loading, request } = useRequest(${1:service});"
   },
-  "mtop.request": {
+  "mtopRequest": {
     "prefix": "mtopRequest",
     "body": [
       "Mtop.request({",
@@ -25,7 +25,7 @@
       ");"
     ]
   },
-  "mtop.config": {
+  "mtopConfig": {
     "prefix": "mtopConfig",
     "body": "Mtop.config('${1:configKey}', '${2:configValue}')"
   }
