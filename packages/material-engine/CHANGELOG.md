@@ -2,7 +2,8 @@
 
 ## 0.1.2
 
-- feat: support generate antd and fusion mobile base material info
+- feat: update official materials
+- chore: remove antd material source
 
 ## 0.1.1
 
