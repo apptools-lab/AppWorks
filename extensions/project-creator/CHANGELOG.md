@@ -3,6 +3,7 @@
 ## 1.0.4
 
 - feat: update official materials
+- feat: display ts or js icon which depends on the projectType in material source data
 
 ## 1.0.3
 
