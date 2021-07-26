@@ -21,7 +21,7 @@ Hi! I’m really excited that you are interested in contributing to AppWorks. Be
 Clone repo and initialize the setup environment：
 
 ```bash
-$ git clone git@github.com:appworks-lab/pack.git
+$ git clone git@github.com:appworks-lab/appworks.git
 $ cd appworks && npm run setup # This will take about 20 minutes
 
 # add dep to some package

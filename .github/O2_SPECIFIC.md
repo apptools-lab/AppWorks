@@ -9,7 +9,7 @@ AppWorks converts VS Code Pack to O2 Pack, this document describes the develop, 
 General O2 pack by following commands:
 
 ```bash
-$ git clone git@github.com:appworks-lab/pack.git
+$ git clone git@github.com:appworks-lab/appworks.git
 $ cd appworks/
 $ npm install
 # before run this script, modify `pushExtension2Npm` param which is in `./config.ts` to true when publish to tnpm

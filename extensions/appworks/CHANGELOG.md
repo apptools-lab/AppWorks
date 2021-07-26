@@ -2,7 +2,11 @@
 
 ## [1.3.1]
 
+- feat: update doctor codemod report [#920](https://github.com/appworks-lab/appworks/pull/920)
+- feat: update official materials [#922](https://github.com/appworks-lab/appworks/pull/922)
+- fix: fail to update material source [#921](https://github.com/appworks-lab/appworks/pull/921)
 - fix: remove stylelint extension that causes some bugs in vscode
+
 
 ## [1.3.0](https://github.com/appworks-lab/pack/releases/tag/v1.3.0)
 

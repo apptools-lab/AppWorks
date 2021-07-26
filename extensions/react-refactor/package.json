@@ -57,7 +57,7 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/pack.git"
+    "url": "https://github.com/appworks-lab/appworks.git"
   },
   "bugs": {
     "url": "https://github.com/appworks-lab/pack/issues",
