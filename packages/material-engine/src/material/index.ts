@@ -243,6 +243,7 @@ export const addSource = async function (materialSource: IMaterialSource) {
 
 export const updateSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
   const sources: IMaterialSource[] = await getSources();
+  // don't update source when the source has already existed
   const existedSource = sources.some(
     ({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source,
   );
@@ -263,7 +264,7 @@ export const updateSource = async function (newMaterialSource: IMaterialSource, 
 
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
   const newSources = materialSources.map((item) => {
-    if (item.source === newMaterialSource.source) {
+    if (item.source === originSource.source) {
       return {
         ...item,
         ...newMaterialSource,

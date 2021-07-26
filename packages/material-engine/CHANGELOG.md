@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## 0.1.0
+## 0.1.2
+
+- fix: fail to update material source
+
+## 0.1.1
 
 - feat: support generate antd and fusion mobile base material info
 
