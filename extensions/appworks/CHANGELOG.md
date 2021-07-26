@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.3.1]
+## [1.3.1](https://github.com/appworks-lab/appworks/releases/tag/v1.3.1)
 
 - feat: update doctor codemod report [#920](https://github.com/appworks-lab/appworks/pull/920)
 - feat: update official materials [#922](https://github.com/appworks-lab/appworks/pull/922)
