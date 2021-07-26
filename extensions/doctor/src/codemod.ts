@@ -17,10 +17,7 @@ const SCAN_OPTIONS = {
 };
 
 export async function runCodemod(transform: string) {
-  const result = await doctor.scan(
-    projectPath,
-    Object.assign({ transforms: [transform] }, SCAN_OPTIONS),
-  );
+  const result = await doctor.scan(projectPath, Object.assign({ transforms: [transform] }, SCAN_OPTIONS));
   setOutput(result.codemod?.reports[0].output || '');
   return result;
 }
@@ -76,10 +73,18 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
 
   // Show deprecate package
   setDeprecatedPackage(deprecatedPackageConfig);
-  vscode.window.onDidChangeActiveTextEditor(() => {
-    setDeprecatedPackage(deprecatedPackageConfig);
-  }, null, context.subscriptions);
-  vscode.workspace.onDidChangeTextDocument(() => {
-    setDeprecatedPackage(deprecatedPackageConfig);
-  }, null, context.subscriptions);
+  vscode.window.onDidChangeActiveTextEditor(
+    () => {
+      setDeprecatedPackage(deprecatedPackageConfig);
+    },
+    null,
+    context.subscriptions,
+  );
+  vscode.workspace.onDidChangeTextDocument(
+    () => {
+      setDeprecatedPackage(deprecatedPackageConfig);
+    },
+    null,
+    context.subscriptions,
+  );
 }
