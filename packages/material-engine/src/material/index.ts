@@ -53,20 +53,13 @@ const componentSourceDetails = [
   },
 ];
 
-const OFFICAL_MATERIAL_SOURCES = [
+const OFFICIAL_MATERIAL_SOURCES = [
   {
     name: i18n.format('package.materialService.index.webTitle'),
     type: 'react',
     client: 'pc',
     source: ICE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.webDescription'),
-  },
-  {
-    name: i18n.format('package.materialService.index.antdTitle'),
-    type: 'react',
-    client: 'pc',
-    source: ANTD_MATERIAL_SOURCE,
-    description: i18n.format('package.materialService.index.antdDescription'),
   },
   {
     name: i18n.format('package.materialService.index.raxTitle'),
@@ -112,7 +105,7 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 };
 
-export const getOfficalMaterialSources = () => [].concat(OFFICAL_MATERIAL_SOURCES);
+export const getOfficialMaterialSources = () => [].concat(OFFICIAL_MATERIAL_SOURCES);
 
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 
@@ -126,7 +119,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     // if the project type is unknown, set the default project type
     specifiedType = 'react';
   }
-  let sources: IMaterialSource[] = getOfficalMaterialSources();
+  let sources: IMaterialSource[] = getOfficialMaterialSources();
   const isAliInternal = await checkIsAliInternal();
   if (!isAliInternal) {
     sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
