@@ -18,7 +18,6 @@ export { generateDebugMaterialData };
 
 // material source
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
-const ANTD_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/antd-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
 // const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
@@ -70,7 +69,7 @@ const OFFICIAL_MATERIAL_SOURCES = [
   },
 ];
 
-const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
+const OFFICIAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
   // {
   //   name: i18n.format('package.materialService.index.miniProgramTitle'),
   //   type: 'miniProgram',
@@ -89,10 +88,6 @@ let dataCache: { [source: string]: IMaterialData } = {};
 
 const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
-};
-
-const isAntdMaterial = (source: string) => {
-  return source === ANTD_MATERIAL_SOURCE;
 };
 
 const isRaxMaterial = (source: string) => {
@@ -122,7 +117,7 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
   let sources: IMaterialSource[] = getOfficialMaterialSources();
   const isAliInternal = await checkIsAliInternal();
   if (!isAliInternal) {
-    sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
+    sources = sources.concat(OFFICIAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = getUserSources();
   sources.unshift(...userSources);
@@ -162,11 +157,11 @@ export const getData = async function (source: string): Promise<IMaterialData> {
     let bases: IMaterialBase[];
     try {
       if (isIceMaterial(source)) {
-        const baseResult = await axios({ url: FUSION_PC_COMPONENTS_SOURCE });
-        bases = getBaseMaterials(baseResult.data, '@alifd/next', '1.18.16');
-      } else if (isAntdMaterial(source)) {
-        const baseResult = await axios({ url: ANTD_PC_COMPONENTS_SOURCE });
-        bases = getBaseMaterials(baseResult.data, 'antd', '4.16.5');
+        const fusionBaseResult = await axios({ url: FUSION_PC_COMPONENTS_SOURCE });
+        const fusionBaseMaterials = getBaseMaterials(fusionBaseResult.data, '@alifd/next', '1.18.16');
+        const antdBaseResult = await axios({ url: ANTD_PC_COMPONENTS_SOURCE });
+        const antdBaseMaterials = getBaseMaterials(antdBaseResult.data, 'antd', '4.16.5');
+        bases = [...fusionBaseMaterials, ...antdBaseMaterials];
       } else if (isRaxMaterial(source)) {
         const baseResult = await axios({ url: RAX_BASE_COMPONENTS_SOURCE });
         bases = baseResult.data;
