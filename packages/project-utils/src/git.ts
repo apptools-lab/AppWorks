@@ -9,7 +9,7 @@ const gitRemoteOriginUrl = require('git-remote-origin-url');
 export interface GitInfo {
   branch: string; // master
   repository: string; // git@github.com:appworks-lab/appworks.git
-  remoteUrl: string; // https://github.com/appworks-lab/pack
+  remoteUrl: string; // https://github.com/appworks-lab/appworks
   group: string; // appworks-lab
   project: string; // pack
   tag?: string;

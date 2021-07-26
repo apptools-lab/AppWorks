@@ -368,9 +368,9 @@
   "extensionDependencies": [
     "iceworks-team.iceworks-project-creator"
   ],
-  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/application-manager/README.md",
+  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/pack/issues",
+    "url": "https://github.com/appworks-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

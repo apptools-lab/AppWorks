@@ -82,9 +82,9 @@
     "tinycolor2": "^1.4.1",
     "vscode-web-custom-data": "^0.1.4"
   },
-  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/style-helper/README.md",
+  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/style-helper/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/pack/issues",
+    "url": "https://github.com/appworks-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

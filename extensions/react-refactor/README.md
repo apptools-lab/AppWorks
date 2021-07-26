@@ -1,6 +1,6 @@
 # React Refactor
 
-English | [简体中文](https://github.com/appworks-lab/pack/blob/master/extensions/react-refactor/README.zh-CN.md)
+English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/react-refactor/README.zh-CN.md)
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-refactor.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-refactor.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-refactor)

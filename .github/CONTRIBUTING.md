@@ -114,7 +114,7 @@ Get a Personal Access Token:
 
 Set Personal Access Token for Github Actions: 
 
-1. Visit [Actions secrets](https://github.com/appworks-lab/pack/settings/secrets/actions)
+1. Visit [Actions secrets](https://github.com/appworks-lab/appworks/settings/secrets/actions)
 2. Update `VSCE_TOKEN`:
     ![](https://img.alicdn.com/imgextra/i2/O1CN01NpeNCf2558rTm9812_!!6000000007474-2-tps-2880-1754.png_790x10000.jpg)
 
