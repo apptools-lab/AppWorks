@@ -2,7 +2,7 @@
 
 ## 1.0.8
 
-- fix: update code snippets, the mtop.[request | config] => mtop[Request | Config]
+- fix: update code snippets, the snippet - mtop.[request | config] => mtop[Request | Config]
 
 ## 1.0.7
 
