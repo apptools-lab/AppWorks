@@ -16,7 +16,6 @@ English | [简体中文](./README.zh-CN.md)
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg" /></a>
   <a href="https://github.com/appworks-lab/appworks/actions"><img src="https://github.com/appworks-lab/appworks/workflows/ci/badge.svg" /></a>
-  <a href="https://codecov.io/gh/appworks-lab/pack"><img src="https://img.shields.io/codecov/c/github/appworks-lab/pack/master.svg" alt="Test Coverage" /></a>
   <a href="https://github.com/appworks-lab/appworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
