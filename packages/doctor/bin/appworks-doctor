@@ -45,7 +45,7 @@ if (args.scan) {
       },
       score: result.score || 0,
     };
-    ['ESLint', 'maintainability', 'repeatability'].forEach((key) => {
+    ['ESLint', 'maintainability', 'repeatability', 'codemod'].forEach((key) => {
       if (result[key]) {
         report[key] = result[key].score;
       }
