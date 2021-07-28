@@ -5,7 +5,7 @@ import i18n from '../i18n';
 export default function getHoverItem(tagName: string, source: string) {
   const docInfos = getDocInfos();
   const tagInfo = docInfos.find((info) => {
-    return info.label === tagName && info.source.npm === source
+    return info.label === tagName && info.source.npm === source;
   });
   if (tagInfo) {
     const docsLink = new vscode.MarkdownString(

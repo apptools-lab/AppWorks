@@ -129,7 +129,7 @@ export function activate(context: vscode.ExtensionContext) {
   createPagesTreeView(context);
 
   importAutoComplete();
-  // help user complete React Component's propTypes; 
+  // help user complete React Component's propTypes;
   propTypesAutoComplete();
 }
 
