@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.3
+
+- Feat: remove typescript from dependencies
+
 ## 0.1.2
 
 - Feat: add fusion mobile docs link
