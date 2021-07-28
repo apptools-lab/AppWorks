@@ -19,6 +19,7 @@ jobs:
       - run: |
           npm run setup:packages
           npm run dependency:check
+          npm run lint
           npm run test
           npm run coverage
         env:
@@ -28,3 +29,4 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: true
+          

@@ -15,9 +15,9 @@ async function getDefLoginClient() {
       accessKeySecret: ACCESS_KEY_SECRET,
       timeout: '300s',
     });
-  
+
     const target = 'packages/def-login-client.zip';
-  
+
     try {
       const result = await ossClient.get(target);
       const zipPath = path.join(__dirname, '..', 'tmp.zip');

@@ -1,4 +1,4 @@
-简体中文 | [English](https://github.com/appworks-lab/pack/blob/master/extensions/time-master/README.md)
+简体中文 | [English](https://github.com/appworks-lab/appworks/blob/master/extensions/time-master/README.md)
 
 # 时间管理大师
 
@@ -29,7 +29,7 @@
 - **从不访问您的代码**：我们不处理、发送或存储您的代码。
 - **您的数据是私有的**：我们不会与任何人共享您的个人数据。
 
-最重要的一点，插件代码是[开源](https://github.com/appworks-lab/pack/tree/master/extensions/iceworks-time-master)的，您可以很容易地看到我们对于数据处理的实现。
+最重要的一点，插件代码是[开源](https://github.com/appworks-lab/appworks/tree/master/extensions/iceworks-time-master)的，您可以很容易地看到我们对于数据处理的实现。
 
 > 备注 1：这是针对社区开发者而言的，如果您是阿里内部用户，我们将默认上传您的数据。
 > 

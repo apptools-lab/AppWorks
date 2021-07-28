@@ -13,7 +13,7 @@ interface IScaffoldCardProps {
   onDoubleClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media, onDoubleClick = () => {} }) => {
+const PCScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, onClick, media, onDoubleClick = () => {} }) => {
   return (
     <div className={styles.container} onDoubleClick={onDoubleClick}>
       <Card
@@ -34,4 +34,4 @@ const ScaffoldCard: React.FC<IScaffoldCardProps> = ({ title, content, selected, 
   );
 };
 
-export default ScaffoldCard;
+export default PCScaffoldCard;

@@ -19,7 +19,7 @@ export interface IDebugConfig {
 function writeConfigFile(filePath: string, config: IDebugConfig) {
   fs.writeFileSync(
     filePath,
-    '// See https://github.com/appworks-lab/pack/blob/master/extensions/application-manager/docs/debug.md \n' +
+    '// See https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/docs/debug.md \n' +
       '// for the documentation about the AppWorks debug \n' +
       `${JSON.stringify(config, null, '  ')}`,
   );

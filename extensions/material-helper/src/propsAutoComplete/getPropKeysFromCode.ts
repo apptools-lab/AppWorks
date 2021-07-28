@@ -21,7 +21,7 @@ export default function getPropKeysFromCode(componentPath: string): string[] {
   } catch (error) {
     // ignore
   }
-  console.log(propKeys)
+  console.log(propKeys);
 
   return propKeys;
 }

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.4
+
+- fix: fail to update the material source
+
 ## 1.0.3
 
 - fix: can not get project info in dashboard when in external

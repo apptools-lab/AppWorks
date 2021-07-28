@@ -18,7 +18,6 @@ export { generateDebugMaterialData };
 
 // material source
 const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
-const ANTD_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/antd-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
 // const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
@@ -53,20 +52,13 @@ const componentSourceDetails = [
   },
 ];
 
-const OFFICAL_MATERIAL_SOURCES = [
+const OFFICIAL_MATERIAL_SOURCES = [
   {
     name: i18n.format('package.materialService.index.webTitle'),
     type: 'react',
     client: 'pc',
     source: ICE_MATERIAL_SOURCE,
     description: i18n.format('package.materialService.index.webDescription'),
-  },
-  {
-    name: i18n.format('package.materialService.index.antdTitle'),
-    type: 'react',
-    client: 'pc',
-    source: ANTD_MATERIAL_SOURCE,
-    description: i18n.format('package.materialService.index.antdDescription'),
   },
   {
     name: i18n.format('package.materialService.index.raxTitle'),
@@ -77,7 +69,7 @@ const OFFICAL_MATERIAL_SOURCES = [
   },
 ];
 
-const OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
+const OFFICIAL_MATERIAL_SOURCES_FOR_EXTERNAL = [
   // {
   //   name: i18n.format('package.materialService.index.miniProgramTitle'),
   //   type: 'miniProgram',
@@ -98,10 +90,6 @@ const isIceMaterial = (source: string) => {
   return source === ICE_MATERIAL_SOURCE;
 };
 
-const isAntdMaterial = (source: string) => {
-  return source === ANTD_MATERIAL_SOURCE;
-};
-
 const isRaxMaterial = (source: string) => {
   return source === RAX_MATERIAL_SOURCE;
 };
@@ -112,7 +100,7 @@ export const getSourcesByProjectType = async function () {
   return getSources(type);
 };
 
-export const getOfficalMaterialSources = () => [].concat(OFFICAL_MATERIAL_SOURCES);
+export const getOfficialMaterialSources = () => [].concat(OFFICIAL_MATERIAL_SOURCES);
 
 export const getUserSources = () => getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
 
@@ -126,10 +114,10 @@ export async function getSources(specifiedType?: string): Promise<IMaterialSourc
     // if the project type is unknown, set the default project type
     specifiedType = 'react';
   }
-  let sources: IMaterialSource[] = getOfficalMaterialSources();
+  let sources: IMaterialSource[] = getOfficialMaterialSources();
   const isAliInternal = await checkIsAliInternal();
   if (!isAliInternal) {
-    sources = sources.concat(OFFICAL_MATERIAL_SOURCES_FOR_EXTERNAL);
+    sources = sources.concat(OFFICIAL_MATERIAL_SOURCES_FOR_EXTERNAL);
   }
   const userSources: IMaterialSource[] = getUserSources();
   sources.unshift(...userSources);
@@ -169,11 +157,11 @@ export const getData = async function (source: string): Promise<IMaterialData> {
     let bases: IMaterialBase[];
     try {
       if (isIceMaterial(source)) {
-        const baseResult = await axios({ url: FUSION_PC_COMPONENTS_SOURCE });
-        bases = getBaseMaterials(baseResult.data, '@alifd/next', '1.18.16');
-      } else if (isAntdMaterial(source)) {
-        const baseResult = await axios({ url: ANTD_PC_COMPONENTS_SOURCE });
-        bases = getBaseMaterials(baseResult.data, 'antd', '4.16.5');
+        const fusionBaseResult = await axios({ url: FUSION_PC_COMPONENTS_SOURCE });
+        const fusionBaseMaterials = getBaseMaterials(fusionBaseResult.data, '@alifd/next', '1.18.16');
+        const antdBaseResult = await axios({ url: ANTD_PC_COMPONENTS_SOURCE });
+        const antdBaseMaterials = getBaseMaterials(antdBaseResult.data, 'antd', '4.16.5');
+        bases = [...fusionBaseMaterials, ...antdBaseMaterials];
       } else if (isRaxMaterial(source)) {
         const baseResult = await axios({ url: RAX_BASE_COMPONENTS_SOURCE });
         bases = baseResult.data;
@@ -243,6 +231,7 @@ export const addSource = async function (materialSource: IMaterialSource) {
 
 export const updateSource = async function (newMaterialSource: IMaterialSource, originSource: IMaterialSource) {
   const sources: IMaterialSource[] = await getSources();
+  // don't update source when the source has already existed
   const existedSource = sources.some(
     ({ source: defaultSource }) => defaultSource === newMaterialSource.source && defaultSource !== originSource.source,
   );
@@ -263,7 +252,7 @@ export const updateSource = async function (newMaterialSource: IMaterialSource, 
 
   const materialSources = getDataFromSettingJson(CONFIGURATION_KEY_MATERIAL_SOURCES);
   const newSources = materialSources.map((item) => {
-    if (item.source === newMaterialSource.source) {
+    if (item.source === originSource.source) {
       return {
         ...item,
         ...newMaterialSource,

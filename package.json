@@ -45,13 +45,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/appworks-lab/pack.git"
+    "url": "git+https://github.com/appworks-lab/appworks.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/appworks-lab/pack/issues"
+    "url": "https://github.com/appworks-lab/appworks/issues"
   },
-  "homepage": "https://github.com/appworks-lab/pack#readme",
+  "homepage": "https://github.com/appworks-lab/appworks#readme",
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@appworks/constant": "^0.1.0",

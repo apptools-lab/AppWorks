@@ -6,6 +6,7 @@ export interface IMaterialSource {
   name: string;
   type: string;
   source: string;
+  client?: string;
   official?: boolean;
   checked?: boolean;
   description?: string;
@@ -52,6 +53,7 @@ export interface IMaterialScaffold {
   title: string;
   updateTime: string;
   isNewlyCreated?: boolean;
+  languageType?: 'js' | 'ts';
 }
 
 export interface IMaterialComponent {
@@ -142,11 +144,11 @@ export const MaterialServerPath = 'MaterialServerPath';
 export const IMaterialServer = Symbol('IMaterialServer');
 
 export interface IMaterialServer {
-  getSources(type?: string): Promise<IMaterialSource[]>;
-  getData(source: string): Promise<IMaterialData>;
-  addSource(param: IMaterialAddSourceParam): Promise<IMaterialSource[]>;
-  updateSource(newSource: IMaterialAddSourceParam, originSource: IMaterialSource): Promise<IMaterialSource[]>;
-  removeSource(source: string): Promise<IMaterialSource[]>;
+  getSources: (type?: string) => Promise<IMaterialSource[]>;
+  getData: (source: string) => Promise<IMaterialData>;
+  addSource: (param: IMaterialAddSourceParam) => Promise<IMaterialSource[]>;
+  updateSource: (newSource: IMaterialAddSourceParam, originSource: IMaterialSource) => Promise<IMaterialSource[]>;
+  removeSource: (source: string) => Promise<IMaterialSource[]>;
 }
 
 export interface ILocalBack {
@@ -155,16 +157,16 @@ export interface ILocalBack {
 }
 
 export interface IMaterialModule extends IMaterialServer {
-  goldlog(originParam: any);
-  maxComposePanel();
-  checkIsTemplate(fsPath: string): boolean;
-  getLocalBlocks(): ILocalBack[];
-  editLocalBlock(oldBlock: ILocalBack, newBlock: ILocalBack): void;
-  composeLocalBlock(blockName: string): void;
-  deleteLocalBlock(blockName: string): void;
-  createLocalBlock(): void;
-  addBlockCode(block: IMaterialBlock): Promise<void>;
-  addCode(dataSource: IMaterialComponent): Promise<void>;
+  goldlog: (originParam: any) => any;
+  maxComposePanel: () => any;
+  checkIsTemplate: (fsPath: string) => boolean;
+  getLocalBlocks: () => ILocalBack[];
+  editLocalBlock: (oldBlock: ILocalBack, newBlock: ILocalBack) => void;
+  composeLocalBlock: (blockName: string) => void;
+  deleteLocalBlock: (blockName: string) => void;
+  createLocalBlock: () => void;
+  addBlockCode: (block: IMaterialBlock) => Promise<void>;
+  addCode: (dataSource: IMaterialComponent) => Promise<void>;
 }
 
 export const IMaterialModule = Symbol('IMaterialModule');
@@ -184,11 +186,11 @@ export interface IMaterialService {
   sources: IMaterialSource[];
   data: IMaterialTypeDatum[];
   currentSource: string;
-  getSources(): Promise<void>;
-  setCurrentSource(source: string): Promise<void>;
-  addSource(param: IMaterialAddSourceParam): Promise<void>;
-  removeSource(source: string): Promise<void>;
-  getMaterialData(source: string): Promise<void>;
-  setSourceIsEditing(source: string, isEditing: boolean): Promise<void>;
-  updateSource(newSource: IMaterialAddSourceParam, originSource: IMaterialSource): Promise<void>;
+  getSources: () => Promise<void>;
+  setCurrentSource: (source: string) => Promise<void>;
+  addSource: (param: IMaterialAddSourceParam) => Promise<void>;
+  removeSource: (source: string) => Promise<void>;
+  getMaterialData: (source: string) => Promise<void>;
+  setSourceIsEditing: (source: string, isEditing: boolean) => Promise<void>;
+  updateSource: (newSource: IMaterialAddSourceParam, originSource: IMaterialSource) => Promise<void>;
 }

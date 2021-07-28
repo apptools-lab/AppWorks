@@ -1,6 +1,9 @@
 # Change Log
 
+# 1.1.3
 
+- feat: update @appworks/codemod
+- feat: update codemod check result list
 ## 1.1.2
 
 - feat: update @appworks/doctor to support custom config set extends and plugins.
@@ -65,7 +68,7 @@ Release 1.0.0
 
 ## 0.1.6
 
-- fix: [#604](https://github.com/appworks-lab/pack/issues/604)
+- fix: [#604](https://github.com/appworks-lab/appworks/issues/604)
 
 ## 0.1.5
 

@@ -452,6 +452,34 @@ export default {
     score: 98,
     reports: [
       {
+        title: '遵循阿里巴巴前端规范，并接入 @iceworks/spec 的最佳实践',
+        title_en: 'Follow Alibaba FED lint rules, and use @iceworks/spec best practices',
+        message: '遵循阿里巴巴前端规范，并更新 rax, ice 和 react 项目中的 eslint / stylelint / prettier 配置。',
+        message_en: 'Follow Alibaba FED lint rules, and update eslint / stylelint / prettier in rax, ice and react project.',
+        severity: 0,
+        npm_deprecate: '@ice/spec',
+        transform: 'lint-config-to-spec',
+        docs: 'https://github.com/appworks-lab/codemod/tree/master/transforms/docs/lint-config-to-spec.md',
+        mode: 'check',
+        output: 'Processing 211 files... \n' +
+          'Spawning 7 workers...\n' +
+          'Running in dry mode, no files will be written! \n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 31 files to free worker...\n' +
+          'Sending 25 files to free worker...\n' +
+          'All done. \n' +
+          'Results: \n' +
+          '0 errors\n' +
+          '0 unmodified\n' +
+          '194 skipped\n' +
+          '17 ok\n' +
+          'Time elapsed: 3.707seconds \n'
+      },
+      {
         title: 'Rax 组件工程升级',
         title_en: 'Rax component project upgrade',
         message: '从 plugin-rax-component 升级到 plugin-component',
