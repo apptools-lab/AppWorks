@@ -2,6 +2,8 @@
 
 ## 0.1.2
 
+- feat: update official materials
+- chore: remove antd material source
 - fix: fail to update material source
 
 ## 0.1.1

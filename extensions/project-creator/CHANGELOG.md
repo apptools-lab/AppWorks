@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4
+
+- feat: update official materials
+- feat: display ts or js icon which depends on the projectType in material source data
+
 ## 1.0.3
 
 - feat: support double click to select scaffold. [#872](https://github.com/appworks-lab/pack/issues/872)

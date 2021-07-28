@@ -52,24 +52,6 @@
         justify-content: flex-start;
         flex-wrap: wrap;
       }
-
-      .collapse {
-        width: 100%;
-        border: none;
-        :global {
-          .next-collapse-panel-expanded > .next-collapse-panel-content {
-            padding: 12px 0;
-          }
-          .next-collapse-panel-title:hover {
-            background: $color-brand1-1;
-          }
-        }
-        .collapseScaffolds {
-          display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-        }
-      }
     }
   }
 
