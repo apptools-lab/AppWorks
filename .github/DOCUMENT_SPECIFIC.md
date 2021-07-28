@@ -46,7 +46,7 @@
 
 ## License
 
-[MIT](https://github.com/appworks-lab/pack/blob/master/LICENSE)
+[MIT](https://github.com/appworks-lab/appworks/blob/master/LICENSE)
 ```
 
 - When there is only one function, there is no need for a three-level title

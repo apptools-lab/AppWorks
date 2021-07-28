@@ -180,7 +180,7 @@
 
 ## 0.1.4
 
-Fix React component completion items, See: https://github.com/appworks-lab/pack/issues/233
+Fix React component completion items, See: https://github.com/appworks-lab/appworks/issues/233
 
 ## 0.1.3
 

@@ -392,11 +392,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/pack.git"
+    "url": "https://github.com/appworks-lab/appworks.git"
   },
-  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/material-helper/README.md",
+  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/material-helper/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/pack/issues",
+    "url": "https://github.com/appworks-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

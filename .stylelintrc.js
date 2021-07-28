@@ -1,4 +1,3 @@
-const { getESLintConfig } = require('@iceworks/spec');
+const { getStylelintConfig } = require('@iceworks/spec');
 
-// getESLintConfig(rule: 'rax'|'react'|'vue', customConfig?);
-module.exports = getESLintConfig('react');
+module.exports = getStylelintConfig('rax');

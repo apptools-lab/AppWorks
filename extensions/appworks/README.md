@@ -1,4 +1,4 @@
-English | [简体中文](https://github.com/appworks-lab/pack/blob/master/extensions/iceworks/README.zh-CN.md)
+English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/iceworks/README.zh-CN.md)
 
 # AppWorks
 
@@ -6,7 +6,7 @@ English | [简体中文](https://github.com/appworks-lab/pack/blob/master/extens
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appworks-lab/pack/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appworks-lab/appworks/pulls)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 AppWorks is a Application Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram Application.
@@ -82,4 +82,4 @@ AppWorks Pack extension installs these recommend extensions:
 
 ## Help
 
-Open an [issue](https://github.com/appworks-lab/pack/issues/new), We will respond quickly to the submitted issues.
+Open an [issue](https://github.com/appworks-lab/appworks/issues/new), We will respond quickly to the submitted issues.

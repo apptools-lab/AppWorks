@@ -1,44 +1,48 @@
 # Change Log
 
-## [1.3.1]
+## [1.3.1](https://github.com/appworks-lab/appworks/releases/tag/v1.3.1)
 
+- feat: update doctor codemod report [#920](https://github.com/appworks-lab/appworks/pull/920)
+- feat: update official materials [#922](https://github.com/appworks-lab/appworks/pull/922)
+- fix: fail to update material source [#921](https://github.com/appworks-lab/appworks/pull/921)
 - fix: remove stylelint extension that causes some bugs in vscode
 
-## [1.3.0](https://github.com/appworks-lab/pack/releases/tag/v1.3.0)
 
-- feat: add jsx files propTypes auto complete [#902](https://github.com/appworks-lab/pack/pull/902)
-- feat: add code snippets [#903](https://github.com/appworks-lab/pack/pull/903)
-- feat: auto fill content in store's files when create [#908](https://github.com/appworks-lab/pack/pull/908)
-- feat: add auto complete when import modules [#905](https://github.com/appworks-lab/pack/pull/905)
-- fix: dashboard show 404 and 500 error [#911](https://github.com/appworks-lab/pack/pull/911)
-- fix: eslint config `overrides` not work [#901](https://github.com/appworks-lab/pack/pull/901)
+## [1.3.0](https://github.com/appworks-lab/appworks/releases/tag/v1.3.0)
 
-## [1.2.1](https://github.com/appworks-lab/pack/releases/tag/v1.2.1)
+- feat: add jsx files propTypes auto complete [#902](https://github.com/appworks-lab/appworks/pull/902)
+- feat: add code snippets [#903](https://github.com/appworks-lab/appworks/pull/903)
+- feat: auto fill content in store's files when create [#908](https://github.com/appworks-lab/appworks/pull/908)
+- feat: add auto complete when import modules [#905](https://github.com/appworks-lab/appworks/pull/905)
+- fix: dashboard show 404 and 500 error [#911](https://github.com/appworks-lab/appworks/pull/911)
+- fix: eslint config `overrides` not work [#901](https://github.com/appworks-lab/appworks/pull/901)
 
-- feat: support double click to select scaffold [#895](https://github.com/appworks-lab/pack/pull/895)
-- feat: loading status when reinstalling deps [#896](https://github.com/appworks-lab/pack/pull/896)
-- fix: build error in macos platform [#891](https://github.com/appworks-lab/pack/pull/891)
-- fix: empty project wrong CodeMod notice [#894](https://github.com/appworks-lab/pack/pull/894)
+## [1.2.1](https://github.com/appworks-lab/appworks/releases/tag/v1.2.1)
 
-## [1.2.0](https://github.com/appworks-lab/pack/releases/tag/v1.2.0)
+- feat: support double click to select scaffold [#895](https://github.com/appworks-lab/appworks/pull/895)
+- feat: loading status when reinstalling deps [#896](https://github.com/appworks-lab/appworks/pull/896)
+- fix: build error in macos platform [#891](https://github.com/appworks-lab/appworks/pull/891)
+- fix: empty project wrong CodeMod notice [#894](https://github.com/appworks-lab/appworks/pull/894)
 
-- feat: remove Auto Complete Tag Feat remove Auto Complete Tag [#878](https://github.com/appworks-lab/pack/pull/878)
-- feat: add time master configuration enableDataAnalysisServices Feat add time master configuration [#871](https://github.com/appworks-lab/pack/pull/871)
-- feat: update vscodeignore Feat update vscodeignore [#883](https://github.com/appworks-lab/pack/pull/883)
-- feat: add codemod check to doctor package Feat add codemod check to doctor package [#870](https://github.com/appworks-lab/pack/pull/870)
-- feat: doctor extension add codemod Feat doctor extension add codemod [#873](https://github.com/appworks-lab/pack/pull/873)
-- fix: auto-complete-tag confused typescript coding [#877](https://github.com/appworks-lab/pack/issues/877)
-- fix: command Find Components In Current File not working Fix command Find Components In Current File not working [#876](https://github.com/appworks-lab/pack/pull/876)
-- fix: component docs link fix: component link [#884](https://github.com/appworks-lab/pack/pull/884)
+## [1.2.0](https://github.com/appworks-lab/appworks/releases/tag/v1.2.0)
+
+- feat: remove Auto Complete Tag Feat remove Auto Complete Tag [#878](https://github.com/appworks-lab/appworks/pull/878)
+- feat: add time master configuration enableDataAnalysisServices Feat add time master configuration [#871](https://github.com/appworks-lab/appworks/pull/871)
+- feat: update vscodeignore Feat update vscodeignore [#883](https://github.com/appworks-lab/appworks/pull/883)
+- feat: add codemod check to doctor package Feat add codemod check to doctor package [#870](https://github.com/appworks-lab/appworks/pull/870)
+- feat: doctor extension add codemod Feat doctor extension add codemod [#873](https://github.com/appworks-lab/appworks/pull/873)
+- fix: auto-complete-tag confused typescript coding [#877](https://github.com/appworks-lab/appworks/issues/877)
+- fix: command Find Components In Current File not working Fix command Find Components In Current File not working [#876](https://github.com/appworks-lab/appworks/pull/876)
+- fix: component docs link fix: component link [#884](https://github.com/appworks-lab/appworks/pull/884)
 
 ## 1.1.0
 
-- feat: hint user install types/rax [#854](https://github.com/appworks-lab/pack/pull/854)
-- fix: rax-spa project targets null [#862](https://github.com/appworks-lab/pack/pull/862)
-- Chore: update webview icon [#856](https://github.com/appworks-lab/pack/pull/856) [#846](https://github.com/appworks-lab/pack/pull/846)
-- feat: add recommend extensions [#837](https://github.com/appworks-lab/pack/pull/837)
-- fix: only exit process when prepublishOnly [#836](https://github.com/appworks-lab/pack/pull/836)
-- fix: make sure that the start & end fields exist [#838](https://github.com/appworks-lab/pack/pull/838)
+- feat: hint user install types/rax [#854](https://github.com/appworks-lab/appworks/pull/854)
+- fix: rax-spa project targets null [#862](https://github.com/appworks-lab/appworks/pull/862)
+- Chore: update webview icon [#856](https://github.com/appworks-lab/appworks/pull/856) [#846](https://github.com/appworks-lab/appworks/pull/846)
+- feat: add recommend extensions [#837](https://github.com/appworks-lab/appworks/pull/837)
+- fix: only exit process when prepublishOnly [#836](https://github.com/appworks-lab/appworks/pull/836)
+- fix: make sure that the start & end fields exist [#838](https://github.com/appworks-lab/appworks/pull/838)
 - fix: vsce [#576](https://github.com/microsoft/vscode-vsce/issues/576) .vscodeignore configuration
 
 ## 1.0.3
@@ -47,7 +51,7 @@
 
 ## 1.0.2
 
-- Fix [#848](https://github.com/appworks-lab/pack/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
+- Fix [#848](https://github.com/appworks-lab/appworks/issues/848), remove [Chinese (Simplified) Language Pack for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hans).
 
 ## 1.0.1
 
