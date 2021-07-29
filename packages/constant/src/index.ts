@@ -1,7 +1,7 @@
 import { Base64 } from 'js-base64';
 
 // Some internal URLs are not suitable for direct disclosure
-export const ALI_NPM_REGISTRY = Base64.decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29t');
+export const ALI_NPM_REGISTRY = Base64.decode('aHR0cHM6Ly9yZWdpc3RyeS5ucG0uYWxpYmFiYS1pbmMuY29tLw==');
 export const ALI_GITACCOUNT_URL = Base64.decode('aHR0cDovL2dpdGxhYi5hbGliYWJhLWluYy5jb20vcHJvZmlsZS9hY2NvdW50');
 export const ALI_GITACCOUNT_SHORTURL = Base64.decode('Z2l0bGFiLmFsaWJhYmEtaW5jLmNvbS9wcm9maWxlL2FjY291bnQ=');
 export const ALI_GITLABGROUPS_API = Base64.decode('aHR0cDovL2dpdGxhYi5hbGliYWJhLWluYy5jb20vYXBpL3YzL2dyb3Vwcw==');

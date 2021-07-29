@@ -29,7 +29,7 @@ const Information = () => {
       title: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.updates.title' }),
       description: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.updates.desc' }),
       linkName: intl.formatMessage({ id: 'web.applicationManager.Welcome.Information.updates.link' }),
-      link: 'https://github.com/appworks-lab/pack/releases',
+      link: 'https://github.com/appworks-lab/appworks/releases',
     },
   ];
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.8
+
+- fix: update code snippets, the snippet - mtop.[request | config] => mtop[Request | Config]
+
 ## 1.0.7
 
 - feat: add import auxiliary
@@ -176,7 +180,7 @@
 
 ## 0.1.4
 
-Fix React component completion items, See: https://github.com/appworks-lab/pack/issues/233
+Fix React component completion items, See: https://github.com/appworks-lab/appworks/issues/233
 
 ## 0.1.3
 

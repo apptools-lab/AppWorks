@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Element } from 'react-scroll';
+import { Icon } from '@alifd/next';
 import { getReportKey } from '@/config';
 import callService from '@/callService';
 import Appreciate from '../Appreciate';
@@ -54,7 +55,17 @@ const CodemodReport = (props) => {
           {(data.reports || []).map((codemod, index) => {
             return (
               <div key={`codemod${index}`} className={styles.codemod}>
-                <p className={styles.title}>{window.USE_EN ? codemod.title_en : codemod.title}</p>
+                <p className={styles.title}>
+                  {codemod.severity > 0 ? (
+                    <Icon
+                      type="warning"
+                      size="small"
+                      className={styles.icon}
+                      style={{ color: codemod.severity === 1 ? '#ff9300' : '#ff3000' }}
+                    />
+                  ) : null}
+                  {window.USE_EN ? codemod.title_en : codemod.title}
+                </p>
                 <p className={styles.message}>
                   {window.USE_EN ? codemod.message_en : codemod.message}
                   <a target="_blank" href={codemod.docs} rel="noreferrer">{window.USE_EN ? ' [docs] ' : '【文档】'}</a>
@@ -78,7 +89,8 @@ const CodemodReport = (props) => {
             );
           })}
         </div>
-      )}
+      )
+      }
     </Element>
   );
 };

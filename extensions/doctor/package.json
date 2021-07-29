@@ -3,7 +3,7 @@
   "displayName": "Doctor",
   "description": "A free security and quality audit tool for modern DevOps teams",
   "publisher": "iceworks-team",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -30,11 +30,11 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/pack.git"
+    "url": "https://github.com/appworks-lab/appworks.git"
   },
-  "homepage": "https://github.com/appworks-lab/pack/blob/master/extensions/doctor/README.md",
+  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/doctor/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/pack/issues",
+    "url": "https://github.com/appworks-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   },
   "scripts": {
