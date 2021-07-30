@@ -3,7 +3,7 @@
   "displayName": "Application Manager",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -33,7 +33,7 @@
         {
           "id": "iceworksApp",
           "title": "AppWorks",
-          "icon": "assets/sidebar-logo.png"
+          "icon": "assets/sidebar-logo.svg"
         }
       ]
     },

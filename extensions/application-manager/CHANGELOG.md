@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5
+
+- feat: update activitybar icon
+
 ## 1.0.4
 
 - fix: fail to update the material source
