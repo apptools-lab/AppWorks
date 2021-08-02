@@ -48,7 +48,7 @@ const CodemodReport = (props) => {
         score={data.score}
         Description={Description}
       />
-      {data.score === 100 ? (
+      {data.score === 100 && (data.reports || []).length === 0 ? (
         <Appreciate />
       ) : (
         <div>
