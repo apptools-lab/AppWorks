@@ -1,0 +1,6 @@
+{
+  "iceworksMaterialHelper.configuration.autoCreateIndexFile.description": "After created folders under src/pages/, src/components/, create a index.j[t]sx file automatically",
+  "iceworksMaterialHelper.configuration.autoCreateIndexFile.title": "After created a folder, the index.j[t]sx file is created automatically",
+  "iceworksMaterialHelper.configuration.autoFillComponentCode.description": "After created the index.j[t]sx file in src/ folder, automatically complete the component declaration code according to the filename",
+  "iceworksMaterialHelper.configuration.autoFillComponentCode.title": "After created the index.j[t]sx file, the component code will be completed automatically"
+}

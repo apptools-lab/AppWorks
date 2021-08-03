@@ -1,0 +1,75 @@
+{
+  "name": "iceworks-generator",
+  "displayName": "React Generator",
+  "description": "Easily create React/Rax boilerplate code.",
+  "publisher": "iceworks-team",
+  "icon": "assets/logo.png",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "appworks",
+    "React",
+    "generator",
+    "create",
+    "creator",
+    "boilerplate"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./build/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/appworks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appworks-lab/appworks/issues",
+    "email": "iceworksteam@163.com"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:extension",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "AppWorks React Generator",
+      "properties": {
+        "appworks.autoCreateIndexFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.description%",
+          "title": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.title%"
+        },
+        "appworks.autoFillComponentCode": {
+          "type": "boolean",
+          "default": true,
+          "description": "%iceworksMaterialHelper.configuration.autoFillComponentCode.description%",
+          "title": "%iceworksMaterialHelper.configuration.autoFillComponentCode.title%"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/project-service": "^0.1.0",
+    "@appworks/project-utils": "^0.1.0",
+    "ejs": "^3.1.6",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.upperfirst": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "copy-webpack-plugin": "^6.0.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
