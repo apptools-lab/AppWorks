@@ -40,7 +40,7 @@ function removeEmptyRuleset(targetNode) {
 export default function getDarkModeStyle(css: string, syntax: string): string {
   const parseTree = gonzales.parse(css, { syntax });
 
-  parseTree.traverseByType('declarationDelimiter', (node, index, parent) => {
+  parseTree.traverseByTypes(['atrule', 'declarationDelimiter'], (node, index, parent) => {
     parent.removeChild(index);
   });
 
