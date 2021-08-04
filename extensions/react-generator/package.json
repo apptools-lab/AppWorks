@@ -37,20 +37,41 @@
     "watch:extension": "webpack --mode development --watch --info-verbosity verbose"
   },
   "contributes": {
+    "commands": [
+      {
+        "command": "react-generator.css-add-dark-mode-media-query",
+        "title": "%react-generator.css-add-dark-mode-media-query.title%"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "react-generator.css-add-dark-mode-media-query",
+          "group": "react-generator"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "react-generator.css-add-dark-mode-media-query",
+          "group": "react-generator",
+          "when": "resourceExtname == .css || resourceExtname == .less || resourceExtname == .scss || resourceExtname == .sass"
+        }
+      ]
+    },
     "configuration": {
       "title": "AppWorks React Generator",
       "properties": {
         "appworks.autoCreateIndexFile": {
           "type": "boolean",
           "default": true,
-          "description": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.description%",
-          "title": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.title%"
+          "description": "%react-generator.configuration.autoCreateIndexFile.description%",
+          "title": "%react-generator.configuration.autoCreateIndexFile.title%"
         },
         "appworks.autoFillComponentCode": {
           "type": "boolean",
           "default": true,
-          "description": "%iceworksMaterialHelper.configuration.autoFillComponentCode.description%",
-          "title": "%iceworksMaterialHelper.configuration.autoFillComponentCode.title%"
+          "description": "%react-generator.configuration.autoFillComponentCode.description%",
+          "title": "%react-generator.configuration.autoFillComponentCode.title%"
         }
       }
     }
@@ -59,7 +80,12 @@
     "@appworks/common-service": "^0.1.0",
     "@appworks/project-service": "^0.1.0",
     "@appworks/project-utils": "^0.1.0",
+    "color": "^3.1.2",
+    "css-color-names": "^1.0.1",
+    "cssbeautify": "^0.3.1",
     "ejs": "^3.1.6",
+    "glob": "^7.1.7",
+    "gonzales-pe": "^4.3.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1"
   },
