@@ -41,6 +41,7 @@
     "iceworks-team.iceworks-time-master",
     "iceworks-team.iceworks-codemod",
     "iceworks-team.iceworks-refactor",
+    "iceworks-team.iceworks-generator",
     "eamodio.gitlens",
     "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",

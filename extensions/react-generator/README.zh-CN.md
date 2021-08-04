@@ -9,6 +9,12 @@ English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/ex
 
 ## 使用
 
+### 生成样式代码
+
+* 生成 dark mode 代码（在 css 文件或目录中右键，选择 `AppWorks：分析 CSS 文件中的颜色，生成「深色模式」的样式代码`）
+
+![img](https://img.alicdn.com/imgextra/i3/O1CN01SFEDNe1Us1NRWfqnE_!!6000000002572-1-tps-1080-637.gif)
+
 ### 创建文件时自动填充样板代码
 
 * 生成页面组件代码
