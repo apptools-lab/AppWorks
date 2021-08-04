@@ -13,7 +13,7 @@ English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/ex
 
 * Generate dark mode styles (Right Click in a directory or a CSS File Editor, choose `AppWorks: add dark mode media query to css files`.)
 
-![img](https://img.alicdn.com/imgextra/i3/O1CN01SFEDNe1Us1NRWfqnE_!!6000000002572-1-tps-1080-637.gif)
+![img](https://img.alicdn.com/imgextra/i3/O1CN017C7Cw91pUlC3XS7Zj_!!6000000005364-1-tps-1080-601.gif)
 
 ### Generate boilerplate code when create file
 

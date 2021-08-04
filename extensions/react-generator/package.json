@@ -80,6 +80,7 @@
     "@appworks/common-service": "^0.1.0",
     "@appworks/project-service": "^0.1.0",
     "@appworks/project-utils": "^0.1.0",
+    "@appworks/recorder": "^1.0.1",
     "color": "^3.1.2",
     "css-color-names": "^1.0.1",
     "cssbeautify": "^0.3.1",

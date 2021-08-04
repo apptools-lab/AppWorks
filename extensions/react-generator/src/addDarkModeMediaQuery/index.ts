@@ -3,6 +3,7 @@ import * as path from 'path';
 import { Uri } from 'vscode';
 import * as glob from 'glob';
 import * as cssbeautify from 'cssbeautify';
+import recorder from '../recorder';
 import getDarkModeStyle from './getDarkModeStyle';
 
 const IGNORE_DIRS = ['node_modules', 'build', '.rax', '.ice'];
@@ -27,6 +28,11 @@ function processCssFile(file: string) {
 }
 
 export default function addDarkModeMediaQuery(uri: Uri) {
+  recorder.record({
+    module: 'generator',
+    action: 'addDarkModeMediaQuery',
+  });
+
   const { fsPath } = uri;
 
   const stat = fs.lstatSync(fsPath);
