@@ -41,6 +41,10 @@
       {
         "command": "react-generator.css-add-dark-mode-media-query",
         "title": "%react-generator.css-add-dark-mode-media-query.title%"
+      },
+      {
+        "command": "react-generator.json-to-ts-interface",
+        "title": "%react-generator.json-to-ts-interface.title%"
       }
     ],
     "menus": {
@@ -48,6 +52,11 @@
         {
           "command": "react-generator.css-add-dark-mode-media-query",
           "group": "react-generator"
+        },
+        {
+          "command": "react-generator.json-to-ts-interface",
+          "group": "react-generator",
+          "when": "resourceExtname == .json"
         }
       ],
       "editor/context": [
@@ -87,6 +96,7 @@
     "ejs": "^3.1.6",
     "glob": "^7.1.7",
     "gonzales-pe": "^4.3.0",
+    "json-to-ts": "^1.7.0",
     "lodash.camelcase": "^4.3.0",
     "lodash.upperfirst": "^4.3.1"
   },

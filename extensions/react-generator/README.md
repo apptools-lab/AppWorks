@@ -9,6 +9,12 @@ English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/ex
 
 ## Usage
 
+### Generate typescript code
+
+* Convert json object to typescript interfaces
+
+![img](https://img.alicdn.com/imgextra/i3/O1CN01ldVoDI1vlbSLpMtid_!!6000000006213-1-tps-1080-705.gif)
+
 ### Generate styles code
 
 * Generate dark mode styles (Right Click in a directory or a CSS File Editor, choose `AppWorks: add dark mode media query to css files`.)
