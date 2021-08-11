@@ -1,5 +1,4 @@
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 
 const tsConfigPath = path.join(__dirname, 'tsconfig.json');
 const destPath = path.resolve(__dirname, 'build');
@@ -40,22 +39,6 @@ const config = {
       },
     ],
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: 'src/templates/*.ejs',
-          globOptions: {
-            gitignore: true,
-          },
-          to() {
-            return `${destPath }/[name].[ext]`;
-          },
-        },
-      ],
-      options: { concurrency: 10 },
-    }),
-  ],
 };
 
 module.exports = (env, argv) => {

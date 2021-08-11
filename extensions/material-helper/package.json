@@ -356,7 +356,6 @@
     "@types/babel-traverse": "^6.25.5",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "copy-webpack-plugin": "^6.0.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.6.4",
     "webpack": "^4.44.2",
