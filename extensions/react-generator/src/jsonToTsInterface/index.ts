@@ -6,7 +6,7 @@ import recorder from '../recorder';
 export default function jsonToTsInterface(uri: Uri) {
   recorder.record({
     module: 'generator',
-    action: 'addDarkModeMediaQuery',
+    action: 'jsonToTsInterface',
   });
 
   const { fsPath } = uri;

@@ -11,13 +11,13 @@ English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/ex
 
 ### 生成 typescript 代码
 
-* 通过 JSON 生成 typescript interface 文件
+通过 JSON 生成 typescript interface 文件
 
 ![img](https://img.alicdn.com/imgextra/i3/O1CN01ldVoDI1vlbSLpMtid_!!6000000006213-1-tps-1080-705.gif)
 
 ### 生成样式代码
 
-* 生成 dark mode 代码（在 css 文件或目录中右键，选择 `AppWorks：分析 CSS 文件中的颜色，生成「深色模式」的样式代码`）
+生成 dark mode 代码（在 css 文件或目录中右键，选择 `AppWorks：分析 CSS 文件中的颜色，生成「深色模式」的样式代码`）
 
 ![img](https://img.alicdn.com/imgextra/i3/O1CN017C7Cw91pUlC3XS7Zj_!!6000000005364-1-tps-1080-601.gif)
 
