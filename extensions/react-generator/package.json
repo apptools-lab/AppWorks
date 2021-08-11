@@ -17,7 +17,9 @@
     "generator",
     "create",
     "creator",
-    "boilerplate"
+    "boilerplate",
+    "interface",
+    "darkmode"
   ],
   "activationEvents": [
     "onStartupFinished"
