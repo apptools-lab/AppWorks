@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.0.9
+
+- feat: change auto fill code to React Generator extension. 
+- fix: the code in the editor is incomplete will cause the AST parser error.
+
 ## 1.0.8
 
 - fix: update code snippets, the snippet - mtop.[request | config] => mtop[Request | Config]

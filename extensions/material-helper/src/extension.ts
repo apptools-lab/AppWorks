@@ -5,7 +5,6 @@ import { autoSetContext as autoSetContextByProject } from '@appworks/project-ser
 import { ICEWORKS_ICON_PATH } from '@appworks/constant';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
-import autoFillContent from './autoFillContent';
 import i18n from './i18n';
 import registerComponentDocSupport from './componentDocSupport';
 import recorder from './utils/recorder';
@@ -122,7 +121,6 @@ export function activate(context: vscode.ExtensionContext) {
   propsAutoComplete();
   mtopAutoComplete();
   registerComponentDocSupport();
-  autoFillContent();
 
   // views
   createComponentsTreeView(context);

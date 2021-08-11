@@ -1,4 +1,4 @@
-English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/iceworks/README.zh-CN.md)
+English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/appworks/README.zh-CN.md)
 
 # AppWorks
 

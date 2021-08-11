@@ -10,6 +10,7 @@ export default (code: string, uri: vscode.Uri): string => {
     const ast = parse(code, {
       sourceType: 'module',
       plugins: getBabelParserPlugins('jsx'),
+      errorRecovery: true,
     });
 
     const propTypesDependentName = getImportDependentName(ast, 'prop-types');
