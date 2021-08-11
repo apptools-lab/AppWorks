@@ -1,0 +1,10 @@
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+**/tsconfig.json
+**/*.map
+**/*.ts
+web/**
+node_modules/**
+!node_modules/prettier

@@ -1,0 +1,114 @@
+{
+  "name": "iceworks-generator",
+  "displayName": "React Generator",
+  "description": "Easily create React/Rax boilerplate code.",
+  "publisher": "iceworks-team",
+  "icon": "assets/logo.png",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "appworks",
+    "React",
+    "generator",
+    "create",
+    "creator",
+    "boilerplate",
+    "interface",
+    "darkmode"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./build/extension.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appworks-lab/appworks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/appworks-lab/appworks/issues",
+    "email": "iceworksteam@163.com"
+  },
+  "scripts": {
+    "vscode:prepublish": "rm -rf build && npm run build:extension",
+    "build:extension": "webpack --mode production",
+    "watch:extension": "webpack --mode development --watch --info-verbosity verbose"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "react-generator.css-add-dark-mode-media-query",
+        "title": "%react-generator.css-add-dark-mode-media-query.title%"
+      },
+      {
+        "command": "react-generator.json-to-ts-interface",
+        "title": "%react-generator.json-to-ts-interface.title%"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "react-generator.css-add-dark-mode-media-query",
+          "group": "react-generator"
+        },
+        {
+          "command": "react-generator.json-to-ts-interface",
+          "group": "react-generator",
+          "when": "resourceExtname == .json"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "react-generator.css-add-dark-mode-media-query",
+          "group": "react-generator",
+          "when": "resourceExtname == .css || resourceExtname == .less || resourceExtname == .scss || resourceExtname == .sass"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AppWorks React Generator",
+      "properties": {
+        "appworks.autoCreateIndexFile": {
+          "type": "boolean",
+          "default": true,
+          "description": "%react-generator.configuration.autoCreateIndexFile.description%",
+          "title": "%react-generator.configuration.autoCreateIndexFile.title%"
+        },
+        "appworks.autoFillComponentCode": {
+          "type": "boolean",
+          "default": true,
+          "description": "%react-generator.configuration.autoFillComponentCode.description%",
+          "title": "%react-generator.configuration.autoFillComponentCode.title%"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/project-service": "^0.1.0",
+    "@appworks/project-utils": "^0.1.0",
+    "@appworks/recorder": "^1.0.1",
+    "color": "^3.1.2",
+    "css-color-names": "^1.0.1",
+    "cssbeautify": "^0.3.1",
+    "ejs": "^3.1.6",
+    "glob": "^7.1.7",
+    "gonzales-pe": "^4.3.0",
+    "json-to-ts": "^1.7.0",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.upperfirst": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "copy-webpack-plugin": "^6.0.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  }
+}
