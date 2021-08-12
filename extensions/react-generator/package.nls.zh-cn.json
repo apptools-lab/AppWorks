@@ -1,0 +1,8 @@
+{
+  "react-generator.css-add-dark-mode-media-query.title": "AppWorks：分析 CSS 文件中的颜色，生成「深色模式」的样式代码",
+  "react-generator.json-to-ts-interface.title": "AppWorks: 通过 JSON 生成 typescript interface 文件",
+  "react-generator.configuration.autoCreateIndexFile.description": "在 src/pages/、src/components/ 等文件夹下创建子文件夹后，自动创建 index.j[t]sx 文件并进行代码补全",
+  "react-generator.configuration.autoCreateIndexFile.title": "创建文件夹时，自动创建 index.j[t]sx 文件",
+  "react-generator.configuration.autoFillComponentCode.description": "在 src/ 文件夹下创建 index.j[t]sx 文件后，自动根据文件名补全组件声明代码",
+  "react-generator.configuration.autoFillComponentCode.title": "创建 index.j[t]sx 文件后，自动补全组件代码"
+}

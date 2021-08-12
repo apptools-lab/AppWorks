@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.4.0](https://github.com/appworks-lab/appworks/releases/tag/v1.4.0)
+
+- feat: add React Generator [#933](https://github.com/appworks-lab/appworks/pull/933)
+- fix: windows get empty files [#937](https://github.com/appworks-lab/appworks/pull/937)
+- fix: ast parser error [#934](https://github.com/appworks-lab/appworks/pull/934)
+- fix: README docs link [#930](https://github.com/appworks-lab/appworks/pull/930) [#931](https://github.com/appworks-lab/appworks/pull/931)
+
 ## [1.3.1](https://github.com/appworks-lab/appworks/releases/tag/v1.3.1)
 
 - feat: update doctor codemod report [#920](https://github.com/appworks-lab/appworks/pull/920)

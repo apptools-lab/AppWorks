@@ -10,8 +10,10 @@ const MAX_CHECK_LOC = 3000;
 // Get ignore config from file
 const IGNORE_CONFIG_FILES = ['.gitignore'];
 
-function getFileInfo(filePath: string): IFileInfo {
-  let source = fs.readFileSync(filePath).toString().trim();
+function getFileInfo(filePath: string, directory?: string): IFileInfo {
+  const file = directory ? path.join(directory, filePath) : filePath;
+
+  let source = fs.readFileSync(file).toString().trim();
 
   // if begins with shebang
   if (source[0] === '#' && source[1] === '!') {
@@ -19,7 +21,7 @@ function getFileInfo(filePath: string): IFileInfo {
   }
 
   return {
-    path: filePath,
+    path: file,
     source,
     LoC: (source.match(/\n/g) || '').length + 1,
   };
@@ -28,6 +30,7 @@ function getFileInfo(filePath: string): IFileInfo {
 export default function getFiles(directory: string, ignoreDirs?: string[]): IFileInfo[] {
   const options: any = {
     nodir: true,
+    cwd: directory,
   };
 
   if (!fs.existsSync(directory)) {
@@ -43,7 +46,7 @@ export default function getFiles(directory: string, ignoreDirs?: string[]): IFil
     }
 
     if (ignoreDirs) {
-      options.ignore = ignoreDirs.map((ignoreDir) => `${directory}/**/${ignoreDir}/**`);
+      options.ignore = ignoreDirs.map((ignoreDir) => `**/${ignoreDir}/**`);
     }
 
     IGNORE_CONFIG_FILES.forEach((ignoreConfigFile) => {
@@ -54,8 +57,8 @@ export default function getFiles(directory: string, ignoreDirs?: string[]): IFil
     });
 
     // https://www.npmjs.com/package/glob
-    return glob.sync(`${directory}/**/*`, options)
-      .map(getFileInfo)
+    return glob.sync('**/*', options)
+      .map((file) => getFileInfo(file, directory))
       .filter((file) => {
         // https://www.npmjs.com/package/ignore
         // Use .ignore file to filter glob result. Same as https://www.npmjs.com/package/glob-gitignore

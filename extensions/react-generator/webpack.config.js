@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const tsConfigPath = path.join(__dirname, 'tsconfig.json');
 const destPath = path.resolve(__dirname, 'build');
@@ -17,8 +18,6 @@ const config = {
   },
   externals: {
     vscode: 'commonjs vscode',
-    prettier: 'commonjs prettier',
-    '@iceworks/code-generator': 'commonjs @iceworks/code-generator',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -39,6 +38,22 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/templates/*.ejs',
+          globOptions: {
+            gitignore: true,
+          },
+          to() {
+            return `${destPath}/[name].[ext]`;
+          },
+        },
+      ],
+      options: { concurrency: 10 },
+    }),
+  ],
 };
 
 module.exports = (env, argv) => {

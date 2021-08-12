@@ -1,0 +1,8 @@
+{
+  "react-generator.css-add-dark-mode-media-query.title": "AppWorks: add dark mode media query to css files",
+  "react-generator.json-to-ts-interface.title": "AppWorks: convert json object to typescript interfaces file",
+  "react-generator.configuration.autoCreateIndexFile.description": "After created folders under src/pages/, src/components/, create a index.j[t]sx file automatically",
+  "react-generator.configuration.autoCreateIndexFile.title": "After created a folder, the index.j[t]sx file is created automatically",
+  "react-generator.configuration.autoFillComponentCode.description": "After created the index.j[t]sx file in src/ folder, automatically complete the component declaration code according to the filename",
+  "react-generator.configuration.autoFillComponentCode.title": "After created the index.j[t]sx file, the component code will be completed automatically"
+}

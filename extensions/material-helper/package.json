@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -265,18 +265,6 @@
           "description": "%iceworksMaterialHelper.configuration.openInBrowserDescription%",
           "title": "Open Doc Link Inside VSCode"
         },
-        "appworks.autoCreateIndexFile": {
-          "type": "boolean",
-          "default": true,
-          "description": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.description%",
-          "title": "%iceworksMaterialHelper.configuration.autoCreateIndexFile.title%"
-        },
-        "appworks.autoFillComponentCode": {
-          "type": "boolean",
-          "default": true,
-          "description": "%iceworksMaterialHelper.configuration.autoFillComponentCode.description%",
-          "title": "%iceworksMaterialHelper.configuration.autoFillComponentCode.title%"
-        },
         "appworks.materialSources": {
           "type": "array",
           "description": "%iceworksMaterialHelper.configuration.properties.appworks.materialSources.description%",
@@ -368,7 +356,6 @@
     "@types/babel-traverse": "^6.25.5",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.41.0",
-    "copy-webpack-plugin": "^6.0.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.6.4",
     "webpack": "^4.44.2",
