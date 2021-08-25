@@ -9,7 +9,7 @@ export default (code: string, uri: vscode.Uri): string => {
   try {
     const ast = parse(code, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('js'),
       errorRecovery: true,
     });
 

@@ -14,7 +14,7 @@ export default (doc: vscode.TextDocument, location: vscode.Location): string[] =
   try {
     const ast = parse(definitionsCode, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('js'),
     });
     if (checkIsCapitalizeWord(originSelectionCode) && checkIsJsxComponent(ast)) {
       return getJsxPropKeysFromAst(ast);

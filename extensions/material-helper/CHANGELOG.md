@@ -2,6 +2,7 @@
 
 ## 1.1.0
 
+- fix: the babel plugin's flow will cause error, when babel parse typescript files.
 - fix: import duplicate components when add routers
 
 ## 1.0.9
