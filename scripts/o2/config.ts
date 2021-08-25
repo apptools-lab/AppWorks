@@ -32,7 +32,14 @@ export const innerExtensions4pack = [
   },
 ];
 
-const otherExtensions: OtherExtension[] = [];
+const otherExtensions: OtherExtension[] = [
+  // {
+  //   packageName: '@ali/publish-visual',
+  //   assetsFolders: ['icons', 'resource'],
+  //   isActiveNode: true,
+  //   isActiveBrowser: true,
+  // },
+];
 
 export const otherExtensions4pack = otherExtensions.map((otherExtension4pack) => (
   { ...otherExtension4pack, extensionName: camelCase(otherExtension4pack.packageName), isOther: true }
