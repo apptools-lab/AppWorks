@@ -33,6 +33,7 @@ export const innerExtensions4pack = [
 ];
 
 const otherExtensions: OtherExtension[] = [
+  // install this extension in DEF extension marketplace
   // {
   //   packageName: '@ali/publish-visual',
   //   assetsFolders: ['icons', 'resource'],
