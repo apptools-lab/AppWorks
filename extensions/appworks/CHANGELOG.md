@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.1](https://github.com/appworks-lab/appworks/releases/tag/v1.4.1)
+
+- feat: update feedback link [#940](https://github.com/appworks-lab/appworks/pull/940)
+- feat: remove deprecated extension [#939](https://github.com/appworks-lab/appworks/pull/939)
+- chore: remove @ali/publish-visual extension [#938](https://github.com/appworks-lab/appworks/pull/938)
+
 ## [1.4.0](https://github.com/appworks-lab/appworks/releases/tag/v1.4.0)
 
 - feat: add React Generator [#933](https://github.com/appworks-lab/appworks/pull/933)
