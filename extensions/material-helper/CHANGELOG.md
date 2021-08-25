@@ -1,4 +1,6 @@
 # Change Log
+## 1.0.10
+- fix: the babel plugin's flow will cause error, when babel parse typescript files.
 
 ## 1.0.9
 
