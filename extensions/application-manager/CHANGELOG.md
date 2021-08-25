@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6
+
+- fix: async function syntax error
+
 ## 1.0.5
 
 - feat: update activitybar icon

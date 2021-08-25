@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.10
+
+- chore: add iceworks-refactor to extensionDependencies
+
 ## 1.0.9
 
 - feat: change auto fill code to React Generator extension. 

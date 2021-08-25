@@ -44,7 +44,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
       itemDataList = element.children;
     } else {
       itemDataList = [
-        ...this.buildQuickItems(),
+        ...await this.buildQuickItems(),
         this.buildDividerItem(),
         await this.buildScriptParentItem(),
       ];
@@ -84,7 +84,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
     return item;
   }
 
-  private buildQuickItems(): ItemData[] {
+  private async buildQuickItems(): Promise<ItemData[]> {
     const items: ItemData[] = [];
     const debugLabel = i18n.format('extension.applicationManager.showEntriesQuickPick.runDebug.label');
     const debugItem = this.buildActionItem(
@@ -112,7 +112,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
       items.push(createPageItem);
     }
 
-    const isAliInternal = checkIsAliInternal();
+    const isAliInternal = await checkIsAliInternal();
     if (isAliInternal) {
       const publishLabel = i18n.format('extension.applicationManager.showEntriesQuickPick.DefPublish.label');
       const publishItem = this.buildActionItem(
