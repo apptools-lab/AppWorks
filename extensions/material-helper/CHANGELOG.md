@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0
+
+- fix: import duplicate components when add routers
+
 ## 1.0.9
 
 - feat: change auto fill code to React Generator extension. 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6
+
+- chore: upgrade @appworks/material-engine version
+
 ## 1.0.5
 
 - feat: update activitybar icon

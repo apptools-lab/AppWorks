@@ -1,6 +1,6 @@
 {
   "name": "@appworks/material-engine",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "AppWorks Material Engine for VSCode extension.",
   "files": [
     "lib"
