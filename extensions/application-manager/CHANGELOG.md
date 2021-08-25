@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.6
+
+- feat: update `@appworks/project-service` for feedbackLink
+
 ## 1.0.5
 
 - feat: update activitybar icon
