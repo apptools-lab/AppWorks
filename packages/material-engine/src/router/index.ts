@@ -165,7 +165,6 @@ function setData(allRouters: IRouter[], routers: IRouter[], routerConfigAST: any
   const dataAST = getASTByCode(JSON.stringify(sortData(allRouters)));
   const arrayAST = dataAST.program.body[0];
 
-  // changeImportDeclarations(routerConfigAST, data);
   // router import page or layout have @
   let existLazy = false;
   // React.lazy(): the existLazyPrefix is true
