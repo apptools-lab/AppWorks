@@ -1,6 +1,6 @@
 {
   "name": "@appworks/project-service",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "AppWorks project service for VSCode extension.",
   "files": [
     "lib"

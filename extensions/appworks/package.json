@@ -49,7 +49,7 @@
     "formulahendry.auto-rename-tag",
     "xabikos.JavaScriptSnippets",
     "burkeholland.simple-react-snippets",
-    "msjsdiag.debugger-for-chrome",
+    "formulahendry.code-runner",
     "alefragnani.Bookmarks"
   ],
   "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/appworks/README.md",

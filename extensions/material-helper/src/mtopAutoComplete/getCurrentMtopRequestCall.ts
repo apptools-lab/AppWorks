@@ -7,8 +7,7 @@ import getBabelParserPlugins from '../utils/getBabelParserPlugins';
 function isCursorInObjectExpression(callExpression: CallExpression, cursorPosition: number): boolean {
   const callArguments = callExpression.arguments;
   const node = callArguments?.[0];
-
-  return isObjectExpression(node) && (node.start < cursorPosition && cursorPosition < node.end);
+  return isObjectExpression(node) && (<number>node.start < cursorPosition && cursorPosition < <number>node.end);
 }
 
 function conditionOfCompletion(callExpression: CallExpression, cursorPosition: number): boolean {
@@ -31,7 +30,7 @@ function getOriginCurrentCallExpress(
   try {
     const ast = parse(code, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('ts'),
     });
     traverse(ast, {
       CallExpression(path: NodePath<CallExpression>) {

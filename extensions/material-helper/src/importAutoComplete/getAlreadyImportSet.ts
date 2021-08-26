@@ -11,7 +11,7 @@ export default (doc: vscode.TextDocument): Set<string> => {
   try {
     const ast = parse(documentText, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('ts'),
       errorRecovery: true,
     });
     traverse(ast, {

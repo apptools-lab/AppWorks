@@ -175,9 +175,7 @@ export function createComponentsTreeView(context: vscode.ExtensionContext) {
       i18n.format('extension.iceworksMaterialHelper.cancel'),
     );
     if (choice === confirmTitle) {
-      if (vscode.extensions.getExtension('iceworks-team.iceworks-refactor')) {
-        await vscode.commands.executeCommand('react-refactor.file-and-reference.remove', { path: component.fsPath });
-      }
+      await vscode.commands.executeCommand('react-refactor.file-and-reference.remove', { path: component.fsPath });
     }
   });
 

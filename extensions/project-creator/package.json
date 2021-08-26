@@ -75,7 +75,7 @@
     "@appworks/common-service": "^0.1.0",
     "@appworks/constant": "^0.1.0",
     "@appworks/i18n": "^0.1.0",
-    "@appworks/material-engine": "^0.1.0",
+    "@appworks/material-engine": "^0.2.0",
     "@iceworks/pegasus-service": "^0.1.0",
     "@appworks/project-service": "^0.1.1",
     "@appworks/recorder": "^0.1.0",

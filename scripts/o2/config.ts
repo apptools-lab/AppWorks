@@ -30,16 +30,23 @@ export const innerExtensions4pack = [
     packageName: 'iceworks-team.iceworks-time-master',
     assetsFolders: ['assets', 'schemas'],
   },
+  {
+    packageName: 'iceworks-team.iceworks-refactor',
+    assetsFolders: ['assets', 'schemas'],
+  },
+  {
+    packageName: 'iceworks-team.iceworks-generator',
+    assetsFolders: ['assets', 'schemas'],
+  },
 ];
 
 const otherExtensions: OtherExtension[] = [
-  // install this extension in DEF extension marketplace
-  // {
-  //   packageName: '@ali/publish-visual',
-  //   assetsFolders: ['icons', 'resource'],
-  //   isActiveNode: true,
-  //   isActiveBrowser: true,
-  // },
+  {
+    packageName: '@ali/publish-visual',
+    assetsFolders: ['icons', 'resource'],
+    isActiveNode: true,
+    isActiveBrowser: true,
+  },
 ];
 
 export const otherExtensions4pack = otherExtensions.map((otherExtension4pack) => (
