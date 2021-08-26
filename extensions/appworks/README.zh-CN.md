@@ -77,7 +77,7 @@ AppWorks 套件内包含以下推荐的三方插件：
 - [Auto Complete Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag): 自动闭合和重命名标签
 - [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets): ES6 语法的 JavaScript 代码片段
 - [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets): React 代码片段
-- [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome): 在 Chrome 浏览器或任何其他支持 Chrome Debugger 协议的目标中调试 JavaScript 代码
+- [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner): 快速运行文件和代码片段，支持多种开发语言.
 - [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks): 源码阅读神器
 
 ## 获取帮助
