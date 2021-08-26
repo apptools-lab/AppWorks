@@ -2,6 +2,7 @@
 
 ## 1.0.6
 
+- feat: update `@appworks/project-service` for feedbackLink
 - chore: upgrade @appworks/material-engine version
 
 ## 1.0.5
