@@ -8,7 +8,6 @@
 - fix: import duplicate components when add routers [#947](https://github.com/appworks-lab/appworks/pull/947)
 - fix: fail to remove component [#942](https://github.com/appworks-lab/appworks/pull/942)
 - fix: material-help babel parse error [#944](https://github.com/appworks-lab/appworks/pull/944)
-- chore: remove @ali/publish-visual extension [#938](https://github.com/appworks-lab/appworks/pull/938)
 
 ## [1.4.0](https://github.com/appworks-lab/appworks/releases/tag/v1.4.0)
 
