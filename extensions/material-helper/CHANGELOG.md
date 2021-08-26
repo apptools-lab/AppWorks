@@ -1,8 +1,9 @@
 # Change Log
 
-## 1.0.10
-
+## 1.1.0
 - chore: add iceworks-refactor to extensionDependencies
+- fix: the babel plugin's flow will cause error, when babel parse typescript files.
+- fix: import duplicate components when add routers
 
 ## 1.0.9
 

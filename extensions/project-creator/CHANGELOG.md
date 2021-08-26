@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- chore: upgrade @appworks/material-engine version
+
 ## 1.0.4
 
 - feat: update official materials

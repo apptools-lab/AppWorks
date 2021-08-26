@@ -14,7 +14,7 @@ export default function getJsxElements(
     // https://babeljs.io/docs/en/babel-parser
     const ast = parse(documentText, {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('ts'),
     });
 
     if (ast) {
