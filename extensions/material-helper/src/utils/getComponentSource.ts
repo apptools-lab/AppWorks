@@ -9,7 +9,7 @@ function getComponentSource(
 ) {
   const ast = parser.parse(documentText, {
     sourceType: 'module',
-    plugins: getBabelParserPlugins('jsx'),
+    plugins: getBabelParserPlugins('ts'),
   });
 
   const result = { source: '', importedComponent: '' };

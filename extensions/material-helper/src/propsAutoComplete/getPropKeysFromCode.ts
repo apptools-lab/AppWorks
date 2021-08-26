@@ -12,7 +12,7 @@ export default function getPropKeysFromCode(componentPath: string): string[] {
   try {
     const ast = parse(fs.readFileSync(componentPath, 'utf-8'), {
       sourceType: 'module',
-      plugins: getBabelParserPlugins('jsx'),
+      plugins: getBabelParserPlugins('js'),
     });
 
     if (ast) {
