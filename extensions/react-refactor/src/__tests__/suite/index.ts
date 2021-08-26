@@ -46,7 +46,7 @@ class CoverageRunner {
     this.options = options;
   }
 
-  public setupCoverage(): void {
+  setupCoverage(): void {
     // Set up Code Coverage, hooking require so that instrumented code is returned
     const self = this;
     self.instrumenter = new istanbul.Instrumenter({ coverageVariable: self.coverageVar });
@@ -102,7 +102,7 @@ class CoverageRunner {
    *
    * @memberOf CoverageRunner
    */
-  public reportCoverage(): void {
+  reportCoverage(): void {
     const self = this;
     istanbul.hook.unhookRequire();
     let cov: any;
@@ -173,11 +173,11 @@ export function run(): Promise<void> {
       }
 
       // Add files to the test suite
-      files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
+      files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
 
       try {
         // Run the mocha test
-        mocha.run(failures => {
+        mocha.run((failures) => {
           if (failures > 0) {
             e(new Error(`${failures} tests failed.`));
           } else {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0
+
+- fix: import duplicate components when add routers
+
 ## 0.1.2
 
 - feat: update official materials

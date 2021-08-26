@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.3
+
+- feat: update `feedbackLink`
+
 ## 0.1.2
 
 - fix: fail to execute getProjectDefInfo function in external

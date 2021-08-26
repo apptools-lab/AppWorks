@@ -150,7 +150,26 @@ export function removeUselessReferences(ast: any, originUnrefIdentifiers: string
         }
 
         if (path && path.node) {
-          binding.path.remove();
+          const { id } = path.node as any;
+          if (id && (t.isArrayPattern(id) || t.isObjectPattern(id))) {
+            // const [a, b] = [1, 2]
+            // const { a, b } = obj;
+            const { properties, elements } = id as any;
+            if (properties) {
+              const propertyIndex = properties.findIndex(({ key }) => key.name === name);
+              if (propertyIndex) {
+                properties.splice(propertyIndex, 1);
+              }
+            }
+            if (elements) {
+              const elementIndex = elements.findIndex((item) => item.name === name);
+              if (elementIndex) {
+                elements.splice(elementIndex, 1);
+              }
+            }
+          } else {
+            binding.path.remove();
+          }
         }
       } else {
         // remove identifier in the parent scope

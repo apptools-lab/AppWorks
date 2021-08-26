@@ -52,9 +52,9 @@ export async function checkIsTargetProjectFramework() {
 export async function getFeedbackLink() {
   const framework = await getProjectFramework();
   if (framework === 'icejs') {
-    return 'https://c.tb.cn/F3.ZpKQYk';
+    return 'https://links.alipay.com/app/room/5f717ef787f98104f34edc18/?short_name=F3.ZA5bU1';
   } else if (framework === 'rax-app') {
-    return 'https://c.tb.cn/F3.ZLhGNW';
+    return 'https://links.alipay.com/app/room/5f6c6bf104dbbf056d050f25/?short_name=F3.ZzWClz';
   }
 }
 

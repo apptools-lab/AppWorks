@@ -77,7 +77,7 @@ AppWorks Pack extension installs these recommend extensions:
 - [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag): Auto rename paired HTML/XML tag.
 - [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets): Code snippets for JavaScript in ES6 syntax.
 - [Simple React Snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets): The essential collection of React Snippets and commands.
-- [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome): Debug your JavaScript code in the Chrome browser, or any other target that supports the Chrome Debugger protocol.
+- [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner): Run code snippet or code file for multiple languages.
 - [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks): It helps you to navigate in your code, moving between important positions easily and quickly.
 
 ## Help
