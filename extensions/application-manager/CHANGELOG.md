@@ -2,6 +2,7 @@
 
 ## 1.0.6
 
+- feat: add extensionDependencies `doctor`
 - fix: async function syntax error
 - feat: update `@appworks/project-service` for feedbackLink
 - chore: upgrade @appworks/material-engine version

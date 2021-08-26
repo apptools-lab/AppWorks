@@ -366,6 +366,7 @@
     "util": "^0.12.3"
   },
   "extensionDependencies": [
+    "iceworks-team.iceworks-doctor",
     "iceworks-team.iceworks-project-creator"
   ],
   "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/README.md",

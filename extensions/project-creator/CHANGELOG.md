@@ -2,6 +2,7 @@
 
 ## 1.0.5
 
+- feat: add extensionDependencies
 - chore: upgrade @appworks/material-engine version
 
 ## 1.0.4
