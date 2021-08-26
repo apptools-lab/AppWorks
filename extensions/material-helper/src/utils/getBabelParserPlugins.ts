@@ -1,7 +1,8 @@
 import { ParserPlugin } from '@babel/parser';
 
-export default function getBabelParserPlugins(language: string): ParserPlugin[] {
+export default function getBabelParserPlugins(language: 'ts' | 'js'): ParserPlugin[] {
   const plugins: ParserPlugin[] = [
+    'jsx',
     'doExpressions',
     'objectRestSpread',
     'decorators-legacy',
@@ -18,7 +19,6 @@ export default function getBabelParserPlugins(language: string): ParserPlugin[] 
     plugins.unshift('typescript');
   } else {
     plugins.unshift('flow');
-    plugins.unshift('jsx');
   }
 
   return plugins;

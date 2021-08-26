@@ -1,5 +1,21 @@
 # Change Log
 
+## [1.4.1](https://github.com/appworks-lab/appworks/releases/tag/v1.4.1)
+
+- feat: update feedback link [#940](https://github.com/appworks-lab/appworks/pull/940)
+- feat: remove deprecated extension [#939](https://github.com/appworks-lab/appworks/pull/939)
+- feat: add extensionDependencies [#945](https://github.com/appworks-lab/appworks/pull/945) 
+- fix: import duplicate components when add routers [#947](https://github.com/appworks-lab/appworks/pull/947)
+- fix: fail to remove component [#942](https://github.com/appworks-lab/appworks/pull/942)
+- fix: material-help babel parse error [#944](https://github.com/appworks-lab/appworks/pull/944)
+
+## [1.4.0](https://github.com/appworks-lab/appworks/releases/tag/v1.4.0)
+
+- feat: add React Generator [#933](https://github.com/appworks-lab/appworks/pull/933)
+- fix: windows get empty files [#937](https://github.com/appworks-lab/appworks/pull/937)
+- fix: ast parser error [#934](https://github.com/appworks-lab/appworks/pull/934)
+- fix: README docs link [#930](https://github.com/appworks-lab/appworks/pull/930) [#931](https://github.com/appworks-lab/appworks/pull/931)
+
 ## [1.3.1](https://github.com/appworks-lab/appworks/releases/tag/v1.3.1)
 
 - feat: update doctor codemod report [#920](https://github.com/appworks-lab/appworks/pull/920)
