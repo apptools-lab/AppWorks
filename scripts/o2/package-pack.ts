@@ -1,5 +1,7 @@
 import { execSync } from 'child_process';
-import { PACK_DIR, PACKAGE_MANAGER } from './constant';
+import { PACK_DIR, PACKAGE_MANAGER, INNER_EXTENSIONS_DIRECTORY } from './constant';
+import * as fse from 'fs-extra';
+import { join } from 'path';
 
 async function installPackDeps() {
   execSync(
@@ -20,6 +22,8 @@ async function buildPack() {
 }
 
 async function packagePack() {
+  // if some static files are not found when packaging the o2, copy it to the extensions/appworks dir
+  await fse.copy(join(INNER_EXTENSIONS_DIRECTORY, 'material-helper', 'snippets'), join(PACK_DIR, 'snippets'));
   await installPackDeps();
   await buildPack();
 }
