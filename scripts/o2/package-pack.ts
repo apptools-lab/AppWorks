@@ -22,6 +22,7 @@ async function buildPack() {
 }
 
 async function packagePack() {
+  // if some static files are not found when packaging the o2, copy it to the extensions/appworks dir
   await fse.copy(join(INNER_EXTENSIONS_DIRECTORY, 'material-helper', 'snippets'), join(PACK_DIR, 'snippets'));
   await installPackDeps();
   await buildPack();
