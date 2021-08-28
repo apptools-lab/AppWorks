@@ -44,7 +44,7 @@ export class ActionsProvider implements vscode.TreeDataProvider<ItemData> {
       itemDataList = element.children;
     } else {
       itemDataList = [
-        ...await this.buildQuickItems(),
+        ...(await this.buildQuickItems()),
         this.buildDividerItem(),
         await this.buildScriptParentItem(),
       ];

@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.7
+
+- fix: actions view error
+
 ## 1.0.6
 
 - feat: add extensionDependencies `doctor`
