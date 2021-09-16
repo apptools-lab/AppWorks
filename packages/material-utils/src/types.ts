@@ -60,19 +60,19 @@ export interface IMaterialScaffold {
 
 export interface IMaterialComponent {
   categories: string[];
-  dependencies: INpmDependencies;
-  description: string;
   homepage: string;
   name: string;
-  publishTime: string;
   repository: string;
-  screenshot: string;
-  screenshots: string[];
   source: IMaterialNpmSource;
   title: string;
-  updateTime: string;
+  screenshots?: string[];
+  screenshot?: string;
+  publishTime?: string;
+  updateTime?: string;
+  description?: string;
+  dependencies?: INpmDependencies;
   importStatement?: string;
-  componentType?: string;
+  componentType: string;
 }
 
 export interface IMaterialBlock {
