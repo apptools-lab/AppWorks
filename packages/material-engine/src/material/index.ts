@@ -15,9 +15,11 @@ import generateDebugMaterialData from './generateDebugMaterialData';
 
 export const DEBUG_PREFIX = 'DEBUG:';
 export { generateDebugMaterialData };
+export * from './getProjectComponentType';
+export * from './getComponentTypeOptionsByProjectType';
 
 // material source
-const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
+const ICE_MATERIAL_SOURCE = 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/pre-assets/materials/react-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
 // const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';

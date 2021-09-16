@@ -36,6 +36,7 @@ export interface IMaterialBase {
   homepage: string;
   repository: string;
   source: IMaterialNpmSource;
+  componentType?: string;
 }
 
 export interface IMaterialScaffold {
@@ -54,6 +55,7 @@ export interface IMaterialScaffold {
   updateTime: string;
   isNewlyCreated?: boolean;
   languageType?: 'js' | 'ts';
+  componentType?: string;
 }
 
 export interface IMaterialComponent {
@@ -70,6 +72,7 @@ export interface IMaterialComponent {
   title: string;
   updateTime: string;
   importStatement?: string;
+  componentType?: string;
 }
 
 export interface IMaterialBlock {
@@ -87,6 +90,7 @@ export interface IMaterialBlock {
   updateTime: string[];
   uid: string[];
   isNewly: boolean;
+  componentType?: string;
 }
 
 export interface IMaterialPage {
@@ -104,8 +108,9 @@ export interface IMaterialPage {
   updateTime: string[];
   uid: string[];
   isNewly: boolean;
-  templateData?: any;
   pageName: any;
+  componentType: string;
+  templateData?: any;
 }
 
 export interface IMaterialData {

@@ -20,6 +20,15 @@ const Home = () => {
     }
   }
 
+  async function getComponentTypeOptions() {
+    try {
+      const componentTypeOptions = await callService('material', 'getComponentTypeOptionsByProjectType');
+      return componentTypeOptions;
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   async function getSources() {
     let sources = [];
     try {
@@ -146,6 +155,7 @@ const Home = () => {
               onSettingsClick={onSettingsClick}
               getData={getData}
               onBlockClick={onSelect}
+              getComponentTypeOptions={getComponentTypeOptions}
               selectedBlocks={selectedBlock ? [selectedBlock] : []}
               dataWhiteList={['blocks']}
             />

@@ -36,6 +36,7 @@
       "dependencies": {
         "prop-types": "^15.5.8"
       },
+      "componentType": "fusion",
       "screenshots": ["https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png"],
       "publishTime": "2019-11-28T11:30:32.213Z",
       "updateTime": "2020-03-31T12:36:39.300Z"
@@ -66,6 +67,7 @@
       "dependencies": {
         "prop-types": "^15.5.8"
       },
+      "componentType": "fusion",
       "screenshots": ["https://unpkg.com/@alifd/fusion-basic-detail/screenshot.png"],
       "publishTime": "2019-11-28T11:38:31.720Z",
       "updateTime": "2020-03-31T12:52:50.478Z"
@@ -96,6 +98,7 @@
       "dependencies": {
         "prop-types": "^15.5.8"
       },
+      "componentType": "fusion",
       "screenshots": ["https://unpkg.com/@alifd/fusion-basic-detail/screenshot.png"],
       "publishTime": "2019-11-28T11:38:31.720Z",
       "updateTime": "2020-03-31T12:52:50.478Z"
@@ -126,6 +129,7 @@
       "dependencies": {
         "prop-types": "^15.5.8"
       },
+      "componentType": "antd",
       "screenshots": ["https://unpkg.com/@alifd/fusion-basic-detail/screenshot.png"],
       "publishTime": "2019-11-28T11:38:31.720Z",
       "updateTime": "2020-03-31T12:52:50.478Z"
@@ -150,6 +154,7 @@
         "classnames": "^2.2.6",
         "prop-types": "^15.5.8"
       },
+      "componentType": "fusion",
       "screenshot": "",
       "screenshots": "",
       "publishTime": "2019-07-02T13:50:26.135Z",
@@ -173,6 +178,7 @@
         "@alifd/next": "^1.x",
         "prop-types": "^15.5.8"
       },
+      "componentType": "fusion",
       "screenshot": "",
       "screenshots": "",
       "publishTime": "2018-01-17T12:37:35.249Z",

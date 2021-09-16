@@ -34,6 +34,15 @@ const Home = () => {
     return sources;
   }
 
+  async function getComponentTypeOptions() {
+    try {
+      const componentTypeOptions = await callService('material', 'getComponentTypeOptionsByProjectType');
+      return componentTypeOptions;
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
   async function refreshSources() {
     await callService('material', 'cleanCache');
     return await getSources();
@@ -55,7 +64,7 @@ const Home = () => {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
     }
     // validate if there is a block with the same name
-    const blockNames = blocks.map(block => block.name);
+    const blockNames = blocks.map((block) => block.name);
     if (blockNames.length !== new Set(blockNames).size) {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated' });
     }
@@ -226,6 +235,7 @@ const Home = () => {
           <Col span={8} className={styles.col}>
             <div className={styles.material}>
               <Material
+                getComponentTypeOptions={getComponentTypeOptions}
                 disableLazyLoad
                 getSources={getSources}
                 refreshSources={refreshSources}
