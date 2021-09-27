@@ -12,14 +12,14 @@ import { IMaterialSource, IMaterialData, IMaterialBase } from '@appworks/materia
 import { getProjectType } from '@appworks/project-service';
 import i18n from './i18n';
 import generateDebugMaterialData from './generateDebugMaterialData';
+import { DEBUG_PREFIX } from './constants';
 
-export const DEBUG_PREFIX = 'DEBUG:';
 export { generateDebugMaterialData };
 export * from './getProjectComponentType';
 export * from './getComponentTypeOptionsByProjectType';
 
 // material source
-const ICE_MATERIAL_SOURCE = 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/pre-assets/materials/react-materials.json';
+const ICE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/react-materials.json';
 const VUE_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/vue-materials.json';
 // const MINI_PROGRAM_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/miniprogram-materials.json';
 const RAX_MATERIAL_SOURCE = 'https://ice.alicdn.com/assets/materials/rax-materials.json';
@@ -152,7 +152,7 @@ export const getData = async function (source: string): Promise<IMaterialData> {
 
     if (isRaxMaterial(source)) {
       // handle with fusion-mobile components
-      materialData.components = getBaseMaterials(materialData.components, '@alifd/meet', '2.2.6', 'fusion-mobile');
+      materialData.components = getBaseMaterials(materialData.components, '@alifd/meet', '2.x', 'fusion-mobile');
     }
 
     // base materials
@@ -160,9 +160,9 @@ export const getData = async function (source: string): Promise<IMaterialData> {
     try {
       if (isIceMaterial(source)) {
         const fusionBaseResult = await axios({ url: FUSION_PC_COMPONENTS_SOURCE });
-        const fusionBaseMaterials = getBaseMaterials(fusionBaseResult.data, '@alifd/next', '1.18.16', 'fusion');
+        const fusionBaseMaterials = getBaseMaterials(fusionBaseResult.data, '@alifd/next', '1.x', 'fusion');
         const antdBaseResult = await axios({ url: ANTD_PC_COMPONENTS_SOURCE });
-        const antdBaseMaterials = getBaseMaterials(antdBaseResult.data, 'antd', '4.16.5', 'antd');
+        const antdBaseMaterials = getBaseMaterials(antdBaseResult.data, 'antd', '4.x', 'antd');
         bases = [...fusionBaseMaterials, ...antdBaseMaterials];
       } else if (isRaxMaterial(source)) {
         const baseResult = await axios({ url: RAX_BASE_COMPONENTS_SOURCE });
