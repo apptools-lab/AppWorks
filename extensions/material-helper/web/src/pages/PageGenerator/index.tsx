@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@appworks/material-ui';
@@ -21,6 +21,7 @@ const Home = () => {
   const [visible, setVisible] = useState(false);
   const [routerConfig, setRouterConfig] = useState<IRouter[]>([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
+  const [projectComponentType, setProjectComponentType] = useState('');
 
   async function getSources() {
     let sources = [];
@@ -212,6 +213,11 @@ const Home = () => {
     }
   }
 
+  useEffect(() => {
+    callService('material', 'getProjectComponentType').then((res: string) => {
+      setProjectComponentType(res);
+    });
+  }, []);
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
@@ -243,6 +249,7 @@ const Home = () => {
                 getData={getData}
                 onBlockClick={onAdd}
                 dataWhiteList={['blocks']}
+                projectComponentType={projectComponentType}
               />
             </div>
           </Col>

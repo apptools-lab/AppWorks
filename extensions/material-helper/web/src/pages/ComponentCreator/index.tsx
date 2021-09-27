@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Notification, Button, Input } from '@alifd/next';
 import Material from '@appworks/material-ui';
 import { LocaleProvider } from '@/i18n';
@@ -11,6 +11,7 @@ const Home = () => {
   const [selectedBlock, setSelectedBlock] = useState({});
   const [componentName, setComponentName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
+  const [projectComponentType, setProjectComponentType] = useState('');
 
   async function onSettingsClick() {
     try {
@@ -124,6 +125,12 @@ const Home = () => {
       await callService('common', 'showTextDocument', blockIndexPath);
     }
   }
+
+  useEffect(() => {
+    callService('material', 'getProjectComponentType').then((res: string) => {
+      setProjectComponentType(res);
+    });
+  }, []);
   return (
     <div className={styles.wrap}>
       <div className={styles.list}>
@@ -158,6 +165,7 @@ const Home = () => {
               getComponentTypeOptions={getComponentTypeOptions}
               selectedBlocks={selectedBlock ? [selectedBlock] : []}
               dataWhiteList={['blocks']}
+              projectComponentType={projectComponentType}
             />
           </div>
         </div>
