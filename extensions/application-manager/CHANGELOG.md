@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.8
+
+- feat: quick entries add 'doctor'
+
 ## 1.0.7
 
 - fix: actions view error

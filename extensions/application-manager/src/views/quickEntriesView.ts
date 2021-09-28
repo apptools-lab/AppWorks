@@ -11,7 +11,7 @@ const entryOptions = options.filter(({ command }) => {
   return [
     'project-creator.create-project.start',
     'applicationManager.dashboard.start',
-    'applicationManager.welcome.start',
+    'doctor.dashboard',
     'applicationManager.configHelper.start',
   ].includes(command);
 }).concat([

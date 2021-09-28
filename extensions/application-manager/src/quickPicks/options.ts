@@ -47,9 +47,7 @@ export default [
     detail: i18n.format('extension.applicationManager.showEntriesQuickPick.doctor.detail'),
     command: 'doctor.dashboard',
     async condition() {
-      const isInstalledDoctor = checkIsInstalledDoctor();
-      const isTargetProjectType = await checkIsTargetProjectType();
-      return isInstalledDoctor && isTargetProjectType;
+      return checkIsInstalledDoctor();
     },
   },
   {
