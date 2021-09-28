@@ -41,7 +41,8 @@
     "env": "node ./scripts/env.js"
   },
   "resolutions": {
-    "eslint-plugin-import": "2.20.2"
+    "eslint-plugin-import": "2.20.2",
+    "@typescript-eslint/parser": "^4.31.2"
   },
   "repository": {
     "type": "git",

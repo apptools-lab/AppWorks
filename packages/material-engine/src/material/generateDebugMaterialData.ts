@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as glob from 'glob';
 import * as BluebirdPromise from 'bluebird';
 import { IMaterialData } from '@appworks/material-utils';
-import { DEBUG_PREFIX } from './index';
+import { DEBUG_PREFIX } from './constants';
 import { getProjectLanguageType } from '@appworks/project-service';
 import * as imageToBase64 from 'image-to-base64';
 
@@ -54,7 +54,7 @@ export default async function generateDebugMaterialData(materialPath: string): P
   const componentsData: any[] = [];
   const scaffoldsData: any[] = [];
   const pagesData: any[] = [];
-  materialsData.forEach(item => {
+  materialsData.forEach((item) => {
     const { materialType, materialData } = item;
     if (materialType === 'block') {
       blocksData.push(materialData);

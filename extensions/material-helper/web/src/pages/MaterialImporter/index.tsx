@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Notification } from '@alifd/next';
 import callService from '@/callService';
 import Material from '@appworks/material-ui';
@@ -7,11 +7,22 @@ import { useIntl } from 'react-intl';
 import styles from './index.module.scss';
 import { LocaleProvider } from '../../i18n';
 
-const Home: React.FC<any> = () => {
+const Home = () => {
+  const [projectComponentType, setProjectComponentType] = useState('');
   const intl = useIntl();
+
   async function onSettingsClick() {
     try {
       await callService('common', 'openMaterialsSettings');
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
+  }
+
+  async function getComponentTypeOptions() {
+    try {
+      const componentTypeOptions = await callService('material', 'getComponentTypeOptionsByProjectType');
+      return componentTypeOptions;
     } catch (e) {
       Notification.error({ content: e.message });
     }
@@ -70,14 +81,22 @@ const Home: React.FC<any> = () => {
       Notification.error({ content: e.message });
     }
   };
+
+  useEffect(() => {
+    callService('material', 'getProjectComponentType').then((res: string) => {
+      setProjectComponentType(res);
+    });
+  }, []);
   return (
     <div className={styles.container}>
       <Material
         disableLazyLoad
         onSettingsClick={onSettingsClick}
         getSources={getSources}
+        getComponentTypeOptions={getComponentTypeOptions}
         refreshSources={refreshSources}
         getData={getData}
+        projectComponentType={projectComponentType}
         onBlockClick={onBlockClick}
         onBaseClick={onBaseClick}
         onComponentClick={onComponentClick}
