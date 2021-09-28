@@ -2,7 +2,7 @@
 
 ## 1.0.7
 
-- fix: actionsView show wrong result.
+- fix: actions view error
 
 ## 1.0.6
 

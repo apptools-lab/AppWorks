@@ -1,5 +1,7 @@
 # Changelog
+## 1.0.6
 
+- fix: remove loop extensionDependencies
 ## 1.0.5
 
 - feat: add extensionDependencies

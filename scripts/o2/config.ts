@@ -41,12 +41,13 @@ export const innerExtensions4pack = [
 ];
 
 const otherExtensions: OtherExtension[] = [
-  {
-    packageName: '@ali/publish-visual',
-    assetsFolders: ['icons', 'resource'],
-    isActiveNode: true,
-    isActiveBrowser: true,
-  },
+  // add tao.def-basic-kit the to extensionDependencies instead of @ali/publish-visual
+  // {
+  //   packageName: '@ali/publish-visual',
+  //   assetsFolders: ['icons', 'resource'],
+  //   isActiveNode: true,
+  //   isActiveBrowser: true,
+  // },
 ];
 
 export const otherExtensions4pack = otherExtensions.map((otherExtension4pack) => (
