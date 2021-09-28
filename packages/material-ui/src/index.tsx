@@ -13,6 +13,7 @@ import { MaterialView } from './components/view';
 const Index: React.FC<{
   getSources: () => Promise<IMaterialSource[]>;
   getData: (source: string) => Promise<IMaterialData>;
+  getComponentTypeOptions: () => Promise<Array<{value: string, label: string}>>;
   refreshSources?: () => Promise<IMaterialSource[]>;
   disableLazyLoad?: boolean;
   selectedBlocks?: IMaterialBlock[];
@@ -20,16 +21,28 @@ const Index: React.FC<{
   selectedBases?: IMaterialBase[];
   dataWhiteList?: string[];
   dataBlackList?: string[];
+  projectComponentType?: string;
   onBlockClick?: (block: IMaterialBlock) => void;
   onComponentClick?: (component: IMaterialComponent) => void;
   onBaseClick?: (base: IMaterialBase) => void;
   onSettingsClick?: () => void;
-}> = ({ refreshSources, getSources, getData, dataBlackList = [], dataWhiteList = [], onSettingsClick, ...others }) => {
+}> = ({
+  refreshSources,
+  getSources,
+  getData,
+  getComponentTypeOptions,
+  dataBlackList = [],
+  dataWhiteList = [],
+  onSettingsClick,
+  projectComponentType = '',
+  ...others
+ }) => {
   const [sources, setSources] = React.useState([]);
   const [currentSource, setCurrentSource] = React.useState('');
   const [data, setData] = React.useState([]);
   const [isLoadingData, setIsLoadingData] = React.useState(false);
   const [isLoadingSources, setIsLoadingSources] = React.useState(false);
+  const [componentTypeOptions, setComponentTypeOptions] = React.useState<Array<{value: string, label: string}>>([]);
 
   async function onRefreshSources() {
     setIsLoadingSources(true);
@@ -41,8 +54,10 @@ const Index: React.FC<{
   async function onGetSources() {
     setIsLoadingSources(true);
     const sources = (await getSources()) || [];
+    const componentTypeOptions = await getComponentTypeOptions();
     setIsLoadingSources(false);
     resetSources(sources);
+    setComponentTypeOptions(componentTypeOptions);
   }
 
   function resetSources(sources: IMaterialSource[]) {
@@ -86,6 +101,8 @@ const Index: React.FC<{
         isLoadingSources={isLoadingSources}
         colSpan={24}
         onChangeSource={handleChangeSource}
+        componentTypeOptions={componentTypeOptions}
+        projectComponentType={projectComponentType}
         extra={
           <div className="extra-wrap">
             {onSettingsClick && <Icon type="set" size="small" title="设置物料源" onClick={onSettingsClick} />}

@@ -22,6 +22,8 @@ export const MaterialView: React.FC<{
   currentSource: string;
   data: IMaterialTypeDatum[];
   onChangeSource(source: string): void;
+  projectComponentType: string;
+  componentTypeOptions: Array<{label: string; value: string}>;
   isLoadingSources?: boolean;
   isLoadingData?: boolean;
   extra?: any;

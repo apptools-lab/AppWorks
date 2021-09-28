@@ -34,11 +34,13 @@
     "lodash.lowercase": "^4.3.0",
     "lodash.startcase": "^4.4.0",
     "prettier": "^2.1.2",
+    "semver": "^7.3.5",
     "transform-ts-to-js": "0.1.0",
     "typescript": "^3.8.3",
     "uppercamelcase": "^3.0.0"
   },
   "devDependencies": {
+    "@types/semver": "^7.3.8",
     "@types/vscode": "^1.45.0"
   },
   "publishConfig": {

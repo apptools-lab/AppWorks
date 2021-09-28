@@ -12,7 +12,7 @@ async function wait(time) {
   await new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const bloks = [
+const blocks = [
   {
     "name": "AdvancedDetailHead",
     "title": "AdvancedDetailHead",
@@ -29,7 +29,27 @@ const bloks = [
       "npm": "@alifd/fusion-advanced-detail",
       "version": "0.1.9",
       "registry": "https://registry.npmjs.org"
-    }
+    },
+    "componentType": "antd"
+  },
+  {
+    "name": "AdvancedDetailHeadFusionPC",
+    "title": "AdvancedDetailHeadFusionPC",
+    "category": "Information",
+    "screenshot": "https://unpkg.com/@alifd/fusion-advanced-detail/screenshot.png",
+    "description": "intro block",
+    "homepage": "https://unpkg.com/@alifd/fusion-advanced-detail@0.1.9/build/index.html",
+    "categories": [
+      "Information"
+    ],
+    "repository": "https://github.com/alibaba-fusion/materials/tree/master/blocks/AdvancedDetail",
+    "source": {
+      "type": "npm",
+      "npm": "@alifd/fusion-advanced-detail",
+      "version": "0.1.9",
+      "registry": "https://registry.npmjs.org"
+    },
+    "componentType": "fusion"
   },
 ];
 
@@ -87,7 +107,8 @@ const components = [
       "npm": "@alifd/biz-anchor",
       "version": "1.1.7",
       "registry": "http://registry.npmjs.org"
-    }
+    },
+    "componentType": "fusion"
   },
 ];
 
@@ -111,7 +132,8 @@ const scaffolds = [
     },
     "screenshots": [
       "https://img.alicdn.com/tfs/TB16ftixUY1gK0jSZFMXXaWcVXa-2880-1800.png"
-    ]
+    ],
+    "componentType": "fusion"
   }
 ];
 
@@ -131,7 +153,7 @@ class App extends Component {
               "type": "react",
               "name": "materials",
               "description": "基于 Fusion 基础组件和 ICE 脚手架的官方物料",
-              "blocks": bloks,
+              "blocks": blocks,
               "components": components,
               "scaffolds": scaffolds 
             };
@@ -140,7 +162,7 @@ class App extends Component {
             await wait(2000);
             return sources;
           }}
-          selectedBlocks={bloks}
+          selectedBlocks={blocks}
           onBlockClick={function() { alert('block click!!!'); }}
         />
       </div>
