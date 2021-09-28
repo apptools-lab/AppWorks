@@ -43,9 +43,9 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
 
         if (codemod.npm_deprecate) {
           const { name, version } = parse(codemod.npm_deprecate);
-          const dependence = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
-
-          if (dependence && semver.satisfies(semver.coerce(dependence), version || '*')) {
+          const dependencyVersion = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
+          const dependencySemver = semver.coerce(dependencyVersion);
+          if (dependencySemver && semver.satisfies(dependencySemver, version || '*')) {
             deprecatedPackageConfig[name] = {
               ...codemod,
               name,
