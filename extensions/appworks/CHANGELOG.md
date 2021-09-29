@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.4.2](https://github.com/appworks-lab/appworks/releases/tag/v1.4.2)
+
+- feat: add quick entries for 'doctor' [#953](https://github.com/appworks-lab/appworks/pull/953) 
+- feat: add showInformationMessage for CodeMod result  [#954](https://github.com/appworks-lab/appworks/pull/954) 
+- feat: support antd and fusion material select [#955](https://github.com/appworks-lab/appworks/pull/955) 
+- feat: add 'tao.def-basic-kit' for O2 [#951](https://github.com/appworks-lab/appworks/pull/951)
+
 ## [1.4.1](https://github.com/appworks-lab/appworks/releases/tag/v1.4.1)
 
 - feat: update feedback link [#940](https://github.com/appworks-lab/appworks/pull/940)
