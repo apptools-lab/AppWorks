@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, ResponsiveGrid, Radio, Loading } from '@alifd/next';
+import { Search, ResponsiveGrid, Radio, Loading, Select } from '@alifd/next';
 import LazyLoad from 'react-lazyload';
 import {
   IMaterialTypeDatum,
@@ -9,6 +9,7 @@ import {
   IMaterialBase,
   CUSTOM_CATEGORY,
   IMaterialPage,
+  IMaterialCategoryDatum
 } from '@appworks/material-utils';
 import { MaterialScaffold } from './scaffold';
 import { MaterialBlock } from './block';
@@ -20,6 +21,7 @@ import styles from './type.module.scss';
 const { Cell } = ResponsiveGrid;
 
 interface ContentProps extends IMaterialTypeDatum {
+  categoryData: IMaterialCategoryDatum[],
   scrollId?: string;
   typeId: string;
   colSpan: number;
@@ -27,6 +29,8 @@ interface ContentProps extends IMaterialTypeDatum {
   selectedComponents?: IMaterialComponent[];
   selectedBases?: IMaterialBase[];
   selectedPages?: IMaterialPage[];
+  projectComponentType: string;
+  componentTypeOptions: Array<{value: string, label: string}>;
   onComponentClick?: (dataSource: IMaterialComponent) => void;
   onBaseClick?: (dataSource: IMaterialBase) => void;
   onBlockClick?: (dataSource: IMaterialBlock) => void;
@@ -43,6 +47,8 @@ const Content: React.FC<ContentProps> = ({
   selectedPages,
   selectedComponents,
   selectedBases,
+  componentTypeOptions,
+  projectComponentType,
   onComponentClick,
   onBaseClick,
   onPageClick,
@@ -51,10 +57,10 @@ const Content: React.FC<ContentProps> = ({
 }) => {
   const [data, setData] = React.useState(categoryData);
   React.useEffect(() => {
-    setData(categoryData);
+    setData(filterCategoryData(projectComponentType));
   }, [categoryData]);
 
-  async function handeSearchSubmit(keyword) {
+  async function handeSearchSubmit(keyword: string) {
     const newData = categoryData.map((item) => {
       const { list } = item;
       return {
@@ -72,10 +78,42 @@ const Content: React.FC<ContentProps> = ({
     setData(newData);
   }
 
+  /**
+   * filter category data by the component type
+   * @param currentComponentType
+   * @returns
+   */
+  function filterCategoryData(currentComponentType?: string) {
+    if (!currentComponentType) {
+      return categoryData
+    }
+    return categoryData.map((item) => {
+      const { list } = item;
+      return {
+        ...item,
+        list: list.filter((materialItem) => {
+          return materialItem.componentType === currentComponentType;
+        })
+      }
+    })
+  }
+  async function handleSelectSubmit(value: string) {
+    const newData = filterCategoryData(value);
+
+    setData(newData);
+  }
+
+
   return (
     <div className={styles.main}>
-      <div className={styles.search}>
+      <div className={styles.operation}>
         <Search shape="simple" placeholder="输入关键字查找物料" onSearch={handeSearchSubmit} />
+        <Select
+          defaultValue={projectComponentType}
+          dataSource={componentTypeOptions}
+          onChange={handleSelectSubmit}
+          placeholder="请选择物料类型"
+        />
       </div>
       {
         categoryData.length ? <div className={styles.content} id={scrollId}>
@@ -189,6 +227,8 @@ export const MaterialType: React.FC<{
   selectedBlocks?: IMaterialBlock[];
   selectedComponents?: IMaterialComponent[];
   selectedBases?: IMaterialBase[];
+  componentTypeOptions: Array<{value: string, label: string}>;
+  projectComponentType: string;
   onComponentClick?: (dataSource: IMaterialComponent) => void;
   onBaseClick?: (dataSource: IMaterialBase) => void;
   onBlockClick?: (dataSource: IMaterialBlock) => void;

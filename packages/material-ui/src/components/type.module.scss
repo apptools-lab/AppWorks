@@ -29,8 +29,17 @@
   flex-direction: column;
   height: 100%;
 
-  .search {
+  .operation {
     margin: 0 12px;
+
+    > span {
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    span:nth-of-type(1) {
+      margin-top: 0;
+    }
 
     :global(.next-search) {
       width: 100%;

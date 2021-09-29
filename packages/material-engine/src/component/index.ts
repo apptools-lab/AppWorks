@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
+import * as semver from 'semver';
 import { IMaterialComponent } from '@appworks/material-utils';
 import {
   getLastAcitveTextEditor,
@@ -102,7 +103,7 @@ export async function addCode(dataSource: IMaterialComponent) {
   const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
   try {
     const packageJSON = await fsExtra.readJson(packageJSONPath);
-    if (packageJSON.version === version) {
+    if (semver.satisfies(packageJSON.version, version)) {
       return;
     }
   } catch {

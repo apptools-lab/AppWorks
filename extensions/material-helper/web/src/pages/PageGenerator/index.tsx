@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Notification, Button } from '@alifd/next';
 import { arrayMove } from 'react-sortable-hoc';
 import Material from '@appworks/material-ui';
@@ -21,6 +21,7 @@ const Home = () => {
   const [visible, setVisible] = useState(false);
   const [routerConfig, setRouterConfig] = useState<IRouter[]>([]);
   const [isConfigurableRouter, setIsConfigurableRouter] = useState(true);
+  const [projectComponentType, setProjectComponentType] = useState('');
 
   async function getSources() {
     let sources = [];
@@ -32,6 +33,15 @@ const Home = () => {
       });
     }
     return sources;
+  }
+
+  async function getComponentTypeOptions() {
+    try {
+      const componentTypeOptions = await callService('material', 'getComponentTypeOptionsByProjectType');
+      return componentTypeOptions;
+    } catch (e) {
+      Notification.error({ content: e.message });
+    }
   }
 
   async function refreshSources() {
@@ -55,7 +65,7 @@ const Home = () => {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.selectBlocks' });
     }
     // validate if there is a block with the same name
-    const blockNames = blocks.map(block => block.name);
+    const blockNames = blocks.map((block) => block.name);
     if (blockNames.length !== new Set(blockNames).size) {
       return intl.formatMessage({ id: 'web.iceworksMaterialHelper.pageGenerater.blackName.cannotBeDuplicated' });
     }
@@ -203,6 +213,11 @@ const Home = () => {
     }
   }
 
+  useEffect(() => {
+    callService('material', 'getProjectComponentType').then((res: string) => {
+      setProjectComponentType(res);
+    });
+  }, []);
   return (
     <div className={styles.wrap}>
       <div className={styles.label}>
@@ -226,6 +241,7 @@ const Home = () => {
           <Col span={8} className={styles.col}>
             <div className={styles.material}>
               <Material
+                getComponentTypeOptions={getComponentTypeOptions}
                 disableLazyLoad
                 getSources={getSources}
                 refreshSources={refreshSources}
@@ -233,6 +249,7 @@ const Home = () => {
                 getData={getData}
                 onBlockClick={onAdd}
                 dataWhiteList={['blocks']}
+                projectComponentType={projectComponentType}
               />
             </div>
           </Col>

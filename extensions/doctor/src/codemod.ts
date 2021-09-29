@@ -18,6 +18,9 @@ const SCAN_OPTIONS = {
 
 export async function runCodemod(transform: string) {
   const result = await doctor.scan(projectPath, Object.assign({ transforms: [transform] }, SCAN_OPTIONS));
+  const { env, window } = vscode;
+  const isEn = env.language === 'en';
+  window.showInformationMessage(`${isEn ? 'Codemod run success, logs shows in the OUTPUT.' : 'Codemod 运行成功，运行日志将在 “输出” 中展示。'}`);
   setOutput(result.codemod?.reports[0].output || '');
   return result;
 }
@@ -40,9 +43,9 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
 
         if (codemod.npm_deprecate) {
           const { name, version } = parse(codemod.npm_deprecate);
-          const dependence = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
-
-          if (dependence && semver.satisfies(semver.coerce(dependence), version || '*')) {
+          const dependencyVersion = (packageJSON.dependencies || {})[name] || (packageJSON.devDependencies || {})[name];
+          const dependencySemver = semver.coerce(dependencyVersion);
+          if (dependencySemver && semver.satisfies(dependencySemver, version || '*')) {
             deprecatedPackageConfig[name] = {
               ...codemod,
               name,

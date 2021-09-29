@@ -28,7 +28,7 @@ export const bulkDownloadMaterials = async function (
       if (material.source.type === 'debug') {
         try {
           await fse.copy(material.source.path, downloadPath, {
-            filter: srcPath => {
+            filter: (srcPath) => {
               return !srcPath.includes('node_modules');
             },
           });
