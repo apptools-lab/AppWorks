@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+- feat: support get component type
+
 ## 0.2.0
 
 - fix: import duplicate components when add routers

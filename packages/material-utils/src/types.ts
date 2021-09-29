@@ -72,7 +72,7 @@ export interface IMaterialComponent {
   description?: string;
   dependencies?: INpmDependencies;
   importStatement?: string;
-  componentType: string;
+  componentType?: string;
 }
 
 export interface IMaterialBlock {
@@ -109,7 +109,7 @@ export interface IMaterialPage {
   uid: string[];
   isNewly: boolean;
   pageName: any;
-  componentType: string;
+  componentType?: string;
   templateData?: any;
 }
 

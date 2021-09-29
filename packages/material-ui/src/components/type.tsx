@@ -98,8 +98,6 @@ const Content: React.FC<ContentProps> = ({
     })
   }
   async function handleSelectSubmit(value: string) {
-    console.log('value==>', value);
-    console.log('categoryData==>', categoryData);
     const newData = filterCategoryData(value);
 
     setData(newData);
