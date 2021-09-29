@@ -103,7 +103,6 @@ export async function addCode(dataSource: IMaterialComponent) {
   const packageJSONPath = path.join(projectPath, dependencyDir, npm, packageJSONFilename);
   try {
     const packageJSON = await fsExtra.readJson(packageJSONPath);
-    console.log('semver.satisfies(packageJSON.version, version)', semver.satisfies(packageJSON.version, version));
     if (semver.satisfies(packageJSON.version, version)) {
       return;
     }
