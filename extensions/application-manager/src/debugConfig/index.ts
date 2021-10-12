@@ -5,7 +5,7 @@ import { parse } from 'comment-json';
 import { checkIsPegasusProject } from '@appworks/project-service';
 import { getLaunchConfig, getTasksConfig } from './getDefaultConfigs';
 
-export const BASE_URL = 'http://localhost:3333';
+export const BASE_URL = 'https://localhost:3333';
 export const CONFIG_NAME = 'AppWorks Debug';
 export const CONFIG_START_LABEL = 'AppWorks Start Background Tasks';
 export const CONFIG_STOP_LABEL = 'AppWorks Stop Background Tasks';
@@ -19,7 +19,7 @@ export interface IDebugConfig {
 function writeConfigFile(filePath: string, config: IDebugConfig) {
   fs.writeFileSync(
     filePath,
-    '// See https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/docs/debug.md \n' +
+    '// See https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/docs/debug.md \n' +
       '// for the documentation about the AppWorks debug \n' +
       `${JSON.stringify(config, null, '  ')}`,
   );

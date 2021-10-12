@@ -11,7 +11,7 @@
 
 ## 0.1.1
 
-- fix: rax-spa project targets null problem. [#861](https://github.com/appworks-lab/appworks/issues/861)
+- fix: rax-spa project targets null problem. [#861](https://github.com/apptools-lab/appworks/issues/861)
 
 ## 0.1.0
 

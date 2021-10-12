@@ -1,4 +1,4 @@
-简体中文 | [English](https://github.com/appworks-lab/appworks/blob/master/extensions/project-creator/README.md)
+简体中文 | [English](https://github.com/apptools-lab/appworks/blob/master/extensions/project-creator/README.md)
 
 # 应用创建器
 

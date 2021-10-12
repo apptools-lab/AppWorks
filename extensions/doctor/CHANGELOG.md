@@ -80,7 +80,7 @@ Release 1.0.0
 
 ## 0.1.6
 
-- fix: [#604](https://github.com/appworks-lab/appworks/issues/604)
+- fix: [#604](https://github.com/apptools-lab/appworks/issues/604)
 
 ## 0.1.5
 

@@ -329,7 +329,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
   "scripts": {
     "vscode:prepublish": "rm -rf build && npm run build:web && npm run build:extension",
@@ -369,9 +369,9 @@
     "iceworks-team.iceworks-doctor",
     "iceworks-team.iceworks-project-creator"
   ],
-  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/README.md",
+  "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

@@ -459,7 +459,7 @@ export default {
         severity: 0,
         npm_deprecate: '@ice/spec',
         transform: 'lint-config-to-spec',
-        docs: 'https://github.com/appworks-lab/codemod/tree/master/transforms/docs/lint-config-to-spec.md',
+        docs: 'https://github.com/apptools-lab/codemod/tree/master/transforms/docs/lint-config-to-spec.md',
         mode: 'check',
         output: 'Processing 211 files... \n' +
           'Spawning 7 workers...\n' +
@@ -487,7 +487,7 @@ export default {
         severity: 1,
         npm_deprecate: 'build-plugin-rax-component',
         transform: 'plugin-rax-component-to-component',
-        docs: 'https://github.com/appworks-lab/codemod/tree/master/transforms/docs/plugin-rax-component-to-component.md',
+        docs: 'https://github.com/apptools-lab/codemod/tree/master/transforms/docs/plugin-rax-component-to-component.md',
         mode: 'check',
         output: 'Processing 20 files... \nSpawning 7 workers...\nRunning in dry mode, no ' +
           'files will be written! \nSending 3 files to free worker...\nSending 3 ' +
