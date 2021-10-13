@@ -15,9 +15,9 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details"><img src="https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg" /></a>
-  <a href="https://github.com/appworks-lab/appworks/actions"><img src="https://github.com/appworks-lab/appworks/workflows/ci/badge.svg" /></a>
-  <a href="https://codecov.io/gh/appworks-lab/pack"><img src="https://img.shields.io/codecov/c/github/appworks-lab/pack/master.svg" alt="Test Coverage" /></a>
-  <a href="https://github.com/appworks-lab/appworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
+  <a href="https://github.com/apptools-lab/appworks/actions"><img src="https://github.com/apptools-lab/appworks/workflows/ci/badge.svg" /></a>
+  <a href="https://codecov.io/gh/apptools-lab/pack"><img src="https://img.shields.io/codecov/c/github/apptools-lab/pack/master.svg" alt="Test Coverage" /></a>
+  <a href="https://github.com/apptools-lab/appworks/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
 </p>
 
@@ -34,7 +34,7 @@
 
 ## 参与贡献
 
-欢迎通过 [issue](https://github.com/appworks-lab/appworks/issues/new) 反馈问题。
+欢迎通过 [issue](https://github.com/apptools-lab/appworks/issues/new) 反馈问题。
 
 如果对 `AppWorks` 感兴趣，请参考 [CONTRIBUTING.md](./.github/CONTRIBUTING.md) 学习如何贡献代码。
 
