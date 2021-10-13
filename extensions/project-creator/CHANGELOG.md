@@ -1,4 +1,9 @@
 # Changelog
+
+## 1.0.7
+
+- feat: update appworks-lab to apptools-lab
+
 ## 1.0.6
 
 - fix: remove loop extensionDependencies

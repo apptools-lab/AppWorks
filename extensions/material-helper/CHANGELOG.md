@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2
+
+- feat: update appworks-lab to apptools-lab
+
 ## 1.1.1
 
 - feat: support select different component type

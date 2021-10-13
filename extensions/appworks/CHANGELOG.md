@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.5.0](https://github.com/apptools-lab/appworks/releases/tag/v1.5.0)
+
+- feat: add auto import for CSS Modules file [#961](https://github.com/apptools-lab/appworks/pull/961) 
+- feat:  update appworks-lab to apptools-lab [#963](https://github.com/apptools-lab/appworks/pull/963) 
+
 ## [1.4.2](https://github.com/apptools-lab/appworks/releases/tag/v1.4.2)
 
 - feat: add quick entries for 'doctor' [#953](https://github.com/apptools-lab/appworks/pull/953) 

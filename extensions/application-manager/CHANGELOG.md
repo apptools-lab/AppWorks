@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.9
+
+- feat: update appworks-lab to apptools-lab
+
 ## 1.0.8
 
 - feat: quick entries add 'doctor'
