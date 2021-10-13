@@ -5,7 +5,7 @@ import { parse } from 'comment-json';
 import { checkIsPegasusProject } from '@appworks/project-service';
 import { getLaunchConfig, getTasksConfig } from './getDefaultConfigs';
 
-export const BASE_URL = 'https://localhost:3333';
+export const BASE_URL = 'http://localhost:3333';
 export const CONFIG_NAME = 'AppWorks Debug';
 export const CONFIG_START_LABEL = 'AppWorks Start Background Tasks';
 export const CONFIG_STOP_LABEL = 'AppWorks Stop Background Tasks';
