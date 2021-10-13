@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.0
+- feat: add `className={}` completion item
+- feat: add `styles` completion item and auto import module style file
+
 ## 1.0.1
 - feat: support *.less style.
 - feat: upgrade [css](https://www.npmjs.com/package/css) fix `@media` parse failed.

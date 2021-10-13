@@ -30,11 +30,11 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
-  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/doctor/README.md",
+  "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/doctor/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   },
   "scripts": {

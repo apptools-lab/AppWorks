@@ -1,10 +1,10 @@
 [
   {
-    "path": "/Users/xuwentao/Documents/www/github/appworks-lab/pack/extensions/codemod/index.jsx",
+    "path": "/Users/xuwentao/Documents/www/github/apptools-lab/pack/extensions/codemod/index.jsx",
     "status": "ok"
   },
   {
-    "path": "/Users/xuwentao/Documents/www/github/appworks-lab/pack/extensions/application-manager/index.jsx",
+    "path": "/Users/xuwentao/Documents/www/github/apptools-lab/pack/extensions/application-manager/index.jsx",
     "status": "error"
   }
 ]

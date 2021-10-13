@@ -21,7 +21,7 @@ Hi! I’m really excited that you are interested in contributing to AppWorks. Be
 Clone repo and initialize the setup environment：
 
 ```bash
-$ git clone git@github.com:appworks-lab/appworks.git
+$ git clone git@github.com:apptools-lab/appworks.git
 $ cd appworks && npm run setup # This will take about 20 minutes
 
 # add dep to some package
@@ -114,7 +114,7 @@ Get a Personal Access Token:
 
 Set Personal Access Token for Github Actions: 
 
-1. Visit [Actions secrets](https://github.com/appworks-lab/appworks/settings/secrets/actions)
+1. Visit [Actions secrets](https://github.com/apptools-lab/appworks/settings/secrets/actions)
 2. Update `VSCE_TOKEN`:
     ![](https://img.alicdn.com/imgextra/i2/O1CN01NpeNCf2558rTm9812_!!6000000007474-2-tps-2880-1754.png_790x10000.jpg)
 
