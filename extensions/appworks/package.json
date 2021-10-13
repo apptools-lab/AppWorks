@@ -3,7 +3,7 @@
   "displayName": "AppWorks",
   "description": "Application Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "engines": {
     "vscode": "^1.41.0"
   },
