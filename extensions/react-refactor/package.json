@@ -4,7 +4,7 @@
   "description": "Easily refactor Component in React/Rax.",
   "publisher": "iceworks-team",
   "icon": "assets/logo.png",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.41.0"
   },
