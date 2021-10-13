@@ -15,6 +15,7 @@ Which supports:
 * Go to definition
 * Create JSX/TSX inline CSS styles
 * Preview style and variable values
+* Auto import CSS Modules file
 
 ## Demo
 
@@ -25,6 +26,10 @@ According to the class selector in the style file 'import' , automatic completio
 Automatic completion for inline style. You can also preview SASS variable value and go to definition.
 
 ![demo](https://img.alicdn.com/imgextra/i1/O1CN01eK13T81wvy0wwt2v5_!!6000000006371-1-tps-750-546.gif)
+
+Automatic import for CSS Modules file.
+
+![demo](https://img.alicdn.com/imgextra/i1/O1CN01vdcFLc1Uw8xTHUfLx_!!6000000002581-1-tps-1712-666.gif)
 
 ## Usage
 

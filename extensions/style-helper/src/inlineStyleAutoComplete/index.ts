@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { recordCompletionItemProvider } from '@appworks/recorder';
 import CSSData, { IProperty, IPropertyValue } from 'vscode-web-custom-data/data/browsers.css-data.json';
 import { getFocusCodeInfo } from '../getFocusCodeInfo';
-import getCompletionItem from './getCompletionItem';
+import getCompletionItem from '../getCompletionItem';
 import isEditStyleKey from './isEditStyleKey';
 
 const CSS_PROPERTIES = {};
@@ -74,9 +74,9 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
         completions.push(
           getCompletionItem(
             propertyName,
-            property.description,
-            `${CSS_DOCS_URL}/${property.name}`, // Docs
+            'Property',
             `${propertyName}: `, // EXP position:
+            new vscode.MarkdownString(`**${property.description}** \n ${CSS_DOCS_URL}/${property.name}`), // Docs
           ),
         );
       }
@@ -94,10 +94,9 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
           completions.push(
             getCompletionItem(
               value.name,
-              value.description || '',
-              `${CSS_DOCS_URL}/${property.name}#Values`, // Docs
-              `'${value.name}'${!isEndsWithComma(currentText) ? ',' : ''}`, // EXP 'relative',
               'Value',
+              `'${value.name}'${!isEndsWithComma(currentText) ? ',' : ''}`, // EXP 'relative',
+              new vscode.MarkdownString(`**${value.description || ''}** \n ${CSS_DOCS_URL}/${property.name}#Values`), // Docs
             ),
           );
         }
