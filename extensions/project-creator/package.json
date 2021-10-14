@@ -87,8 +87,5 @@
   "bugs": {
     "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
-  },
-  "extensionDependencies": [
-    "iceworks-team.iceworks-app"
-  ]
+  }
 }
