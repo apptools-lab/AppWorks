@@ -1,4 +1,4 @@
-English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/README.zh-CN.md)
+English | [简体中文](https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/README.zh-CN.md)
 
 # Application Manager
 
@@ -77,7 +77,7 @@ The dashboard shows some status of the current application. If your application 
 2. Add a customize device or delete devices
 3. Select the custom device for debugging
 
-For more information, please see [Reference Document](https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/docs/debug.en.md)
+For more information, please see [Reference Document](https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/docs/debug.en.md)
 
 ### Node Dependencies
 

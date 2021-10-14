@@ -4,7 +4,7 @@
   "description": "Easily refactor Component in React/Rax.",
   "publisher": "iceworks-team",
   "icon": "assets/logo.png",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -57,10 +57,10 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   },
   "scripts": {

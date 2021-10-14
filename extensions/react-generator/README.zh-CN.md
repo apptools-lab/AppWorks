@@ -1,6 +1,6 @@
 # React 代码生成器
 
-English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/react-generator/README.zh-CN.md)
+English | [简体中文](https://github.com/apptools-lab/appworks/blob/master/extensions/react-generator/README.zh-CN.md)
 
 [![Version for VS Code Extension](https://vsmarketplacebadge.apphb.com/version-short/iceworks-team.iceworks-generator.svg?logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-generator)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks-generator.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-generator)

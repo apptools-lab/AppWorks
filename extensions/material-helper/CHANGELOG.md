@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2
+
+- feat: update appworks-lab to apptools-lab
+
 ## 1.1.1
 
 - feat: support select different component type
@@ -195,7 +199,7 @@
 
 ## 0.1.4
 
-Fix React component completion items, See: https://github.com/appworks-lab/appworks/issues/233
+Fix React component completion items, See: https://github.com/apptools-lab/appworks/issues/233
 
 ## 0.1.3
 

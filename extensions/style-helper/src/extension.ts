@@ -3,6 +3,7 @@ import { Recorder, recordCompletionItemSelect } from '@appworks/recorder';
 import { registerCommand, initExtension } from '@appworks/common-service';
 import cssClassAutoCompete from './cssClassAutoCompete';
 import inlineStyleAutoComplete from './inlineStyleAutoComplete';
+import jsxVarStylesComplete from './jsxVarStylesComplete';
 import styleInfoViewer from './styleInfoViewer';
 import sassVariablesViewer from './sassVariablesViewer';
 
@@ -19,6 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   cssClassAutoCompete(context);
   inlineStyleAutoComplete(context);
+  jsxVarStylesComplete(context);
   styleInfoViewer(context);
   sassVariablesViewer(context);
 

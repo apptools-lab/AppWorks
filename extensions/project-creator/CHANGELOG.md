@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- feat: update appworks-lab to apptools-lab
+
 ## 1.0.6
 
 - fix: remove loop extensionDependencies
@@ -16,12 +20,12 @@
 
 ## 1.0.3
 
-- feat: support double click to select scaffold. [#872](https://github.com/appworks-lab/appworks/issues/872)
+- feat: support double click to select scaffold. [#872](https://github.com/apptools-lab/appworks/issues/872)
 - fix: service api(setUserInfo) not found
 
 ## 1.0.2
 
-- fix: rax-spa project targets null problem. [#861](https://github.com/appworks-lab/appworks/issues/861)
+- fix: rax-spa project targets null problem. [#861](https://github.com/apptools-lab/appworks/issues/861)
 - fix .vscodeignore configuration [#576](https://github.com/microsoft/vscode-vsce/issues/576)
 
 ## 1.0.1

@@ -4,7 +4,7 @@
   "description": "Easily create React/Rax boilerplate code.",
   "publisher": "iceworks-team",
   "icon": "assets/logo.png",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -27,10 +27,10 @@
   "main": "./build/extension.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   },
   "scripts": {

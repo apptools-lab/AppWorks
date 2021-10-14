@@ -1,4 +1,4 @@
-简体中文 | [English](https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/README.md)
+简体中文 | [English](https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/README.md)
 
 # 应用管理器
 
@@ -79,7 +79,7 @@
 2. 添加或删除设备信息
 3. 选择自定义的设备进行调试
 
-更多请看[参考文档](https://github.com/appworks-lab/appworks/blob/master/extensions/application-manager/docs/debug.md)
+更多请看[参考文档](https://github.com/apptools-lab/appworks/blob/master/extensions/application-manager/docs/debug.md)
 
 ### 依赖信息视图
 

@@ -1,4 +1,4 @@
-简体中文 | [English](https://github.com/appworks-lab/appworks/blob/master/extensions/style-helper/README.md)
+简体中文 | [English](https://github.com/apptools-lab/appworks/blob/master/extensions/style-helper/README.md)
 
 # React 样式开发辅助插件
 
@@ -15,6 +15,7 @@
 * 跳转至样式和变量定义位置
 * 创建 JSX/TSX 的行内样式
 * 预览样式及变量内容
+* 自动 import CSS Modules 文件
 
 ## 示例
 
@@ -25,6 +26,10 @@
 行内样式自动补全，同时支持 SASS 变量的跳转及预览。
 
 ![demo](https://img.alicdn.com/imgextra/i1/O1CN01eK13T81wvy0wwt2v5_!!6000000006371-1-tps-750-546.gif)
+
+自动 import CSS Modules 文件。
+
+![demo](https://img.alicdn.com/imgextra/i1/O1CN01vdcFLc1Uw8xTHUfLx_!!6000000002581-1-tps-1712-666.gif)
 
 ## 使用
 

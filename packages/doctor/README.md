@@ -51,7 +51,7 @@ $ appworks-doctor -s ./ --ignore types mock
 
 * fix?: boolean, whether fix ESLint fixable problems.
 * framework?: string, target project framework, default is `react`.
-* transforms?: string[], you want to run code transform keys, from [@appworks/codemod](https://github.com/appworks-lab/codemod/)
+* transforms?: string[], you want to run code transform keys, from [@appworks/codemod](https://github.com/apptools-lab/codemod/)
 * languageType?: 'js'|'ts', target project languageType, default is `js`.
 * tempFileDir?: string, set temp reporters file directory, default is `node_modules/@appworks/doctor/tmp/`.
 * disableESLint?: boolean, whether disable ESLint part reports.

@@ -1,4 +1,4 @@
-简体中文 | [English](https://github.com/appworks-lab/appworks/blob/master/extensions/appworks/README.md)
+简体中文 | [English](https://github.com/apptools-lab/appworks/blob/master/extensions/appworks/README.md)
 
 # AppWorks
 
@@ -6,7 +6,7 @@
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks)
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-star/iceworks-team.iceworks.svg)](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks&ssr=false#review-details)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appworks-lab/appworks/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/apptools-lab/appworks/pulls)
 [![The MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 前端研发套件，通过可视化编程和编码辅助手段，更快更好地构建多端应用，支持 Web 、HTML 5 和小程序应用。
@@ -82,4 +82,4 @@ AppWorks 套件内包含以下推荐的三方插件：
 
 ## 获取帮助
 
-向 AppWorks 的 Github 仓库提交 [issue](https://github.com/appworks-lab/appworks/issues/new) ，我们会快速响应所提交的问题。
+向 AppWorks 的 Github 仓库提交 [issue](https://github.com/apptools-lab/appworks/issues/new) ，我们会快速响应所提交的问题。
