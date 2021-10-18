@@ -5,9 +5,9 @@ import config from '../../config';
 
 const [directory, tempFileDir, ruleKey, fix] = process.argv.slice(2)[0].split(' ');
 
-function run() {
+async function run() {
   const files = fs.readJSONSync(join(tempFileDir, config.tmpFiles.files));
-  const result = getEslintReports(directory, files, ruleKey, fix);
+  const result = await getEslintReports(directory, files, ruleKey, fix);
 
   fs.writeFileSync(join(tempFileDir, config.tmpFiles.report.eslint), JSON.stringify(result));
 }

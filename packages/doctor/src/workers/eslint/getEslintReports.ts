@@ -1,12 +1,7 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import ignore from 'ignore';
-import { CLIEngine } from 'eslint';
-import { deepmerge, getESLintConfig } from '@iceworks/spec';
-import getCustomESLintConfig from './getCustomESLintConfig';
 import Scorer from '../../Scorer';
 import { IEslintReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
+import { runESLint } from '@applint/applint';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -15,19 +10,8 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-const SUPPORT_FILE_REG = /(\.js|\.jsx|\.ts|\.tsx|\.vue|package\.json)$/;
-
-export default function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: string): IEslintReports {
-  const fixErr = fix === 'true';
-  const customConfig: any = getCustomESLintConfig(directory) || {};
-  if (ruleKey.indexOf('ts') !== -1) {
-    if (!customConfig.parserOptions) {
-      customConfig.parserOptions = {};
-    }
-    if (fs.existsSync(path.join(directory, './tsconfig.json'))) {
-      customConfig.parserOptions.project = path.join(directory, './tsconfig.json');
-    }
-  }
+export default async function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: string): Promise<IEslintReports> {
+  const fixError = fix === 'true';
 
   let warningScore = 0;
   let warningCount = 0;
@@ -36,44 +20,12 @@ export default function getEslintReports(directory: string, files: IFileInfo[], 
   let errorCount = 0;
 
   // package.json object
-  let packageInfo: any = {};
+  const packageInfo: any = getPackageInfo(files);
 
   const reports = [];
 
-  const cliEngine = new CLIEngine({
-    cache: false,
-    baseConfig: deepmerge(getESLintConfig(ruleKey), customConfig),
-    cwd: directory,
-    // If user add extends or plugins, should find plugin form target directory
-    resolvePluginsRelativeTo: customConfig.extends || customConfig.plugins ? directory : path.dirname(require.resolve('@iceworks/spec')),
-    fix: !!fixErr,
-    useEslintrc: false,
-  });
-
-  const ig = ignore();
-  const ignoreConfigFilePath = path.join(directory, '.eslintignore');
-  if (fs.existsSync(ignoreConfigFilePath)) {
-    ig.add(fs.readFileSync(ignoreConfigFilePath).toString());
-  }
-
-  const targetFiles: string[] = files.filter((file: IFileInfo) => {
-    if (file.path.endsWith('package.json')) {
-      packageInfo = JSON.parse(file.source);
-    }
-    return SUPPORT_FILE_REG.test(file.path) && !ig.ignores(file.path.replace(path.join(directory, '/'), ''));
-  }).map((file: IFileInfo) => {
-    // Use absolute path
-    return file.path.startsWith('.') ? path.join(process.cwd(), file.path) : file.path;
-  });
-
-  const data = cliEngine.executeOnFiles(targetFiles);
-
-  if (fixErr) {
-    // output fixes to disk
-    CLIEngine.outputFixes(data);
-  }
-
-  (data.results || []).forEach((result) => {
+  const { data: results, customConfig } = await runESLint({ directory, ruleKey, fixError, files });
+  (results || []).forEach((result) => {
     // Remove Parsing error
     result.messages = (result.messages || []).filter((message) => {
       if (
@@ -133,4 +85,15 @@ export default function getEslintReports(directory: string, files: IFileInfo[], 
     warningCount,
     customConfig,
   };
+}
+
+function getPackageInfo(files: IFileInfo[]) {
+  const packageJSONFile = files.find((file: IFileInfo) => {
+    return file.path.endsWith('package.json');
+  });
+  if (packageJSONFile) {
+    return JSON.parse(packageJSONFile.source);
+  }
+
+  return {};
 }
