@@ -62,13 +62,13 @@ $ appworks-doctor -s ./ --ignore types mock
 
 #### ESLint
 
-Use [@iceworks/spec](https://www.npmjs.com/package/@iceworks/spec) check your project. 
+Use [@applint/spec](https://www.npmjs.com/package/@applint/spec) check your project. 
 
 `.eslintrc.js` customConfig will merge into ESLint config.
 
 ```js
 // .eslintrc.js
-const { getESLintConfig } = require('@iceworks/spec');
+const { getESLintConfig } = require('@applint/spec');
  
 // getESLintConfig(rule: 'rax'|'react', customConfig?);
 module.exports = getESLintConfig('react', {
