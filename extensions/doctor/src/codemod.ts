@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as semver from 'semver';
 import { Doctor } from '@appworks/doctor';
-import { projectPath } from '@appworks/project-service';
+import { projectPath, getProjectFramework } from '@appworks/project-service';
 import parse from 'parse-package-name';
 import setOutput from './setOutput';
 import setDeprecatedPackage from './setDeprecatedPackage';
@@ -34,8 +34,14 @@ export async function activateCodemod(context: vscode.ExtensionContext) {
   const packageFile = path.join(projectPath, 'package.json');
   const packageJSON = fs.existsSync(packageFile) ? JSON.parse(fs.readFileSync(packageFile, 'utf-8')) : {};
 
+  const projectFramework = await getProjectFramework();
+
   // Show notifaction
-  if (fs.existsSync(packageFile) && projectPath) {
+  if (
+    fs.existsSync(packageFile) && projectPath &&
+    // Only check for rax and ice project
+    projectFramework !== 'unknown' && projectFramework !== 'vue'
+  ) {
     const reports = await doctor.scan(projectPath, SCAN_OPTIONS);
     (reports.codemod?.reports || []).forEach((codemod) => {
       if (codemod.severity > 0) {
