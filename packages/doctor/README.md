@@ -51,7 +51,7 @@ $ appworks-doctor -s ./ --ignore types mock
 
 * fix?: boolean, whether fix ESLint fixable problems.
 * framework?: string, target project framework, default is `react`.
-* transforms?: string[], you want to run code transform keys, from [@appworks/codemod](https://github.com/appworks-lab/codemod/)
+* transforms?: string[], you want to run code transform keys, from [@applint/projectlint](https://www.npmjs.com/package/@applint/projectlint)
 * languageType?: 'js'|'ts', target project languageType, default is `js`.
 * tempFileDir?: string, set temp reporters file directory, default is `node_modules/@appworks/doctor/tmp/`.
 * disableESLint?: boolean, whether disable ESLint part reports.
@@ -62,7 +62,7 @@ $ appworks-doctor -s ./ --ignore types mock
 
 #### ESLint
 
-Use [@applint/spec](https://www.npmjs.com/package/@applint/spec) check your project. 
+Use [@applint/spec](https://www.npmjs.com/package/@applint/spec) check your project.
 
 `.eslintrc.js` customConfig will merge into ESLint config.
 
@@ -87,6 +87,6 @@ Use [jscpd](https://www.npmjs.com/package/jscpd) calculate repeatability reports
 
 #### Codemod
 
-Use [@appworks/codemod](https://www.npmjs.com/package/@appworks/codemod) check and update Rax and React deprecated usages.
+Use [@applint/projectlint](https://www.npmjs.com/package/@applint/projectlint) check and update Rax and React deprecated usages.
 
 Enjoy!

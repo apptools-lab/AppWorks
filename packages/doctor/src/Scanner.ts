@@ -69,7 +69,7 @@ export default class Scanner {
 
     // Run Codemod
     if (!options || options.disableCodemod !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/codemod/index.js'), [`${directory} ${tempFileDir} ${options?.transforms}`]));
+      subprocessList.push(execa.node(path.join(__dirname, './workers/codemod/index.js'), [`${directory} ${tempFileDir} ${JSON.stringify(options?.transforms || {})} ${options?.fix}`]));
       processReportList.push(async () => {
         reports.codemod = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.codemod));
       });

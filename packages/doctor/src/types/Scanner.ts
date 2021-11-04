@@ -1,14 +1,16 @@
 import { IClone } from '@jscpd/core';
-import { IResult } from '@appworks/codemod';
+import { TransformResult, Severity as CodemodSeverity } from '@applint/projectlint';
+
+export { Severity as CodemodSeverity } from '@applint/projectlint';
 
 export interface IScannerOptions {
-  ignore: string[];
+  ignore?: string[];
 }
 
 export interface IScanOptions {
   fix?: boolean;
   framework?: string;
-  transforms?: string[];
+  transforms?: Record<string, keyof typeof CodemodSeverity>;
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
   timeout?: number;
@@ -56,7 +58,7 @@ export interface IEslintReports {
 
 export interface ICodemodReports {
   score: number;
-  reports: IResult[];
+  reports: TransformResult[];
 }
 
 export interface IScannerReports {
