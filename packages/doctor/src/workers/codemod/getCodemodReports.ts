@@ -17,7 +17,7 @@ export default async function getCodemodReports(directory: string, transforms: R
     reports = await runTransforms({ cwd: directory, transforms, dry });
 
     reports.forEach((report) => {
-      if (report.severity === Severity.warn || report.severity === Severity.recommendation) {
+      if (report.severity === Severity.warn) {
         scorer.plus(WARNING_WEIGHT);
       } else if (report.severity === Severity.error) {
         scorer.plus(ERROR_WEIGHT);
