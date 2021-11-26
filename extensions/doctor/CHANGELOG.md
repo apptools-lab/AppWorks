@@ -1,5 +1,9 @@
 # Change Log
 
+# 1.1.7
+
+- feat: only check codemod for rax and ice project
+
 # 1.1.6
 
 - feat: add showInformationMessage for codemod result
