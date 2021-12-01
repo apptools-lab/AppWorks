@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.5.1](https://github.com/apptools-lab/appworks/releases/tag/v1.5.1)
+- feat: only check codemod for rax and ice project [#969](https://github.com/apptools-lab/appworks/pull/969)
+- feat: remove [AppWorks - CodeMod](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-codemod), [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks) and [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
+
 ## [1.5.0](https://github.com/apptools-lab/appworks/releases/tag/v1.5.0)
 
 - feat: add auto import for CSS Modules file [#961](https://github.com/apptools-lab/appworks/pull/961) 
