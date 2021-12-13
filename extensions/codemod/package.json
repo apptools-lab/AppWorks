@@ -3,7 +3,7 @@
   "displayName": "CodeMod",
   "description": "CodeMod(Code Modify) is a tool to assist you with large-scale codebase refactors that can be partially automated but still require human oversight and occasional intervention.",
   "publisher": "iceworks-team",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
   "main": "./build/extension.js",
   "scripts": {
@@ -63,9 +63,9 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.flatten": "^4.4.0"
   },
-  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/codemod/README.md",
+  "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/codemod/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

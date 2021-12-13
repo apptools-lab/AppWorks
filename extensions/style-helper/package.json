@@ -3,7 +3,7 @@
   "displayName": "React Style Helper",
   "description": "Easily write styles(CSS/LESS/SASS).",
   "publisher": "iceworks-team",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -22,6 +22,7 @@
     "Less",
     "CSS",
     "ClassName",
+    "CSS Modules",
     "appworks"
   ],
   "icon": "assets/logo.png",
@@ -37,7 +38,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
   "main": "./build/extension.js",
   "scripts": {
@@ -71,10 +72,10 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@appworks/common-service": "^0.1.0",
+    "@appworks/recorder": "^1.0.1",
     "@babel/parser": "^7.10.3",
     "@babel/traverse": "^7.10.3",
-    "@appworks/common-service": "^0.1.0",
-    "@appworks/recorder": "^0.1.0",
     "css": "^3.0.0",
     "css-flatten": "^1.0.1",
     "datauri": "^2.0.0",
@@ -82,9 +83,9 @@
     "tinycolor2": "^1.4.1",
     "vscode-web-custom-data": "^0.1.4"
   },
-  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/style-helper/README.md",
+  "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/style-helper/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   }
 }

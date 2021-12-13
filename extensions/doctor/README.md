@@ -1,4 +1,4 @@
-English | [简体中文](https://github.com/appworks-lab/appworks/blob/master/extensions/doctor/README.zh-CN.md)
+English | [简体中文](https://github.com/apptools-lab/appworks/blob/master/extensions/doctor/README.zh-CN.md)
 
 # Doctor
 

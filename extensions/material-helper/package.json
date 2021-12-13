@@ -3,7 +3,7 @@
   "displayName": "Component Helper",
   "description": "Easily use Component in React/Vue/Rax.",
   "publisher": "iceworks-team",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "./build/extension.js",
   "engines": {
     "vscode": "^1.41.0"
@@ -379,11 +379,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/appworks-lab/appworks.git"
+    "url": "https://github.com/apptools-lab/appworks.git"
   },
-  "homepage": "https://github.com/appworks-lab/appworks/blob/master/extensions/material-helper/README.md",
+  "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/material-helper/README.md",
   "bugs": {
-    "url": "https://github.com/appworks-lab/appworks/issues",
+    "url": "https://github.com/apptools-lab/appworks/issues",
     "email": "iceworksteam@163.com"
   },
   "extensionDependencies": [

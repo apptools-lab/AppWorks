@@ -6,7 +6,7 @@
   "severity": 1,
   "npm_deprecate": "build-plugin-rax-component",
   "transform": "plugin-rax-component-to-component",
-  "docs": "https://github.com/appworks-lab/codemod/tree/master/transforms/docs/plugin-rax-component-to-component.md",
+  "docs": "https://github.com/apptools-lab/codemod/tree/master/transforms/docs/plugin-rax-component-to-component.md",
   "mode": "run",
   "output": "Processing 20 files... \nSpawning 7 workers...\nRunning in dry mode, no files will be written! \nSending 3 files to free worker...\nSending 3 files to free worker...\nSending 3 files to free worker...\nSending 3 files to free worker...\nSending 3 files to free worker...\nSending 3 files to free worker...\nSending 2 files to free worker...\nAll done. \nResults: \n0 errors\n18 unmodified\n1 skipped\n1 ok\nTime elapsed: 1.014seconds "
 }
