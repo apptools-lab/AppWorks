@@ -1,7 +1,5 @@
 import { IClone } from '@jscpd/core';
-import { TransformResult, Severity as CodemodSeverity } from '@applint/projectlint';
-
-export { Severity as CodemodSeverity } from '@applint/projectlint';
+import { ProjectLintResult, CodemodSeverity } from '@applint/applint/dist/projectLint';
 
 export interface IScannerOptions {
   ignore?: string[];
@@ -58,7 +56,7 @@ export interface IEslintReports {
 
 export interface ICodemodReports {
   score: number;
-  reports: TransformResult[];
+  reports: ProjectLintResult;
 }
 
 export interface IScannerReports {

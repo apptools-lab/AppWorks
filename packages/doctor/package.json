@@ -1,7 +1,7 @@
 {
   "name": "@appworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.3.0",
+  "version": "0.3.0-beta.9",
   "keywords": [
     "doctor",
     "analysis",
@@ -25,8 +25,7 @@
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
-    "@applint/applint": "^0.1.0",
-    "@applint/projectlint": "^0.1.0",
+    "@applint/applint": "latest",
     "@babel/parser": "^7.12.5",
     "@babel/traverse": "^7.12.5",
     "@jscpd/core": "^3.3.3",

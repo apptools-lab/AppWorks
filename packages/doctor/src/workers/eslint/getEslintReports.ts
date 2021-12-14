@@ -1,7 +1,7 @@
 import Scorer from '../../Scorer';
 import { IEslintReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
-import { runESLint } from '@applint/applint';
+import ESLint from '@applint/applint/dist/eslint';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -10,9 +10,7 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default async function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: string): Promise<IEslintReports> {
-  const fixError = fix === 'true';
-
+export default async function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: boolean): Promise<IEslintReports> {
   let warningScore = 0;
   let warningCount = 0;
 
@@ -23,8 +21,16 @@ export default async function getEslintReports(directory: string, files: IFileIn
   const packageInfo: any = getPackageInfo(files);
 
   const reports = [];
+  let ESLintResult = {} as any;
 
-  const { data: results, customConfig } = await runESLint({ directory, ruleKey, fixError, files });
+  const eslint = new ESLint({ directory, ruleKey, files });
+  if (fix) {
+    ESLintResult = await eslint.fix();
+  } else {
+    ESLintResult = await eslint.scan();
+  }
+
+  const { data: results, customConfig } = ESLintResult;
   (results || []).forEach((result) => {
     // Remove Parsing error
     result.messages = (result.messages || []).filter((message) => {
