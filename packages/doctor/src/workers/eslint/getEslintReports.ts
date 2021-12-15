@@ -1,7 +1,7 @@
 import Scorer from '../../Scorer';
 import { IEslintReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
-import ESLint from '@applint/applint/dist/eslint';
+import { ESLint } from '@applint/applint';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;

@@ -1,5 +1,5 @@
-import ProjectLint, { CodemodSeverity } from '@applint/applint/dist/projectLint';
-import type { ProjectLintResult } from '@applint/applint/dist/projectLint';
+import { ProjectLint, CodemodSeverity } from '@applint/applint';
+import type { ProjectLintResult } from '@applint/applint';
 import Scorer from '../../Scorer';
 import { ICodemodReports } from '../../types/Scanner';
 

@@ -1,5 +1,5 @@
 import { IClone } from '@jscpd/core';
-import { ProjectLintResult } from '@applint/applint/dist/projectLint';
+import type { ProjectLintResult } from '@applint/applint';
 
 export interface IScannerOptions {
   ignore?: string[];
