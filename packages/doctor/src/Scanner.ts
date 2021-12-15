@@ -76,6 +76,7 @@ export default class Scanner {
         ),
       );
       processReportList.push(async () => {
+        // TODO: write all the projectlint reports but not only the codemod report
         reports.codemod = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.codemod));
       });
     }
