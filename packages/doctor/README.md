@@ -91,6 +91,6 @@ Use [jscpd](https://www.npmjs.com/package/jscpd) calculate repeatability reports
 
 #### Codemod
 
-Use [@applint/projectlint](https://www.npmjs.com/package/@applint/projectlint) check and update Rax and React deprecated usages.
+Use [@applint/applint](https://www.npmjs.com/package/@applint/applint) check and update Rax and React deprecated usages.
 
 Enjoy!
