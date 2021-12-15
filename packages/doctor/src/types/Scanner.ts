@@ -1,5 +1,5 @@
 import { IClone } from '@jscpd/core';
-import { ProjectLintResult, CodemodSeverity } from '@applint/applint/dist/projectLint';
+import { ProjectLintResult } from '@applint/applint/dist/projectLint';
 
 export interface IScannerOptions {
   ignore?: string[];
@@ -8,7 +8,7 @@ export interface IScannerOptions {
 export interface IScanOptions {
   fix?: boolean;
   framework?: string;
-  transforms?: Record<string, keyof typeof CodemodSeverity>;
+  transforms?: Record<string, number>;
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
   timeout?: number;

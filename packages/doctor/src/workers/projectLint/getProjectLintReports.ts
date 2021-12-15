@@ -1,4 +1,5 @@
-import ProjectLint, { ProjectLintResult, CodemodSeverity } from '@applint/applint/dist/projectLint';
+import ProjectLint, { CodemodSeverity } from '@applint/applint/dist/projectLint';
+import type { ProjectLintResult } from '@applint/applint/dist/projectLint';
 import Scorer from '../../Scorer';
 import { ICodemodReports } from '../../types/Scanner';
 
@@ -9,13 +10,12 @@ const ERROR_WEIGHT = -5;
 
 export default async function getProjectLintReports(
   cwd: string,
-  transforms: Record<string, CodemodSeverity>,
   fix: boolean,
+  transforms?: Record<string, number>,
 ): Promise<ICodemodReports> {
   let reports: ProjectLintResult = {};
 
   const scorer = new Scorer();
-
   const projectLint = new ProjectLint({ cwd, transforms });
 
   try {
