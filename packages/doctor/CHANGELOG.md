@@ -1,5 +1,9 @@
 # changelog
 
+## 0.3.0
+
+- Feat: replace `@appworks/codemod` with `@applint/applint`
+
 ## 0.2.3
 
 - Fix Windows get empty files
