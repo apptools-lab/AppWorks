@@ -10,7 +10,7 @@ const ERROR_WEIGHT = -5;
 export default async function getProjectLintReports(
   cwd: string,
   transforms: Record<string, CodemodSeverity>,
-  fix = false,
+  fix: boolean,
 ): Promise<ICodemodReports> {
   let reports: ProjectLintResult = {};
 
