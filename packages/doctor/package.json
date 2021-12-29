@@ -1,7 +1,7 @@
 {
   "name": "@appworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.3.0",
+  "version": "0.3.1-beta.0",
   "keywords": [
     "doctor",
     "analysis",
@@ -38,7 +38,6 @@
     "jscpd": "^3.3.3",
     "moment": "^2.29.1",
     "stylelint": "^13.7.0",
-    "typescript": "^3.0.0",
-    "typhonjs-escomplex": "^0.1.0"
+    "typescript": "^3.0.0"
   }
 }
