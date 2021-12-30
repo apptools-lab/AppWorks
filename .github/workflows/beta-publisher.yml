@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 43
+          node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: |
           npm i
