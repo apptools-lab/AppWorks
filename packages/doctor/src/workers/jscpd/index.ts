@@ -3,7 +3,7 @@ import { join } from 'path';
 import getRepeatabilityReports from './getRepeatabilityReports';
 import config from '../../config';
 
-const [directory, tempFileDir, ignore] = process.argv.slice(2)[0].split(' ');
+const [directory, tempFileDir, ignore] = process.argv.slice(2);
 
 async function run() {
   const result = await getRepeatabilityReports(directory, tempFileDir, ignore);
