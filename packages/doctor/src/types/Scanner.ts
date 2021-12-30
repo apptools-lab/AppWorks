@@ -1,5 +1,5 @@
 import { IClone } from '@jscpd/core';
-import type { ProjectLintResult } from '@applint/applint';
+import type { ProjectLintResult, CodemodRule } from '@applint/applint';
 
 export interface IScannerOptions {
   ignore?: string[];
@@ -17,6 +17,7 @@ export interface IScanOptions {
   disableRepeatability?: boolean;
   disableCodemod?: boolean;
   maxRepeatabilityCheckLines?: number;
+  customTransformRules?: Record<string, CodemodRule>;
 }
 
 // https://www.npmjs.com/package/typhonjs-escomplex
