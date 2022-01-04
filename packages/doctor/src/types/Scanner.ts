@@ -20,28 +20,6 @@ export interface IScanOptions {
   customTransformRules?: Record<string, CodemodRule>;
 }
 
-// https://www.npmjs.com/package/typhonjs-escomplex
-export interface IMaintainabilityReport {
-  classes: any[];
-  errors: any[];
-  methods: any[];
-  aggregate: any;
-  aggregateAverage: any;
-  methodAverage: any;
-  settings: any;
-  srcPathAlias: any;
-  filePath: string;
-  srcPath: string;
-  lineEnd: number;
-  lineStart: number;
-  maintainability: number;
-}
-
-export interface IMaintainabilityReports {
-  score: number;
-  reports: IMaintainabilityReport[];
-}
-
 export interface IRepeatabilityReports {
   score: number;
   clones: IClone[];
@@ -68,7 +46,8 @@ export interface IScannerReports {
   score?: number;
   scanTime?: number;
   ESLint?: IEslintReports;
-  maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
   codemod?: ICodemodReports;
+  // the content is empty
+  maintainability?: any;
 }

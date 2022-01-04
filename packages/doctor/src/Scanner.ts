@@ -119,7 +119,6 @@ export default class Scanner {
       reports.score = getFinalScore(
         [
           (reports.ESLint || {}).score,
-          (reports.maintainability || {}).score,
           (reports.repeatability || {}).score,
           (reports.codemod || {}).score,
         ].filter((score) => !isNaN(score)),

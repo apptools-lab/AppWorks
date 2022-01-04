@@ -1,5 +1,9 @@
 # changelog
 
+## 0.3.1
+
+- chore: remove maintainability detail from report and `typhonjs-escomplex` dependency
+
 ## 0.3.0
 
 - Feat: replace `@appworks/codemod` with `@applint/applint`
