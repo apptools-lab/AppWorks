@@ -1,14 +1,14 @@
 import { IClone } from '@jscpd/core';
-import { IResult } from '@appworks/codemod';
+import type { ProjectLintResult, CodemodRule } from '@applint/applint';
 
 export interface IScannerOptions {
-  ignore: string[];
+  ignore?: string[];
 }
 
 export interface IScanOptions {
   fix?: boolean;
   framework?: string;
-  transforms?: string[];
+  transforms?: Record<string, number>;
   languageType?: 'js' | 'ts';
   tempFileDir?: string;
   timeout?: number;
@@ -17,28 +17,7 @@ export interface IScanOptions {
   disableRepeatability?: boolean;
   disableCodemod?: boolean;
   maxRepeatabilityCheckLines?: number;
-}
-
-// https://www.npmjs.com/package/typhonjs-escomplex
-export interface IMaintainabilityReport {
-  classes: any[];
-  errors: any[];
-  methods: any[];
-  aggregate: any;
-  aggregateAverage: any;
-  methodAverage: any;
-  settings: any;
-  srcPathAlias: any;
-  filePath: string;
-  srcPath: string;
-  lineEnd: number;
-  lineStart: number;
-  maintainability: number;
-}
-
-export interface IMaintainabilityReports {
-  score: number;
-  reports: IMaintainabilityReport[];
+  customTransformRules?: Record<string, CodemodRule>;
 }
 
 export interface IRepeatabilityReports {
@@ -56,7 +35,7 @@ export interface IEslintReports {
 
 export interface ICodemodReports {
   score: number;
-  reports: IResult[];
+  reports: ProjectLintResult;
 }
 
 export interface IScannerReports {
@@ -67,7 +46,8 @@ export interface IScannerReports {
   score?: number;
   scanTime?: number;
   ESLint?: IEslintReports;
-  maintainability?: IMaintainabilityReports;
   repeatability?: IRepeatabilityReports;
   codemod?: ICodemodReports;
+  // the content is empty
+  maintainability?: any;
 }

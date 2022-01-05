@@ -1,7 +1,7 @@
 {
   "name": "@appworks/doctor",
   "description": "Analyse and running codemods over react/rax projects, troubleshooting and automatically fixing errors",
-  "version": "0.2.3",
+  "version": "0.3.1",
   "keywords": [
     "doctor",
     "analysis",
@@ -25,10 +25,9 @@
     "prepublishOnly": "npm run compile"
   },
   "dependencies": {
-    "@appworks/codemod": "^0.2.0",
+    "@applint/applint": "^0.1.0",
     "@babel/parser": "^7.12.5",
     "@babel/traverse": "^7.12.5",
-    "@iceworks/spec": "^1.0.2",
     "@jscpd/core": "^3.3.3",
     "argv-parse": "^1.0.1",
     "eslint": "^7.22.0",
@@ -39,7 +38,6 @@
     "jscpd": "^3.3.3",
     "moment": "^2.29.1",
     "stylelint": "^13.7.0",
-    "typescript": "^3.0.0",
-    "typhonjs-escomplex": "^0.1.0"
+    "typescript": "^3.0.0"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable max-len */
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -45,7 +46,17 @@ export default class Scanner {
     if (!options || options.disableESLint !== true) {
       // Example: react react-ts rax rax-ts, support common and common-ts
       const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(/^unknown/, 'common');
-      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint/index.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
+      const subprocess = execa.node(
+        path.join(__dirname, './workers/eslint/index.js'),
+        [
+          directory,
+          tempFileDir,
+          ruleKey,
+          `${options?.fix}`,
+        ],
+      );
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
       });
@@ -53,7 +64,9 @@ export default class Scanner {
 
     // Run maintainability
     if (!options || options.disableMaintainability !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]));
+      const subprocess = execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]);
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.maintainability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.escomplex));
       });
@@ -61,16 +74,37 @@ export default class Scanner {
 
     // Run repeatability
     if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd/index.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+      const subprocess = execa.node(
+        path.join(__dirname, './workers/jscpd/index.js'),
+        [
+          directory,
+          tempFileDir,
+          `${this.options.ignore}`,
+        ],
+      );
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.repeatability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.jscpd));
       });
     }
 
-    // Run Codemod
+    // Run ProjectLint
     if (!options || options.disableCodemod !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/codemod/index.js'), [`${directory} ${tempFileDir} ${options?.transforms}`]));
+      const subprocess = execa.node(
+        path.join(__dirname, './workers/projectLint/index.js'),
+        [
+          directory,
+          tempFileDir,
+          JSON.stringify(options?.transforms),
+          `${options?.fix}`,
+          JSON.stringify(options?.customTransformRules),
+        ],
+      );
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
+        // TODO: write all the projectlint reports but not only the codemod report
         reports.codemod = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.codemod));
       });
     }
@@ -85,7 +119,6 @@ export default class Scanner {
       reports.score = getFinalScore(
         [
           (reports.ESLint || {}).score,
-          (reports.maintainability || {}).score,
           (reports.repeatability || {}).score,
           (reports.codemod || {}).score,
         ].filter((score) => !isNaN(score)),
