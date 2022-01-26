@@ -42,23 +42,39 @@ export default class Scanner {
 
     fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.files), JSON.stringify(files));
 
+    // Example: react react-ts rax rax-ts, support common and common-ts
+    const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(
+      /^unknown/,
+      'common',
+    );
+
     // Run ESLint
     if (!options || options.disableESLint !== true) {
-      // Example: react react-ts rax rax-ts, support common and common-ts
-      const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(/^unknown/, 'common');
-      const subprocess = execa.node(
-        path.join(__dirname, './workers/eslint/index.js'),
-        [
-          directory,
-          tempFileDir,
-          ruleKey,
-          `${options?.fix}`,
-        ],
-      );
+      const subprocess = execa.node(path.join(__dirname, './workers/eslint/index.js'), [
+        directory,
+        tempFileDir,
+        ruleKey,
+        `${options?.fix}`,
+      ]);
 
       subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
+      });
+    }
+
+    // Run Stylelint
+    if (!options || options.disableStylelint !== true) {
+      const subprocess = execa.node(path.join(__dirname, './workers/stylelint/index.js'), [
+        directory,
+        tempFileDir,
+        ruleKey,
+        `${options?.fix}`,
+      ]);
+
+      subprocessList.push(subprocess);
+      processReportList.push(async () => {
+        reports.Stylelint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.stylelint));
       });
     }
 
@@ -73,15 +89,15 @@ export default class Scanner {
     }
 
     // Run repeatability
-    if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
-      const subprocess = execa.node(
-        path.join(__dirname, './workers/jscpd/index.js'),
-        [
-          directory,
-          tempFileDir,
-          `${this.options.ignore}`,
-        ],
-      );
+    if (
+      (!options || options.disableRepeatability !== true) &&
+      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
+    ) {
+      const subprocess = execa.node(path.join(__dirname, './workers/jscpd/index.js'), [
+        directory,
+        tempFileDir,
+        `${this.options.ignore}`,
+      ]);
 
       subprocessList.push(subprocess);
       processReportList.push(async () => {
@@ -91,16 +107,13 @@ export default class Scanner {
 
     // Run ProjectLint
     if (!options || options.disableCodemod !== true) {
-      const subprocess = execa.node(
-        path.join(__dirname, './workers/projectLint/index.js'),
-        [
-          directory,
-          tempFileDir,
-          JSON.stringify(options?.transforms),
-          `${options?.fix}`,
-          JSON.stringify(options?.customTransformRules),
-        ],
-      );
+      const subprocess = execa.node(path.join(__dirname, './workers/projectLint/index.js'), [
+        directory,
+        tempFileDir,
+        JSON.stringify(options?.transforms),
+        `${options?.fix}`,
+        JSON.stringify(options?.customTransformRules),
+      ]);
 
       subprocessList.push(subprocess);
       processReportList.push(async () => {
@@ -113,15 +126,17 @@ export default class Scanner {
       // Check
       await Promise.all(subprocessList);
       // Set result
-      await Promise.all(processReportList.map(async (fn) => { await fn(); }));
+      await Promise.all(
+        processReportList.map(async (fn) => {
+          await fn();
+        }),
+      );
 
       // Calculate total score
       reports.score = getFinalScore(
-        [
-          (reports.ESLint || {}).score,
-          (reports.repeatability || {}).score,
-          (reports.codemod || {}).score,
-        ].filter((score) => !isNaN(score)),
+        [(reports.ESLint || {}).score, (reports.repeatability || {}).score, (reports.codemod || {}).score].filter(
+          (score) => !isNaN(score),
+        ),
       );
 
       // Duration seconds
