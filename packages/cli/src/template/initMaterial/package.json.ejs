@@ -1,0 +1,26 @@
+{
+  "name": "<%= npmName %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "author": "",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "appworks generate",
+    "sync": "appworks sync",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
+    "prepublishOnly": "npm run generate"
+  },
+  "files": ["build"],
+  "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
+    "@iceworks/spec": "^1.0.0",
+    "eslint": "^7.0.0",
+    "stylelint": "^13.1.0"
+  },
+  "materialConfig": {
+    "template": "<%= template %>",
+    "type": "<%= materialConfig.type %>"
+  }
+}
