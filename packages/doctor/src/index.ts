@@ -27,9 +27,9 @@ const defaultIgnore = [
 ];
 
 class Doctor {
-  private options: IDoctorOptions;
+  options: IDoctorOptions;
 
-  private ignore: string[];
+  ignore: string[];
 
   private scanner: Scanner;
 
