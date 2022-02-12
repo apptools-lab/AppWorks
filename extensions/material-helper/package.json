@@ -306,10 +306,10 @@
         },
         "appworks.npmRegistry": {
           "type": "string",
-          "default": "https://registry.npm.taobao.org",
+          "default": "https://registry.npmmirror.com",
           "enum": [
             "https://registry.npmjs.org",
-            "https://registry.npm.taobao.org"
+            "https://registry.npmmirror.com"
           ],
           "description": "%iceworksMaterialHelper.configuration.properties.appworks.npmRegistry.description%"
         },
