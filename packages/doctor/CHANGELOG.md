@@ -1,6 +1,6 @@
 # changelog
 
-## 1.0.0
+## 0.4.0
 
 - feat: support scan and fix css files
 
