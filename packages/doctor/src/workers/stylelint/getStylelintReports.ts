@@ -23,7 +23,9 @@ async function getStylelintReports(
   const { data, customConfig } = stylelintResult;
 
   const reports = data.results.filter((result) => result.parseErrors.length === 0);
-  const warningCount = reports.length;
+  const warningCount = reports.reduce((count, report) => {
+    return count + report.warnings.length;
+  }, 0);
   const warningScore = warningCount * WARNING_WEIGHT;
 
   const scorer = new Scorer();
