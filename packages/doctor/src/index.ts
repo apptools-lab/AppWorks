@@ -7,7 +7,25 @@ import { IScanOptions, IScannerReports } from './types/Scanner';
 import { IFileInfo } from './types/File';
 
 // Ignore directories
-const defaultignore = ['.faas_debug_tmp', '.ice', '.rax', 'build', 'es', 'dist', 'lib', 'mocks', 'logs', 'coverage', 'node_modules', 'demo', 'examples', 'public', 'test', '__tests__'];
+const defaultIgnore = [
+  '.faas_debug_tmp',
+  '.ice',
+  '.rax',
+  'build',
+  'es',
+  'dist',
+  'lib',
+  'mocks',
+  'logs',
+  'coverage',
+  'node_modules',
+  'demo',
+  'examples',
+  'public',
+  'test',
+  '__tests__',
+];
+
 class Doctor {
   options: IDoctorOptions;
 
@@ -20,7 +38,7 @@ class Doctor {
   constructor(options: IDoctorOptions) {
     this.options = options || {};
 
-    this.ignore = defaultignore.concat(this.options.ignore || []);
+    this.ignore = defaultIgnore.concat(this.options.ignore || []);
 
     this.scanner = new Scanner({ ignore: this.ignore });
 

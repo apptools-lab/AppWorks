@@ -1,7 +1,7 @@
 import Scorer from '../../Scorer';
-import { IEslintReports } from '../../types/Scanner';
+import { IESLintReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
-import { ESLint } from '@applint/applint';
+import { ESLint, RuleKey } from '@applint/applint';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -10,7 +10,12 @@ const ERROR_WEIGHT = -3;
 // bonus add 2 point
 const BONUS_WEIGHT = 2;
 
-export default async function getEslintReports(directory: string, files: IFileInfo[], ruleKey: string, fix: boolean): Promise<IEslintReports> {
+export default async function getESLintReports(
+  directory: string,
+  files: IFileInfo[],
+  ruleKey: RuleKey,
+  fix: boolean,
+): Promise<IESLintReports> {
   let warningScore = 0;
   let warningCount = 0;
 
@@ -35,12 +40,12 @@ export default async function getEslintReports(directory: string, files: IFileIn
     // Remove Parsing error
     result.messages = (result.messages || []).filter((message) => {
       if (
-        message.severity === 2 && (
-          // Ignore Parsing error
-          (message.fatal && message.message.startsWith('Parsing error:')) ||
+        message.severity === 2 &&
+        // Ignore Parsing error
+        ((message.fatal && message.message.startsWith('Parsing error:')) ||
           // Ignore no rules error
-          message.message.startsWith('Definition for rule')
-        )) {
+          message.message.startsWith('Definition for rule'))
+      ) {
         result.errorCount--;
         return false;
       }
