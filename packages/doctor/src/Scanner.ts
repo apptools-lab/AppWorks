@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable max-len */
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -41,36 +42,82 @@ export default class Scanner {
 
     fs.writeFileSync(path.join(tempFileDir, config.tmpFiles.files), JSON.stringify(files));
 
+    // Example: react react-ts rax rax-ts, support common and common-ts
+    const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(
+      /^unknown/,
+      'common',
+    );
+
     // Run ESLint
     if (!options || options.disableESLint !== true) {
-      // Example: react react-ts rax rax-ts, support common and common-ts
-      const ruleKey = `${options?.framework || 'react'}${options?.languageType === 'ts' ? '-ts' : ''}`.replace(/^unknown/, 'common');
-      subprocessList.push(execa.node(path.join(__dirname, './workers/eslint/index.js'), [`${directory} ${tempFileDir} ${ruleKey} ${options?.fix}`]));
+      const subprocess = execa.node(path.join(__dirname, './workers/eslint/index.js'), [
+        directory,
+        tempFileDir,
+        ruleKey,
+        `${options?.fix}`,
+      ]);
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.ESLint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.eslint));
       });
     }
 
+    // Run Stylelint
+    if (!options || options.disableStylelint !== true) {
+      const subprocess = execa.node(path.join(__dirname, './workers/stylelint/index.js'), [
+        directory,
+        tempFileDir,
+        ruleKey,
+        `${options?.fix}`,
+      ]);
+
+      subprocessList.push(subprocess);
+      processReportList.push(async () => {
+        reports.Stylelint = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.stylelint));
+      });
+    }
+
     // Run maintainability
     if (!options || options.disableMaintainability !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]));
+      const subprocess = execa.node(path.join(__dirname, './workers/escomplex/index.js'), [tempFileDir]);
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.maintainability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.escomplex));
       });
     }
 
     // Run repeatability
-    if ((!options || options.disableRepeatability !== true) && (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/jscpd/index.js'), [`${directory} ${tempFileDir} ${this.options.ignore}`]));
+    if (
+      (!options || options.disableRepeatability !== true) &&
+      (!options.maxRepeatabilityCheckLines || reports.filesInfo.lines < options.maxRepeatabilityCheckLines)
+    ) {
+      const subprocess = execa.node(path.join(__dirname, './workers/jscpd/index.js'), [
+        directory,
+        tempFileDir,
+        `${this.options.ignore}`,
+      ]);
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
         reports.repeatability = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.jscpd));
       });
     }
 
-    // Run Codemod
+    // Run ProjectLint
     if (!options || options.disableCodemod !== true) {
-      subprocessList.push(execa.node(path.join(__dirname, './workers/codemod/index.js'), [`${directory} ${tempFileDir} ${options?.transforms}`]));
+      const subprocess = execa.node(path.join(__dirname, './workers/projectLint/index.js'), [
+        directory,
+        tempFileDir,
+        JSON.stringify(options?.transforms),
+        `${options?.fix}`,
+        JSON.stringify(options?.customTransformRules),
+      ]);
+
+      subprocessList.push(subprocess);
       processReportList.push(async () => {
+        // TODO: write all the projectlint reports but not only the codemod report
         reports.codemod = await fs.readJSON(path.join(tempFileDir, config.tmpFiles.report.codemod));
       });
     }
@@ -79,16 +126,17 @@ export default class Scanner {
       // Check
       await Promise.all(subprocessList);
       // Set result
-      await Promise.all(processReportList.map(async (fn) => { await fn(); }));
+      await Promise.all(
+        processReportList.map(async (fn) => {
+          await fn();
+        }),
+      );
 
       // Calculate total score
       reports.score = getFinalScore(
-        [
-          (reports.ESLint || {}).score,
-          (reports.maintainability || {}).score,
-          (reports.repeatability || {}).score,
-          (reports.codemod || {}).score,
-        ].filter((score) => !isNaN(score)),
+        [(reports.ESLint || {}).score, (reports.repeatability || {}).score, (reports.codemod || {}).score].filter(
+          (score) => !isNaN(score),
+        ),
       );
 
       // Duration seconds

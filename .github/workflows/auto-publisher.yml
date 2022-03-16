@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: |
           npm i
-          npm i -g vsce
+          npm i -g vsce@1
           npm run ci:setup
           npm run publish
         env:

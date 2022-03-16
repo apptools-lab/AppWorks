@@ -3,7 +3,7 @@
   "displayName": "AppWorks",
   "description": "Application Development Pack, provide visualization and intelligent technology to build Universal Application faster and better, support Web / H5 / MiniProgram(小程序) Application.",
   "publisher": "iceworks-team",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -39,7 +39,6 @@
     "iceworks-team.iceworks-material-helper",
     "iceworks-team.iceworks-doctor",
     "iceworks-team.iceworks-time-master",
-    "iceworks-team.iceworks-codemod",
     "iceworks-team.iceworks-refactor",
     "iceworks-team.iceworks-generator",
     "eamodio.gitlens",
@@ -48,9 +47,7 @@
     "esbenp.prettier-vscode",
     "formulahendry.auto-rename-tag",
     "xabikos.JavaScriptSnippets",
-    "burkeholland.simple-react-snippets",
-    "formulahendry.code-runner",
-    "alefragnani.Bookmarks"
+    "burkeholland.simple-react-snippets"
   ],
   "homepage": "https://github.com/apptools-lab/appworks/blob/master/extensions/appworks/README.md",
   "bugs": {
