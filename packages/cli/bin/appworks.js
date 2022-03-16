@@ -170,7 +170,7 @@ logCLIVersion();
 checkNodeVersion();
 
 // check @appworks/cli version
-checkAppworksCLIVersion();
+checkAppWorksCLIVersion();
 
 if (!process.argv.slice(2).length) {
   program.help();
@@ -209,7 +209,7 @@ function checkNodeVersion() {
   }
 }
 
-async function checkAppworksCLIVersion() {
+async function checkAppWorksCLIVersion() {
   const packageName = '@appworks/cli';
   const packageVersion = packageConfig.version;
   const latestVersion = await checkVersion(packageName, packageVersion);

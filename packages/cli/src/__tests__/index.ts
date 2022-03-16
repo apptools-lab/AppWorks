@@ -10,7 +10,7 @@ import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
 jest.setTimeout(60 * 1000);
-
+console.log("111");
 let originConfig;
 beforeAll(async () => {
   originConfig = await config({
