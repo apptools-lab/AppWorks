@@ -1,6 +1,6 @@
-# Appworks CLI
+# AppWorks CLI
 
-Appworks CLI for develop project/material-collection/component.
+AppWorks CLI for develop project/material-collection/component.
 
 ## Features
 
