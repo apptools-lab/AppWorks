@@ -13,6 +13,7 @@ export interface IScanOptions {
   tempFileDir?: string;
   timeout?: number;
   disableESLint?: boolean;
+  disableStylelint?: boolean;
   disableMaintainability?: boolean;
   disableRepeatability?: boolean;
   disableCodemod?: boolean;
@@ -25,10 +26,17 @@ export interface IRepeatabilityReports {
   clones: IClone[];
 }
 
-export interface IEslintReports {
+export interface IESLintReports {
   score: number;
   reports: any[];
   errorCount: number;
+  warningCount: number;
+  customConfig: any;
+}
+
+export interface IStylelintReports {
+  score: number;
+  reports: any[];
   warningCount: number;
   customConfig: any;
 }
@@ -45,7 +53,8 @@ export interface IScannerReports {
   };
   score?: number;
   scanTime?: number;
-  ESLint?: IEslintReports;
+  ESLint?: IESLintReports;
+  Stylelint?: IStylelintReports;
   repeatability?: IRepeatabilityReports;
   codemod?: ICodemodReports;
   // the content is empty
