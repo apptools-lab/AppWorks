@@ -62,5 +62,8 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
     "@types/fs-readdir-recursive": "^1.0.0"
+  }, 
+  "publishConfig": {
+    "access": "public"
   }
 }
