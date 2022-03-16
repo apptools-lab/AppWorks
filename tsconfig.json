@@ -1,6 +1,10 @@
 {
   "files": [],
   "references": [
+    { "path": "packages/cli" },
+    { "path": "packages/generate-material" },
+    { "path": "packages/generate-project" },
+    { "path": "packages/ice-screenshot" },
     { "path": "packages/doctor" },
     { "path": "packages/constant" },
     { "path": "packages/i18n" },
