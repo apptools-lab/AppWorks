@@ -34,7 +34,7 @@
 
 ## 1.0.0
 
-- chore: release 1.0.0, Rename to Appworks
+- chore: release 1.0.0, Rename to AppWorks
 - feat: add antd material
 
 ## 0.4.12
