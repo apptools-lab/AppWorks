@@ -5,7 +5,8 @@
     "rootDir": "src",
     "outDir": "lib",
     "target": "ES2019",
-    "lib": ["ES2019"]
+    "lib": ["ES2019"],
+    "moduleResolution": "node"
   },
   "exclude": ["src/__tests__", "lib"]
 }
