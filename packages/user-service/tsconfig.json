@@ -6,5 +6,5 @@
     "outDir": "lib",
     "resolveJsonModule": true
   },
-  "exclude": ["src/__tests__", "lib", "scripts"]
+  "exclude": ["src/__tests__", "lib", "scripts", "webpack.config.js"],
 }

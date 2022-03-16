@@ -2,8 +2,9 @@ import { ALI_GITLABGROUPS_API, ALI_GITLABPROJECTS_API } from '@appworks/constant
 import axios from 'axios';
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as readFiles from 'fs-readdir-recursive';
 import { indexFileSuffix } from './constants';
+
+import readFiles = require('fs-readdir-recursive');
 
 export async function getGitLabGroups(token: string) {
   const res = await axios.get(ALI_GITLABGROUPS_API, {

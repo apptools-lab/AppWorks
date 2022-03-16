@@ -71,7 +71,7 @@ export default async (options) => {
         await config.set(tokenKey, null);
       } else {
         // 接口异常、列表为空
-        log.error(`${err.message}，如果怀疑是 token 问题，可通过命令 ${chalk.cyan(`appworks config set ${tokenKey}`)} 手动清除 token，然后再次执行 sync 命令`);
+        log.error('error', `${err.message}，如果怀疑是 token 问题，可通过命令 ${chalk.cyan(`appworks config set ${tokenKey}`)} 手动清除 token，然后再次执行 sync 命令`);
       }
       throw err;
     }
@@ -100,7 +100,7 @@ export default async (options) => {
       // token 失效，重置掉
       await config.set(tokenKey, null);
     } else {
-      log.error(`${err.message}，如果怀疑是 token 问题，可通过命令 ${chalk.cyan(`appworks config set ${tokenKey}`)} 手动清除 token，然后再次执行 sync 命令`);
+      log.error('error', `${err.message}，如果怀疑是 token 问题，可通过命令 ${chalk.cyan(`appworks config set ${tokenKey}`)} 手动清除 token，然后再次执行 sync 命令`);
     }
     throw err;
   }
@@ -121,7 +121,7 @@ async function getMaterialData(pkgData, materialDataPath) {
     const data = await fse.readJson(materialDataPath);
 
     ['block', 'scaffold', 'component'].forEach((materialType) => {
-      (data[`${materialType}s`] || []).forEach(item => {
+      (data[`${materialType}s`] || []).forEach((item) => {
         result.push({
           npm: item.source.npm,
           version: item.source.version,

@@ -11,6 +11,7 @@ import { TEMP_PATH } from '../../utils/constants';
 import getNpmTarball from '../../utils/getNpmTarball';
 import getNpmRegistry from '../../utils/getNpmRegistry';
 
+// @ts-ignore
 import readFiles = require('fs-readdir-recursive');
 
 export default async (options, destDir) => {

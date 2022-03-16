@@ -6,6 +6,7 @@
     "outDir": "lib",
     "target": "ES2019",
     "lib": ["ES2019"],
+    "skipLibCheck": true,
     "moduleResolution": "node"
   },
   "exclude": ["src/__tests__", "lib"]
