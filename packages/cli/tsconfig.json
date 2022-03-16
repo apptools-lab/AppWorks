@@ -4,9 +4,6 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib",
-    "target": "ES2019",
-    "lib": ["ES2019"],
-    "skipLibCheck": true,
     "moduleResolution": "node"
   },
   "include": ["src"],
