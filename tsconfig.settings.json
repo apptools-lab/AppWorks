@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "target": "es5",
     "experimentalDecorators": true,
     "declaration": true,
