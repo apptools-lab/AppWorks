@@ -21,6 +21,8 @@ export const SKIP_PACK_EXTENSION_LIST = [
 // Beta publish only zip published extension.
 // Production publish should zip all extensions.
 export default function uploadExtesions(extensions: string[], production?: boolean) {
+  if (!extensions.length) return;
+
   extensions.forEach((extension) => {
     const info = extension.split(':');
     const name = info[0];

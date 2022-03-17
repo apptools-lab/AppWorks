@@ -1,8 +1,11 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/doctor" },
     { "path": "packages/constant" },
+    { "path": "packages/generate-material" },
+    { "path": "packages/generate-project" },
+    { "path": "packages/cli" },
+    { "path": "packages/doctor" },
     { "path": "packages/i18n" },
     { "path": "packages/storage" },
     { "path": "packages/logger" },

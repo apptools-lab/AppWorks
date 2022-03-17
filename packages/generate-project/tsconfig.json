@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "lib",
-    "resolveJsonModule": true
+    "moduleResolution": "node"
   },
-  "exclude": ["src/__tests__", "lib", "scripts", "webpack.config.js", "def-login-client"],
+  "exclude": ["src/__tests__", "lib"]
 }

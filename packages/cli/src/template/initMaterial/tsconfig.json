@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["es5", "dom"]
+  }
+}
