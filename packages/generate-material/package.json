@@ -10,7 +10,7 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "rm -rf lib && ../../node_modules/.bin/tsc && cp -rf src/template/ lib/template/",
+    "build": "rm -rf lib && tsc",
     "prepublishOnly": "npm run build"
   },
   "repository": {
