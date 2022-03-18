@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/generate-project",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Generator project",
   "files": [
     "lib/"
@@ -9,6 +9,10 @@
     "node": ">=12"
   },
   "main": "lib/index.js",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/apptools-lab/AppWorks/tree/master/packages/generate-project"
+  },
   "scripts": {
     "build": "rm -rf lib && tsc",
     "prepublishOnly": "npm run build"
