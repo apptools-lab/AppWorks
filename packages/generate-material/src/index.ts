@@ -25,12 +25,6 @@ export async function generateMaterial({
     throw new Error(`当前物料模板不存在 ${materialType} 类型的物料`);
   }
 
-  // add fusion cool adaptor template
-  if (materialType === 'component' && templateOptions.adaptor) {
-    const adaptorTemplatePath = path.join(__dirname, './template/componentAdaptor');
-    await fse.copy(adaptorTemplatePath, templateDir);
-  }
-
   // generate files by template
   const { npmName } = templateOptions;
   const name = /^@/.test(npmName) ? npmName.split('/')[1] : npmName;
@@ -46,7 +40,6 @@ export async function generateMaterial({
     version: '0.1.0',
     category: '',
     projectTargets: ['web'],
-    adaptor: false,
     ...templateOptions,
   };
 

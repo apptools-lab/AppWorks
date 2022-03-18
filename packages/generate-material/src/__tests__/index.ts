@@ -19,8 +19,7 @@ test('generate component', async () => {
     materialTemplateDir,
     materialType: 'component',
     templateOptions: {
-      npmName: '@ali/ice-label',
-      adaptor: true,
+      npmName: '@ali/ice-label'
     },
     enableDefPublish: true,
     enablePegasus: true,

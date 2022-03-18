@@ -2,7 +2,9 @@
 
 ## 1.0.12
 
-- migrate GitHub repo to appworks and add repository to package.json
+- feat: remove adaptor option and template
+- feat: add author template option
+- chore: migrate GitHub repo to appworks and add repository to package.json
 
 ## 1.0.11
 
