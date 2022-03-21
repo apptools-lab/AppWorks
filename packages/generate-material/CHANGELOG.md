@@ -1,5 +1,11 @@
 # `@iceworks/generate-material`
 
+## 1.0.12
+
+- feat: remove adaptor option and template
+- feat: add author template option
+- chore: migrate GitHub repo to appworks and add repository to package.json
+
 ## 1.0.11
 
 - chore: remove using target dir

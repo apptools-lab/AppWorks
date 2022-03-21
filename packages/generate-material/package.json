@@ -1,6 +1,6 @@
 {
   "name": "@iceworks/generate-material",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Generate material collection or single component",
   "files": [
     "lib/"
@@ -8,11 +8,15 @@
   "engines": {
     "node": ">=12"
   },
+  "main": "lib/index.js",
   "scripts": {
-    "build": "rm -rf lib && ../../node_modules/.bin/tsc && cp -rf src/template/ lib/template/",
+    "build": "rm -rf lib && tsc",
     "prepublishOnly": "npm run build"
   },
-  "main": "lib/index.js",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/apptools-lab/AppWorks/tree/master/packages/generate-material"
+  },
   "publishConfig": {
     "access": "public"
   },

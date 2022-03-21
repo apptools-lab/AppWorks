@@ -10,10 +10,10 @@ export interface ITemplateOptions {
   category?: string;
   // web, miniapp...
   projectTargets?: string[];
-  adaptor?: boolean;
   miniappComponentBuildType?: 'runtime' | 'compile'; // miniapp component build type,
   miniappPluginBuildType?: 'runtime' | 'compile'; // miniapp plugin build type
   isAliInternal?: boolean;
+  author?: string;
 }
 
 export interface IOptions {
