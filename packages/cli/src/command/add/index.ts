@@ -49,7 +49,7 @@ export default async (options) => {
         type: 'list',
         name: 'materialType',
         message: 'Please select material type',
-        choices: ['block', 'component', 'scaffold', 'page'],
+        choices: ['block', 'component', 'scaffold'],
       },
     ]);
     materialType = answers.materialType;
