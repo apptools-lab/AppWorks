@@ -27,17 +27,12 @@ $ npm run start
 $ cd blocks/ExampleBlock
 $ npm install
 $ npm run start
-
-# page
-$ cd pages/ExamplePage
-$ npm install
-$ npm run start
 ```
 
 ## Add new material
 
 ```bash
-$ appworks add  # select block|component|scaffold|page
+$ appworks add  # select block|component|scaffold
 ```
 
 ## Generate materials data
