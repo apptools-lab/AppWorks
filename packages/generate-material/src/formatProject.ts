@@ -23,7 +23,7 @@ export default async function formatProject({
   const pkgPath = path.join(rootDir, 'package.json');
   const buildJsonPath = path.join(rootDir, 'build.json');
 
-  const buildData = fse.existsSync(buildJsonPath) ?  fse.readJsonSync(buildJsonPath) : null;
+  const buildData = fse.existsSync(buildJsonPath) ? fse.readJsonSync(buildJsonPath) : null;
   const pkgData = fse.readJsonSync(pkgPath);
   let abcData = null;
 
