@@ -17,6 +17,7 @@ const SCAN_OPTIONS = {
 };
 
 export async function runCodemod(transform: string) {
+  // @ts-ignore
   const result = await doctor.scan(projectPath, Object.assign({ transforms: [transform] }, SCAN_OPTIONS));
   const { env, window } = vscode;
   const isEn = env.language === 'en';
