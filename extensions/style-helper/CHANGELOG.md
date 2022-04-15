@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.1.1
+- feat: add `className={styles.xxx}` automatic completion will be provided when editing css file
+
 ## 1.1.0
 - feat: add `className={}` completion item
 - feat: add `styles` completion item and auto import module style file

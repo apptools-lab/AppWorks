@@ -22,8 +22,8 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
   fs.readdirSync(directory).forEach((file) => {
     if (path.extname(file) === '.jsx' || path.extname(file) === '.tsx') {
       const filePath = `${directory}/${file}`;
-      // Add className="xxx" and  style={styles.xxx}
-      classNames = classNames.concat(getClassNames(filePath), getCSSModuleKeys(filePath));
+      // Add className="xxx" , className={styles.xxx} and  style={styles.xxx}
+      classNames = classNames.concat(getClassNames(filePath), getCSSModuleClassNames(filePath), getCSSModuleKeys(filePath));
     }
   });
   if (classNames.length) {
@@ -57,6 +57,21 @@ function getClassNames(filePath: string): string[] {
     }
   }
   return classNames;
+}
+
+// Process className={styles.xxx}
+function getCSSModuleClassNames(filePath: string): string[] {
+  const code = fs.readFileSync(filePath, 'utf8');
+  const reg = new RegExp('className=\\{styles\\.([\\w\\.]+)\\}', 'g');
+
+  const CSSModuleClassNames: string[] = [];
+  let matched: RegExpExecArray | null;
+
+  // eslint-disable-next-line
+  while ((matched = reg.exec(code)) !== null) {
+    CSSModuleClassNames.push(matched[1]);
+  }
+  return CSSModuleClassNames;
 }
 
 // Process style={styles.xxx}
