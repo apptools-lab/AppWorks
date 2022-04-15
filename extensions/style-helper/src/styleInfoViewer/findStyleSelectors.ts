@@ -45,7 +45,10 @@ export default function findStyleSelectors(directory: string, styleDependencies:
     // eslint-disable-next-line
     stylesheet.rules.forEach((rule: IStyle) => {
       if (rule.selectors) {
-        selectors = selectors.concat(rule.selectors);
+        selectors = selectors.concat(rule.selectors.map((selector) => {
+          // .foo .bar => .bar
+          return selector.split(' ').pop() || '';
+        }));
       }
     });
   }
