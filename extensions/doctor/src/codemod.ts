@@ -17,8 +17,8 @@ const SCAN_OPTIONS = {
 };
 
 export async function runCodemod(transform: string) {
-  // @ts-ignore
-  const result = await doctor.scan(projectPath, Object.assign({ transforms: [transform] }, SCAN_OPTIONS));
+  const options: any = Object.assign({ transforms: [transform] }, SCAN_OPTIONS);
+  const result = await doctor.scan(projectPath, options);
   const { env, window } = vscode;
   const isEn = env.language === 'en';
   window.showInformationMessage(`${isEn ? 'Codemod run success, logs shows in the OUTPUT.' : 'Codemod 运行成功，运行日志将在 “输出” 中展示。'}`);
