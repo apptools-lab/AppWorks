@@ -2,6 +2,7 @@
 
 ## 1.1.1
 - feat: add `className={styles.xxx}` automatic completion will be provided when editing css file
+- fix: `style={styles.xxx}` automatic completion failed with nested css file
 
 ## 1.1.0
 - feat: add `className={}` completion item
