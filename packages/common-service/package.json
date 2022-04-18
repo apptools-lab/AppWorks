@@ -1,6 +1,6 @@
 {
   "name": "@appworks/common-service",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AppWorks common service for VSCode extension.",
   "files": [
     "lib"

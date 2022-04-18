@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.2
+
+- [chore]: 更新淘宝 npm 镜像源地址为 `https://registry.npmmirror.com`
+
 ## 3.0.1
 
 - [feat] 不再支持 `add page`

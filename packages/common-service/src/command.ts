@@ -26,7 +26,7 @@ export function createNpmCommand(action: string, target = '', extra = ''): strin
   const packageManager = getDataFromSettingJson('packageManager', 'npm');
   let registry = '';
   if (!(packageManager === 'cnpm' || packageManager === 'tnpm' || action === 'run')) {
-    registry = ` --registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npm.taobao.org')}`;
+    registry = ` --registry ${getDataFromSettingJson('npmRegistry', 'https://registry.npmmirror.com')}`;
   }
   target = target && ` ${target}`;
   extra = extra && ` ${extra}`;

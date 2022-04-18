@@ -1,12 +1,16 @@
 # Change Log
 
+## 1.0.4
+
+- chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 1.0.3
 
 - feat: update appworks-lab to apptools-lab
 
 ## 1.0.2
 
-- feat: add `enableDataAnalysisServices` configuration 
+- feat: add `enableDataAnalysisServices` configuration
 
 ## 1.0.1
 

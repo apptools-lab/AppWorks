@@ -2,7 +2,7 @@ import { ALI_NPM_REGISTRY } from '@appworks/constant';
 
 export const packageManagers = ['npm', 'cnpm', 'yarn'];
 
-export const npmRegistries = ['https://registry.npmjs.org', 'https://registry.npm.taobao.org'];
+export const npmRegistries = ['https://registry.npmjs.org', 'https://registry.npmmirror.com'];
 
 export const AliNpmRegistry = ALI_NPM_REGISTRY;
 
