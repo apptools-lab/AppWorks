@@ -101,7 +101,7 @@ export const getTarballURLByMaterielSource = async function (
 
   // Using taobao registry to increase download speed
   if (registryUrl === 'https://registry.npmjs.org') {
-    registryUrl = 'https://registry.npm.taobao.org';
+    registryUrl = 'https://registry.npmmirror.com';
   }
 
   const packageData: any = await packageJSON(source.npm, {

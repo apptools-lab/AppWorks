@@ -151,7 +151,7 @@ async function screenshot(url, selector, output, timeout) {
       console.log(chalk.white('\n  npm uninstall puppeteer -g'));
       console.log(
         chalk.white(
-          '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npm.taobao.org',
+          '\n  PUPPETEER_DOWNLOAD_HOST=https://storage.googleapis.com.cnpmjs.org npm i puppeteer -g --registry=https://registry.npmmirror.com',
         ),
       );
       console.log(chalk.white('\n  screenshot -u http://www.example.com\n'));

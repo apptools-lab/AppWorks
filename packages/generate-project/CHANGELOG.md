@@ -1,5 +1,9 @@
 # `@iceworks/generate-project`
 
+## 1.4.6
+
+- [chore]: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 1.4.5
 
 - migrate GitHub repo to appworks and add repository to package.json
