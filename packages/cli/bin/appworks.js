@@ -62,7 +62,7 @@ program
   })
   .action(async (materialType, npmName, cmd) => {
     // 兼容 iceworks add @icedesign/block-test
-    if (materialType && ['scaffold', 'block', 'component', 'page'].indexOf(materialType) === -1) {
+    if (materialType && ['scaffold', 'block', 'component'].indexOf(materialType) === -1) {
       npmName = materialType;
       materialType = null;
     }

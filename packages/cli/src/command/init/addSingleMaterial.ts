@@ -1,5 +1,5 @@
 /**
- * material add [block|component|scaffold|page]:
+ * material add [block|component|scaffold]:
  *  1. get options by materialType
  *  2. copy and ejsRender，文件名称转换：
  *    - _package.json -> package.json
@@ -28,7 +28,7 @@ export default async function ({
   cwd,
   useDefaultOptions,
   npmScope,
-  materialType, // scaffold | block | component | page
+  materialType, // scaffold | block | component
   projectType, // material | component
 }): Promise<void> {
   log.verbose('addSingleMaterial args', materialDir, cwd, useDefaultOptions, npmScope, materialType);
@@ -88,8 +88,6 @@ const COMPONENT_CATEGORIES = [
   'Information',
   'Others',
 ];
-
-const PAGE_CATEGORIES = ['Basic', 'Others'];
 
 const BLOCK_CATEGORIES = [
   'Table',
@@ -288,57 +286,6 @@ function getQuestions(npmScope, cwd) {
         message: 'category',
         default: 'Basic',
         choices: SCAFFOLD_CATEGORIES,
-        filter: (answer) => {
-          return answer;
-        },
-      },
-    ],
-    page: [
-      nameQuestion('page', npmScope, cwd),
-      {
-        type: 'input',
-        name: 'title',
-        message: 'title',
-        default: 'demo page',
-        validate: (value) => {
-          if (!value) {
-            return 'title cannot be empty';
-          }
-          return true;
-        },
-        filter(value) {
-          return value.trim();
-        },
-      },
-      {
-        type: 'string',
-        required: true,
-        name: 'version',
-        message: 'version',
-        default: '1.0.0',
-      },
-      {
-        type: 'string',
-        required: true,
-        name: 'description',
-        message: 'description',
-        default: 'intro page',
-        filter(value) {
-          return value.trim();
-        },
-        validate: (value) => {
-          if (!value) {
-            return 'description cannot be empty';
-          }
-          return true;
-        },
-      },
-      {
-        type: 'list',
-        name: 'category',
-        message: 'category',
-        default: 'Information',
-        choices: PAGE_CATEGORIES,
         filter: (answer) => {
           return answer;
         },

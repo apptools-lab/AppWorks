@@ -1,10 +1,19 @@
 # Change Log
 
+## 1.1.1
+
+- chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+- feat: add `className={styles.xxx}` automatic completion will be provided when editing css file
+- fix: `style={styles.xxx}` automatic completion failed with nested css file
+
+
 ## 1.1.0
+
 - feat: add `className={}` completion item
 - feat: add `styles` completion item and auto import module style file
 
 ## 1.0.1
+
 - feat: support *.less style.
 - feat: upgrade [css](https://www.npmjs.com/package/css) fix `@media` parse failed.
 

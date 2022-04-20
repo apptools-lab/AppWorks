@@ -71,7 +71,7 @@ async function selectType(): Promise<string> {
       default: DEFAULT_TYPE,
       choices: [
         {
-          name: 'material collection(component&scaffold&block&page)',
+          name: 'material collection(component&scaffold&block)',
           value: 'material',
         },
         {

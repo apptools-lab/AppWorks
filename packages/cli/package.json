@@ -1,6 +1,6 @@
 {
   "name": "@appworks/cli",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "AppWorks CLI for develop project/material-collection/component.",
   "main": "bin/appworks.js",
   "bin": {
@@ -62,7 +62,7 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
     "@types/fs-readdir-recursive": "^1.0.0"
-  }, 
+  },
   "publishConfig": {
     "access": "public"
   }

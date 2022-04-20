@@ -1,8 +1,14 @@
 # `@iceworks/generate-material`
 
+## 1.0.13
+
+- fix: `build.json` will no longer be default config file for project
+
 ## 1.0.12
 
-- migrate GitHub repo to appworks and add repository to package.json
+- feat: remove adaptor option and template
+- feat: add author template option
+- chore: migrate GitHub repo to appworks and add repository to package.json
 
 ## 1.0.11
 

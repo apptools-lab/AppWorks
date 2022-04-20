@@ -15,11 +15,11 @@ export const reportKeys: IReportKeys[] = [
     nameEn: 'Ali ESLint',
     key: 'ESLint',
   },
-  {
-    name: '代码可维护度',
-    nameEn: 'Maintainability',
-    key: 'maintainability',
-  },
+  // {
+  //   name: '代码可维护度',
+  //   nameEn: 'Maintainability',
+  //   key: 'maintainability',
+  // },
   {
     name: '代码重复度',
     nameEn: 'Repeatability',

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.9
+
+- [chore]: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 0.1.5
 
 - [fix] format selector consider '-s' undefined
