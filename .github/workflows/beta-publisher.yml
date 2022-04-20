@@ -16,7 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: |
           npm i
-          npm i -g vsce
+          npm i -g vsce@1
           npm run ci:setup
           npm run publish-beta
         env:
