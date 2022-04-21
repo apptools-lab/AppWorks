@@ -1,5 +1,9 @@
 # Change Log
 
+# 1.2.1
+
+- fix: run the wrong AppLint CodeMod  
+
 # 1.2.0
 
 - feat: change to AppLint 
