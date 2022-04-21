@@ -3,7 +3,7 @@
   "displayName": "Application Manager",
   "description": "Quick view your Universal Application(React/Rax/Vue, etc).",
   "publisher": "iceworks-team",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -296,10 +296,10 @@
         },
         "appworks.npmRegistry": {
           "type": "string",
-          "default": "https://registry.npm.taobao.org",
+          "default": "https://registry.npmmirror.com",
           "enum": [
             "https://registry.npmjs.org",
-            "https://registry.npm.taobao.org"
+            "https://registry.npmmirror.com"
           ],
           "description": "%applicationManager.configuration.properties.appworks.npmRegistry.description%"
         },

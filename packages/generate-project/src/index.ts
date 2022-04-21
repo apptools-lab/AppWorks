@@ -69,6 +69,6 @@ async function getNpmRegistry(npmName: string): Promise<string> {
   } else if (isAliNpm(npmName)) {
     return ALI_NPM_REGISTRY;
   } else {
-    return 'https://registry.npm.taobao.org';
+    return 'https://registry.npmmirror.com';
   }
 }

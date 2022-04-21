@@ -1,5 +1,9 @@
 # Change Log
 
+# 1.2.0
+
+- feat: change to AppLint 
+
 # 1.1.7
 
 - feat: only check codemod for rax and ice project

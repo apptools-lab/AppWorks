@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.3
+
+- [chore]: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 0.1.2
 
 - feat: add ts type(componentType)

@@ -1,5 +1,9 @@
 # changelog
 
+## 0.4.1
+
+- feat: support stylelint
+
 ## 0.4.0
 
 - feat: support scan and fix css files

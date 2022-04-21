@@ -22,7 +22,8 @@ export default async function formatProject({
   const abcPath = path.join(rootDir, 'abc.json');
   const pkgPath = path.join(rootDir, 'package.json');
   const buildJsonPath = path.join(rootDir, 'build.json');
-  const buildData = fse.readJsonSync(buildJsonPath);
+
+  const buildData = fse.existsSync(buildJsonPath) ? fse.readJsonSync(buildJsonPath) : null;
   const pkgData = fse.readJsonSync(pkgPath);
   let abcData = null;
 
@@ -39,16 +40,17 @@ export default async function formatProject({
 
     if (enablePegasus) {
       pkgData.devDependencies['@ali/build-plugin-rax-seed'] = '^2.0.0';
-      buildData.plugins.push([
+      buildData && buildData.plugins.push([
         '@ali/build-plugin-rax-seed',
         {
           majorVersionIsolation: false,
         },
       ]);
     }
+
   }
 
   abcData && fse.writeJSONSync(abcPath, abcData, { spaces: 2 });
-  fse.writeJSONSync(buildJsonPath, buildData, { spaces: 2 });
+  buildData && fse.writeJSONSync(buildJsonPath, buildData, { spaces: 2 });
   fse.writeJSONSync(pkgPath, pkgData, { spaces: 2 });
 }

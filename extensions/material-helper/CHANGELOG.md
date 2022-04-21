@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.3
+
+- chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 1.1.2
 
 - feat: update appworks-lab to apptools-lab
@@ -16,7 +20,7 @@
 
 ## 1.0.9
 
-- feat: change auto fill code to React Generator extension. 
+- feat: change auto fill code to React Generator extension.
 - fix: the code in the editor is incomplete will cause the AST parser error.
 
 ## 1.0.8
@@ -199,7 +203,7 @@
 
 ## 0.1.4
 
-Fix React component completion items, See: https://github.com/apptools-lab/appworks/issues/233
+Fix React component completion items, See: <https://github.com/apptools-lab/appworks/issues/233>
 
 ## 0.1.3
 
