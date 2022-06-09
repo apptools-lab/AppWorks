@@ -1,6 +1,10 @@
 # Change Log
 
 ## 1.1.1
+- feat: change cursors position when auto complete the css class name [#1019](https://github.com/apptools-lab/AppWorks/issues/1019)
+- fix: use square brackets when class name has special key [#1020](https://github.com/apptools-lab/AppWorks/issues/1020)
+
+## 1.1.1
 
 - chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
 - feat: add `className={styles.xxx}` automatic completion will be provided when editing css file

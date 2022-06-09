@@ -60,9 +60,17 @@ function provideCompletionItems(document: vscode.TextDocument, position: vscode.
     ) {
       return findStyleSelectors(directory, styleDependencies).map((selector: string) => {
         // Remove class selector `.`, When use styles.xxx.
-        const completionItem = new vscode.CompletionItem(selector.replace('.', ''), vscode.CompletionItemKind.Variable);
+        const item = selector.replace('.', '');
+        const completionItem = new vscode.CompletionItem(item, vscode.CompletionItemKind.Variable);
         completionItem.detail = 'AppWorks';
         completionItem.command = { command: 'style-helper.recordCompletionItemSelect', title: '' };
+        // stlye.xxx-xxx to stlye['xxx-xxx']
+        if (!/^[a-zA-Z]+$/.test(item)) {
+          completionItem.insertText = `['${item}']`;
+          completionItem.additionalTextEdits = [
+            vscode.TextEdit.delete(new vscode.Range(position.line, position.character - 1, position.line, position.character)),
+          ];
+        }
         return completionItem;
       });
     }
