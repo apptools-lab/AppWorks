@@ -36,6 +36,7 @@ import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
 import transformTextComponent from './utils/transformTextComponent';
 import i18nService from './i18n';
+import { triggerHook } from '../utils/hookUtil';
 
 const { window, Position } = vscode;
 
@@ -118,6 +119,9 @@ export async function addCode(dataSource: IMaterialComponent) {
   terminal.sendText(createNpmCommand(addDependencyAction, `${npm}@${version || 'latest'}`, '--save'), true);
   // activate the textEditor
   window.showTextDocument(activeTextEditor.document, activeTextEditor.viewColumn);
+
+  // triggerHook
+  triggerHook('component.addCode', dataSource, { fsPath });
 }
 
 export async function generateComponentCode(
