@@ -1,5 +1,5 @@
 /**
- * hool utils
+ * hook utils
  */
 const hookStore = {};
 
@@ -14,13 +14,18 @@ export function registerHook(action: string, handler: IMaterialHookHandler) {
 
   hookStore[action] = hookStore[action] || [];
 
+  console.log('registerHook', action);
+
   hookStore[action].push(handler);
 }
 
 export function triggerHook(action: string, ...data: any) {
   if (!action || !hookStore[action]) {
+    console.log('triggerHook, no action or no handler');
     return;
   }
+
+  console.log('triggerHook', action);
 
   const handlers = hookStore[action];
 
