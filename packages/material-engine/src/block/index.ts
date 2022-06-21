@@ -24,7 +24,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
-import { triggerHook } from '../utils/hookUtil';
+import { triggerHook } from '../utils/hook';
 
 const { window, Position } = vscode;
 

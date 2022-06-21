@@ -27,7 +27,7 @@ import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
-import { triggerHook } from '../utils/hookUtil';
+import { triggerHook } from '../utils/hook';
 
 const getCurPagesPath = async () => {
   const projectType = await getProjectType();

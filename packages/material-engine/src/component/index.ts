@@ -36,7 +36,7 @@ import insertComponent from './utils/insertComponent';
 import transformComponentsMap from './utils/transformComponentsMap';
 import transformTextComponent from './utils/transformTextComponent';
 import i18nService from './i18n';
-import { triggerHook } from '../utils/hookUtil';
+import { triggerHook } from '../utils/hook';
 
 const { window, Position } = vscode;
 
