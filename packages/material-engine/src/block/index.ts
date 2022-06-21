@@ -24,7 +24,7 @@ import * as upperCamelCase from 'uppercamelcase';
 import * as transfromTsToJs from 'transform-ts-to-js';
 import i18n from './i18n';
 import { generateBlockName } from './utils/generateBlockName';
-import { triggerHook } from '../utils/hook';
+import { trigger } from '../utils/hook';
 
 const { window, Position } = vscode;
 
@@ -139,8 +139,8 @@ export async function addBlockCode(block: IMaterialBlock) {
   // install block dependencies
   await bulkInstallMaterialsDependencies([block], projectPath);
 
-  // triggerHook
-  triggerHook('block.addBlockCode', block, { fsPath });
+  // trigger hook
+  trigger('block.addBlockCode', block, { fsPath });
 }
 
 export async function insertBlock(activeTextEditor: vscode.TextEditor, blockName: string) {

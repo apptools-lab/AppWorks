@@ -27,7 +27,7 @@ import raxPageTemplate from './templates/template.rax';
 import vuePageTemplate from './templates/template.vue';
 import i18n from './i18n';
 import renderEjsTemplates from './utils/renderEjsTemplates';
-import { triggerHook } from '../utils/hook';
+import { trigger } from '../utils/hook';
 
 const getCurPagesPath = async () => {
   const projectType = await getProjectType();
@@ -114,8 +114,8 @@ export const generate = async function ({
       throw error;
     }
 
-    // triggerHook
-    triggerHook('page.generate', blocks, { pagePath: curPagesPath, pageName });
+    // trigger hook
+    trigger('page.generate', blocks, { pagePath: curPagesPath, pageName });
 
     return { pageIndexPath, pageName };
   }

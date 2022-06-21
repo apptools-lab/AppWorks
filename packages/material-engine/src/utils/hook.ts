@@ -19,7 +19,7 @@ export function registerHook(action: string, handler: IMaterialHookHandler) {
   hookStore[action].push(handler);
 }
 
-export function triggerHook(action: string, ...data: any) {
+export function trigger(action: string, ...data: any) {
   if (!action || !hookStore[action]) {
     console.log(`triggerHook, no action or no handler. action: ${action}`);
     return;
