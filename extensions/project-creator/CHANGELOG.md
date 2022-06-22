@@ -7,6 +7,10 @@
 
 - chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
 
+## 1.0.8
+
+- chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
+
 ## 1.0.7
 
 - feat: update appworks-lab to apptools-lab

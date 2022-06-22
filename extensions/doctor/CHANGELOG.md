@@ -1,32 +1,42 @@
 # Change Log
 
-# 1.2.0
+## 1.2.2
 
-- feat: change to AppLint 
+- chore: upgrade `@appworks/doctor` to 0.4.1 version
 
-# 1.1.7
+## 1.2.1
+
+- fix: run the wrong AppLint CodeMod  
+
+## 1.2.0
+
+- feat: change to AppLint
+
+## 1.1.7
 
 - feat: only check codemod for rax and ice project
 
-# 1.1.6
+## 1.1.6
 
 - feat: add showInformationMessage for codemod result
 
-# 1.1.5
+## 1.1.5
 
 - fix: windows get empty files
 
-# 1.1.4
+## 1.1.4
 
 - fix: codemod 100 score show result
 
-# 1.1.3
+## 1.1.3
 
 - feat: update @appworks/codemod
 - feat: update codemod check result list
+
 ## 1.1.2
 
 - feat: update @appworks/doctor to support custom config set extends and plugins.
+
 ## 1.1.1
 
 - fix: empty project show wrong CodeMod notice.

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.2](https://github.com/apptools-lab/appworks/releases/tag/v1.5.2)
+- Feat: add className={styles.xxx} automatic completion [#1002](https://github.com/apptools-lab/appworks/pull/1002) 
+- Feat: Doctor use AppLint [#1001](https://github.com/apptools-lab/appworks/pull/1001) 
+- Fix: compatible with build.json in older style [#993](https://github.com/apptools-lab/appworks/pull/993) 
+- Fix style={styles.xxx} automatic completion failed with nested css file [#1004](https://github.com/apptools-lab/appworks/pull/1004) 
+
 ## [1.5.1](https://github.com/apptools-lab/appworks/releases/tag/v1.5.1)
 - feat: only check codemod for rax and ice project [#969](https://github.com/apptools-lab/appworks/pull/969)
 - feat: remove [AppWorks - CodeMod](https://marketplace.visualstudio.com/items?itemName=iceworks-team.iceworks-codemod), [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks) and [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
