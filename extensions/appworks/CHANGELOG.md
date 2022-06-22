@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.5.3](https://github.com/apptools-lab/appworks/releases/tag/v1.5.3)
+
+- Feat: add material hooks for other extensions
+
 ## [1.5.2](https://github.com/apptools-lab/appworks/releases/tag/v1.5.2)
 - Feat: add className={styles.xxx} automatic completion [#1002](https://github.com/apptools-lab/appworks/pull/1002) 
 - Feat: Doctor use AppLint [#1001](https://github.com/apptools-lab/appworks/pull/1001) 
