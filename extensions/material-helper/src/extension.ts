@@ -3,6 +3,7 @@ import { connectService, getHtmlForWebview } from '@appworks/connector/lib/vscod
 import { initExtension, registerCommand } from '@appworks/common-service';
 import { autoSetContext as autoSetContextByProject } from '@appworks/project-service';
 import { ICEWORKS_ICON_PATH } from '@appworks/constant';
+import { hookUtil } from '@appworks/material-engine';
 import services from './services/index';
 import propsAutoComplete from './propsAutoComplete';
 import i18n from './i18n';
@@ -129,6 +130,25 @@ export function activate(context: vscode.ExtensionContext) {
   importAutoComplete();
   // help user complete React Component's propTypes;
   propTypesAutoComplete();
+
+  // exports
+  return {
+    /*
+    example:
+    
+    hookUtil.registerHook('block.addBlockCode', (data, args) => {
+      console.log('block.addBlockCode', JSON.stringify(data), JSON.stringify(args));
+    });
+    hookUtil.registerHook('component.addCode', (data, args) => {
+      console.log('component.addCode', JSON.stringify(data), JSON.stringify(args));
+    });
+    hookUtil.registerHook('page.generate', (data, args) => {
+      console.log('page.generate', JSON.stringify(data), JSON.stringify(args));
+    });
+
+    */
+    registerHook: hookUtil.registerHook,
+  }
 }
 
 export function deactivate() { }

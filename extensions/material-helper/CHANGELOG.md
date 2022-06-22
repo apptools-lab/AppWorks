@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.4
+
+- feat: exports material hook register function
+
 ## 1.1.3
 
 - chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
