@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.2
+
+- feat: add hook utils
+
 ## 0.2.1
 
 - feat: support get component type
