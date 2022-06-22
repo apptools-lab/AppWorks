@@ -4,8 +4,8 @@
 const hookStore = {};
 
 export interface IMaterialHookHandler {
-  (action: string, data?: any, args?: any): any
-};
+  (action: string, data?: any, args?: any): any;
+}
 
 export function registerHook(action: string, handler: IMaterialHookHandler) {
   if (!action || !handler) {

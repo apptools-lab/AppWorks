@@ -135,7 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
   return {
     /*
     example:
-    
+
     hookUtil.registerHook('block.addBlockCode', (data, args) => {
       console.log('block.addBlockCode', JSON.stringify(data), JSON.stringify(args));
     });
@@ -148,7 +148,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     */
     registerHook: hookUtil.registerHook,
-  }
+  };
 }
 
 export function deactivate() { }
