@@ -22,5 +22,6 @@ export interface IOptions {
   templateOptions: ITemplateOptions;
   enablePegasus?: boolean;
   enableDefPublish?: boolean;
+  builder?: string;
   materialType: 'component' | 'block' | 'scaffold';
 }

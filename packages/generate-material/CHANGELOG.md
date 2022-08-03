@@ -1,5 +1,9 @@
 # `@iceworks/generate-material`
 
+## 1.1.0
+
+- feat: add builder option for generateMaterial
+
 ## 1.0.13
 
 - fix: `build.json` will no longer be default config file for project

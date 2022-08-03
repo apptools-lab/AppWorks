@@ -18,6 +18,7 @@ export async function generateMaterial({
   templateOptions,
   enablePegasus,
   enableDefPublish,
+  builder = '',
   materialType = 'component',
 }: IOptions): Promise<void> {
   const templateDir = path.join(materialTemplateDir, 'template', materialType);
@@ -51,6 +52,7 @@ export async function generateMaterial({
       templateOptions,
       enablePegasus,
       enableDefPublish,
+      builder,
       materialType,
     });
   } catch (err) {
