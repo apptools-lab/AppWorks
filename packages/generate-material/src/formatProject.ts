@@ -8,6 +8,7 @@ interface IOptions {
   templateOptions?: ITemplateOptions;
   enableDefPublish?: boolean;
   enablePegasus?: boolean;
+  builder?: string;
   materialType?: 'component' | 'block' | 'scaffold';
 }
 
@@ -16,6 +17,7 @@ export default async function formatProject({
   templateOptions,
   enableDefPublish,
   enablePegasus,
+  builder = '',
   materialType,
 }: IOptions): Promise<void> {
   const { npmName } = templateOptions;
@@ -35,7 +37,7 @@ export default async function formatProject({
 
   if (materialType === 'component' || enableDefPublish || enablePegasus) {
     abcData = {
-      builder: '@ali/builder-component',
+      builder: builder || '@ali/builder-component',
     };
 
     if (enablePegasus) {
