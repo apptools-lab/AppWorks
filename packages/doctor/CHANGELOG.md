@@ -1,5 +1,9 @@
 # changelog
 
+## 0.4.2
+
+- chore: remove typescript dependency and use the local typescript
+
 ## 0.4.1
 
 - feat: support stylelint
