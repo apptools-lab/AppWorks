@@ -1,5 +1,9 @@
 # changelog
 
+## 0.5.0
+
+- feat: support modify eslint config
+
 ## 0.4.2
 
 - chore: remove typescript dependency and use the local typescript

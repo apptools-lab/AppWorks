@@ -2,6 +2,7 @@ import Scorer from '../../Scorer';
 import { IESLintReports } from '../../types/Scanner';
 import { IFileInfo } from '../../types/File';
 import { ESLint, RuleKey } from '@applint/applint';
+import type { Linter as ESLinter } from 'eslint';
 
 // level waring minus 1 point
 const WARNING_WEIGHT = -1;
@@ -15,6 +16,7 @@ export default async function getESLintReports(
   files: IFileInfo[],
   ruleKey: RuleKey,
   fix: boolean,
+  modifyESLintConfig?: (config: ESLinter.Config) => ESLinter.Config,
 ): Promise<IESLintReports> {
   let warningScore = 0;
   let warningCount = 0;
@@ -29,6 +31,9 @@ export default async function getESLintReports(
   let ESLintResult = {} as any;
 
   const eslint = new ESLint({ directory, ruleKey, files });
+  if (typeof modifyESLintConfig === 'function') {
+    eslint.setConfig(modifyESLintConfig(eslint.getConfig()))
+  }
   if (fix) {
     ESLintResult = await eslint.fix();
   } else {
