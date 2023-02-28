@@ -16,7 +16,7 @@ export default async function getESLintReports(
   files: IFileInfo[],
   ruleKey: RuleKey,
   fix: boolean,
-  modifyESLintConfig?: (config: ESLinter.Config) => ESLinter.Config,
+  eslintExtendsConfig: string[],
 ): Promise<IESLintReports> {
   let warningScore = 0;
   let warningCount = 0;
@@ -31,8 +31,16 @@ export default async function getESLintReports(
   let ESLintResult = {} as any;
 
   const eslint = new ESLint({ directory, ruleKey, files });
-  if (typeof modifyESLintConfig === 'function') {
-    eslint.setConfig(modifyESLintConfig(eslint.getConfig()))
+
+  if (eslintExtendsConfig.length) {
+    const originESLintConfig = eslint.getConfig();
+    if (typeof originESLintConfig.extends === 'string') {
+      originESLintConfig.extends = [originESLintConfig.extends];
+    } else if (!originESLintConfig.extends) {
+      originESLintConfig.extends = [];
+    }
+    originESLintConfig.extends.push(...eslintExtendsConfig);
+    eslint.setConfig(originESLintConfig);
   }
   if (fix) {
     ESLintResult = await eslint.fix();

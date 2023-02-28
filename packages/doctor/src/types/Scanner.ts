@@ -19,6 +19,7 @@ export interface IScanOptions {
   disableCodemod?: boolean;
   maxRepeatabilityCheckLines?: number;
   customTransformRules?: Record<string, CodemodRule>;
+  eslintExtendsConfig?: string[];
 }
 
 export interface IRepeatabilityReports {
