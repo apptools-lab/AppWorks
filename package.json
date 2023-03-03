@@ -11,7 +11,7 @@
     "setup:extensions": "npm run extensions:install && npm run extensions:link",
     "ci:setup": "npm run env && npm run setup:packages",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
-    "packages:install": "rm -rf node_modules && rm -rf ./packages/*/node_modules && rm -rf ./packages/*/package-lock.json && SASS_BINARY_SITE=https://npmmirror.com/mirrors/node-sass/ yarn install --registry=https://registry.npmmirror.com",
+    "packages:install": "rm -rf node_modules && rm -rf ./packages/*/node_modules && rm -rf ./packages/*/package-lock.json && SASS_BINARY_SITE=https://npmmirror.com/mirrors/node-sass/ yarn install",
     "packages:link": "lerna link",
     "packages:watch": "ts-node ./scripts/watch.ts",
     "packages:build": "npm run packages:clean && ts-node ./scripts/build.ts",
