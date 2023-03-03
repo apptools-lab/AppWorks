@@ -1,44 +1,40 @@
-import * as ora from 'ora';
+import ora from 'ora';
 import { isAliNpm, getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 import { ALI_NPM_REGISTRY } from '@appworks/constant';
-import formatProject from './formatProject';
+import formatProject from './writeAbcJson';
 import checkEmpty from './checkEmpty';
 import formatScaffoldToProject from './formatScaffoldToProject';
+import type { ExtraDependencies } from './addDependenciesToPkgJson';
 
 export { formatProject, checkEmpty, formatScaffoldToProject };
 
-export interface IEjsOptions {
-  targets?: string[];
-  miniappType?: 'runtime' | 'compile';
-  mpa?: boolean;
-  pha?: boolean;
+interface Options {
+  version?: string;
+  registry?: string;
+  projectName?: string;
+  extraDependencies?: ExtraDependencies,
+  ejsOptions?: Record<string, any>;
 }
 
 export async function downloadAndGenerateProject(
   projectDir: string,
-  npmName: string,
-  version?: string,
-  registry?: string,
-  projectName?: string,
-  ejsOptions?: IEjsOptions,
+  scaffoldNpmName: string,
+  {
+    version,
+    registry,
+    extraDependencies,
+    projectName,
+    ejsOptions,
+  }: Options,
 ): Promise<void> {
-  registry = registry || (await getNpmRegistry(npmName));
-
-  // 根据模板创建项目支持的参数
-  ejsOptions = {
-    targets: ['web'],
-    miniappType: 'runtime',
-    mpa: false,
-    pha: false,
-    ...ejsOptions,
-  };
+  registry = registry || (await getNpmRegistry(scaffoldNpmName));
 
   let tarballURL: string;
   try {
-    tarballURL = await getNpmTarball(npmName, version || 'latest', registry);
+    tarballURL = await getNpmTarball(scaffoldNpmName, version || 'latest', registry);
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return Promise.reject(new Error(`获取模板 npm 信息失败，当前的模板地址是：${registry}/${npmName}。`));
+      return Promise.reject(new Error(`获取模板 npm 信息失败，当前的模板地址是：${registry}/${scaffoldNpmName}。`));
     } else {
       return Promise.reject(error);
     }
@@ -57,9 +53,15 @@ export async function downloadAndGenerateProject(
   spinner.succeed('download npm tarball successfully.');
 
   try {
-    await formatScaffoldToProject(projectDir, projectName, ejsOptions);
+    await formatScaffoldToProject(
+      projectDir,
+      {
+        projectName,
+        ejsOptions,
+        extraDependencies,
+      });
   } catch (err) {
-    console.warn('format scaffold to project error', err.message);
+    console.warn('format scaffold to project error', err);
   }
 }
 

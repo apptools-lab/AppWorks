@@ -4,11 +4,13 @@
 export default function formatFilename(filename: string) {
   // 只转换特定文件，防止误伤
   const dotFilenames = [
+    '_gitignore',
     '_eslintrc.js',
+    '_eslintrc.cjs',
     '_eslintrc',
     '_eslintignore',
-    '_gitignore',
     '_stylelintrc.js',
+    '_stylelintrc.cjs',
     '_stylelintrc',
     '_stylelintignore',
     '_editorconfig',
