@@ -2,9 +2,11 @@
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "target": "ES2017",
+    "module": "CommonJS",
     "rootDir": "src",
     "outDir": "lib",
     "moduleResolution": "node"
   },
-  "exclude": ["src/__tests__", "lib"]
+  "exclude": ["src/__tests__", "vitest.config.mts"]
 }

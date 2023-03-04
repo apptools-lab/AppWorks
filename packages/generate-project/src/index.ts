@@ -1,4 +1,3 @@
-import ora from 'ora';
 import { isAliNpm, getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 import { ALI_NPM_REGISTRY } from '@appworks/constant';
 import formatProject from './writeAbcJson';
@@ -6,13 +5,15 @@ import checkEmpty from './checkEmpty';
 import formatScaffoldToProject from './formatScaffoldToProject';
 import type { ExtraDependencies } from './addDependenciesToPkgJson';
 
+import ora = require('ora');
+
 export { formatProject, checkEmpty, formatScaffoldToProject };
 
 interface Options {
   version?: string;
   registry?: string;
   projectName?: string;
-  extraDependencies?: ExtraDependencies,
+  extraDependencies?: ExtraDependencies;
   ejsOptions?: Record<string, any>;
 }
 
@@ -59,7 +60,8 @@ export async function downloadAndGenerateProject(
         projectName,
         ejsOptions,
         extraDependencies,
-      });
+      },
+    );
   } catch (err) {
     console.warn('format scaffold to project error', err);
   }

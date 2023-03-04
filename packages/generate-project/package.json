@@ -1,12 +1,12 @@
 {
   "name": "@iceworks/generate-project",
-  "version": "2.0.0",
+  "version": "2.0.0-beta.1",
   "description": "Generator project",
   "files": [
     "lib/"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=14.18.0"
   },
   "main": "lib/index.js",
   "repository": {
@@ -27,13 +27,14 @@
     "fs-extra": "^11.0.0",
     "glob": "^9.2.1",
     "ice-npm-utils": "^3.0.0",
-    "ora": "^6.1.2",
+    "ora": "^5.4.1",
     "prettier": "^2.7.1"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
     "@types/fs-extra": "^11.0.1",
     "@types/prettier": "^2.7.2",
-    "vitest": "^0.29.2"
+    "vitest": "^0.29.2",
+    "typescript": "^4.9.5"
   }
 }

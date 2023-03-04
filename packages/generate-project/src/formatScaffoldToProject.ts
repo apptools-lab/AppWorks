@@ -19,8 +19,8 @@ export default async function formatScaffoldToProject(
   {
     projectName,
     extraDependencies,
-    ejsOptions = {}
-  }: Options
+    ejsOptions = {},
+  }: Options,
 ) {
   // format filename
   const files: string[] = await glob('**/*', { cwd: projectDir, ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**'] });
