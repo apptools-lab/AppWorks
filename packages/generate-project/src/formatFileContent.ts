@@ -5,7 +5,7 @@ export default function formatFileContent(text: string, options: Options = {}) {
   return prettier.format(text, {
     singleQuote: true,
     tabWidth: 2,
-    parser: 'babel-ts',
+    parser: 'babel-ts' as any,
     ...options,
   });
 }
