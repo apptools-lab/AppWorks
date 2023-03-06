@@ -1,6 +1,5 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { glob } from 'glob';
 import formatFilename from './formatFilename';
 import writeAbcJson from './writeAbcJson';
 import ejsRenderDir from './ejsRenderDir';
@@ -8,8 +7,9 @@ import type { ExtraDependencies } from './addDependenciesToPkgJson';
 import addDependencies from './addDependenciesToPkgJson';
 import formatPkgJson from './formatPkgJson';
 
+import glob = require('glob');
+
 interface Options {
-  projectName?: string;
   extraDependencies?: ExtraDependencies;
   ejsOptions?: Record<string, any>;
 }
@@ -17,13 +17,27 @@ interface Options {
 export default async function formatScaffoldToProject(
   projectDir: string,
   {
-    projectName,
     extraDependencies,
     ejsOptions = {},
   }: Options,
 ) {
   // format filename
-  const files: string[] = await glob('**/*', { cwd: projectDir, ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**'] });
+  const files: string[] = await new Promise((resolve, reject) => {
+    glob(
+      '**/*',
+      {
+        cwd: projectDir,
+        ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**']
+      },
+      (error, matches) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(matches);
+      },
+    );
+  })
+  
   files.forEach((file) => {
     fse.renameSync(path.join(projectDir, file), path.join(projectDir, formatFilename(file)));
   });

@@ -24,7 +24,6 @@ export async function downloadAndGenerateProject(
     version,
     registry,
     extraDependencies,
-    projectName,
     ejsOptions,
   }: Options,
 ): Promise<void> {
@@ -57,7 +56,6 @@ export async function downloadAndGenerateProject(
     await formatScaffoldToProject(
       projectDir,
       {
-        projectName,
         ejsOptions,
         extraDependencies,
       },

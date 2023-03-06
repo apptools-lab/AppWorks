@@ -1,20 +1,30 @@
 import * as path from 'path';
-import { glob } from 'glob';
 import * as ejs from 'ejs';
 import * as fse from 'fs-extra';
 import type { Data as ejsData } from 'ejs';
 import formatFileContent from './formatFileContent';
 
+import glob = require('glob');
+
 export default async function ejsRenderDir(dir: string, data: ejsData): Promise<void> {
-  const files: string[] = await glob(
-    '**/*.ejs',
-    {
-      cwd: dir,
-      nodir: true,
-      dot: true,
-      ignore: ['node_modules/**'],
-    },
-  );
+  const files: string[] = await new Promise((resolve, reject) => {
+    glob(
+      '**/*.ejs',
+      {
+        cwd: dir,
+        nodir: true,
+        dot: true,
+        ignore: ['node_modules/**'],
+      },
+      (error, matches) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(matches);
+      }
+    );
+  });
+
   await Promise.all(
     files.map((file) => {
       const filepath = path.join(dir, file);

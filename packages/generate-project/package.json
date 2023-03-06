@@ -6,7 +6,7 @@
     "lib/"
   ],
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=12.20.0"
   },
   "main": "lib/index.js",
   "repository": {
@@ -25,7 +25,7 @@
     "@appworks/constant": "^0.1.0",
     "ejs": "^3.1.8",
     "fs-extra": "^11.0.0",
-    "glob": "^9.2.1",
+    "glob": "^7.1.6",
     "ice-npm-utils": "^3.0.0",
     "ora": "^5.4.1",
     "prettier": "^2.7.1"
