@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { downloadAndGenerateProject } from '..';
-import { test, beforeAll, expect } from 'vitest';
 
 const tmpPath = path.resolve(__dirname, '../../.tmp');
 
