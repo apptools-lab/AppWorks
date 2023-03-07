@@ -21,7 +21,7 @@ export default async function ejsRenderDir(dir: string, data: ejsData): Promise<
           reject(error);
         }
         resolve(matches);
-      }
+      },
     );
   });
 
@@ -30,7 +30,7 @@ export default async function ejsRenderDir(dir: string, data: ejsData): Promise<
       const filepath = path.join(dir, file);
       return renderAndFormatFile(filepath, data);
     }),
-  )
+  );
 }
 
 async function renderAndFormatFile(filepath: string, data: ejsData): Promise<void> {

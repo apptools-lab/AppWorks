@@ -27,17 +27,17 @@ export default async function formatScaffoldToProject(
       '**/*',
       {
         cwd: projectDir,
-        ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**']
+        ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**'],
       },
       (error, matches) => {
         if (error) {
-          reject(error)
+          reject(error);
         }
         resolve(matches);
       },
     );
-  })
-  
+  });
+
   files.forEach((file) => {
     fse.renameSync(path.join(projectDir, file), path.join(projectDir, formatFilename(file)));
   });
