@@ -9,10 +9,12 @@ import { downloadAndGenerateProject } from '@iceworks/generate-project';
 
 await downloadAndGenerateProject(
   projectDir,
-  npmName,
-  npmVersion,
-  npmRegistry?,
-  projectName?,
-  ejsOptions?,
+  scaffoldNpmName,
+  {
+    version,
+    registry,
+    extraDependencies,
+    ejsOptions,
+  }
 );
 ```

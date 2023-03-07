@@ -1,13 +1,12 @@
 import { isAliNpm, getNpmTarball, getAndExtractTarball } from 'ice-npm-utils';
 import { ALI_NPM_REGISTRY } from '@appworks/constant';
-import formatProject from './writeAbcJson';
 import checkEmpty from './checkEmpty';
 import formatScaffoldToProject from './formatScaffoldToProject';
 import type { ExtraDependencies } from './addDependenciesToPkgJson';
 
 import ora = require('ora');
 
-export { formatProject, checkEmpty, formatScaffoldToProject };
+export { checkEmpty, formatScaffoldToProject };
 
 interface Options {
   version?: string;
