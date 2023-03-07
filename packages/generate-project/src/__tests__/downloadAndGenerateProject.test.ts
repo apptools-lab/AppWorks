@@ -50,7 +50,7 @@ plugins: [
           `,
         },
         esLintConfigOptions: `{
-          extends: ['@ali/eslint-config-att']
+          extends: []
         }`,
       },
       extraDependencies: {
@@ -86,7 +86,7 @@ import spm from '@ali/ice-plugin-spm';`)).toBeTruthy();
 
   const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
   const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
-  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
+  expect(eslintConfigContent.includes("extends: [],")).toBeTruthy();
 })
 
 test('generate antd-pro scaffold', async () => {
@@ -111,7 +111,7 @@ test('generate antd-pro scaffold', async () => {
           },
         },
         esLintConfigOptions: `{
-          extends: ['@ali/eslint-config-att']
+          extends: []
         }`,
       },
       extraDependencies: {
@@ -140,7 +140,7 @@ test('generate antd-pro scaffold', async () => {
 
   const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
   const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
-  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
+  expect(eslintConfigContent.includes("extends: [],")).toBeTruthy();
 })
 
 test('generate fusion-pro scaffold', async () => {
@@ -165,7 +165,7 @@ test('generate fusion-pro scaffold', async () => {
           },
         },
         esLintConfigOptions: `{
-          extends: ['@ali/eslint-config-att']
+          extends: []
         }`,
       },
       extraDependencies: {
@@ -194,5 +194,5 @@ test('generate fusion-pro scaffold', async () => {
 
   const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
   const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
-  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
+  expect(eslintConfigContent.includes("extends: [],")).toBeTruthy();
 })
