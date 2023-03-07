@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "setup": "npm run setup:packages && npm run setup:extensions",
-    "setup:packages": "npm run packages:install && lerna clean --yes && npm run packages:link && npm run packages:build",
+    "setup:packages": "npm run packages:install && npm run packages:link && npm run packages:build",
     "setup:extensions": "npm run extensions:install && npm run extensions:link",
     "ci:setup": "npm run env && npm run setup:packages",
     "test": "NODE_ENV=unittest LOG_LEVEL=verbose jest",
