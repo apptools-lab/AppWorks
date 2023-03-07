@@ -17,7 +17,7 @@ test('generate ice3-lite scaffold', async () => {
     projectDir,
     '@ice/lite-scaffold',
     {
-      version: '1.1.0-beta.1',
+      version: 'beta',
       ejsOptions: {
         appConfig: {
           importDeclarationsStr: `import type { Manifest } from '@ice/plugin-pha/types';
@@ -49,6 +49,9 @@ plugins: [
 ],
           `,
         },
+        esLintConfigOptions: `{
+          extends: ['@ali/eslint-config-att']
+        }`,
       },
       extraDependencies: {
         devDependencies: {
@@ -56,7 +59,7 @@ plugins: [
           '@ali/ice-plugin-spm': '^1.0.0',
           '@ice/plugin-pha': '^2.0.0',
         },
-      }
+      },
     }
   );
 
@@ -80,6 +83,10 @@ import { defineSpmConfig } from '@ali/ice-plugin-spm/types';`)).toBeTruthy();
 import pha from '@ice/plugin-pha';
 import spm from '@ali/ice-plugin-spm';`)).toBeTruthy();
   expect(configContent.includes('plugins: [def(), pha(), spm()]')).toBeTruthy();
+
+  const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
+  const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
+  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
 })
 
 test('generate antd-pro scaffold', async () => {
@@ -90,7 +97,7 @@ test('generate antd-pro scaffold', async () => {
     projectDir,
     '@ice/antd-pro-scaffold',
     {
-      version: '1.1.0-beta.3',
+      version: 'beta',
       ejsOptions: {
         appConfig: {
           configStr: `router: {
@@ -103,6 +110,9 @@ test('generate antd-pro scaffold', async () => {
             pluginItemsStr: `def(),`
           },
         },
+        esLintConfigOptions: `{
+          extends: ['@ali/eslint-config-att']
+        }`,
       },
       extraDependencies: {
         devDependencies: {
@@ -127,6 +137,10 @@ test('generate antd-pro scaffold', async () => {
   const configContent = await fs.readFile(configPath, 'utf-8');
   expect(configContent.includes(`import def from '@ali/ice-plugin-def';`)).toBeTruthy();
   expect(configContent.includes('plugins: [request(), store(), auth(), def()]')).toBeTruthy();
+
+  const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
+  const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
+  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
 })
 
 test('generate fusion-pro scaffold', async () => {
@@ -137,7 +151,7 @@ test('generate fusion-pro scaffold', async () => {
     projectDir,
     '@ice/fusion-pro-scaffold',
     {
-      version: '1.1.0-beta.0',
+      version: 'beta',
       ejsOptions: {
         appConfig: {
           configStr: `router: {
@@ -150,6 +164,9 @@ test('generate fusion-pro scaffold', async () => {
             pluginItemsStr: `def(),`
           },
         },
+        esLintConfigOptions: `{
+          extends: ['@ali/eslint-config-att']
+        }`,
       },
       extraDependencies: {
         devDependencies: {
@@ -174,4 +191,8 @@ test('generate fusion-pro scaffold', async () => {
   const configContent = await fs.readFile(configPath, 'utf-8');
   expect(configContent.includes(`import def from '@ali/ice-plugin-def';`)).toBeTruthy();
   expect(configContent.includes('plugins: [request(), store(), auth(), def()]')).toBeTruthy();
+
+  const eslintConfig = path.join(projectDir, '.eslintrc.cjs');
+  const eslintConfigContent = await fs.readFile(eslintConfig, 'utf-8');
+  expect(eslintConfigContent.includes("extends: ['@ali/eslint-config-att'],")).toBeTruthy();
 })
