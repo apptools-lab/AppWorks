@@ -4,6 +4,8 @@ import { downloadAndGenerateProject } from '..';
 
 const tmpPath = path.resolve(__dirname, '../../.tmp');
 
+jest.setTimeout(60 * 1000);
+
 beforeAll(async () => {
   await fs.ensureDir(tmpPath);
 })
