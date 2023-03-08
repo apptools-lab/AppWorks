@@ -46,7 +46,10 @@ class Doctor {
   }
 
   scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
-    return this.scanner.scan(path.isAbsolute(directory) ? directory : path.join(process.cwd(), directory), options);
+    return this.scanner.scan(
+      path.isAbsolute(directory) ? directory : path.join(process.cwd(), directory),
+      options || {},
+    );
   }
 
   analyse(directory: string) {
