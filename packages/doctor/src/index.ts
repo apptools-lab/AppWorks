@@ -45,10 +45,10 @@ class Doctor {
     this.analyzer = new Analyzer({ ignore: this.ignore });
   }
 
-  scan(directory: string, options?: IScanOptions): Promise<IScannerReports> {
+  scan(directory: string, options: IScanOptions = {}): Promise<IScannerReports> {
     return this.scanner.scan(
       path.isAbsolute(directory) ? directory : path.join(process.cwd(), directory),
-      options || {},
+      options,
     );
   }
 
