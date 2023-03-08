@@ -1,18 +1,52 @@
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import { glob } from 'glob';
 import formatFilename from './formatFilename';
-import formatProject from './formatProject';
+import writeAbcJson from './writeAbcJson';
 import ejsRenderDir from './ejsRenderDir';
+import type { ExtraDependencies } from './addDependenciesToPkgJson';
+import addDependencies from './addDependenciesToPkgJson';
+import formatPkgJson from './formatPkgJson';
 
-export default async function formatScaffoldToProject(projectDir: string, projectName?: string, ejsOptions: any = {}) {
+import glob = require('glob');
+
+interface Options {
+  extraDependencies?: ExtraDependencies;
+  ejsOptions?: Record<string, any>;
+}
+
+export default async function formatScaffoldToProject(
+  projectDir: string,
+  {
+    extraDependencies,
+    ejsOptions = {},
+  }: Options,
+) {
   // format filename
-  const files = glob.sync('**/*', { cwd: projectDir, ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**'] });
+  const files: string[] = await new Promise((resolve, reject) => {
+    glob(
+      '**/*',
+      {
+        cwd: projectDir,
+        ignore: ['node_modules/**', 'build/**', '.ice/**', '.rax/**'],
+      },
+      (error, matches) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(matches);
+      },
+    );
+  });
+
   files.forEach((file) => {
     fse.renameSync(path.join(projectDir, file), path.join(projectDir, formatFilename(file)));
   });
-  // render ejs template
+  // Render ejs templates.
   await ejsRenderDir(projectDir, ejsOptions);
-  // format project
-  await formatProject(projectDir, projectName, ejsOptions);
+  // Format project.
+  await writeAbcJson(projectDir);
+  // Add dependencies to package.json.
+  await addDependencies(extraDependencies, projectDir);
+
+  await formatPkgJson(projectDir);
 }

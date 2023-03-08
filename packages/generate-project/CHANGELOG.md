@@ -1,5 +1,9 @@
 # `@iceworks/generate-project`
 
+## 2.0.0
+
+- [chore]: support generate ice.js 3 scaffolds
+
 ## 1.4.6
 
 - [chore]: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`

@@ -1,11 +1,9 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0 */
 import * as glob from 'glob';
 import * as path from 'path';
+import * as chokidar from 'chokidar';
 import * as fs from 'fs-extra';
 import { run } from './fn/shell';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nsfw = require('nsfw');
 
 async function watchFiles(cwd, ext) {
   const files = glob.sync(ext, { cwd, nodir: true });
@@ -18,22 +16,16 @@ async function watchFiles(cwd, ext) {
     fileSet.add(path.join(cwd, file));
   }
 
-  const watcher = await nsfw(cwd, (event) => {
-    event.forEach((e) => {
-      if (
-        e.action === nsfw.actions.CREATED ||
-        e.action === nsfw.actions.MODIFIED ||
-        e.action === nsfw.actions.RENAMED
-      ) {
-        const filePath = e.newFile ? path.join(e.directory, e.newFile!) : path.join(e.directory, e.file!);
-        if (fileSet.has(filePath)) {
-          console.log('non-ts change detected:', filePath);
-          copyOneFile(path.relative(cwd, filePath), cwd);
-        }
+  const watcher = chokidar.watch(cwd, { ignoreInitial: true });
+  watcher
+    .on('all', (event, filePath) => {
+      const availableEvents = ['add', 'change'];
+      if (availableEvents.includes(event)
+        && filePath.match(/.+[\\/]src[\\/].+\.(?!ts$|tsx$|rs$)/)) {
+        console.log('non-ts change detected:', filePath);
+        copyOneFile(path.relative(cwd, filePath), cwd);
       }
     });
-  });
-  watcher.start();
 }
 
 watchFiles(path.join(__dirname, '../packages'), '*/src/**/!(*.ts|*.tsx)').catch((e) => {
