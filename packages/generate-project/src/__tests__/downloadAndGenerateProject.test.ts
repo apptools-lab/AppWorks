@@ -16,7 +16,6 @@ test('generate ice3-lite scaffold', async () => {
     projectDir,
     '@ice/lite-scaffold',
     {
-      version: 'beta',
       ejsOptions: {
         appConfig: {
           importDeclarationsStr: `import type { Manifest } from '@ice/plugin-pha/types';
@@ -96,7 +95,6 @@ test('generate antd-pro scaffold', async () => {
     projectDir,
     '@ice/antd-pro-scaffold',
     {
-      version: 'beta',
       ejsOptions: {
         appConfig: {
           configStr: `router: {
@@ -150,7 +148,6 @@ test('generate fusion-pro scaffold', async () => {
     projectDir,
     '@ice/fusion-pro-scaffold',
     {
-      version: 'beta',
       ejsOptions: {
         appConfig: {
           configStr: `router: {
