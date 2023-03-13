@@ -1,8 +1,13 @@
 # `@iceworks/generate-project`
 
+## 2.0.1
+
+- [feat] support format json file
+- [fix] throw error when `extraDependencies` is `undefined`
+
 ## 2.0.0
 
-- [chore]: support generate ice.js 3 scaffolds
+- [feat]: support generate ice.js 3 scaffolds
 
 ## 1.4.6
 

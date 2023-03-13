@@ -46,7 +46,7 @@ export default async function formatScaffoldToProject(
   // Format project.
   await writeAbcJson(projectDir);
   // Add dependencies to package.json.
-  await addDependencies(extraDependencies, projectDir);
+  await addDependencies(projectDir, extraDependencies);
 
   await formatPkgJson(projectDir);
 }
