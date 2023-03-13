@@ -37,6 +37,7 @@ export default async function ejsRenderDir(dir: string, data: ejsData): Promise<
 const parserMaps: Array<[RegExp, string]> = [
   [/\.json$/, 'json'],
   [/\.(js|jsx|ts|tsx)$/, 'babel-ts'],
+  [/\.(yml|yaml)$/, 'yaml'],
 ];
 
 async function renderAndFormatFile(filepath: string, data: ejsData): Promise<void> {
