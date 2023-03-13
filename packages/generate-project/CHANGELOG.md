@@ -3,6 +3,7 @@
 ## 2.0.1
 
 - [feat] support format json file
+- [fix] throw error when `extraDependencies` is `undefined`
 
 ## 2.0.0
 

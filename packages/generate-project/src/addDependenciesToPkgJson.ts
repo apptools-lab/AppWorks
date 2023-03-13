@@ -6,7 +6,7 @@ export interface ExtraDependencies {
   devDependencies?: Record<string, string>;
 }
 
-export default async function addDependencies(extraDependencies: ExtraDependencies, projectDir: string) {
+export default async function addDependencies(projectDir: string, extraDependencies: ExtraDependencies = {}) {
   const pkgJsonPath = path.join(projectDir, 'package.json');
   if (!await fse.pathExists(pkgJsonPath)) {
     throw new Error(`Path ${pkgJsonPath} does not exist.`);
