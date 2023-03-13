@@ -3,6 +3,7 @@ import * as ejs from 'ejs';
 import * as fse from 'fs-extra';
 import type { Data as ejsData } from 'ejs';
 import formatFileContent from './formatFileContent';
+import type { Options } from 'prettier';
 
 import glob = require('glob');
 
@@ -33,8 +34,24 @@ export default async function ejsRenderDir(dir: string, data: ejsData): Promise<
   );
 }
 
+const parserMaps: Array<[RegExp, string]> = [
+  [/\.json$/, 'json'],
+  [/\.(js|jsx|ts|tsx)$/, 'babel-ts'],
+];
+
 async function renderAndFormatFile(filepath: string, data: ejsData): Promise<void> {
   const fileContent = await ejs.renderFile(filepath, data);
-  await fse.writeFile(filepath.replace(/\.ejs$/, ''), formatFileContent(fileContent));
+  const realFilepath = filepath.replace(/\.ejs$/, '');
+
+  const formatOptions: Options = {};
+
+  for (const [regexp, parser] of parserMaps) {
+    if (regexp.test(realFilepath)) {
+      formatOptions.parser = parser;
+      continue;
+    }
+  }
+
+  await fse.writeFile(realFilepath, formatFileContent(fileContent, formatOptions));
   await fse.remove(filepath);
 }
