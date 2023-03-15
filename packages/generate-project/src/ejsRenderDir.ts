@@ -36,7 +36,8 @@ export default async function ejsRenderDir(dir: string, data: ejsData): Promise<
 
 const parserMaps: Array<[RegExp, string]> = [
   [/\.json$/, 'json'],
-  [/\.(js|jsx|ts|tsx)$/, 'babel-ts'],
+  [/\.(ts|tsx|mts|cts)$/, 'babel-ts'],
+  [/\.(js|jsx|mjs|cjs)$/, 'babel'],
   [/\.(yml|yaml)$/, 'yaml'],
 ];
 
