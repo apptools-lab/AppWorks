@@ -1,5 +1,18 @@
 # `@iceworks/generate-project`
 
+## 2.0.2
+
+- [feat] support format `.mjs` `.cjs` `.mts` `.cts` file
+
+## 2.0.1
+
+- [feat] support format json file
+- [fix] throw error when `extraDependencies` is `undefined`
+
+## 2.0.0
+
+- [feat]: support generate ice.js 3 scaffolds
+
 ## 1.4.6
 
 - [chore]: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`

@@ -36,7 +36,8 @@ export default async function renderEjsTemplates(templateData: Record<string, un
 async function renderFile(templateFilepath: string, data: any) {
   const asyncRenderFile = util.promisify(ejs.renderFile);
   try {
-    let content = await asyncRenderFile(templateFilepath, data);
+    // @ts-expect-error
+    let content: string = await asyncRenderFile(templateFilepath, data);
     const targetFilePath = templateFilepath.replace(/\.ejs$/, '');
     if (targetFilePath.match(/tsx$|jsx$/)) {
       // TODO: 需要对换行进行进一步的处理。
