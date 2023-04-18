@@ -55,7 +55,7 @@ export default class Scanner {
         tempFileDir,
         ruleKey,
         `${options?.fix}`,
-        `${JSON.stringify(options.eslintExtendsConfig || [])}`
+        `${JSON.stringify(options.eslintExtendsConfig || [])}`,
       ]);
 
       subprocessList.push(subprocess);
