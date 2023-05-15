@@ -15,7 +15,6 @@ export default async function formatPkgJson(projectDir: string) {
 
 function deleteFields(pkgJsonContent: Record<string, any>) {
   delete pkgJsonContent.files;
-  delete pkgJsonContent.publishConfig;
 
   return pkgJsonContent;
 }
