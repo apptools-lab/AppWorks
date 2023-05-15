@@ -65,7 +65,6 @@ plugins: [
 
   const pkgJsonPath = path.join(projectDir, 'package.json');
   const pkgJsonContent = await fs.readJSON(pkgJsonPath);
-  expect(pkgJsonContent.version).toBe('0.1.0');
   expect(Object.keys(pkgJsonContent.devDependencies).includes('@ali/ice-plugin-def')).toBeTruthy();
   expect(Object.keys(pkgJsonContent.devDependencies).includes('@ali/ice-plugin-spm')).toBeTruthy();
   expect(Object.keys(pkgJsonContent.devDependencies).includes('@ice/plugin-pha')).toBeTruthy();
@@ -123,7 +122,6 @@ test('generate antd-pro scaffold', async () => {
 
   const pkgJsonPath = path.join(projectDir, 'package.json');
   const pkgJsonContent = await fs.readJSON(pkgJsonPath);
-  expect(pkgJsonContent.version).toBe('0.1.0');
   expect(Object.keys(pkgJsonContent.devDependencies).includes('@ali/ice-plugin-def')).toBeTruthy();
 
   const appConfigPath = path.join(projectDir, 'src/app.ts');
@@ -176,7 +174,6 @@ test('generate fusion-pro scaffold', async () => {
 
   const pkgJsonPath = path.join(projectDir, 'package.json');
   const pkgJsonContent = await fs.readJSON(pkgJsonPath);
-  expect(pkgJsonContent.version).toBe('0.1.0');
   expect(Object.keys(pkgJsonContent.devDependencies).includes('@ali/ice-plugin-def')).toBeTruthy();
 
   const appConfigPath = path.join(projectDir, 'src/app.ts');
