@@ -1,5 +1,9 @@
 # `@iceworks/generate-project`
 
+## 2.0.3
+
+- [fix] remove unnecessary package.json format
+
 ## 2.0.2
 
 - [feat] support format `.mjs` `.cjs` `.mts` `.cts` file
