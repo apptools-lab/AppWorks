@@ -1,5 +1,9 @@
 # `@iceworks/generate-project`
 
+## 2.0.4
+
+- [fix] do not remove publishConfig in package.json
+
 ## 2.0.3
 
 - [fix] remove unnecessary package.json format
