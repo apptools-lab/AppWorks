@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.0.5
+
+- feat: add ru-RU locale
+
 ## 1.0.4
 
 - chore: update taobao npm registry from `https://registry.npm.taobao.org` to `https://registry.npmmirror.com`
