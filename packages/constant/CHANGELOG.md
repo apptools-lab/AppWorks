@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.5
+
+- chore: update ALI_NPM_REGISTRY
+
 ## 0.1.4
 
 - Chore: update ALI_NPM_REGISTRY
