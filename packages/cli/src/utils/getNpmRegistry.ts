@@ -11,7 +11,7 @@ export default async function (npmName, materialConfig, publishConfig, enableUse
     // 兼容老的用法
     registry = process.env.REGISTRY;
   } else if (isAliNpm(npmName)) {
-    registry = 'https://registry.npm.alibaba-inc.com';
+    registry = 'https://registry.anpm.alibaba-inc.com';
   } else if (materialConfig && materialConfig.registry) {
     registry = materialConfig.registry;
   } else {
