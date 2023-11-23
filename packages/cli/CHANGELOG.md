@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.3
+
+- [chore] 更新内网源地址为 `https://registry.anpm.alibaba-inc.com/`
+
 ## 3.0.2
 
 - [chore]: 更新淘宝 npm 镜像源地址为 `https://registry.npmmirror.com`
