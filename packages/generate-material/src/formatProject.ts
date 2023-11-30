@@ -31,7 +31,7 @@ export default async function formatProject({
 
   if (isAliNpm(npmName)) {
     pkgData.publishConfig = {
-      registry: 'https://registry.npm.alibaba-inc.com',
+      registry: 'https://registry.anpm.alibaba-inc.com',
     };
   }
 
@@ -49,7 +49,6 @@ export default async function formatProject({
         },
       ]);
     }
-
   }
 
   abcData && fse.writeJSONSync(abcPath, abcData, { spaces: 2 });

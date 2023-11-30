@@ -1,5 +1,9 @@
 # `@iceworks/generate-material`
 
+## 1.1.1
+
+- feat: update anpm registry
+
 ## 1.1.0
 
 - feat: add builder option for generateMaterial
