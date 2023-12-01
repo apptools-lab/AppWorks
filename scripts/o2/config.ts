@@ -26,10 +26,11 @@ export const innerExtensions4pack = [
     packageName: 'iceworks-team.iceworks-style-helper',
     assetsFolders: ['assets', 'schemas'],
   },
-  {
-    packageName: 'iceworks-team.iceworks-time-master',
-    assetsFolders: ['assets', 'schemas'],
-  },
+  // time-master maybe has performance problem in O2
+  // {
+  //   packageName: 'iceworks-team.iceworks-time-master',
+  //   assetsFolders: ['assets', 'schemas'],
+  // },
   {
     packageName: 'iceworks-team.iceworks-refactor',
     assetsFolders: ['assets', 'schemas'],
