@@ -22,7 +22,7 @@ import logger from '../utils/logger';
 import { recordDAU } from '@appworks/recorder';
 import recorder from '../utils/recorder';
 
-const NUMBER_FORMAT = '0 a';
+const NUMBER_FORMAT = '0.[00] a';
 const timerCollapsedStateMap: {[key: string]: TreeItemCollapsibleState} = {};
 
 class TimerItem {
